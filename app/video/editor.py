@@ -77,14 +77,10 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         
         video = in_visual
         if os.path.exists(vtt_path):
-            # FFmpeg's VTT-to-ASS converter uses an internal canvas height of 288 (PlayResY=288).
-            # We must calculate MarginV relative to 288, not 1920/1080.
-            # For Shorts: We want it ~30% from the bottom to clear YouTube UI (288 * 0.30 = 85).
-            # For Long: The user requested it to be dead in the middle of the screen (288 / 2 = 144).
-            margin_v = 85 if video_format == "short" else 144
-            # Using Alignment=10 (Legacy SSA code for Middle-Center) anchors the text to the absolute center, 
-            # so it grows equally up and down, preventing the text position from "jumping" when line counts change.
-            style = f"Alignment=10,Fontsize=14,Bold=1,MarginL=40,MarginR=40,MarginV={margin_v},PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=2"
+            # Alignment=5 is ASS code for absolute Middle-Center. 
+            # With MarginV=0, the text block pivots exactly around the vertical center.
+            # This guarantees the text NEVER jumps around when changing from 1 to 3 lines.
+            style = "Alignment=5,Fontsize=14,Bold=1,MarginL=40,MarginR=40,MarginV=0,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=2"
             video = video.filter('subtitles', safe_vtt, force_style=style)
             
         out = ffmpeg.output(

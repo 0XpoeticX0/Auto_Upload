@@ -85,13 +85,13 @@ Every scene's 'visuals' field MUST literally show what the narration describes a
 - Describe the LOCATION and ACTION, not the person's face.
 - Always end visual prompt with: ", wide angle, full scene, photorealistic, 8k, dramatic lighting, cinematic\"""")
 
-    rules.append("""=============================================
+rules.append("""=============================================
 RULE 8 — DUAL-VOICE ENGINE (ARABIC RECITATION)
 =============================================
-- When quoting an Ayah (Quranic verse) or a Dua, you MUST write the ACTUAL Arabic script followed by the English translation in parentheses, BOTH inside the `<ARABIC>` tags.
-- Example: "The Prophet said, <ARABIC>سُبْحَانَ اللَّهِ (Glory be to Allah)</ARABIC>."
-- ONLY wrap the Arabic words. Do not wrap the English translation.
-- This will signal the video engine to switch to a native Saudi Arabian voice for perfect pronunciation!""")
+- When quoting an Ayah (Quranic verse) or a Dua, you MUST write the ACTUAL Arabic script, followed by a newline (\\n), followed by the English pronunciation, followed by a newline (\\n), followed by the English translation, ALL inside the `<ARABIC>` tags.
+- Example: "The Prophet said, <ARABIC>سُبْحَانَ اللَّهِ\\nSubhanAllah\\n(Glory be to Allah)</ARABIC>."
+- This creates a beautiful 3-line stacked text on the screen: Top is Arabic, Middle is pronunciation, Bottom is meaning.
+- ONLY wrap the Arabic/Dua block. Do not wrap normal English narration.""")
 
 
     system_prompt = f"""You are an expert Islamic content writer and master storyteller.
