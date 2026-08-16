@@ -11,12 +11,12 @@ Your goal is to generate 5 highly viral, extremely engaging topic ideas based pu
 Do not use weak Hadiths. 
 
 VIRAL CATEGORIES TO ROTATE THROUGH:
-1. End of Times / Signs of Qiyamah / Dajjal
-2. The Unseen World (Jinn, Angels, Life in the Grave)
-3. Miracles of the Quran (Science, prophecies)
-4. Incredible Stories of Prophets & Sahabah
-5. Jannah (Paradise) & Jahannam (Hellfire) descriptions
-6. Daily Life: What is Halal/Haram, powerful Dhikr rewards
+1. Daily Life: What is Halal and Haram in modern daily life (very important)
+2. Duas & Cures: Powerful Duas for forgiveness, curing sadness/disease, and success
+3. Heart Softeners: Fear of Allah (Taqwa), repenting from Haram, and the Mercy of Allah
+4. End of Times / Signs of Qiyamah / Dajjal
+5. The Unseen World (Jinn, Angels, Life in the Grave)
+6. Jannah (Paradise) & Jahannam (Hellfire) descriptions
 
 Output JSON format:
 {
