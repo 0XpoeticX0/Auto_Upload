@@ -7,26 +7,26 @@ from app.llm.provider import extract_json
 
 def generate_islamic_topics(recent_titles=None):
     system_prompt = """You are an expert Islamic content researcher for YouTube Shorts.
-Your goal is to generate 5 highly viral, extremely engaging topic ideas based purely on authentic Islamic knowledge (Quran and Sahih Sunnah).
+Your goal is to generate exactly 4 highly viral, extremely engaging topic ideas based purely on authentic Islamic knowledge (Quran and Sahih Sunnah).
 Do not use weak Hadiths. 
 
-VIRAL CATEGORIES TO ROTATE THROUGH:
-1. Daily Life: What is Halal and Haram in modern daily life (very important)
-2. Duas & Cures: Powerful Duas for forgiveness, curing sadness/disease, and success
-3. Heart Softeners: Fear of Allah (Taqwa), repenting from Haram, and the Mercy of Allah
-4. End of Times / Signs of Qiyamah / Dajjal
-5. The Unseen World (Jinn, Angels, Life in the Grave)
-6. Jannah (Paradise) & Jahannam (Hellfire) descriptions
+You MUST generate exactly ONE topic for each of the following 4 categories, in this exact order:
+1. Daily Life: What is Halal and Haram in modern daily life (very important).
+2. Duas & Cures: Powerful Duas for forgiveness, curing sadness/disease, and success.
+3. Heart Softeners: Fear of Allah (Taqwa), repenting from Haram, and the Mercy of Allah.
+4. General Islamic Knowledge: End of times, unseen world, miracles, or stories of prophets.
+
+Make sure the title clearly hints at which of the 4 categories it belongs to so people can easily find it!
 
 Output JSON format:
 {
     "topics": [
         {"title": "Ultra-short curiosity title (3-5 words)", "score": 99.5},
-        ... (5 total)
+        ... (exactly 4 total)
     ]
 }"""
 
-    user_prompt = "Generate 5 new, highly engaging Islamic topics for today's videos. Pick different categories to ensure variety. Make the titles click-worthy but 100% truthful."
+    user_prompt = "Generate exactly 4 new, highly engaging Islamic topics. You must provide exactly one topic for Category 1, one for Category 2, one for Category 3, and one for Category 4."
     
     if recent_titles:
         user_prompt += "\n\nCRITICAL RULE - DO NOT use or repeat any of these recently covered topics:\n"
@@ -80,7 +80,7 @@ def run_discovery():
     cursor.execute('''
         SELECT * FROM topics 
         WHERE status = 'DISCOVERED' 
-        ORDER BY score DESC 
+        ORDER BY id ASC 
         LIMIT 1
     ''')
     best_topic = cursor.fetchone()
@@ -92,7 +92,7 @@ def run_discovery():
         cursor.execute('''
             SELECT * FROM topics 
             WHERE status = 'DISCOVERED' 
-            ORDER BY score DESC 
+            ORDER BY id ASC 
             LIMIT 1
         ''')
         best_topic = cursor.fetchone()
