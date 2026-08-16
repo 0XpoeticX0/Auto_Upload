@@ -2,8 +2,8 @@ name: Auto Upload Pipeline
 
 on:
   schedule:
-    # Runs at 7:00 AM and 8:00 PM your local time (01:00 and 14:00 UTC)
-    - cron: '0 1,14 * * *'
+    # Runs at 6:40 AM and 7:40 PM your local time (00:40 and 13:40 UTC)
+    - cron: '40 0,13 * * *'
   workflow_dispatch: # Allows manual trigger from the Actions tab
 
 jobs:
