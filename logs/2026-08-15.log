@@ -1,0 +1,1369 @@
+2026-08-15 00:37:23,986 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Dual Format) ---
+2026-08-15 00:37:23,986 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 00:37:24,094 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 00:37:24,095 - YoutubeAutomation - INFO - Selected content category: CRIME THRILLER
+2026-08-15 00:37:24,095 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/UnresolvedMysteries/top/.rss?t=week
+2026-08-15 00:37:43,365 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/TrueCrime/top/.rss?t=week
+2026-08-15 00:37:43,763 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/crime/top/.rss?t=week
+2026-08-15 00:38:03,045 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/mystery/top/.rss?t=week
+2026-08-15 00:38:22,336 - YoutubeAutomation - WARNING - No topics discovered. Trying educational fallback...
+2026-08-15 00:38:22,336 - YoutubeAutomation - INFO - Parsing feed: https://www.sciencedaily.com/rss/all.xml
+2026-08-15 00:38:23,686 - YoutubeAutomation - INFO - Parsing feed: https://www.smithsonianmag.com/rss/science-nature/
+2026-08-15 00:38:24,090 - YoutubeAutomation - INFO - Parsing feed: https://www.nasa.gov/rss/dyn/breaking_news.rss
+2026-08-15 00:38:24,600 - YoutubeAutomation - INFO - Parsing feed: https://www.sciencedaily.com/rss/mind_brain.xml
+2026-08-15 00:38:25,526 - YoutubeAutomation - INFO - Saved 10 new topics to database.
+2026-08-15 00:38:25,593 - YoutubeAutomation - INFO - Selected topic: Quantum mechanics once baffled scientists. Now it's changing the world
+2026-08-15 00:38:25,594 - YoutubeAutomation - INFO - Content category this run: CRIME THRILLER
+2026-08-15 00:38:25,594 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 00:38:25,594 - YoutubeAutomation - INFO - Generating short script for topic: Quantum mechanics once baffled scientists. Now it's changing the world (59s)
+2026-08-15 00:38:25,594 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 00:38:26,933 - YoutubeAutomation - INFO - Script: 7/7 scenes | ~48 words | ~19s estimated duration (target: 59s)
+2026-08-15 00:38:27,025 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 00:38:27,025 - YoutubeAutomation - INFO - --- Generating Visuals (short) ---
+2026-08-15 00:38:27,026 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 00:38:34,987 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 00:39:19,745 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 00:40:04,907 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 00:40:49,597 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 00:41:29,910 - YoutubeAutomation - WARNING - Attempt 1: Failed to download image: 500
+2026-08-15 00:42:19,849 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 00:43:05,983 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 00:43:50,958 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (short) ---
+2026-08-15 00:43:50,958 - YoutubeAutomation - INFO - Using voice: en-US-SteffanNeural for category: crime_thriller
+2026-08-15 00:43:50,958 - YoutubeAutomation - INFO - Generating TTS for: 'Scientists baffled by quantum ...'
+2026-08-15 00:43:52,738 - YoutubeAutomation - INFO - Generating TTS for: 'Now it's changing the world ra...'
+2026-08-15 00:43:54,285 - YoutubeAutomation - INFO - Generating TTS for: 'Innovations in tech and medici...'
+2026-08-15 00:43:55,806 - YoutubeAutomation - INFO - Generating TTS for: 'Quantum computers process info...'
+2026-08-15 00:43:57,753 - YoutubeAutomation - INFO - Generating TTS for: 'New materials and energy sourc...'
+2026-08-15 00:43:59,405 - YoutubeAutomation - INFO - Generating TTS for: 'The future of quantum is full ...'
+2026-08-15 00:44:01,030 - YoutubeAutomation - INFO - Generating TTS for: 'Follow for more mind-blowing s...'
+2026-08-15 00:44:02,385 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 00:44:02,385 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_short\scene_1.mp4
+2026-08-15 00:44:04,152 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_short\scene_2.mp4
+2026-08-15 00:44:05,690 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_short\scene_3.mp4
+2026-08-15 00:44:07,160 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_short\scene_4.mp4
+2026-08-15 00:44:09,069 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_short\scene_5.mp4
+2026-08-15 00:44:10,543 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_short\scene_6.mp4
+2026-08-15 00:44:12,332 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_short\scene_7.mp4
+2026-08-15 00:44:14,178 - YoutubeAutomation - INFO - Concatenating all scenes into final video...
+2026-08-15 00:44:14,285 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_23_short.mp4
+2026-08-15 00:44:14,285 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 00:44:14,286 - YoutubeAutomation - INFO - Generating thumbnail for: Quantum Leap
+2026-08-15 00:44:30,083 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_23.jpg
+2026-08-15 00:44:30,085 - YoutubeAutomation - INFO - --- Generating Metadata (short) ---
+2026-08-15 00:44:30,085 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 00:44:30,085 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 00:44:30,729 - YoutubeAutomation - INFO - Metadata generated successfully.
+2026-08-15 00:44:30,730 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 00:44:30,730 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 00:44:30,731 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 00:44:30,815 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 00:44:30,816 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_23_short.mp4
+2026-08-15 00:44:39,440 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: f5SdMN8ckNA
+2026-08-15 00:44:39,441 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 00:44:40,005 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=f5SdMN8ckNA&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 00:44:40,005 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_23_short.mp4
+2026-08-15 00:44:40,006 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 00:44:41,799 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 3351254648380248
+2026-08-15 00:44:45,805 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 00:44:49,549 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 00:44:49,552 - YoutubeAutomation - INFO - ========== Starting Generation for LONG ==========
+2026-08-15 00:44:49,552 - YoutubeAutomation - INFO - Generating long script for topic: Quantum mechanics once baffled scientists. Now it's changing the world (146s)
+2026-08-15 00:44:49,552 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 00:44:52,509 - YoutubeAutomation - INFO - Script: 18/18 scenes | ~146 words | ~58s estimated duration (target: 146s)
+2026-08-15 00:44:52,612 - YoutubeAutomation - INFO - Script (long) successfully generated and saved.
+2026-08-15 00:44:52,613 - YoutubeAutomation - INFO - --- Generating Visuals (long) ---
+2026-08-15 00:44:52,614 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:45:20,131 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:46:05,031 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:46:50,850 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:47:36,121 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:48:19,661 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:49:04,668 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:49:49,495 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:50:35,071 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:51:20,070 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:52:04,869 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:52:50,098 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:53:35,795 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:54:19,779 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:55:05,453 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:55:13,243 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:55:58,219 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:56:43,303 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 00:57:28,036 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (long) ---
+2026-08-15 00:57:28,037 - YoutubeAutomation - INFO - Using voice: en-US-SteffanNeural for category: crime_thriller
+2026-08-15 00:57:28,037 - YoutubeAutomation - INFO - Generating TTS for: 'Scientists baffled by quantum ...'
+2026-08-15 00:57:29,784 - YoutubeAutomation - INFO - Generating TTS for: 'Theories emerged, but experime...'
+2026-08-15 00:57:31,318 - YoutubeAutomation - INFO - Generating TTS for: 'Then, breakthroughs in quantum...'
+2026-08-15 00:57:32,956 - YoutubeAutomation - INFO - Generating TTS for: 'New materials with unique prop...'
+2026-08-15 00:57:34,943 - YoutubeAutomation - INFO - Generating TTS for: 'Quantum mechanics now powers i...'
+2026-08-15 00:57:36,581 - YoutubeAutomation - INFO - Generating TTS for: 'From medicine to finance, quan...'
+2026-08-15 00:57:38,174 - YoutubeAutomation - INFO - Generating TTS for: 'Secure communication systems r...'
+2026-08-15 00:57:39,717 - YoutubeAutomation - INFO - Generating TTS for: 'The future of energy productio...'
+2026-08-15 00:57:41,321 - YoutubeAutomation - INFO - Generating TTS for: 'Quantum sensors enhance naviga...'
+2026-08-15 00:57:43,187 - YoutubeAutomation - INFO - Generating TTS for: 'Breakthroughs in quantum biolo...'
+2026-08-15 00:57:44,744 - YoutubeAutomation - INFO - Generating TTS for: 'The boundaries of space explor...'
+2026-08-15 00:57:46,385 - YoutubeAutomation - INFO - Generating TTS for: 'Quantum mechanics is transform...'
+2026-08-15 00:57:48,162 - YoutubeAutomation - INFO - Generating TTS for: 'New quantum materials are bein...'
+2026-08-15 00:57:49,744 - YoutubeAutomation - INFO - Generating TTS for: 'The potential for quantum tech...'
+2026-08-15 00:57:51,267 - YoutubeAutomation - INFO - Generating TTS for: 'As research continues, new dis...'
+2026-08-15 00:57:53,047 - YoutubeAutomation - INFO - Generating TTS for: 'The world is on the cusp of a ...'
+2026-08-15 00:57:54,800 - YoutubeAutomation - INFO - Generating TTS for: 'The future is uncertain, but o...'
+2026-08-15 00:57:56,334 - YoutubeAutomation - INFO - Generating TTS for: 'Follow for more mind-blowing s...'
+2026-08-15 00:57:57,894 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 00:57:57,895 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_1.mp4
+2026-08-15 00:57:59,608 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_2.mp4
+2026-08-15 00:58:01,125 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_3.mp4
+2026-08-15 00:58:02,605 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_4.mp4
+2026-08-15 00:58:04,151 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_5.mp4
+2026-08-15 00:58:05,865 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_6.mp4
+2026-08-15 00:58:07,343 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_7.mp4
+2026-08-15 00:58:08,907 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_8.mp4
+2026-08-15 00:58:10,459 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_9.mp4
+2026-08-15 00:58:12,142 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_10.mp4
+2026-08-15 00:58:13,562 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_11.mp4
+2026-08-15 00:58:15,170 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_12.mp4
+2026-08-15 00:58:17,005 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_13.mp4
+2026-08-15 00:58:18,462 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_14.mp4
+2026-08-15 00:58:20,039 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_15.mp4
+2026-08-15 00:58:21,650 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_16.mp4
+2026-08-15 00:58:23,125 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_17.mp4
+2026-08-15 00:58:24,674 - YoutubeAutomation - INFO - Rendering scene video: data\temp\23_long\scene_18.mp4
+2026-08-15 00:58:26,342 - YoutubeAutomation - INFO - Concatenating all scenes into final video...
+2026-08-15 00:58:26,557 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_23_long.mp4
+2026-08-15 00:58:26,557 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 00:58:26,558 - YoutubeAutomation - INFO - Generating thumbnail for: Quantum Leap
+2026-08-15 00:58:27,405 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_23.jpg
+2026-08-15 00:58:27,406 - YoutubeAutomation - INFO - --- Generating Metadata (long) ---
+2026-08-15 00:58:27,406 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 00:58:27,406 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 00:58:28,179 - YoutubeAutomation - INFO - Metadata generated successfully.
+2026-08-15 00:58:28,179 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 00:58:28,180 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 00:58:28,181 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 00:58:28,285 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 00:58:28,286 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_23_long.mp4
+2026-08-15 00:58:43,809 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: Pnf_LNdxEgY
+2026-08-15 00:58:43,809 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 00:58:44,388 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=Pnf_LNdxEgY&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 00:58:44,389 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_23_long.mp4
+2026-08-15 00:58:44,390 - YoutubeAutomation - INFO - Uploading as Facebook VIDEO (shown on Page timeline)
+2026-08-15 00:58:51,569 - YoutubeAutomation - INFO - Facebook Video uploaded! Video ID: 1415498707117349
+2026-08-15 00:58:51,571 - YoutubeAutomation - INFO - Dual-Format Pipeline finished.
+2026-08-15 07:30:26,627 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Dual Format) ---
+2026-08-15 07:30:26,638 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 07:30:26,715 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 07:30:26,716 - YoutubeAutomation - INFO - Selected content category: KNOWLEDGE
+2026-08-15 07:30:26,716 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/todayilearned/top/.rss?t=day
+2026-08-15 07:30:48,397 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/interestingasfuck/top/.rss?t=day
+2026-08-15 07:31:07,656 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/History/top/.rss?t=week
+2026-08-15 07:31:09,435 - YoutubeAutomation - INFO - Parsing feed: https://www.smithsonianmag.com/rss/history-archaeology/
+2026-08-15 07:31:09,962 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 07:31:10,045 - YoutubeAutomation - INFO - Selected topic: Scientists discover a hidden brain rhythm that could improve Parkinson’s treatment
+2026-08-15 07:31:10,046 - YoutubeAutomation - INFO - Content category this run: KNOWLEDGE
+2026-08-15 07:31:10,046 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 07:31:10,047 - YoutubeAutomation - INFO - Generating short script for topic: Scientists discover a hidden brain rhythm that could improve Parkinson’s treatment (59s)
+2026-08-15 07:31:10,047 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 07:31:11,687 - YoutubeAutomation - INFO - Script: 7/7 scenes | ~52 words | ~21s estimated duration (target: 59s)
+2026-08-15 07:31:11,767 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 07:31:11,767 - YoutubeAutomation - INFO - --- Generating Visuals (short) ---
+2026-08-15 07:31:11,768 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 07:31:19,355 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 07:32:05,252 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 07:32:50,694 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 07:33:34,590 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 07:34:19,518 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 07:35:04,551 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, wide angle shot...'
+2026-08-15 07:35:50,146 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (short) ---
+2026-08-15 07:35:50,147 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: knowledge
+2026-08-15 07:35:50,148 - YoutubeAutomation - INFO - Generating TTS for: 'Scientists stunned by hidden b...'
+2026-08-15 07:35:52,525 - YoutubeAutomation - INFO - Generating TTS for: 'Parkinson's patients may benef...'
+2026-08-15 07:35:54,194 - YoutubeAutomation - INFO - Generating TTS for: 'Brain waves hold secrets to im...'
+2026-08-15 07:35:55,965 - YoutubeAutomation - INFO - Generating TTS for: 'Researchers race to unlock rhy...'
+2026-08-15 07:35:57,766 - YoutubeAutomation - INFO - Generating TTS for: 'New treatment methods on the h...'
+2026-08-15 07:36:00,057 - YoutubeAutomation - INFO - Generating TTS for: 'Groundbreaking study sparks ho...'
+2026-08-15 07:36:01,661 - YoutubeAutomation - INFO - Generating TTS for: 'Follow for more mind-blowing s...'
+2026-08-15 07:36:03,415 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 07:36:03,415 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_short\scene_1.mp4
+2026-08-15 07:36:06,051 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_short\scene_2.mp4
+2026-08-15 07:36:07,649 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_short\scene_3.mp4
+2026-08-15 07:36:09,257 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_short\scene_4.mp4
+2026-08-15 07:36:10,831 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_short\scene_5.mp4
+2026-08-15 07:36:12,397 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_short\scene_6.mp4
+2026-08-15 07:36:13,825 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_short\scene_7.mp4
+2026-08-15 07:36:15,486 - YoutubeAutomation - INFO - Concatenating all scenes into final video...
+2026-08-15 07:36:15,632 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_24_short.mp4
+2026-08-15 07:36:15,633 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 07:36:15,633 - YoutubeAutomation - INFO - Generating thumbnail for: Brain Rhythm Breakthrough
+2026-08-15 07:36:30,948 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_24.jpg
+2026-08-15 07:36:30,949 - YoutubeAutomation - INFO - --- Generating Metadata (short) ---
+2026-08-15 07:36:30,950 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 07:36:30,950 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 07:36:31,565 - YoutubeAutomation - INFO - Metadata generated successfully.
+2026-08-15 07:36:31,565 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 07:36:31,565 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 07:36:31,566 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 07:36:31,662 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 07:36:31,663 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_24_short.mp4
+2026-08-15 07:36:40,067 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: dTWuQcGSe3M
+2026-08-15 07:36:40,068 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 07:36:40,619 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=dTWuQcGSe3M&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 07:36:40,619 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_24_short.mp4
+2026-08-15 07:36:40,620 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 07:36:42,691 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 2029020051088860
+2026-08-15 07:36:47,338 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 07:36:51,209 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 07:36:51,212 - YoutubeAutomation - INFO - ========== Starting Generation for LONG ==========
+2026-08-15 07:36:51,214 - YoutubeAutomation - INFO - Generating long script for topic: Scientists discover a hidden brain rhythm that could improve Parkinson’s treatment (272s)
+2026-08-15 07:36:51,214 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 07:36:56,859 - YoutubeAutomation - INFO - Script: 34/34 scenes | ~263 words | ~105s estimated duration (target: 272s)
+2026-08-15 07:36:56,968 - YoutubeAutomation - INFO - Script (long) successfully generated and saved.
+2026-08-15 07:36:56,969 - YoutubeAutomation - INFO - --- Generating Visuals (long) ---
+2026-08-15 07:36:56,969 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:37:20,462 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:38:04,830 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:38:49,796 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:39:35,055 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:40:19,899 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:41:04,792 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:41:49,595 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:41:57,516 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:42:42,362 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:43:27,579 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:44:12,380 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:44:58,063 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:45:43,408 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:46:27,227 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:47:12,636 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:47:20,486 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:48:05,199 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:48:50,136 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:49:35,329 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:50:20,245 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:51:05,316 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:51:50,575 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:52:35,106 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:52:42,777 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:53:27,875 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:54:12,716 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:54:57,635 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:55:42,692 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:56:27,475 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:56:33,343 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:57:12,531 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:57:57,630 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:58:05,075 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 07:58:50,144 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (long) ---
+2026-08-15 07:58:50,144 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: knowledge
+2026-08-15 07:58:50,145 - YoutubeAutomation - INFO - Generating TTS for: 'Scientists stunned by hidden b...'
+2026-08-15 07:58:51,624 - YoutubeAutomation - INFO - Generating TTS for: 'Neuroscientists uncover a new ...'
+2026-08-15 07:58:53,324 - YoutubeAutomation - INFO - Generating TTS for: 'Parkinson's disease affects mi...'
+2026-08-15 07:58:54,826 - YoutubeAutomation - INFO - Generating TTS for: 'Current treatments have limite...'
+2026-08-15 07:58:56,683 - YoutubeAutomation - INFO - Generating TTS for: 'New brain rhythm discovery bri...'
+2026-08-15 07:58:58,241 - YoutubeAutomation - INFO - Generating TTS for: 'This hidden rhythm affects mot...'
+2026-08-15 07:58:59,792 - YoutubeAutomation - INFO - Generating TTS for: 'Scientists use advanced brain ...'
+2026-08-15 07:59:01,580 - YoutubeAutomation - INFO - Generating TTS for: 'To study the brain's electrica...'
+2026-08-15 07:59:03,210 - YoutubeAutomation - INFO - Generating TTS for: 'And identify the unique rhythm...'
+2026-08-15 07:59:04,754 - YoutubeAutomation - INFO - Generating TTS for: 'This breakthrough could lead t...'
+2026-08-15 07:59:06,235 - YoutubeAutomation - INFO - Generating TTS for: 'And improve the lives of Parki...'
+2026-08-15 07:59:07,859 - YoutubeAutomation - INFO - Generating TTS for: 'The discovery of this hidden b...'
+2026-08-15 07:59:09,408 - YoutubeAutomation - INFO - Generating TTS for: 'A 50-year-old neuroscientist w...'
+2026-08-15 07:59:11,200 - YoutubeAutomation - INFO - Generating TTS for: 'Leading the research team with...'
+2026-08-15 07:59:13,328 - YoutubeAutomation - INFO - Generating TTS for: 'The team works tirelessly to u...'
+2026-08-15 07:59:15,087 - YoutubeAutomation - INFO - Generating TTS for: 'And its potential to revolutio...'
+2026-08-15 07:59:17,058 - YoutubeAutomation - INFO - Generating TTS for: 'The discovery sparks hope for ...'
+2026-08-15 07:59:18,621 - YoutubeAutomation - INFO - Generating TTS for: 'For those affected by this deb...'
+2026-08-15 07:59:20,403 - YoutubeAutomation - INFO - Generating TTS for: 'The hidden brain rhythm is a c...'
+2026-08-15 07:59:22,027 - YoutubeAutomation - INFO - Generating TTS for: 'Involving multiple brain regio...'
+2026-08-15 07:59:23,725 - YoutubeAutomation - INFO - Generating TTS for: 'Scientists use cutting-edge te...'
+2026-08-15 07:59:25,392 - YoutubeAutomation - INFO - Generating TTS for: 'And develop new treatments to ...'
+2026-08-15 07:59:27,178 - YoutubeAutomation - INFO - Generating TTS for: 'The potential impact on Parkin...'
+2026-08-15 07:59:29,313 - YoutubeAutomation - INFO - Generating TTS for: 'A new era of treatment and man...'
+2026-08-15 07:59:30,928 - YoutubeAutomation - INFO - Generating TTS for: 'The discovery of the hidden br...'
+2026-08-15 07:59:32,526 - YoutubeAutomation - INFO - Generating TTS for: 'In the ongoing quest to unders...'
+2026-08-15 07:59:34,069 - YoutubeAutomation - INFO - Generating TTS for: 'And develop effective treatmen...'
+2026-08-15 07:59:35,729 - YoutubeAutomation - INFO - Generating TTS for: 'The hidden brain rhythm holds ...'
+2026-08-15 07:59:37,345 - YoutubeAutomation - INFO - Generating TTS for: 'Waiting to be uncovered by ded...'
+2026-08-15 07:59:39,418 - YoutubeAutomation - INFO - Generating TTS for: 'The journey to understanding t...'
+2026-08-15 07:59:40,969 - YoutubeAutomation - INFO - Generating TTS for: 'With new discoveries and break...'
+2026-08-15 07:59:42,653 - YoutubeAutomation - INFO - Generating TTS for: 'The future of Parkinson's trea...'
+2026-08-15 07:59:44,405 - YoutubeAutomation - INFO - Generating TTS for: 'Thanks to the dedication of ne...'
+2026-08-15 07:59:46,192 - YoutubeAutomation - INFO - Generating TTS for: 'Follow for more mind-blowing s...'
+2026-08-15 07:59:47,593 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 07:59:47,593 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_1.mp4
+2026-08-15 07:59:49,745 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_2.mp4
+2026-08-15 07:59:51,086 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_3.mp4
+2026-08-15 07:59:52,483 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_4.mp4
+2026-08-15 07:59:53,983 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_5.mp4
+2026-08-15 07:59:55,403 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_6.mp4
+2026-08-15 07:59:56,932 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_7.mp4
+2026-08-15 07:59:58,209 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_8.mp4
+2026-08-15 07:59:59,558 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_9.mp4
+2026-08-15 08:00:01,053 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_10.mp4
+2026-08-15 08:00:02,430 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_11.mp4
+2026-08-15 08:00:03,987 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_12.mp4
+2026-08-15 08:00:05,504 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_13.mp4
+2026-08-15 08:00:06,991 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_14.mp4
+2026-08-15 08:00:08,420 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_15.mp4
+2026-08-15 08:00:09,855 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_16.mp4
+2026-08-15 08:00:11,389 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_17.mp4
+2026-08-15 08:00:12,874 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_18.mp4
+2026-08-15 08:00:14,460 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_19.mp4
+2026-08-15 08:00:15,944 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_20.mp4
+2026-08-15 08:00:17,398 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_21.mp4
+2026-08-15 08:00:18,940 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_22.mp4
+2026-08-15 08:00:20,144 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_23.mp4
+2026-08-15 08:00:21,745 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_24.mp4
+2026-08-15 08:00:23,095 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_25.mp4
+2026-08-15 08:00:24,569 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_26.mp4
+2026-08-15 08:00:26,074 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_27.mp4
+2026-08-15 08:00:27,556 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_28.mp4
+2026-08-15 08:00:28,950 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_29.mp4
+2026-08-15 08:00:30,436 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_30.mp4
+2026-08-15 08:00:31,898 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_31.mp4
+2026-08-15 08:00:33,305 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_32.mp4
+2026-08-15 08:00:34,653 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_33.mp4
+2026-08-15 08:00:36,286 - YoutubeAutomation - INFO - Rendering scene video: data\temp\24_long\scene_34.mp4
+2026-08-15 08:00:37,599 - YoutubeAutomation - INFO - Concatenating all scenes into final video...
+2026-08-15 08:00:37,954 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_24_long.mp4
+2026-08-15 08:00:37,954 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 08:00:37,955 - YoutubeAutomation - INFO - Generating thumbnail for: Brain Rhythm Breakthrough
+2026-08-15 08:00:38,829 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_24.jpg
+2026-08-15 08:00:38,830 - YoutubeAutomation - INFO - --- Generating Metadata (long) ---
+2026-08-15 08:00:38,830 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 08:00:38,830 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 08:00:39,501 - YoutubeAutomation - INFO - Metadata generated successfully.
+2026-08-15 08:00:39,501 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 08:00:39,502 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 08:00:39,502 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 08:00:39,584 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 08:00:39,585 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_24_long.mp4
+2026-08-15 08:01:04,265 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: Qj4Q7qW9W3E
+2026-08-15 08:01:04,265 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 08:01:04,807 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=Qj4Q7qW9W3E&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 08:01:04,807 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_24_long.mp4
+2026-08-15 08:01:04,808 - YoutubeAutomation - INFO - Uploading as Facebook VIDEO (shown on Page timeline)
+2026-08-15 08:01:13,635 - YoutubeAutomation - INFO - Facebook Video uploaded! Video ID: 2286412695097346
+2026-08-15 08:01:13,636 - YoutubeAutomation - INFO - Dual-Format Pipeline finished.
+2026-08-15 08:10:33,137 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Dual Format) ---
+2026-08-15 08:10:33,137 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 08:10:33,193 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 08:10:33,193 - YoutubeAutomation - INFO - Selected content category: KNOWLEDGE
+2026-08-15 08:10:33,193 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/todayilearned/top/.rss?t=day
+2026-08-15 08:10:54,862 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/interestingasfuck/top/.rss?t=day
+2026-08-15 08:11:14,114 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/History/top/.rss?t=week
+2026-08-15 08:11:33,375 - YoutubeAutomation - INFO - Parsing feed: https://www.smithsonianmag.com/rss/history-archaeology/
+2026-08-15 08:11:33,795 - YoutubeAutomation - WARNING - No topics discovered. Trying educational fallback...
+2026-08-15 08:11:33,795 - YoutubeAutomation - INFO - Parsing feed: https://www.sciencedaily.com/rss/all.xml
+2026-08-15 08:11:35,134 - YoutubeAutomation - INFO - Parsing feed: https://www.smithsonianmag.com/rss/science-nature/
+2026-08-15 08:11:35,469 - YoutubeAutomation - INFO - Parsing feed: https://www.nasa.gov/rss/dyn/breaking_news.rss
+2026-08-15 08:11:36,003 - YoutubeAutomation - INFO - Parsing feed: https://www.sciencedaily.com/rss/mind_brain.xml
+2026-08-15 08:11:36,674 - YoutubeAutomation - INFO - Saved 3 new topics to database.
+2026-08-15 08:11:36,766 - YoutubeAutomation - INFO - Selected topic: MIT neuroscientists discover the brain can reason without words
+2026-08-15 08:11:36,767 - YoutubeAutomation - INFO - Content category this run: KNOWLEDGE
+2026-08-15 08:11:36,767 - YoutubeAutomation - INFO - ========== Starting Generation for LONG ==========
+2026-08-15 08:11:36,767 - YoutubeAutomation - INFO - Generating long script for topic: MIT neuroscientists discover the brain can reason without words (166s)
+2026-08-15 08:11:36,767 - YoutubeAutomation - INFO - Attempting to extract JSON with model: llama-3.3-70b-versatile
+2026-08-15 08:11:40,443 - YoutubeAutomation - INFO - Script: 22/22 scenes | ~191 words | ~76s estimated duration (target: 166s)
+2026-08-15 08:11:40,550 - YoutubeAutomation - INFO - Script (long) successfully generated and saved.
+2026-08-15 08:11:40,550 - YoutubeAutomation - INFO - --- Generating Visuals (long) ---
+2026-08-15 08:11:40,551 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:11:48,067 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:12:33,728 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:13:18,079 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:14:03,849 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:14:48,382 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:15:33,253 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:16:09,548 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Dual Format) ---
+2026-08-15 08:16:09,548 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 08:16:09,551 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 08:16:09,551 - YoutubeAutomation - INFO - Selected content category: NOVEL STORY
+2026-08-15 08:16:09,551 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/WritingPrompts/top/.rss?t=week
+2026-08-15 08:16:28,856 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/nosleep/top/.rss?t=week
+2026-08-15 08:16:48,121 - YoutubeAutomation - INFO - Parsing feed: https://www.reddit.com/r/shortscarystories/top/.rss?t=week
+2026-08-15 08:17:07,368 - YoutubeAutomation - WARNING - No topics discovered. Trying educational fallback...
+2026-08-15 08:17:07,368 - YoutubeAutomation - INFO - Parsing feed: https://www.sciencedaily.com/rss/all.xml
+2026-08-15 08:17:08,677 - YoutubeAutomation - INFO - Parsing feed: https://www.smithsonianmag.com/rss/science-nature/
+2026-08-15 08:17:08,730 - YoutubeAutomation - INFO - Parsing feed: https://www.nasa.gov/rss/dyn/breaking_news.rss
+2026-08-15 08:17:09,216 - YoutubeAutomation - INFO - Parsing feed: https://www.sciencedaily.com/rss/mind_brain.xml
+2026-08-15 08:17:09,763 - YoutubeAutomation - INFO - Saved 0 new topics to database.
+2026-08-15 08:17:09,863 - YoutubeAutomation - INFO - Selected topic: Ozempic may have revealed the brain’s hidden “craving center”
+2026-08-15 08:17:09,864 - YoutubeAutomation - INFO - Content category this run: NOVEL STORY
+2026-08-15 08:17:09,864 - YoutubeAutomation - INFO - Novel Story detected! Forcing format to LONG and duration to 120s for Part 1/7
+2026-08-15 08:17:09,864 - YoutubeAutomation - INFO - ========== Starting Generation for LONG ==========
+2026-08-15 08:17:09,864 - YoutubeAutomation - INFO - Generating long script for topic: Ozempic may have revealed the brain’s hidden “craving center” (120s)
+2026-08-15 08:17:09,864 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 08:17:27,081 - YoutubeAutomation - INFO - Script: 16/16 scenes | ~305 words | ~122s estimated duration (target: 120s)
+2026-08-15 08:17:27,173 - YoutubeAutomation - INFO - Script (long) successfully generated and saved.
+2026-08-15 08:17:27,175 - YoutubeAutomation - INFO - --- Generating Visuals (long) ---
+2026-08-15 08:17:27,175 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:17:34,811 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:18:20,009 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:19:04,706 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:19:49,696 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:20:35,738 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:21:19,738 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:22:04,878 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:22:49,675 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:22:57,320 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:23:42,921 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:24:27,236 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:25:12,573 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:25:57,094 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:26:43,109 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:27:27,490 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 08:28:12,163 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (long) ---
+2026-08-15 08:28:12,164 - YoutubeAutomation - INFO - Using voice: en-US-ChristopherNeural for category: novel_story
+2026-08-15 08:28:12,164 - YoutubeAutomation - INFO - Generating Master TTS for 1938 chars...
+2026-08-15 08:28:33,166 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 08:28:33,205 - YoutubeAutomation - INFO - Total audio duration: 129.84s. Assigning 8.12s per scene.
+2026-08-15 08:28:33,206 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_1.mp4 (8.12s)
+2026-08-15 08:34:11,233 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_2.mp4 (8.12s)
+2026-08-15 08:39:47,785 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_3.mp4 (8.12s)
+2026-08-15 08:45:22,164 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_4.mp4 (8.12s)
+2026-08-15 08:50:21,448 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_5.mp4 (8.12s)
+2026-08-15 08:55:15,865 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_6.mp4 (8.12s)
+2026-08-15 09:00:27,891 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_7.mp4 (8.12s)
+2026-08-15 09:05:34,147 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_8.mp4 (8.12s)
+2026-08-15 09:11:29,197 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_9.mp4 (8.12s)
+2026-08-15 09:17:01,892 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_10.mp4 (8.12s)
+2026-08-15 09:22:15,511 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_11.mp4 (8.12s)
+2026-08-15 09:28:14,660 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_12.mp4 (8.12s)
+2026-08-15 09:33:42,317 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_13.mp4 (8.12s)
+2026-08-15 09:38:48,642 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_14.mp4 (8.12s)
+2026-08-15 09:44:10,489 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_15.mp4 (8.12s)
+2026-08-15 09:49:13,134 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_16.mp4 (8.12s)
+2026-08-15 09:54:16,057 - YoutubeAutomation - INFO - Concatenating visual scenes...
+2026-08-15 09:54:22,835 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 09:54:54,929 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_26_long.mp4
+2026-08-15 09:54:54,929 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 09:54:54,930 - YoutubeAutomation - INFO - Generating thumbnail for: The Craving Code: Part 1
+2026-08-15 09:54:54,970 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_26.jpg
+2026-08-15 09:54:54,971 - YoutubeAutomation - INFO - --- Generating Metadata (long) ---
+2026-08-15 09:54:54,971 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 09:54:54,972 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 09:55:01,510 - YoutubeAutomation - INFO - Metadata generated successfully.
+2026-08-15 09:55:01,510 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 09:55:01,512 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 09:55:01,513 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 09:55:01,589 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 09:55:01,590 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_26_long.mp4
+2026-08-15 09:55:21,946 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: 25NOhJVTvAI
+2026-08-15 09:55:21,947 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 09:55:22,563 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=25NOhJVTvAI&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 09:55:22,563 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_26_long.mp4
+2026-08-15 09:55:22,564 - YoutubeAutomation - INFO - Uploading as Facebook VIDEO (shown on Page timeline)
+2026-08-15 09:55:31,079 - YoutubeAutomation - INFO - Facebook Video uploaded! Video ID: 1765144204516937
+2026-08-15 09:55:31,081 - YoutubeAutomation - INFO - Saving Series State -> Part 1 complete. Next up: Part 2
+2026-08-15 09:55:31,187 - YoutubeAutomation - INFO - Dual-Format Pipeline finished.
+2026-08-15 10:24:42,156 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Dual Format) ---
+2026-08-15 10:24:42,156 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 10:24:42,391 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 10:24:42,392 - YoutubeAutomation - INFO - Continuing active Novel Series 'Ozempic may have revealed the brain’s hidden “craving center”' (Part 2 of 7)
+2026-08-15 10:24:42,392 - YoutubeAutomation - INFO - Content category this run: NOVEL STORY
+2026-08-15 10:24:42,392 - YoutubeAutomation - INFO - Novel Story detected! Forcing format to LONG and duration to 120s for Part 2/7
+2026-08-15 10:24:42,392 - YoutubeAutomation - INFO - ========== Starting Generation for LONG ==========
+2026-08-15 10:24:42,392 - YoutubeAutomation - INFO - Generating long script for topic: Ozempic may have revealed the brain’s hidden “craving center” (120s)
+2026-08-15 10:24:42,392 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 10:25:00,700 - YoutubeAutomation - INFO - Script: 16/16 scenes | ~301 words | ~120s estimated duration (target: 120s)
+2026-08-15 10:25:00,785 - YoutubeAutomation - INFO - Script (long) successfully generated and saved.
+2026-08-15 10:25:00,786 - YoutubeAutomation - INFO - --- Generating Visuals (long) ---
+2026-08-15 10:25:00,786 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:25:07,852 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:25:53,102 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:26:38,598 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:27:23,931 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:28:08,873 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:28:52,994 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:29:38,103 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:30:23,040 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:30:30,498 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:31:15,526 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:32:00,537 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:32:45,668 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:33:30,513 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:34:15,522 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:35:00,580 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, wide angle sh...'
+2026-08-15 10:35:46,850 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (long) ---
+2026-08-15 10:35:46,850 - YoutubeAutomation - INFO - Using voice: en-US-ChristopherNeural for category: novel_story
+2026-08-15 10:35:46,850 - YoutubeAutomation - INFO - Generating Master TTS for 1936 chars...
+2026-08-15 10:35:57,809 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 10:35:57,848 - YoutubeAutomation - INFO - Total audio duration: 138.77s. Assigning 8.67s per scene.
+2026-08-15 10:35:57,848 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_1.mp4 (8.67s)
+2026-08-15 10:37:01,981 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_2.mp4 (8.67s)
+2026-08-15 10:38:08,711 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_3.mp4 (8.67s)
+2026-08-15 10:39:13,406 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_4.mp4 (8.67s)
+2026-08-15 10:40:18,984 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_5.mp4 (8.67s)
+2026-08-15 10:41:26,936 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_6.mp4 (8.67s)
+2026-08-15 10:42:35,742 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_7.mp4 (8.67s)
+2026-08-15 10:43:41,356 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_8.mp4 (8.67s)
+2026-08-15 10:44:46,324 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_9.mp4 (8.67s)
+2026-08-15 10:45:55,152 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_10.mp4 (8.67s)
+2026-08-15 10:47:05,381 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_11.mp4 (8.67s)
+2026-08-15 10:48:12,697 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_12.mp4 (8.67s)
+2026-08-15 10:49:20,038 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_13.mp4 (8.67s)
+2026-08-15 10:50:27,908 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_14.mp4 (8.67s)
+2026-08-15 10:51:34,243 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_15.mp4 (8.67s)
+2026-08-15 10:52:43,006 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\26_long\scene_16.mp4 (8.67s)
+2026-08-15 10:53:50,659 - YoutubeAutomation - INFO - Concatenating visual scenes...
+2026-08-15 10:55:09,256 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 10:55:17,318 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_26_long.mp4
+2026-08-15 10:55:17,318 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 10:55:17,318 - YoutubeAutomation - INFO - Generating thumbnail for: The Cosmic Trap of Our Cravings
+2026-08-15 10:55:17,362 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_26.jpg
+2026-08-15 10:55:17,362 - YoutubeAutomation - INFO - --- Generating Metadata (long) ---
+2026-08-15 10:55:17,362 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 10:55:17,363 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 10:55:34,454 - YoutubeAutomation - INFO - Metadata generated successfully.
+2026-08-15 10:55:34,455 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 10:55:34,455 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 10:55:34,456 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 10:55:34,682 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 10:55:34,683 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_26_long.mp4
+2026-08-15 10:56:20,020 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: 5TDfdWPaXSs
+2026-08-15 10:56:20,020 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 10:56:20,768 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=5TDfdWPaXSs&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 10:56:20,768 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_26_long.mp4
+2026-08-15 10:56:20,769 - YoutubeAutomation - INFO - Uploading as Facebook VIDEO (shown on Page timeline)
+2026-08-15 10:56:32,052 - YoutubeAutomation - INFO - Facebook Video uploaded! Video ID: 2065452517416143
+2026-08-15 10:56:32,058 - YoutubeAutomation - INFO - Saving Series State -> Part 2 complete. Next up: Part 3
+2026-08-15 10:56:32,224 - YoutubeAutomation - INFO - Dual-Format Pipeline finished.
+2026-08-15 14:01:35,604 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 14:01:35,605 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 14:01:35,744 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 14:01:35,744 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 14:01:35,744 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:01:42,107 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 14:01:42,208 - YoutubeAutomation - INFO - Selected topic: The Gold Mountain Under the Euphrates
+2026-08-15 14:01:42,209 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 14:01:42,209 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 14:01:42,209 - YoutubeAutomation - INFO - Generating short script for topic: The Gold Mountain Under the Euphrates (90s)
+2026-08-15 14:01:42,209 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:02:01,550 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~240 words | ~96s estimated duration (target: 90s)
+2026-08-15 14:02:01,665 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 14:02:01,665 - YoutubeAutomation - INFO - --- Generating Visuals (short) ---
+2026-08-15 14:02:01,666 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 14:02:01,666 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, beautiful wide ...'
+2026-08-15 14:02:04,334 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (short) ---
+2026-08-15 14:02:04,335 - YoutubeAutomation - INFO - Using voice: en-US-GuyNeural for category: islamic_knowledge
+2026-08-15 14:02:04,335 - YoutubeAutomation - INFO - Generating Master TTS for 1455 chars...
+2026-08-15 14:02:12,335 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 14:02:12,816 - YoutubeAutomation - INFO - Total audio duration: 89.62s.
+2026-08-15 14:02:12,816 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 14:02:12,816 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\77_short\master_visual.mp4 (89.62s)
+2026-08-15 14:18:27,120 - YoutubeAutomation - ERROR - Error creating silent scene video: ffmpeg error (see stderr output for detail)
+2026-08-15 14:18:27,120 - YoutubeAutomation - ERROR - Failed to render master visual track.
+2026-08-15 14:18:27,121 - YoutubeAutomation - ERROR - Video rendering failed for short
+2026-08-15 14:19:44,240 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 14:19:44,240 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 14:19:44,916 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 14:19:44,916 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 14:19:44,917 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:19:51,590 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 14:19:51,674 - YoutubeAutomation - INFO - Selected topic: The Man Who Shook the Throne of Allah
+2026-08-15 14:19:51,674 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 14:19:51,674 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 14:19:51,674 - YoutubeAutomation - INFO - Generating short script for topic: The Man Who Shook the Throne of Allah (90s)
+2026-08-15 14:19:51,674 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:20:07,041 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~239 words | ~96s estimated duration (target: 90s)
+2026-08-15 14:20:07,172 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 14:20:07,172 - YoutubeAutomation - INFO - --- Generating Visuals (short) ---
+2026-08-15 14:20:07,172 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 14:20:07,173 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, beautiful wide ...'
+2026-08-15 14:20:12,296 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (short) ---
+2026-08-15 14:20:12,296 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 14:20:12,296 - YoutubeAutomation - INFO - Generating Master TTS for 1414 chars...
+2026-08-15 14:20:20,457 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 14:20:20,498 - YoutubeAutomation - INFO - Total audio duration: 90.34s.
+2026-08-15 14:20:20,498 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 14:20:20,499 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\84_short\master_visual.mp4 (90.34s)
+2026-08-15 14:20:23,423 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 14:20:23,450 - YoutubeAutomation - ERROR - Error in final multiplexing step: ffmpeg error (see stderr output for detail)
+2026-08-15 14:20:23,450 - YoutubeAutomation - ERROR - Video rendering failed for short
+2026-08-15 14:25:06,724 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 14:25:06,724 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 14:25:06,727 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 14:25:06,727 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 14:25:06,727 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:25:13,499 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 14:25:13,591 - YoutubeAutomation - INFO - Selected topic: The Lightest Punishment in Hellfire
+2026-08-15 14:25:13,595 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 14:25:13,601 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 14:25:13,602 - YoutubeAutomation - INFO - Generating short script for topic: The Lightest Punishment in Hellfire (90s)
+2026-08-15 14:25:13,602 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:25:31,104 - YoutubeAutomation - ERROR - Failed with gemini-3.5-flash: Expecting ',' delimiter: line 68 column 6 (char 4924)
+2026-08-15 14:25:31,104 - YoutubeAutomation - ERROR - Failed to generate script.
+2026-08-15 14:25:31,104 - YoutubeAutomation - ERROR - Failed to generate short script. Exiting.
+2026-08-15 14:27:08,526 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 14:27:08,526 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 14:27:08,528 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 14:27:08,528 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 14:27:08,528 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:27:13,540 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 14:27:13,620 - YoutubeAutomation - INFO - Selected topic: What Angel Jibril Actually Looks Like
+2026-08-15 14:27:13,620 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 14:27:13,621 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 14:27:13,621 - YoutubeAutomation - INFO - Generating short script for topic: What Angel Jibril Actually Looks Like (90s)
+2026-08-15 14:27:13,621 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:27:26,989 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~227 words | ~91s estimated duration (target: 90s)
+2026-08-15 14:27:27,088 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 14:27:27,089 - YoutubeAutomation - INFO - --- Generating Visuals (short) ---
+2026-08-15 14:27:27,089 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 14:27:27,090 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, beautiful wide ...'
+2026-08-15 14:27:29,921 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (short) ---
+2026-08-15 14:27:29,921 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 14:27:29,921 - YoutubeAutomation - INFO - Generating Master TTS for 1356 chars...
+2026-08-15 14:27:39,198 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 14:27:39,236 - YoutubeAutomation - INFO - Total audio duration: 91.70s.
+2026-08-15 14:27:39,236 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 14:27:39,237 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\82_short\master_visual.mp4 (91.70s)
+2026-08-15 14:27:41,865 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 14:27:48,990 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_82_short.mp4
+2026-08-15 14:27:48,990 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 14:27:48,991 - YoutubeAutomation - INFO - Generating thumbnail for: What Angel Jibril Actually Looks Like
+2026-08-15 14:27:49,042 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_82.jpg
+2026-08-15 14:27:49,043 - YoutubeAutomation - INFO - --- Generating Metadata (short) ---
+2026-08-15 14:27:49,043 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 14:27:49,043 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:27:54,835 - YoutubeAutomation - INFO - Metadata generated successfully with references.
+2026-08-15 14:27:54,835 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 14:27:54,836 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 14:27:54,836 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 14:27:54,920 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 14:27:54,921 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_82_short.mp4
+2026-08-15 14:28:06,700 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: kKGLkEr6-Es
+2026-08-15 14:28:06,700 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 14:28:07,379 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=kKGLkEr6-Es&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 14:28:07,379 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_82_short.mp4
+2026-08-15 14:28:07,380 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 14:28:09,125 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 1364283955285727
+2026-08-15 14:28:13,907 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 14:28:18,884 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 14:28:18,887 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 14:31:38,245 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 14:31:38,245 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 14:31:38,247 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 14:31:38,247 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 14:31:38,247 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:31:44,278 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 14:31:44,345 - YoutubeAutomation - INFO - Selected topic: The Mountain of Gold Hidden in a River
+2026-08-15 14:31:44,345 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 14:31:44,345 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 14:31:44,345 - YoutubeAutomation - INFO - Generating short script for topic: The Mountain of Gold Hidden in a River (90s)
+2026-08-15 14:31:44,346 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 14:31:59,775 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~234 words | ~94s estimated duration (target: 90s)
+2026-08-15 14:31:59,867 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 14:31:59,868 - YoutubeAutomation - INFO - --- Generating Visuals (short) ---
+2026-08-15 14:31:59,868 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 14:31:59,868 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, beautiful wide ...'
+2026-08-15 14:32:02,858 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (short) ---
+2026-08-15 14:32:02,859 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 14:32:02,859 - YoutubeAutomation - INFO - Generating Master TTS for 1428 chars...
+2026-08-15 15:47:32,459 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 15:47:32,459 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 15:47:32,574 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 15:47:32,574 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 15:47:32,574 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 15:47:37,747 - YoutubeAutomation - ERROR - Failed with gemini-3.5-flash: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-08-15 15:47:37,747 - YoutubeAutomation - WARNING - No topics generated. Using fallback.
+2026-08-15 15:47:37,847 - YoutubeAutomation - INFO - Saved 2 new topics to database.
+2026-08-15 15:47:37,922 - YoutubeAutomation - INFO - Selected topic: The Euphrates River Prophecy is Coming True
+2026-08-15 15:47:37,922 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 15:47:37,923 - YoutubeAutomation - INFO - ========== Starting Generation for SHORT ==========
+2026-08-15 15:47:37,923 - YoutubeAutomation - INFO - Generating short script for topic: The Euphrates River Prophecy is Coming True (90s)
+2026-08-15 15:47:37,923 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 15:48:00,076 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~217 words | ~87s estimated duration (target: 90s)
+2026-08-15 15:48:00,187 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 15:48:00,187 - YoutubeAutomation - INFO - --- Generating Visuals (short) ---
+2026-08-15 15:48:00,188 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 15:48:00,188 - YoutubeAutomation - INFO - Generating image for prompt: 'vertical 9:16, beautiful wide ...'
+2026-08-15 15:48:03,404 - YoutubeAutomation - INFO - --- Generating Audio & Subtitles (short) ---
+2026-08-15 15:48:03,405 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 15:48:03,405 - YoutubeAutomation - INFO - Generating Master TTS for 1333 chars...
+2026-08-15 15:48:10,022 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 15:48:10,428 - YoutubeAutomation - INFO - Total audio duration: 80.38s.
+2026-08-15 15:48:10,428 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 15:48:10,429 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\97_short\master_visual.mp4 (80.38s)
+2026-08-15 15:48:13,146 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 15:48:30,179 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_97_short.mp4
+2026-08-15 15:48:30,179 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 15:48:30,180 - YoutubeAutomation - INFO - Generating thumbnail for: The Euphrates River Prophecy is Coming True
+2026-08-15 15:48:30,223 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_97.jpg
+2026-08-15 15:48:30,223 - YoutubeAutomation - INFO - --- Generating Metadata (short) ---
+2026-08-15 15:48:30,224 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 15:48:30,224 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 15:48:41,026 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 15:48:41,026 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 15:48:41,027 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 15:48:41,027 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 15:48:41,125 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 15:48:41,125 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_97_short.mp4
+2026-08-15 15:48:56,164 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: aNSbLasdyDE
+2026-08-15 15:48:56,164 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 15:48:56,849 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=aNSbLasdyDE&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 15:48:56,849 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_97_short.mp4
+2026-08-15 15:48:56,850 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 15:48:58,571 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 2353828042119890
+2026-08-15 15:49:03,345 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 15:49:06,766 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 15:49:06,768 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 15:56:50,942 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 15:56:50,942 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 15:56:50,945 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 15:56:50,945 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 15:56:50,945 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 15:56:58,554 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 15:56:58,653 - YoutubeAutomation - INFO - Selected topic: 2 Words That Can Erase All Your Sins
+2026-08-15 15:56:58,654 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 15:56:58,654 - YoutubeAutomation - INFO - Generating short script for topic: 2 Words That Can Erase All Your Sins (90s)
+2026-08-15 15:56:58,654 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 15:57:17,367 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~232 words | ~93s estimated duration (target: 90s)
+2026-08-15 15:57:17,459 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 15:57:17,460 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 15:57:17,460 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 15:57:17,460 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 15:57:20,171 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 15:57:20,172 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 15:57:20,172 - YoutubeAutomation - INFO - Generating Master TTS for 1394 chars...
+2026-08-15 15:57:29,588 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 15:57:29,766 - YoutubeAutomation - INFO - Total audio duration: 95.57s.
+2026-08-15 15:57:29,766 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 15:57:29,766 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\79_short\master_visual.mp4 (95.57s)
+2026-08-15 15:57:32,789 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 15:57:39,121 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_79_short.mp4
+2026-08-15 15:57:39,122 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 15:57:39,122 - YoutubeAutomation - INFO - Generating thumbnail for: 2 Words That Can Erase All Your Sins
+2026-08-15 15:57:39,147 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_79.jpg
+2026-08-15 15:57:39,147 - YoutubeAutomation - INFO - --- Generating Metadata (short) ---
+2026-08-15 15:57:39,147 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 15:57:39,147 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 15:57:48,776 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 15:57:48,776 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 15:57:48,776 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 15:57:48,777 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 15:57:48,891 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 15:57:48,892 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_79_short.mp4
+2026-08-15 15:57:59,383 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: oavrE9O60lI
+2026-08-15 15:57:59,383 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 15:57:59,951 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=oavrE9O60lI&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 15:57:59,951 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_79_short.mp4
+2026-08-15 15:57:59,951 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 15:58:01,620 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 1431236752251782
+2026-08-15 15:58:06,553 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 15:58:10,337 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 15:58:10,340 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 15:58:10,365 - YoutubeAutomation - INFO - Total audio duration: 95.57s.
+2026-08-15 15:58:10,365 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 15:58:10,365 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\79_long\master_visual.mp4 (95.57s)
+2026-08-15 15:58:13,460 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 15:58:16,908 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_79_long.mp4
+2026-08-15 15:58:16,908 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 15:58:16,908 - YoutubeAutomation - INFO - Generating thumbnail for: 2 Words That Can Erase All Your Sins
+2026-08-15 15:58:16,922 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_79.jpg
+2026-08-15 15:58:16,922 - YoutubeAutomation - INFO - --- Generating Metadata (long) ---
+2026-08-15 15:58:16,923 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 15:58:16,923 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 15:58:23,327 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 15:58:23,328 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 15:58:23,328 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 15:58:23,328 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 15:58:23,329 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 15:58:23,329 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_79_long.mp4
+2026-08-15 15:58:32,290 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: oO3fKuiBMdw
+2026-08-15 15:58:32,290 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 15:58:32,809 - YoutubeAutomation - WARNING - Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): <HttpError 403 when requesting https://youtube.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=oO3fKuiBMdw&alt=json&uploadType=media returned "The authenticated user doesn't have permissions to upload and set custom video thumbnails.". Details: "[{'message': "The authenticated user doesn't have permissions to upload and set custom video thumbnails.", 'domain': 'youtube.thumbnail', 'reason': 'forbidden', 'location': 'Authorization', 'locationType': 'header'}]">
+2026-08-15 15:58:32,809 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_79_long.mp4
+2026-08-15 15:58:32,810 - YoutubeAutomation - INFO - Uploading as Facebook VIDEO (shown on Page timeline)
+2026-08-15 15:58:38,174 - YoutubeAutomation - INFO - Facebook Video uploaded! Video ID: 2132705174306684
+2026-08-15 15:58:38,175 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 16:06:28,210 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:06:28,210 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:06:28,212 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:06:28,212 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:06:28,213 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:06:36,609 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 16:06:36,701 - YoutubeAutomation - INFO - Selected topic: The Smallest Kingdom in Jannah
+2026-08-15 16:06:36,701 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:06:36,701 - YoutubeAutomation - INFO - Generating short script for topic: The Smallest Kingdom in Jannah (90s)
+2026-08-15 16:06:36,701 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:07:06,881 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~231 words | ~92s estimated duration (target: 90s)
+2026-08-15 16:07:07,030 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 16:07:07,032 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 16:07:07,033 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 16:07:07,033 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 16:07:09,920 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 16:07:09,920 - YoutubeAutomation - INFO - Using voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 16:07:09,920 - YoutubeAutomation - INFO - Generating Master TTS for 1375 chars...
+2026-08-15 16:07:18,548 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 16:07:18,582 - YoutubeAutomation - INFO - Total audio duration: 94.54s.
+2026-08-15 16:07:18,582 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:07:18,582 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\94_short\master_visual.mp4 (94.54s)
+2026-08-15 16:07:21,688 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:07:27,767 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_94_short.mp4
+2026-08-15 16:07:27,767 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 16:07:27,767 - YoutubeAutomation - INFO - Generating thumbnail for: The Smallest Kingdom in Jannah
+2026-08-15 16:07:27,791 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_94.jpg
+2026-08-15 16:07:27,792 - YoutubeAutomation - INFO - --- Generating Metadata (short) ---
+2026-08-15 16:07:27,792 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 16:07:27,792 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:07:33,961 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 16:07:33,961 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 16:07:33,961 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 16:07:33,961 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 16:07:34,047 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 16:07:34,047 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_94_short.mp4
+2026-08-15 16:07:44,243 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: AuyXZIP1qVQ
+2026-08-15 16:07:44,243 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 16:07:52,631 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 16:07:52,631 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_94_short.mp4
+2026-08-15 16:07:52,632 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 16:07:53,928 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 1766310231032590
+2026-08-15 16:07:57,661 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 16:08:01,173 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 16:08:01,175 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 16:08:01,205 - YoutubeAutomation - INFO - Total audio duration: 94.54s.
+2026-08-15 16:08:01,206 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:08:01,206 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\94_long\master_visual.mp4 (94.54s)
+2026-08-15 16:08:04,359 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:08:07,591 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_94_long.mp4
+2026-08-15 16:08:07,591 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 16:08:07,591 - YoutubeAutomation - INFO - Generating thumbnail for: The Smallest Kingdom in Jannah
+2026-08-15 16:08:07,605 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_94.jpg
+2026-08-15 16:08:07,606 - YoutubeAutomation - INFO - --- Generating Metadata (long) ---
+2026-08-15 16:08:07,606 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 16:08:07,606 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:08:07,949 - YoutubeAutomation - ERROR - Failed with gemini-3.5-flash: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.5-flash\nPlease retry in 51.41434691s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '51s'}]}}
+2026-08-15 16:08:07,949 - YoutubeAutomation - ERROR - Failed to generate metadata.
+2026-08-15 16:08:07,949 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 16:08:07,949 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 16:08:07,950 - YoutubeAutomation - ERROR - QC Failed: Metadata missing or incomplete.
+2026-08-15 16:08:07,950 - YoutubeAutomation - INFO - Quality Score: 70/100
+2026-08-15 16:08:08,044 - YoutubeAutomation - ERROR - Video failed quality control check.
+2026-08-15 16:08:08,044 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 16:34:08,746 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:34:08,746 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:34:08,749 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:34:08,749 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:34:08,749 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:34:09,340 - YoutubeAutomation - ERROR - Failed with gemini-3.5-flash: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.5-flash\nPlease retry in 50.038235851s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '50s'}]}}
+2026-08-15 16:34:09,340 - YoutubeAutomation - WARNING - No topics generated. Using fallback.
+2026-08-15 16:34:09,341 - YoutubeAutomation - INFO - Saved 0 new topics to database.
+2026-08-15 16:34:09,432 - YoutubeAutomation - INFO - Selected topic: The First Meal In Jannah
+2026-08-15 16:34:09,433 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:34:09,433 - YoutubeAutomation - INFO - Generating short script for topic: The First Meal In Jannah (90s)
+2026-08-15 16:34:09,433 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:34:09,641 - YoutubeAutomation - ERROR - Failed with gemini-3.5-flash: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.5-flash\nPlease retry in 49.738387183s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '49s'}]}}
+2026-08-15 16:34:09,641 - YoutubeAutomation - ERROR - Failed to generate script.
+2026-08-15 16:34:09,641 - YoutubeAutomation - ERROR - Failed to generate script. Exiting.
+2026-08-15 16:36:59,122 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:36:59,122 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:36:59,125 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:36:59,125 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:36:59,125 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:36:59,670 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-2.5-flash...
+2026-08-15 16:36:59,895 - YoutubeAutomation - ERROR - Failed with fallback gemini-2.5-flash: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/migrate-to-interactions).', 'status': 'NOT_FOUND'}}
+2026-08-15 16:36:59,895 - YoutubeAutomation - WARNING - No topics generated. Using fallback.
+2026-08-15 16:36:59,896 - YoutubeAutomation - INFO - Saved 0 new topics to database.
+2026-08-15 16:36:59,978 - YoutubeAutomation - INFO - Selected topic: The Killer of 100 Men
+2026-08-15 16:36:59,978 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:36:59,978 - YoutubeAutomation - INFO - Generating short script for topic: The Killer of 100 Men (90s)
+2026-08-15 16:36:59,979 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:37:00,159 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-2.5-flash...
+2026-08-15 16:37:00,382 - YoutubeAutomation - ERROR - Failed with fallback gemini-2.5-flash: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/migrate-to-interactions).', 'status': 'NOT_FOUND'}}
+2026-08-15 16:37:00,382 - YoutubeAutomation - ERROR - Failed to generate script.
+2026-08-15 16:37:00,382 - YoutubeAutomation - ERROR - Failed to generate script. Exiting.
+2026-08-15 16:37:13,868 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:37:13,868 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:37:13,870 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:37:13,870 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:37:13,871 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:37:14,194 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-2.5-flash...
+2026-08-15 16:37:14,427 - YoutubeAutomation - ERROR - Failed with fallback gemini-2.5-flash: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/migrate-to-interactions).', 'status': 'NOT_FOUND'}}
+2026-08-15 16:37:14,427 - YoutubeAutomation - WARNING - No topics generated. Using fallback.
+2026-08-15 16:37:14,427 - YoutubeAutomation - INFO - Saved 0 new topics to database.
+2026-08-15 16:37:14,518 - YoutubeAutomation - INFO - Selected topic: The Last Man to Enter Jannah
+2026-08-15 16:37:14,519 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:37:14,519 - YoutubeAutomation - INFO - Generating short script for topic: The Last Man to Enter Jannah (90s)
+2026-08-15 16:37:14,519 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:37:14,699 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-2.5-flash...
+2026-08-15 16:37:14,920 - YoutubeAutomation - ERROR - Failed with fallback gemini-2.5-flash: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/migrate-to-interactions).', 'status': 'NOT_FOUND'}}
+2026-08-15 16:37:14,921 - YoutubeAutomation - ERROR - Failed to generate script.
+2026-08-15 16:37:14,921 - YoutubeAutomation - ERROR - Failed to generate script. Exiting.
+2026-08-15 16:39:18,429 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:39:18,430 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:39:18,431 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:39:18,431 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:39:18,431 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:39:19,032 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-1.5-flash...
+2026-08-15 16:39:19,193 - YoutubeAutomation - ERROR - Failed with fallback gemini-1.5-flash: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-08-15 16:39:19,193 - YoutubeAutomation - WARNING - No topics generated. Using fallback.
+2026-08-15 16:39:19,194 - YoutubeAutomation - INFO - Saved 0 new topics to database.
+2026-08-15 16:39:19,276 - YoutubeAutomation - INFO - Selected topic: The Last Person to Enter Paradise
+2026-08-15 16:39:19,276 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:39:19,277 - YoutubeAutomation - INFO - Generating short script for topic: The Last Person to Enter Paradise (90s)
+2026-08-15 16:39:19,277 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:39:19,435 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-1.5-flash...
+2026-08-15 16:39:19,623 - YoutubeAutomation - ERROR - Failed with fallback gemini-1.5-flash: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-08-15 16:39:19,623 - YoutubeAutomation - ERROR - Failed to generate script.
+2026-08-15 16:39:19,623 - YoutubeAutomation - ERROR - Failed to generate script. Exiting.
+2026-08-15 16:40:38,572 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:40:38,572 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:40:38,574 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:40:38,574 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:40:38,574 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:40:39,150 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:40:40,436 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 16:40:40,519 - YoutubeAutomation - INFO - Selected topic: Iron Sent Down From Space
+2026-08-15 16:40:40,520 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:40:40,520 - YoutubeAutomation - INFO - Generating short script for topic: Iron Sent Down From Space (90s)
+2026-08-15 16:40:40,520 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:40:40,704 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:40:45,207 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~201 words | ~80s estimated duration (target: 90s)
+2026-08-15 16:40:45,301 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 16:40:45,301 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 16:40:45,302 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 16:40:45,302 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 16:40:48,235 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 16:40:48,235 - YoutubeAutomation - INFO - Using primary voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 16:40:48,235 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 16:40:48,236 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 16:40:52,008 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 16:40:53,736 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 16:41:01,472 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 16:41:01,515 - YoutubeAutomation - ERROR - FFmpeg failed to concatenate audio chunks.
+2026-08-15 16:41:01,515 - YoutubeAutomation - INFO - --- Generating Metadata ---
+2026-08-15 16:41:01,516 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 16:41:01,517 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:41:01,784 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:41:03,383 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 16:41:03,383 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 16:41:03,384 - YoutubeAutomation - ERROR - Master audio track not found: None
+2026-08-15 16:41:03,384 - YoutubeAutomation - ERROR - Video rendering failed for short
+2026-08-15 16:41:03,384 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 16:41:03,385 - YoutubeAutomation - ERROR - Master audio track not found: None
+2026-08-15 16:41:03,385 - YoutubeAutomation - ERROR - Video rendering failed for long
+2026-08-15 16:41:03,385 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 16:43:28,710 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:43:28,711 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:43:28,713 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:43:28,713 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:43:28,713 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:43:29,229 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:43:30,706 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 16:43:30,806 - YoutubeAutomation - INFO - Selected topic: The Naked Earth Exposed
+2026-08-15 16:43:30,807 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:43:30,807 - YoutubeAutomation - INFO - Generating short script for topic: The Naked Earth Exposed (90s)
+2026-08-15 16:43:30,807 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:43:30,969 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:43:35,362 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~218 words | ~87s estimated duration (target: 90s)
+2026-08-15 16:43:35,456 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 16:43:35,456 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 16:43:35,457 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 16:43:35,457 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 16:43:38,496 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 16:43:38,497 - YoutubeAutomation - INFO - Using primary voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 16:43:38,497 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 16:43:38,497 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 16:43:41,363 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 16:43:43,211 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 16:43:55,145 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 16:43:55,202 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 16:43:55,203 - YoutubeAutomation - INFO - --- Generating Metadata ---
+2026-08-15 16:43:55,203 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 16:43:55,204 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:43:55,490 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:43:57,011 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 16:43:57,011 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 16:43:57,043 - YoutubeAutomation - INFO - Total audio duration: 79.75s.
+2026-08-15 16:43:57,043 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:43:57,043 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\118_short\master_visual.mp4 (79.75s)
+2026-08-15 16:43:59,315 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:44:01,529 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_118_short.mp4
+2026-08-15 16:44:01,529 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 16:44:01,530 - YoutubeAutomation - INFO - Generating thumbnail for: The Naked Earth Exposed
+2026-08-15 16:44:01,552 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_118.jpg
+2026-08-15 16:44:01,552 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 16:44:01,552 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 16:44:01,552 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 16:44:01,654 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 16:44:01,655 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_118_short.mp4
+2026-08-15 16:44:06,905 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: Y9_lZVfaYsU
+2026-08-15 16:44:06,905 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 16:44:12,187 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 16:44:12,187 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_118_short.mp4
+2026-08-15 16:44:12,188 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 16:44:13,546 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 4471884253086528
+2026-08-15 16:44:16,561 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 16:44:20,982 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 16:44:20,985 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 16:44:21,014 - YoutubeAutomation - INFO - Total audio duration: 79.75s.
+2026-08-15 16:44:21,014 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:44:21,015 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\118_long\master_visual.mp4 (79.75s)
+2026-08-15 16:44:23,469 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:44:25,504 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_118_long.mp4
+2026-08-15 16:44:25,504 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 16:44:25,505 - YoutubeAutomation - INFO - Generating thumbnail for: The Naked Earth Exposed
+2026-08-15 16:44:25,519 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_118.jpg
+2026-08-15 16:44:25,519 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 16:44:25,519 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 16:44:25,519 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 16:44:25,520 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 16:44:25,521 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_118_long.mp4
+2026-08-15 16:44:32,071 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: xQjrHX_OqYQ
+2026-08-15 16:44:32,072 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 16:44:36,718 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 16:44:36,718 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 16:47:41,647 - YoutubeAutomation - INFO - Using primary voice: en-US-GuyNeural for category: educational
+2026-08-15 16:47:41,647 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 16:47:41,648 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 16:47:43,485 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 16:47:45,082 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 16:47:46,669 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 16:47:46,710 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 16:47:46,750 - YoutubeAutomation - INFO - Total audio duration: 6.48s.
+2026-08-15 16:47:46,750 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:47:46,750 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\999_short\master_visual.mp4 (6.48s)
+2026-08-15 16:47:47,215 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:47:47,460 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_999_short.mp4
+2026-08-15 16:48:21,844 - YoutubeAutomation - INFO - Using primary voice: en-US-GuyNeural for category: educational
+2026-08-15 16:48:21,844 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 16:48:21,844 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 16:48:23,472 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 16:48:25,474 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 16:48:26,875 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 16:48:26,904 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 16:48:26,939 - YoutubeAutomation - INFO - Total audio duration: 6.48s.
+2026-08-15 16:48:26,939 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:48:26,939 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\999_short\master_visual.mp4 (6.48s)
+2026-08-15 16:48:27,356 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:48:27,620 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_999_short.mp4
+2026-08-15 16:50:39,751 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:50:39,751 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:50:39,753 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:50:39,753 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:50:39,754 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:50:40,358 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:50:41,632 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 16:50:41,715 - YoutubeAutomation - INFO - Selected topic: The Dajjal's Secret Shortcut
+2026-08-15 16:50:41,715 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:50:41,715 - YoutubeAutomation - INFO - Generating short script for topic: The Dajjal's Secret Shortcut (90s)
+2026-08-15 16:50:41,715 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:50:41,914 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:50:46,230 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~214 words | ~86s estimated duration (target: 90s)
+2026-08-15 16:50:46,398 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 16:50:46,398 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 16:50:46,399 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 16:50:46,399 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 16:50:49,568 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 16:50:49,569 - YoutubeAutomation - INFO - Using primary voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 16:50:49,569 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 16:50:49,569 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 16:50:55,003 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 16:50:56,828 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 16:51:02,488 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 16:51:02,581 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 16:51:02,582 - YoutubeAutomation - INFO - --- Generating Metadata ---
+2026-08-15 16:51:02,582 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 16:51:02,582 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:51:02,839 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:52:31,350 - YoutubeAutomation - ERROR - Failed with fallback gemini-3.5-flash-lite: Server disconnected without sending a response.
+2026-08-15 16:52:31,350 - YoutubeAutomation - ERROR - Failed to generate metadata.
+2026-08-15 16:52:31,350 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 16:52:31,380 - YoutubeAutomation - INFO - Total audio duration: 81.22s.
+2026-08-15 16:52:31,381 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:52:31,381 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\123_short\master_visual.mp4 (81.22s)
+2026-08-15 16:52:33,668 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:52:41,807 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_123_short.mp4
+2026-08-15 16:52:41,807 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 16:52:41,807 - YoutubeAutomation - INFO - Generating thumbnail for: The Dajjal's Secret Shortcut
+2026-08-15 16:52:41,829 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_123.jpg
+2026-08-15 16:52:41,829 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 16:52:41,829 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 16:52:41,829 - YoutubeAutomation - ERROR - QC Failed: Metadata missing or incomplete.
+2026-08-15 16:52:41,829 - YoutubeAutomation - INFO - Quality Score: 70/100
+2026-08-15 16:52:41,930 - YoutubeAutomation - ERROR - Video failed quality control check.
+2026-08-15 16:52:41,930 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 16:52:41,950 - YoutubeAutomation - INFO - Total audio duration: 81.22s.
+2026-08-15 16:52:41,950 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 16:52:41,950 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\123_long\master_visual.mp4 (81.22s)
+2026-08-15 16:52:44,138 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 16:52:48,024 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_123_long.mp4
+2026-08-15 16:52:48,024 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 16:52:48,024 - YoutubeAutomation - INFO - Generating thumbnail for: The Dajjal's Secret Shortcut
+2026-08-15 16:52:48,039 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_123.jpg
+2026-08-15 16:52:48,039 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 16:52:48,039 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 16:52:48,039 - YoutubeAutomation - ERROR - QC Failed: Metadata missing or incomplete.
+2026-08-15 16:52:48,039 - YoutubeAutomation - INFO - Quality Score: 70/100
+2026-08-15 16:52:48,040 - YoutubeAutomation - ERROR - Video failed quality control check.
+2026-08-15 16:52:48,040 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 16:59:51,643 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 16:59:51,644 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 16:59:51,646 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 16:59:51,646 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 16:59:51,646 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:59:53,222 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:59:54,731 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 16:59:54,814 - YoutubeAutomation - INFO - Selected topic: The Gates of Jahannam Closing
+2026-08-15 16:59:54,814 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 16:59:54,814 - YoutubeAutomation - INFO - Generating short script for topic: The Gates of Jahannam Closing (90s)
+2026-08-15 16:59:54,814 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 16:59:55,083 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 16:59:59,533 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~196 words | ~78s estimated duration (target: 90s)
+2026-08-15 16:59:59,643 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 16:59:59,643 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 16:59:59,644 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 16:59:59,644 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 17:00:03,059 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 17:00:03,059 - YoutubeAutomation - INFO - Using primary voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 17:00:03,059 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 17:00:03,060 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 17:00:05,362 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 17:00:07,331 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 17:00:16,259 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 17:00:16,316 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 17:00:16,317 - YoutubeAutomation - INFO - --- Generating Metadata ---
+2026-08-15 17:00:16,317 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 17:00:16,317 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 17:00:19,003 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 17:00:21,118 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 17:00:21,118 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 17:00:21,212 - YoutubeAutomation - INFO - Total audio duration: 78.43s.
+2026-08-15 17:00:21,212 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 17:00:21,212 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\127_short\master_visual.mp4 (78.43s)
+2026-08-15 17:00:23,471 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 17:00:30,800 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_127_short.mp4
+2026-08-15 17:00:30,800 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 17:00:30,800 - YoutubeAutomation - INFO - Generating thumbnail for: The terrifying gates of Jahannam...
+2026-08-15 17:00:30,821 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_127.jpg
+2026-08-15 17:00:30,822 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 17:00:30,822 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 17:00:30,822 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 17:00:30,911 - YoutubeAutomation - INFO - --- Uploading (short) --- (DISABLED FOR TEST RUN)
+2026-08-15 17:00:30,911 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 17:00:30,931 - YoutubeAutomation - INFO - Total audio duration: 78.43s.
+2026-08-15 17:00:30,931 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 17:00:30,931 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\127_long\master_visual.mp4 (78.43s)
+2026-08-15 17:00:32,924 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 17:00:36,331 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_127_long.mp4
+2026-08-15 17:00:36,332 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 17:00:36,332 - YoutubeAutomation - INFO - Generating thumbnail for: The terrifying gates of Jahannam...
+2026-08-15 17:00:36,346 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_127.jpg
+2026-08-15 17:00:36,346 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 17:00:36,346 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 17:00:36,346 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 17:00:36,347 - YoutubeAutomation - INFO - --- Uploading (long) --- (DISABLED FOR TEST RUN)
+2026-08-15 17:00:36,347 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 17:14:29,623 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 17:14:29,624 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 17:14:29,624 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 17:14:29,625 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 17:14:29,625 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 17:14:30,987 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 17:14:32,497 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 17:14:32,589 - YoutubeAutomation - INFO - Selected topic: What Your Grave Looks Like
+2026-08-15 17:14:32,589 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 17:14:32,590 - YoutubeAutomation - INFO - Generating short script for topic: What Your Grave Looks Like (90s)
+2026-08-15 17:14:32,590 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 17:14:32,842 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 17:14:37,404 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~214 words | ~86s estimated duration (target: 90s)
+2026-08-15 17:14:37,522 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 17:14:37,522 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 17:14:37,523 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 17:14:37,523 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 17:14:41,005 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 17:14:41,006 - YoutubeAutomation - INFO - Using primary voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 17:14:41,006 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 17:14:41,007 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 17:14:45,417 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 17:14:47,466 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 17:14:52,427 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 17:14:52,510 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 17:14:52,511 - YoutubeAutomation - INFO - --- Generating Metadata ---
+2026-08-15 17:14:52,511 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 17:14:52,511 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 17:14:53,051 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 17:14:54,602 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 17:14:54,602 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 17:14:54,633 - YoutubeAutomation - INFO - Total audio duration: 74.57s.
+2026-08-15 17:14:54,633 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 17:14:54,633 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\124_short\master_visual.mp4 (74.57s)
+2026-08-15 17:14:56,830 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 17:15:03,914 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_124_short.mp4
+2026-08-15 17:15:03,914 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 17:15:03,915 - YoutubeAutomation - INFO - Generating thumbnail for: What Your Grave Looks Like
+2026-08-15 17:15:03,936 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_124.jpg
+2026-08-15 17:15:03,936 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 17:15:03,936 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 17:15:03,937 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 17:15:04,020 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 17:15:04,020 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_124_short.mp4
+2026-08-15 17:15:24,838 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: qf5JI_m9eCk
+2026-08-15 17:15:24,839 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 17:15:38,465 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 17:15:38,465 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_124_short.mp4
+2026-08-15 17:15:38,466 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 17:15:40,499 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 1057961173763094
+2026-08-15 17:15:55,916 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 17:16:01,302 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 17:16:01,305 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 17:16:01,333 - YoutubeAutomation - INFO - Total audio duration: 74.57s.
+2026-08-15 17:16:01,333 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 17:16:01,334 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\124_long\master_visual.mp4 (74.57s)
+2026-08-15 17:16:03,733 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 17:16:07,024 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_124_long.mp4
+2026-08-15 17:16:07,025 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 17:16:07,025 - YoutubeAutomation - INFO - Generating thumbnail for: What Your Grave Looks Like
+2026-08-15 17:16:07,039 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_124.jpg
+2026-08-15 17:16:07,039 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 17:16:07,039 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 17:16:07,039 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 17:16:07,040 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 17:16:07,040 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_124_long.mp4
+2026-08-15 17:16:18,562 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: _JXgP9kJ4Ao
+2026-08-15 17:16:18,562 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 17:16:26,677 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 17:16:26,677 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 22:18:50,153 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 22:18:50,153 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 22:18:50,251 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 22:18:50,251 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 22:18:50,252 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 22:19:18,184 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 22:19:19,522 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 22:19:19,605 - YoutubeAutomation - INFO - Selected topic: The Man Who Argued With Allah
+2026-08-15 22:19:19,606 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 22:19:19,606 - YoutubeAutomation - INFO - Generating short script for topic: The Man Who Argued With Allah (90s)
+2026-08-15 22:19:19,606 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 22:19:19,766 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 22:19:24,485 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~231 words | ~92s estimated duration (target: 90s)
+2026-08-15 22:19:24,630 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 22:19:24,630 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 22:19:24,631 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 22:19:24,631 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 22:19:27,735 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 22:19:27,735 - YoutubeAutomation - INFO - Using primary voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 22:19:27,735 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 22:19:27,736 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 22:19:33,708 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 22:19:35,271 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 22:19:37,795 - YoutubeAutomation - INFO - Generating chunk 3 (ARABIC)
+2026-08-15 22:19:39,302 - YoutubeAutomation - INFO - Generating chunk 4 (ENGLISH)
+2026-08-15 22:19:42,856 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 22:19:43,235 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 22:19:43,236 - YoutubeAutomation - INFO - --- Generating Metadata ---
+2026-08-15 22:19:43,236 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 22:19:43,237 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 22:19:43,509 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 22:19:45,054 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 22:19:45,054 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 22:19:45,076 - YoutubeAutomation - INFO - Total audio duration: 82.13s.
+2026-08-15 22:19:45,076 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 22:19:45,076 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\121_short\master_visual.mp4 (82.13s)
+2026-08-15 22:19:47,282 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 22:19:54,975 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_121_short.mp4
+2026-08-15 22:19:54,975 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 22:19:54,975 - YoutubeAutomation - INFO - Generating thumbnail for: The Man Who Argued With Allah
+2026-08-15 22:19:55,011 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_121.jpg
+2026-08-15 22:19:55,011 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 22:19:55,011 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 22:19:55,011 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 22:19:55,111 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 22:19:55,112 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_121_short.mp4
+2026-08-15 22:20:05,183 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: jXoiBqL1Pto
+2026-08-15 22:20:05,183 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 22:20:13,028 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 22:20:13,029 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_121_short.mp4
+2026-08-15 22:20:13,029 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 22:20:14,922 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 1281864720632365
+2026-08-15 22:20:19,422 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 22:20:23,569 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 22:20:23,571 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 22:20:23,596 - YoutubeAutomation - INFO - Total audio duration: 82.13s.
+2026-08-15 22:20:23,596 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 22:20:23,596 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\121_long\master_visual.mp4 (82.13s)
+2026-08-15 22:20:26,067 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 22:20:29,934 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_121_long.mp4
+2026-08-15 22:20:29,934 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 22:20:29,934 - YoutubeAutomation - INFO - Generating thumbnail for: The Man Who Argued With Allah
+2026-08-15 22:20:29,948 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_121.jpg
+2026-08-15 22:20:29,949 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 22:20:29,949 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 22:20:29,949 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 22:20:29,950 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 22:20:29,950 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_121_long.mp4
+2026-08-15 22:20:40,641 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: AqOPGR9ocgg
+2026-08-15 22:20:40,642 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 22:20:44,979 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 22:20:44,980 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
+2026-08-15 22:57:49,332 - YoutubeAutomation - INFO - --- Starting Youtube Automation Pipeline (Islamic Shorts) ---
+2026-08-15 22:57:49,332 - YoutubeAutomation - INFO - Cleaning up old temp files...
+2026-08-15 22:57:49,334 - YoutubeAutomation - INFO - Database initialized.
+2026-08-15 22:57:49,335 - YoutubeAutomation - INFO - Selected content category: ISLAMIC KNOWLEDGE
+2026-08-15 22:57:49,335 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 22:57:49,919 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 22:57:51,219 - YoutubeAutomation - INFO - Saved 5 new topics to database.
+2026-08-15 22:57:51,302 - YoutubeAutomation - INFO - Selected topic: The Trumpet Is Ready
+2026-08-15 22:57:51,302 - YoutubeAutomation - INFO - Content category this run: ISLAMIC KNOWLEDGE
+2026-08-15 22:57:51,302 - YoutubeAutomation - INFO - Generating short script for topic: The Trumpet Is Ready (90s)
+2026-08-15 22:57:51,303 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 22:57:51,471 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 22:57:55,443 - YoutubeAutomation - INFO - Script: 12/12 scenes | ~206 words | ~82s estimated duration (target: 90s)
+2026-08-15 22:57:55,541 - YoutubeAutomation - INFO - Script (short) successfully generated and saved.
+2026-08-15 22:57:55,541 - YoutubeAutomation - INFO - --- Generating Master Visuals (16:9) ---
+2026-08-15 22:57:55,541 - YoutubeAutomation - INFO - Generating Master Image for Islamic Shorts Pipeline...
+2026-08-15 22:57:55,542 - YoutubeAutomation - INFO - Generating image for prompt: 'horizontal 16:9, beautiful wid...'
+2026-08-15 22:57:57,866 - YoutubeAutomation - INFO - --- Generating Master Audio & Subtitles ---
+2026-08-15 22:57:57,866 - YoutubeAutomation - INFO - Using primary voice: en-GB-RyanNeural for category: islamic_knowledge
+2026-08-15 22:57:57,867 - YoutubeAutomation - INFO - Generating Dual-Voice Master TTS...
+2026-08-15 22:57:57,868 - YoutubeAutomation - INFO - Generating chunk 0 (ENGLISH)
+2026-08-15 22:58:03,135 - YoutubeAutomation - INFO - Generating chunk 1 (ARABIC)
+2026-08-15 22:58:05,090 - YoutubeAutomation - INFO - Generating chunk 2 (ENGLISH)
+2026-08-15 22:58:07,387 - YoutubeAutomation - INFO - Concatenating audio chunks...
+2026-08-15 22:58:07,506 - YoutubeAutomation - INFO - Merging VTT subtitles...
+2026-08-15 22:58:07,507 - YoutubeAutomation - INFO - --- Generating Metadata ---
+2026-08-15 22:58:07,507 - YoutubeAutomation - INFO - Generating viral metadata for YouTube and Facebook...
+2026-08-15 22:58:07,508 - YoutubeAutomation - INFO - Attempting to extract JSON with model: gemini-3.5-flash
+2026-08-15 22:58:07,784 - YoutubeAutomation - WARNING - Failed with gemini-3.5-flash (Likely Quota Limit). Falling back to gemini-3.5-flash-lite...
+2026-08-15 22:58:09,305 - YoutubeAutomation - INFO - Metadata generated successfully with references and links.
+2026-08-15 22:58:09,306 - YoutubeAutomation - INFO - --- Rendering Video (short) ---
+2026-08-15 22:58:09,331 - YoutubeAutomation - INFO - Total audio duration: 75.00s.
+2026-08-15 22:58:09,331 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 22:58:09,331 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\143_short\master_visual.mp4 (75.00s)
+2026-08-15 22:58:11,603 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 22:58:18,630 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_143_short.mp4
+2026-08-15 22:58:18,630 - YoutubeAutomation - INFO - --- Generating Thumbnail (short) ---
+2026-08-15 22:58:18,630 - YoutubeAutomation - INFO - Generating thumbnail for: The Trumpet Is Ready
+2026-08-15 22:58:18,663 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_143.jpg
+2026-08-15 22:58:18,664 - YoutubeAutomation - INFO - --- Running QC (short) ---
+2026-08-15 22:58:18,664 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 22:58:18,664 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 22:58:18,759 - YoutubeAutomation - INFO - --- Uploading (short) ---
+2026-08-15 22:58:18,759 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_143_short.mp4
+2026-08-15 22:58:28,220 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: 2VNlrfPzHVY
+2026-08-15 22:58:28,220 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 22:58:33,841 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 22:58:33,842 - YoutubeAutomation - INFO - Starting Facebook Page Upload for data/output\video_143_short.mp4
+2026-08-15 22:58:33,842 - YoutubeAutomation - INFO - Uploading as Facebook REEL (shown to non-followers automatically!)
+2026-08-15 22:58:35,826 - YoutubeAutomation - INFO - Reel upload session started. Session ID: 28510037941933626
+2026-08-15 22:58:40,075 - YoutubeAutomation - INFO - Reel binary uploaded successfully. Publishing...
+2026-08-15 22:58:44,264 - YoutubeAutomation - INFO - Facebook REEL published! It will now be shown to non-followers.
+2026-08-15 22:58:44,268 - YoutubeAutomation - INFO - --- Rendering Video (long) ---
+2026-08-15 22:58:44,305 - YoutubeAutomation - INFO - Total audio duration: 75.00s.
+2026-08-15 22:58:44,305 - YoutubeAutomation - INFO - Rendering Master Visual track (Single Scene Mode)...
+2026-08-15 22:58:44,306 - YoutubeAutomation - INFO - Rendering silent scene clip: data\temp\143_long\master_visual.mp4 (75.00s)
+2026-08-15 22:58:46,623 - YoutubeAutomation - INFO - Multiplexing master audio and burning subtitles...
+2026-08-15 22:58:49,945 - YoutubeAutomation - INFO - Final video successfully rendered: data/output\video_143_long.mp4
+2026-08-15 22:58:49,945 - YoutubeAutomation - INFO - --- Generating Thumbnail (long) ---
+2026-08-15 22:58:49,945 - YoutubeAutomation - INFO - Generating thumbnail for: The Trumpet Is Ready
+2026-08-15 22:58:49,971 - YoutubeAutomation - INFO - Thumbnail created at data/output\thumbnail_143.jpg
+2026-08-15 22:58:49,971 - YoutubeAutomation - INFO - --- Running QC (long) ---
+2026-08-15 22:58:49,972 - YoutubeAutomation - INFO - Running Quality Control...
+2026-08-15 22:58:49,972 - YoutubeAutomation - INFO - Quality Score: 100/100
+2026-08-15 22:58:49,973 - YoutubeAutomation - INFO - --- Uploading (long) ---
+2026-08-15 22:58:49,973 - YoutubeAutomation - INFO - Starting YouTube Upload for data/output\video_143_long.mp4
+2026-08-15 22:58:57,566 - YoutubeAutomation - INFO - YouTube Video uploaded successfully! Video ID: 9PyrI2X_OcY
+2026-08-15 22:58:57,566 - YoutubeAutomation - INFO - Uploading custom thumbnail to YouTube...
+2026-08-15 22:59:04,718 - YoutubeAutomation - INFO - Custom thumbnail uploaded successfully.
+2026-08-15 22:59:04,719 - YoutubeAutomation - INFO - Islamic Shorts Pipeline finished.
