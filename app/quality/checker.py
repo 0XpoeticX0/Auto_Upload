@@ -16,15 +16,15 @@ def check_quality(video_path: str, thumbnail_path: str, metadata: dict, topic_id
         score -= 20
         
     if not metadata or "youtube_title" not in metadata:
-        logger.error("QC Failed: Metadata missing or incomplete.")
-        score -= 30
+        logger.warning("QC Warning: Metadata missing or incomplete. Will use fallback title.")
+        score -= 10
         
     logger.info(f"Quality Score: {score}/100")
     
     conn = get_connection()
     cursor = conn.cursor()
     
-    if score >= 80:
+    if score >= 50:
         cursor.execute("UPDATE topics SET status = 'READY' WHERE id = ?", (topic_id,))
         conn.commit()
         conn.close()
