@@ -18,7 +18,6 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
-        cache: 'pip'
 
     - name: Install System Dependencies (FFmpeg)
       run: |
@@ -28,8 +27,9 @@ jobs:
     - name: Install Python Dependencies
       run: |
         python -m pip install --upgrade pip
+        pip uninstall -y google-genai 2>/dev/null || true
         pip install -r requirements.txt
-        pip list
+        pip list | grep google
 
     - name: Inject YouTube Tokens
       run: |
