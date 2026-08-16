@@ -15,45 +15,7 @@ CATEGORY_VOICES = {
 DEFAULT_VOICE = "en-US-GuyNeural"
 ARABIC_VOICE = "ar-SA-HamedNeural" # Native Saudi voice for authentic Arabic recitation
 
-PHONETIC_MAP = {
-    "Quran": "Koor-ahn",
-    "Qur'an": "Koor-ahn",
-    "Hadith": "Ha-deeth",
-    "Ahadith": "Aha-deeth",
-    "Sahih": "Sa-heeh",
-    "Bukhari": "Boo-khah-ree",
-    "Muslim": "Moos-lim",
-    "Qiyamah": "Kee-yah-mah",
-    "Jannah": "Jun-nah",
-    "Jahannam": "Ja-hun-num",
-    "Dajjal": "Daj-jaal",
-    "Sunnah": "Soon-nah",
-    "Allah": "Ahl-lah",
-    "Muhammad": "Moo-hum-mud",
-    "Prophet": "Prophet",
-    "Sahabah": "Sa-haa-bah",
-    "Dhikr": "Thikr",
-    "Dua": "Doo-ah",
-    "Halal": "Ha-laal",
-    "Haram": "Ha-raam",
-    "Imam": "Ee-maam",
-    "Mahdi": "Mah-dee",
-    "Isa": "Ee-sah",
-    "Musa": "Moo-sah",
-    "Barakah": "Bah-rah-kah",
-    "Surah": "Soo-rah",
-    "Ayah": "Ah-yah"
-}
 
-def apply_phonetics(text: str) -> str:
-    for word, phonetic in PHONETIC_MAP.items():
-        text = re.sub(rf'\b{re.escape(word)}\b', phonetic, text, flags=re.IGNORECASE)
-    return text
-
-def reverse_phonetics(text: str) -> str:
-    for word, phonetic in PHONETIC_MAP.items():
-        text = re.sub(rf'\b{re.escape(phonetic)}\b', word, text, flags=re.IGNORECASE)
-    return text
 
 def time_to_ms(t_str):
     h, m, s_ms = t_str.split(':')
@@ -107,8 +69,10 @@ def generate_chunk_audio(full_text: str, output_filepath: str, voice: str):
     # We want the TTS to ONLY read the Arabic (to avoid thick accents), but we want BOTH on the screen.
     tts_text = full_text
     if voice == ARABIC_VOICE:
-        # Strip all A-Z, a-z, and parentheses for the audio generation
-        tts_text = re.sub(r'[a-zA-Z\(\)]', '', full_text).strip()
+        # Extract ONLY pure Arabic characters and tashkeel from the first line, eliminating English transliteration/hyphens/punctuation
+        first_line = [l.strip() for l in full_text.splitlines() if l.strip()][0] if full_text.strip() else ""
+        tts_text = re.sub(r'[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\s]', '', first_line).strip()
+        tts_text = re.sub(r'\s+', ' ', tts_text)
         
     try:
         command = [
@@ -134,13 +98,16 @@ def generate_chunk_audio(full_text: str, output_filepath: str, voice: str):
             with open(vtt_filepath, "r", encoding="utf-8") as f:
                 vtt_content = f.read()
                 
-            # If it was an Arabic chunk, restore the full text (with English transliteration) into the subtitle
+            # If it was an Arabic chunk, merge all fragmented cues into one solid block spanning the whole duration
             if voice == ARABIC_VOICE and tts_text != full_text:
-                vtt_content = vtt_content.replace(tts_text, full_text)
-            # If it was an English chunk, reverse the phonetics back to normal text
-            elif voice != ARABIC_VOICE:
-                vtt_content = reverse_phonetics(vtt_content)
-                
+                pattern = re.compile(r"(\d{2}:\d{2}:\d{2}[.,]\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}[.,]\d{3})")
+                matches = pattern.findall(vtt_content)
+                if matches:
+                    first_start = matches[0][0]
+                    last_end = matches[-1][1]
+                    # Double space the lines using a zero-width space so VTT doesn't split the cue
+                    spaced_full_text = full_text.strip().replace('\n', '\n\u200B\n')
+                    vtt_content = f"WEBVTT\n\n1\n{first_start} --> {last_end}\n{spaced_full_text}\n"
             with open(vtt_filepath, "w", encoding="utf-8") as f:
                 f.write(vtt_content)
         return True
@@ -163,8 +130,7 @@ def generate_master_audio(full_script_text: str, output_filepath: str, voice: st
             chunks.append((p[8:-9], ARABIC_VOICE))
         else:
             if p.strip():
-                # Apply phonetics only to English parts
-                chunks.append((apply_phonetics(p), voice))
+                chunks.append((p.strip(), voice))
                 
     chunk_audio_files = []
     chunk_vtt_contents = []

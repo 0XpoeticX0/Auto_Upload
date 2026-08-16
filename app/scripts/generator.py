@@ -27,11 +27,12 @@ RULE 1 — DURATION (NON-NEGOTIABLE)
 - DO NOT summarize or skip scenes to save space.""")
 
     rules.append("""=============================================
-RULE 2 — ISLAMIC AUTHENTICITY & REFERENCES (CRITICAL)
+RULE 2 — ISLAMIC AUTHENTICITY & CITATIONS (STRICT & MANDATORY)
 =============================================
-- Every single fact, story, or claim MUST be backed by the Quran or authentic Sunnah (Sahih Bukhari, Sahih Muslim, etc).
-- DO NOT use weak (da'eef) hadiths, cultural myths, or fabricated stories.
-- You must provide the exact references (e.g., "Surah Al-Baqarah 2:153", "Sahih Bukhari 5063") in the 'references' array of your JSON output.""")
+- Every single fact, story, Ayah, and Hadith MUST be 100% AUTHENTIC from the Quran or Sahih/Hasan Sunnah (Sahih Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami' at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah, Musnad Ahmad).
+- STRICTLY FORBIDDEN: NEVER use weak (da'eef) hadiths, fabricated claims, cultural myths, or made-up narratives.
+- NEVER cut an Ayah or Hadith in half: The quoted Arabic text must be a complete, grammatically intact verse, Hadith statement, or self-contained Dua.
+- You MUST provide the exact chapter/verse (e.g. 'Quran 2:153') or exact collection & number (e.g. 'Sahih Bukhari 5063', 'Sahih Muslim 1631') in the 'references' array of your JSON output.""")
 
     rules.append("""=============================================
 RULE 3 — HOOK & VIRAL STORYTELLING
@@ -85,13 +86,17 @@ Every scene's 'visuals' field MUST literally show what the narration describes a
 - Describe the LOCATION and ACTION, not the person's face.
 - Always end visual prompt with: ", wide angle, full scene, photorealistic, 8k, dramatic lighting, cinematic\"""")
 
-rules.append("""=============================================
-RULE 8 — DUAL-VOICE ENGINE (ARABIC RECITATION)
+    rules.append("""=============================================
+RULE 8 — DUAL-VOICE ENGINE (COMPLETE ARABIC RECITATION & EXPLANATION)
 =============================================
-- When quoting an Ayah (Quranic verse) or a Dua, you MUST write the ACTUAL Arabic script, followed by a newline (\\n), followed by the English pronunciation, followed by a newline (\\n), followed by the English translation, ALL inside the `<ARABIC>` tags.
-- Example: "The Prophet said, <ARABIC>سُبْحَانَ اللَّهِ\\nSubhanAllah\\n(Glory be to Allah)</ARABIC>."
-- This creates a beautiful 3-line stacked text on the screen: Top is Arabic, Middle is pronunciation, Bottom is meaning.
-- ONLY wrap the Arabic/Dua block. Do not wrap normal English narration.""")
+- When quoting an Ayah (Quranic verse), authentic Hadith, or Dua, you MUST write the FULL, complete Arabic script, followed by a newline (\\n), followed by the English pronunciation, followed by a newline (\\n), followed by the full English translation, ALL inside the `<ARABIC>` tags.
+- DO NOT cut an Ayah or Hadith in half. The Arabic quotation must be a complete, self-contained statement.
+- The English translation inside the `<ARABIC>` tags must be the full, accurate translation of the entire Arabic text.
+- AFTER THE ARABIC BLOCK: The English narration that follows MUST be a standalone, complete sentence that clearly explains what the Ayah/Hadith means and connects its profound lesson to the viewer's life.
+- NEVER split a sentence across Arabic and English (e.g., DO NOT do '<ARABIC>...</ARABIC> because grief overwhelmed them').
+- Correct Example:
+  "The Prophet said, <ARABIC>اصْنَعُوا لآلِ جَعْفَرٍ طَعَامًا فَإِنَّهُ قَدْ أَتَاهُمْ أَمْرٌ يَشْغَلُهُمْ\\nIsna'oo li-Aali Ja'farin ta'aman fa-innahu qad ataahum amrun yash-ghaluhum\\n(Prepare food for the family of Ja'far, for there has come upon them what overwhelms them with grief)</ARABIC>. Notice how the Prophet commanded the community to immediately step in and take care of grieving families."
+- ONLY wrap the Arabic recitation/Dua block inside `<ARABIC>`. Do not wrap normal English narration.""")
 
 
     system_prompt = f"""You are an expert Islamic content writer and master storyteller.

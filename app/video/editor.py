@@ -77,11 +77,83 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         
         video = in_visual
         if os.path.exists(vtt_path):
-            # Alignment=5 is ASS code for absolute Middle-Center. 
-            # With MarginV=0, the text block pivots exactly around the vertical center.
-            # This guarantees the text NEVER jumps around when changing from 1 to 3 lines.
-            style = "Alignment=5,Fontsize=14,Bold=1,MarginL=40,MarginR=40,MarginV=0,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=2"
-            video = video.filter('subtitles', safe_vtt, force_style=style)
+            import re
+            import subprocess
+            ass_path = vtt_path.replace(".vtt", ".ass")
+            
+            # 1. Convert VTT to ASS
+            subprocess.run(["ffmpeg", "-y", "-i", vtt_path, ass_path], check=True, capture_output=True)
+            
+            # 2. Process ASS to strictly de-overlap timestamps, update canvas, and inject {\an5}
+            with open(ass_path, "r", encoding="utf-8") as f:
+                lines = f.read().splitlines()
+                
+            def parse_ass_time(t_str):
+                parts = t_str.strip().split(':')
+                return int(parts[0])*3600 + int(parts[1])*60 + float(parts[2])
+                
+            def format_ass_time(sec):
+                h = int(sec // 3600)
+                m = int((sec % 3600) // 60)
+                s = sec % 60
+                return f"{h}:{m:02d}:{s:05.2f}"
+                
+            header_lines = []
+            dialogues = []
+            is_vertical = (video_format == "short")
+            target_width = 1080 if is_vertical else 1920
+            target_height = 1920 if is_vertical else 1080
+            
+            for line in lines:
+                if line.startswith("Dialogue:"):
+                    parts = line.split(",", 9)
+                    if len(parts) == 10:
+                        dialogues.append({
+                            'prefix_fields': parts[0:3],
+                            'start': parse_ass_time(parts[1]),
+                            'end': parse_ass_time(parts[2]),
+                            'start_str': parts[1],
+                            'end_str': parts[2],
+                            'middle_fields': parts[3:9],
+                            'text': parts[9]
+                        })
+                else:
+                    if line.startswith("PlayResX:"):
+                        header_lines.append(f"PlayResX: {target_width}")
+                    elif line.startswith("PlayResY:"):
+                        header_lines.append(f"PlayResY: {target_height}")
+                    elif line.startswith("Style: Default,"):
+                        s_parts = line.split(",")
+                        if len(s_parts) >= 19:
+                            s_parts[18] = "5" # Set Alignment to Mid-Center
+                            header_lines.append(",".join(s_parts))
+                        else:
+                            header_lines.append(line)
+                    else:
+                        header_lines.append(line)
+                    
+            # Strictly eliminate any overlapping timestamps between consecutive cues
+            for i in range(len(dialogues) - 1):
+                if dialogues[i]['end'] > dialogues[i+1]['start']:
+                    new_end = max(dialogues[i]['start'] + 0.1, dialogues[i+1]['start'] - 0.01)
+                    dialogues[i]['end'] = new_end
+                    dialogues[i]['end_str'] = format_ass_time(new_end)
+                    
+            # Reconstruct ASS file with absolute center anchor {\an5} directly in the Text field
+            out_lines = list(header_lines)
+            for d in dialogues:
+                clean_text = d['text'].replace('{\\an5}', '')
+                mid_str = ",".join(d['middle_fields'])
+                out_lines.append(f"{d['prefix_fields'][0]},{d['start_str']},{d['end_str']},{mid_str},{{\\an5}}{clean_text}")
+                
+            with open(ass_path, "w", encoding="utf-8") as f:
+                f.write("\n".join(out_lines) + "\n")
+                
+            safe_ass = ass_path.replace('\\', '/')
+            # Font size scaled for large, bold, punchy mobile/desktop reading
+            font_size = 60 if is_vertical else 65
+            style = f"Fontsize={font_size},Bold=1,MarginL=60,MarginR=60,MarginV=0,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=5"
+            video = video.filter('subtitles', safe_ass, force_style=style)
             
         out = ffmpeg.output(
             video, 

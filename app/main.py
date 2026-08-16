@@ -126,15 +126,14 @@ def main():
         
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
-            os.makedirs(temp_dir, exist_ok=True)
             logger.info("Wiped temp directory.")
             
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
-            os.makedirs(output_dir, exist_ok=True)
             logger.info("Wiped output directory (videos & thumbnails).")
+            
     except Exception as e:
-        logger.error(f"Error during final cleanup: {e}")
+        logger.error(f"Failed during cleanup: {e}")
         
     logger.info("Cleanup complete. Shutting down.")
 
