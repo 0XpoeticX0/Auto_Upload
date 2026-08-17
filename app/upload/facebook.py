@@ -5,11 +5,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from app.upload.instagram import upload_reel_to_instagram
+
 def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"):
-    logger.info(f"Starting Facebook Page Upload for {video_path}")
+    logger.info(f"Starting Facebook & Instagram Upload for {video_path}")
     
     page_id = os.getenv("FB_PAGE_ID")
     access_token = os.getenv("FB_ACCESS_TOKEN")
+    ig_user_id = os.getenv("IG_USER_ID")
     
     if not page_id or not access_token:
         logger.warning("Facebook Upload Skipped: FB_PAGE_ID or FB_ACCESS_TOKEN not set in .env")
@@ -17,6 +20,7 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
 
     description = metadata.get("description", "")
     title = metadata.get("facebook_title", metadata.get("youtube_title", ""))
+    full_caption = f"{title}\n\n{description}".strip()
 
     # Auto-detect: if filename contains "_short" or video_type forced to "reel", use Reels API
     is_reel = video_type == "reel" or "_short" in video_path
@@ -27,6 +31,14 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
     else:
         logger.info("Uploading as Facebook VIDEO (shown on Page timeline)")
         success = _upload_as_video(page_id, access_token, video_path, title, description)
+
+    # Cross-post to Instagram Reels if IG_USER_ID is configured
+    if is_reel and ig_user_id:
+        try:
+            logger.info(f"Starting Instagram REEL cross-posting for @{ig_user_id}...")
+            upload_reel_to_instagram(video_path, full_caption)
+        except Exception as e:
+            logger.warning(f"Instagram Reel auto-post encountered an issue: {e}")
 
     return success
 
