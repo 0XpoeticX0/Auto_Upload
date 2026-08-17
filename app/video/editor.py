@@ -107,8 +107,9 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         rel_ass = os.path.relpath(ass_path).replace('\\', '/')
         rel_fonts = "app/assets/fonts"
         
-        # 3. Build FFmpeg rendering command
-        final_video_vf = f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},subtitles='{rel_ass}':fontsdir='{rel_fonts}'"
+        # 3. Build FFmpeg rendering command with explicit force_style for 100% reliable Hind Siliguri font binding
+        style_override = "Fontname=Hind Siliguri,Fontsize=74,Bold=1,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=5,Alignment=5,MarginL=60,MarginR=60,MarginV=0"
+        final_video_vf = f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},subtitles='{rel_ass}':fontsdir='{rel_fonts}':force_style='{style_override}'"
         
         cmd = [
             "ffmpeg", "-y",

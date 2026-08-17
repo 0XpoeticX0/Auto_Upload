@@ -35,14 +35,15 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install System Fonts & Register Bengali Fonts
+    - name: Install System Fonts & Register Authentic Bengali Fonts
       run: |
         sudo apt-get update
-        sudo apt-get install -y ffmpeg fontconfig fonts-noto-core fonts-noto-extra fonts-beng fonts-kacst
+        sudo apt-get purge -y fonts-lohit-beng-bengali fonts-beng || true
+        sudo apt-get install -y ffmpeg fontconfig fonts-noto-core fonts-noto-extra fonts-kacst
         sudo mkdir -p /usr/local/share/fonts/bengali
         sudo cp app/assets/fonts/*.ttf /usr/local/share/fonts/bengali/ || true
         sudo fc-cache -f -v
-        fc-list : family | grep -iE 'hind|siliguri|amiri|bengali' || true
+        fc-list : family | grep -iE 'hind|siliguri|amiri|noto' || true
 
     - name: Install Python Dependencies
       run: |

@@ -60,11 +60,11 @@ def main():
         
     scenes = script_data.get("scenes", [])
     
-    logger.info(f"--- Generating Master Visuals (16:9) ---")
-    scenes = generate_all_images(scenes, topic_id, "master")
+    logger.info(f"--- Generating Visuals (9:16 Vertical) ---")
+    scenes = generate_all_images(scenes, topic_id, "short")
     
-    logger.info(f"--- Generating Master Audio & Subtitles ---")
-    scenes = generate_all_audio(scenes, topic_id, "master", topic_category)
+    logger.info(f"--- Generating Audio & Subtitles ---")
+    scenes = generate_all_audio(scenes, topic_id, "short", topic_category)
     
     logger.info(f"--- Generating Metadata ---")
     base_metadata = generate_viral_metadata(topic_id, script_data)
