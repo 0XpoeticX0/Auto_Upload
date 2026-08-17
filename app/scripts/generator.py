@@ -95,8 +95,16 @@ RULE 8 — DUAL-VOICE ENGINE (COMPLETE ARABIC RECITATION & EXPLANATION)
 - AFTER THE ARABIC BLOCK: The English narration that follows MUST be a standalone, complete sentence that clearly explains what the Ayah/Hadith means and connects its profound lesson to the viewer's life.
 - NEVER split a sentence across Arabic and English (e.g., DO NOT do '<ARABIC>...</ARABIC> because grief overwhelmed them').
 - Correct Example:
-  "The Prophet said, <ARABIC>اصْنَعُوا لآلِ جَعْفَرٍ طَعَامًا فَإِنَّهُ قَدْ أَتَاهُمْ أَمْرٌ يَشْغَلُهُمْ\\nIsna'oo li-Aali Ja'farin ta'aman fa-innahu qad ataahum amrun yash-ghaluhum\\n(Prepare food for the family of Ja'far, for there has come upon them what overwhelms them with grief)</ARABIC>. Notice how the Prophet commanded the community to immediately step in and take care of grieving families."
+  "The Prophet, peace be upon him, said, <ARABIC>اصْنَعُوا لآلِ جَعْفَرٍ طَعَامًا فَإِنَّهُ قَدْ أَتَاهُمْ أَمْرٌ يَشْغَلُهُمْ\\nIsna'oo li-Aali Ja'farin ta'aman fa-innahu qad ataahum amrun yash-ghaluhum\\n(Prepare food for the family of Ja'far, for there has come upon them what overwhelms them with grief)</ARABIC>. Notice how the Prophet, peace be upon him, commanded the community to immediately step in and take care of grieving families."
 - ONLY wrap the Arabic recitation/Dua block inside `<ARABIC>`. Do not wrap normal English narration.""")
+
+    rules.append("""=============================================
+RULE 9 — SALAWAT & HONORIFICS (MANDATORY & RESPECTFUL)
+=============================================
+- Whenever mentioning Prophet Muhammad, you MUST ALWAYS say 'Prophet Muhammad, peace be upon him,' or 'the Prophet, peace be upon him,'. NEVER say 'Muhammad' or 'the Prophet' alone without 'peace be upon him'.
+- ALWAYS write out 'peace be upon him' in full English words (DO NOT abbreviate as 'PBUH' or 'SAW', because the text-to-speech engine must read it out loud naturally).
+- For other Prophets (e.g., Musa, Isa, Ibrahim, Yunus, Ayyub), say 'peace be upon him'.
+- For Companions (Sahabah like Abu Bakr, Umar, Ali, Aisha), say 'may Allah be pleased with them' or 'may Allah be pleased with him/her'.""")
 
 
     system_prompt = f"""You are an expert Islamic content writer and master storyteller.
@@ -133,6 +141,19 @@ Only respond when all boxes are checked."""
         return None
     
     scenes = script_data.get("scenes", [])
+    
+    # Automated Salawat & Honorifics enforcement
+    import re
+    for scene in scenes:
+        narration = scene.get("narration", "")
+        # Ensure 'Prophet Muhammad' has 'peace be upon him'
+        narration = re.sub(r'\bProphet Muhammad\b(?!\s*[,(]?\s*peace be upon him)', 'Prophet Muhammad, peace be upon him,', narration, flags=re.IGNORECASE)
+        # Ensure 'the Prophet' has 'peace be upon him'
+        narration = re.sub(r'\bthe Prophet\b(?!\s*[,(]?\s*peace be upon him)', 'the Prophet, peace be upon him,', narration, flags=re.IGNORECASE)
+        # Clean double commas
+        narration = re.sub(r',\s*,', ',', narration)
+        scene["narration"] = narration
+        
     actual_scenes = len(scenes)
     actual_words = sum(len(s.get("narration", "").split()) for s in scenes)
     estimated_duration = actual_words / 2.5
