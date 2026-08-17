@@ -24,8 +24,7 @@ jobs:
     - name: Install System Dependencies & Register Authentic Bengali Fonts
       run: |
         sudo apt-get update
-        sudo apt-get purge -y fonts-lohit-beng-bengali fonts-beng || true
-        sudo apt-get install -y ffmpeg fontconfig libharfbuzz0b libfribidi0 libass9 fonts-noto-core fonts-noto-extra fonts-noto-ui-core fonts-noto-beng fonts-noto-beng-extra || true
+        sudo apt-get install -y ffmpeg fontconfig libharfbuzz0b libfribidi0 libass9 fonts-noto-core fonts-noto-extra
         sudo mkdir -p /usr/local/share/fonts/bengali
         sudo cp app/assets/fonts/*.ttf /usr/local/share/fonts/bengali/
         sudo cp app/assets/fonts/fonts.conf /etc/fonts/local.conf
