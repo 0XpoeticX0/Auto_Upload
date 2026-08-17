@@ -5,32 +5,62 @@ from app.logger import logger
 from app.database import get_connection
 from app.llm.provider import extract_json
 
-def generate_islamic_topics(recent_titles=None):
-    system_prompt = """You are an expert Islamic content researcher for viral Bengali YouTube Shorts and Reels.
-Your goal is to generate 4 highly engaging, deeply emotional Islamic topic ideas in Bangla (বাংলা) based purely on authentic Quran and Sahih Hadith.
+# Core theme keywords for deduplication — prevent same theme appearing twice
+THEME_KEYWORDS = {
+    "দুশ্চিন্তা": ["দুশ্চিন্তা", "মানসিক অস্থিরতা", "উদ্বেগ", "পেরেশানি"],
+    "তওবা": ["তওবা", "গুনাহ মাফ", "ক্ষমা", "ইস্তিগফার"],
+    "কবর": ["কবর", "মৃত্যু", "সাকরাতুল মাউত", "আখিরাত"],
+    "হালাল": ["হালাল", "হারাম", "রিজিক", "উপার্জন"],
+    "জবান": ["জবান", "কথা", "মুখ", "বাক্য"],
+    "দোয়া": ["দোয়া", "আমল", "যিকির", "তাসবিহ"],
+    "কিয়ামত": ["কিয়ামত", "শেষ যামানা", "দাজ্জাল", "ইমাম মাহদি"],
+}
 
-Generate ONE topic for each of these 4 pillars:
-1. দৈনন্দিন জীবন: প্রতিদিনের জীবনে হালাল ও হারাম, জবান হেফাজত, লেনদেন
-2. দোয়া ও নিরাময়: মানসিক অস্থিরতা, দুশ্চিন্তা ও বিপদ থেকে মুক্তির সহীহ দোয়া
-3. অন্তর গলানো নসিহত: তওবা, আল্লাহর সীমাহীন রহমত, গুনাহ মাফের উপায়
-4. শেষ যামানা ও আখিরাত: মৃত্যুর পরবর্তী জীবন, কিয়ামতের আলামত, কবরের শান্তি
+def _get_topic_theme(title: str) -> str:
+    """Returns the theme key if a title matches a known theme, else None."""
+    title_lower = title.lower()
+    for theme, keywords in THEME_KEYWORDS.items():
+        if any(kw in title_lower for kw in keywords):
+            return theme
+    return None
 
-Output JSON format (ONLY valid JSON):
-{
-    "topics": [
-        {"title": "হতাশা ও দুশ্চিন্তা দূর করার সেরা দোয়া", "category": "dua_cures", "score": 99.5},
-        {"title": "আল্লাহর দরবারে সবচেয়ে প্রিয় দুটি সহজ বাক্য", "category": "heart_softeners", "score": 98.0},
-        {"title": "কথা বলার আগে ভাবুন: ঈমানদারের বিশেষ গুণ", "category": "daily_life", "score": 97.5},
-        {"title": "শেষ যামানার ভয়ংকর আলামত ও ঈমানের হেফাজত", "category": "islamic_knowledge", "score": 99.0}
-    ]
-}"""
-
-    user_prompt = "Generate 4 fresh, authentic Bengali Islamic Short topics covering the 4 pillars."
+def generate_islamic_topics(recent_titles=None, used_themes=None):
+    used_themes = used_themes or set()
     
+    # Build strict avoidance rules for the prompt
+    avoid_section = ""
     if recent_titles:
-        user_prompt += "\n\nCRITICAL RULE - DO NOT use or repeat any of these recently covered topics:\n"
+        avoid_section += "\n\nCRITICAL RULE — DO NOT repeat or slightly rephrase any of these recent topics:\n"
         for t in recent_titles:
-            user_prompt += f"- {t}\n"
+            avoid_section += f"- {t}\n"
+    
+    if used_themes:
+        avoid_section += f"\nALSO AVOID these themes entirely (already covered recently): {', '.join(used_themes)}\n"
+
+    system_prompt = f"""You are an expert Islamic content researcher for viral Bengali YouTube Shorts and Reels.
+Generate 4 highly engaging, deeply emotional Islamic topics in Bangla (বাংলা) — one per pillar below.
+Each topic MUST be backed by authentic Quran or Sahih Hadith.
+Each topic MUST be completely different in theme from the others.
+Titles should be emotionally gripping (max 12 words each).
+
+PILLARS (one topic per pillar, no exceptions):
+1. দৈনন্দিন জীবন: হালাল/হারাম, সম্পর্ক, আচরণ, লেনদেন, নামাজ-রোজার ফজিলত
+2. দোয়া ও নিরাময়: বিপদ, রোগ, মানসিক কষ্ট থেকে মুক্তির সহীহ দোয়া ও আমল
+3. অন্তর গলানো নসিহত: তওবা, আল্লাহর রহমত, অনুপ্রেরণা, গুনাহ থেকে ফেরার পথ
+4. শেষ যামানা ও আখিরাত: কিয়ামতের আলামত, কবরের জীবন, জান্নাত-জাহান্নামের বর্ণনা
+{avoid_section}
+
+Output ONLY valid JSON in this exact format:
+{{
+    "topics": [
+        {{"title": "...", "category": "daily_life", "score": 97.5}},
+        {{"title": "...", "category": "dua_cures", "score": 98.0}},
+        {{"title": "...", "category": "heart_softeners", "score": 99.0}},
+        {{"title": "...", "category": "islamic_knowledge", "score": 98.5}}
+    ]
+}}"""
+
+    user_prompt = "Generate 4 fresh unique Bengali Islamic Short topics, one per pillar. No repetition of themes."
 
     try:
         data = extract_json(system_prompt, user_prompt, max_tokens=1000)
@@ -46,30 +76,51 @@ def run_discovery():
     conn = get_connection()
     cursor = conn.cursor()
     
+    # Fetch last 20 produced titles for anti-repetition
     try:
-        cursor.execute("SELECT title FROM topics ORDER BY id DESC LIMIT 20")
+        cursor.execute("SELECT title FROM topics WHERE status IN ('IN_PROGRESS', 'DONE', 'DISCOVERED') ORDER BY id DESC LIMIT 20")
         recent_titles = [row["title"] for row in cursor.fetchall()]
-    except Exception as e:
+    except Exception:
         recent_titles = []
     
-    topics = generate_islamic_topics(recent_titles)
+    # Find which themes are already covered in the pending queue
+    try:
+        cursor.execute("SELECT title FROM topics WHERE status = 'DISCOVERED' ORDER BY id DESC")
+        pending = [row["title"] for row in cursor.fetchall()]
+        used_themes = set(filter(None, [_get_topic_theme(t) for t in pending]))
+    except Exception:
+        used_themes = set()
+
+    topics = generate_islamic_topics(recent_titles, used_themes)
     
     if not topics:
         logger.warning("No topics generated. Using fallback topics in Bangla.")
         topics = [
-            {"title": "আল্লাহর দরবারে সবচেয়ে প্রিয় দুটি সহজ বাক্য", "category": "heart_softeners", "score": 98.0},
-            {"title": "হতাশা ও মানসিক কষ্ট দূর করার কার্যকরী দোয়া", "category": "dua_cures", "score": 99.0},
-            {"title": "তওবার দরজা কখন বন্ধ হয়ে যাবে?", "category": "islamic_knowledge", "score": 97.0},
-            {"title": "মানুষের সাথে উত্তম আচরণের অপার সওয়াব", "category": "daily_life", "score": 96.0}
+            {"title": "নামাজে মনোযোগ ধরে রাখার কার্যকর আমল", "category": "daily_life", "score": 98.0},
+            {"title": "ইউনুস (আ.)-এর দোয়া: ঘোর বিপদ থেকে মুক্তির পথ", "category": "dua_cures", "score": 99.0},
+            {"title": "আল্লাহর ভালোবাসা পাওয়ার সহজ ৩টি আমল", "category": "heart_softeners", "score": 97.5},
+            {"title": "কিয়ামতের দিন নবীজির শাফাআত কারা পাবেন?", "category": "islamic_knowledge", "score": 98.5}
         ]
-        
+    
+    # Deduplicate: skip topics whose theme is already in the pending queue
+    new_topics = []
     for t in topics:
+        theme = _get_topic_theme(t.get("title", ""))
+        if theme and theme in used_themes:
+            logger.info(f"Skipping duplicate-theme topic: {t['title']} (theme: {theme})")
+            continue
+        if theme:
+            used_themes.add(theme)
+        new_topics.append(t)
+
+    for t in new_topics:
         title = t.get("title", "")
         score = t.get("score", 90.0)
+        cat = t.get("category", "islamic_knowledge")
         try:
             cursor.execute(
                 "INSERT INTO topics (title, source, score, status) VALUES (?, ?, ?, 'DISCOVERED')",
-                (title, "Gemini AI Discovery", score)
+                (title, f"Gemini AI Discovery ({cat})", score)
             )
         except Exception:
             pass
