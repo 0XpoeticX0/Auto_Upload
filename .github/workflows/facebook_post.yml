@@ -1,4 +1,4 @@
-name: Daily Facebook Post Pipeline
+name: Daily Facebook & Instagram Post Pipeline
 
 on:
   schedule:
@@ -34,11 +34,12 @@ jobs:
         pip install --force-reinstall google-genai
         pip install --force-reinstall Pillow
 
-    - name: Run Facebook Post Pipeline
+    - name: Run Facebook & Instagram Post Pipeline
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
         FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        IG_USER_ID: ${{ secrets.IG_USER_ID || '17841436824022360' }}
       run: |
         python -m app.post_main
