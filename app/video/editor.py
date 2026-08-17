@@ -119,10 +119,13 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
             
         # Use relative paths for FFmpeg to prevent Windows drive letter colon issues
         rel_ass = os.path.relpath(ass_path).replace('\\', '/')
-        rel_fonts = "app/assets/fonts"
         
         # 3. Build FFmpeg rendering command
-        final_video_vf = f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},subtitles='{rel_ass}':fontsdir='{rel_fonts}'"
+        # NOTE: Do NOT use :fontsdir here. Passing fontsdir disables HarfBuzz on Linux,
+        # causing Bengali vowels (ো, ে, ি) to be drawn in wrong order (broken spelling).
+        # Fonts are pre-installed into /usr/local/share/fonts/bengali/ by the workflow,
+        # so libass uses system Fontconfig + HarfBuzz for correct Bengali shaping.
+        final_video_vf = f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},subtitles='{rel_ass}'"
         
         cmd = [
             "ffmpeg", "-y",
