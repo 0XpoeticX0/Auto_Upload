@@ -28,6 +28,9 @@ jobs:
         sudo apt-get install -y ffmpeg fontconfig fonts-noto-core fonts-noto-extra fonts-kacst
         sudo mkdir -p /usr/local/share/fonts/bengali
         sudo cp app/assets/fonts/*.ttf /usr/local/share/fonts/bengali/ || true
+        sudo mkdir -p ~/.config/fontconfig
+        cp app/assets/fonts/fonts.conf ~/.config/fontconfig/fonts.conf || true
+        sudo cp app/assets/fonts/fonts.conf /etc/fonts/local.conf || true
         sudo fc-cache -f -v
         fc-list : family | grep -iE 'hind|siliguri|amiri|noto' || true
 
