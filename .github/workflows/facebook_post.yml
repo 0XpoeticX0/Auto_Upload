@@ -43,7 +43,10 @@ jobs:
         sudo cp app/assets/fonts/*.ttf /usr/local/share/fonts/bengali/
         sudo cp app/assets/fonts/fonts.conf /etc/fonts/local.conf
         sudo fc-cache -f -v
-        echo "=== Verifying fonts registered ==="
+        echo "=== Verifying FFmpeg & FFprobe ==="
+        ffmpeg -version | head -n 1
+        ffprobe -version | head -n 1
+        echo "=== Verifying Fonts Registered ==="
         fc-list : family | grep -iE 'noto|hind|amiri' || echo "WARNING: fonts not found!"
 
     - name: Install Python Dependencies
