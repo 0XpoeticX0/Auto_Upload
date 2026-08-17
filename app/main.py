@@ -46,7 +46,7 @@ def main(no_upload: bool = False):
     
     cleanup_temp_folder()
     init_db()
-    purge_old_topics(days=20)  # Delete topics older than 20 days so they can repeat
+    purge_old_topics(days=40)  # Delete topics older than 40 days so they can repeat
     
     topic = run_discovery()
     if not topic:
