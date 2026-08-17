@@ -55,7 +55,10 @@ def clean_arabic_for_audio(raw_arabic: str) -> str:
         return " ".join(pure_arabic_lines).strip()
     return lines[0].strip()
 
-def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: str, out_vtt: str):
+def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: str, out_vtt: str) -> bool:
+    # Filter out punctuation-only text
+    if not any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in text):
+        return False
     cmd = [
         "edge-tts",
         f"--voice={voice}",
@@ -65,7 +68,12 @@ def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: st
         f"--write-media={out_mp3}",
         f"--write-subtitles={out_vtt}"
     ]
-    subprocess.run(cmd, check=True, capture_output=True)
+    try:
+        subprocess.run(cmd, check=True, capture_output=True)
+        return os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 100
+    except Exception as e:
+        logger.warning(f"edge-tts synthesis warning for text '{text[:25]}...': {e}")
+        return False
 
 def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
     os.makedirs(temp_dir, exist_ok=True)
@@ -91,14 +99,15 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
             raw_arabic_block = re.sub(r'</?[a-zA-Z0-9_-]+>', '', raw_arabic_block).strip()
             spoken_text = clean_arabic_for_audio(raw_arabic_block)
             display_text = raw_arabic_block
-            segments.append({
-                "type": "arabic",
-                "voice": ARABIC_VOICE,
-                "spoken_text": spoken_text,
-                "display_text": display_text,
-                "rate": "-15%",
-                "pitch": "-2Hz"
-            })
+            if any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in spoken_text):
+                segments.append({
+                    "type": "arabic",
+                    "voice": ARABIC_VOICE,
+                    "spoken_text": spoken_text,
+                    "display_text": display_text,
+                    "rate": "-15%",
+                    "pitch": "-2Hz"
+                })
         else:
             # Strip any stray tags or 'arabic:' prefixes
             clean_bangla = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_part)
@@ -108,7 +117,8 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                 clean_bangla = clean_bangla.replace(k, v)
             clean_bangla = clean_bangla.replace('।', '। ').replace(',', ', ').replace('?', '? ')
             
-            if clean_bangla.strip():
+            # Ensure text contains actual letters/words, not just stray punctuation
+            if any(c.isalnum() for c in clean_bangla):
                 segments.append({
                     "type": "bangla",
                     "voice": BANGLA_VOICE,
@@ -126,8 +136,10 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
         s_mp3 = os.path.join(temp_dir, f"scene_{scene_idx}_seg_{idx}.mp3")
         s_vtt = os.path.join(temp_dir, f"scene_{scene_idx}_seg_{idx}.vtt")
         
-        synthesize_segment(seg["spoken_text"], seg["voice"], seg["rate"], seg["pitch"], s_mp3, s_vtt)
-        
+        ok = synthesize_segment(seg["spoken_text"], seg["voice"], seg["rate"], seg["pitch"], s_mp3, s_vtt)
+        if not ok or not os.path.exists(s_mp3):
+            continue
+            
         probe_cmd = ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", s_mp3]
         dur_res = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
         seg_dur_ms = int(float(dur_res.stdout.strip()) * 1000)
