@@ -1,0 +1,78 @@
+import os
+import sys
+import time
+from app.logger import logger
+from app.database import init_db, get_connection
+from app.post.generator import generate_post_content
+from app.post.card_builder import create_post_image_card
+from app.post.uploader import upload_post_to_facebook
+
+def run_facebook_post_pipeline():
+    logger.info("==================================================")
+    logger.info("--- Starting Daily Facebook Image Post Pipeline ---")
+    logger.info("==================================================")
+    
+    init_db()
+    
+    # 1. Generate authentic post content & caption with anti-repetition check
+    post_data = generate_post_content()
+    if not post_data:
+        logger.error("Pipeline aborted: Failed to generate post content.")
+        return False
+        
+    post_title = post_data.get("title", "Islamic Reflection")
+    category = post_data.get("category", "islamic_knowledge")
+    quote = post_data.get("quote", "")
+    reference = post_data.get("reference", "")
+    caption = post_data.get("caption", "")
+    
+    # 2. Build 1080x1350 aesthetic image reflection card
+    timestamp = int(time.time())
+    output_image_path = os.path.join("data", "output", f"fb_post_{timestamp}.jpg")
+    
+    logger.info(f"Generating aesthetic photo card: {output_image_path}")
+    created_image = create_post_image_card(post_data, output_image_path)
+    
+    if not os.path.exists(created_image) or os.path.getsize(created_image) < 10000:
+        logger.error("Pipeline aborted: Image card creation failed.")
+        return False
+        
+    logger.info(f"Image card successfully created: {created_image}")
+    
+    # 3. Save to database to enforce 30-day anti-repetition tracking
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO facebook_posts (category, title, quote, reference, caption, image_path, status)
+            VALUES (?, ?, ?, ?, ?, ?, 'GENERATED')
+        ''', (category, post_title, quote, reference, caption, created_image))
+        conn.commit()
+        conn.close()
+        logger.info("Saved post record to database for 30-day anti-repetition history.")
+    except Exception as e:
+        logger.error(f"Failed to record post in database: {e}")
+        
+    # 4. Upload to Facebook Page
+    logger.info("--- Publishing Photo Post to Facebook ---")
+    upload_success = upload_post_to_facebook(created_image, caption)
+    
+    if upload_success:
+        try:
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute('''
+                UPDATE facebook_posts SET status = 'PUBLISHED' WHERE image_path = ?
+            ''', (created_image,))
+            conn.commit()
+            conn.close()
+        except Exception:
+            pass
+        logger.info("Daily Facebook Image Post Pipeline completed successfully!")
+        return True
+    else:
+        logger.warning("Facebook upload was skipped or failed.")
+        return False
+
+if __name__ == "__main__":
+    run_facebook_post_pipeline()

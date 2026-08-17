@@ -129,9 +129,36 @@ def init_db():
         )
     ''')
     
+    # Create facebook_posts table for daily photo reflection cards
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS facebook_posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT,
+            title TEXT,
+            quote TEXT,
+            reference TEXT,
+            caption TEXT,
+            image_path TEXT,
+            status TEXT DEFAULT 'POSTED',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
     conn.commit()
     conn.close()
     logger.info("Database initialized.")
+
+def get_recent_facebook_posts(limit: int = 30):
+    """Retrieve recent Facebook posts to prevent repeating topics/quotes for 30+ days."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT title, quote, reference FROM facebook_posts
+        ORDER BY id DESC LIMIT ?
+    ''', (limit,))
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
 
 if __name__ == "__main__":
     init_db()
