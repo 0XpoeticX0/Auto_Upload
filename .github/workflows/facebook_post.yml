@@ -2,8 +2,15 @@ name: Daily Facebook Post Pipeline
 
 on:
   schedule:
-    # Runs at 12:55 PM local time (06:55 UTC) — 5 minutes before peak 1:00 PM engagement window
-    - cron: '55 6 * * *'
+    # 4-Post Daily Timeline (5 minutes early start, UTC+6):
+    # 1. 8:25 AM Local (02:25 UTC) - Commute / Early Start
+    - cron: '25 2 * * *'
+    # 2. 12:25 PM Local (06:25 UTC) - Mid-day Peak Lunch Hour
+    - cron: '25 6 * * *'
+    # 3. 3:55 PM Local (09:55 UTC) - Afternoon Slump / Pre-Clockout
+    - cron: '55 9 * * *'
+    # 4. 8:25 PM Local (14:25 UTC) - Prime-time Evening Wind-down
+    - cron: '25 14 * * *'
   workflow_dispatch: # Allows manual trigger from the Actions tab
 
 jobs:

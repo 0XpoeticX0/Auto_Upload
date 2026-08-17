@@ -47,9 +47,16 @@ STRICT REQUIREMENTS:
 1. 100% AUTHENTICITY: The Ayah or Hadith MUST be completely authentic from the Quran or Sahih Sunnah (Sahih Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami' at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah). No weak or fabricated claims.
 2. NO REPETITIONS: You must choose a FRESH, UNIQUE Hadith or Ayah that has NOT been used in recent posts.
 3. FORMAT OF THE IMAGE CARD:
-   - "header": E.g. "The Prophet ﷺ said:" or "The Prophet (peace be upon him) said:" or "Allah says in the Quran:".
+   - "header": E.g. "The Prophet (peace be upon him) said:" or "Allah says in the Quran:".
    - "quote": The exact authentic English translation of the Hadith or Ayah in single quotes. Make it powerful, self-contained, and complete (30-50 words max).
-   - "highlight_phrases": An array of 1 to 3 short key phrases from the quote that should be highlighted in warm gold accent color on the image card.
+   - "highlight_phrases": An array of 1 or 2 of the MOST IMPORTANT, CORE PUNCHLINES, COMMANDS, OR PROMISES from the quote to be highlighted in bold golden yellow on the image card.
+     * Examples of what to highlight:
+       - If about modesty: ["Do not be alone with a woman", "The husband's brother is like death"]
+       - If about forgiveness: ["forgiven all his sins", "even as much as the foam of the sea"]
+       - If about trials: ["greatest reward comes with the greatest trial", "When Allah loves a people He tests them"]
+       - If about patience: ["Allah is with the patient"]
+     * RULE: NEVER highlight small random filler words. Highlight the entire core action, key ruling, or striking promise (3 to 6 consecutive words).
+     * The words in "highlight_phrases" MUST appear word-for-word inside your "quote" field.
    - "explain_title": "Explain:"
    - "explanation": Exactly 2 to 3 concise, clear, powerful sentences explaining the deeper wisdom, why this was said, and how it directly applies to modern daily life (35-55 words max).
    - "reference": Exact authentic citation (e.g. 'Sahih Muslim: 2172 a', 'Sahih al-Bukhari: 6306', 'Surah Al-Baqarah: 153').
