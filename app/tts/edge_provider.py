@@ -145,7 +145,7 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                     "voice": BANGLA_VOICE,
                     "spoken_text": spoken_bangla,
                     "display_text": display_text,
-                    "rate": "-4%",
+                    "rate": "-10%",
                     "pitch": "-2Hz"
                 })
             
