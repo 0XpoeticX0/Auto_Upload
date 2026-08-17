@@ -16,21 +16,31 @@ DHIKR_REPLACEMENTS = {
     r'(?<!<ARABIC>)লা ইলাহা ইল্লাল্লাহ(?!</ARABIC>)': '<ARABIC>لَا إِلٰهَ إِلَّا اللّٰهُ\n(লা ইলাহা ইল্লাল্লাহ)</ARABIC>'
 }
 
+HONORIFIC_SPOKEN_REPLACEMENTS = {
+    # Replace abbreviations for TTS audio only (so voice does not say awkward initials)
+    r'\(\s*সা[\.\:\s]*\)': ' সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম ',
+    r'\(\s*সাঃ\s*\)': ' সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম ',
+    r'\(\s*আ[\.\:\s]*\)': ' আলাইহিস সালাম ',
+    r'\(\s*আঃ\s*\)': ' আলাইহিস সালাম ',
+    r'\(\s*রা[\.\:\s]*\)': ' রাদিয়াল্লাহু আনহু ',
+    r'\(\s*রাঃ\s*\)': ' রাদিয়াল্লাহু আনহু ',
+    r'\(\s*রহ[\.\:\s]*\)': ' রাহিমাহুল্লাহ ',
+    r'\(\s*রহঃ\s*\)': ' রাহিমাহুল্লাহ ',
+    r'ﷺ': ' সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম ',
+    r'ﷻ': ' জাল্লা জালালুহু ',
+}
+
 PHONETIC_CLEANUPS = {
     "হইয়ো না": "হবেন না",
     "হইও না": "হবেন না",
     "হৃদয়": "অন্তর",
     "হৃদয়ে": "অন্তরে",
-    "বুঝি": "কি",
     "পবিত্র পবিত্র কুরআনে": "পবিত্র কুরআনে",
     "পবিত্র পবিত্র কোরআনে": "পবিত্র কুরআনে",
     "নিশ্চয়ই": "নিশ্চয়ই",
     "স্বস্তি": "শান্তি",
     "তাআলা": "তা'আলা",
     "সাল্লাল্লাহু আলাইহি ওয়াসাল্লাম": "সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম",
-    "ﷺ": " সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম, ",
-    "ﷻ": " জাল্লা জালালুহু, ",
-    " (আঃ)": " আলাইহিস সালাম, "
 }
 
 def time_to_ms(t_str):
@@ -111,19 +121,30 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
         else:
             # Strip any stray tags or 'arabic:' prefixes
             clean_bangla = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_part)
-            clean_bangla = re.sub(r'^\s*(arabic|bangla|english)\s*:\s*', '', clean_bangla, flags=re.IGNORECASE)
+            clean_bangla = re.sub(r'^\s*(arabic|bangla|english)\s*:\s*', '', clean_bangla, flags=re.IGNORECASE).strip()
             
+            # 1. Visual display text (keeps (সা.), (রা.), (আ.) exact and untouched for subtitles)
+            display_text = clean_bangla
+            
+            # 2. Spoken text for AI voice: expand initials into natural honorifics for fluent audio
+            spoken_bangla = clean_bangla
+            for pattern, repl in HONORIFIC_SPOKEN_REPLACEMENTS.items():
+                spoken_bangla = re.sub(pattern, repl, spoken_bangla)
+                
             for k, v in PHONETIC_CLEANUPS.items():
-                clean_bangla = clean_bangla.replace(k, v)
-            clean_bangla = clean_bangla.replace('।', '। ').replace(',', ', ').replace('?', '? ')
+                spoken_bangla = spoken_bangla.replace(k, v)
+                
+            spoken_bangla = spoken_bangla.replace('।', '। ').replace(',', ', ').replace('?', '? ')
+            # Remove isolated brackets from spoken audio so AI doesn't stumble
+            spoken_bangla = re.sub(r'[\(\)\[\]]', ' ', spoken_bangla).strip()
             
             # Ensure text contains actual letters/words, not just stray punctuation
-            if any(c.isalnum() for c in clean_bangla):
+            if any(c.isalnum() for c in spoken_bangla):
                 segments.append({
                     "type": "bangla",
                     "voice": BANGLA_VOICE,
-                    "spoken_text": clean_bangla.strip(),
-                    "display_text": clean_bangla.strip(),
+                    "spoken_text": spoken_bangla,
+                    "display_text": display_text,
                     "rate": "-4%",
                     "pitch": "-2Hz"
                 })
@@ -144,31 +165,12 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
         dur_res = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
         seg_dur_ms = int(float(dur_res.stdout.strip()) * 1000)
         
-        if seg["type"] == "arabic":
-            seg_cues.append({
-                "start_ms": current_offset_ms,
-                "end_ms": current_offset_ms + seg_dur_ms,
-                "text": seg["display_text"]
-            })
-        else:
-            if os.path.exists(s_vtt):
-                with open(s_vtt, "r", encoding="utf-8") as f:
-                    vtt_content = f.read()
-                matches = re.findall(r'(\d{2}:\d{2}:\d{2}[\.,]\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}[\.,]\d{3})\s*\n(.*?)(?=\n\n|\Z)', vtt_content, re.DOTALL)
-                for start_t, end_t, c_text in matches:
-                    c_clean = c_text.strip()
-                    if c_clean:
-                        seg_cues.append({
-                            "start_ms": current_offset_ms + time_to_ms(start_t),
-                            "end_ms": current_offset_ms + time_to_ms(end_t),
-                            "text": c_clean
-                        })
-            else:
-                seg_cues.append({
-                    "start_ms": current_offset_ms,
-                    "end_ms": current_offset_ms + seg_dur_ms,
-                    "text": seg["display_text"]
-                })
+        # Always use pristine display_text for the subtitles on screen
+        seg_cues.append({
+            "start_ms": current_offset_ms,
+            "end_ms": current_offset_ms + seg_dur_ms,
+            "text": seg["display_text"]
+        })
                 
         seg_mp3s.append(s_mp3)
         current_offset_ms += seg_dur_ms
