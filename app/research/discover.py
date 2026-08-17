@@ -76,9 +76,9 @@ def run_discovery():
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Fetch last 20 produced titles for anti-repetition
+    # Fetch titles used in the last 20 days for anti-repetition (matches the purge cycle)
     try:
-        cursor.execute("SELECT title FROM topics WHERE status IN ('IN_PROGRESS', 'DONE', 'DISCOVERED') ORDER BY id DESC LIMIT 20")
+        cursor.execute("SELECT title FROM topics WHERE status IN ('IN_PROGRESS', 'DONE', 'DISCOVERED') AND created_at >= datetime('now', '-20 days') ORDER BY id DESC")
         recent_titles = [row["title"] for row in cursor.fetchall()]
     except Exception:
         recent_titles = []

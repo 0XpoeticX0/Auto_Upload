@@ -4,7 +4,7 @@ import time
 import argparse
 from datetime import datetime, timezone
 from app.logger import logger
-from app.database import init_db, get_connection
+from app.database import init_db, get_connection, purge_old_facebook_posts
 from app.post.generator import generate_post_content
 from app.post.card_builder import create_post_image_card
 from app.post.uploader import upload_post_to_facebook
@@ -26,6 +26,7 @@ def determine_target_language(cli_lang: str = None) -> str:
 
 def run_facebook_post_pipeline(lang: str = None, no_upload: bool = False):
     init_db()
+    purge_old_facebook_posts(days=20)  # Delete posts older than 20 days so topics can repeat
     
     target_lang = determine_target_language(lang)
     logger.info("==================================================")

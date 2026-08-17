@@ -2,7 +2,7 @@ import os
 import shutil
 import argparse
 from app.logger import logger
-from app.database import init_db
+from app.database import init_db, purge_old_topics
 from app.research.discover import run_discovery
 from app.scripts.generator import generate_script
 from app.tts.edge_provider import generate_all_audio
@@ -46,6 +46,7 @@ def main(no_upload: bool = False):
     
     cleanup_temp_folder()
     init_db()
+    purge_old_topics(days=20)  # Delete topics older than 20 days so they can repeat
     
     topic = run_discovery()
     if not topic:

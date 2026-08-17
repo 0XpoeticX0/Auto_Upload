@@ -148,8 +148,39 @@ def init_db():
     conn.close()
     logger.info("Database initialized.")
 
-def get_recent_facebook_posts(limit: int = 30):
-    """Retrieve recent Facebook posts to prevent repeating topics/quotes for 30+ days."""
+def purge_old_topics(days: int = 20):
+    """
+    Delete topics older than `days` days so they can repeat in the next 20-day cycle.
+    2 videos/day × 20 days = 40 videos before any topic can repeat.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        DELETE FROM topics
+        WHERE created_at < datetime('now', ?)
+    ''', (f'-{days} days',))
+    conn.commit()
+    deleted = cursor.fetchone()  # rowcount not available via DualCursor, so we log before
+    conn.close()
+    logger.info(f"Purged topics older than {days} days (20-day rotation cycle).")
+
+def purge_old_facebook_posts(days: int = 20):
+    """
+    Delete facebook_posts older than `days` days so posts can repeat in the next 20-day cycle.
+    4 posts/day × 20 days = 80 posts before any topic can repeat.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        DELETE FROM facebook_posts
+        WHERE created_at < datetime('now', ?)
+    ''', (f'-{days} days',))
+    conn.commit()
+    conn.close()
+    logger.info(f"Purged facebook_posts older than {days} days (20-day rotation cycle).")
+
+def get_recent_facebook_posts(limit: int = 80):
+    """Retrieve recent Facebook posts to prevent repeating topics/quotes within the 20-day cycle."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('''
