@@ -400,13 +400,13 @@ PlayResY: {CARD_HEIGHT}
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Header,Nirmala UI,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Arabic,Arial,{f_arabic},&H0041AFEB,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Quote,Nirmala UI,{f_quote},&H00E6F0F4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: ExplainTitle,Nirmala UI,{f_explain - 2},&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
-Style: Explain,Nirmala UI,{f_explain},&H00DCDCDC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
-Style: Reference,Nirmala UI,36,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Watermark,Nirmala UI,26,&H00808080,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
+Style: Header,Hind Siliguri,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Arabic,Amiri,{f_arabic},&H0041AFEB,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Quote,Hind Siliguri,{f_quote},&H00E6F0F4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: ExplainTitle,Hind Siliguri,{f_explain - 2},&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
+Style: Explain,Hind Siliguri,{f_explain},&H00DCDCDC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
+Style: Reference,Hind Siliguri,36,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Watermark,Hind Siliguri,26,&H00808080,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -415,11 +415,13 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     with open(temp_ass, "w", encoding="utf-8") as f:
         f.write(ass_content)
         
-    safe_ass = temp_ass.replace("\\", "/")
+    safe_ass = os.path.relpath(temp_ass).replace('\\', '/')
+    fonts_dir = "app/assets/fonts"
+    
     cmd = [
         "ffmpeg", "-y",
         "-i", temp_canvas,
-        "-vf", f"subtitles='{safe_ass}'",
+        "-vf", f"subtitles='{safe_ass}':fontsdir='{fonts_dir}'",
         "-frames:v", "1",
         "-update", "1",
         output_path

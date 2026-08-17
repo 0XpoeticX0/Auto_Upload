@@ -9,7 +9,7 @@ VIDEO_HEIGHT = 1920
 
 def render_final_video(scenes: list, topic_id: int, video_format: str = "short") -> str:
     """
-    Renders 9:16 vertical Islamic Short video with Noto Sans Bengali & Arabic font subtitles.
+    Renders 9:16 vertical Islamic Short video with Hind Siliguri authentic Bengali font subtitles.
     """
     output_dir = "data/output"
     temp_dir = os.path.join("data", "temp", f"{topic_id}_{video_format}")
@@ -43,7 +43,7 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         ass_path = os.path.join(temp_dir, "bengali_subtitles.ass")
         subprocess.run(["ffmpeg", "-y", "-i", vtt_path, ass_path], check=True, capture_output=True)
         
-        # 2. Format ASS file with Noto Sans Bengali & Center Alignment
+        # 2. Format ASS file with Hind Siliguri font and Center Alignment
         with open(ass_path, "r", encoding="utf-8") as f:
             lines = f.read().splitlines()
             
@@ -79,13 +79,7 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                 elif line.startswith("PlayResY:"):
                     header_lines.append(f"PlayResY: {VIDEO_HEIGHT}")
                 elif line.startswith("Style: Default,"):
-                    s_parts = line.split(",")
-                    if len(s_parts) >= 19:
-                        s_parts[1] = "Noto Sans Bengali"
-                        s_parts[18] = "5"  # Center alignment
-                        header_lines.append(",".join(s_parts))
-                    else:
-                        header_lines.append(line)
+                    header_lines.append("Style: Default,Hind Siliguri,74,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,0,5,60,60,0,1")
                 else:
                     header_lines.append(line)
                     
@@ -99,57 +93,44 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         out_lines = list(header_lines)
         for d in dialogues:
             clean_text = d['text'].replace('{\\an5}', '')
-            # Strip any stray tags
+            # Clean any stray tags or 'arabic:' prefixes
             clean_text = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_text)
             clean_text = re.sub(r'^\s*(arabic|bangla)\s*:\s*', '', clean_text, flags=re.IGNORECASE).strip()
+            # Wrap long lines with \N if needed
             mid_str = ",".join(d['middle_fields'])
             out_lines.append(f"{d['prefix_fields'][0]},{d['start_str']},{d['end_str']},{mid_str},{{\\an5}}{clean_text}")
             
         with open(ass_path, "w", encoding="utf-8") as f:
             f.write("\n".join(out_lines) + "\n")
             
-        safe_ass = ass_path.replace('\\', '/')
-        fonts_dir = os.path.abspath("app/assets/fonts").replace('\\', '/')
+        # Use relative paths for FFmpeg to prevent Windows drive letter colon issues
+        rel_ass = os.path.relpath(ass_path).replace('\\', '/')
+        rel_fonts = "app/assets/fonts"
         
-        # 3. Build FFmpeg graph
-        in_image = ffmpeg.input(image_path, loop=1, t=duration)
-        in_audio = ffmpeg.input(master_audio_path)
+        # 3. Build FFmpeg rendering command
+        final_video_vf = f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},subtitles='{rel_ass}':fontsdir='{rel_fonts}'"
         
-        # Scale to 9:16 vertical (1080x1920)
-        video = in_image.filter('scale', VIDEO_WIDTH, VIDEO_HEIGHT)
+        cmd = [
+            "ffmpeg", "-y",
+            "-loop", "1", "-t", str(duration),
+            "-i", image_path,
+            "-i", master_audio_path,
+            "-vf", final_video_vf,
+            "-c:v", "libx264",
+            "-crf", "18",
+            "-preset", "ultrafast",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-pix_fmt", "yuv420p",
+            "-shortest",
+            final_output
+        ]
         
-        # Subtitle styling: Noto Sans Bengali, large font size 68, bold, white with black outline
-        style = "Fontname=Noto Sans Bengali,Fontsize=68,Bold=1,MarginL=60,MarginR=60,MarginV=0,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=5"
-        
-        if os.path.exists(fonts_dir):
-            video = video.filter('subtitles', safe_ass, fontsdir=fonts_dir, force_style=style)
-        else:
-            video = video.filter('subtitles', safe_ass, force_style=style)
-            
-        # Background ambient audio if present
-        bg_audio_path = "app/assets/background_audio.mp3"
-        if os.path.exists(bg_audio_path):
-            in_bg = ffmpeg.input(bg_audio_path, stream_loop=-1, t=duration).filter('volume', 0.12)
-            final_audio = ffmpeg.filter([in_audio, in_bg], 'amix', inputs=2, duration='first')
-        else:
-            final_audio = in_audio
-            
-        out = ffmpeg.output(
-            video,
-            final_audio,
-            final_output,
-            vcodec='libx264',
-            crf=18,
-            preset='ultrafast',
-            acodec='aac',
-            audio_bitrate='192k',
-            pix_fmt='yuv420p',
-            shortest=None
-        )
-        out.run(overwrite_output=True, capture_stderr=True, quiet=True)
+        logger.info(f"Running video render command: {' '.join(cmd)}")
+        subprocess.run(cmd, check=True, capture_output=True)
         logger.info(f"Final 9:16 Bengali Video successfully rendered: {final_output}")
         return final_output
-    except ffmpeg.Error as e:
+    except subprocess.CalledProcessError as e:
         logger.error(f"FFmpeg Error in final video render:\n{e.stderr.decode('utf8', errors='ignore')}")
         return None
     except Exception as e:
