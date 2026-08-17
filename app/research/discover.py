@@ -6,27 +6,26 @@ from app.database import get_connection
 from app.llm.provider import extract_json
 
 def generate_islamic_topics(recent_titles=None):
-    system_prompt = """You are an expert Islamic content researcher for YouTube Shorts.
-Your goal is to generate exactly 4 highly viral, extremely engaging topic ideas based purely on authentic Islamic knowledge (Quran and Sahih Sunnah).
-Do not use weak Hadiths. 
+    system_prompt = """You are an expert Islamic content researcher for viral Bengali YouTube Shorts and Reels.
+Your goal is to generate 4 highly engaging, deeply emotional Islamic topic ideas in Bangla (বাংলা) based purely on authentic Quran and Sahih Hadith.
 
-You MUST generate exactly ONE topic for each of the following 4 categories, in this exact order:
-1. Daily Life: What is Halal and Haram in modern daily life (very important).
-2. Duas & Cures: Powerful Duas for forgiveness, curing sadness/disease, and success.
-3. Heart Softeners: Fear of Allah (Taqwa), repenting from Haram, and the Mercy of Allah.
-4. General Islamic Knowledge: End of times, unseen world, miracles, or stories of prophets.
+Generate ONE topic for each of these 4 pillars:
+1. দৈনন্দিন জীবন: প্রতিদিনের জীবনে হালাল ও হারাম, জবান হেফাজত, লেনদেন
+2. দোয়া ও নিরাময়: মানসিক অস্থিরতা, দুশ্চিন্তা ও বিপদ থেকে মুক্তির সহীহ দোয়া
+3. অন্তর গলানো নসিহত: তওবা, আল্লাহর সীমাহীন রহমত, গুনাহ মাফের উপায়
+4. শেষ যামানা ও আখিরাত: মৃত্যুর পরবর্তী জীবন, কিয়ামতের আলামত, কবরের শান্তি
 
-Make sure the title clearly hints at which of the 4 categories it belongs to so people can easily find it!
-
-Output JSON format:
+Output JSON format (ONLY valid JSON):
 {
     "topics": [
-        {"title": "Ultra-short curiosity title (3-5 words)", "score": 99.5},
-        ... (exactly 4 total)
+        {"title": "হতাশা ও দুশ্চিন্তা দূর করার সেরা দোয়া", "category": "dua_cures", "score": 99.5},
+        {"title": "আল্লাহর দরবারে সবচেয়ে প্রিয় দুটি সহজ বাক্য", "category": "heart_softeners", "score": 98.0},
+        {"title": "কথা বলার আগে ভাবুন: ঈমানদারের বিশেষ গুণ", "category": "daily_life", "score": 97.5},
+        {"title": "শেষ যামানার ভয়ংকর আলামত ও ঈমানের হেফাজত", "category": "islamic_knowledge", "score": 99.0}
     ]
 }"""
 
-    user_prompt = "Generate exactly 4 new, highly engaging Islamic topics. You must provide exactly one topic for Category 1, one for Category 2, one for Category 3, and one for Category 4."
+    user_prompt = "Generate 4 fresh, authentic Bengali Islamic Short topics covering the 4 pillars."
     
     if recent_titles:
         user_prompt += "\n\nCRITICAL RULE - DO NOT use or repeat any of these recently covered topics:\n"
@@ -56,57 +55,46 @@ def run_discovery():
     topics = generate_islamic_topics(recent_titles)
     
     if not topics:
-        logger.warning("No topics generated. Using fallback.")
+        logger.warning("No topics generated. Using fallback topics in Bangla.")
         topics = [
-            {"title": "The terrifying sign of Qiyamah happening right now", "score": 95.0},
-            {"title": "What happens to your soul when you sleep?", "score": 90.0}
+            {"title": "আল্লাহর দরবারে সবচেয়ে প্রিয় দুটি সহজ বাক্য", "category": "heart_softeners", "score": 98.0},
+            {"title": "হতাশা ও মানসিক কষ্ট দূর করার কার্যকরী দোয়া", "category": "dua_cures", "score": 99.0},
+            {"title": "তওবার দরজা কখন বন্ধ হয়ে যাবে?", "category": "islamic_knowledge", "score": 97.0},
+            {"title": "মানুষের সাথে উত্তম আচরণের অপার সওয়াব", "category": "daily_life", "score": 96.0}
         ]
-
-    
-    saved_count = 0
-    for topic in topics:
+        
+    for t in topics:
+        title = t.get("title", "")
+        score = t.get("score", 90.0)
         try:
-            cursor.execute('''
-                INSERT INTO topics (title, source, score, status)
-                VALUES (?, ?, ?, 'DISCOVERED')
-            ''', (topic["title"], "AI_GENERATED", topic.get("score", 50.0)))
-            saved_count += 1
-        except sqlite3.IntegrityError:
+            cursor.execute(
+                "INSERT INTO topics (title, source, score, status) VALUES (?, ?, ?, 'DISCOVERED')",
+                (title, "Gemini AI Discovery", score)
+            )
+        except Exception:
             pass
             
     conn.commit()
-    logger.info(f"Saved {saved_count} new topics to database.")
     
-    cursor.execute('''
-        SELECT * FROM topics 
-        WHERE status = 'DISCOVERED' 
-        ORDER BY id ASC 
-        LIMIT 1
-    ''')
-    best_topic = cursor.fetchone()
+    # Pick the top undiscovered topic
+    cursor.execute("SELECT id, title, score FROM topics WHERE status = 'DISCOVERED' ORDER BY score DESC LIMIT 1")
+    row = cursor.fetchone()
     
-    if not best_topic:
-        logger.warning("Topic pool exhausted. Recycling old topics...")
-        cursor.execute("UPDATE topics SET status = 'DISCOVERED' WHERE status IN ('RESEARCHING', 'SCRIPTING', 'DONE')")
-        conn.commit()
-        cursor.execute('''
-            SELECT * FROM topics 
-            WHERE status = 'DISCOVERED' 
-            ORDER BY id ASC 
-            LIMIT 1
-        ''')
-        best_topic = cursor.fetchone()
-    
-    if best_topic:
-        cursor.execute("UPDATE topics SET status = 'RESEARCHING' WHERE id = ?", (best_topic["id"],))
-        conn.commit()
+    if not row:
+        logger.error("No valid discovered topic found.")
         conn.close()
+        return None
         
-        logger.info(f"Selected topic: {best_topic['title']}")
-        topic_dict = dict(best_topic)
-        topic_dict["category"] = category
-            
-        return topic_dict
+    topic = {
+        "id": row["id"],
+        "title": row["title"],
+        "score": row["score"],
+        "category": category
+    }
     
+    cursor.execute("UPDATE topics SET status = 'IN_PROGRESS' WHERE id = ?", (topic["id"],))
+    conn.commit()
     conn.close()
-    return None
+    
+    logger.info(f"Selected topic for production: {topic['title']} (ID: {topic['id']})")
+    return topic
