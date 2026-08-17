@@ -18,42 +18,11 @@ if sys.stdout.encoding != 'utf-8':
 
 def determine_target_language(cli_lang: str = None) -> str:
     """
-    Determines whether the current run should be English or Bangla.
-    1. If explicitly specified via CLI, respect it.
-    2. Otherwise, check the last posted language in the database to alternate (50/50 split).
-    3. Fallback: check UTC hour (02:00, 09:00 -> Bangla; 06:00, 14:00 -> English).
+    Determines post language. Defaults strictly to Bangla (বাংলা) for all automated runs.
     """
-    if cli_lang and cli_lang.lower() in ["bangla", "bengali", "bn"]:
-        return "bangla"
     if cli_lang and cli_lang.lower() in ["english", "en"]:
         return "english"
-        
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        # Check if table has language column or check last post text
-        cursor.execute("SELECT quote, caption FROM facebook_posts ORDER BY id DESC LIMIT 1")
-        row = cursor.fetchone()
-        conn.close()
-        
-        if row:
-            text = f"{row['quote']} {row['caption']}"
-            has_bengali = any('\u0980' <= char <= '\u09FF' for char in text)
-            if has_bengali:
-                logger.info("Last post was in BANGLA. Alternating to ENGLISH.")
-                return "english"
-            else:
-                logger.info("Last post was in ENGLISH. Alternating to BANGLA.")
-                return "bangla"
-    except Exception as e:
-        logger.warning(f"Could not read last post from DB: {e}")
-        
-    # UTC Hour Fallback
-    current_utc_hour = datetime.now(timezone.utc).hour
-    if current_utc_hour in [2, 3, 4, 9, 10, 11]:
-        return "bangla"
-    else:
-        return "english"
+    return "bangla"
 
 def run_facebook_post_pipeline(lang: str = None):
     init_db()

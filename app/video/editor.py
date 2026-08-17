@@ -151,8 +151,8 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                 
             safe_ass = ass_path.replace('\\', '/')
             # Font size scaled for large, bold, punchy mobile/desktop reading
-            font_size = 60 if is_vertical else 65
-            style = f"Fontsize={font_size},Bold=1,MarginL=60,MarginR=60,MarginV=0,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=5"
+            font_size = 56 if is_vertical else 60
+            style = f"Fontname=Nirmala UI,Fontsize={font_size},Bold=1,MarginL=60,MarginR=60,MarginV=0,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=5"
             video = video.filter('subtitles', safe_ass, force_style=style)
             
         out = ffmpeg.output(

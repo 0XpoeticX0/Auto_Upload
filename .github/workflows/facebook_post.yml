@@ -1,27 +1,26 @@
-name: Daily Facebook & Instagram Post Pipeline
+name: Daily Facebook & Instagram Post Pipeline (Bangla)
 
 on:
   schedule:
-    # 4-Post Daily Timeline (50/50 Split: 2 Bangla, 2 English):
-    # 1. 8:25 AM Local (02:25 UTC) - Bangla Post
-    - cron: '25 2 * * *'
-    # 2. 12:25 PM Local (06:25 UTC) - English Post
-    - cron: '25 6 * * *'
-    # 3. 3:55 PM Local (09:55 UTC) - Bangla Post
-    - cron: '55 9 * * *'
-    # 4. 8:25 PM Local (14:25 UTC) - English Post
-    - cron: '25 14 * * *'
-  workflow_dispatch: # Allows manual trigger with optional language selection
+    # 4 Daily Bangla Post Runs (15 min early, UTC+6):
+    # 1. 8:45 AM Local (02:45 UTC) - Morning Reflection (for 9:00 AM)
+    - cron: '45 2 * * *'
+    # 2. 12:45 PM Local (06:45 UTC) - Mid-day Peak (for 1:00 PM)
+    - cron: '45 6 * * *'
+    # 3. 4:45 PM Local (10:45 UTC) - Afternoon Reminder (for 5:00 PM)
+    - cron: '45 10 * * *'
+    # 4. 8:45 PM Local (14:45 UTC) - Night Dhikr & Heart Softener (for 9:00 PM)
+    - cron: '45 14 * * *'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
     inputs:
       language:
         description: 'Select Post Language'
         required: true
-        default: 'auto'
+        default: 'bangla'
         type: choice
         options:
-          - auto
-          - english
           - bangla
+          - english
 
 jobs:
   generate-and-post:
@@ -49,7 +48,7 @@ jobs:
         pip install --force-reinstall google-genai
         pip install --force-reinstall Pillow
 
-    - name: Run Facebook & Instagram Post Pipeline
+    - name: Run Bangla Facebook & Instagram Post Pipeline
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GEMINI_POST_API_KEY: ${{ secrets.GEMINI_POST_API_KEY || secrets.GEMINI_API_KEY }}
@@ -59,4 +58,4 @@ jobs:
         FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         IG_USER_ID: ${{ secrets.IG_USER_ID || '17841436824022360' }}
       run: |
-        python -m app.post_main --lang "${{ inputs.language || 'auto' }}"
+        python -m app.post_main --lang "${{ inputs.language || 'bangla' }}"

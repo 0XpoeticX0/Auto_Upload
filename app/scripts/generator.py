@@ -1,176 +1,86 @@
+import random
 from app.llm.provider import extract_json
 from app.logger import logger
 from app.database import get_connection
-import json
 
-CATEGORY_TONES = {
-    "islamic_knowledge": "a wise, sincere, and knowledgeable Islamic scholar sharing powerful reminders from the Quran and Sunnah. Speak with absolute authenticity, compassion, and awe."
-}
-
-def generate_script(topic_id: int, topic_title: str, video_format: str = "short", duration_sec: int = 90, category: str = "islamic_knowledge", series_info: dict = None):
-    logger.info(f"Generating {video_format} script for topic: {topic_title} ({duration_sec}s)")
+def generate_script(topic_id: int = None, topic_title: str = None, video_format: str = "short", duration_sec: int = 30, category: str = "islamic_knowledge", series_info: dict = None) -> dict:
+    """
+    Generates authentic Bengali Islamic short video scripts with Dual-Voice <ARABIC> tagging and Triple Subtitle formatting.
+    """
+    logger.info(f"Generating Bengali Islamic Short video script...")
     
-    # 1 scene = ~5-6 seconds. We want roughly 5-6 scenes for a short, and ~24 for a 3 min video.
-    num_scenes = max(5, round(duration_sec / 7.5))
-    words_per_scene = 20
-    total_words = num_scenes * words_per_scene
-    
-    tone = CATEGORY_TONES.get(category, CATEGORY_TONES["islamic_knowledge"])
+    system_prompt = """You are an expert Islamic content creator crafting viral, deeply emotional 30-second Islamic Shorts videos for Bengali-speaking audiences.
 
-    rules = []
-    
-    rules.append(f"""=============================================
-RULE 1 — DURATION (NON-NEGOTIABLE)
-=============================================
-- You MUST write EXACTLY {num_scenes} scenes.
-- Every single scene's narration MUST contain approximately {words_per_scene} words.
-- DO NOT summarize or skip scenes to save space.""")
+CRITICAL RULES:
+1. TRIPLE ARABIC DISPLAY (Arabic + English Transliteration + Bangla Spelling):
+   - For ANY Quranic Ayah, Dua, or Dhikr inside <ARABIC>...</ARABIC> tags:
+     * Line 1: Pure Arabic with full Tashkeel/Harakat
+     * Line 2: (English Transliteration — বাংলা উচ্চারণ)
+   - Examples:
+     * <ARABIC>
+أَسْتَغْفِرُ اللَّهَ
+(Astaghfirullah — আস্তাগফিরুল্লাহ)
+</ARABIC>
+     * <ARABIC>
+سُبْحَانَ اللَّهِ
+(SubhanAllah — সুবহানাল্লাহ)
+</ARABIC>
+     * <ARABIC>
+فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۞ إِنَّ مَعَ الْعُسْرِ يُسْرًا
+(Fa inna ma'al 'usri yusra — নিশ্চয়ই কষ্টের সাথেই রয়েছে শান্তি)
+</ARABIC>
+     * <ARABIC>
+أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ
+(Ala bi dhikrillahi tatma'innul qulub — আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়)
+</ARABIC>
 
-    rules.append("""=============================================
-RULE 2 — ISLAMIC AUTHENTICITY & CITATIONS (STRICT & MANDATORY)
-=============================================
-- Every single fact, story, Ayah, and Hadith MUST be 100% AUTHENTIC from the Quran or Sahih/Hasan Sunnah (Sahih Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami' at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah, Musnad Ahmad).
-- STRICTLY FORBIDDEN: NEVER use weak (da'eef) hadiths, fabricated claims, cultural myths, or made-up narratives.
-- NEVER cut an Ayah or Hadith in half: The quoted Arabic text must be a complete, grammatically intact verse, Hadith statement, or self-contained Dua.
-- You MUST provide the exact chapter/verse (e.g. 'Quran 2:153') or exact collection & number (e.g. 'Sahih Bukhari 5063', 'Sahih Muslim 1631') in the 'references' array of your JSON output.""")
+2. NATURAL CONVERSATIONAL BANGLA (প্রমিত চলিত ভাষা):
+   - Use warm, modern standard Bengali that is easy for text-to-speech AI to pronounce clearly and naturally.
+   - Use words like 'অন্তর', 'শান্তি', 'ভরসা', 'হবেন না'.
+   - Add commas (,) and dāri (।) to create natural breathing pauses so the voice feels reflective and soulful.
 
-    rules.append("""=============================================
-RULE 3 — HOOK & VIRAL STORYTELLING
-=============================================
-- THE 3-SECOND CURIOSITY GAP: Scene 1 narration MUST start with a hook that creates a curiosity gap. Start with a bold claim or a relatable question that makes the viewer realize there is a secret they don't know. Never start with a dry fact.
-- MAKE IT RELATABLE: Translate complex topics into things the viewer experiences every day. Speak directly to them ("Have you ever...", "Think about...").
-- Final scene narration MUST end with exactly: "Follow for more authentic Islamic reminders... every single day!\"""")
-    
-    json_format = f"""{{
-    "title": "Catchy viral title under 60 characters",
-    "references": ["Reference 1", "Reference 2"],
+3. STRUCTURE (Target 25-30 seconds spoken length, approx 50-65 Bangla words):
+   - Scene 1 (Hook in Bangla): An emotional question or hook that stops scrolling in the first 2 seconds.
+   - Scene 2 (The Core Arabic & Meaning): The authentic Arabic quote with triple formatting in <ARABIC>...</ARABIC> tags, followed by its clear Bangla translation.
+   - Scene 3 (Heart Reflection in Bangla): A comforting, practical lesson applying to daily struggles (anxiety, grief, forgiveness, patience).
+   - Scene 4 (Outro with Triple Dhikr): "কমেন্টে '<ARABIC>سُبْحَانَ اللَّهِ\n(SubhanAllah — সুবহানাল্লাহ)</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর রিমাইন্ডারের জন্য পেজটি ফলো করুন।"
+
+4. VISUAL PROMPTS:
+   - 9:16 vertical photorealistic, cinematic visual descriptions (ancient desert, glowing lantern, calm morning mist over minarets, dramatic sunlight rays, no humans, no faces).
+
+OUTPUT JSON FORMAT (ONLY valid JSON):
+{
+    "title": "ভিডিওর শিরোনাম (বাংলা)",
+    "title_bn": "ভিডিওর শিরোনাম (বাংলা)",
+    "topic": "Topic Name",
+    "reference": "Surah Az-Zumar: 53",
+    "narration_full_bn": "মনে হচ্ছে আপনার পাপ অনেক বেশি? মনটা কি ভীষণ অশান্তিতে ভুগছে? মহান আল্লাহ বলেন: <ARABIC>\nلَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ\n(La taqnatu min rahmatillah — আল্লাহর রহমত থেকে নিরাশ হয়ো না)\n</ARABIC> আল্লাহর রহমত থেকে কখনো নিরাশ হবেন না। তিনি আপনার সব ভুল ক্ষমা করতে চান। শুধু একবার মন থেকে তাকে ডাকুন, তিনি শুনবেন। কমেন্টে '<ARABIC>\nأَسْتَغْفِرُ اللَّهَ\n(Astaghfirullah — আস্তাগফিরুল্লাহ)\n</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর রিমাইন্ডারের জন্য পেজটি ফলো করুন।",
     "scenes": [
-        {{
+        {
             "scene_number": 1,
-            "narration": "Exactly {words_per_scene} words...",
-            "visuals": "Detailed visual prompt, photorealistic, 8k, cinematic"
-        }}
+            "narration": "মনে হচ্ছে আপনার পাপ অনেক বেশি? মনটা কি ভীষণ অশান্তিতে ভুগছে?",
+            "visuals": "moody dark atmospheric room with warm ray of golden sunlight piercing through wooden window, photorealistic 8k, cinematic, empty, no humans"
+        },
+        {
+            "scene_number": 2,
+            "narration": "মহান আল্লাহ বলেন: <ARABIC>\nلَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ\n(La taqnatu min rahmatillah — আল্লাহর রহমত থেকে নিরাশ হয়ো না)\n</ARABIC> আল্লাহর রহমত থেকে কখনো নিরাশ হবেন না।",
+            "visuals": "vast calm ocean at night under dramatic glowing moon, peaceful serene atmosphere, photorealistic 8k, no humans"
+        },
+        {
+            "scene_number": 3,
+            "narration": "তিনি আপনার সব ভুল ক্ষমা করতে চান, শুধু একবার মন থেকে তাকে ডাকুন। তিনি অবশ্যই শুনবেন।",
+            "visuals": "grand peaceful empty mosque with warm golden rays descending through dome, cinematic 8k, photorealistic, no humans"
+        },
+        {
+            "scene_number": 4,
+            "narration": "কমেন্টে '<ARABIC>\nأَسْتَغْفِرُ اللَّهَ\n(Astaghfirullah — আস্তাগফিরুল্লাহ)\n</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর রিমাইন্ডারের জন্য পেজটি ফলো করুন।",
+            "visuals": "ancient glowing lantern resting on ancient stone balcony with peaceful sunrise mist over desert, 8k, photorealistic, cinematic, no humans"
+        }
     ]
-}}"""
-
-    rules.append(f"""=============================================
-RULE 4 — WRITE FOR THE EAR (VOICE & TONE)
-=============================================
-- Write like {tone}
-- USE SIMPLE, EVERYDAY VOCABULARY: Write at a 5th-grade reading level. Use words people use daily. Do not use complex, academic, or "hard to catch" words.
-- AI READS EXACTLY WHAT YOU TYPE. If you write formally, it sounds like a robot.
-- USE CONTRACTIONS: Always use "it's", "they're", "wouldn't", "you've". Never use "it is" or "they are".
-- USE FILLER WORDS: Occasionally start sentences with "Now,", "Look,", or "Listen," to make it sound conversational.
-- FORCE PUNCTUATION PAUSES: Use ellipses (...) for dramatic, trailing pauses. Use em-dashes (—) for a sudden interruption or shift in tone.
-- SHORT, PUNCHY SENTENCES: Break up long sentences. If it has an "and", make it two sentences.""")
-
-    rules.append("""=============================================
-RULE 5 — THE "BUT / THEREFORE" FRAMEWORK
-=============================================
-- DO NOT use "and then" storytelling. 
-- A gripping script says: "This happened, THEREFORE this happened, BUT then this went wrong."
-- The narrative must escalate and constantly shift momentum.""")
-
-    rules.append("""=============================================
-RULE 6 — NO REPETITION (CRITICAL)
-=============================================
-- NEVER repeat the same sentence or phrase.
-- Each scene must introduce NEW information, NEW story beats, or NEW concepts.
-- The story must continuously move forward.""")
-
-    rules.append("""=============================================
-RULE 7 — VISUAL-SCRIPT MATCHING (CRITICAL)
-=============================================
-Every scene's 'visuals' field MUST literally show what the narration describes at that exact moment.
-- NEVER describe a close-up face, portrait, or selfie. ALWAYS describe the full environment and scene.
-- Describe the LOCATION and ACTION, not the person's face.
-- Always end visual prompt with: ", wide angle, full scene, photorealistic, 8k, dramatic lighting, cinematic\"""")
-
-    rules.append("""=============================================
-RULE 8 — DUAL-VOICE ENGINE (COMPLETE ARABIC RECITATION & EXPLANATION)
-=============================================
-- When quoting an Ayah (Quranic verse), authentic Hadith, or Dua, you MUST write the FULL, complete Arabic script, followed by a newline (\\n), followed by the English pronunciation, followed by a newline (\\n), followed by the full English translation, ALL inside the `<ARABIC>` tags.
-- DO NOT cut an Ayah or Hadith in half. The Arabic quotation must be a complete, self-contained statement.
-- The English translation inside the `<ARABIC>` tags must be the full, accurate translation of the entire Arabic text.
-- AFTER THE ARABIC BLOCK: The English narration that follows MUST be a standalone, complete sentence that clearly explains what the Ayah/Hadith means and connects its profound lesson to the viewer's life.
-- NEVER split a sentence across Arabic and English (e.g., DO NOT do '<ARABIC>...</ARABIC> because grief overwhelmed them').
-- Correct Example:
-  "The Prophet, peace be upon him, said, <ARABIC>اصْنَعُوا لآلِ جَعْفَرٍ طَعَامًا فَإِنَّهُ قَدْ أَتَاهُمْ أَمْرٌ يَشْغَلُهُمْ\\nIsna'oo li-Aali Ja'farin ta'aman fa-innahu qad ataahum amrun yash-ghaluhum\\n(Prepare food for the family of Ja'far, for there has come upon them what overwhelms them with grief)</ARABIC>. Notice how the Prophet, peace be upon him, commanded the community to immediately step in and take care of grieving families."
-- ONLY wrap the Arabic recitation/Dua block inside `<ARABIC>`. Do not wrap normal English narration.""")
-
-    rules.append("""=============================================
-RULE 9 — SALAWAT & HONORIFICS (MANDATORY & RESPECTFUL)
-=============================================
-- Whenever mentioning Prophet Muhammad, you MUST ALWAYS say 'Prophet Muhammad, peace be upon him,' or 'the Prophet, peace be upon him,'. NEVER say 'Muhammad' or 'the Prophet' alone without 'peace be upon him'.
-- ALWAYS write out 'peace be upon him' in full English words (DO NOT abbreviate as 'PBUH' or 'SAW', because the text-to-speech engine must read it out loud naturally).
-- For other Prophets (e.g., Musa, Isa, Ibrahim, Yunus, Ayyub), say 'peace be upon him'.
-- For Companions (Sahabah like Abu Bakr, Umar, Ali, Aisha), say 'may Allah be pleased with them' or 'may Allah be pleased with him/her'.""")
-
-
-    system_prompt = f"""You are an expert Islamic content writer and master storyteller.
-Your job is to write a script for a {duration_sec}-second video (approx {num_scenes} scenes).
-Content Category: {category.upper().replace('_', ' ')}
-
-{chr(10).join(rules)}
-
-=============================================
-OUTPUT FORMAT
-=============================================
-Return ONLY valid JSON. No extra text before or after.
-- CRITICAL: DO NOT use double quotes (") inside your JSON string values. If you need to quote dialogue, use single quotes ('). This prevents JSON parsing errors.
-
-{json_format}
+}
 """
-
-    user_prompt = f"""Topic: {topic_title}
-
-CHECKLIST BEFORE YOU RESPOND:
-1. Did you write EXACTLY {num_scenes} scenes? ___
-2. Does each scene have ~{words_per_scene} words? ___
-3. Does every visual match its narration exactly? ___
-4. Did you double check that you are NOT repeating sentences? ___
-5. Did you use ellipses (...) and contractions (they're, it's) to force the TTS to sound human? ___
-6. Did you provide authentic references (Quran/Sahih Sunnah)? ___
-
-Only respond when all boxes are checked."""
-
-    script_data = extract_json(system_prompt, user_prompt)
+    topic_hint = f" Topic: {topic_title}." if topic_title else ""
+    user_prompt = f"Generate a fresh, viral, emotional 30-second Islamic Short video script in Bangla with authentic Arabic Ayah/Hadith/Dhikr.{topic_hint}"
     
-    if not script_data:
-        logger.error("Failed to generate script.")
-        return None
-    
-    scenes = script_data.get("scenes", [])
-    
-    # Automated Salawat & Honorifics enforcement
-    import re
-    for scene in scenes:
-        narration = scene.get("narration", "")
-        # Ensure 'Prophet Muhammad' has 'peace be upon him'
-        narration = re.sub(r'\bProphet Muhammad\b(?!\s*[,(]?\s*peace be upon him)', 'Prophet Muhammad, peace be upon him,', narration, flags=re.IGNORECASE)
-        # Ensure 'the Prophet' has 'peace be upon him'
-        narration = re.sub(r'\bthe Prophet\b(?!\s*[,(]?\s*peace be upon him)', 'the Prophet, peace be upon him,', narration, flags=re.IGNORECASE)
-        # Clean double commas
-        narration = re.sub(r',\s*,', ',', narration)
-        scene["narration"] = narration
-        
-    actual_scenes = len(scenes)
-    actual_words = sum(len(s.get("narration", "").split()) for s in scenes)
-    estimated_duration = actual_words / 2.5
-    logger.info(f"Script: {actual_scenes}/{num_scenes} scenes | ~{actual_words} words | ~{estimated_duration:.0f}s estimated duration (target: {duration_sec}s)")
-        
-    conn = get_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute('''
-        INSERT INTO scripts (topic_id, raw_script, scenes_json)
-        VALUES (?, ?, ?)
-    ''', (topic_id, json.dumps(script_data), json.dumps(scenes)))
-    
-    cursor.execute("UPDATE topics SET status = 'SCRIPTING' WHERE id = ?", (topic_id,))
-    
-    conn.commit()
-    conn.close()
-    
-    logger.info(f"Script ({video_format}) successfully generated and saved.")
+    script_data = extract_json(system_prompt, user_prompt, for_posts=False)
     return script_data
