@@ -18,19 +18,18 @@ MODELS = [
 GLOBAL_RULE = "\n\nCRITICAL SYSTEM RULE: You must cross-check all Islamic claims with authentic Quranic verses and Sahih Hadith. Do not output any misinformation, unverified stories, or false claims. All claims must be backed by authentic sources."
 
 def get_api_keys_pool(for_posts: bool = False) -> list:
-    """Returns an ordered pool of available Gemini API keys for seamless fallback."""
+    """Returns an ordered pool of all available Gemini API keys."""
     keys = []
-    # Add new accounts first for fresh quota
+    if GEMINI_API_KEY and GEMINI_API_KEY not in keys:
+        keys.append(GEMINI_API_KEY)
     if GEMINI_KEY_3 and GEMINI_KEY_3 not in keys:
         keys.append(GEMINI_KEY_3)
     if GEMINI_KEY_4 and GEMINI_KEY_4 not in keys:
         keys.append(GEMINI_KEY_4)
-    if for_posts and GEMINI_POST_API_KEY and GEMINI_POST_API_KEY not in keys:
-        keys.append(GEMINI_POST_API_KEY)
-    if GEMINI_API_KEY and GEMINI_API_KEY not in keys:
-        keys.append(GEMINI_API_KEY)
     if GEMINI_BACKUP_API_KEY and GEMINI_BACKUP_API_KEY not in keys:
         keys.append(GEMINI_BACKUP_API_KEY)
+    if for_posts and GEMINI_POST_API_KEY and GEMINI_POST_API_KEY not in keys:
+        keys.append(GEMINI_POST_API_KEY)
     return [k for k in keys if k]
 
 def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False) -> str:
@@ -41,22 +40,21 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
         
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
     
-    for key in key_pool:
-        try:
-            client = genai.Client(api_key=key)
-            for model_name in MODELS:
-                try:
-                    logger.info(f"Attempting to generate text with model: {model_name}")
-                    response = client.models.generate_content(
-                        model=model_name,
-                        contents=prompt,
-                    )
-                    if response.text:
-                        return response.text
-                except Exception as e:
-                    logger.warning(f"Failed with {model_name} ({e}). Falling back to next model...")
-        except Exception as ke:
-            logger.warning(f"API key failed ({ke}). Trying backup key...")
+    # Priority: Try the BEST model across ALL available API keys first!
+    for model_name in MODELS:
+        for idx, key in enumerate(key_pool, start=1):
+            try:
+                logger.info(f"Attempting model '{model_name}' on Key #{idx}/{len(key_pool)}")
+                client = genai.Client(api_key=key)
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt,
+                )
+                if response.text:
+                    logger.info(f"Successfully generated text using '{model_name}' on Key #{idx}!")
+                    return response.text
+            except Exception as e:
+                logger.warning(f"Model '{model_name}' failed on Key #{idx} ({e}). Trying next key/model...")
             
     logger.error("All Gemini models and API keys failed.")
     return ""
@@ -98,30 +96,29 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
         
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
     
-    for key in key_pool:
-        try:
-            client = genai.Client(api_key=key)
-            for model_name in MODELS:
-                try:
-                    logger.info(f"Attempting to extract JSON with model: {model_name}")
-                    response = client.models.generate_content(
-                        model=model_name,
-                        contents=prompt,
-                        config=types.GenerateContentConfig(
-                            response_mime_type="application/json",
-                            max_output_tokens=max_tokens
-                        )
+    # Priority: Try the BEST model across ALL available API keys first!
+    for model_name in MODELS:
+        for idx, key in enumerate(key_pool, start=1):
+            try:
+                logger.info(f"Attempting model '{model_name}' on Key #{idx}/{len(key_pool)}")
+                client = genai.Client(api_key=key)
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        max_output_tokens=max_tokens
                     )
-                    raw_text = response.text
-                    if not raw_text:
-                        continue
-                    parsed = _parse_dirty_json(raw_text)
-                    if parsed:
-                        return parsed
-                except Exception as e:
-                    logger.warning(f"Failed with {model_name} ({e}). Falling back to next model...")
-        except Exception as ke:
-            logger.warning(f"API key failed ({ke}). Trying backup key...")
+                )
+                raw_text = response.text
+                if not raw_text:
+                    continue
+                parsed = _parse_dirty_json(raw_text)
+                if parsed:
+                    logger.info(f"Successfully extracted JSON using '{model_name}' on Key #{idx}!")
+                    return parsed
+            except Exception as e:
+                logger.warning(f"Model '{model_name}' failed on Key #{idx} ({e}). Trying next key/model...")
             
     logger.error("All Gemini models and API keys failed.")
     return {}
