@@ -1,7 +1,7 @@
 import json
 from google import genai
 from google.genai import types
-from app.config import GEMINI_API_KEY, GEMINI_POST_API_KEY, GEMINI_BACKUP_API_KEY, GEMINI_KEY_3, GEMINI_KEY_4
+from app.config import GEMINI_API_KEY, GEMINI_POST_API_KEY, GEMINI_BACKUP_API_KEY, GEMINI_KEY_3, GEMINI_KEY_4, GEMINI_KEY_5
 from app.logger import logger
 
 import re
@@ -20,6 +20,8 @@ GLOBAL_RULE = "\n\nCRITICAL SYSTEM RULE: You must cross-check all Islamic claims
 def get_api_keys_pool(for_posts: bool = False) -> list:
     """Returns an ordered pool of all available Gemini API keys."""
     keys = []
+    if GEMINI_KEY_5 and GEMINI_KEY_5 not in keys:
+        keys.append(GEMINI_KEY_5)
     if GEMINI_API_KEY and GEMINI_API_KEY not in keys:
         keys.append(GEMINI_API_KEY)
     if GEMINI_KEY_3 and GEMINI_KEY_3 not in keys:
