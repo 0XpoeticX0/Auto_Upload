@@ -24,7 +24,7 @@ jobs:
     - name: Install System Dependencies & Arabic/Bengali Fonts
       run: |
         sudo apt-get update
-        sudo apt-get install -y ffmpeg fonts-noto-core fonts-beng fonts-arab
+        sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-extra fonts-beng fonts-kacst
 
     - name: Install Python Dependencies
       run: |
