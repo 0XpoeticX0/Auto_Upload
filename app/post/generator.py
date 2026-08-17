@@ -84,7 +84,7 @@ OUTPUT JSON FORMAT (ONLY valid JSON, no markdown outside):
 
     user_prompt = f"Generate an authentic, captivating Facebook post card and caption for category: {selected_category['name']}."
     
-    post_data = extract_json(system_prompt, user_prompt)
+    post_data = extract_json(system_prompt, user_prompt, for_posts=True)
     if not post_data or "quote" not in post_data:
         logger.error("Failed to generate Facebook post content from LLM.")
         return None
