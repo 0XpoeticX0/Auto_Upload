@@ -157,10 +157,15 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
     subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", concat_list, "-c", "copy", scene_mp3], check=True, capture_output=True)
     return scene_mp3, seg_cues, current_offset_ms
 
-def generate_all_audio(script_data: dict, temp_dir: str = "data/temp") -> dict:
+def generate_all_audio(scenes_or_script, topic_id: int = 0, video_format: str = "master", category: str = "islamic_knowledge") -> list:
     """Master audio synthesizer for all scenes with dual-voice stitching and VTT/ASS export."""
+    if isinstance(scenes_or_script, dict):
+        scenes = scenes_or_script.get("scenes", [])
+    else:
+        scenes = scenes_or_script
+        
+    temp_dir = os.path.join("data", "temp", f"{topic_id}_{video_format}")
     os.makedirs(temp_dir, exist_ok=True)
-    scenes = script_data.get("scenes", [])
     
     all_scene_mp3s = []
     global_cues = []
@@ -196,9 +201,10 @@ def generate_all_audio(script_data: dict, temp_dir: str = "data/temp") -> dict:
             f.write(f"{ms_to_time(cue['start_ms'])} --> {ms_to_time(cue['end_ms'])}\n{cue['text']}\n\n")
             
     logger.info(f"Master Dual-Voice audio generated: {master_mp3} ({global_offset_ms/1000:.1f}s)")
-    return {
-        "audio_path": master_mp3,
-        "vtt_path": master_vtt,
-        "duration_sec": global_offset_ms / 1000.0,
-        "cues": global_cues
-    }
+    
+    for sc in scenes:
+        sc["audio_path"] = master_mp3
+        sc["vtt_path"] = master_vtt
+        sc["duration"] = global_offset_ms / 1000.0
+        
+    return scenes
