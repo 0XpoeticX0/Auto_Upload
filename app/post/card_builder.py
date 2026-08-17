@@ -353,21 +353,21 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     reference = post_data.get("reference", "").strip()
     
     header_lines = split_text_wrap_ass(header, max_chars=48) if header else []
-    arabic_lines = split_text_wrap_ass(arabic_quote, max_chars=44) if arabic_quote else []
+    arabic_lines = split_text_wrap_ass(arabic_quote, max_chars=60) if arabic_quote else []
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
     quote_lines = split_text_wrap_ass(styled_quote, max_chars=46) if bangla_quote else []
     explain_lines = split_text_wrap_ass(explanation, max_chars=50) if explanation else []
     
     # Typography specs matching reference image
     f_header = 46
-    f_arabic = 56
+    f_arabic = 58
     f_quote = 44
     f_explain = 34
     f_ref = 42
     f_wm = 26
     
     h_step = 56
-    a_step = 66
+    a_step = 70
     q_step = 54
     e_step = 44
     
@@ -384,7 +384,7 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     for a_l in arabic_lines:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Arabic,,0,0,0,,{{\\pos(540,{current_y})}}{a_l}")
         current_y += a_step
-    if arabic_lines: current_y += 20
+    if arabic_lines: current_y += 22
         
     for q_l in quote_lines:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Quote,,0,0,0,,{{\\pos(540,{current_y})}}{q_l}")
@@ -412,12 +412,12 @@ PlayResY: {CARD_HEIGHT}
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Arabic,Amiri,{f_arabic},&H003DBFF2,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: ExplainTitle,Noto Sans Bengali,32,&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
-Style: Explain,Noto Sans Bengali,{f_explain},&H00D4D4D4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
-Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
+Style: Arabic,Amiri,{f_arabic},&H003DBFF2,&H000000FF,&H00000000,&H80000000,-1,0,0,0,105,100,0,0,1,3,0,5,40,40,0,1
+Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
+Style: ExplainTitle,Noto Sans Bengali,32,&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
+Style: Explain,Noto Sans Bengali,{f_explain},&H00D4D4D4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
+Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
 Style: Watermark,Noto Sans Bengali,{f_wm},&H00808080,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
 
 [Events]
