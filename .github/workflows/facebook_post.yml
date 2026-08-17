@@ -35,16 +35,19 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install System Fonts & Register Authentic Bengali Fonts
+    - name: Setup Full FFmpeg with HarfBuzz
+      uses: FedericoCarboni/setup-ffmpeg@v3
+
+    - name: Install System Bengali Fonts & Register Fontconfig
       run: |
         sudo apt-get update
-        sudo apt-get install -y ffmpeg fontconfig libharfbuzz0b libfribidi0 libass9 fonts-noto-core fonts-noto-extra
+        sudo apt-get install -y fontconfig fonts-beng fonts-noto-core fonts-noto-extra || true
         sudo mkdir -p /usr/local/share/fonts/bengali
         sudo cp app/assets/fonts/*.ttf /usr/local/share/fonts/bengali/
         sudo cp app/assets/fonts/fonts.conf /etc/fonts/local.conf
         sudo fc-cache -f -v
         echo "=== Verifying FFmpeg & FFprobe ==="
-        ffmpeg -version | head -n 1
+        ffmpeg -version | head -n 2
         ffprobe -version | head -n 1
         echo "=== Verifying Fonts Registered ==="
         fc-list : family | grep -iE 'noto|hind|amiri' || echo "WARNING: fonts not found!"
