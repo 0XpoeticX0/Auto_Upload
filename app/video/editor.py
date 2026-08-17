@@ -79,7 +79,7 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                 elif line.startswith("PlayResY:"):
                     header_lines.append(f"PlayResY: {VIDEO_HEIGHT}")
                 elif line.startswith("Style: Default,"):
-                    header_lines.append("Style: Default,Hind Siliguri,74,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,0,5,60,60,0,1")
+                    header_lines.append("Style: Default,Nirmala UI,74,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,0,5,60,60,0,1")
                 else:
                     header_lines.append(line)
                     
@@ -107,10 +107,10 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                     # Style Arabic text with Amiri font and gold accent
                     formatted_sub_lines.append(f"{{\\fnAmiri\\fs80\\b1\\c&HEBAF41&}}{sl}")
                 else:
-                    # Style Bangla text with Hind Siliguri font and crisp white color
-                    formatted_sub_lines.append(f"{{\\fnHind Siliguri\\fs74\\b1\\c&HFFFFFF&}}{sl}")
+                    # Style Bangla text with Nirmala UI font and crisp white color
+                    formatted_sub_lines.append(f"{{\\fnNirmala UI\\fs74\\b1\\c&HFFFFFF&}}{sl}")
                     
-            final_dialogue_text = "\\N".join(formatted_sub_lines) if formatted_sub_lines else f"{{\\fnHind Siliguri\\fs74\\b1}}{clean_text}"
+            final_dialogue_text = "\\N".join(formatted_sub_lines) if formatted_sub_lines else f"{{\\fnNirmala UI\\fs74\\b1}}{clean_text}"
             mid_str = ",".join(d['middle_fields'])
             out_lines.append(f"{d['prefix_fields'][0]},{d['start_str']},{d['end_str']},{mid_str},{{\\an5}}{final_dialogue_text}")
             
