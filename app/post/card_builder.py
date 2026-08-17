@@ -288,7 +288,7 @@ def format_quote_with_highlights_ass(quote_text: str, highlight_phrases: list) -
         if not hl.strip():
             continue
         clean_hl = hl.strip()
-        styled = styled.replace(clean_hl, f"{{\\c&H0041AFEB&}}{{\\b1}}{clean_hl}{{\\r\\c&H00E6F0F4&}}")
+        styled = styled.replace(clean_hl, f"{{\\c&H003DBFF2&}}{{\\b1}}{clean_hl}{{\\r\\c&H00FFFFFF&}}")
     return styled
 
 def create_bengali_post_card(post_data: dict, output_path: str) -> str:
@@ -301,37 +301,49 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     temp_canvas = os.path.join(temp_dir, f"canvas_{timestamp}.jpg")
     temp_ass = os.path.join(temp_dir, f"card_{timestamp}.ass")
     
-    # 1. Visual & Base Canvas
-    image_prompt = post_data.get("image_prompt", "ancient mosque arches with warm sunset sunbeams, photorealistic 8k")
+    # 1. Visual & Base Canvas (Atmospheric top arch image with soft feathering)
+    image_prompt = post_data.get("image_prompt", "antique wooden arched window with warm glowing golden lantern light inside ancient room, dark atmospheric cinematic photography 8k, soft shadows")
     download_card_background(image_prompt, temp_bg)
     
     card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (11, 13, 17))
     try:
         with Image.open(temp_bg).convert("RGBA") as bg_img:
             bg_w, bg_h = bg_img.size
-            target_h = 580
+            target_h = 420
             scale = max(CARD_WIDTH / bg_w, target_h / bg_h)
             new_w = int(bg_w * scale)
             new_h = int(bg_h * scale)
             bg_scaled = bg_img.resize((new_w, new_h), Image.Resampling.LANCZOS)
             crop_x = (new_w - CARD_WIDTH) // 2
             bg_cropped = bg_scaled.crop((crop_x, 0, crop_x + CARD_WIDTH, target_h))
+            
+            # Soft feather mask on bottom and sides
             mask = Image.new("L", (CARD_WIDTH, target_h), 255)
             for y in range(target_h):
-                if y < target_h * 0.38:
-                    alpha = 255
-                else:
-                    progress = (y - target_h * 0.38) / (target_h * 0.62)
-                    alpha = int(255 * (1.0 - (progress ** 1.6)))
                 for x in range(CARD_WIDTH):
-                    mask.putpixel((x, y), alpha)
+                    # Vertical fade
+                    if y < target_h * 0.35:
+                        alpha_v = 240
+                    else:
+                        progress_y = (y - target_h * 0.35) / (target_h * 0.65)
+                        alpha_v = int(240 * (1.0 - (progress_y ** 1.8)))
+                    
+                    # Horizontal side fade
+                    edge_dist_x = min(x, CARD_WIDTH - x)
+                    if edge_dist_x < 100:
+                        alpha_h = edge_dist_x / 100.0
+                    else:
+                        alpha_h = 1.0
+                    
+                    mask.putpixel((x, y), int(alpha_v * alpha_h))
+                    
             card.paste(bg_cropped.convert("RGB"), (0, 0), mask)
     except Exception as e:
         logger.warning(f"Error blending background: {e}")
         
     card.save(temp_canvas, "JPEG", quality=95)
     
-    # 2. Text layout & dynamic sizing
+    # 2. Text layout & dynamic sizing (Matching exact reference design)
     header = post_data.get("header", "").strip()
     arabic_quote = post_data.get("arabic_quote", "").strip()
     bangla_quote = post_data.get("quote", post_data.get("bangla_quote", "")).strip()
@@ -341,53 +353,53 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     reference = post_data.get("reference", "").strip()
     
     header_lines = split_text_wrap_ass(header, max_chars=48) if header else []
-    arabic_lines = split_text_wrap_ass(arabic_quote, max_chars=46) if arabic_quote else []
+    arabic_lines = split_text_wrap_ass(arabic_quote, max_chars=44) if arabic_quote else []
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
-    quote_lines = split_text_wrap_ass(styled_quote, max_chars=48) if bangla_quote else []
-    explain_lines = split_text_wrap_ass(explanation, max_chars=52) if explanation else []
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=46) if bangla_quote else []
+    explain_lines = split_text_wrap_ass(explanation, max_chars=50) if explanation else []
     
-    total_lines = len(header_lines) + len(arabic_lines) + len(quote_lines) + (len(explain_lines) + 1 if explanation else 0)
+    # Typography specs matching reference image
+    f_header = 46
+    f_arabic = 56
+    f_quote = 44
+    f_explain = 34
+    f_ref = 42
+    f_wm = 26
     
-    if total_lines >= 12:
-        f_header, f_arabic, f_quote, f_explain = 36, 42, 34, 28
-        h_step, a_step, q_step, e_step = 44, 50, 42, 36
-        start_y = 510
-    elif total_lines >= 8:
-        f_header, f_arabic, f_quote, f_explain = 38, 44, 36, 30
-        h_step, a_step, q_step, e_step = 46, 52, 44, 38
-        start_y = 520
-    else:
-        f_header, f_arabic, f_quote, f_explain = 40, 46, 38, 32
-        h_step, a_step, q_step, e_step = 48, 54, 46, 40
-        start_y = 535
-
-    dialogues = []
+    h_step = 56
+    a_step = 66
+    q_step = 54
+    e_step = 44
+    
+    start_y = 445
     current_y = start_y
+    
+    dialogues = []
     
     for h_l in header_lines:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Header,,0,0,0,,{{\\pos(540,{current_y})}}{h_l}")
         current_y += h_step
-    if header_lines: current_y += 12
+    if header_lines: current_y += 18
         
     for a_l in arabic_lines:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Arabic,,0,0,0,,{{\\pos(540,{current_y})}}{a_l}")
         current_y += a_step
-    if arabic_lines: current_y += 12
+    if arabic_lines: current_y += 20
         
     for q_l in quote_lines:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Quote,,0,0,0,,{{\\pos(540,{current_y})}}{q_l}")
         current_y += q_step
-    if quote_lines: current_y += 16
+    if quote_lines: current_y += 24
         
     if explanation:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,ExplainTitle,,0,0,0,,{{\\pos(540,{current_y})}}{explain_title}")
-        current_y += (e_step + 6)
+        current_y += (e_step + 4)
         for e_l in explain_lines:
             dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Explain,,0,0,0,,{{\\pos(540,{current_y})}}{e_l}")
             current_y += e_step
             
-    ref_y = max(1225, current_y + 32)
-    wm_y = min(1310, ref_y + 48)
+    ref_y = max(1185, current_y + 36)
+    wm_y = min(1280, ref_y + 48)
     
     if reference:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{reference}")
@@ -401,12 +413,12 @@ PlayResY: {CARD_HEIGHT}
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Arabic,Amiri,{f_arabic},&H0041AFEB,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Quote,Noto Sans Bengali,{f_quote},&H00E6F0F4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: ExplainTitle,Noto Sans Bengali,{f_explain - 2},&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
-Style: Explain,Noto Sans Bengali,{f_explain},&H00DCDCDC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
-Style: Reference,Noto Sans Bengali,36,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
-Style: Watermark,Noto Sans Bengali,26,&H00808080,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
+Style: Arabic,Amiri,{f_arabic},&H003DBFF2,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: ExplainTitle,Noto Sans Bengali,32,&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
+Style: Explain,Noto Sans Bengali,{f_explain},&H00D4D4D4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
+Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Watermark,Noto Sans Bengali,{f_wm},&H00808080,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
