@@ -93,12 +93,26 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         out_lines = list(header_lines)
         for d in dialogues:
             clean_text = d['text'].replace('{\\an5}', '')
-            # Clean any stray tags or 'arabic:' prefixes
+            # Clean any stray tags or prefixes
             clean_text = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_text)
-            clean_text = re.sub(r'^\s*(arabic|bangla)\s*:\s*', '', clean_text, flags=re.IGNORECASE).strip()
-            # Wrap long lines with \N if needed
+            clean_text = re.sub(r'^\s*(arabic|bangla|english)\s*:\s*', '', clean_text, flags=re.IGNORECASE).strip()
+            
+            sub_lines = clean_text.split('\\N')
+            formatted_sub_lines = []
+            for sl in sub_lines:
+                sl = sl.strip()
+                if not sl:
+                    continue
+                if re.search(r'[\u0600-\u06FF]', sl):
+                    # Style Arabic text with Amiri font and gold accent
+                    formatted_sub_lines.append(f"{{\\fnAmiri\\fs80\\b1\\c&HEBAF41&}}{sl}")
+                else:
+                    # Style Bangla text with Hind Siliguri font and crisp white color
+                    formatted_sub_lines.append(f"{{\\fnHind Siliguri\\fs74\\b1\\c&HFFFFFF&}}{sl}")
+                    
+            final_dialogue_text = "\\N".join(formatted_sub_lines) if formatted_sub_lines else f"{{\\fnHind Siliguri\\fs74\\b1}}{clean_text}"
             mid_str = ",".join(d['middle_fields'])
-            out_lines.append(f"{d['prefix_fields'][0]},{d['start_str']},{d['end_str']},{mid_str},{{\\an5}}{clean_text}")
+            out_lines.append(f"{d['prefix_fields'][0]},{d['start_str']},{d['end_str']},{mid_str},{{\\an5}}{final_dialogue_text}")
             
         with open(ass_path, "w", encoding="utf-8") as f:
             f.write("\n".join(out_lines) + "\n")

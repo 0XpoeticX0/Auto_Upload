@@ -5,33 +5,34 @@ from app.database import get_connection
 
 def generate_script(topic_id: int = None, topic_title: str = None, video_format: str = "short", duration_sec: int = 30, category: str = "islamic_knowledge", series_info: dict = None) -> dict:
     """
-    Generates authentic Bengali Islamic short video scripts with Dual-Voice <ARABIC> tagging and Triple Subtitle formatting.
+    Generates authentic Bengali Islamic short video scripts with Dual-Voice <ARABIC> tagging and Bangla-only subtitle formatting.
     """
-    logger.info(f"Generating Bengali Islamic Short video script...")
+    logger.info(f"Generating 100% Bengali & Arabic Islamic Short video script...")
     
     system_prompt = """You are an expert Islamic content creator crafting viral, deeply emotional 30-second Islamic Shorts videos for Bengali-speaking audiences.
 
 CRITICAL RULES:
-1. TRIPLE ARABIC DISPLAY (Arabic + English Transliteration + Bangla Spelling):
+1. ARABIC & BANGLA DISPLAY ONLY (NO ENGLISH AT ALL):
    - For ANY Quranic Ayah, Dua, or Dhikr inside <ARABIC>...</ARABIC> tags:
      * Line 1: Pure Arabic with full Tashkeel/Harakat
-     * Line 2: (English Transliteration — বাংলা উচ্চারণ)
+     * Line 2: (বাংলা উচ্চারণ ও অর্থ)
+   - DO NOT USE ANY ENGLISH WORDS OR LATIN LETTERS AT ALL.
    - Examples:
      * <ARABIC>
 أَسْتَغْفِرُ اللَّهَ
-(Astaghfirullah — আস্তাগফিরুল্লাহ)
+(আস্তাগফিরুল্লাহ — আমি আল্লাহর কাছে ক্ষমা চাই)
 </ARABIC>
      * <ARABIC>
 سُبْحَانَ اللَّهِ
-(SubhanAllah — সুবহানাল্লাহ)
+(সুবহানাল্লাহ — সমস্ত পবিত্রতা আল্লাহর)
 </ARABIC>
      * <ARABIC>
 فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۞ إِنَّ مَعَ الْعُسْرِ يُسْرًا
-(Fa inna ma'al 'usri yusra — নিশ্চয়ই কষ্টের সাথেই রয়েছে শান্তি)
+(নিশ্চয়ই কষ্টের সাথেই রয়েছে শান্তি)
 </ARABIC>
      * <ARABIC>
 أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ
-(Ala bi dhikrillahi tatma'innul qulub — আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়)
+(জেনে রেখো, আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়)
 </ARABIC>
 
 2. NATURAL CONVERSATIONAL BANGLA (প্রমিত চলিত ভাষা):
@@ -41,20 +42,20 @@ CRITICAL RULES:
 
 3. STRUCTURE (Target 25-30 seconds spoken length, approx 50-65 Bangla words):
    - Scene 1 (Hook in Bangla): An emotional question or hook that stops scrolling in the first 2 seconds.
-   - Scene 2 (The Core Arabic & Meaning): The authentic Arabic quote with triple formatting in <ARABIC>...</ARABIC> tags, followed by its clear Bangla translation.
+   - Scene 2 (The Core Arabic & Meaning): The authentic Arabic quote in <ARABIC>...</ARABIC> tags, followed by its clear Bangla translation.
    - Scene 3 (Heart Reflection in Bangla): A comforting, practical lesson applying to daily struggles (anxiety, grief, forgiveness, patience).
-   - Scene 4 (Outro with Triple Dhikr): "কমেন্টে '<ARABIC>سُبْحَانَ اللَّهِ\n(SubhanAllah — সুবহানাল্লাহ)</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর রিমাইন্ডারের জন্য পেজটি ফলো করুন।"
+   - Scene 4 (Outro with Bangla Dhikr): "কমেন্টে '<ARABIC>سُبْحَانَ اللَّهِ\n(সুবহানাল্লাহ)</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর ইসলামিক রিমাইন্ডারের জন্য পেজটি ফলো করুন।"
 
 4. VISUAL PROMPTS:
    - 9:16 vertical photorealistic, cinematic visual descriptions (ancient desert, glowing lantern, calm morning mist over minarets, dramatic sunlight rays, no humans, no faces).
 
-OUTPUT JSON FORMAT (ONLY valid JSON):
+OUTPUT JSON FORMAT (ONLY valid JSON, 100% BANGLA & ARABIC, NO ENGLISH):
 {
-    "title": "ভিডিওর শিরোনাম (বাংলা)",
-    "title_bn": "ভিডিওর শিরোনাম (বাংলা)",
-    "topic": "Topic Name",
-    "reference": "Surah Az-Zumar: 53",
-    "narration_full_bn": "মনে হচ্ছে আপনার পাপ অনেক বেশি? মনটা কি ভীষণ অশান্তিতে ভুগছে? মহান আল্লাহ বলেন: <ARABIC>\nلَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ\n(La taqnatu min rahmatillah — আল্লাহর রহমত থেকে নিরাশ হয়ো না)\n</ARABIC> আল্লাহর রহমত থেকে কখনো নিরাশ হবেন না। তিনি আপনার সব ভুল ক্ষমা করতে চান। শুধু একবার মন থেকে তাকে ডাকুন, তিনি শুনবেন। কমেন্টে '<ARABIC>\nأَسْتَغْفِرُ اللَّهَ\n(Astaghfirullah — আস্তাগফিরুল্লাহ)\n</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর রিমাইন্ডারের জন্য পেজটি ফলো করুন।",
+    "title": "ভিডিওর বাংলা শিরোনাম",
+    "title_bn": "ভিডিওর বাংলা শিরোনাম",
+    "topic": "বাংলা বিষয়ের নাম",
+    "reference": "সূরা আল-ইমরান: ১৩৩",
+    "narration_full_bn": "মনে হচ্ছে আপনার পাপ অনেক বেশি? মনটা কি ভীষণ অশান্তিতে ভুগছে? মহান আল্লাহ বলেন: <ARABIC>\nلَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ\n(আল্লাহর রহমত থেকে কখনো নিরাশ হয়ো না)\n</ARABIC> আল্লাহর রহমত থেকে কখনো নিরাশ হবেন না। তিনি আপনার সব ভুল ক্ষমা করতে চান। শুধু একবার মন থেকে তাকে ডাকুন, তিনি শুনবেন। কমেন্টে '<ARABIC>\nأَسْتَغْفِرُ اللَّهَ\n(আস্তাগফিরুল্লাহ)\n</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর ইসলামিক রিমাইন্ডারের জন্য পেজটি ফলো করুন।",
     "scenes": [
         {
             "scene_number": 1,
@@ -63,7 +64,7 @@ OUTPUT JSON FORMAT (ONLY valid JSON):
         },
         {
             "scene_number": 2,
-            "narration": "মহান আল্লাহ বলেন: <ARABIC>\nلَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ\n(La taqnatu min rahmatillah — আল্লাহর রহমত থেকে নিরাশ হয়ো না)\n</ARABIC> আল্লাহর রহমত থেকে কখনো নিরাশ হবেন না।",
+            "narration": "মহান আল্লাহ বলেন: <ARABIC>\nلَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ\n(আল্লাহর রহমত থেকে কখনো নিরাশ হয়ো না)\n</ARABIC> আল্লাহর রহমত থেকে কখনো নিরাশ হবেন না।",
             "visuals": "vast calm ocean at night under dramatic glowing moon, peaceful serene atmosphere, photorealistic 8k, no humans"
         },
         {
@@ -73,14 +74,18 @@ OUTPUT JSON FORMAT (ONLY valid JSON):
         },
         {
             "scene_number": 4,
-            "narration": "কমেন্টে '<ARABIC>\nأَسْتَغْفِرُ اللَّهَ\n(Astaghfirullah — আস্তাগফিরুল্লাহ)\n</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর রিমাইন্ডারের জন্য পেজটি ফলো করুন।",
-            "visuals": "ancient glowing lantern resting on ancient stone balcony with peaceful sunrise mist over desert, 8k, photorealistic, cinematic, no humans"
+            "narration": "কমেন্টে '<ARABIC>\nأَسْتَغْفِرُ اللَّهَ\n(আস্তাগফিরুল্লাহ)\n</ARABIC>' লিখুন, এবং প্রতিদিনের সুন্দর ইসলামিক রিমাইন্ডারের জন্য পেজটি ফলো করুন।",
+            "visuals": "warm ambient glowing lantern on antique wooden table, soft shadows, peaceful dusk ambience, photorealistic 8k"
         }
     ]
 }
 """
-    topic_hint = f" Topic: {topic_title}." if topic_title else ""
-    user_prompt = f"Generate a fresh, viral, emotional 30-second Islamic Short video script in Bangla with authentic Arabic Ayah/Hadith/Dhikr.{topic_hint}"
+
+    user_prompt = f"Generate a viral, heart-touching 30-second Islamic video script in 100% Bangla with authentic Arabic in <ARABIC> tags (Arabic + Bangla pronunciation). Topic: {topic_title or 'Islamic Reminders'}. Category: {category}. NO ENGLISH WORDS."
     
-    script_data = extract_json(system_prompt, user_prompt, for_posts=False)
+    script_data = extract_json(system_prompt, user_prompt, max_tokens=1500)
+    if not script_data or "scenes" not in script_data:
+        logger.error("Failed to generate script.")
+        return None
+        
     return script_data

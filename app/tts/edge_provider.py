@@ -7,13 +7,13 @@ BANGLA_VOICE = "bn-BD-PradeepNeural"
 ARABIC_VOICE = "ar-SA-HamedNeural"
 
 DHIKR_REPLACEMENTS = {
-    r'(?<!<ARABIC>)সুবহানাল্লাহ(?!</ARABIC>)': '<ARABIC>سُبْحَانَ اللَّهِ\n(SubhanAllah — সুবহানাল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)আলহামদুলিল্লাহ(?!</ARABIC>)': '<ARABIC>الْحَمْدُ لِلَّهِ\n(Alhamdulillah — আলহামদুলিল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)আল্লাহু আকবার(?!</ARABIC>)': '<ARABIC>اللَّهُ أَكْبَرُ\n(Allahu Akbar — আল্লাহু আকবার)</ARABIC>',
-    r'(?<!<ARABIC>)মাশাআল্লাহ(?!</ARABIC>)': '<ARABIC>مَا شَاءَ اللَّهُ\n(MashaAllah — মাশাআল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)ইনশাআল্লাহ(?!</ARABIC>)': '<ARABIC>إِنْ شَاءَ اللَّهُ\n(InshaAllah — ইনশাআল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)আস্তাগফিরুল্লাহ(?!</ARABIC>)': '<ARABIC>أَسْتَغْفِرُ اللَّهَ\n(Astaghfirullah — আস্তাগফিরুল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)লা ইলাহা ইল্লাল্লাহ(?!</ARABIC>)': '<ARABIC>لَا إِلٰهَ إِلَّا اللّٰهُ\n(La ilaha illallah — লা ইলাহা ইল্লাল্লাহ)</ARABIC>'
+    r'(?<!<ARABIC>)সুবহানাল্লাহ(?!</ARABIC>)': '<ARABIC>سُبْحَانَ اللَّهِ\n(সুবহানাল্লাহ)</ARABIC>',
+    r'(?<!<ARABIC>)আলহামদুলিল্লাহ(?!</ARABIC>)': '<ARABIC>الْحَمْدُ لِلَّهِ\n(আলহামদুলিল্লাহ)</ARABIC>',
+    r'(?<!<ARABIC>)আল্লাহু আকবার(?!</ARABIC>)': '<ARABIC>اللَّهُ أَكْبَرُ\n(আল্লাহু আকবার)</ARABIC>',
+    r'(?<!<ARABIC>)মাশাআল্লাহ(?!</ARABIC>)': '<ARABIC>مَا شَاءَ اللَّهُ\n(মাশাআল্লাহ)</ARABIC>',
+    r'(?<!<ARABIC>)ইনশাআল্লাহ(?!</ARABIC>)': '<ARABIC>إِنْ شَاءَ اللَّهُ\n(ইনশাআল্লাহ)</ARABIC>',
+    r'(?<!<ARABIC>)আস্তাগফিরুল্লাহ(?!</ARABIC>)': '<ARABIC>أَسْتَغْفِرُ اللَّهَ\n(আস্তাগফিরুল্লাহ)</ARABIC>',
+    r'(?<!<ARABIC>)লা ইলাহা ইল্লাল্লাহ(?!</ARABIC>)': '<ARABIC>لَا إِلٰهَ إِلَّا اللّٰهُ\n(লা ইলাহা ইল্লাল্লাহ)</ARABIC>'
 }
 
 PHONETIC_CLEANUPS = {
