@@ -1,4 +1,5 @@
 import random
+import re
 from app.llm.provider import extract_json
 from app.logger import logger
 from app.database import get_recent_facebook_posts
@@ -7,7 +8,7 @@ POST_CATEGORIES = [
     {
         "key": "daily_life",
         "name": "Daily Life: What is Halal and Haram",
-        "description": "Everyday Islamic ethics, dealings, relations with in-laws/non-mahrams, speech, modesty, business, rights of family & neighbors."
+        "description": "Everyday Islamic ethics, dealings, speech, modesty, business, rights of family & neighbors."
     },
     {
         "key": "dua_cures",
@@ -26,12 +27,13 @@ POST_CATEGORIES = [
     }
 ]
 
-def generate_post_content() -> dict:
+def generate_post_content(language: str = "english") -> dict:
     """
-    Generates authentic Islamic photo card content + Facebook/Instagram caption with EXACT verbatim Hadith translations from Sunnah.com and Sahabi narrator attribution.
+    Generates authentic Islamic photo card content + Facebook/Instagram caption.
+    Supports both English (verbatim Sunnah.com) and Bangla (with pure Arabic quote).
     """
     selected_category = random.choice(POST_CATEGORIES)
-    logger.info(f"Selected category for Facebook Post: {selected_category['name']}")
+    logger.info(f"Selected category for Post ({language.upper()}): {selected_category['name']}")
     
     # Query past posts to strictly prevent repeating content for 30+ days
     recent_posts = get_recent_facebook_posts(limit=40)
@@ -40,17 +42,59 @@ def generate_post_content() -> dict:
         past_topics_list = [f"- Reference: {dict(p).get('reference', '')} | Quote: {dict(p).get('quote', '')[:60]}..." for p in recent_posts]
         past_topics_text = "STRICTLY FORBIDDEN PREVIOUS TOPICS/HADITHS (DO NOT REPEAT ANY OF THESE):\n" + "\n".join(past_topics_list)
 
-    system_prompt = f"""You are an expert Islamic scholar and content creator crafting authentic, beautiful reflection cards and captions for Facebook and Instagram.
+    if language == "bangla":
+        system_prompt = f"""You are an expert Islamic scholar and content creator specializing in authentic, viral Islamic reflection posts in Bangla (বাংলা).
+Category: {selected_category['name']} — {selected_category['description']}
+
+CRITICAL REQUIREMENTS:
+1. AUTHENTICITY & SAHABI ATTRIBUTION:
+   - Must be 100% authentic from Sahih Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami` at-Tirmidhi, or the Holy Quran.
+   - For Hadiths: Always include the Sahabi narrator in the header (e.g. 'আবু হুরায়রা (রাঃ) থেকে বর্ণিত, রাসূলুল্লাহ (ﷺ) বলেছেন:').
+   - For Quranic Ayahs: 'মহান আল্লাহ তা'আলা পবিত্র কুরআনে এরশাদ করেছেন:'.
+
+2. QUOTE ACCURACY:
+   - Provide the exact Arabic text with full Tashkeel/Harakat.
+   - Provide the exact, accurate Bangla translation.
+   - Select 2-3 key impactful phrases for highlight_phrases (which will be rendered in golden amber #EBAF41).
+
+3. SHORT & PUNCHY EXPLANATION (ব্যাখ্যা):
+   - Keep the explanation to EXACTLY 1-2 SHORT, COMFORTING SENTENCES (Maximum 20-30 words).
+
+4. CAPTION FOR SOCIAL MEDIA:
+   - Engaging Bengali title + Sahabi narrator + Arabic quote + English transliteration + Bangla meaning + reflection + verified citation + hashtags (#IslamicPost #BanglaHadith #DailyDosOfIslam).
+
+{past_topics_text}
+
+OUTPUT JSON FORMAT (ONLY valid JSON):
+{{
+    "language": "bangla",
+    "category": "{selected_category['key']}",
+    "title": "পোস্টের শিরোনাম (বাংলা)",
+    "header": "আবু হুরায়রা (রাঃ) থেকে বর্ণিত, রাসূলুল্লাহ (ﷺ) বলেছেন:",
+    "arabic_quote": "مَنْ صَلَّى عَلَيَّ وَاحِدَةً صَلَّى اللَّهُ عَلَيْهِ عَشْرًا",
+    "quote": "‘যে ব্যক্তি আমার ওপর একবার দরুদ পাঠ করবে, আল্লাহ তার ওপর দশবার রহমত বর্ষণ করবেন।’",
+    "bangla_quote": "‘যে ব্যক্তি আমার ওপর একবার দরুদ পাঠ করবে, আল্লাহ তার ওপর দশবার রহমত বর্ষণ করবেন।’",
+    "highlight_phrases": ["একবার দরুদ পাঠ করবে", "দশবার রহমত বর্ষণ করবেন"],
+    "explain_title": "ব্যাখ্যা:",
+    "explanation": "কঠিন সময়ে রাসূলুল্লাহ (ﷺ)-এর ওপর বেশি বেশি দরুদ পড়ুন; আল্লাহ আপনার জীবনে রহমতের দরজা খুলে দেবেন।",
+    "reference": "সহীহ মুসলিম: ৪০৮",
+    "caption": "✨ রাসূলুল্লাহ (ﷺ)-এর ওপর দরুদ পাঠের অপার মহিমা ✨\\n\\nআবু হুরায়রা (রাঃ) থেকে বর্ণিত, রাসূলুল্লাহ (ﷺ) বলেছেন:\\n\\n'مَنْ صَلَّى عَلَيَّ وَاحِدَةً صَلَّى اللَّهُ عَلَيْهِ عَشْرًا'\\n(Man salla 'alayya wahidatan salla Allahu 'alayhi 'ashran)\\n\\n‘যে ব্যক্তি আমার ওপর একবার দরুদ পাঠ করবে, আল্লাহ তার ওপর দশবার রহমত বর্ষণ করবেন।’\\n\\n📖 রেফারেন্স: সহীহ মুসলিম (৪০৮)\\n\\n🌿 শিক্ষা:\\nআমরা যখন জীবনে পেরেশানি বা বরকতের অভাব অনুভব করি, তখন বেশি বেশি দরুদ পাঠ করা উচিত।\\n\\n💬 কমেন্টে ‘আল্লাহুম্মা সাল্লি আলা মুহাম্মদ’ লিখুন এবং শেয়ার করে সাদাকায়ে জারিয়ার অংশ হোন।\\n\\n#IslamicPost #DailyDosOfIslam #BanglaHadith #IslamicReminder",
+    "image_prompt": "moody dark atmospheric ancient mosque archway with soft golden sunset rays, photorealistic 8k, serene, cinematic, empty, no humans"
+}}
+"""
+        user_prompt = "Generate a fresh authentic Islamic post in Bangla with Sahabi narrator, Arabic quote with Tashkeel, Bangla translation, and concise reflection."
+    else:
+        system_prompt = f"""You are an expert Islamic scholar and content creator crafting authentic, beautiful reflection cards and captions for Facebook and Instagram.
 Category: {selected_category['name']} — {selected_category['description']}
 
 STRICT SACRED RULES FOR HADITH & NARRATOR ATTRIBUTION:
 1. SAHABI NARRATOR ATTRIBUTION:
-   - For Hadith, the "header" MUST include the authentic Sahabi narrator who reported it from the Prophet ﷺ:
+   - For Hadith, the "header" MUST include the authentic Sahabi narrator who reported it from the Prophet (peace be upon him):
      * Examples:
-       - "Jabir ibn 'Abdullah reported that the Prophet ﷺ said:"
-       - "Abu Hurairah reported: The Messenger of Allah ﷺ said:"
+       - "Jabir ibn 'Abdullah reported that the Prophet (peace be upon him) said:"
+       - "Abu Hurairah reported: The Messenger of Allah (peace be upon him) said:"
        - "'Aisha (may Allah be pleased with her) reported:"
-       - "Ibn 'Abbas reported that the Prophet ﷺ said:"
+       - "Ibn 'Abbas reported that the Prophet (peace be upon him) said:"
    - For Quranic Ayahs: "Allah says in the Quran:" or "Allah ﷻ says:".
 
 2. EXACT VERBATIM TRANSLATION (DO NOT CHANGE OR PARAPHRASE):
@@ -58,49 +102,36 @@ STRICT SACRED RULES FOR HADITH & NARRATOR ATTRIBUTION:
    - STRICTLY NEVER modernize, paraphrase, rewrite, summarize, or alter ANY words of the Hadith text. Keep it 100% faithful to the official recorded translation.
 
 3. 100% AUTHENTICITY:
-   - The Hadith MUST be graded Sahih or Hasan from the standard Kutub al-Sittah (Sahih al-Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami` at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah) or authentic Quranic Ayah. No weak or unverified narrations.
+   - Must be from Sahih al-Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami` at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah, Riyad as-Salihin, or the Holy Quran.
+   - You MUST provide the exact collection name and Hadith/Ayah number in the "reference" field (e.g. "Sunan Abi Dawud: 4727", "Sahih al-Bukhari: 6407", "Surah Al-Baqarah: 286").
 
-4. NO REPETITIONS:
-   - You must choose a FRESH, UNIQUE Hadith or Ayah that has NOT been used in recent posts.
+4. HIGHLIGHTS & EXPLANATION:
+   - "highlight_phrases": 1-3 key punchy phrases that will be colored in gold on the card.
+   - "explanation": 1-2 short, relatable reflection sentences applying the lesson to daily life.
 
-5. FORMAT OF THE IMAGE CARD:
-   - "header": E.g. "Jabir ibn 'Abdullah reported that the Prophet ﷺ said:"
-   - "quote": The EXACT, verbatim authentic English translation in single quotes (25-50 words).
-   - "highlight_phrases": An array of 1 or 2 core punchline phrases from the quote to be rendered in bold golden amber (#EBAF41).
-     * RULE: Must be EXACT substrings that appear word-for-word inside your "quote" field.
-   - "explain_title": "Explain:"
-   - "explanation": Exactly 2 to 3 simple, warm, heartfelt sentences explaining the practical daily lesson and how it applies to our modern daily lives in easy, relatable words (30-45 words max).
-   - "reference": Exact authentic citation matching Sunnah.com (e.g. 'Sunan Abi Dawud: 4727', 'Sahih al-Bukhari: 6474', 'Sahih Muslim: 2202').
-
-6. SOCIAL MEDIA CAPTION:
-   - "caption": A captivating caption. Start with a warm relatable hook, include the full narrator and authentic reference, explain the practical reflection simply, encourage readers to save & share, and include 5-8 relevant hashtags (#Islam #Hadith #DailyReminder #Sunnah #IslamicQuotes #Faith #Muslim #Allah).
-
-7. VISUAL BACKGROUND PROMPT:
-   - "image_prompt": A moody, atmospheric, cinematic visual description for the background photo (e.g. 'moody ancient stone archway with warm morning sunbeams, dramatic atmospheric shadows, serene quiet ambience, photorealistic, 8k, empty room, cinematic lighting, no humans, no faces').
+5. CAPTION:
+   - Engaging title + Sahabi narrator + exact Hadith quote + explanation + citation + call-to-action + hashtags (#DailyDosOfIslam #IslamicReminder #Hadith).
 
 {past_topics_text}
 
-OUTPUT JSON FORMAT (ONLY valid JSON, no markdown outside):
+OUTPUT JSON FORMAT (ONLY valid JSON):
 {{
+    "language": "english",
     "category": "{selected_category['key']}",
-    "title": "Short title describing the topic",
-    "header": "Abu Hurairah reported that the Prophet ﷺ said:",
-    "quote": "‘Exact official verbatim translation from Sunnah.com here...’",
-    "highlight_phrases": ["exact phrase 1", "exact phrase 2"],
+    "title": "Short Impactful Title",
+    "header": "Jabir b. 'Abd Allah reported that the Prophet (peace be upon him) said:",
+    "quote": "‘I have been permitted to tell about one of Allah’s angels who bears the throne that the distance between the lobe of his ear and his shoulder is a journey of seven hundred years.’",
+    "highlight_phrases": ["angels who bears the throne", "journey of seven hundred years"],
     "explain_title": "Explain:",
-    "explanation": "Simple, warm, relatable 2-3 sentence explanation...",
+    "explanation": "If a single creation of Allah is this immense, imagine the boundless greatness of the Creator. Place all your trust in Him.",
     "reference": "Sunan Abi Dawud: 4727",
-    "caption": "Full rich social media caption with hook, reflection, and hashtags...",
-    "image_prompt": "moody dark atmospheric hallway with warm sunlight through door, cinematic lighting, 8k, photorealistic, no humans"
+    "caption": "✨ The Immensity of Allah’s Creation ✨\\n\\nJabir b. 'Abd Allah reported that the Prophet (peace be upon him) said:\\n\\n‘I have been permitted to tell about one of Allah’s angels who bears the throne that the distance between the lobe of his ear and his shoulder is a journey of seven hundred years.’\\n\\n📖 Reference: Sunan Abi Dawud (4727)\\n\\n🌿 Reflection:\\nWhen we realize how vast Allah's creation is, our worldly worries become small. Keep your heart attached to the Lord of the heavens and the earth.\\n\\n💬 Comment 'SubhanAllah' and share to inspire others.\\n\\n#DailyDosOfIslam #IslamicReminder #Hadith #SunanAbiDawud #IslamicPost",
+    "image_prompt": "vast moody cinematic desert dunes under soft glowing golden dusk sky, atmospheric, 8k, photorealistic, no humans"
 }}
 """
+        user_prompt = "Generate a fresh authentic Islamic post with Sahabi narrator, exact verbatim Sunnah.com translation, and inspiring reflection."
 
-    user_prompt = f"Generate an authentic Islamic post card with the Sahabi narrator, the EXACT verbatim English translation from Sunnah.com, and a simple daily explanation for category: {selected_category['name']}."
-    
-    post_data = extract_json(system_prompt, user_prompt, for_posts=True)
-    if not post_data or "quote" not in post_data:
-        logger.error("Failed to generate post content from LLM.")
-        return None
-        
-    logger.info(f"Generated Post: '{post_data.get('title')}' | Ref: {post_data.get('reference')}")
-    return post_data
+    data = extract_json(system_prompt, user_prompt, for_posts=True)
+    if data and "language" not in data:
+        data["language"] = language
+    return data

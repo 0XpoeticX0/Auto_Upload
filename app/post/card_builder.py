@@ -2,15 +2,14 @@ import os
 import re
 import urllib.parse
 import time
+import subprocess
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from app.logger import logger
 
-# Card dimensions (4:5 aspect ratio - optimal for Facebook/Instagram mobile feeds)
 CARD_WIDTH = 1080
 CARD_HEIGHT = 1350
 
-# Colors for maximum readability on solid dark backgrounds
 COLOR_WHITE = (255, 255, 255)
 COLOR_CREAM = (244, 240, 230)
 COLOR_OFFWHITE = (220, 220, 220)
@@ -24,10 +23,9 @@ NEGATIVE_PROMPT = urllib.parse.quote(
     "human, person, face, eye, man, woman, child, people, crowd, animal, dog, cat, bird, insect, living being"
 )
 
+# ----------------- ENGLISH CARD BUILDER (PIL) -----------------
+
 def get_font(font_name: str, size: int):
-    """
-    Load requested TrueType font with robust fallbacks for Windows and Linux.
-    """
     font_candidates = [
         font_name,
         f"C:/Windows/Fonts/{font_name}",
@@ -47,10 +45,8 @@ def get_font(font_name: str, size: int):
     return ImageFont.load_default()
 
 def wrap_text_to_lines(text: str, font: ImageFont.ImageFont, max_width: int) -> list:
-    """Wraps text cleanly into multiple lines that fit within max_width."""
     lines = []
-    paragraphs = text.split("\n")
-    for para in paragraphs:
+    for para in text.split("\n"):
         if not para.strip():
             lines.append("")
             continue
@@ -71,16 +67,12 @@ def wrap_text_to_lines(text: str, font: ImageFont.ImageFont, max_width: int) -> 
     return lines
 
 def normalize_text_for_matching(text: str) -> str:
-    """Normalize quotes, apostrophes, and special punctuation for reliable matching."""
     text = text.replace('\ufdfa', '(peace be upon him)').replace('ﷺ', '(peace be upon him)')
     text = re.sub(r'[\u2018\u2019\u201a\u201b\']', "'", text)
     text = re.sub(r'[\u201c\u201d\u201e\u201f\"]', '"', text)
     return text
 
 def tag_and_wrap_quote(quote: str, highlight_phrases: list, font_normal: ImageFont.ImageFont, font_bold: ImageFont.ImageFont, max_width: int):
-    """
-    Identifies exact highlight phrases and wraps words into balanced lines with measured width.
-    """
     norm_quote = normalize_text_for_matching(quote)
     spans = []
     for hl in highlight_phrases:
@@ -91,22 +83,6 @@ def tag_and_wrap_quote(quote: str, highlight_phrases: list, font_normal: ImageFo
         for m in re.finditer(pattern, norm_quote, re.IGNORECASE):
             spans.append((m.start(), m.end()))
             
-    # Fallback: if exact substring match didn't find spans, match words sequence
-    if not spans and highlight_phrases:
-        for hl in highlight_phrases:
-            hl_words = [re.sub(r'[^\w]', '', w.lower()) for w in hl.split() if w.strip()]
-            if not hl_words:
-                continue
-            words_in_quote = list(re.finditer(r'\S+', quote))
-            clean_q_words = [re.sub(r'[^\w]', '', m.group().lower()) for m in words_in_quote]
-            
-            k = len(hl_words)
-            for i in range(len(clean_q_words) - k + 1):
-                if clean_q_words[i:i+k] == hl_words:
-                    start_pos = words_in_quote[i].start()
-                    end_pos = words_in_quote[i+k-1].end()
-                    spans.append((start_pos, end_pos))
-
     is_hl_char = [False] * len(quote)
     for start, end in spans:
         for i in range(start, min(end, len(quote))):
@@ -122,225 +98,350 @@ def tag_and_wrap_quote(quote: str, highlight_phrases: list, font_normal: ImageFo
         
     space_w = font_normal.getbbox(" ")[2] - font_normal.getbbox(" ")[0]
     lines = []
-    cur_line = []
-    cur_w = 0
+    current_line = []
+    current_w = 0
     
     for word, is_hl in tokens:
         f = font_bold if is_hl else font_normal
         bbox = f.getbbox(word)
         w = bbox[2] - bbox[0]
-        needed = w if not cur_line else (cur_w + space_w + w)
+        needed = w if not current_line else current_w + space_w + w
         if needed <= max_width:
-            cur_line.append((word, is_hl, w))
-            cur_w = needed
+            current_line.append((word, is_hl, w))
+            current_w = needed
         else:
-            if cur_line:
-                lines.append((cur_line, cur_w))
-            cur_line = [(word, is_hl, w)]
-            cur_w = w
-            
-    if cur_line:
-        lines.append((cur_line, cur_w))
-        
-    return lines
+            if current_line:
+                lines.append(current_line)
+            current_line = [(word, is_hl, w)]
+            current_w = w
+    if current_line:
+        lines.append(current_line)
+    return lines, space_w
 
-def download_background_image(prompt: str, output_path: str) -> bool:
-    """
-    Downloads background image from Pollinations with standard resolution and robust retries.
-    """
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    
-    enhanced_prompt = f"vertical 9:16, beautiful wide angle shot, {prompt}, masterpiece, 8k resolution, cinematic lighting, photorealistic, atmospheric depth, NO living beings, completely empty of humans or animals"
-    encoded_prompt = urllib.parse.quote(enhanced_prompt)
-    seed = int(time.time()) % 100000
-    
-    url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1080&height=1920&nologo=true&seed={seed}&negative={NEGATIVE_PROMPT}"
-    
-    max_retries = 3
-    for attempt in range(max_retries):
-        logger.info(f"Downloading background visual (attempt {attempt+1}/{max_retries})...")
+def download_card_background(prompt: str, output_path: str) -> str:
+    encoded_prompt = urllib.parse.quote(
+        f"{prompt}, dark cinematic atmosphere, photorealistic, 8k, majestic soft golden ambient light, peaceful, empty, no humans, no faces"
+    )
+    url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1080&height=650&nologo=true&negative={NEGATIVE_PROMPT}"
+    for attempt in range(1, 4):
         try:
-            resp = requests.get(url, timeout=60)
-            if resp.status_code == 200 and len(resp.content) > 15000:
+            logger.info(f"Downloading background visual (attempt {attempt}/3)...")
+            resp = requests.get(url, timeout=30)
+            if resp.status_code == 200 and len(resp.content) > 10000:
                 with open(output_path, "wb") as f:
                     f.write(resp.content)
+                with Image.open(output_path) as img:
+                    img.verify()
                 logger.info("Background visual downloaded successfully.")
-                return True
-            else:
-                logger.warning(f"Attempt {attempt+1} failed with status: {resp.status_code}")
+                return output_path
         except Exception as e:
-            logger.warning(f"Attempt {attempt+1} error: {e}")
+            logger.warning(f"Visual download failed on attempt {attempt}: {e}")
+            time.sleep(2)
             
-        if attempt < max_retries - 1:
-            time.sleep(4)
-            
-    # Solid pitch dark canvas fallback
-    img = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), color=(10, 10, 12))
-    img.save(output_path, "JPEG", quality=95)
-    return False
+    img = Image.new("RGB", (1080, 650), (12, 14, 18))
+    img.save(output_path, "JPEG")
+    return output_path
 
-def create_post_image_card(post_data: dict, output_filepath: str) -> str:
-    """
-    Builds the 1080x1350 aesthetic Islamic reflection card matching the reference design.
-    """
-    temp_bg_path = output_filepath.replace(".jpg", "_raw_bg.jpg")
-    has_photo = download_background_image(post_data.get("image_prompt", "ancient stone doorway with radiant warm sunlight"), temp_bg_path)
+def create_english_post_card(post_data: dict, output_path: str) -> str:
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    temp_bg = output_path.replace(".jpg", "_bg_temp.jpg")
     
+    image_prompt = post_data.get("image_prompt", "ancient grand library with glowing lantern on wooden desk, 8k")
+    download_card_background(image_prompt, temp_bg)
+    
+    card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (11, 13, 17))
     try:
-        bg_image = Image.open(temp_bg_path).convert("RGBA")
-        # Crop to top 45% of card (1080 x 600)
-        bg_image = bg_image.resize((CARD_WIDTH, int(CARD_WIDTH * (1920/1080))), Image.Resampling.LANCZOS)
-        # Create full card canvas
-        card_canvas = Image.new("RGBA", (CARD_WIDTH, CARD_HEIGHT), (8, 8, 10, 255))
-        card_canvas.paste(bg_image, (0, 0))
-    except Exception:
-        card_canvas = Image.new("RGBA", (CARD_WIDTH, CARD_HEIGHT), (8, 8, 10, 255))
-        has_photo = False
-        
-    # Top 38% shows photo, smooth gradient completes to 100% solid pitch black by y = 470px
-    gradient = Image.new("RGBA", (CARD_WIDTH, CARD_HEIGHT), (0, 0, 0, 0))
-    draw_grad = ImageDraw.Draw(gradient)
-    
-    fade_start = int(CARD_HEIGHT * 0.20)  # ~270px
-    fade_end = int(CARD_HEIGHT * 0.35)    # ~470px
-    
-    for y in range(CARD_HEIGHT):
-        if y < fade_start:
-            alpha = int(25 * (y / fade_start))
-        elif y < fade_end:
-            progress = (y - fade_start) / (fade_end - fade_start)
-            alpha = min(255, int(25 + (230 * (progress ** 1.3))))
-        else:
-            alpha = 255
+        with Image.open(temp_bg).convert("RGBA") as bg_img:
+            bg_w, bg_h = bg_img.size
+            target_h = 580
+            scale = max(CARD_WIDTH / bg_w, target_h / bg_h)
+            new_w = int(bg_w * scale)
+            new_h = int(bg_h * scale)
+            bg_scaled = bg_img.resize((new_w, new_h), Image.Resampling.LANCZOS)
             
-        draw_grad.line([(0, y), (CARD_WIDTH, y)], fill=(8, 8, 10, alpha))
+            crop_x = (new_w - CARD_WIDTH) // 2
+            bg_cropped = bg_scaled.crop((crop_x, 0, crop_x + CARD_WIDTH, target_h))
+            
+            mask = Image.new("L", (CARD_WIDTH, target_h), 255)
+            for y in range(target_h):
+                if y < target_h * 0.38:
+                    alpha = 255
+                else:
+                    progress = (y - target_h * 0.38) / (target_h * 0.62)
+                    alpha = int(255 * (1.0 - (progress ** 1.6)))
+                for x in range(CARD_WIDTH):
+                    mask.putpixel((x, y), alpha)
+                    
+            card.paste(bg_cropped.convert("RGB"), (0, 0), mask)
+    except Exception as e:
+        logger.warning(f"Error applying background image: {e}")
         
-    card = Image.alpha_composite(card_canvas, gradient)
+    try:
+        if os.path.exists(temp_bg):
+            os.remove(temp_bg)
+    except: pass
+    
     draw = ImageDraw.Draw(card)
     
-    # Typography Fonts matching Blossom.mee scale
-    font_header = get_font("georgiab.ttf", 38)
-    font_quote = get_font("georgia.ttf", 34)
-    font_quote_bold = get_font("georgiab.ttf", 34)
-    font_explain_title = get_font("georgia.ttf", 32)
-    font_explain_body = get_font("segoeui.ttf", 29)
-    font_ref = get_font("georgiab.ttf", 32)
-    font_watermark = get_font("segoeui.ttf", 22)
+    font_header = get_font("georgiab.ttf", 44)
+    font_quote_normal = get_font("georgia.ttf", 46)
+    font_quote_bold = get_font("georgiab.ttf", 46)
+    font_explain_title = get_font("georgiab.ttf", 34)
+    font_explain_body = get_font("georgia.ttf", 36)
+    font_ref = get_font("georgiab.ttf", 38)
+    font_watermark = get_font("arial.ttf", 26)
     
-    # Clean header text
-    raw_header = post_data.get("header", "The Prophet (peace be upon him) said:")
-    header_text = raw_header.replace("ﷺ", "(peace be upon him)").replace("  ", " ").strip()
-    if not header_text.endswith(":"):
-        header_text += ":"
+    max_text_width = CARD_WIDTH - 160
+    current_y = 560
+    
+    # 1. Header (Sahabi Narrator)
+    header_text = post_data.get("header", "")
+    if header_text:
+        header_lines = wrap_text_to_lines(header_text, font_header, max_text_width)
+        for line in header_lines:
+            bbox = font_header.getbbox(line)
+            lw = bbox[2] - bbox[0]
+            lh = bbox[3] - bbox[1]
+            draw.text(((CARD_WIDTH - lw) // 2, current_y), line, font=font_header, fill=COLOR_WHITE)
+            current_y += lh + 12
+        current_y += 20
         
-    raw_quote = post_data.get("quote", "").strip()
-    raw_quote = raw_quote.strip(" \t\n\r\"'‘'“”")
-    clean_quote = f"‘{raw_quote}’"
-        
+    # 2. Exact Quote with Golden Highlights
+    quote_text = post_data.get("quote", "")
     highlight_phrases = post_data.get("highlight_phrases", [])
-    explain_title = post_data.get("explain_title", "Explain:").strip()
-    if not explain_title.endswith(":"):
-        explain_title += ":"
+    if quote_text:
+        lines_data, space_w = tag_and_wrap_quote(quote_text, highlight_phrases, font_quote_normal, font_quote_bold, max_text_width)
+        for line in lines_data:
+            line_w = sum(w for _, _, w in line) + (len(line) - 1) * space_w
+            x_start = (CARD_WIDTH - line_w) // 2
+            max_lh = 0
+            for word, is_hl, w in line:
+                f = font_quote_bold if is_hl else font_quote_normal
+                color = COLOR_GOLD if is_hl else COLOR_CREAM
+                bbox = f.getbbox(word)
+                max_lh = max(max_lh, bbox[3] - bbox[1])
+                draw.text((x_start, current_y), word, font=f, fill=color)
+                x_start += w + space_w
+            current_y += max_lh + 16
+        current_y += 24
         
-    explanation_text = post_data.get("explanation", "").replace("ﷺ", "(peace be upon him)").strip()
-    reference_text = post_data.get("reference", "").strip()
-    watermark_text = "@DailyDosOfIslam"
+    # 3. Explanation
+    explain_title = post_data.get("explain_title", "Explain:")
+    explanation = post_data.get("explanation", "")
+    if explanation:
+        bbox_et = font_explain_title.getbbox(explain_title)
+        draw.text(((CARD_WIDTH - (bbox_et[2] - bbox_et[0])) // 2, current_y), explain_title, font=font_explain_title, fill=COLOR_MUTED)
+        current_y += (bbox_et[3] - bbox_et[1]) + 14
+        
+        explain_lines = wrap_text_to_lines(explanation, font_explain_body, max_text_width)
+        for line in explain_lines:
+            bbox = font_explain_body.getbbox(line)
+            lw = bbox[2] - bbox[0]
+            lh = bbox[3] - bbox[1]
+            draw.text(((CARD_WIDTH - lw) // 2, current_y), line, font=font_explain_body, fill=COLOR_OFFWHITE)
+            current_y += lh + 10
+        current_y += 30
+        
+    # 4. Reference & Watermark
+    ref_text = post_data.get("reference", "")
+    if ref_text:
+        bbox_ref = font_ref.getbbox(ref_text)
+        draw.text(((CARD_WIDTH - (bbox_ref[2] - bbox_ref[0])) // 2, CARD_HEIGHT - 120), ref_text, font=font_ref, fill=COLOR_WHITE)
+        
+    watermark = "@DailyDosOfIslam"
+    bbox_wm = font_watermark.getbbox(watermark)
+    draw.text(((CARD_WIDTH - (bbox_wm[2] - bbox_wm[0])) // 2, CARD_HEIGHT - 65), watermark, font=font_watermark, fill=COLOR_DIM)
     
-    max_text_width = 920  # 80px margin each side for balanced typography
+    card.save(output_path, "JPEG", quality=95)
+    logger.info(f"Aesthetic Islamic post card generated at {output_path}")
+    return output_path
+
+# ----------------- BANGLA CARD BUILDER (HarfBuzz FFmpeg) -----------------
+
+def split_text_wrap_ass(text: str, max_chars: int = 46) -> list:
+    lines = []
+    paragraphs = text.split("\n")
+    for para in paragraphs:
+        if not para.strip():
+            continue
+        words = para.split()
+        cur_line = []
+        cur_visible_len = 0
+        for w in words:
+            visible_w = re.sub(r'{\\[^}]+}', '', w)
+            w_len = len(visible_w)
+            if cur_visible_len + w_len + 1 <= max_chars:
+                cur_line.append(w)
+                cur_visible_len += w_len + 1
+            else:
+                if cur_line:
+                    lines.append(" ".join(cur_line))
+                cur_line = [w]
+                cur_visible_len = w_len
+        if cur_line:
+            lines.append(" ".join(cur_line))
+    return lines
+
+def format_quote_with_highlights_ass(quote_text: str, highlight_phrases: list) -> str:
+    styled = quote_text
+    for hl in highlight_phrases:
+        if not hl.strip():
+            continue
+        clean_hl = hl.strip()
+        styled = styled.replace(clean_hl, f"{{\\c&H0041AFEB&}}{{\\b1}}{clean_hl}{{\\r\\c&H00E6F0F4&}}")
+    return styled
+
+def create_bengali_post_card(post_data: dict, output_path: str) -> str:
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    temp_dir = os.path.join("data", "temp")
+    os.makedirs(temp_dir, exist_ok=True)
     
-    # Precalculate lines and element heights
-    header_lines = wrap_text_to_lines(header_text, font_header, max_text_width)
-    h_single_h = font_header.getbbox("Tg")[3] - font_header.getbbox("Tg")[1]
-    header_total_h = len(header_lines) * (h_single_h + 8)
+    timestamp = int(time.time() * 1000)
+    temp_bg = os.path.join(temp_dir, f"bg_{timestamp}.jpg")
+    temp_canvas = os.path.join(temp_dir, f"canvas_{timestamp}.jpg")
+    temp_ass = os.path.join(temp_dir, f"card_{timestamp}.ass")
     
-    quote_lines = tag_and_wrap_quote(clean_quote, highlight_phrases, font_quote, font_quote_bold, max_text_width)
-    line_single_h = font_quote.getbbox("Tg")[3] - font_quote.getbbox("Tg")[1]
-    quote_total_h = len(quote_lines) * (line_single_h + 16)
+    # 1. Visual & Base Canvas
+    image_prompt = post_data.get("image_prompt", "ancient mosque arches with warm sunset sunbeams, photorealistic 8k")
+    download_card_background(image_prompt, temp_bg)
     
-    exp_t_bbox = font_explain_title.getbbox(explain_title)
-    exp_t_h = exp_t_bbox[3] - exp_t_bbox[1]
+    card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (11, 13, 17))
+    try:
+        with Image.open(temp_bg).convert("RGBA") as bg_img:
+            bg_w, bg_h = bg_img.size
+            target_h = 580
+            scale = max(CARD_WIDTH / bg_w, target_h / bg_h)
+            new_w = int(bg_w * scale)
+            new_h = int(bg_h * scale)
+            bg_scaled = bg_img.resize((new_w, new_h), Image.Resampling.LANCZOS)
+            crop_x = (new_w - CARD_WIDTH) // 2
+            bg_cropped = bg_scaled.crop((crop_x, 0, crop_x + CARD_WIDTH, target_h))
+            mask = Image.new("L", (CARD_WIDTH, target_h), 255)
+            for y in range(target_h):
+                if y < target_h * 0.38:
+                    alpha = 255
+                else:
+                    progress = (y - target_h * 0.38) / (target_h * 0.62)
+                    alpha = int(255 * (1.0 - (progress ** 1.6)))
+                for x in range(CARD_WIDTH):
+                    mask.putpixel((x, y), alpha)
+            card.paste(bg_cropped.convert("RGB"), (0, 0), mask)
+    except Exception as e:
+        logger.warning(f"Error blending background: {e}")
+        
+    card.save(temp_canvas, "JPEG", quality=95)
     
-    exp_lines = wrap_text_to_lines(explanation_text, font_explain_body, max_text_width)
-    exp_single_h = font_explain_body.getbbox("Tg")[3] - font_explain_body.getbbox("Tg")[1]
-    exp_total_h = len(exp_lines) * (exp_single_h + 14)
+    # 2. Text layout & dynamic sizing
+    header = post_data.get("header", "").strip()
+    arabic_quote = post_data.get("arabic_quote", "").strip()
+    bangla_quote = post_data.get("quote", post_data.get("bangla_quote", "")).strip()
+    highlight_phrases = post_data.get("highlight_phrases", [])
+    explain_title = post_data.get("explain_title", "ব্যাখ্যা:").strip()
+    explanation = post_data.get("explanation", "").strip()
+    reference = post_data.get("reference", "").strip()
     
-    ref_bbox = font_ref.getbbox(reference_text)
-    ref_h = ref_bbox[3] - ref_bbox[1]
+    header_lines = split_text_wrap_ass(header, max_chars=48) if header else []
+    arabic_lines = split_text_wrap_ass(arabic_quote, max_chars=46) if arabic_quote else []
+    styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=48) if bangla_quote else []
+    explain_lines = split_text_wrap_ass(explanation, max_chars=52) if explanation else []
     
-    wm_bbox = font_watermark.getbbox(watermark_text)
-    wm_h = wm_bbox[3] - wm_bbox[1]
+    total_lines = len(header_lines) + len(arabic_lines) + len(quote_lines) + (len(explain_lines) + 1 if explanation else 0)
     
-    # Total height of all text elements and spacing gaps
-    total_block_height = (
-        header_total_h + 22 +
-        quote_total_h + 22 +
-        exp_t_h + 20 +
-        exp_total_h + 26 +
-        ref_h + 12 +
-        wm_h
-    )
+    if total_lines >= 12:
+        f_header, f_arabic, f_quote, f_explain = 36, 42, 34, 28
+        h_step, a_step, q_step, e_step = 44, 50, 42, 36
+        start_y = 510
+    elif total_lines >= 8:
+        f_header, f_arabic, f_quote, f_explain = 38, 44, 36, 30
+        h_step, a_step, q_step, e_step = 46, 52, 44, 38
+        start_y = 520
+    else:
+        f_header, f_arabic, f_quote, f_explain = 40, 46, 38, 32
+        h_step, a_step, q_step, e_step = 48, 54, 46, 40
+        start_y = 535
+
+    dialogues = []
+    current_y = start_y
     
-    # Perfect mathematical centering in the bottom dark region (from y = 470 to y = 1350, height = 880px)
-    dark_top = 470
-    dark_bottom = 1350
-    available_dark_space = dark_bottom - dark_top
-    current_y = dark_top + max(0, (available_dark_space - total_block_height) // 2)
-    
-    # 1. Draw Header (multi-line safe & centered)
-    for h_line in header_lines:
-        h_bbox = font_header.getbbox(h_line)
-        h_w = h_bbox[2] - h_bbox[0]
-        draw.text(((CARD_WIDTH - h_w) // 2, current_y), h_line, font=font_header, fill=COLOR_WHITE)
-        current_y += h_single_h + 8
-    current_y += 22
-    
-    # 2. Draw Quote with Exact Golden Highlighted Words
-    space_w = font_quote.getbbox(" ")[2] - font_quote.getbbox(" ")[0]
-    for tokens, line_w in quote_lines:
-        start_x = (CARD_WIDTH - line_w) // 2
-        x_cursor = start_x
-        for word, is_hl, w in tokens:
-            w_font = font_quote_bold if is_hl else font_quote
-            w_color = COLOR_GOLD if is_hl else COLOR_CREAM
-            draw.text((x_cursor, current_y), word, font=w_font, fill=w_color)
-            x_cursor += w + space_w
+    for h_l in header_lines:
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Header,,0,0,0,,{{\\pos(540,{current_y})}}{h_l}")
+        current_y += h_step
+    if header_lines: current_y += 12
+        
+    for a_l in arabic_lines:
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Arabic,,0,0,0,,{{\\pos(540,{current_y})}}{a_l}")
+        current_y += a_step
+    if arabic_lines: current_y += 12
+        
+    for q_l in quote_lines:
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Quote,,0,0,0,,{{\\pos(540,{current_y})}}{q_l}")
+        current_y += q_step
+    if quote_lines: current_y += 16
+        
+    if explanation:
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,ExplainTitle,,0,0,0,,{{\\pos(540,{current_y})}}{explain_title}")
+        current_y += (e_step + 6)
+        for e_l in explain_lines:
+            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Explain,,0,0,0,,{{\\pos(540,{current_y})}}{e_l}")
+            current_y += e_step
             
-        current_y += line_single_h + 16
+    ref_y = max(1225, current_y + 32)
+    wm_y = min(1310, ref_y + 48)
+    
+    if reference:
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{reference}")
+    dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Watermark,,0,0,0,,{{\\pos(540,{wm_y})}}@DailyDosOfIslam")
+    
+    ass_content = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: {CARD_WIDTH}
+PlayResY: {CARD_HEIGHT}
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Header,Nirmala UI,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Arabic,Arial,{f_arabic},&H0041AFEB,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Quote,Nirmala UI,{f_quote},&H00E6F0F4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: ExplainTitle,Nirmala UI,{f_explain - 2},&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
+Style: Explain,Nirmala UI,{f_explain},&H00DCDCDC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,80,80,0,1
+Style: Reference,Nirmala UI,36,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,80,80,0,1
+Style: Watermark,Nirmala UI,26,&H00808080,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+""" + "\n".join(dialogues)
+
+    with open(temp_ass, "w", encoding="utf-8") as f:
+        f.write(ass_content)
         
-    current_y += 22
-    
-    # 3. Draw Section Title ("Explain:")
-    exp_t_w = exp_t_bbox[2] - exp_t_bbox[0]
-    draw.text(((CARD_WIDTH - exp_t_w) // 2, current_y), explain_title, font=font_explain_title, fill=COLOR_OFFWHITE)
-    current_y += exp_t_h + 20
-    
-    # 4. Draw Explanation Body
-    for line in exp_lines:
-        l_bbox = font_explain_body.getbbox(line)
-        l_w = l_bbox[2] - l_bbox[0]
-        draw.text(((CARD_WIDTH - l_w) // 2, current_y), line, font=font_explain_body, fill=COLOR_OFFWHITE)
-        current_y += exp_single_h + 14
+    safe_ass = temp_ass.replace("\\", "/")
+    cmd = [
+        "ffmpeg", "-y",
+        "-i", temp_canvas,
+        "-vf", f"subtitles='{safe_ass}'",
+        "-frames:v", "1",
+        "-update", "1",
+        output_path
+    ]
+    try:
+        subprocess.run(cmd, check=True, capture_output=True)
+        logger.info(f"Bengali post card generated at {output_path}")
+    except Exception as e:
+        logger.error(f"FFmpeg Bengali rendering error: {e}")
         
-    current_y += 26
+    for t in [temp_bg, temp_canvas, temp_ass]:
+        try: os.remove(t)
+        except: pass
+        
+    return output_path
+
+def create_post_image_card(post_data: dict, output_path: str) -> str:
+    """Universal card builder: routes automatically between English (PIL) and Bangla (HarfBuzz FFmpeg)."""
+    lang = post_data.get("language", "english").lower()
+    has_bengali = any('\u0980' <= char <= '\u09FF' for char in str(post_data.get("quote", "")))
     
-    # 5. Draw Reference ("Sahih Muslim: 2172 a")
-    ref_w = ref_bbox[2] - ref_bbox[0]
-    draw.text(((CARD_WIDTH - ref_w) // 2, current_y), reference_text, font=font_ref, fill=COLOR_WHITE)
-    current_y += ref_h + 12
-    
-    # 6. Draw Watermark with Page Username ("@DailyDosOfIslam")
-    wm_w = wm_bbox[2] - wm_bbox[0]
-    draw.text(((CARD_WIDTH - wm_w) // 2, current_y), watermark_text, font=font_watermark, fill=COLOR_DIM)
-    
-    final_card = card.convert("RGB")
-    os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
-    final_card.save(output_filepath, format="JPEG", quality=95)
-    
-    if os.path.exists(temp_bg_path):
-        try:
-            os.remove(temp_bg_path)
-        except Exception:
-            pass
-            
-    logger.info(f"Aesthetic Islamic post card generated at {output_filepath}")
-    return output_filepath
+    if lang == "bangla" or has_bengali or post_data.get("arabic_quote"):
+        return create_bengali_post_card(post_data, output_path)
+    else:
+        return create_english_post_card(post_data, output_path)
