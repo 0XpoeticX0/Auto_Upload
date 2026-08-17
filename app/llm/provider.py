@@ -32,12 +32,11 @@ def get_api_keys_pool(for_posts: bool = False) -> list:
         keys.append(GEMINI_POST_API_KEY)
     return [k for k in keys if k]
 
-# Session memory: Remember the working model+key, and blacklist failed pairs for the run
-_SESSION_WORKING_PAIR = None  # Tuple: (model_name, key)
+# Session memory: Blacklist any model+key pair that fails in this run
 _SESSION_FAILED_PAIRS = set()  # Set of (model_name, key)
 
 def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False) -> str:
-    global _SESSION_WORKING_PAIR, _SESSION_FAILED_PAIRS
+    global _SESSION_FAILED_PAIRS
     key_pool = get_api_keys_pool(for_posts=for_posts)
     if not key_pool:
         logger.error("No Gemini API keys available.")
@@ -45,25 +44,7 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
         
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
     
-    # 1. First priority: If a model+key already worked in this run, reuse it directly!
-    if _SESSION_WORKING_PAIR:
-        w_model, w_key = _SESSION_WORKING_PAIR
-        if w_key in key_pool and (w_model, w_key) not in _SESSION_FAILED_PAIRS:
-            try:
-                logger.info(f"Reusing active working model '{w_model}' with current working key...")
-                client = genai.Client(api_key=w_key)
-                response = client.models.generate_content(
-                    model=w_model,
-                    contents=prompt,
-                )
-                if response.text:
-                    return response.text
-            except Exception as e:
-                logger.warning(f"Active model '{w_model}' failed ({e}). Searching for new working pair...")
-                _SESSION_FAILED_PAIRS.add((w_model, w_key))
-                _SESSION_WORKING_PAIR = None
-                
-    # 2. Search for the next best model across available keys, skipping failed ones
+    # Priority: Try the BEST model across ALL available API keys first, skipping failed ones
     for model_name in MODELS:
         for idx, key in enumerate(key_pool, start=1):
             if (model_name, key) in _SESSION_FAILED_PAIRS:
@@ -77,8 +58,7 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
                     contents=prompt,
                 )
                 if response.text:
-                    logger.info(f"Locked in working model '{model_name}' on Key #{idx} for this run!")
-                    _SESSION_WORKING_PAIR = (model_name, key)
+                    logger.info(f"Success with '{model_name}' on Key #{idx}!")
                     return response.text
             except Exception as e:
                 logger.warning(f"Model '{model_name}' failed on Key #{idx} ({e}). Blacklisting for this run...")
@@ -117,7 +97,7 @@ def _parse_dirty_json(text: str) -> dict:
     return json.loads(clean, strict=False)
 
 def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, for_posts: bool = False) -> dict:
-    global _SESSION_WORKING_PAIR, _SESSION_FAILED_PAIRS
+    global _SESSION_FAILED_PAIRS
     key_pool = get_api_keys_pool(for_posts=for_posts)
     if not key_pool:
         logger.error("No Gemini API keys available.")
@@ -125,32 +105,7 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
         
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
     
-    # 1. First priority: If a model+key already worked in this run, reuse it directly!
-    if _SESSION_WORKING_PAIR:
-        w_model, w_key = _SESSION_WORKING_PAIR
-        if w_key in key_pool and (w_model, w_key) not in _SESSION_FAILED_PAIRS:
-            try:
-                logger.info(f"Reusing active working model '{w_model}' with current working key...")
-                client = genai.Client(api_key=w_key)
-                response = client.models.generate_content(
-                    model=w_model,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        response_mime_type="application/json",
-                        max_output_tokens=max_tokens
-                    )
-                )
-                raw_text = response.text
-                if raw_text:
-                    parsed = _parse_dirty_json(raw_text)
-                    if parsed:
-                        return parsed
-            except Exception as e:
-                logger.warning(f"Active model '{w_model}' failed ({e}). Searching for new working pair...")
-                _SESSION_FAILED_PAIRS.add((w_model, w_key))
-                _SESSION_WORKING_PAIR = None
-
-    # 2. Search for the next best model across available keys, skipping failed ones
+    # Priority: Try the BEST model across ALL available API keys first, skipping failed ones
     for model_name in MODELS:
         for idx, key in enumerate(key_pool, start=1):
             if (model_name, key) in _SESSION_FAILED_PAIRS:
@@ -172,8 +127,7 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
                     continue
                 parsed = _parse_dirty_json(raw_text)
                 if parsed:
-                    logger.info(f"Locked in working model '{model_name}' on Key #{idx} for this run!")
-                    _SESSION_WORKING_PAIR = (model_name, key)
+                    logger.info(f"Success with '{model_name}' on Key #{idx}!")
                     return parsed
             except Exception as e:
                 logger.warning(f"Model '{model_name}' failed on Key #{idx} ({e}). Blacklisting for this run...")
