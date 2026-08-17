@@ -76,20 +76,33 @@ export default {
 
 async function handleMessengerReply({ env, senderId, userText }) {
   try {
+    console.log(`[BOT] Received message from ${senderId}: "${userText}"`);
     await sendTyping(env.FB_ACCESS_TOKEN, senderId, "typing_on");
+    
+    // Ask Gemini using Best-to-Worst model failover
     const aiReply = await askGemini(env.GEMINI_API_KEY, userText);
+    console.log(`[BOT] Generated AI Reply: "${aiReply.substring(0, 50)}..."`);
+    
     await sendFbMessage(env.FB_ACCESS_TOKEN, senderId, aiReply);
     await sendTyping(env.FB_ACCESS_TOKEN, senderId, "typing_off");
   } catch (err) {
-    console.error("Error in handleMessengerReply:", err);
+    console.error("[BOT] Error in handleMessengerReply:", err);
   }
 }
 
-async function askGemini(apiKey, text) {
-  const models = ["gemini-3.7-flash", "gemini-3.5-flash-lite", "gemini-3.1-pro"];
+// Ordered strictly from BEST to WORST
+const MODELS_BEST_TO_WORST = [
+  "gemini-3.7-flash",        // 1. Best standard fast reasoning model
+  "gemini-3.6-flash",        // 2. High-performance Flash model
+  "gemini-3.5-flash-lite",   // 3. Ultra-low latency lightweight model
+  "gemini-3.1-flash-lite",   // 4. Fast fallback model
+  "gemini-3.1-pro"           // 5. Powerful reasoning model
+];
 
-  for (const model of models) {
+async function askGemini(apiKey, text) {
+  for (const model of MODELS_BEST_TO_WORST) {
     try {
+      console.log(`[GEMINI] Trying model: ${model}`);
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
       const payload = {
         contents: [
@@ -113,37 +126,58 @@ async function askGemini(apiKey, text) {
       if (res.ok) {
         const data = await res.json();
         const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (reply) return reply.trim();
+        if (reply && reply.trim()) {
+          console.log(`[GEMINI] SUCCESS with model: ${model}`);
+          return reply.trim();
+        }
+      } else {
+        const errText = await res.text();
+        console.warn(`[GEMINI] Model ${model} failed (HTTP ${res.status}): ${errText.substring(0, 120)}`);
       }
     } catch (e) {
-      console.warn(`Model ${model} failed, trying next...`, e);
+      console.warn(`[GEMINI] Model ${model} exception:`, e);
     }
   }
 
+  console.warn("[GEMINI] All models failed. Using polite default response.");
   return "আসসালামু আলাইকুম। Daily Dos of Islam-এ আপনাকে স্বাগতম। আমরা শীঘ্রই আপনার মেসেজের উত্তর দিব, ইনশাআল্লাহ। জাযাকাল্লাহু খাইরান!";
 }
 
 async function sendFbMessage(accessToken, recipientId, text) {
   const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${accessToken}`;
-  await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      recipient: { id: recipientId },
-      message: { text: text },
-      messaging_type: "RESPONSE"
-    })
-  });
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        recipient: { id: recipientId },
+        message: { text: text },
+        messaging_type: "RESPONSE"
+      })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      console.log(`[FB_SEND] Message delivered to ${recipientId}, message_id: ${data.message_id}`);
+    } else {
+      console.error(`[FB_SEND] Graph API Error (HTTP ${res.status}):`, JSON.stringify(data));
+    }
+  } catch (err) {
+    console.error("[FB_SEND] Failed to fetch Graph API:", err);
+  }
 }
 
 async function sendTyping(accessToken, recipientId, action) {
   const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${accessToken}`;
-  await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      recipient: { id: recipientId },
-      sender_action: action
-    })
-  });
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        recipient: { id: recipientId },
+        sender_action: action
+      })
+    });
+  } catch (err) {
+    // Ignore typing errors
+  }
 }
