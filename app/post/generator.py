@@ -28,7 +28,7 @@ POST_CATEGORIES = [
 
 def generate_post_content() -> dict:
     """
-    Generates authentic Islamic photo card content + Facebook/Instagram caption with EXACT verbatim Hadith translations from Sunnah.com and relatable explanations.
+    Generates authentic Islamic photo card content + Facebook/Instagram caption with EXACT verbatim Hadith translations from Sunnah.com and Sahabi narrator attribution.
     """
     selected_category = random.choice(POST_CATEGORIES)
     logger.info(f"Selected category for Facebook Post: {selected_category['name']}")
@@ -43,19 +43,28 @@ def generate_post_content() -> dict:
     system_prompt = f"""You are an expert Islamic scholar and content creator crafting authentic, beautiful reflection cards and captions for Facebook and Instagram.
 Category: {selected_category['name']} — {selected_category['description']}
 
-STRICT SACRED RULES FOR HADITH / QURAN TEXT:
-1. EXACT VERBATIM TRANSLATION (DO NOT CHANGE OR PARAPHRASE):
-   - The "quote" MUST be the EXACT, OFFICIAL WORD-FOR-WORD English translation as found on Sunnah.com / Darussalam / Sahih International (e.g. if Sunan Abi Dawud 4727 says 'I have been permitted to tell about one of Allah’s angels who bears the throne that the distance between the lobe of his ear and his shoulder is a journey of seven hundred years.', you MUST output that exact text word-for-word).
+STRICT SACRED RULES FOR HADITH & NARRATOR ATTRIBUTION:
+1. SAHABI NARRATOR ATTRIBUTION:
+   - For Hadith, the "header" MUST include the authentic Sahabi narrator who reported it from the Prophet ﷺ:
+     * Examples:
+       - "Jabir ibn 'Abdullah reported that the Prophet ﷺ said:"
+       - "Abu Hurairah reported: The Messenger of Allah ﷺ said:"
+       - "'Aisha (may Allah be pleased with her) reported:"
+       - "Ibn 'Abbas reported that the Prophet ﷺ said:"
+   - For Quranic Ayahs: "Allah says in the Quran:" or "Allah ﷻ says:".
+
+2. EXACT VERBATIM TRANSLATION (DO NOT CHANGE OR PARAPHRASE):
+   - The "quote" MUST be the EXACT, OFFICIAL WORD-FOR-WORD English translation as found on Sunnah.com / Darussalam / Sahih International.
    - STRICTLY NEVER modernize, paraphrase, rewrite, summarize, or alter ANY words of the Hadith text. Keep it 100% faithful to the official recorded translation.
 
-2. 100% AUTHENTICITY:
-   - The Hadith MUST be graded Sahih or Hasan from the standard Kutub al-Sittah (Sahih al-Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami` at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah) or authentic Quranic Ayah with Surah and Verse number. No weak or fabricated narrations.
+3. 100% AUTHENTICITY:
+   - The Hadith MUST be graded Sahih or Hasan from the standard Kutub al-Sittah (Sahih al-Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami` at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah) or authentic Quranic Ayah. No weak or unverified narrations.
 
-3. NO REPETITIONS:
+4. NO REPETITIONS:
    - You must choose a FRESH, UNIQUE Hadith or Ayah that has NOT been used in recent posts.
 
-4. FORMAT OF THE IMAGE CARD:
-   - "header": E.g. "The Prophet (peace be upon him) said:" or "Allah says in the Quran:".
+5. FORMAT OF THE IMAGE CARD:
+   - "header": E.g. "Jabir ibn 'Abdullah reported that the Prophet ﷺ said:"
    - "quote": The EXACT, verbatim authentic English translation in single quotes (25-50 words).
    - "highlight_phrases": An array of 1 or 2 core punchline phrases from the quote to be rendered in bold golden amber (#EBAF41).
      * RULE: Must be EXACT substrings that appear word-for-word inside your "quote" field.
@@ -63,10 +72,10 @@ STRICT SACRED RULES FOR HADITH / QURAN TEXT:
    - "explanation": Exactly 2 to 3 simple, warm, heartfelt sentences explaining the practical daily lesson and how it applies to our modern daily lives in easy, relatable words (30-45 words max).
    - "reference": Exact authentic citation matching Sunnah.com (e.g. 'Sunan Abi Dawud: 4727', 'Sahih al-Bukhari: 6474', 'Sahih Muslim: 2202').
 
-5. SOCIAL MEDIA CAPTION:
-   - "caption": A captivating caption. Start with a warm relatable hook, explain the practical reflection simply, include the full authentic reference, encourage readers to save & share, and include 5-8 relevant hashtags (#Islam #Hadith #DailyReminder #Sunnah #IslamicQuotes #Faith #Muslim #Allah).
+6. SOCIAL MEDIA CAPTION:
+   - "caption": A captivating caption. Start with a warm relatable hook, include the full narrator and authentic reference, explain the practical reflection simply, encourage readers to save & share, and include 5-8 relevant hashtags (#Islam #Hadith #DailyReminder #Sunnah #IslamicQuotes #Faith #Muslim #Allah).
 
-6. VISUAL BACKGROUND PROMPT:
+7. VISUAL BACKGROUND PROMPT:
    - "image_prompt": A moody, atmospheric, cinematic visual description for the background photo (e.g. 'moody ancient stone archway with warm morning sunbeams, dramatic atmospheric shadows, serene quiet ambience, photorealistic, 8k, empty room, cinematic lighting, no humans, no faces').
 
 {past_topics_text}
@@ -75,7 +84,7 @@ OUTPUT JSON FORMAT (ONLY valid JSON, no markdown outside):
 {{
     "category": "{selected_category['key']}",
     "title": "Short title describing the topic",
-    "header": "The Prophet (peace be upon him) said:",
+    "header": "Abu Hurairah reported that the Prophet ﷺ said:",
     "quote": "‘Exact official verbatim translation from Sunnah.com here...’",
     "highlight_phrases": ["exact phrase 1", "exact phrase 2"],
     "explain_title": "Explain:",
@@ -86,7 +95,7 @@ OUTPUT JSON FORMAT (ONLY valid JSON, no markdown outside):
 }}
 """
 
-    user_prompt = f"Generate an authentic Islamic post card with the EXACT verbatim English translation from Sunnah.com and a simple, relatable daily explanation for category: {selected_category['name']}."
+    user_prompt = f"Generate an authentic Islamic post card with the Sahabi narrator, the EXACT verbatim English translation from Sunnah.com, and a simple daily explanation for category: {selected_category['name']}."
     
     post_data = extract_json(system_prompt, user_prompt, for_posts=True)
     if not post_data or "quote" not in post_data:
