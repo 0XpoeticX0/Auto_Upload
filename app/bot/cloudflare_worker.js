@@ -35,7 +35,7 @@ export default {
       const token = url.searchParams.get("hub.verify_token");
       const challenge = url.searchParams.get("hub.challenge");
 
-      const verifyToken = env.FB_VERIFY_TOKEN || "daily_dos_islam_bot_verify_token";
+      const verifyToken = (env.FB_VERIFY_TOKEN || "daily_dos_islam_bot_verify_token").trim();
 
       if (mode === "subscribe" && token === verifyToken) {
         return new Response(challenge, { status: 200 });
@@ -49,24 +49,34 @@ export default {
         const body = await request.json();
 
         if (body.object === "page") {
+          const promises = [];
+
           for (const entry of body.entry || []) {
-            for (const event of entry.messaging || []) {
+            const events = entry.messaging || entry.standby || [];
+            for (const event of events) {
               const senderId = event.sender?.id;
               const message = event.message;
 
+              // Ignore echoes or messages without text
               if (message && !message.is_echo && senderId) {
                 const userText = message.quick_reply?.payload || message.text;
                 if (userText) {
-                  // Keep worker execution alive until message is delivered
-                  ctx.waitUntil(handleMessengerReply({ env, senderId, userText }));
+                  promises.push(handleMessengerReply({ env, senderId, userText }));
                 }
               }
             }
           }
+
+          if (promises.length > 0) {
+            // Await execution so Cloudflare never sleeps before delivering the reply
+            await Promise.all(promises);
+          }
+
           return new Response("EVENT_RECEIVED", { status: 200 });
         }
       } catch (err) {
-        return new Response("Bad Request", { status: 400 });
+        console.error("[BOT] Webhook Error:", err);
+        return new Response("EVENT_RECEIVED", { status: 200 });
       }
     }
 
@@ -75,16 +85,24 @@ export default {
 };
 
 async function handleMessengerReply({ env, senderId, userText }) {
+  const fbToken = (env.FB_ACCESS_TOKEN || "").trim();
+  const geminiKey = (env.GEMINI_API_KEY || "").trim();
+
+  if (!fbToken || !geminiKey) {
+    console.error("[BOT] Missing FB_ACCESS_TOKEN or GEMINI_API_KEY in Worker Settings!");
+    return;
+  }
+
   try {
     console.log(`[BOT] Received message from ${senderId}: "${userText}"`);
-    await sendTyping(env.FB_ACCESS_TOKEN, senderId, "typing_on");
-    
+    await sendTyping(fbToken, senderId, "typing_on");
+
     // Ask Gemini using Best-to-Worst model failover
-    const aiReply = await askGemini(env.GEMINI_API_KEY, userText);
-    console.log(`[BOT] Generated AI Reply: "${aiReply.substring(0, 50)}..."`);
-    
-    await sendFbMessage(env.FB_ACCESS_TOKEN, senderId, aiReply);
-    await sendTyping(env.FB_ACCESS_TOKEN, senderId, "typing_off");
+    const aiReply = await askGemini(geminiKey, userText);
+    console.log(`[BOT] Generated AI Reply: "${aiReply.substring(0, 60)}..."`);
+
+    await sendFbMessage(fbToken, senderId, aiReply);
+    await sendTyping(fbToken, senderId, "typing_off");
   } catch (err) {
     console.error("[BOT] Error in handleMessengerReply:", err);
   }
@@ -100,10 +118,13 @@ const MODELS_BEST_TO_WORST = [
 ];
 
 async function askGemini(apiKey, text) {
+  const cleanKey = apiKey.trim();
+
   for (const model of MODELS_BEST_TO_WORST) {
     try {
       console.log(`[GEMINI] Trying model: ${model}`);
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      // Use official Google GenAI endpoint with x-goog-api-key header
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
       const payload = {
         contents: [
           {
@@ -119,7 +140,10 @@ async function askGemini(apiKey, text) {
 
       const res = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": cleanKey
+        },
         body: JSON.stringify(payload)
       });
 
@@ -144,15 +168,18 @@ async function askGemini(apiKey, text) {
 }
 
 async function sendFbMessage(accessToken, recipientId, text) {
-  const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${accessToken}`;
+  const cleanToken = accessToken.trim();
+  const url = "https://graph.facebook.com/v20.0/me/messages";
   try {
     const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${cleanToken}`
+      },
       body: JSON.stringify({
         recipient: { id: recipientId },
-        message: { text: text },
-        messaging_type: "RESPONSE"
+        message: { text: text }
       })
     });
     const data = await res.json();
@@ -167,11 +194,15 @@ async function sendFbMessage(accessToken, recipientId, text) {
 }
 
 async function sendTyping(accessToken, recipientId, action) {
-  const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${accessToken}`;
+  const cleanToken = accessToken.trim();
+  const url = "https://graph.facebook.com/v20.0/me/messages";
   try {
     await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${cleanToken}`
+      },
       body: JSON.stringify({
         recipient: { id: recipientId },
         sender_action: action
