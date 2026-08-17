@@ -24,7 +24,7 @@ def determine_target_language(cli_lang: str = None) -> str:
         return "english"
     return "bangla"
 
-def run_facebook_post_pipeline(lang: str = None):
+def run_facebook_post_pipeline(lang: str = None, no_upload: bool = False):
     init_db()
     
     target_lang = determine_target_language(lang)
@@ -72,21 +72,30 @@ def run_facebook_post_pipeline(lang: str = None):
         logger.error(f"Failed to record post in database: {e}")
         
     # 4. Upload to Facebook Page & Instagram
-    logger.info("--- Publishing Photo Post to Facebook & Instagram ---")
-    upload_success = upload_post_to_facebook(created_image, caption)
-    
-    if upload_success:
-        logger.info(f"Daily {target_lang.capitalize()} Islamic Post Pipeline finished successfully!")
+    if no_upload:
+        logger.info("--- TEST MODE (NO UPLOAD): Skipping Facebook & Instagram upload ---")
+        logger.info(f"Photo post card preserved at: {created_image}")
         return True
     else:
-        logger.error("Daily Islamic Post Pipeline failed during upload.")
-        return False
+        logger.info("--- Publishing Photo Post to Facebook & Instagram ---")
+        upload_success = upload_post_to_facebook(created_image, caption)
+        
+        if upload_success:
+            logger.info(f"Daily {target_lang.capitalize()} Islamic Post Pipeline finished successfully!")
+            return True
+        else:
+            logger.error("Daily Islamic Post Pipeline failed during upload.")
+            return False
 
-if __name__ == "__main__":
+def run_facebook_post_pipeline_wrapper():
     parser = argparse.ArgumentParser(description="Run Facebook & Instagram Post Pipeline")
     parser.add_argument("--lang", choices=["english", "bangla", "auto"], default="auto", help="Post language")
+    parser.add_argument("--no-upload", action="store_true", help="Generate post card without uploading to social media")
     args = parser.parse_args()
     
     cli_choice = None if args.lang == "auto" else args.lang
-    success = run_facebook_post_pipeline(cli_choice)
+    success = run_facebook_post_pipeline(cli_choice, no_upload=args.no_upload)
     sys.exit(0 if success else 1)
+
+if __name__ == "__main__":
+    run_facebook_post_pipeline_wrapper()
