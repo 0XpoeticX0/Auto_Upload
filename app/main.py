@@ -24,11 +24,15 @@ def cleanup_temp_folder():
         except Exception as e:
             logger.warning(f"Failed to clean temp folder: {e}")
 
-def main():
+def main(no_upload: bool = False):
     parser = argparse.ArgumentParser(description="YouTube Automation Pipeline (Islamic Shorts Edition)")
     parser.add_argument("--duration", type=int, help="Target duration in seconds for the short video (max 90)")
-    args = parser.parse_args()
+    parser.add_argument("--no-upload", action="store_true", help="Render video without uploading to social media")
+    args, unknown = parser.parse_known_args()
     
+    if args.no_upload:
+        no_upload = True
+        
     target_short_duration = args.duration
     if not target_short_duration:
         target_short_duration = 90
@@ -103,32 +107,45 @@ def main():
         passed_qc = check_quality(final_video_path, thumbnail_path, metadata, topic_id)
         
         if passed_qc:
-            logger.info(f"--- Uploading ({v_format}) ---")
-            vtt_path = scenes[0].get("vtt_path")
-            upload_to_youtube(final_video_path, metadata, thumbnail_path, vtt_path)
-            upload_to_facebook(final_video_path, metadata)
+            if no_upload:
+                logger.info("--- TEST MODE (NO UPLOAD): Skipping YouTube & Facebook uploads ---")
+                import subprocess
+                subprocess.run(["ffmpeg", "-y", "-ss", "00:00:03", "-i", final_video_path, "-vframes", "1", "data/output/preview_frame_1.jpg"], check=False)
+                subprocess.run(["ffmpeg", "-y", "-ss", "00:00:08", "-i", final_video_path, "-vframes", "1", "data/output/preview_frame_2.jpg"], check=False)
+                subprocess.run(["ffmpeg", "-y", "-ss", "00:00:14", "-i", final_video_path, "-vframes", "1", "data/output/preview_frame_3.jpg"], check=False)
+                logger.info(f"Verification frames and video preserved in data/output/ for inspection.")
+            else:
+                logger.info(f"--- Uploading ({v_format}) ---")
+                vtt_path = scenes[0].get("vtt_path")
+                upload_to_youtube(final_video_path, metadata, thumbnail_path, vtt_path)
+                upload_to_facebook(final_video_path, metadata)
 
     logger.info("Islamic Shorts Pipeline finished.")
     
     # --- Aggressive Disk Space Cleanup ---
-    logger.info("Performing aggressive cleanup to save disk space...")
-    try:
-        import shutil
-        temp_dir = os.path.join("data", "temp")
-        output_dir = os.path.join("data", "output")
-        
-        if os.path.exists(temp_dir):
-            shutil.rmtree(temp_dir)
-            logger.info("Wiped temp directory.")
+    if not no_upload:
+        logger.info("Performing aggressive cleanup to save disk space...")
+        try:
+            import shutil
+            temp_dir = os.path.join("data", "temp")
+            output_dir = os.path.join("data", "output")
             
-        if os.path.exists(output_dir):
-            shutil.rmtree(output_dir)
-            logger.info("Wiped output directory (videos & thumbnails).")
+            if os.path.exists(temp_dir):
+                shutil.rmtree(temp_dir)
+                logger.info("Wiped temp directory.")
+                
+            if os.path.exists(output_dir):
+                shutil.rmtree(output_dir)
+                logger.info("Wiped output directory (videos & thumbnails).")
+                
+        except Exception as e:
+            logger.error(f"Failed during cleanup: {e}")
             
-    except Exception as e:
-        logger.error(f"Failed during cleanup: {e}")
-        
-    logger.info("Cleanup complete. Shutting down.")
+    logger.info("Pipeline run complete.")
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="Run Islamic Shorts Pipeline")
+    parser.add_argument("--no-upload", action="store_true", help="Run full pipeline and render video without uploading to social media")
+    args = parser.parse_args()
+    main(no_upload=args.no_upload)

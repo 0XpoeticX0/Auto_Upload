@@ -1,0 +1,51 @@
+name: Test Video Render (No Upload)
+
+on:
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions tab to inspect rendered video & subtitles
+
+jobs:
+  test-render:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install System Dependencies & Register Authentic Bengali Fonts
+      run: |
+        sudo apt-get update
+        sudo apt-get purge -y fonts-lohit-beng-bengali fonts-beng || true
+        sudo apt-get install -y ffmpeg fontconfig fonts-noto-core fonts-noto-extra fonts-kacst
+        sudo mkdir -p /usr/local/share/fonts/bengali
+        sudo cp app/assets/fonts/*.ttf /usr/local/share/fonts/bengali/ || true
+        sudo fc-cache -f -v
+        fc-list : family | grep -iE 'hind|siliguri|amiri|noto' || true
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip uninstall -y google-generativeai 2>/dev/null || true
+        pip install -r requirements.txt
+        pip install --force-reinstall google-genai
+        pip install --force-reinstall Pillow
+
+    - name: Run Test Render (No Upload)
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GEMINI_POST_API_KEY: ${{ secrets.GEMINI_POST_API_KEY || secrets.GEMINI_API_KEY }}
+        GEMINI_BACKUP_API_KEY: ${{ secrets.GEMINI_BACKUP_API_KEY || 'AQ.Ab8RN6LXG-lJXSn7eLyJ80hTHHSaHlvS27etoOpw9xIJnRwnyg' }}
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      run: |
+        python -m app.main --no-upload
+
+    - name: Upload Rendered Video & Frames as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-rendered-video-and-frames
+        path: data/output/
+        retention-days: 7
