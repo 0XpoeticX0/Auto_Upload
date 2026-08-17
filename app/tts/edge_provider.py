@@ -69,17 +69,26 @@ def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: st
 
 def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
     os.makedirs(temp_dir, exist_ok=True)
+    
+    # 1. Normalize all possible tag variants (<arabic>, <ARABIC>, [arabic], etc.)
+    text = re.sub(r'<\s*arabic\s*>', '<ARABIC>', text, flags=re.IGNORECASE)
+    text = re.sub(r'<\s*/\s*arabic\s*>', '</ARABIC>', text, flags=re.IGNORECASE)
+    
+    # Auto-tag common Dhikr if untagged
     for pattern, repl in DHIKR_REPLACEMENTS.items():
         text = re.sub(pattern, repl, text)
         
-    parts = re.split(r'(<ARABIC>.*?</ARABIC>)', text, flags=re.DOTALL)
+    parts = re.split(r'(<ARABIC>.*?</ARABIC>)', text, flags=re.DOTALL | re.IGNORECASE)
     segments = []
     
     for part in parts:
-        if not part.strip():
+        clean_part = part.strip()
+        if not clean_part:
             continue
-        if part.startswith("<ARABIC>") and part.endswith("</ARABIC>"):
-            raw_arabic_block = part[8:-9].strip()
+        if clean_part.upper().startswith("<ARABIC>") and clean_part.upper().endswith("</ARABIC>"):
+            raw_arabic_block = clean_part[8:-9].strip()
+            # Strip any accidental nested tags
+            raw_arabic_block = re.sub(r'</?[a-zA-Z0-9_-]+>', '', raw_arabic_block).strip()
             spoken_text = clean_arabic_for_audio(raw_arabic_block)
             display_text = raw_arabic_block
             segments.append({
@@ -91,18 +100,23 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                 "pitch": "-2Hz"
             })
         else:
-            cleaned_text = part
+            # Strip any stray tags or 'arabic:' prefixes
+            clean_bangla = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_part)
+            clean_bangla = re.sub(r'^\s*(arabic|bangla|english)\s*:\s*', '', clean_bangla, flags=re.IGNORECASE)
+            
             for k, v in PHONETIC_CLEANUPS.items():
-                cleaned_text = cleaned_text.replace(k, v)
-            cleaned_text = cleaned_text.replace('।', '। ').replace(',', ', ').replace('?', '? ')
-            segments.append({
-                "type": "bangla",
-                "voice": BANGLA_VOICE,
-                "spoken_text": cleaned_text.strip(),
-                "display_text": part.strip(),
-                "rate": "-4%",
-                "pitch": "-2Hz"
-            })
+                clean_bangla = clean_bangla.replace(k, v)
+            clean_bangla = clean_bangla.replace('।', '। ').replace(',', ', ').replace('?', '? ')
+            
+            if clean_bangla.strip():
+                segments.append({
+                    "type": "bangla",
+                    "voice": BANGLA_VOICE,
+                    "spoken_text": clean_bangla.strip(),
+                    "display_text": clean_bangla.strip(),
+                    "rate": "-4%",
+                    "pitch": "-2Hz"
+                })
             
     seg_mp3s = []
     seg_cues = []

@@ -73,7 +73,7 @@ def main():
         
     import copy
 
-    for v_format in ["short", "long"]:
+    for v_format in ["short"]:
         logger.info(f"--- Rendering Video ({v_format}) ---")
         final_video_path = render_final_video(scenes, topic_id, v_format)
         
@@ -99,21 +99,14 @@ def main():
                 "tags": ["Islam", "Islamic", "Quran", "Hadith", "Muslim", "Shorts"],
             }
         
-        if v_format == "long":
-            metadata["description"] = metadata["description"].replace("#Shorts", "#IslamicVideo").replace("#shorts", "#IslamicVideo")
-        
         logger.info(f"--- Running QC ({v_format}) ---")
         passed_qc = check_quality(final_video_path, thumbnail_path, metadata, topic_id)
         
         if passed_qc:
             logger.info(f"--- Uploading ({v_format}) ---")
-            # The VTT file is located in the temp directory
-            vtt_path = os.path.join("data", "temp", f"{topic_id}_{v_format}", "master_audio.vtt")
+            vtt_path = scenes[0].get("vtt_path")
             upload_to_youtube(final_video_path, metadata, thumbnail_path, vtt_path)
-            
-            # Only upload the vertical format to Facebook to prevent duplicate Reels
-            if v_format == "short":
-                upload_to_facebook(final_video_path, metadata)
+            upload_to_facebook(final_video_path, metadata)
 
     logger.info("Islamic Shorts Pipeline finished.")
     
