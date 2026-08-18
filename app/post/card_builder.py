@@ -333,7 +333,7 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     
     # 2. Build Base Canvas with smooth continuous vertical feather into solid black #08090C
     card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (8, 9, 12))
-    target_h = 520
+    target_h = 430
     
     try:
         with Image.open(temp_bg).convert("RGBA") as bg_img:
@@ -345,13 +345,13 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
             crop_x = (new_w - CARD_WIDTH) // 2
             bg_cropped = bg_scaled.crop((crop_x, 0, crop_x + CARD_WIDTH, target_h))
             
-            # Smooth continuous feather mask from top to bottom
+            # Smooth continuous feather mask from top to bottom (Top 35% height)
             mask = Image.new("L", (CARD_WIDTH, target_h), 255)
             for y in range(target_h):
-                if y < target_h * 0.40:
+                if y < target_h * 0.35:
                     alpha = 255
                 else:
-                    progress = (y - target_h * 0.40) / (target_h * 0.60)
+                    progress = (y - target_h * 0.35) / (target_h * 0.65)
                     alpha = int(255 * (1.0 - (progress ** 1.6)))
                 for x in range(CARD_WIDTH):
                     mask.putpixel((x, y), alpha)
@@ -362,7 +362,7 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
         
     card.save(temp_canvas, "JPEG", quality=95)
     
-    # 3. Dynamic Typography & Layout Calculation (Zero Overlap for any length)
+    # 3. Dynamic Typography & Wide Layout Calculation (Utilize full left-to-right space)
     header = post_data.get("header", "রাসূলুল্লাহ (সা.) বলেছেন:").strip()
     bangla_quote = post_data.get("quote", post_data.get("bangla_quote", "")).strip()
     highlight_phrases = post_data.get("highlight_phrases", [])
@@ -370,43 +370,51 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     explanation = post_data.get("explanation", "").strip()
     reference = post_data.get("reference", "").strip()
     
-    # Calculate wrap width based on text length
+    # Ensure header splits cleanly: narrator line 1, Rasulullah line 2 if long
+    if "রাসূলুল্লাহ" in header and "\n" not in header and len(header) > 36:
+        for split_token in ["রাসূলুল্লাহ", "রাসূলুল্লাহ (সা.)", "মহান আল্লাহ"]:
+            if split_token in header:
+                idx = header.find(split_token)
+                header = header[:idx].rstrip() + "\n" + header[idx:].lstrip()
+                break
+                
     styled_header = format_header_with_highlights_ass(header) if header else ""
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
     
-    header_lines = split_text_wrap_ass(styled_header, max_chars=44) if header else []
-    quote_lines = split_text_wrap_ass(styled_quote, max_chars=42) if bangla_quote else []
-    explain_lines = split_text_wrap_ass(explanation, max_chars=46) if explanation else []
+    # Wide wrapping utilizing full width (approx 88-90% of 1080px canvas)
+    header_lines = split_text_wrap_ass(styled_header, max_chars=48) if header else []
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=50) if bangla_quote else []
+    explain_lines = split_text_wrap_ass(explanation, max_chars=54) if explanation else []
     
     total_lines = len(header_lines) + len(quote_lines) + len(explain_lines)
     
     # Smart dynamic scaling based on content length
     if total_lines >= 14:
-        f_header = 40
-        f_quote = 38
-        f_explain_title = 30
-        f_explain_body = 31
+        f_header = 42
+        f_quote = 40
+        f_explain_title = 32
+        f_explain_body = 32
         f_ref = 38
         f_wm = 24
-        h_step = 48
-        q_step = 48
-        e_step = 38
-        gap_h = 16
-        gap_q = 20
-        start_y = 445
-    elif total_lines >= 10:
-        f_header = 42
-        f_quote = 42
-        f_explain_title = 32
-        f_explain_body = 33
-        f_ref = 40
-        f_wm = 25
-        h_step = 52
+        h_step = 50
         q_step = 52
         e_step = 42
         gap_h = 20
         gap_q = 24
         start_y = 475
+    elif total_lines >= 10:
+        f_header = 44
+        f_quote = 44
+        f_explain_title = 34
+        f_explain_body = 34
+        f_ref = 40
+        f_wm = 25
+        h_step = 54
+        q_step = 56
+        e_step = 45
+        gap_h = 24
+        gap_q = 28
+        start_y = 500
     else:
         f_header = 46
         f_quote = 46
@@ -415,11 +423,11 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
         f_ref = 42
         f_wm = 26
         h_step = 58
-        q_step = 58
-        e_step = 46
-        gap_h = 24
-        gap_q = 30
-        start_y = 525
+        q_step = 60
+        e_step = 48
+        gap_h = 28
+        gap_q = 34
+        start_y = 520
         
     current_y = start_y
     dialogues = []
@@ -447,10 +455,10 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
             current_y += e_step
             
     # 4. Reference & Watermark at bottom with comfortable breathing room
-    ref_y = max(current_y + 32, 1180)
+    ref_y = max(current_y + 36, 1175)
     if ref_y > 1215:
         ref_y = 1215
-    wm_y = min(1280, ref_y + 55)
+    wm_y = min(1275, ref_y + 55)
     
     if reference:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{reference}")
@@ -463,12 +471,12 @@ PlayResY: {CARD_HEIGHT}
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
-Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
-Style: ExplainTitle,Noto Sans Bengali,{f_explain_title},&H00A0A5B0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
-Style: Explain,Noto Sans Bengali,{f_explain_body},&H00D0D4DC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
-Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
-Style: Watermark,Noto Sans Bengali,{f_wm},&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
+Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,50,50,0,1
+Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,50,50,0,1
+Style: ExplainTitle,Noto Sans Bengali,{f_explain_title},&H00A0A5B0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,50,50,0,1
+Style: Explain,Noto Sans Bengali,{f_explain_body},&H00D0D4DC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,50,50,0,1
+Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,50,50,0,1
+Style: Watermark,Noto Sans Bengali,{f_wm},&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,50,50,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
