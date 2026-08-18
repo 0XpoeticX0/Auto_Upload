@@ -381,53 +381,40 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     styled_header = format_header_with_highlights_ass(header) if header else ""
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
     
-    # Wide wrapping utilizing ~90% canvas width (50px side margins)
-    header_lines = split_text_wrap_ass(styled_header, max_chars=48) if header else []
-    quote_lines = split_text_wrap_ass(styled_quote, max_chars=50) if bangla_quote else []
-    explain_lines = split_text_wrap_ass(explanation, max_chars=54) if explanation else []
+    # Ultra-wide wrapping (72-76 chars) to utilize 94% of the 1080px canvas!
+    header_lines = split_text_wrap_ass(styled_header, max_chars=58) if header else []
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=72) if bangla_quote else []
+    explain_lines = split_text_wrap_ass(explanation, max_chars=76) if explanation else []
     
     total_content_lines = len(header_lines) + len(quote_lines) + (len(explain_lines) + 1 if explanation else 0)
     
-    # Mathematical auto-scaling to fit within the safe vertical zone (440px to 1160px)
-    if total_content_lines >= 14:
-        f_header = 40
-        f_quote = 38
-        f_explain_title = 30
-        f_explain_body = 31
-        f_ref = 38
-        f_wm = 24
-        h_step = 46
-        q_step = 48
-        e_step = 38
-        gap_h = 16
-        gap_q = 20
-        start_y = 445
-    elif total_content_lines >= 10:
+    # Large, bold, high-contrast typography scaling
+    if total_content_lines >= 13:
         f_header = 44
-        f_quote = 42
+        f_quote = 44
         f_explain_title = 32
-        f_explain_body = 33
+        f_explain_body = 34
         f_ref = 40
         f_wm = 25
         h_step = 52
-        q_step = 54
+        q_step = 56
         e_step = 44
-        gap_h = 22
-        gap_q = 26
-        start_y = 480
+        gap_h = 20
+        gap_q = 24
+        start_y = 460
     else:
-        f_header = 46
-        f_quote = 46
+        f_header = 48
+        f_quote = 48
         f_explain_title = 34
-        f_explain_body = 35
+        f_explain_body = 36
         f_ref = 42
         f_wm = 26
         h_step = 58
-        q_step = 60
-        e_step = 48
-        gap_h = 26
-        gap_q = 32
-        start_y = 520
+        q_step = 62
+        e_step = 46
+        gap_h = 24
+        gap_q = 28
+        start_y = 490
         
     current_y = start_y
     dialogues = []
@@ -474,12 +461,12 @@ PlayResY: {CARD_HEIGHT}
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,50,50,0,1
-Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,50,50,0,1
-Style: ExplainTitle,Noto Sans Bengali,{f_explain_title},&H00A0A5B0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,50,50,0,1
-Style: Explain,Noto Sans Bengali,{f_explain_body},&H00D0D4DC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,50,50,0,1
-Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,50,50,0,1
-Style: Watermark,Noto Sans Bengali,{f_wm},&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,50,50,0,1
+Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,40,40,0,1
+Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,40,40,0,1
+Style: ExplainTitle,Noto Sans Bengali,{f_explain_title},&H00A0A5B0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
+Style: Explain,Noto Sans Bengali,{f_explain_body},&H00D0D4DC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
+Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,40,40,0,1
+Style: Watermark,Noto Sans Bengali,{f_wm},&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,40,40,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
