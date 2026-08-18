@@ -115,41 +115,28 @@ POST_PILLARS = [
     }
 ]
 
-def _get_next_post_pillar(cursor) -> dict:
+from app.history import (
+    get_next_pillar_from_history,
+    get_recent_post_records
+)
+
+def _get_next_post_pillar() -> dict:
     """Round-robin rotation for Facebook posts across the 4 pillars."""
-    try:
-        cursor.execute("SELECT category FROM facebook_posts ORDER BY id DESC LIMIT 1")
-        row = cursor.fetchone()
-        if row and row["category"]:
-            last_cat = row["category"]
-            for i, p in enumerate(POST_PILLARS):
-                if p["key"] == last_cat:
-                    next_p = POST_PILLARS[(i + 1) % len(POST_PILLARS)]
-                    logger.info(f"Post Round-Robin: Last was '{last_cat}' → Next is '{next_p['key']}'")
-                    return next_p
-    except Exception as e:
-        logger.warning(f"Could not read last post pillar: {e}")
-        
-    return POST_PILLARS[0]
+    return get_next_pillar_from_history(POST_PILLARS, "post")
 
 def generate_post_content(language: str = "bangla") -> dict:
     """
     Generates authentic Islamic photo card content with 4-pillar round-robin and 80+ concept deduplication.
     """
-    conn = get_connection()
-    cursor = conn.cursor()
-    selected_pillar = _get_next_post_pillar(cursor)
-    conn.close()
-    
+    selected_pillar = _get_next_post_pillar()
     logger.info(f"Selected Pillar for Post ({language.upper()}): {selected_pillar['name']}")
     
-    recent_posts = get_recent_facebook_posts(limit=60)
+    recent_posts = get_recent_post_records(limit=60)
     past_topics_list = []
     if recent_posts:
         for p in recent_posts:
-            p_dict = dict(p)
-            ref = p_dict.get("reference", "")
-            q = p_dict.get("quote", "")[:50]
+            ref = p.get("reference", "")
+            q = p.get("quote", "")[:50]
             if ref or q:
                 past_topics_list.append(f"- Ref: {ref} | Quote: {q}...")
                 

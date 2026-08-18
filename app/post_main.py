@@ -58,7 +58,10 @@ def run_facebook_post_pipeline(lang: str = None, no_upload: bool = False):
         
     logger.info(f"Image card successfully created: {created_image}")
     
-    # 3. Save to database to enforce 30-day anti-repetition tracking
+    # 3. Save to persistent history file & database
+    from app.history import record_post_history
+    record_post_history(post_title, category, quote, reference)
+    
     try:
         conn = get_connection()
         cursor = conn.cursor()
@@ -68,7 +71,7 @@ def run_facebook_post_pipeline(lang: str = None, no_upload: bool = False):
         ''', (category, post_title, quote, reference, caption, created_image))
         conn.commit()
         conn.close()
-        logger.info("Saved post record to database for 30-day anti-repetition history.")
+        logger.info("Saved post record to database and persistent history file.")
     except Exception as e:
         logger.error(f"Failed to record post in database: {e}")
         
