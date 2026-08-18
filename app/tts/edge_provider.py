@@ -3,7 +3,7 @@ import re
 import subprocess
 from app.logger import logger
 
-BANGLA_VOICE = "bn-BD-PradeepNeural"
+BANGLA_VOICE = "bn-IN-BashkarNeural"
 ARABIC_VOICE = "ar-SA-HamedNeural"
 
 DHIKR_REPLACEMENTS = {
@@ -145,8 +145,8 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                     "voice": BANGLA_VOICE,
                     "spoken_text": spoken_bangla,
                     "display_text": display_text,
-                    "rate": "-10%",
-                    "pitch": "-2Hz"
+                    "rate": "+5%",
+                    "pitch": "-1Hz"
                 })
             
     seg_mp3s = []
@@ -221,7 +221,14 @@ def generate_all_audio(scenes_or_script, topic_id: int = 0, video_format: str = 
             safe_m = os.path.abspath(m).replace("\\", "/")
             f.write(f"file '{safe_m}'\n")
             
-    subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", master_concat, "-c", "copy", master_mp3], check=True, capture_output=True)
+    raw_master_mp3 = os.path.join(temp_dir, "master_raw.mp3")
+    subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", master_concat, "-c", "copy", raw_master_mp3], check=True, capture_output=True)
+    
+    # Apply vocal warmth and presence mastering chain
+    vocal_filter = "equalizer=f=200:width_type=h:width=120:g=2,equalizer=f=4000:width_type=h:width=1000:g=1.5,aecho=0.8:0.9:25:0.1"
+    subprocess.run(["ffmpeg", "-y", "-i", raw_master_mp3, "-af", vocal_filter, "-b:a", "192k", master_mp3], check=True, capture_output=True)
+    try: os.remove(raw_master_mp3)
+    except: pass
     
     with open(master_vtt, "w", encoding="utf-8") as f:
         f.write("WEBVTT\n\n")
