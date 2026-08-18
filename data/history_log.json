@@ -1,6 +1,6 @@
 {
   "last_video_pillar": "dua_cures",
-  "last_post_pillar": "heart_softeners",
+  "last_post_pillar": "islamic_knowledge",
   "videos": [
     {
       "title": "মানসিক অশান্তি ও চরম বিপদে এই একটিমাত্র দোয়া সব বদলে দেবে",
@@ -53,6 +53,14 @@
     }
   ],
   "posts": [
+    {
+      "title": "আরশ বহনকারী ফেরেশতার বিশালতা",
+      "category": "islamic_knowledge",
+      "quote": "‘আমাকে আল্লাহর আরশ বহনকারী ফেরেশতাদের মধ্য থেকে একজন ফেরেশতার বিবরণ দেওয়ার অনুমত",
+      "reference": "সুনান আবু দাউদ: ৪৭২৭ (সহীহ)",
+      "timestamp": 1787066040,
+      "date_str": "2026-08-18 15:14:00"
+    },
     {
       "title": "আল্লাহর অসীম ক্ষমার প্রতিশ্রুতি",
       "category": "heart_softeners",
