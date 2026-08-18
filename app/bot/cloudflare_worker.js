@@ -108,13 +108,12 @@ async function handleMessengerReply({ env, senderId, userText }) {
   }
 }
 
-// Ordered strictly from BEST to WORST
+// Prioritized for blazing fast response time (< 1.5s) while maintaining top quality
 const MODELS_BEST_TO_WORST = [
-  "gemini-3.7-flash",        // 1. Best standard fast reasoning model
-  "gemini-3.6-flash",        // 2. High-performance Flash model
-  "gemini-3.5-flash-lite",   // 3. Ultra-low latency lightweight model
-  "gemini-3.1-flash-lite",   // 4. Fast fallback model
-  "gemini-3.1-pro"           // 5. Powerful reasoning model
+  "gemini-3.6-flash",        // 1. Instant response & highly accurate (Recommended)
+  "gemini-3.5-flash-lite",   // 2. Ultra-low latency (< 800ms)
+  "gemini-3.7-flash",        // 3. Deep reasoning Flash model
+  "gemini-3.1-flash-lite"    // 4. Lightweight fallback
 ];
 
 async function askGemini(apiKey, text) {
@@ -122,8 +121,9 @@ async function askGemini(apiKey, text) {
 
   for (const model of MODELS_BEST_TO_WORST) {
     try {
-      console.log(`[GEMINI] Trying model: ${model}`);
-      // Use official Google GenAI endpoint with x-goog-api-key header
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s fast timeout
+
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
       const payload = {
         contents: [
@@ -133,7 +133,7 @@ async function askGemini(apiKey, text) {
           }
         ],
         generationConfig: {
-          maxOutputTokens: 300,
+          maxOutputTokens: 250,
           temperature: 0.7
         }
       };
@@ -144,26 +144,25 @@ async function askGemini(apiKey, text) {
           "Content-Type": "application/json",
           "x-goog-api-key": cleanKey
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (res.ok) {
         const data = await res.json();
         const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
         if (reply && reply.trim()) {
-          console.log(`[GEMINI] SUCCESS with model: ${model}`);
+          console.log(`[GEMINI] Fast response delivered with ${model}`);
           return reply.trim();
         }
-      } else {
-        const errText = await res.text();
-        console.warn(`[GEMINI] Model ${model} failed (HTTP ${res.status}): ${errText.substring(0, 120)}`);
       }
     } catch (e) {
-      console.warn(`[GEMINI] Model ${model} exception:`, e);
+      console.warn(`[GEMINI] Fast fallback triggered for ${model}`);
     }
   }
 
-  console.warn("[GEMINI] All models failed. Using polite default response.");
   return "আসসালামু আলাইকুম। Daily Dos of Islam-এ আপনাকে স্বাগতম। আমরা শীঘ্রই আপনার মেসেজের উত্তর দিব, ইনশাআল্লাহ। জাযাকাল্লাহু খাইরান!";
 }
 

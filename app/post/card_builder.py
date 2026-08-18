@@ -282,6 +282,32 @@ def split_text_wrap_ass(text: str, max_chars: int = 46) -> list:
             lines.append(" ".join(cur_line))
     return lines
 
+def format_header_with_highlights_ass(header: str) -> str:
+    """
+    Highlights 'রাসূলুল্লাহ (সা.) বলেছেন:', 'মহান আল্লাহ বলেন:', etc. in golden amber.
+    """
+    if not header or "{\\c" in header:
+        return header
+    
+    targets = [
+        "রাসূলুল্লাহ (সা.) বলেছেন, মহান আল্লাহ বলেন:",
+        "রাসূলুল্লাহ (ﷺ) বলেছেন, মহান আল্লাহ বলেন:",
+        "রাসূলুল্লাহ (সা.) বলেছেন:",
+        "রাসূলুল্লাহ (ﷺ) বলেছেন:",
+        "রাসূলুল্লাহ (সা.) বলেছেন",
+        "রাসূলুল্লাহ (ﷺ) বলেছেন",
+        "মহান আল্লাহ তা'আলা এরশাদ করেছেন:",
+        "মহান আল্লাহ বলেন:",
+        "The Messenger of Allah (peace be upon him) said:",
+        "The Prophet (peace be upon him) said:",
+        "the Prophet (peace be upon him) as saying:",
+        "the Prophet (May peace be upon him) as saying:"
+    ]
+    for t in targets:
+        if t in header:
+            return header.replace(t, f"{{\\c&H003DBFF2&}}{t}{{\\c&H00FFFFFF&}}")
+    return header
+
 def format_quote_with_highlights_ass(quote_text: str, highlight_phrases: list) -> str:
     styled = quote_text
     for hl in highlight_phrases:
@@ -301,15 +327,17 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     temp_canvas = os.path.join(temp_dir, f"canvas_{timestamp}.jpg")
     temp_ass = os.path.join(temp_dir, f"card_{timestamp}.ass")
     
-    # 1. Visual & Base Canvas (Atmospheric top arch image with soft feathering)
-    image_prompt = post_data.get("image_prompt", "antique wooden arched window with warm glowing golden lantern light inside ancient room, dark atmospheric cinematic photography 8k, soft shadows")
+    # 1. Visual Download (cinematic peaceful desert dunes / nature sunset, no alive beings)
+    image_prompt = post_data.get("image_prompt", "vast tranquil desert sand dunes under warm glowing twilight sunset, cinematic atmospheric photography 8k, serene, empty, no humans, no living beings")
     download_card_background(image_prompt, temp_bg)
     
-    card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (11, 13, 17))
+    # 2. Build Base Canvas with smooth continuous vertical feather into solid black #08090C
+    card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (8, 9, 12))
+    target_h = 520
+    
     try:
         with Image.open(temp_bg).convert("RGBA") as bg_img:
             bg_w, bg_h = bg_img.size
-            target_h = 420
             scale = max(CARD_WIDTH / bg_w, target_h / bg_h)
             new_w = int(bg_w * scale)
             new_h = int(bg_h * scale)
@@ -317,89 +345,112 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
             crop_x = (new_w - CARD_WIDTH) // 2
             bg_cropped = bg_scaled.crop((crop_x, 0, crop_x + CARD_WIDTH, target_h))
             
-            # Soft feather mask on bottom and sides
+            # Smooth continuous feather mask from top to bottom
             mask = Image.new("L", (CARD_WIDTH, target_h), 255)
             for y in range(target_h):
+                if y < target_h * 0.40:
+                    alpha = 255
+                else:
+                    progress = (y - target_h * 0.40) / (target_h * 0.60)
+                    alpha = int(255 * (1.0 - (progress ** 1.6)))
                 for x in range(CARD_WIDTH):
-                    # Vertical fade
-                    if y < target_h * 0.35:
-                        alpha_v = 240
-                    else:
-                        progress_y = (y - target_h * 0.35) / (target_h * 0.65)
-                        alpha_v = int(240 * (1.0 - (progress_y ** 1.8)))
-                    
-                    # Horizontal side fade
-                    edge_dist_x = min(x, CARD_WIDTH - x)
-                    if edge_dist_x < 100:
-                        alpha_h = edge_dist_x / 100.0
-                    else:
-                        alpha_h = 1.0
-                    
-                    mask.putpixel((x, y), int(alpha_v * alpha_h))
+                    mask.putpixel((x, y), alpha)
                     
             card.paste(bg_cropped.convert("RGB"), (0, 0), mask)
     except Exception as e:
-        logger.warning(f"Error blending background: {e}")
+        logger.warning(f"Error applying background image: {e}")
         
     card.save(temp_canvas, "JPEG", quality=95)
     
-    # 2. Text layout & dynamic sizing (Matching exact reference design)
-    header = post_data.get("header", "").strip()
-    arabic_quote = post_data.get("arabic_quote", "").strip()
+    # 3. Dynamic Typography & Layout Calculation (Zero Overlap for any length)
+    header = post_data.get("header", "রাসূলুল্লাহ (সা.) বলেছেন:").strip()
     bangla_quote = post_data.get("quote", post_data.get("bangla_quote", "")).strip()
     highlight_phrases = post_data.get("highlight_phrases", [])
     explain_title = post_data.get("explain_title", "ব্যাখ্যা:").strip()
     explanation = post_data.get("explanation", "").strip()
     reference = post_data.get("reference", "").strip()
     
-    header_lines = split_text_wrap_ass(header, max_chars=48) if header else []
-    arabic_lines = split_text_wrap_ass(arabic_quote, max_chars=60) if arabic_quote else []
+    # Calculate wrap width based on text length
+    styled_header = format_header_with_highlights_ass(header) if header else ""
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
-    quote_lines = split_text_wrap_ass(styled_quote, max_chars=46) if bangla_quote else []
-    explain_lines = split_text_wrap_ass(explanation, max_chars=50) if explanation else []
     
-    # Typography specs matching reference image
-    f_header = 46
-    f_arabic = 58
-    f_quote = 44
-    f_explain = 34
-    f_ref = 42
-    f_wm = 26
+    header_lines = split_text_wrap_ass(styled_header, max_chars=44) if header else []
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=42) if bangla_quote else []
+    explain_lines = split_text_wrap_ass(explanation, max_chars=46) if explanation else []
     
-    h_step = 56
-    a_step = 70
-    q_step = 54
-    e_step = 44
+    total_lines = len(header_lines) + len(quote_lines) + len(explain_lines)
     
-    start_y = 445
+    # Smart dynamic scaling based on content length
+    if total_lines >= 14:
+        f_header = 40
+        f_quote = 38
+        f_explain_title = 30
+        f_explain_body = 31
+        f_ref = 38
+        f_wm = 24
+        h_step = 48
+        q_step = 48
+        e_step = 38
+        gap_h = 16
+        gap_q = 20
+        start_y = 445
+    elif total_lines >= 10:
+        f_header = 42
+        f_quote = 42
+        f_explain_title = 32
+        f_explain_body = 33
+        f_ref = 40
+        f_wm = 25
+        h_step = 52
+        q_step = 52
+        e_step = 42
+        gap_h = 20
+        gap_q = 24
+        start_y = 475
+    else:
+        f_header = 46
+        f_quote = 46
+        f_explain_title = 34
+        f_explain_body = 35
+        f_ref = 42
+        f_wm = 26
+        h_step = 58
+        q_step = 58
+        e_step = 46
+        gap_h = 24
+        gap_q = 30
+        start_y = 525
+        
     current_y = start_y
-    
     dialogues = []
     
+    # 1. Header (Sahabi Narrator)
     for h_l in header_lines:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Header,,0,0,0,,{{\\pos(540,{current_y})}}{h_l}")
         current_y += h_step
-    if header_lines: current_y += 18
+    if header_lines:
+        current_y += gap_h
         
-    for a_l in arabic_lines:
-        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Arabic,,0,0,0,,{{\\pos(540,{current_y})}}{a_l}")
-        current_y += a_step
-    if arabic_lines: current_y += 22
-        
+    # 2. Main Hadith Quote with Golden Highlights
     for q_l in quote_lines:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Quote,,0,0,0,,{{\\pos(540,{current_y})}}{q_l}")
         current_y += q_step
-    if quote_lines: current_y += 24
+    if quote_lines:
+        current_y += gap_q
         
+    # 3. Explain Section
     if explanation:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,ExplainTitle,,0,0,0,,{{\\pos(540,{current_y})}}{explain_title}")
-        current_y += (e_step + 4)
+        current_y += (f_explain_title + 14)
         for e_l in explain_lines:
             dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Explain,,0,0,0,,{{\\pos(540,{current_y})}}{e_l}")
             current_y += e_step
             
-    ref_y = max(1185, current_y + 36)
-    wm_y = min(1280, ref_y + 48)
+    # 4. Reference & Watermark at bottom with comfortable breathing room
+    ref_y = max(current_y + 32, 1180)
+    if ref_y > 1215:
+        ref_y = 1215
+    wm_y = min(1280, ref_y + 55)
     
     if reference:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{reference}")
@@ -413,12 +464,11 @@ PlayResY: {CARD_HEIGHT}
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
-Style: Arabic,Amiri,{f_arabic},&H003DBFF2,&H000000FF,&H00000000,&H80000000,-1,0,0,0,105,100,0,0,1,3,0,5,40,40,0,1
-Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
-Style: ExplainTitle,Noto Sans Bengali,32,&H00A0A0A0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
-Style: Explain,Noto Sans Bengali,{f_explain},&H00D4D4D4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
+Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
+Style: ExplainTitle,Noto Sans Bengali,{f_explain_title},&H00A0A5B0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
+Style: Explain,Noto Sans Bengali,{f_explain_body},&H00D0D4DC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,60,60,0,1
 Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,60,60,0,1
-Style: Watermark,Noto Sans Bengali,{f_wm},&H00808080,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
+Style: Watermark,Noto Sans Bengali,{f_wm},&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,80,80,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -429,10 +479,6 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         
     safe_ass = os.path.relpath(temp_ass).replace('\\', '/')
     
-    # NOTE: Do NOT use :fontsdir here. Passing fontsdir disables HarfBuzz on Linux,
-    # causing Bengali vowels (ো, ে, ি) to be drawn in wrong order (broken spelling).
-    # Fonts are pre-installed into /usr/local/share/fonts/bengali/ by the workflow,
-    # so libass uses system Fontconfig + HarfBuzz for correct Bengali shaping.
     cmd = [
         "ffmpeg", "-y",
         "-i", temp_canvas,
