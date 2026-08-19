@@ -1,6 +1,6 @@
 {
   "last_video_pillar": "heart_softeners",
-  "last_post_pillar": "islamic_knowledge",
+  "last_post_pillar": "dreams_and_sleep",
   "videos": [
     {
       "title": "গোপনে আল্লাহকে ভয় করার পুরস্কার: যার জন্য অপেক্ষা করছে মহা মাগফিরাত",
@@ -60,6 +60,14 @@
     }
   ],
   "posts": [
+    {
+      "title": "দুঃস্বপ্ন দেখলে নবীজির শেখানো সুন্নাহ ও মুক্তির উপায়",
+      "category": "dreams_and_sleep",
+      "quote": "‘উত্তম স্বপ্ন আল্লাহর পক্ষ থেকে এবং দুঃস্বপ্ন শয়তানের পক্ষ থেকে। সুতরাং তোমাদের",
+      "reference": "সহীহ বুখারী: ৬৯৮৪, সহীহ মুসলিম: ২২৬১",
+      "timestamp": 1787112938,
+      "date_str": "2026-08-19 04:15:38"
+    },
     {
       "title": "আরশ বহনকারী ফেরেশতার বিশালতা",
       "category": "islamic_knowledge",
