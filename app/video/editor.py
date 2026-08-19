@@ -97,17 +97,32 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
             clean_text = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_text)
             clean_text = re.sub(r'^\s*(arabic|bangla|english)\s*:\s*', '', clean_text, flags=re.IGNORECASE).strip()
             
+            clean_text = clean_text.replace('\n', '\\N')
             sub_lines = clean_text.split('\\N')
             formatted_sub_lines = []
+            
+            has_arabic = any(re.search(r'[\u0600-\u06FF]', l) for l in sub_lines)
+            bangla_idx = 0
+            
             for sl in sub_lines:
                 sl = sl.strip()
                 if not sl:
                     continue
                 if re.search(r'[\u0600-\u06FF]', sl):
                     # Style Arabic text with Amiri font and gold accent
-                    formatted_sub_lines.append(f"{{\\fnAmiri\\fs80\\b1\\c&HEBAF41&}}{sl}")
+                    formatted_sub_lines.append(f"{{\\fnAmiri\\fs82\\b1\\c&HEBAF41&}}{sl}")
+                elif has_arabic:
+                    # Inside an Arabic Ayah/Dua block
+                    if bangla_idx == 0 and len(sub_lines) >= 3:
+                        # Pronunciation line: NOT bold, smaller font
+                        formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs62\\b0\\c&HE0E4E8&}}{sl}")
+                        bangla_idx += 1
+                    else:
+                        # Translation line: Warm yellowish / amber highlight
+                        formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs70\\b1\\c&H3DBFF2&}}{sl}")
+                        bangla_idx += 1
                 else:
-                    # Style Bangla text with Noto Sans Bengali font and crisp white color
+                    # Standard narration Bangla line: crisp white
                     formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs74\\b1\\c&HFFFFFF&}}{sl}")
                     
             final_dialogue_text = "\\N".join(formatted_sub_lines) if formatted_sub_lines else f"{{\\fnNoto Sans Bengali\\fs74\\b1}}{clean_text}"
