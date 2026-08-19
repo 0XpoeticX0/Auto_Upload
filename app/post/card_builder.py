@@ -270,12 +270,11 @@ def split_text_wrap_ass(text: str, max_chars: int = 46) -> list:
         for w in words:
             visible_w = re.sub(r'{\\[^}]+}', '', w)
             w_len = len(visible_w)
-            if cur_visible_len + w_len + 1 <= max_chars:
+            if cur_visible_len + w_len + 1 <= max_chars or not cur_line:
                 cur_line.append(w)
                 cur_visible_len += w_len + 1
             else:
-                if cur_line:
-                    lines.append(" ".join(cur_line))
+                lines.append(" ".join(cur_line))
                 cur_line = [w]
                 cur_visible_len = w_len
         if cur_line:
@@ -333,7 +332,7 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     
     # 2. Build Base Canvas with smooth continuous vertical feather into solid black #08090C
     card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (8, 9, 12))
-    target_h = 430
+    target_h = 460
     
     try:
         with Image.open(temp_bg).convert("RGBA") as bg_img:
@@ -345,14 +344,14 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
             crop_x = (new_w - CARD_WIDTH) // 2
             bg_cropped = bg_scaled.crop((crop_x, 0, crop_x + CARD_WIDTH, target_h))
             
-            # Smooth continuous feather mask from top to bottom (Top 35% height)
+            # Smooth continuous feather mask from top to bottom
             mask = Image.new("L", (CARD_WIDTH, target_h), 255)
             for y in range(target_h):
-                if y < target_h * 0.35:
+                if y < target_h * 0.30:
                     alpha = 255
                 else:
-                    progress = (y - target_h * 0.35) / (target_h * 0.65)
-                    alpha = int(255 * (1.0 - (progress ** 1.6)))
+                    progress = (y - target_h * 0.30) / (target_h * 0.70)
+                    alpha = int(255 * (1.0 - (progress ** 1.8)))
                 for x in range(CARD_WIDTH):
                     mask.putpixel((x, y), alpha)
                     
@@ -362,60 +361,56 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
         
     card.save(temp_canvas, "JPEG", quality=95)
     
-    # 3. Dynamic Typography & Proportional Spacing (100% Mathematical Zero-Overlap Guarantee)
-    header = post_data.get("header", "রাসূলুল্লাহ (সা.) বলেছেন:").strip()
+    # 3. Dynamic Typography & Proportional Spacing (Matches English Template Proportions)
+    header_raw = post_data.get("header", "রাসূলুল্লাহ (সা.) বলেছেন:")
+    header = " ".join(header_raw.split()).strip() if header_raw else ""
     bangla_quote = post_data.get("quote", post_data.get("bangla_quote", "")).strip()
     highlight_phrases = post_data.get("highlight_phrases", [])
     explain_title = post_data.get("explain_title", "ব্যাখ্যা:").strip()
     explanation = post_data.get("explanation", "").strip()
     reference = post_data.get("reference", "").strip()
     
-    # Ensure header splits cleanly: narrator line 1, Rasulullah line 2 if long
-    if "রাসূলুল্লাহ" in header and "\n" not in header and len(header) > 36:
-        for split_token in ["রাসূলুল্লাহ", "রাসূলুল্লাহ (সা.)", "মহান আল্লাহ"]:
-            if split_token in header:
-                idx = header.find(split_token)
-                header = header[:idx].rstrip() + "\n" + header[idx:].lstrip()
-                break
-                
+    # Format header and quote with highlights
     styled_header = format_header_with_highlights_ass(header) if header else ""
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
-    
-    # Ultra-wide wrapping (72-76 chars) to utilize 94% of the 1080px canvas!
-    header_lines = split_text_wrap_ass(styled_header, max_chars=58) if header else []
-    quote_lines = split_text_wrap_ass(styled_quote, max_chars=72) if bangla_quote else []
-    explain_lines = split_text_wrap_ass(explanation, max_chars=76) if explanation else []
-    
-    total_content_lines = len(header_lines) + len(quote_lines) + (len(explain_lines) + 1 if explanation else 0)
-    
-    # Large, bold, high-contrast typography scaling
-    if total_content_lines >= 13:
-        f_header = 44
-        f_quote = 44
-        f_explain_title = 32
-        f_explain_body = 34
-        f_ref = 40
-        f_wm = 25
-        h_step = 52
-        q_step = 56
-        e_step = 44
-        gap_h = 20
-        gap_q = 24
-        start_y = 460
+
+    # BASE font sizes — fixed, never scaled UP
+    # Only scaled DOWN if content is too long to fit without overlap
+    f_header = 40
+    f_quote = 40
+    f_explain_body = 32
+    f_explain_title = 32
+
+    # Wrap at calibrated char-count for NirmalaUI Regular (~90% canvas width, same margins always)
+    # Header max_chars=55 keeps standard "সাহাবী বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:" on a single clean line
+    header_lines = split_text_wrap_ass(styled_header, max_chars=55) if header else []
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=50) if bangla_quote else []
+    explain_lines = split_text_wrap_ass(explanation, max_chars=58) if explanation else []
+
+    total_lines = len(header_lines) + len(quote_lines) + len(explain_lines)
+
+    # Scale DOWN only — progressively reduce font & step if too many lines
+    # Never increase font for fewer lines (small text = more breathing room, not bigger font)
+    if total_lines >= 18:
+        f_header = 34; f_quote = 33; f_explain_body = 26; f_explain_title = 26
+        h_step = 40; q_step = 41; e_step = 32; gap_h = 6; gap_q = 8; start_y = 420
+        # Re-wrap tighter for smaller font
+        header_lines = split_text_wrap_ass(styled_header, max_chars=52) if header else []
+        quote_lines = split_text_wrap_ass(styled_quote, max_chars=58) if bangla_quote else []
+        explain_lines = split_text_wrap_ass(explanation, max_chars=70) if explanation else []
+    elif total_lines >= 15:
+        f_header = 37; f_quote = 36; f_explain_body = 28; f_explain_title = 28
+        h_step = 43; q_step = 44; e_step = 34; gap_h = 8; gap_q = 10; start_y = 430
+        header_lines = split_text_wrap_ass(styled_header, max_chars=48) if header else []
+        quote_lines = split_text_wrap_ass(styled_quote, max_chars=54) if bangla_quote else []
+        explain_lines = split_text_wrap_ass(explanation, max_chars=64) if explanation else []
+    elif total_lines >= 12:
+        f_header = 40; f_quote = 38; f_explain_body = 30; f_explain_title = 30
+        h_step = 47; q_step = 48; e_step = 36; gap_h = 8; gap_q = 10; start_y = 445
     else:
-        f_header = 48
-        f_quote = 48
-        f_explain_title = 34
-        f_explain_body = 36
-        f_ref = 42
-        f_wm = 26
-        h_step = 58
-        q_step = 62
-        e_step = 46
-        gap_h = 24
-        gap_q = 28
-        start_y = 490
-        
+        # Short text: base sizes, tighter gaps
+        h_step = 50; q_step = 50; e_step = 38; gap_h = 10; gap_q = 12; start_y = 465
+
     current_y = start_y
     dialogues = []
     
@@ -436,19 +431,18 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     # 3. Explain Section
     if explanation:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,ExplainTitle,,0,0,0,,{{\\pos(540,{current_y})}}{explain_title}")
-        current_y += (f_explain_title + 14)
+        current_y += (f_explain_title + 10)
         for e_l in explain_lines:
             dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Explain,,0,0,0,,{{\\pos(540,{current_y})}}{e_l}")
             current_y += e_step
             
-    # 4. Reference & Watermark - ALWAYS strictly placed below the content (Zero-Overlap)
-    ref_y = max(current_y + 36, 1175)
-    # Ensure ref_y doesn't exceed screen boundary while preserving gap from last line
-    if ref_y > 1220 and current_y < 1180:
-        ref_y = 1220
-    elif ref_y > 1240:
-        ref_y = current_y + 32
-    wm_y = min(1280, ref_y + 55)
+    # 4. Reference & Watermark — strictly placed BELOW all content, never overlapping
+    # Reference sits exactly 40px below the last content line — no forced floor gap
+    ref_y = current_y + 40
+    # Only enforce a hard floor if reference would go off-screen
+    if ref_y > 1230:
+        ref_y = 1230
+    wm_y = min(1285, ref_y + 52)
     
     if reference:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{reference}")
@@ -461,12 +455,12 @@ PlayResY: {CARD_HEIGHT}
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,40,40,0,1
-Style: Quote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,40,40,0,1
+Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
+Style: Quote,Noto Sans Bengali,{f_quote},&H00F5F2F0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
 Style: ExplainTitle,Noto Sans Bengali,{f_explain_title},&H00A0A5B0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
-Style: Explain,Noto Sans Bengali,{f_explain_body},&H00D0D4DC,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
-Style: Reference,Noto Sans Bengali,{f_ref},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,5,40,40,0,1
-Style: Watermark,Noto Sans Bengali,{f_wm},&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,40,40,0,1
+Style: Explain,Noto Sans Bengali,{f_explain_body},&H00DCE0D4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
+Style: Reference,Noto Sans Bengali,38,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
+Style: Watermark,Noto Sans Bengali,24,&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,40,40,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
