@@ -1,6 +1,6 @@
 {
   "last_video_pillar": "islamic_knowledge",
-  "last_post_pillar": "daily_life",
+  "last_post_pillar": "dua_cures",
   "videos": [
     {
       "title": "সিদরাতুল মুনতাহায় রাসুল (সা.)-এর দেখা সেই ৬০০ ডানার জিবরাঈলের অপরূপ রূপ!",
@@ -67,6 +67,14 @@
     }
   ],
   "posts": [
+    {
+      "title": "মানসিক অস্থিরতা ও দুশ্চিন্তা দূর করার দোয়া",
+      "category": "dua_cures",
+      "quote": "‘হে চিরঞ্জীব! হে সর্বসত্তার ধারক! আমি আপনার রহমতের উসিলায় সাহায্য প্রার্থনা করছি",
+      "reference": "জামে আত-তিরমিজি: ৩৫২৪ (হাসান)",
+      "timestamp": 1787152645,
+      "date_str": "2026-08-19 15:17:25"
+    },
     {
       "title": "The Heaviest Deed on the Scale",
       "category": "daily_life",
