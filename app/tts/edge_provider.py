@@ -65,6 +65,13 @@ def clean_arabic_for_audio(raw_arabic: str) -> str:
         return " ".join(pure_arabic_lines).strip()
     return lines[0].strip()
 
+def should_speak_bangla_translation(clean_trans: str) -> bool:
+    short_dhikrs = {'সুবহানাল্লাহ', 'আলহামদুলিল্লাহ', 'আল্লাহু আকবার', 'আস্তাগফিরুল্লাহ', 'মাশাআল্লাহ', 'ইনশাআল্লাহ', 'লা ইলাহা ইল্লাল্লাহ'}
+    words = clean_trans.strip().split()
+    if len(words) <= 2 and any(d in clean_trans for d in short_dhikrs):
+        return False
+    return len(clean_trans.strip()) > 3
+
 def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: str, out_vtt: str) -> bool:
     # Filter out punctuation-only text
     if not any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in text):
@@ -107,17 +114,57 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
             raw_arabic_block = clean_part[8:-9].strip()
             # Strip any accidental nested tags
             raw_arabic_block = re.sub(r'</?[a-zA-Z0-9_-]+>', '', raw_arabic_block).strip()
-            spoken_text = clean_arabic_for_audio(raw_arabic_block)
-            display_text = raw_arabic_block
-            if any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in spoken_text):
+            
+            lines = [l.strip() for l in raw_arabic_block.split('\n') if l.strip()]
+            arabic_lines = [l for l in lines if any('\u0600' <= c <= '\u06FF' for c in l)]
+            bangla_lines = [l for l in lines if not any('\u0600' <= c <= '\u06FF' for c in l)]
+            
+            spoken_arabic = clean_arabic_for_audio(raw_arabic_block)
+            display_arabic = '\n'.join(arabic_lines) if arabic_lines else raw_arabic_block
+            
+            trans_lines = []
+            if bangla_lines:
+                if len(bangla_lines) >= 2:
+                    # Line 1 is transliteration/pronunciation, line 2+ is translation
+                    display_arabic += '\n' + bangla_lines[0]
+                    trans_lines = bangla_lines[1:]
+                else:
+                    trans_lines = bangla_lines
+                    
+            if any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in spoken_arabic):
                 segments.append({
                     "type": "arabic",
                     "voice": ARABIC_VOICE,
-                    "spoken_text": spoken_text,
-                    "display_text": display_text,
+                    "spoken_text": spoken_arabic,
+                    "display_text": display_arabic,
                     "rate": "-15%",
                     "pitch": "-2Hz"
                 })
+                
+            # If there is a Bangla translation inside the block, synthesize it with the Bengali voice
+            if trans_lines:
+                raw_trans = ' '.join(trans_lines).strip()
+                clean_trans = re.sub(r'[\(\)\[\]]', '', raw_trans).strip()
+                clean_trans = re.sub(r'^(বাংলা অর্থ|অর্থ|উচ্চারণ|অনুবাদ)\s*[:ঃ\-—]\s*', '', clean_trans).strip()
+                
+                if should_speak_bangla_translation(clean_trans):
+                    spoken_bangla_trans = clean_trans
+                    for p, r in HONORIFIC_SPOKEN_REPLACEMENTS.items():
+                        spoken_bangla_trans = re.sub(p, r, spoken_bangla_trans)
+                    for k, v in PHONETIC_CLEANUPS.items():
+                        spoken_bangla_trans = spoken_bangla_trans.replace(k, v)
+                    spoken_bangla_trans = spoken_bangla_trans.replace('।', '। ').replace(',', ', ').replace('?', '? ')
+                    spoken_bangla_trans = re.sub(r'[\(\)\[\]]', ' ', spoken_bangla_trans).strip()
+                    
+                    if any(c.isalnum() for c in spoken_bangla_trans):
+                        segments.append({
+                            "type": "bangla",
+                            "voice": BANGLA_VOICE,
+                            "spoken_text": spoken_bangla_trans,
+                            "display_text": raw_trans,
+                            "rate": "+5%",
+                            "pitch": "-1Hz"
+                        })
         else:
             # Strip any stray tags or 'arabic:' prefixes
             clean_bangla = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_part)

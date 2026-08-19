@@ -31,10 +31,12 @@ Topic-matching examples:
 Write the hook fresh and unique — matched to the actual topic, not copied from examples.
 
 CRITICAL RULES:
-1. ARABIC & BANGLA ONLY (NO ENGLISH AT ALL):
+1. ARABIC & BANGLA FORMATTING (NO ENGLISH AT ALL):
    - For ANY Quranic Ayah, Dua, or Dhikr use <ARABIC>...</ARABIC> tags:
      * Line 1: Pure Arabic text with full Tashkeel/Harakat
-     * Line 2: (বাংলা উচ্চারণ ও অর্থ)
+     * Line 2: (বাংলা উচ্চারণ)
+     * Line 3: (বাংলা অনুবাদ ও অর্থ)
+   - The audio engine will recite the Arabic line in Arabic, and immediately read the Bangla translation in clear Bengali!
    - DO NOT USE ANY ENGLISH WORDS OR LATIN LETTERS ANYWHERE.
 
 2. NATURAL CONVERSATIONAL BANGLA:
@@ -43,7 +45,7 @@ CRITICAL RULES:
 
 3. STRUCTURE (25-30 seconds, approx 50-65 Bangla words):
    - Scene 1 (Hook): Punchy 3-second hook matched naturally to the topic.
-   - Scene 2 (Core Arabic & Meaning): Authentic Arabic in <ARABIC> tags with clear Bangla translation.
+   - Scene 2 (Core Arabic & Meaning): Authentic Arabic in <ARABIC> tags with clear Bangla translation so both are recited in sequence.
    - Scene 3 (Heart Reflection): A comforting practical lesson for daily struggles (anxiety, grief, bad dreams, evil eye, forgiveness, patience).
    - Scene 4 (Close): End ONLY by asking the viewer to comment a relevant dhikr or phrase in Arabic — NO likes, NO follows, NO saves.
      * Choose the dhikr that fits the video topic:

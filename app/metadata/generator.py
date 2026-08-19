@@ -57,4 +57,10 @@ Output JSON format (ONLY valid JSON):
         hashtags = " #" + " #".join([p.strip() for p in parts[1:]]) if len(parts) > 1 else "\n#Shorts #Islamic #Bangla #Quran #Hadith"
         metadata["description"] = f"{main_desc}\n{injection_text}{hashtags}".strip()
         
+    if "youtube_title" in metadata:
+        yt_t = metadata["youtube_title"].strip()
+        if "#Shorts" not in yt_t and "#shorts" not in yt_t:
+            yt_t = f"{yt_t} #Shorts"
+        metadata["youtube_title"] = yt_t[:100]
+        
     return metadata
