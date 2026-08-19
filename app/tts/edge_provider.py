@@ -120,51 +120,59 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
             bangla_lines = [l for l in lines if not any('\u0600' <= c <= '\u06FF' for c in l)]
             
             spoken_arabic = clean_arabic_for_audio(raw_arabic_block)
-            display_arabic = '\n'.join(arabic_lines) if arabic_lines else raw_arabic_block
+            # The entire card (Arabic + transliteration + translation) stays displayed together continuously
+            display_card = raw_arabic_block
             
-            trans_lines = []
-            if bangla_lines:
-                if len(bangla_lines) >= 2:
-                    # Line 1 is transliteration/pronunciation, line 2+ is translation
-                    display_arabic += '\n' + bangla_lines[0]
-                    trans_lines = bangla_lines[1:]
+            # Extract ONLY the translation to speak (skip the transliteration/spelling line)
+            spoken_translation = ""
+            if len(bangla_lines) >= 2:
+                # First bangla line is spelling/pronunciation (DO NOT SPEAK)
+                # Second bangla line is translation (SPEAK THIS)
+                raw_trans = ' '.join(bangla_lines[1:]).strip()
+                clean_trans = re.sub(r'[\(\)\[\]]', '', raw_trans).strip()
+                clean_trans = re.sub(r'^(বাংলা অর্থ|অর্থ|উচ্চারণ|অনুবাদ)\s*[:ঃ\-—]\s*', '', clean_trans).strip()
+                spoken_translation = clean_trans
+            elif len(bangla_lines) == 1:
+                line = bangla_lines[0]
+                if '—' in line or '–' in line or '-' in line or ':' in line:
+                    parts = re.split(r'[—–\-:]', line, maxsplit=1)
+                    clean_trans = re.sub(r'[\(\)\[\]]', '', parts[1]).strip()
+                    spoken_translation = clean_trans
                 else:
-                    trans_lines = bangla_lines
-                    
+                    clean_trans = re.sub(r'[\(\)\[\]]', '', line).strip()
+                    short_dhikrs = {'সুবহানাল্লাহ', 'আলহামদুলিল্লাহ', 'আল্লাহু আকবার', 'আস্তাগফিরুল্লাহ', 'মাশাআল্লাহ', 'ইনশাআল্লাহ', 'লা ইলাহা ইল্লাল্লাহ'}
+                    if len(clean_trans.split()) > 2 or not any(d in clean_trans for d in short_dhikrs):
+                        spoken_translation = clean_trans
+                        
             if any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in spoken_arabic):
                 segments.append({
                     "type": "arabic",
                     "voice": ARABIC_VOICE,
                     "spoken_text": spoken_arabic,
-                    "display_text": display_arabic,
+                    "display_text": display_card,
                     "rate": "-15%",
                     "pitch": "-2Hz"
                 })
                 
-            # If there is a Bangla translation inside the block, synthesize it with the Bengali voice
-            if trans_lines:
-                raw_trans = ' '.join(trans_lines).strip()
-                clean_trans = re.sub(r'[\(\)\[\]]', '', raw_trans).strip()
-                clean_trans = re.sub(r'^(বাংলা অর্থ|অর্থ|উচ্চারণ|অনুবাদ)\s*[:ঃ\-—]\s*', '', clean_trans).strip()
+            # If translation text exists, speak ONLY the Bangla translation with the same display_card
+            if spoken_translation and should_speak_bangla_translation(spoken_translation):
+                spoken_bangla_trans = spoken_translation
+                for p, r in HONORIFIC_SPOKEN_REPLACEMENTS.items():
+                    spoken_bangla_trans = re.sub(p, r, spoken_bangla_trans)
+                for k, v in PHONETIC_CLEANUPS.items():
+                    spoken_bangla_trans = spoken_bangla_trans.replace(k, v)
+                spoken_bangla_trans = spoken_bangla_trans.replace('।', '। ').replace(',', ', ').replace('?', '? ')
+                spoken_bangla_trans = re.sub(r'[\(\)\[\]]', ' ', spoken_bangla_trans).strip()
                 
-                if should_speak_bangla_translation(clean_trans):
-                    spoken_bangla_trans = clean_trans
-                    for p, r in HONORIFIC_SPOKEN_REPLACEMENTS.items():
-                        spoken_bangla_trans = re.sub(p, r, spoken_bangla_trans)
-                    for k, v in PHONETIC_CLEANUPS.items():
-                        spoken_bangla_trans = spoken_bangla_trans.replace(k, v)
-                    spoken_bangla_trans = spoken_bangla_trans.replace('।', '। ').replace(',', ', ').replace('?', '? ')
-                    spoken_bangla_trans = re.sub(r'[\(\)\[\]]', ' ', spoken_bangla_trans).strip()
-                    
-                    if any(c.isalnum() for c in spoken_bangla_trans):
-                        segments.append({
-                            "type": "bangla",
-                            "voice": BANGLA_VOICE,
-                            "spoken_text": spoken_bangla_trans,
-                            "display_text": raw_trans,
-                            "rate": "+5%",
-                            "pitch": "-1Hz"
-                        })
+                if any(c.isalnum() for c in spoken_bangla_trans):
+                    segments.append({
+                        "type": "bangla",
+                        "voice": BANGLA_VOICE,
+                        "spoken_text": spoken_bangla_trans,
+                        "display_text": display_card,
+                        "rate": "+5%",
+                        "pitch": "-1Hz"
+                    })
         else:
             # Strip any stray tags or 'arabic:' prefixes
             clean_bangla = re.sub(r'</?[a-zA-Z0-9_-]+>', '', clean_part)
@@ -212,12 +220,18 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
         dur_res = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
         seg_dur_ms = int(float(dur_res.stdout.strip()) * 1000)
         
-        # Always use pristine display_text for the subtitles on screen
-        seg_cues.append({
-            "start_ms": current_offset_ms,
-            "end_ms": current_offset_ms + seg_dur_ms,
-            "text": seg["display_text"]
-        })
+        start_t = current_offset_ms
+        end_t = current_offset_ms + seg_dur_ms
+        
+        # Merge cues if display text is identical (prevents frame skipping/jumping)
+        if seg_cues and seg_cues[-1]["text"] == seg["display_text"]:
+            seg_cues[-1]["end_ms"] = end_t
+        else:
+            seg_cues.append({
+                "start_ms": start_t,
+                "end_ms": end_t,
+                "text": seg["display_text"]
+            })
                 
         seg_mp3s.append(s_mp3)
         current_offset_ms += seg_dur_ms
