@@ -17,8 +17,10 @@ def _get_supabase_config():
     key = os.environ.get("SUPABASE_KEY", os.environ.get("SUPABASE_ANON_KEY", DEFAULT_SUPABASE_KEY))
     return raw_url, key
 
+DEFAULT_SUPABASE_TABLE = "used_islamic_video"
+
 def _supabase_insert(row_data: dict) -> bool:
-    """Inserts a topic record to Supabase content_history (or used_videos fallback)."""
+    """Inserts a topic record to Supabase used_islamic_video (or used_videos fallback)."""
     try:
         url, key = _get_supabase_config()
         if not key or not url:
@@ -30,28 +32,23 @@ def _supabase_insert(row_data: dict) -> bool:
             "Prefer": "return=representation"
         }
         
-        # Try new dedicated table content_history first
-        try:
-            payload_new = json.dumps({
-                "id": row_data.get("id"),
-                "title": row_data.get("title"),
-                "category": row_data.get("category", row_data.get("source", "").replace("video_", "").replace("post_", "")),
-                "type": "video" if "video" in row_data.get("source", "") or row_data.get("id", "").startswith("vid_") else "post",
-                "core_concept": row_data.get("core_concept", "")
-            }).encode("utf-8")
-            req_new = urllib.request.Request(f"{url}/content_history", data=payload_new, headers=headers, method="POST")
-            with urllib.request.urlopen(req_new, timeout=5) as resp:
-                if resp.status in (200, 201):
-                    return True
-        except Exception:
-            pass
-
-        # Fallback to used_videos
         payload = json.dumps({
             "id": row_data.get("id"),
             "title": row_data.get("title"),
             "source": row_data.get("source", "video")
         }).encode("utf-8")
+
+        # 1. Try used_islamic_video / used_islamic_videos
+        for tbl in ["used_islamic_video", "used_islamic_videos"]:
+            try:
+                req = urllib.request.Request(f"{url}/{tbl}", data=payload, headers=headers, method="POST")
+                with urllib.request.urlopen(req, timeout=5) as resp:
+                    if resp.status in (200, 201):
+                        return True
+            except Exception:
+                pass
+
+        # 2. Fallback to used_videos
         req = urllib.request.Request(f"{url}/used_videos", data=payload, headers=headers, method="POST")
         with urllib.request.urlopen(req, timeout=5) as resp:
             return resp.status in (200, 201)
@@ -60,7 +57,7 @@ def _supabase_insert(row_data: dict) -> bool:
         return False
 
 def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
-    """Fetches recent topics from Supabase content_history or used_videos."""
+    """Fetches recent topics from Supabase used_islamic_video (or used_videos fallback)."""
     try:
         url, key = _get_supabase_config()
         if not key or not url:
@@ -71,21 +68,20 @@ def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
             "Content-Type": "application/json"
         }
         
-        item_type = "video" if "video" in source_prefix else "post"
-        
-        # Try content_history first
-        try:
-            req_url_new = f"{url}/content_history?type=eq.{item_type}&select=id,title,category,core_concept&order=created_at.desc&limit={limit}"
-            req_new = urllib.request.Request(req_url_new, headers=headers, method="GET")
-            with urllib.request.urlopen(req_new, timeout=5) as resp:
-                if resp.status == 200:
-                    data = json.loads(resp.read().decode("utf-8"))
-                    if isinstance(data, list) and data:
-                        return [{"id": d.get("id"), "title": d.get("title"), "source": f"{item_type}_{d.get('category', '')}"} for d in data]
-        except Exception:
-            pass
+        # 1. Try used_islamic_video / used_islamic_videos
+        for tbl in ["used_islamic_video", "used_islamic_videos"]:
+            try:
+                req_url = f"{url}/{tbl}?source=like.{source_prefix}*&select=id,title,source&limit={limit}"
+                req = urllib.request.Request(req_url, headers=headers, method="GET")
+                with urllib.request.urlopen(req, timeout=5) as resp:
+                    if resp.status == 200:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        if isinstance(data, list) and data:
+                            return data
+            except Exception:
+                pass
 
-        # Fallback to used_videos
+        # 2. Fallback to used_videos
         req_url = f"{url}/used_videos?source=like.{source_prefix}*&select=id,title,source&limit={limit}"
         req = urllib.request.Request(req_url, headers=headers, method="GET")
         with urllib.request.urlopen(req, timeout=5) as resp:
