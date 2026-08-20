@@ -220,16 +220,21 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                 clean_trans = re.sub(r'^(বাংলা অর্থ|অর্থ|উচ্চারণ|অনুবাদ)\s*[:ঃ\-—]\s*', '', clean_trans).strip()
                 spoken_translation = clean_trans
             elif len(bangla_lines) == 1:
-                line = bangla_lines[0]
-                if '—' in line or '–' in line or '-' in line or ':' in line:
-                    parts = re.split(r'[—–\-:]', line, maxsplit=1)
-                    clean_trans = re.sub(r'[\(\)\[\]]', '', parts[1]).strip()
-                    spoken_translation = clean_trans
-                else:
-                    clean_trans = re.sub(r'[\(\)\[\]]', '', line).strip()
-                    short_dhikrs = {'সুবহানাল্লাহ', 'আলহামদুলিল্লাহ', 'আল্লাহু আকবার', 'আস্তাগফিরুল্লাহ', 'মাশাআল্লাহ', 'ইনশাআল্লাহ', 'লা ইলাহা ইল্লাল্লাহ'}
-                    if len(clean_trans.split()) > 2 or not any(d in clean_trans for d in short_dhikrs):
+                line = bangla_lines[0].strip()
+                # If the only Bangla line is in parentheses → it's the pronunciation/spelling
+                # line (e.g. "(আলহামদুলিল্লাহ)"). NEVER speak this — it shows on screen only.
+                is_pronunciation = line.startswith('(') and line.endswith(')')
+                if not is_pronunciation:
+                    # It's an actual translation line without parens — speak it
+                    if '—' in line or '–' in line or '-' in line or ':' in line:
+                        parts_split = re.split(r'[—–\-:]', line, maxsplit=1)
+                        clean_trans = re.sub(r'[\(\)\[\]]', '', parts_split[1]).strip()
                         spoken_translation = clean_trans
+                    else:
+                        clean_trans = re.sub(r'[\(\)\[\]]', '', line).strip()
+                        short_dhikrs = {'সুবহানাল্লাহ', 'আলহামদুলিল্লাহ', 'আল্লাহু আকবার', 'আস্তাগফিরুল্লাহ', 'মাশাআল্লাহ', 'ইনশাআল্লাহ', 'লা ইলাহা ইল্লাল্লাহ'}
+                        if len(clean_trans.split()) > 2 or not any(d in clean_trans for d in short_dhikrs):
+                            spoken_translation = clean_trans
                         
             if any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in spoken_arabic):
                 segments.append({
