@@ -7,14 +7,28 @@ import urllib.request
 import urllib.error
 from app.logger import logger
 
-# ── Sarvam AI (Bengali) + Edge TTS (Arabic) ──────────────────────────────────
-SARVAM_API_KEY = os.environ.get("SARVAM_API_KEY", "sk_m0zfsvef_944TQcASUziwTjZ7fHXOEMrz")
+# ── Sarvam AI — 5 key rotation (Bengali) + Edge TTS (Arabic + free fallback) ─
+# Keys are tried in order. If all fail → falls back to free Edge TTS.
+# In local testing (not GitHub Actions), skip Sarvam to preserve credits.
+SARVAM_KEYS = [
+    "sk_m0zfsvef_944TQcASUziwTjZ7fHXOEMrz",   # Key 1
+    "sk_i3inlhio_lNzyuWuTNALNG7vAheJuxx5O",   # Key 2
+    "sk_1qnvr0q6_j0pYTUeQ45kSSPeTQT7JLY22",   # Key 3
+    "sk_dhpmrsnd_oZ5OSS5XDBwz4yTxJC6rgGoT",   # Key 4
+    "sk_d6swnxed_eG6fTmwk1onerXj203QMwfQQ",   # Key 5
+]
 SARVAM_URL     = "https://api.sarvam.ai/text-to-speech"
-SARVAM_SPEAKER = "ritu"          # calm, warm — best for Islamic content
-SARVAM_MODEL   = "bulbul:v3"     # highest quality
-SARVAM_PACE    = 0.88            # slightly slower = more calming
+SARVAM_SPEAKER = "ritu"       # calm, warm — best for Islamic content
+SARVAM_MODEL   = "bulbul:v3"  # highest quality
+SARVAM_PACE    = 0.88         # slightly slower = more calming
 
-ARABIC_VOICE = "ar-SA-HamedNeural"  # Edge TTS — kept for Arabic recitation
+# Only use Sarvam in GitHub Actions (production). Local runs use free Edge TTS.
+IS_CI = os.environ.get("GITHUB_ACTIONS", "").lower() == "true" or \
+        os.environ.get("CI", "").lower() == "true"
+
+BANGLA_VOICE = "bn-IN-BashkarNeural"  # Edge TTS free fallback for Bengali
+ARABIC_VOICE = "ar-SA-HamedNeural"   # Edge TTS — kept for Arabic recitation
+
 
 DHIKR_REPLACEMENTS = {
     r'\bসুবহানাল্লাহ\b': '<ARABIC>سُبْحَانَ اللَّهِ\n(সুবহানাল্লাহ)</ARABIC>',
@@ -102,50 +116,89 @@ def should_speak_bangla_translation(clean_trans: str) -> bool:
         return False
     return len(clean_trans.strip()) > 3
 
+def _synthesize_bangla_edge_free(text: str, out_mp3: str) -> bool:
+    """Free Edge TTS fallback for Bengali (used during local testing)."""
+    out_vtt = out_mp3.replace(".mp3", ".vtt")
+    cmd = [
+        "edge-tts",
+        f"--voice={BANGLA_VOICE}",
+        f"--text={text}",
+        "--rate=+5%",
+        "--pitch=-1Hz",
+        f"--write-media={out_mp3}",
+        f"--write-subtitles={out_vtt}"
+    ]
+    try:
+        subprocess.run(cmd, check=True, capture_output=True)
+        return os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 100
+    except Exception as e:
+        logger.warning(f"Edge TTS Bengali fallback error: {e}")
+        return False
+
+
 def synthesize_bangla_sarvam(text: str, out_mp3: str) -> bool:
-    """Synthesize Bengali text using Sarvam AI bulbul:v3 (Ritu voice)."""
+    """Synthesize Bengali with Sarvam AI — 5 key rotation, Edge TTS fallback.
+    
+    Rules:
+    - Local testing (not CI): always use free Edge TTS, never burn API credits
+    - GitHub Actions (CI=true): try all 5 keys in order → fallback to Edge TTS
+    """
     if not any(c.isalnum() for c in text):
         return False
-    try:
-        payload = json.dumps({
-            "inputs": [text],
-            "target_language_code": "bn-IN",
-            "speaker": SARVAM_SPEAKER,
-            "model": SARVAM_MODEL,
-            "enable_preprocessing": True,
-            "pace": SARVAM_PACE
-        }).encode("utf-8")
-        req = urllib.request.Request(SARVAM_URL, data=payload, headers={
-            "api-subscription-key": SARVAM_API_KEY,
-            "Content-Type": "application/json"
-        }, method="POST")
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            audio_b64 = data.get("audios", [None])[0]
-            if not audio_b64:
-                logger.warning("Sarvam returned no audio data")
-                return False
-            audio_bytes = base64.b64decode(audio_b64)
-            # Sarvam returns WAV — convert to MP3 via ffmpeg
-            tmp_wav = out_mp3.replace(".mp3", "_sarvam.wav")
-            with open(tmp_wav, "wb") as f:
-                f.write(audio_bytes)
-            subprocess.run(
-                ["ffmpeg", "-y", "-i", tmp_wav, "-b:a", "192k", out_mp3],
-                check=True, capture_output=True
-            )
-            try:
-                os.remove(tmp_wav)
-            except Exception:
-                pass
-            return os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 100
-    except urllib.error.HTTPError as e:
-        err = e.read().decode()
-        logger.warning(f"Sarvam API error for '{text[:30]}': {err[:120]}")
-        return False
-    except Exception as e:
-        logger.warning(f"Sarvam synthesis error for '{text[:30]}': {e}")
-        return False
+
+    # ── Local testing: use free Edge TTS to preserve credits ──────────────────
+    if not IS_CI:
+        logger.info("Local run — using free Edge TTS for Bengali (Sarvam credits preserved)")
+        return _synthesize_bangla_edge_free(text, out_mp3)
+
+    # ── Production (GitHub Actions): try 5 Sarvam keys in order ──────────────
+    payload = json.dumps({
+        "inputs": [text],
+        "target_language_code": "bn-IN",
+        "speaker": SARVAM_SPEAKER,
+        "model": SARVAM_MODEL,
+        "enable_preprocessing": True,
+        "pace": SARVAM_PACE
+    }).encode("utf-8")
+
+    for idx, key in enumerate(SARVAM_KEYS, 1):
+        try:
+            req = urllib.request.Request(SARVAM_URL, data=payload, headers={
+                "api-subscription-key": key,
+                "Content-Type": "application/json"
+            }, method="POST")
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                audio_b64 = data.get("audios", [None])[0]
+                if not audio_b64:
+                    continue
+                audio_bytes = base64.b64decode(audio_b64)
+                tmp_wav = out_mp3.replace(".mp3", "_sarvam.wav")
+                with open(tmp_wav, "wb") as f:
+                    f.write(audio_bytes)
+                subprocess.run(
+                    ["ffmpeg", "-y", "-i", tmp_wav, "-b:a", "192k", out_mp3],
+                    check=True, capture_output=True
+                )
+                try:
+                    os.remove(tmp_wav)
+                except Exception:
+                    pass
+                if os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 100:
+                    logger.info(f"Sarvam Key #{idx} OK for '{text[:30]}'")
+                    return True
+        except urllib.error.HTTPError as e:
+            err = e.read().decode()
+            if e.code == 429 or "quota" in err.lower() or "limit" in err.lower():
+                logger.warning(f"Sarvam Key #{idx} quota reached — trying next key")
+            else:
+                logger.warning(f"Sarvam Key #{idx} error ({e.code}): {err[:80]}")
+        except Exception as e:
+            logger.warning(f"Sarvam Key #{idx} failed: {e}")
+
+    # ── All 5 keys failed → free Edge TTS fallback ────────────────────────────
+    logger.warning("All 5 Sarvam keys failed — falling back to free Edge TTS for Bengali")
+    return _synthesize_bangla_edge_free(text, out_mp3)
 
 
 def synthesize_arabic_edge(text: str, rate: str, pitch: str, out_mp3: str, out_vtt: str) -> bool:
@@ -170,14 +223,15 @@ def synthesize_arabic_edge(text: str, rate: str, pitch: str, out_mp3: str, out_v
 
 
 def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: str, out_vtt: str) -> bool:
-    """Unified synthesizer — routes Bangla to Sarvam, Arabic to Edge TTS."""
+    """Unified synthesizer — routes Bangla to Sarvam (or free fallback), Arabic to Edge TTS."""
     if not any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in text):
         return False
-    # Arabic segments → Edge TTS
+    # Arabic segments → always Edge TTS
     if voice == ARABIC_VOICE:
         return synthesize_arabic_edge(text, rate, pitch, out_mp3, out_vtt)
-    # Bangla segments → Sarvam AI
+    # Bangla segments → Sarvam (CI) or Edge TTS free (local)
     return synthesize_bangla_sarvam(text, out_mp3)
+
 
 
 def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
