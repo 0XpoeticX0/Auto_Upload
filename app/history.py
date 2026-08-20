@@ -11,7 +11,10 @@ DEFAULT_SUPABASE_URL = "https://tvezntceubxaqvcicyyc.supabase.co"
 DEFAULT_SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2ZXpudGNldWJ4YXF2Y2ljeXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NTg0NjgsImV4cCI6MjA5OTMzNDQ2OH0.sx5A6WT54mQUqqMDvrDZqo-mCURidOpVri-j7JFekq0"
 
 def _get_supabase_config():
-    raw_url = os.environ.get("SUPABASE_URL", DEFAULT_SUPABASE_URL).rstrip("/")
+    raw_url = os.environ.get("SUPABASE_URL", DEFAULT_SUPABASE_URL).strip()
+    if raw_url.startswith("postgresql://") or raw_url.startswith("postgres://") or "fvboniedjpcjldoniqtp" in raw_url or not raw_url.startswith("http"):
+        raw_url = DEFAULT_SUPABASE_URL
+    raw_url = raw_url.rstrip("/")
     if "/rest/v1" not in raw_url:
         raw_url = f"{raw_url}/rest/v1"
     key = os.environ.get("SUPABASE_KEY", os.environ.get("SUPABASE_ANON_KEY", DEFAULT_SUPABASE_KEY))

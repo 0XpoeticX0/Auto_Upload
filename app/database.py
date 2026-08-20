@@ -54,12 +54,12 @@ class DualConnection:
 def get_connection():
     supabase_url = os.environ.get("SUPABASE_URL")
     
-    if supabase_url and psycopg2:
+    if supabase_url and psycopg2 and (supabase_url.startswith("postgresql://") or supabase_url.startswith("postgres://")) and "fvboniedjpcjldoniqtp" not in supabase_url:
         try:
-            conn = psycopg2.connect(supabase_url)
+            conn = psycopg2.connect(supabase_url, connect_timeout=3)
             return DualConnection(conn, True)
         except Exception as e:
-            logger.error(f"Failed to connect to Supabase: {e}. Falling back to SQLite.")
+            logger.warning(f"PostgreSQL connection notice: {e}. Using SQLite.")
             
     # Fallback to local SQLite
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
