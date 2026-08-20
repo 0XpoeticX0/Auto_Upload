@@ -1,10 +1,20 @@
 import os
 import re
+import json
+import base64
 import subprocess
+import urllib.request
+import urllib.error
 from app.logger import logger
 
-BANGLA_VOICE = "bn-IN-BashkarNeural"
-ARABIC_VOICE = "ar-SA-HamedNeural"
+# ── Sarvam AI (Bengali) + Edge TTS (Arabic) ──────────────────────────────────
+SARVAM_API_KEY = os.environ.get("SARVAM_API_KEY", "sk_m0zfsvef_944TQcASUziwTjZ7fHXOEMrz")
+SARVAM_URL     = "https://api.sarvam.ai/text-to-speech"
+SARVAM_SPEAKER = "ritu"          # calm, warm — best for Islamic content
+SARVAM_MODEL   = "bulbul:v3"     # highest quality
+SARVAM_PACE    = 0.88            # slightly slower = more calming
+
+ARABIC_VOICE = "ar-SA-HamedNeural"  # Edge TTS — kept for Arabic recitation
 
 DHIKR_REPLACEMENTS = {
     r'\bসুবহানাল্লাহ\b': '<ARABIC>سُبْحَانَ اللَّهِ\n(সুবহানাল্লাহ)</ARABIC>',
@@ -29,17 +39,25 @@ def auto_tag_dhikr(text: str) -> str:
     return "".join(res)
 
 HONORIFIC_SPOKEN_REPLACEMENTS = {
-    # Replace abbreviations for TTS audio only (so voice does not say awkward initials)
-    r'\(\s*সা[\.\:\s]*\)': ' সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম ',
-    r'\(\s*সাঃ\s*\)': ' সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম ',
-    r'\(\s*আ[\.\:\s]*\)': ' আলাইহিস সালাম ',
-    r'\(\s*আঃ\s*\)': ' আলাইহিস সালাম ',
-    r'\(\s*রা[\.\:\s]*\)': ' রাদিয়াল্লাহু আনহু ',
-    r'\(\s*রাঃ\s*\)': ' রাদিয়াল্লাহু আনহু ',
-    r'\(\s*রহ[\.\:\s]*\)': ' রাহিমাহুল্লাহ ',
-    r'\(\s*রহঃ\s*\)': ' রাহিমাহুল্লাহ ',
-    r'ﷺ': ' সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম ',
-    r'ﷻ': ' জাল্লা জালালুহু ',
+    # For audio: drop honorific abbreviations entirely — they show on screen,
+    # but Sarvam cannot pronounce "সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম" cleanly.
+    # Viewers read it on screen. Audio stays clean.
+    r'\(\s*সা[\.\:\s]*\)': '',
+    r'\(\s*সাঃ\s*\)': '',
+    r'\(\s*আ[\.\:\s]*\)': '',
+    r'\(\s*আঃ\s*\)': '',
+    r'\(\s*রা[\.\:\s]*\)': '',
+    r'\(\s*রাঃ\s*\)': '',
+    r'\(\s*রহ[\.\:\s]*\)': '',
+    r'\(\s*রহঃ\s*\)': '',
+    r'ﷺ': '',
+    r'ﷻ': '',
+    # Also clean up the full written-out form if Gemini writes it
+    r'সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম': '',
+    r'সাল্লাল্লাহু আলাইহি ওয়াসাল্লাম': '',
+    r'আলাইহিস সালাম': '',
+    r'রাদিয়াল্লাহু আনহু': '',
+    r'রাহিমাহুল্লাহ': '',
 }
 
 PHONETIC_CLEANUPS = {
@@ -84,13 +102,59 @@ def should_speak_bangla_translation(clean_trans: str) -> bool:
         return False
     return len(clean_trans.strip()) > 3
 
-def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: str, out_vtt: str) -> bool:
-    # Filter out punctuation-only text
+def synthesize_bangla_sarvam(text: str, out_mp3: str) -> bool:
+    """Synthesize Bengali text using Sarvam AI bulbul:v3 (Ritu voice)."""
+    if not any(c.isalnum() for c in text):
+        return False
+    try:
+        payload = json.dumps({
+            "inputs": [text],
+            "target_language_code": "bn-IN",
+            "speaker": SARVAM_SPEAKER,
+            "model": SARVAM_MODEL,
+            "enable_preprocessing": True,
+            "pace": SARVAM_PACE
+        }).encode("utf-8")
+        req = urllib.request.Request(SARVAM_URL, data=payload, headers={
+            "api-subscription-key": SARVAM_API_KEY,
+            "Content-Type": "application/json"
+        }, method="POST")
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            audio_b64 = data.get("audios", [None])[0]
+            if not audio_b64:
+                logger.warning("Sarvam returned no audio data")
+                return False
+            audio_bytes = base64.b64decode(audio_b64)
+            # Sarvam returns WAV — convert to MP3 via ffmpeg
+            tmp_wav = out_mp3.replace(".mp3", "_sarvam.wav")
+            with open(tmp_wav, "wb") as f:
+                f.write(audio_bytes)
+            subprocess.run(
+                ["ffmpeg", "-y", "-i", tmp_wav, "-b:a", "192k", out_mp3],
+                check=True, capture_output=True
+            )
+            try:
+                os.remove(tmp_wav)
+            except Exception:
+                pass
+            return os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 100
+    except urllib.error.HTTPError as e:
+        err = e.read().decode()
+        logger.warning(f"Sarvam API error for '{text[:30]}': {err[:120]}")
+        return False
+    except Exception as e:
+        logger.warning(f"Sarvam synthesis error for '{text[:30]}': {e}")
+        return False
+
+
+def synthesize_arabic_edge(text: str, rate: str, pitch: str, out_mp3: str, out_vtt: str) -> bool:
+    """Synthesize Arabic text using Edge TTS (kept — good quality for Arabic)."""
     if not any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in text):
         return False
     cmd = [
         "edge-tts",
-        f"--voice={voice}",
+        f"--voice={ARABIC_VOICE}",
         f"--text={text}",
         f"--rate={rate}",
         f"--pitch={pitch}",
@@ -101,8 +165,20 @@ def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: st
         subprocess.run(cmd, check=True, capture_output=True)
         return os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 100
     except Exception as e:
-        logger.warning(f"edge-tts synthesis warning for text '{text[:25]}...': {e}")
+        logger.warning(f"Edge TTS Arabic warning for '{text[:25]}': {e}")
         return False
+
+
+def synthesize_segment(text: str, voice: str, rate: str, pitch: str, out_mp3: str, out_vtt: str) -> bool:
+    """Unified synthesizer — routes Bangla to Sarvam, Arabic to Edge TTS."""
+    if not any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in text):
+        return False
+    # Arabic segments → Edge TTS
+    if voice == ARABIC_VOICE:
+        return synthesize_arabic_edge(text, rate, pitch, out_mp3, out_vtt)
+    # Bangla segments → Sarvam AI
+    return synthesize_bangla_sarvam(text, out_mp3)
+
 
 def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
     os.makedirs(temp_dir, exist_ok=True)
