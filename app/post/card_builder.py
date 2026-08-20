@@ -374,42 +374,29 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     styled_header = format_header_with_highlights_ass(header) if header else ""
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
 
-    # BASE font sizes — fixed, never scaled UP
-    # Only scaled DOWN if content is too long to fit without overlap
-    f_header = 40
-    f_quote = 40
-    f_explain_body = 32
+    # BASE font sizes — large, readable, left-to-right filled
+    f_header = 44
+    f_quote = 42
+    f_explain_body = 33
     f_explain_title = 32
 
-    # Wrap at calibrated char-count for NirmalaUI Regular (~90% canvas width, same margins always)
-    # Header max_chars=55 keeps standard "সাহাবী বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:" on a single clean line
-    header_lines = split_text_wrap_ass(styled_header, max_chars=55) if header else []
-    quote_lines = split_text_wrap_ass(styled_quote, max_chars=50) if bangla_quote else []
-    explain_lines = split_text_wrap_ass(explanation, max_chars=58) if explanation else []
+    # Wide left-to-right wrapping (fills ~92-94% of canvas width with clean 45px margins)
+    header_lines = split_text_wrap_ass(styled_header, max_chars=58) if header else []
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=70) if bangla_quote else []
+    explain_lines = split_text_wrap_ass(explanation, max_chars=74) if explanation else []
 
     total_lines = len(header_lines) + len(quote_lines) + len(explain_lines)
 
-    # Scale DOWN only — progressively reduce font & step if too many lines
-    # Never increase font for fewer lines (small text = more breathing room, not bigger font)
-    if total_lines >= 18:
-        f_header = 34; f_quote = 33; f_explain_body = 26; f_explain_title = 26
-        h_step = 40; q_step = 41; e_step = 32; gap_h = 6; gap_q = 8; start_y = 420
-        # Re-wrap tighter for smaller font
-        header_lines = split_text_wrap_ass(styled_header, max_chars=52) if header else []
-        quote_lines = split_text_wrap_ass(styled_quote, max_chars=58) if bangla_quote else []
-        explain_lines = split_text_wrap_ass(explanation, max_chars=70) if explanation else []
-    elif total_lines >= 15:
-        f_header = 37; f_quote = 36; f_explain_body = 28; f_explain_title = 28
-        h_step = 43; q_step = 44; e_step = 34; gap_h = 8; gap_q = 10; start_y = 430
-        header_lines = split_text_wrap_ass(styled_header, max_chars=48) if header else []
-        quote_lines = split_text_wrap_ass(styled_quote, max_chars=54) if bangla_quote else []
-        explain_lines = split_text_wrap_ass(explanation, max_chars=64) if explanation else []
-    elif total_lines >= 12:
-        f_header = 40; f_quote = 38; f_explain_body = 30; f_explain_title = 30
-        h_step = 47; q_step = 48; e_step = 36; gap_h = 8; gap_q = 10; start_y = 445
+    # Scale DOWN only if exceptionally long text would exceed the vertical card area
+    if total_lines >= 16:
+        f_header = 38; f_quote = 36; f_explain_body = 28; f_explain_title = 28
+        h_step = 44; q_step = 45; e_step = 34; gap_h = 8; gap_q = 10; start_y = 430
+    elif total_lines >= 13:
+        f_header = 41; f_quote = 39; f_explain_body = 30; f_explain_title = 30
+        h_step = 48; q_step = 48; e_step = 36; gap_h = 10; gap_q = 12; start_y = 445
     else:
-        # Short text: base sizes, tighter gaps
-        h_step = 50; q_step = 50; e_step = 38; gap_h = 10; gap_q = 12; start_y = 465
+        # Standard text: full large sizes, generous line steps
+        h_step = 52; q_step = 52; e_step = 40; gap_h = 12; gap_q = 15; start_y = 465
 
     current_y = start_y
     dialogues = []

@@ -7,14 +7,26 @@ BANGLA_VOICE = "bn-IN-BashkarNeural"
 ARABIC_VOICE = "ar-SA-HamedNeural"
 
 DHIKR_REPLACEMENTS = {
-    r'(?<!<ARABIC>)সুবহানাল্লাহ(?!</ARABIC>)': '<ARABIC>سُبْحَانَ اللَّهِ\n(সুবহানাল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)আলহামদুলিল্লাহ(?!</ARABIC>)': '<ARABIC>الْحَمْدُ لِلَّهِ\n(আলহামদুলিল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)আল্লাহু আকবার(?!</ARABIC>)': '<ARABIC>اللَّهُ أَكْبَرُ\n(আল্লাহু আকবার)</ARABIC>',
-    r'(?<!<ARABIC>)মাশাআল্লাহ(?!</ARABIC>)': '<ARABIC>مَا شَاءَ اللَّهُ\n(মাশাআল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)ইনশাআল্লাহ(?!</ARABIC>)': '<ARABIC>إِنْ شَاءَ اللَّهُ\n(ইনশাআল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)আস্তাগফিরুল্লাহ(?!</ARABIC>)': '<ARABIC>أَسْتَغْفِرُ اللَّهَ\n(আস্তাগফিরুল্লাহ)</ARABIC>',
-    r'(?<!<ARABIC>)লা ইলাহা ইল্লাল্লাহ(?!</ARABIC>)': '<ARABIC>لَا إِلٰهَ إِلَّا اللّٰهُ\n(লা ইলাহা ইল্লাল্লাহ)</ARABIC>'
+    r'\bসুবহানাল্লাহ\b': '<ARABIC>سُبْحَانَ اللَّهِ\n(সুবহানাল্লাহ)</ARABIC>',
+    r'\bআলহামদুলিল্লাহ\b': '<ARABIC>الْحَمْدُ لِلَّهِ\n(আলহামদুলিল্লাহ)</ARABIC>',
+    r'\bআল্লাহু আকবার\b': '<ARABIC>اللَّهُ أَكْبَرُ\n(আল্লাহু আকবার)</ARABIC>',
+    r'\bমাশাআল্লাহ\b': '<ARABIC>مَا شَاءَ اللَّهُ\n(মাশাআল্লাহ)</ARABIC>',
+    r'\bইনশাআল্লাহ\b': '<ARABIC>إِنْ شَاءَ اللَّهُ\n(ইনশাআল্লাহ)</ARABIC>',
+    r'\bআস্তাগফিরুল্লাহ\b': '<ARABIC>أَسْتَغْفِرُ اللَّهَ\n(আস্তাগফিরুল্লাহ)</ARABIC>',
+    r'\bলা ইলাহা ইল্লাল্লাহ\b': '<ARABIC>لَا إِلٰهَ إِلَّا اللّٰهُ\n(লা ইলাহা ইল্লাল্লাহ)</ARABIC>'
 }
+
+def auto_tag_dhikr(text: str) -> str:
+    parts = re.split(r'(<ARABIC>.*?</ARABIC>)', text, flags=re.DOTALL | re.IGNORECASE)
+    res = []
+    for p in parts:
+        if p.upper().startswith("<ARABIC>") and p.upper().endswith("</ARABIC>"):
+            res.append(p)
+        else:
+            for pattern, repl in DHIKR_REPLACEMENTS.items():
+                p = re.sub(pattern, repl, p)
+            res.append(p)
+    return "".join(res)
 
 HONORIFIC_SPOKEN_REPLACEMENTS = {
     # Replace abbreviations for TTS audio only (so voice does not say awkward initials)
@@ -99,9 +111,8 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
     text = re.sub(r'<\s*arabic\s*>', '<ARABIC>', text, flags=re.IGNORECASE)
     text = re.sub(r'<\s*/\s*arabic\s*>', '</ARABIC>', text, flags=re.IGNORECASE)
     
-    # Auto-tag common Dhikr if untagged
-    for pattern, repl in DHIKR_REPLACEMENTS.items():
-        text = re.sub(pattern, repl, text)
+    # Auto-tag common Dhikr if untagged outside <ARABIC> tags
+    text = auto_tag_dhikr(text)
         
     parts = re.split(r'(<ARABIC>.*?</ARABIC>)', text, flags=re.DOTALL | re.IGNORECASE)
     segments = []
