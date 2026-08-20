@@ -54,7 +54,8 @@ jobs:
         GEMINI_BACKUP_API_KEY: ${{ secrets.GEMINI_BACKUP_API_KEY || 'AQ.Ab8RN6LXG-lJXSn7eLyJ80hTHHSaHlvS27etoOpw9xIJnRwnyg' }}
         GEMINI_KEY_3: ${{ secrets.GEMINI_KEY_3 || 'AQ.Ab8RN6K4etu26VDAdgGRxFJYOOHWUaG_KNF8-8608wxh608pCA' }}
         GEMINI_KEY_4: ${{ secrets.GEMINI_KEY_4 || 'AQ.Ab8RN6IqbrtQWlwYwelnZlhfyaYeSksaf_PXSnhRTok40Mfbaw' }}
-        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://tvezntceubxaqvcicyyc.supabase.co' }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2ZXpudGNldWJ4YXF2Y2ljeXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NTg0NjgsImV4cCI6MjA5OTMzNDQ2OH0.sx5A6WT54mQUqqMDvrDZqo-mCURidOpVri-j7JFekq0' }}
       run: |
         python -m app.main --no-upload
 
