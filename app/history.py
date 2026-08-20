@@ -60,7 +60,7 @@ def _supabase_insert(row_data: dict) -> bool:
         return False
 
 def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
-    """Fetches recent topics from Supabase used_islamic_video (or used_videos fallback)."""
+    """Fetches recent topics from Supabase used_islamic_video (ordered by most recent first)."""
     try:
         url, key = _get_supabase_config()
         if not key or not url:
@@ -71,10 +71,10 @@ def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
             "Content-Type": "application/json"
         }
         
-        # 1. Try used_islamic_video / used_islamic_videos
+        # 1. Try used_islamic_video — order by id desc so most recently inserted is first
         for tbl in ["used_islamic_video", "used_islamic_videos"]:
             try:
-                req_url = f"{url}/{tbl}?source=like.{source_prefix}*&select=id,title,source&limit={limit}"
+                req_url = f"{url}/{tbl}?source=like.{source_prefix}*&select=id,title,source&order=id.desc&limit={limit}"
                 req = urllib.request.Request(req_url, headers=headers, method="GET")
                 with urllib.request.urlopen(req, timeout=5) as resp:
                     if resp.status == 200:
@@ -85,7 +85,7 @@ def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
                 pass
 
         # 2. Fallback to used_videos
-        req_url = f"{url}/used_videos?source=like.{source_prefix}*&select=id,title,source&limit={limit}"
+        req_url = f"{url}/used_videos?source=like.{source_prefix}*&select=id,title,source&order=id.desc&limit={limit}"
         req = urllib.request.Request(req_url, headers=headers, method="GET")
         with urllib.request.urlopen(req, timeout=5) as resp:
             if resp.status == 200:
