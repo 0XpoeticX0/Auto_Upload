@@ -281,6 +281,28 @@ def split_text_wrap_ass(text: str, max_chars: int = 46) -> list:
             lines.append(" ".join(cur_line))
     return lines
 
+def balance_wrapped_lines(lines: list) -> list:
+    if len(lines) <= 1:
+        return lines
+    def vis_len(s):
+        return len(re.sub(r'{\\[^}]+}', '', s))
+    
+    last_l = lines[-1]
+    prev_l = lines[-2]
+    if vis_len(last_l) < 22 and vis_len(prev_l) > 32:
+        words_prev = prev_l.split()
+        words_last = last_l.split()
+        while len(words_prev) > 2:
+            moved = words_prev.pop()
+            words_last.insert(0, moved)
+            new_p = " ".join(words_prev)
+            new_l = " ".join(words_last)
+            if vis_len(new_l) >= vis_len(new_p) or vis_len(new_l) >= 22:
+                lines[-2] = new_p
+                lines[-1] = new_l
+                break
+    return lines
+
 def format_header_with_highlights_ass(header: str) -> str:
     """
     Highlights 'রাসূলুল্লাহ (সা.) বলেছেন:', 'মহান আল্লাহ বলেন:', etc. in golden amber.
@@ -361,7 +383,7 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
         
     card.save(temp_canvas, "JPEG", quality=95)
     
-    # 3. Dynamic Typography & Proportional Spacing (Matches English Template Proportions)
+    # 3. Typography & Dynamic Vertical Distribution Engine (Matches English Balanced Proportions)
     header_raw = post_data.get("header", "রাসূলুল্লাহ (সা.) বলেছেন:")
     header = " ".join(header_raw.split()).strip() if header_raw else ""
     bangla_quote = post_data.get("quote", post_data.get("bangla_quote", "")).strip()
@@ -370,33 +392,53 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     explanation = post_data.get("explanation", "").strip()
     reference = post_data.get("reference", "").strip()
     
-    # Format header and quote with highlights
     styled_header = format_header_with_highlights_ass(header) if header else ""
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
 
-    # BASE font sizes — large, readable, left-to-right filled
-    f_header = 44
-    f_quote = 42
-    f_explain_body = 33
-    f_explain_title = 32
-
-    # Wide left-to-right wrapping (fills ~92-94% of canvas width with clean 45px margins)
-    header_lines = split_text_wrap_ass(styled_header, max_chars=58) if header else []
-    quote_lines = split_text_wrap_ass(styled_quote, max_chars=70) if bangla_quote else []
-    explain_lines = split_text_wrap_ass(explanation, max_chars=74) if explanation else []
+    # Balanced wrapping (prevents dangling single words)
+    header_lines = split_text_wrap_ass(styled_header, max_chars=55) if header else []
+    quote_lines = balance_wrapped_lines(split_text_wrap_ass(styled_quote, max_chars=64)) if bangla_quote else []
+    explain_lines = balance_wrapped_lines(split_text_wrap_ass(explanation, max_chars=72)) if explanation else []
 
     total_lines = len(header_lines) + len(quote_lines) + len(explain_lines)
 
-    # Scale DOWN only if exceptionally long text would exceed the vertical card area
-    if total_lines >= 16:
-        f_header = 38; f_quote = 36; f_explain_body = 28; f_explain_title = 28
-        h_step = 44; q_step = 45; e_step = 34; gap_h = 8; gap_q = 10; start_y = 430
-    elif total_lines >= 13:
-        f_header = 41; f_quote = 39; f_explain_body = 30; f_explain_title = 30
-        h_step = 48; q_step = 48; e_step = 36; gap_h = 10; gap_q = 12; start_y = 445
+    # Dynamic vertical spacing & fill engine
+    if total_lines <= 9:
+        # Short content: larger typography, generous spacing to fill vertical space beautifully
+        f_header = 46
+        f_quote = 44
+        f_explain_body = 34
+        f_explain_title = 32
+        h_step = 58
+        q_step = 62
+        e_step = 48
+        gap_h = 24
+        gap_q = 30
+        start_y = 480
+    elif total_lines <= 13:
+        # Medium content: standard balanced proportions
+        f_header = 44
+        f_quote = 42
+        f_explain_body = 33
+        f_explain_title = 32
+        h_step = 52
+        q_step = 54
+        e_step = 42
+        gap_h = 16
+        gap_q = 20
+        start_y = 460
     else:
-        # Standard text: full large sizes, generous line steps
-        h_step = 52; q_step = 52; e_step = 40; gap_h = 12; gap_q = 15; start_y = 465
+        # Long content: compact spacing
+        f_header = 38
+        f_quote = 36
+        f_explain_body = 28
+        f_explain_title = 28
+        h_step = 44
+        q_step = 45
+        e_step = 34
+        gap_h = 8
+        gap_q = 10
+        start_y = 430
 
     current_y = start_y
     dialogues = []
@@ -418,15 +460,13 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     # 3. Explain Section
     if explanation:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,ExplainTitle,,0,0,0,,{{\\pos(540,{current_y})}}{explain_title}")
-        current_y += (f_explain_title + 10)
+        current_y += (f_explain_title + 12)
         for e_l in explain_lines:
             dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Explain,,0,0,0,,{{\\pos(540,{current_y})}}{e_l}")
             current_y += e_step
             
-    # 4. Reference & Watermark — strictly placed BELOW all content, never overlapping
-    # Reference sits exactly 40px below the last content line — no forced floor gap
-    ref_y = current_y + 40
-    # Only enforce a hard floor if reference would go off-screen
+    # 4. Reference & Watermark — positioned in the lower anchor zone (never huge empty void)
+    ref_y = max(current_y + 40, 1180)
     if ref_y > 1230:
         ref_y = 1230
     wm_y = min(1285, ref_y + 52)
@@ -434,6 +474,7 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     if reference:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{reference}")
     dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Watermark,,0,0,0,,{{\\pos(540,{wm_y})}}@DailyDosOfIslam")
+
     
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
