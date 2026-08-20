@@ -195,9 +195,10 @@ CRITICAL RULES (100% STRICT):
    - For Hadiths: Always include the Sahabi narrator in the header (e.g. 'জাবির ইবনে আব্দুল্লাহ (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:' or 'আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:').
    - For Quranic Ayahs: 'মহান আল্লাহ তা'আলা পবিত্র কুরআনে এরশাদ করেছেন:'.
 
-2. QUOTE ACCURACY (NO ALTERATION):
-   - Provide the EXACT authentic Bangla translation inside Bangla quotes ‘...’.
-   - Select 2-3 key impactful phrases for highlight_phrases (which will be rendered in golden amber #EBAF41).
+2. QUOTE & PHRASING ACCURACY (EASY, RELATABLE & 100% IDENTICAL):
+   - Provide the EXACT authentic 100% identical Bangla translation from Sahih Hadith / Quran inside Bangla quotes ‘...’.
+   - Use simple, natural, and relatable Bengali phrasing — strictly avoid overly dramatic, bookish, or difficult Sanskritized words.
+   - Select 2-3 key meaningful phrases for highlight_phrases (which will be rendered in golden amber #EBAF41).
 
 3. SHORT & HEART-TOUCHING REFLECTION (ব্যাখ্যা):
    - Exactly 1-2 comforting, emotionally uplifting sentences connecting the Hadith to peace of mind and faith.

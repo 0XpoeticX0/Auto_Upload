@@ -30,23 +30,24 @@ Topic-matching examples:
 
 Write the hook fresh and unique — matched to the actual topic, not copied from examples.
 
-CRITICAL RULES:
-1. ARABIC & BANGLA FORMATTING (NO ENGLISH AT ALL):
-   - For ANY Quranic Ayah, Dua, or Dhikr use <ARABIC>...</ARABIC> tags:
-     * Line 1: Pure Arabic text with full Tashkeel/Harakat
-     * Line 2: (বাংলা উচ্চারণ)
-     * Line 3: (বাংলা অনুবাদ ও অর্থ)
-   - The audio engine will recite the Arabic line in Arabic, and immediately read the Bangla translation in clear Bengali!
-   - DO NOT USE ANY ENGLISH WORDS OR LATIN LETTERS ANYWHERE.
+CRITICAL RULES FOR PHRASING & AUTHENTICITY:
+1. EASY, NATURAL & RELATABLE LANGUAGE (NO DRAMATIC JARGON):
+   - Write in simple, warm, everyday conversational Bengali that any viewer instantly connects with.
+   - NEVER use overly dramatic, difficult, or bookish Sanskritized words (e.g. DO NOT USE "হিংসাত্মক নজর", "সুরক্ষা কবচ", "বাক্যাবলী", "অপ্রতিরোধ্য").
+   - Instead, use comforting, relatable phrases: "কারো বদনজর কি আপনার শান্তি কেড়ে নিচ্ছে?...", "আজ রাতে মন যদি খুব ভারী লাগে...", "নবীজি (সা.) এই ছোট সহজ আমলটি শিখিয়েছেন...".
 
-2. NATURAL CONVERSATIONAL BANGLA:
-   - Use warm, modern standard Bengali easy for TTS to pronounce.
-   - Insert commas (,) and ellipses (...) to create natural, soulful breathing pauses.
+2. 100% IDENTICAL & AUTHENTIC QURAN / HADITH MEANING:
+   - The Bengali translation of any Quranic Ayah, Dua, or Hadith MUST be 100% identical and faithful to authentic Sahih sources (e.g. Sahih Bukhari, Sahih Muslim, Quran Tafsir).
+   - NEVER loosely paraphrase or distort sacred meanings.
+   - Inside <ARABIC>...</ARABIC> tags:
+     * Line 1: Pure Arabic text with accurate Tashkeel/Harakat
+     * Line 2: (বাংলা উচ্চারণ)
+     * Line 3: (১০০% নির্ভুল ও প্রামাণিক বাংলা অর্থ)
 
 3. STRUCTURE (25-30 seconds, approx 50-65 Bangla words):
-   - Scene 1 (Hook): Punchy 3-second hook matched naturally to the topic.
-   - Scene 2 (Core Arabic & Meaning): Authentic Arabic in <ARABIC> tags with clear Bangla translation so both are recited in sequence.
-   - Scene 3 (Heart Reflection): A comforting practical lesson for daily struggles (anxiety, grief, bad dreams, evil eye, forgiveness, patience).
+   - Scene 1 (Hook): Natural, easy, relatable 3-second hook that touches the viewer's real life.
+   - Scene 2 (Core Arabic & Meaning): Authentic Arabic in <ARABIC> tags with 100% accurate, identical Bangla translation so both are recited in sequence.
+   - Scene 3 (Heart Reflection): A warm, comforting practical lesson for daily struggles (anxiety, grief, bad dreams, evil eye, forgiveness, patience).
    - Scene 4 (Close): End ONLY by asking the viewer to comment a relevant dhikr or phrase in Arabic — NO likes, NO follows, NO saves.
      * Choose the dhikr that fits the video topic:
        - Forgiveness / repentance topic → কমেন্টে লিখুন: <ARABIC>أَسْتَغْفِرُ اللَّهَ\n(আস্তাগফিরুল্লাহ)</ARABIC>
