@@ -7,28 +7,39 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 
-SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+SCOPES = [
+    'https://www.googleapis.com/auth/youtube.upload',
+    'https://www.googleapis.com/auth/youtube.force-ssl',
+    'https://www.googleapis.com/auth/youtube'
+]
 
 def get_authenticated_service():
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first time.
     if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+        try:
+            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+        except Exception as e:
+            logger.warning(f"Could not load token.json: {e}")
+            creds = None
         
-    # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
+            try:
+                creds.refresh(Request())
+            except Exception as e:
+                logger.warning(f"Failed to refresh YouTube credentials: {e}")
+                creds = None
+        if not creds:
             if not os.path.exists('client_secrets.json'):
                 logger.error("client_secrets.json missing. Cannot authenticate YouTube.")
                 return None
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'client_secrets.json', SCOPES)
-            creds = flow.run_local_server(port=0)
+            try:
+                flow = InstalledAppFlow.from_client_secrets_file('client_secrets.json', SCOPES)
+                creds = flow.run_local_server(port=0)
+            except Exception as e:
+                logger.error(f"OAuth flow failed: {e}")
+                return None
             
-        # Save the credentials for the next run
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
             
@@ -46,13 +57,13 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
         return False
         
     try:
-        # Map category to YouTube category ID
+        # Category ID: Education (27)
         CATEGORY_IDS = {
-            "educational": "27",    # Education
-            "crime_thriller": "25", # News & Politics
-            "knowledge": "27",      # Education
-            "funny": "23",          # Comedy
-            "motivational": "22",   # People & Blogs
+            "educational": "27",
+            "crime_thriller": "25",
+            "knowledge": "27",
+            "funny": "23",
+            "motivational": "22",
         }
         video_category = metadata.get("category", "educational")
         category_id = CATEGORY_IDS.get(video_category, "27")
@@ -62,13 +73,30 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
                 'title': metadata.get('youtube_title', 'Generated Short')[:100],
                 'description': metadata.get('description', ''),
                 'tags': metadata.get('tags', []),
-                'categoryId': category_id
+                'categoryId': category_id,
+                'defaultLanguage': 'bn',
+                'defaultAudioLanguage': 'bn'
             },
             'status': {
                 'privacyStatus': 'public',
-                'selfDeclaredMadeForKids': False
+                'selfDeclaredMadeForKids': False,
+                'embeddable': True,
+                'publicStatsViewable': True,
+                'license': 'youtube'
             }
         }
+        
+        # Multi-Language Localizations (Global English Search Reach)
+        en_title = metadata.get("english_title")
+        en_desc = metadata.get("english_description")
+        if en_title and en_desc:
+            body['localizations'] = {
+                'en': {
+                    'title': en_title[:100],
+                    'description': en_desc[:5000]
+                }
+            }
+            body['snippet']['defaultLanguage'] = 'bn'
         
         media = MediaFileUpload(video_path, chunksize=-1, resumable=True, mimetype='video/mp4')
         
@@ -85,9 +113,9 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
                 logger.info(f"YouTube Upload Progress: {int(status.progress() * 100)}%")
                 
         video_id = response.get('id')
-        logger.info(f"YouTube Video uploaded successfully! Video ID: {video_id}")
+        logger.info(f"🎉 YouTube Video uploaded successfully! Video ID: {video_id} (https://youtube.com/shorts/{video_id})")
         
-        # Upload Thumbnail if provided
+        # 1. Upload Custom Thumbnail if provided
         if thumbnail_path and os.path.exists(thumbnail_path):
             logger.info("Uploading custom thumbnail to YouTube...")
             try:
@@ -97,11 +125,11 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
                 ).execute()
                 logger.info("Custom thumbnail uploaded successfully.")
             except HttpError as e:
-                logger.warning(f"Could not upload thumbnail (Account might not be phone-verified for custom thumbnails): {e}")
+                logger.warning(f"Could not upload thumbnail: {e}")
             except Exception as e:
                 logger.error(f"Failed to upload thumbnail: {e}")
                 
-        # Upload Captions (VTT) if provided
+        # 2. Upload Captions (VTT) if provided
         if vtt_path and os.path.exists(vtt_path):
             logger.info("Uploading subtitle/caption track to YouTube for maximum SEO reach...")
             try:
@@ -110,8 +138,8 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
                     body={
                         "snippet": {
                             "videoId": video_id,
-                            "language": "en",
-                            "name": "English",
+                            "language": "bn",
+                            "name": "Bangla",
                             "isDraft": False
                         }
                     },
@@ -122,6 +150,34 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
                 logger.warning(f"Could not upload captions: {e}")
             except Exception as e:
                 logger.error(f"Failed to upload captions: {e}")
+                
+        # 3. Auto-Post Pinned First Comment for Instant Algorithm Boost
+        comment_text = metadata.get("pinned_comment")
+        if not comment_text:
+            if "কুইজ" in metadata.get("youtube_title", "") or "quiz" in metadata.get("youtube_title", "").lower():
+                comment_text = "আজকের কুইজে আপনার স্কোর ৫-এ কত হলো? ৫/৫, ৪/৫ নাকি ৩/৫? কমেন্টে জানান! 👇"
+            else:
+                comment_text = "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿"
+                
+        if comment_text and video_id:
+            try:
+                logger.info(f"Posting auto-first comment on YouTube video {video_id}...")
+                youtube.commentThreads().insert(
+                    part="snippet",
+                    body={
+                        "snippet": {
+                            "videoId": video_id,
+                            "topLevelComment": {
+                                "snippet": {
+                                    "textOriginal": comment_text
+                                }
+                            }
+                        }
+                    }
+                ).execute()
+                logger.info(f"✅ Auto-first comment posted on YouTube!")
+            except Exception as e:
+                logger.warning(f"Notice: Could not post first comment on YouTube: {e}")
                 
         return True
         

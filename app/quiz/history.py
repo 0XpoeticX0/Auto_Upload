@@ -147,6 +147,9 @@ def format_quiz_metadata(quiz_script: dict) -> dict:
         "youtube_title": yt_title[:100],
         "facebook_title": raw_title,
         "description": desc.strip(),
+        "pinned_comment": "আজকের কুইজে আপনার স্কোর ৫-এ কত হলো? ৫/৫, ৪/৫ নাকি ৩/৫? কমেন্টে জানান! 👇",
+        "english_title": "Islamic Knowledge Quiz: Test Your Deen #Shorts",
+        "english_description": "Interactive 5-question Islamic quiz on core pillars, worship, prophets, Quran, and Sahih Hadith. Test your knowledge and share your score in the comments.",
         "tags": ["Shorts", "IslamicQuiz", "MuslimQuiz", "TestYourKnowledge", "BanglaIslamic", "ইসলামিকপোস্ট", "DailyDos", "ReelsViral", "ShortsFeed", "সহীহ_হাদিস", "LearnIslam", "ExplorePage"],
         "category": "educational"
     }
