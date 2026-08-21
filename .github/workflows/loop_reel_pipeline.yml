@@ -1,20 +1,15 @@
-name: 4-Slot Daily Peak Loop Reel Pipeline
+name: 2-Slot Daily Prime Loop Reel Pipeline
 
 on:
   schedule:
-    # 4 Daily Peak Release Windows (Always starting 30 min early, UTC+6 / BST):
-    # 1. Slot 1 (Post-Fajr): 06:00 AM BST (00:00 UTC) -> for 06:30 AM window
-    - cron: '0 0 * * *'
-    # 2. Slot 2 (Midday): 12:00 PM BST (06:00 UTC) -> for 12:30 PM window
-    - cron: '0 6 * * *'
-    # 3. Slot 3 (Post-Asr): 04:15 PM BST (10:15 UTC) -> for 04:45 PM window
-    - cron: '15 10 * * *'
-    # 4. Slot 4 (Prime Evening): 08:00 PM BST (14:00 UTC) -> for 08:30 PM window
-    - cron: '0 14 * * *'
+    # 2 Daily Prime Release Windows (Always starting 30 min early, UTC+6 / BST):
+    # 1. Slot 1 (Morning & Day Prime): 06:00 AM BST (00:00 UTC) -> for 06:30 AM window
+    # 2. Slot 2 (Prime Evening & Night): 08:00 PM BST (14:00 UTC) -> for 08:30 PM window
+    - cron: '0 0,14 * * *'
   workflow_dispatch:
     inputs:
       slot:
-        description: 'Specific Slot to Run (slot_1_fajr, slot_2_midday, slot_3_asr, slot_4_evening, or auto)'
+        description: 'Specific Slot to Run (slot_1_morning, slot_2_evening, or auto)'
         required: false
         default: 'auto'
 

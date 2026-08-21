@@ -15,48 +15,32 @@ from app.loop_reel.audio_library import get_or_download_quran_audio
 from app.upload.youtube import upload_to_youtube
 from app.upload.facebook import upload_to_facebook
 
-# 4 Daily Peak Release Windows (BST / GMT+6) with High-Demand "Must-Know" Themes
+# 2 Daily Prime Slots (BST / GMT+6) with Merged High-Demand Topics
 SLOT_CONFIGS = {
-    "slot_1_fajr": {
-        "name": "🌅 Slot 1: Post-Fajr & Morning Commute (06:30 AM - 08:30 AM BST)",
-        "theme": "Morning Dua, Protection from Evil Eye/Bad Nazr, Rizq Unlocking & Barakah",
-        "system_instruction": "Create a high-curiosity 'MUST-KNOW' morning reminder. Focus on: 3 morning deeds for immense Barakah, 1 Dua to unlock blocked Rizq, how to protect your family from Evil Eye (বদনজর) all day, or the morning Azkar that shields against all harm.",
+    "slot_1_morning": {
+        "name": "🌅 Slot 1: Morning & Day Prime (06:00 AM BST)",
+        "theme": "Morning Dua, Protection from Evil Eye, Guaranteed Duas (ইসমে আজম), Rizq Unlocking, Marriage & Family Sunnah",
+        "system_instruction": "Create a high-curiosity 'MUST-KNOW / WANT-TO-KNOW' day reminder. Focus on one of these high-performing topics: (1) 3 morning deeds for immense Barakah, (2) The greatest name of Allah (ইসমে আজম) where no Dua is rejected, (3) 7 signs Allah is answering your Dua, (4) The 1 forgotten prayer that opens closed doors and relieves crushing debt, (5) 1 secret Sunnah deed between husband and wife (feeding spouse, smiling, good character), (6) 3 things forbidden in anger, or (7) Protecting your family from Evil Eye (বদনজর) with morning Azkar.",
         "visual_prompt": "vertical 9:16, aesthetic interior of a modern serene home with an emerald green velvet prayer rug on polished wooden floor before a large floor-to-ceiling glass window overlooking misty lush morning hills and soft cloudy dawn sky after Fajr, cinematic warm morning light rays, photorealistic 8k, architectural digest, no people, no living beings"
     },
-    "slot_2_midday": {
-        "name": "☀️ Slot 2: Midday / Pre-Dhuhr Break (12:30 PM - 01:45 PM BST)",
-        "theme": "Guaranteed Duas, Secret Names of Allah (Ism Azam), Opening Closed Doors & Halal Rizq",
-        "system_instruction": "Create a high-curiosity 'WANT-TO-KNOW' midday reminder. Focus on: The greatest name of Allah (ইসমে আজম) where no Dua is rejected, 7 signs Allah is answering your Dua even if you don't see it yet, the forgotten prayer that opens every closed door in life, or the fastest Dua for crushing debt.",
-        "visual_prompt": "vertical 9:16, aesthetic minimal wooden Rehal holding an open antique Holy Quran with gold embossed pages next to warm glowing amber Moroccan lantern on polished marble table by sunlit courtyard window, volumetric light beams, photorealistic 8k, serene atmosphere, no people, no living beings"
-    },
-    "slot_3_asr": {
-        "name": "🌿 Slot 3: Post-Asr / Pre-Maghrib (04:45 PM - 05:45 PM BST)",
-        "theme": "Marriage Sunnah, Family Harmony, Relationship Secrets, Character & Parents' Blessings",
-        "system_instruction": "Create a high-curiosity 'RELATABLE & ESSENTIAL' afternoon reminder. Focus on: 1 secret Sunnah deed to bring unconditional love in marriage, 3 words Islam forbids saying in anger to your spouse, why feeding your wife is charity, or the hidden door of Rizq through parents' smile.",
-        "visual_prompt": "vertical 9:16, peaceful traditional oriental courtyard garden at golden hour dusk, tranquil water fountain with lotus reflection, glowing warm brass lanterns, blooming white jasmine vines climbing stone archways, warm amber and rose-gold dusk palette, 8k resolution, serene, no people, no living beings"
-    },
-    "slot_4_evening": {
-        "name": "🌙 Slot 4: Prime Evening (08:30 PM - 10:00 PM BST)",
-        "theme": "Heart-Softeners, Grave Protection (Surah Mulk), Sins-Wiping Prayers, Tahajjud Miracles & Night Peace",
-        "system_instruction": "Create a profound, emotionally powerful 'HEART-TOUCHING' nighttime reminder. Focus on: The 1 Sunnah prayer that wipes years of sins in minutes (সালাতুত তাসবীহ), the miraculous defense of Surah Al-Mulk inside the grave, what to say if you wake up suddenly in the night with anxiety, or the magic of 2 Rakat Tahajjud.",
+    "slot_2_evening": {
+        "name": "🌙 Slot 2: Prime Evening & Night (08:00 PM BST)",
+        "theme": "Heart-Softeners, Grave Protection (সূরা মুলক), Sins-Wiping Prayers, Tahajjud Miracles & Night Peace",
+        "system_instruction": "Create a profound, emotionally powerful 'HEART-TOUCHING' nighttime reminder. Focus on one of these high-performing topics: (1) The 30-verse Surah (সূরা মুলক) that miraculously shields you inside the grave, (2) The 1 Sunnah prayer that wipes years of sins in minutes (সালাতুত তাসবীহ / আওয়াবীন), (3) What to say if you wake up suddenly in the night with anxiety to have all Duas accepted instantly, (4) The magic of 2 Rakat Tahajjud for impossible miracles, or (5) Sayyidul Istighfar: the master repentance Dua that guarantees Jannah.",
         "visual_prompt": "vertical 9:16, luxury balcony view looking out over the illuminated Holy Kaaba and Masjid Al-Haram in Makkah at twilight night, glowing emerald green minarets, polished marble courtyard, soft atmospheric mist, high aesthetic cinematic lighting, photorealistic 8k, architectural digest, no humans in focus"
     }
 }
 
 def determine_current_slot() -> str:
-    """Calculates the current peak slot based on BST (UTC+6) time."""
+    """Calculates the current peak slot based on BST (UTC+6) time (2 runs per day)."""
     now_utc = datetime.datetime.now(datetime.timezone.utc)
     now_bst = now_utc + datetime.timedelta(hours=6)
     hour = now_bst.hour
 
-    if 4 <= hour < 11:
-        return "slot_1_fajr"
-    elif 11 <= hour < 15:
-        return "slot_2_midday"
-    elif 15 <= hour < 19:
-        return "slot_3_asr"
+    if 3 <= hour < 15:
+        return "slot_1_morning"
     else:
-        return "slot_4_evening"
+        return "slot_2_evening"
 
 def generate_loop_reel_content(slot_key: str = None) -> dict:
     """Generates viral 7-second curiosity hook and high-value point-by-point caption with deduplication."""
@@ -196,7 +180,7 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
 
     # 1. Background image generation
     bg_path = os.path.join(temp_dir, "background.jpg")
-    visual_p = content.get("visual_prompt", SLOT_CONFIGS["slot_1_fajr"]["visual_prompt"])
+    visual_p = content.get("visual_prompt", SLOT_CONFIGS["slot_1_morning"]["visual_prompt"])
     
     # Try Pollinations Flux first
     encoded = urllib.parse.quote(visual_p)
