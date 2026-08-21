@@ -20,7 +20,7 @@ SARVAM_KEYS = [
 SARVAM_URL     = "https://api.sarvam.ai/text-to-speech"
 SARVAM_SPEAKER = "ritu"       # calm, warm — best for Islamic content
 SARVAM_MODEL   = "bulbul:v3"  # highest quality
-SARVAM_PACE    = 1.0          # normal pace — ffmpeg atempo handles final speed tuning
+SARVAM_PACE    = 1.12         # 1.12x pace (12% faster, brisk and engaging without dragging)
 
 # Only use Sarvam in GitHub Actions (production). Local runs use free Edge TTS.
 IS_CI = os.environ.get("GITHUB_ACTIONS", "").lower() == "true" or \
