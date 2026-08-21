@@ -15,30 +15,30 @@ from app.loop_reel.audio_library import get_or_download_quran_audio
 from app.upload.youtube import upload_to_youtube
 from app.upload.facebook import upload_to_facebook
 
-# 4 Daily Peak Release Windows (BST / GMT+6)
+# 4 Daily Peak Release Windows (BST / GMT+6) with High-Demand "Must-Know" Themes
 SLOT_CONFIGS = {
     "slot_1_fajr": {
         "name": "🌅 Slot 1: Post-Fajr & Morning Commute (06:30 AM - 08:30 AM BST)",
-        "theme": "Morning Dua, Protection, Rizq & Barakah reminders",
-        "system_instruction": "Create a high-curiosity morning Fajr reminder about morning Duas, Rizq, Barakah, protection, or 3 powerful morning deeds.",
+        "theme": "Morning Dua, Protection from Evil Eye/Bad Nazr, Rizq Unlocking & Barakah",
+        "system_instruction": "Create a high-curiosity 'MUST-KNOW' morning reminder. Focus on: 3 morning deeds for immense Barakah, 1 Dua to unlock blocked Rizq, how to protect your family from Evil Eye (বদনজর) all day, or the morning Azkar that shields against all harm.",
         "visual_prompt": "vertical 9:16, aesthetic interior of a modern serene home with an emerald green velvet prayer rug on polished wooden floor before a large floor-to-ceiling glass window overlooking misty lush morning hills and soft cloudy dawn sky after Fajr, cinematic warm morning light rays, photorealistic 8k, architectural digest, no people, no living beings"
     },
     "slot_2_midday": {
         "name": "☀️ Slot 2: Midday / Pre-Dhuhr Break (12:30 PM - 01:45 PM BST)",
-        "theme": "Short Hadith reflections, Sunnah habits, midday mindfulness",
-        "system_instruction": "Create a high-curiosity midday reminder about quick Sunnah habits, honest livelihood, peace of mind, or easily forgotten daily Hadith.",
+        "theme": "Guaranteed Duas, Secret Names of Allah (Ism Azam), Opening Closed Doors & Halal Rizq",
+        "system_instruction": "Create a high-curiosity 'WANT-TO-KNOW' midday reminder. Focus on: The greatest name of Allah (ইসমে আজম) where no Dua is rejected, 7 signs Allah is answering your Dua even if you don't see it yet, the forgotten prayer that opens every closed door in life, or the fastest Dua for crushing debt.",
         "visual_prompt": "vertical 9:16, aesthetic minimal wooden Rehal holding an open antique Holy Quran with gold embossed pages next to warm glowing amber Moroccan lantern on polished marble table by sunlit courtyard window, volumetric light beams, photorealistic 8k, serene atmosphere, no people, no living beings"
     },
     "slot_3_asr": {
         "name": "🌿 Slot 3: Post-Asr / Pre-Maghrib (04:45 PM - 05:45 PM BST)",
-        "theme": "Sunnah habits, relationship & marriage advice, family, parents' rights, Halal living",
-        "system_instruction": "Create a high-curiosity late afternoon reminder about marriage blessings, kindness to spouse/parents, good character, or sweet Sunnah practices.",
+        "theme": "Marriage Sunnah, Family Harmony, Relationship Secrets, Character & Parents' Blessings",
+        "system_instruction": "Create a high-curiosity 'RELATABLE & ESSENTIAL' afternoon reminder. Focus on: 1 secret Sunnah deed to bring unconditional love in marriage, 3 words Islam forbids saying in anger to your spouse, why feeding your wife is charity, or the hidden door of Rizq through parents' smile.",
         "visual_prompt": "vertical 9:16, peaceful traditional oriental courtyard garden at golden hour dusk, tranquil water fountain with lotus reflection, glowing warm brass lanterns, blooming white jasmine vines climbing stone archways, warm amber and rose-gold dusk palette, 8k resolution, serene, no people, no living beings"
     },
     "slot_4_evening": {
         "name": "🌙 Slot 4: Prime Evening (08:30 PM - 10:00 PM BST)",
-        "theme": "Heart-softeners, forgiveness, Akhirah, repentance, grave protection, Surah Al-Mulk, Tahajjud",
-        "system_instruction": "Create a profound nighttime reflection on grave protection (Surah Al-Mulk), heartfelt repentance, Tahajjud prayer, or Allah's boundless mercy.",
+        "theme": "Heart-Softeners, Grave Protection (Surah Mulk), Sins-Wiping Prayers, Tahajjud Miracles & Night Peace",
+        "system_instruction": "Create a profound, emotionally powerful 'HEART-TOUCHING' nighttime reminder. Focus on: The 1 Sunnah prayer that wipes years of sins in minutes (সালাতুত তাসবীহ), the miraculous defense of Surah Al-Mulk inside the grave, what to say if you wake up suddenly in the night with anxiety, or the magic of 2 Rakat Tahajjud.",
         "visual_prompt": "vertical 9:16, luxury balcony view looking out over the illuminated Holy Kaaba and Masjid Al-Haram in Makkah at twilight night, glowing emerald green minarets, polished marble courtyard, soft atmospheric mist, high aesthetic cinematic lighting, photorealistic 8k, architectural digest, no humans in focus"
     }
 }
@@ -84,13 +84,14 @@ CRITICAL FORMAT RULES:
    • Archetype 5 [Astronomical Rewards / Sins Wiping]: "এমন ১টি সুন্নাহ আমল... যা মাত্র কয়েক মিনিটে বহু বছরের গুনাহ ধুয়ে ফেলে..."
    • Archetype 6 [Time-Locked Barakah]: "ফজরের পর মাত্র ৫ মিনিটে এই ৩টি আমল করুন এবং দেখুন কীভাবে আল্লাহ পুরো দিনকে বরকতে ভরিয়ে দেন..."
 
-2. ON-SCREEN TEXT (Hook):
+2. ON-SCREEN TEXT & NUMBER PSYCHOLOGY (MANDATORY):
+   - Every title and on-screen hook MUST contain a specific number (e.g. "৩টি আমল", "৭টি নিশ্চিত লক্ষণ", "১টি বিশেষ দোয়া", "২ রাকাত নামাজ", "১টি মারাত্মক ভুল", "৫ মিনিটে", "১২ বছরের গুনাহ"). Numbered hooks drive the highest engagement and retention!
    - A single, curiosity-driving sentence in 2-3 short lines in authentic BANGLA (বাংলা).
    - Must specify:
-     a) The Action/Topic (e.g. "৩টি আমল", "১টি নাম", "গোপন নামাজ", "৭টি লক্ষণ")
+     a) The Numbered Action/Topic (e.g. "৩টি আমল", "১টি নাম", "২ রাকাত নামাজ", "৭টি লক্ষণ")
      b) The Divine Entity ("আল্লাহ")
      c) The Promised Outcome/Benefit (e.g. "বরকতে ভরিয়ে দেন", "দোয়া কখনো ফিরিয়ে দেন না", "সব বন্ধ দরজা খুলে যায়")
-   - Specify "highlight_words": list of 2-3 exact words/phrases to be highlighted in Warm Gold and enlarged (+4px) (MUST include the action, 'আল্লাহ', and the outcome).
+   - Specify "highlight_words": list of 2-3 exact words/phrases to be highlighted in Warm Gold and enlarged (+4px) (MUST include the numbered action, 'আল্লাহ', and the outcome).
 
 3. VALUE-PACKED CAPTION:
    - Must provide the COMPLETE point-by-point answers and exact Sahih Hadith / Quranic references!
@@ -100,7 +101,11 @@ CRITICAL FORMAT RULES:
    - Community Dhikr comment prompt.
    - Follow credit MUST be 👉 @dailydos_islam
 
-3. TOPICS RECENTLY COVERED (DO NOT REPEAT ANY OF THESE):
+4. AUDIENCE PSYCHOLOGY & HIGH-DEMAND CURIOSITY:
+   - Always choose high-stakes, relatable topics people DESPERATELY WANT OR NEED TO KNOW (e.g. overcoming debt/anxiety, unblocking trapped Rizq, signs your Dua is accepted, protection against Evil Eye/বদনজর, marital peace, secrets of Tahajjud, grave protection, astronomical reward prayers).
+   - NEVER create dry, generic, or boring textbook lessons. Every reel must answer an urgent spiritual or life question.
+
+5. TOPICS RECENTLY COVERED (DO NOT REPEAT ANY OF THESE):
 - {avoid_context}
 
 Output ONLY valid JSON:
