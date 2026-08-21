@@ -118,14 +118,14 @@ def should_speak_bangla_translation(clean_trans: str) -> bool:
     return len(clean_trans.strip()) > 3
 
 def _synthesize_bangla_edge_free(text: str, out_mp3: str) -> bool:
-    """Free Edge TTS fallback for Bengali (used during local testing)."""
+    """Free Edge TTS fallback for Bengali at normal natural speed."""
     out_vtt = out_mp3.replace(".mp3", ".vtt")
     cmd = [
         "edge-tts",
         f"--voice={BANGLA_VOICE}",
         f"--text={text}",
-        "--rate=+15%",
-        "--pitch=-1Hz",
+        "--rate=+0%",
+        "--pitch=+0Hz",
         f"--write-media={out_mp3}",
         f"--write-subtitles={out_vtt}"
     ]
@@ -138,21 +138,11 @@ def _synthesize_bangla_edge_free(text: str, out_mp3: str) -> bool:
 
 
 def synthesize_bangla_sarvam(text: str, out_mp3: str) -> bool:
-    """Synthesize Bengali with Sarvam AI — 5 key rotation, Edge TTS fallback.
-    
-    Rules:
-    - Local testing (not CI): always use free Edge TTS, never burn API credits
-    - GitHub Actions (CI=true): try all 5 keys in order → fallback to Edge TTS
-    """
+    """Synthesize Bengali with Sarvam AI — 5 key rotation, Edge TTS fallback."""
     if not any(c.isalnum() for c in text):
         return False
 
-    # ── Local testing: use free Edge TTS to preserve credits ──────────────────
-    if not IS_CI:
-        logger.info("Local run — using free Edge TTS for Bengali (Sarvam credits preserved)")
-        return _synthesize_bangla_edge_free(text, out_mp3)
-
-    # ── Production (GitHub Actions): try 5 Sarvam keys in order ──────────────
+    # ── Try 5 Sarvam keys in rotation ────────────────────────────────────────
     payload = json.dumps({
         "inputs": [text],
         "target_language_code": "bn-IN",
@@ -317,8 +307,8 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                         "voice": BANGLA_VOICE,
                         "spoken_text": spoken_bangla_trans,
                         "display_text": display_card,
-                        "rate": "+5%",
-                        "pitch": "-1Hz"
+                        "rate": "+0%",
+                        "pitch": "+0Hz"
                     })
         else:
             # Strip any stray tags or 'arabic:' prefixes
@@ -347,8 +337,8 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                     "voice": BANGLA_VOICE,
                     "spoken_text": spoken_bangla,
                     "display_text": display_text,
-                    "rate": "+5%",
-                    "pitch": "-1Hz"
+                    "rate": "+0%",
+                    "pitch": "+0Hz"
                 })
             
     seg_mp3s = []
