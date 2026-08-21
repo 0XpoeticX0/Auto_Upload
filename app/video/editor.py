@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import re
 import subprocess
@@ -6,6 +7,36 @@ from app.logger import logger
 
 VIDEO_WIDTH = 1080
 VIDEO_HEIGHT = 1920
+
+# Strategic 1-2 word highlight color codes (ASS BGR format)
+COLOR_GOLD_ASS = "{\\c&H0041AFEB&}"   # #EBAF41 Warm Gold (Core virtues, rewards, severe warnings)
+COLOR_CYAN_ASS = "{\\c&H00F8BD38&}"   # #38BDF8 Soft Cyan (Practical Sunnah actions & benefits)
+COLOR_RESET_ASS = "{\\c&H00FFFFFF&}"  # #FFFFFF Crisp White
+
+HIGHLIGHT_KEYWORDS_GOLD = [
+    "কবরের আজাব", "ঋণের বোঝা", "সহীহ সুন্নাহ", "ভিত্তিহীন কুসংস্কার", "কুসংস্কার",
+    "সদকা", "গুনাহ", "বরকত", "রিজিক", "বদনজর", "অশান্তি", 
+    "ক্ষমা", "তওবা", "আজাব", "অভিশাপ", "হারাম", "হালাল", 
+    "সওয়াব", "সওয়াব", "প্রতিদান", "রহমত", "জান্নাত", "জাহান্নাম", "ঈমান"
+]
+
+HIGHLIGHT_KEYWORDS_CYAN = [
+    "সুন্নাহটি", "সুন্নাহ", "আমলটি", "আমলগুলো", "আমল", "দোয়াটি", "দোয়াটি", "দোয়া", "দোয়া", "হেফাজত"
+]
+
+def apply_selective_narration_highlight(text: str) -> str:
+    """Highlights max 1 punchy keyword (1-2 words) per line in Gold or Cyan, keeping base text crisp white."""
+    for kw in HIGHLIGHT_KEYWORDS_GOLD:
+        pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(kw) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
+        if re.search(pattern, text):
+            return re.sub(pattern, f"{COLOR_GOLD_ASS}\\1{COLOR_RESET_ASS}", text, count=1)
+            
+    for kw in HIGHLIGHT_KEYWORDS_CYAN:
+        pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(kw) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
+        if re.search(pattern, text):
+            return re.sub(pattern, f"{COLOR_CYAN_ASS}\\1{COLOR_RESET_ASS}", text, count=1)
+            
+    return text
 
 def render_final_video(scenes: list, topic_id: int, video_format: str = "short") -> str:
     """
@@ -109,10 +140,10 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                 if not sl:
                     continue
                 if re.search(r'[\u0600-\u06FF]', sl):
-                    # Style Arabic text with Amiri font and gold accent
+                    # Style Arabic text with Amiri font and gold accent (UNTOUCHED)
                     formatted_sub_lines.append(f"{{\\fnAmiri\\fs82\\b1\\c&HEBAF41&}}{sl}")
                 elif has_arabic:
-                    # Inside an Arabic Ayah/Dua block
+                    # Inside an Arabic Ayah/Dua block (UNTOUCHED)
                     if bangla_idx == 0 and len(sub_lines) >= 3:
                         # Pronunciation line: NOT bold, smaller font
                         formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs62\\b0\\c&HE0E4E8&}}{sl}")
@@ -122,8 +153,9 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                         formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs70\\b1\\c&H3DBFF2&}}{sl}")
                         bangla_idx += 1
                 else:
-                    # Standard narration Bangla line: crisp white
-                    formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs74\\b1\\c&HFFFFFF&}}{sl}")
+                    # Standard narration Bangla line: crisp white with selective 1-2 word highlight
+                    highlighted_sl = apply_selective_narration_highlight(sl)
+                    formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs74\\b1\\c&HFFFFFF&}}{highlighted_sl}")
                     
             final_dialogue_text = "\\N".join(formatted_sub_lines) if formatted_sub_lines else f"{{\\fnNoto Sans Bengali\\fs74\\b1}}{clean_text}"
             mid_str = ",".join(d['middle_fields'])
@@ -136,10 +168,6 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         rel_ass = os.path.relpath(ass_path).replace('\\', '/')
         
         # 3. Build FFmpeg rendering command
-        # NOTE: Do NOT use :fontsdir here. Passing fontsdir disables HarfBuzz on Linux,
-        # causing Bengali vowels (ো, ে, ি) to be drawn in wrong order (broken spelling).
-        # Fonts are pre-installed into /usr/local/share/fonts/bengali/ by the workflow,
-        # so libass uses system Fontconfig + HarfBuzz for correct Bengali shaping.
         final_video_vf = f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},subtitles='{rel_ass}'"
         
         cmd = [
