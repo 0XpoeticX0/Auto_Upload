@@ -12,8 +12,8 @@ from app.logger import logger
 from app.llm.provider import extract_json
 from app.history import _supabase_insert, _supabase_fetch_recent, get_recent_video_titles
 from app.loop_reel.audio_library import get_or_download_quran_audio
-from app.upload.youtube import upload_youtube_video
-from app.upload.facebook import upload_to_facebook_and_instagram
+from app.upload.youtube import upload_to_youtube
+from app.upload.facebook import upload_to_facebook
 
 # 4 Daily Peak Release Windows (BST / GMT+6)
 SLOT_CONFIGS = {
@@ -139,11 +139,9 @@ Output ONLY valid JSON:
     return content
 
 def format_loop_caption(data: dict) -> str:
-    """Builds the comprehensive, high-value point-by-point viral caption."""
-    title_bn = data.get("title_bn", "")
-    title_en = data.get("title_en", "").replace("#Shorts", "").strip()
-    
-    header = f"{title_en}: 🌿\n({title_bn})\n\n"
+    """Builds the comprehensive, high-value point-by-point viral caption in 100% Bangla."""
+    title_bn = data.get("title_bn", "").strip()
+    header = f"{title_bn} 🌿\n\n"
     
     points_text = ""
     for pt in data.get("caption_points", []):
@@ -314,8 +312,8 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
     video_path = render_loop_reel_video(content)
     
     # 3. Prepare metadata
-    yt_title = content.get("title_en", content.get("title_bn", "Islamic Reminder #Shorts"))
-    if "#Shorts" not in yt_title:
+    yt_title = content.get("title_bn", "ইসলামিক রিলস")
+    if "#Shorts" not in yt_title and "#shorts" not in yt_title:
         yt_title = f"{yt_title} #Shorts"
         
     fb_title = content.get("title_bn", "ইসলামিক রিলস")
@@ -329,11 +327,11 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
         "tags": content.get("tags", ["Shorts", "Islam", "DailyDos"])
     }
     
-    yt_ok = upload_youtube_video(video_path, metadata)
+    yt_ok = upload_to_youtube(video_path, metadata)
     logger.info(f"YouTube Shorts Upload: {yt_ok}")
 
     # 5. Upload to Facebook & Instagram Reels
-    fb_ok = upload_to_facebook_and_instagram(video_path, caption, title=fb_title, is_reel=True)
+    fb_ok = upload_to_facebook(video_path, metadata, video_type="reel")
     logger.info(f"Facebook / Instagram Upload: {fb_ok}")
 
     # 6. Save to Supabase for zero-topic repetition
