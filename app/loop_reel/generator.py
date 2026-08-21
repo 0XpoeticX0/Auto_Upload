@@ -76,19 +76,27 @@ THEME: {cfg['theme']}
 INSTRUCTION: {cfg['system_instruction']}
 
 CRITICAL FORMAT RULES:
-1. ON-SCREEN TEXT (Hook):
+1. VIRAL HOOK ARCHETYPES (Cycle dynamically through these high-converting angles):
+   • Archetype 1 [The Guaranteed Dua]: "রাসূলুল্লাহ (ﷺ) বলেছেন: আল্লাহর এমন ১টি নাম আছে, যা দিয়ে দোয়া করলে আল্লাহ তা কখনো ফিরিয়ে দেন না..." (ইসমে আজম)
+   • Archetype 2 [Spiritual Signs]: "৭টি নিশ্চিত লক্ষণ যা প্রমাণ করে আল্লাহ আপনার দোয়া কবুল করছেন — যদিও আপনি তা এখনই দেখতে পাচ্ছেন না..."
+   • Archetype 3 [The Forgotten Key Prayer]: "এমন ১টি অবহেলিত সুন্নাহ নামাজ যা আপনার জীবনের সমস্ত বন্ধ দরজা খুলে দিতে পারে..."
+   • Archetype 4 [Mind-Blowing Quranic Miracle]: "কুরআনে কেন আল্লাহ কিয়ামতকে অতীত কাল (Past Tense) দিয়ে বর্ণনা করেছেন তা জানলে আপনি বিস্মিত হবেন..."
+   • Archetype 5 [Astronomical Rewards / Sins Wiping]: "এমন ১টি সুন্নাহ আমল... যা মাত্র কয়েক মিনিটে বহু বছরের গুনাহ ধুয়ে ফেলে..."
+   • Archetype 6 [Time-Locked Barakah]: "ফজরের পর মাত্র ৫ মিনিটে এই ৩টি আমল করুন এবং দেখুন কীভাবে আল্লাহ পুরো দিনকে বরকতে ভরিয়ে দেন..."
+
+2. ON-SCREEN TEXT (Hook):
    - A single, curiosity-driving sentence in 2-3 short lines in authentic BANGLA (বাংলা).
    - Must specify:
-     a) The Action/Topic (e.g. "৩টি আমল", "১টি গোপন সুন্নাহ")
+     a) The Action/Topic (e.g. "৩টি আমল", "১টি নাম", "গোপন নামাজ", "৭টি লক্ষণ")
      b) The Divine Entity ("আল্লাহ")
-     c) The Promised Outcome/Benefit (e.g. "বরকতে ভরিয়ে দেন", "কবরের আজাব থেকে বাঁচায়")
-   - Specify "highlight_words": list of 2-3 exact words/phrases to be highlighted in Warm Gold and enlarged (MUST include the action, 'আল্লাহ', and the outcome).
+     c) The Promised Outcome/Benefit (e.g. "বরকতে ভরিয়ে দেন", "দোয়া কখনো ফিরিয়ে দেন না", "সব বন্ধ দরজা খুলে যায়")
+   - Specify "highlight_words": list of 2-3 exact words/phrases to be highlighted in Warm Gold and enlarged (+4px) (MUST include the action, 'আল্লাহ', and the outcome).
 
-2. VALUE-PACKED CAPTION:
+3. VALUE-PACKED CAPTION:
    - Must provide the COMPLETE point-by-point answers and exact Sahih Hadith / Quranic references!
    - Numbered steps (১, ২, ৩) with clear explanations.
    - For Duas: Arabic text + Bengali pronunciation + Bengali meaning.
-   - Sahih book references: [সহীহ বুখারী / সহীহ মুসলিম / সহীহ আন-নাসায়ী / সহীহ ইবনে মাজাহ].
+   - Sahih book references: [সহীহ বুখারী / সহীহ মুসলিম / সহীহ আন-নাসায়ী / সহীহ ইবনে মাজাহ / জামে আত-তিরমিযী].
    - Community Dhikr comment prompt.
    - Follow credit MUST be 👉 @dailydos_islam
 
