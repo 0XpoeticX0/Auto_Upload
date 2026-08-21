@@ -10,7 +10,14 @@ NEGATIVE_PROMPT = (
     "pale, washed out, blurry, foggy gray, bright overcast, "
     "close-up face, extreme close up, portrait, selfie, bad anatomy, "
     "low quality, watermark, logo, text, deformed, ugly, duplicate, cropped, "
-    "human, person, face, eye, man, woman, child, people, crowd, animal, dog, cat, bird, insect, living being, living creatures"
+    "human, person, face, eye, nose, mouth, lips, hair, skin, hands, fingers, body, man, woman, girl, boy, child, baby, people, crowd, "
+    "animal, dog, cat, bird, insect, fish, living being, living creatures, figure, silhouette of person"
+)
+
+# Hard-prepended prefix that overrides any AI prompt output before sending to Pollinations
+NO_HUMAN_PREFIX = (
+    "vertical 9:16, absolutely no humans no faces no living beings no animals, "
+    "empty atmospheric Islamic scenery only, "
 )
 
 FALLBACK_PILLAR_STYLES = {
@@ -99,6 +106,8 @@ Respond ONLY with valid JSON (no markdown):
         res = extract_json(system_prompt, user_prompt, max_tokens=300)
         if res and res.get("visual_prompt"):
             custom_prompt = res.get("visual_prompt").strip()
+            # HARD SAFETY: always prepend no-human guarantee regardless of LLM output
+            custom_prompt = NO_HUMAN_PREFIX + custom_prompt
             logger.info(f"✨ Gemini created unique visual prompt: {custom_prompt[:60]}...")
             return custom_prompt
     except Exception as e:
@@ -111,7 +120,12 @@ def generate_image_for_scene(visual_prompt: str, output_filepath: str, seed: int
     """Generates 9:16 high-contrast vertical backgrounds via Pollinations AI (FLUX Model)."""
     logger.info(f"Generating high-contrast Flux background image for prompt: '{visual_prompt[:40]}...'")
     
-    enhanced_prompt = f"{visual_prompt}, high contrast, rich shadows, deep saturation, masterpiece, 8k resolution"
+    # Always strip any stray human-suggesting words before sending
+    enhanced_prompt = (
+        f"{NO_HUMAN_PREFIX}{visual_prompt}, "
+        "high contrast, rich shadows, deep saturation, masterpiece, 8k resolution, "
+        "no humans, no faces, no living beings, empty scenery"
+    )
     encoded_prompt = urllib.parse.quote(enhanced_prompt)
     
     base_url = "https://image.pollinations.ai/prompt/"
