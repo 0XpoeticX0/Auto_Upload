@@ -3,7 +3,7 @@ import re
 from app.llm.provider import extract_json
 from app.logger import logger
 
-def format_video_description(metadata_desc: str, script_data: dict) -> str:
+def format_video_description(metadata_desc: str, script_data: dict, english_summary: str = "") -> str:
     """
     Builds a professional, aesthetic, and algorithm-friendly description adhering to the new standard.
     """
@@ -47,15 +47,18 @@ def format_video_description(metadata_desc: str, script_data: dict) -> str:
     else:
         ref_block += "• কুরআনুল কারীম ও সহীহ হাদিস"
         
-    # 5. English Translation Summary (For Global Facebook & Instagram Search Discovery)
+    # 4. CTA Block
+    cta_block = "\n\n💬 আজকের আমল:\nকমেন্টে একবার 'সুবহানাল্লাহ' লিখে আপনার বন্ধুদের সাথে শেয়ার করুন এবং নেকির অংশীদার হোন 🤍"
+
+    # 5. English Translation Summary (For Global Search Discovery)
     en_block = ""
     if english_summary:
         en_block = f"\n\n✨ In English:\n{english_summary.strip()}"
 
     # 6. Social Links & High-Traffic Niche + Bengali Hashtags
-    social_block = f"""{en_block}\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n#Shorts #IslamicReminders #SahihHadith #BanglaIslamic #সহীহ_হাদিস #দোয়া #DailyDos #DeenOverDunya #ShortsFeed #ExplorePage"""
+    social_block = f"{en_block}\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@DailyDosOfIslam\n🔹 Facebook: https://www.facebook.com/DailyDosOfIslam\n\n#Shorts #IslamicReminders #SahihHadith #BanglaIslamic #সহীহ_হাদিস #দোয়া #DailyDos #DeenOverDunya #ShortsFeed #ExplorePage"
 
-    return f"{main_summary}{ayah_hadith_block}{ref_block}{cta_block}{social_block}".strip()
+    return f"{main_summary}{ayah_hadith_block}{ref_block}{cta_block}\n\n{social_block}".strip()
 
 def generate_viral_metadata(topic_id: int, script_data: dict):
     logger.info("Generating viral metadata in Bangla & English localizations for YouTube and Facebook...")
