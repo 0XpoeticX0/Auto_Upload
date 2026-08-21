@@ -28,6 +28,7 @@ IS_CI = os.environ.get("GITHUB_ACTIONS", "").lower() == "true" or \
 
 BANGLA_VOICE = "bn-IN-BashkarNeural"  # Edge TTS free fallback for Bengali
 ARABIC_VOICE = "ar-SA-HamedNeural"   # Edge TTS — kept for Arabic recitation
+ARABIC_RATE  = "-10%"                 # 0.90x speed (calm, clear recitation)
 
 
 DHIKR_REPLACEMENTS = {
@@ -296,7 +297,7 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                     "voice": ARABIC_VOICE,
                     "spoken_text": spoken_arabic,
                     "display_text": display_card,
-                    "rate": "-15%",
+                    "rate": ARABIC_RATE,
                     "pitch": "-2Hz"
                 })
                 
