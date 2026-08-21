@@ -66,7 +66,7 @@ def main(no_upload: bool = False):
     scenes = script_data.get("scenes", [])
     
     logger.info(f"--- Generating Visuals (9:16 Vertical) ---")
-    scenes = generate_all_images(scenes, topic_id, "short", pillar_category=topic_category)
+    scenes = generate_all_images(scenes, topic_id, "short", pillar_category=topic_category, script_data=script_data)
     
     logger.info(f"--- Generating Audio & Subtitles ---")
     scenes = generate_all_audio(scenes, topic_id, "short", topic_category)
