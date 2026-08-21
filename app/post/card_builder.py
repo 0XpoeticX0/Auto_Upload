@@ -348,13 +348,13 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     temp_canvas = os.path.join(temp_dir, f"canvas_{timestamp}.jpg")
     temp_ass = os.path.join(temp_dir, f"card_{timestamp}.ass")
     
-    # 1. Visual Download (cinematic peaceful desert dunes / nature sunset, no alive beings)
+    # 1. Download Background (Top landscape fading smoothly into dark background)
     image_prompt = post_data.get("image_prompt", "vast tranquil desert sand dunes under warm glowing twilight sunset, cinematic atmospheric photography 8k, serene, empty, no humans, no living beings")
     download_card_background(image_prompt, temp_bg)
     
     # 2. Build Base Canvas with smooth continuous vertical feather into solid black #08090C
     card = Image.new("RGB", (CARD_WIDTH, CARD_HEIGHT), (8, 9, 12))
-    target_h = 460
+    target_h = 440
     
     try:
         with Image.open(temp_bg).convert("RGBA") as bg_img:
@@ -366,14 +366,13 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
             crop_x = (new_w - CARD_WIDTH) // 2
             bg_cropped = bg_scaled.crop((crop_x, 0, crop_x + CARD_WIDTH, target_h))
             
-            # Smooth continuous feather mask from top to bottom
             mask = Image.new("L", (CARD_WIDTH, target_h), 255)
             for y in range(target_h):
-                if y < target_h * 0.30:
+                if y < target_h * 0.25:
                     alpha = 255
                 else:
-                    progress = (y - target_h * 0.30) / (target_h * 0.70)
-                    alpha = int(255 * (1.0 - (progress ** 1.8)))
+                    progress = (y - target_h * 0.25) / (target_h * 0.75)
+                    alpha = int(255 * (1.0 - (progress ** 1.6)))
                 for x in range(CARD_WIDTH):
                     mask.putpixel((x, y), alpha)
                     
@@ -381,100 +380,103 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     except Exception as e:
         logger.warning(f"Error applying background image: {e}")
         
-    card.save(temp_canvas, "JPEG", quality=95)
+    draw = ImageDraw.Draw(card)
     
-    # 3. Typography & Dynamic Vertical Distribution Engine (Matches English Balanced Proportions)
-    header_raw = post_data.get("header", "রাসূলুল্লাহ (সা.) বলেছেন:")
-    header = " ".join(header_raw.split()).strip() if header_raw else ""
+    # 3. Typography & Dynamic Vertical Scaling Calculation
+    hook_title = post_data.get("hook_title", post_data.get("title", "হাদিসের অমূল্য শিক্ষা"))
+    narrator_raw = post_data.get("header", "রাসূলুল্লাহ (সা.) বলেছেন:")
+    narrator = " ".join(narrator_raw.split()).strip() if narrator_raw else ""
     bangla_quote = post_data.get("quote", post_data.get("bangla_quote", "")).strip()
     highlight_phrases = post_data.get("highlight_phrases", [])
-    explain_title = post_data.get("explain_title", "ব্যাখ্যা:").strip()
+    explain_title = post_data.get("explain_title", "শিক্ষা ও বাস্তব আমল").strip().rstrip(":")
     explanation = post_data.get("explanation", "").strip()
     reference = post_data.get("reference", "").strip()
     
-    styled_header = format_header_with_highlights_ass(header) if header else ""
+    styled_narrator = format_header_with_highlights_ass(narrator) if narrator else ""
     styled_quote = format_quote_with_highlights_ass(bangla_quote, highlight_phrases) if bangla_quote else ""
-
-    # Balanced wrapping (prevents dangling single words)
-    header_lines = split_text_wrap_ass(styled_header, max_chars=55) if header else []
-    quote_lines = balance_wrapped_lines(split_text_wrap_ass(styled_quote, max_chars=64)) if bangla_quote else []
-    explain_lines = balance_wrapped_lines(split_text_wrap_ass(explanation, max_chars=72)) if explanation else []
-
-    total_lines = len(header_lines) + len(quote_lines) + len(explain_lines)
-
-    # Dynamic vertical spacing & fill engine
-    if total_lines <= 9:
-        # Short content: larger typography, generous spacing to fill vertical space beautifully
-        f_header = 46
-        f_quote = 44
-        f_explain_body = 34
-        f_explain_title = 32
-        h_step = 58
-        q_step = 62
-        e_step = 48
-        gap_h = 24
-        gap_q = 30
-        start_y = 480
-    elif total_lines <= 13:
-        # Medium content: standard balanced proportions
-        f_header = 44
-        f_quote = 42
-        f_explain_body = 33
-        f_explain_title = 32
-        h_step = 52
-        q_step = 54
-        e_step = 42
-        gap_h = 16
-        gap_q = 20
-        start_y = 460
+    
+    # Clean non-font symbols
+    from app.quiz.card_builder import clean_text_ass
+    raw_clean_quote = clean_text_ass(bangla_quote)
+    quote_chars = len(raw_clean_quote)
+    
+    if quote_chars <= 130:
+        # SHORT HADITH (1-3 lines)
+        f_quote = 68
+        step_quote = 78
+        max_c = 30
+        f_narrator = 38
+        f_takeaway_title = 36
+        f_takeaway_body = 34
+        step_takeaway = 44
+        takeaway_max_c = 48
+        start_quote_y = 480
+    elif quote_chars <= 250:
+        # MEDIUM HADITH (4-6 lines)
+        f_quote = 56
+        step_quote = 66
+        max_c = 36
+        f_narrator = 36
+        f_takeaway_title = 34
+        f_takeaway_body = 32
+        step_takeaway = 40
+        takeaway_max_c = 52
+        start_quote_y = 420
     else:
-        # Long content: compact spacing
-        f_header = 38
-        f_quote = 36
-        f_explain_body = 28
-        f_explain_title = 28
-        h_step = 44
-        q_step = 45
-        e_step = 34
-        gap_h = 8
-        gap_q = 10
-        start_y = 430
-
-    current_y = start_y
-    dialogues = []
+        # VERY LONG HADITH (7-10 lines)
+        f_quote = 48
+        step_quote = 56
+        max_c = 42
+        f_narrator = 34
+        f_takeaway_title = 32
+        f_takeaway_body = 29
+        step_takeaway = 36
+        takeaway_max_c = 58
+        start_quote_y = 370
+        
+    quote_lines = split_text_wrap_ass(styled_quote, max_chars=max_c)
+    takeaway_lines = split_text_wrap_ass(clean_text_ass(explanation), max_chars=takeaway_max_c) if explanation else []
     
-    # 1. Header (Sahabi Narrator)
-    for h_l in header_lines:
-        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Header,,0,0,0,,{{\\pos(540,{current_y})}}{h_l}")
-        current_y += h_step
-    if header_lines:
-        current_y += gap_h
+    # Dynamic Takeaway Box Coordinates
+    quote_end_y = start_quote_y + len(quote_lines) * step_quote
+    box_start_y = quote_end_y + 25
+    box_h = 45 + len(takeaway_lines) * step_takeaway + 20 if takeaway_lines else 0
+    
+    # Draw Top Gold Hook Pill
+    draw.rounded_rectangle((90, 85, CARD_WIDTH - 90, 160), radius=20, fill=(24, 20, 10, 220), outline=(235, 175, 65), width=2)
+    
+    # Draw Bottom Emerald Takeaway Card
+    if box_h > 0:
+        draw.rounded_rectangle((70, box_start_y, CARD_WIDTH - 70, box_start_y + box_h), radius=20, fill=(16, 25, 20, 220), outline=(40, 70, 58), width=2)
         
-    # 2. Main Hadith Quote with Golden Highlights
-    for q_l in quote_lines:
-        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Quote,,0,0,0,,{{\\pos(540,{current_y})}}{q_l}")
-        current_y += q_step
-    if quote_lines:
-        current_y += gap_q
+    card.save(temp_canvas, "JPEG", quality=95)
+    
+    # 4. Build ASS Dialogue Events
+    dialogues = [
+        # Top Hook Badge
+        f"Dialogue: 0,0:00:00.00,0:00:05.00,HookBadge,,0,0,0,,{{\\pos(540,122)}}• {clean_text_ass(hook_title)} •"
+    ]
+    
+    if narrator:
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Narrator,,0,0,0,,{{\\pos(540,{start_quote_y - 50})}}{styled_narrator}")
         
-    # 3. Explain Section
-    if explanation:
-        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,ExplainTitle,,0,0,0,,{{\\pos(540,{current_y})}}{explain_title}")
-        current_y += (f_explain_title + 12)
-        for e_l in explain_lines:
-            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Explain,,0,0,0,,{{\\pos(540,{current_y})}}{e_l}")
-            current_y += e_step
+    cur_qy = start_quote_y
+    for ql in quote_lines:
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,MainQuote,,0,0,0,,{{\\pos(540,{cur_qy})}}{ql}")
+        cur_qy += step_quote
+        
+    if takeaway_lines:
+        cur_ty = box_start_y + 35
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,TakeawayTitle,,0,0,0,,{{\\pos(540,{cur_ty})}}• {clean_text_ass(explain_title)} •")
+        cur_ty += 42
+        for tl in takeaway_lines:
+            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,TakeawayBody,,0,0,0,,{{\\pos(540,{cur_ty})}}{tl}")
+            cur_ty += step_takeaway
             
-    # 4. Reference & Watermark — positioned in the lower anchor zone (never huge empty void)
-    ref_y = max(current_y + 40, 1180)
-    if ref_y > 1230:
-        ref_y = 1230
-    wm_y = min(1285, ref_y + 52)
-    
+    ref_y = min(1205, box_start_y + box_h + 35) if box_h > 0 else 1180
     if reference:
-        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{reference}")
-    dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Watermark,,0,0,0,,{{\\pos(540,{wm_y})}}@DailyDosOfIslam")
-
+        dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{clean_text_ass(reference)}")
+    dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Watermark,,0,0,0,,{{\\pos(540,1275)}}@DailyDosOfIslam")
     
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
@@ -483,16 +485,17 @@ PlayResY: {CARD_HEIGHT}
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Header,Noto Sans Bengali,{f_header},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
-Style: Quote,Noto Sans Bengali,{f_quote},&H00F5F2F0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
-Style: ExplainTitle,Noto Sans Bengali,{f_explain_title},&H00A0A5B0,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
-Style: Explain,Noto Sans Bengali,{f_explain_body},&H00DCE0D4,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
-Style: Reference,Noto Sans Bengali,38,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,5,40,40,0,1
-Style: Watermark,Noto Sans Bengali,24,&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,40,40,0,1
+Style: HookBadge,Noto Sans Bengali,42,&H003DBFF2,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: Narrator,Noto Sans Bengali,{f_narrator},&H00E0E0E0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: MainQuote,Noto Sans Bengali,{f_quote},&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: TakeawayTitle,Noto Sans Bengali,{f_takeaway_title},&H003DBFF2,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: TakeawayBody,Noto Sans Bengali,{f_takeaway_body},&H00D0E0D8,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: Reference,Noto Sans Bengali,34,&H003DBFF2,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: Watermark,Noto Sans Bengali,28,&H00808590,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-""" + "\n".join(dialogues)
+""" + "\n".join(dialogues) + "\n"
 
     with open(temp_ass, "w", encoding="utf-8") as f:
         f.write(ass_content)
