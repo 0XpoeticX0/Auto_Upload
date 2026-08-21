@@ -53,10 +53,15 @@ jobs:
         pip install -r requirements.txt
         pip install --force-reinstall Pillow
 
-    - name: Inject YouTube Tokens
+    - name: Install Playwright Browsers
+      run: |
+        python -m playwright install chromium
+
+    - name: Inject Platform Tokens
       run: |
         echo '${{ secrets.YOUTUBE_TOKEN_JSON }}' > token.json
         echo '${{ secrets.YOUTUBE_CLIENT_SECRETS_JSON }}' > client_secrets.json
+        echo '${{ secrets.TIKTOK_COOKIES_TXT }}' > tiktok_cookies.txt
 
     - name: Run 4-Slot Loop Reel Pipeline
       env:

@@ -11,3 +11,5 @@ google-auth-httplib2
 psycopg2-binary
 google-genai
 Pillow
+tiktok-uploader
+playwright
