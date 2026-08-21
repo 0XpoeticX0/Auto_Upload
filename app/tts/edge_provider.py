@@ -431,9 +431,8 @@ def generate_all_audio(scenes_or_script, topic_id: int = 0, video_format: str = 
     raw_master_mp3 = os.path.join(temp_dir, "master_raw.mp3")
     subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", master_concat, "-c", "copy", raw_master_mp3], check=True, capture_output=True)
     
-    # Apply vocal warmth + speed tuning (atempo=1.12 = 12% faster, no pitch change)
-    # This fixes slow-sounding Bengali TTS without any API cost — pure ffmpeg
-    vocal_filter = "atempo=1.12,equalizer=f=200:width_type=h:width=120:g=2,equalizer=f=4000:width_type=h:width=1000:g=1.5,aecho=0.8:0.9:25:0.1"
+    # Apply vocal warmth and presence mastering chain
+    vocal_filter = "equalizer=f=200:width_type=h:width=120:g=2,equalizer=f=4000:width_type=h:width=1000:g=1.5,aecho=0.8:0.9:25:0.1"
     subprocess.run(["ffmpeg", "-y", "-i", raw_master_mp3, "-af", vocal_filter, "-b:a", "192k", master_mp3], check=True, capture_output=True)
     try: os.remove(raw_master_mp3)
     except: pass
