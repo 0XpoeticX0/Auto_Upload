@@ -73,7 +73,10 @@ def format_spoken_question(q_num: int, q_text: str, options: list[str], language
     for opt in options:
         # Strip prefixes like "ক) ", "খ) ", "গ) ", "A) ", "B) ", "C) "
         opt_t = re.sub(r'^[কখগঘABCDEFabcdef\d]+[\)\.\:\-]\s*', '', opt.strip())
+        # Strip parenthetical synonyms/duplicates like "(নামাজ)", "(রোজা)", "(ঈমান)" so voice never speaks double words
+        opt_t = re.sub(r'\s*[\(\[\{][^\)\]\}]*[\)\]\}]', '', opt_t).strip()
         opt_t = expand_honorifics_spoken(clean_text_ass(opt_t)).strip()
+        opt_t = re.sub(r'\s+', ' ', opt_t)
         opts_clean.append(opt_t)
         
     bn_nums = {1: "১", 2: "২", 3: "৩", 4: "৪", 5: "৫"}

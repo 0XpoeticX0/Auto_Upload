@@ -243,6 +243,9 @@ def render_question_card(
     opt_y_text = 765
     for opt in options:
         opt_str = opt.strip()
+        # Clean parenthetical duplicate words: "(নামাজ)", "(রোজা)", "(ঈমান)" so card and voice only show/say single term
+        opt_str = re.sub(r'\s*[\(\[\{][^\)\]\}]*[\)\]\}]', '', opt_str).strip()
+        opt_str = re.sub(r'\s+', ' ', opt_str)
         opt_letter = opt_str[0] if opt_str else "ক"
         is_this_correct = (opt_letter == correct_letter) or (correct_opt in opt_str)
         

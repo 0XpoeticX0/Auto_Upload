@@ -68,6 +68,7 @@ QUIZ DESIGN & TIMING RULES:
 3. STRICT CONSTRAINTS:
    - Exactly 3 clean options per question.
    - Exactly ONE correct option matching one of the options.
+   - CRITICAL OPTION PHRASING RULE: NEVER put bracketed synonyms or translations inside options (e.g. NEVER write "ক) সালাত (নামাজ)", "খ) শাহাদাহ্ (ঈমান)", "গ) সাওম (রোজা)"). Write ONLY single, clean, concise terms: "ক) সালাত", "খ) শাহাদাহ্", "গ) সাওম" (or "ক) নামাজ", "খ) ঈমান", "গ) রোজা"). NO parentheses/brackets in options so the voiceover never speaks double words!
    - Authentic Sahih references only (Sahih Bukhari, Sahih Muslim, Quran Surah:Ayah).
    - Keep question text punchy, clear, and easy to read on mobile.
    - 1-line short explanation/reference on reveal.
