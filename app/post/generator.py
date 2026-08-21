@@ -172,15 +172,29 @@ Respond with ONLY valid JSON (no markdown formatting, no other text):
 
     user_prompt = f"Generate 1 high-CTR, deeply relatable Islamic photo post for pillar '{selected_pillar['name']}' in 100% Bangla."
 
-    try:
-        post_data = extract_json(system_prompt, user_prompt, max_tokens=1500)
-        if not post_data or "quote" not in post_data:
-            logger.error("Failed to generate valid post JSON from LLM.")
-            return None
-        return post_data
-    except Exception as e:
-        logger.error(f"Error generating post content: {e}")
-        return None
+    from app.history import is_topic_duplicate_global, record_post_history
+    for attempt in range(3):
+        try:
+            post_data = extract_json(system_prompt, user_prompt, max_tokens=1500)
+            if not post_data or "quote" not in post_data:
+                logger.warning(f"Attempt {attempt+1}: Failed to parse valid post JSON from LLM. Retrying...")
+                continue
+                
+            quote = post_data.get("quote", "")
+            ref = post_data.get("reference", "")
+            topic_str = f"[{ref}] {quote}"
+            
+            # Cross-pipeline deduplication check
+            if is_topic_duplicate_global(topic_str):
+                logger.warning(f"Topic '{topic_str}' flagged as duplicate in global history! Retrying with a fresh topic...")
+                continue
+                
+            return post_data
+        except Exception as e:
+            logger.error(f"Error on post generation attempt {attempt+1}: {e}")
+            
+    logger.error("Failed to generate a non-duplicate post after 3 attempts.")
+    return None
 
 if __name__ == "__main__":
     p = generate_post_content("bangla")

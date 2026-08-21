@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 import os
 import json
 import time
 import urllib.request
 import urllib.error
+import re
 from app.logger import logger
 
 HISTORY_FILE = os.path.abspath("data/history_log.json")
@@ -38,11 +40,11 @@ def _supabase_insert(row_data: dict) -> bool:
         payload = json.dumps({
             "id": row_data.get("id"),
             "title": row_data.get("title"),
-            "source": row_data.get("source", "video")
+            "source": row_data.get("source", "content")
         }).encode("utf-8")
 
-        # 1. Try used_islamic_video / used_islamic_videos
-        for tbl in ["used_islamic_video", "used_islamic_videos"]:
+        # Try inserting to primary tables
+        for tbl in ["used_islamic_video", "used_islamic_videos", "used_videos"]:
             try:
                 req = urllib.request.Request(f"{url}/{tbl}", data=payload, headers=headers, method="POST")
                 with urllib.request.urlopen(req, timeout=5) as resp:
@@ -50,17 +52,12 @@ def _supabase_insert(row_data: dict) -> bool:
                         return True
             except Exception:
                 pass
-
-        # 2. Fallback to used_videos
-        req = urllib.request.Request(f"{url}/used_videos", data=payload, headers=headers, method="POST")
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            return resp.status in (200, 201)
     except Exception as e:
         logger.warning(f"Supabase insert notice: {e}")
-        return False
+    return False
 
-def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
-    """Fetches recent topics from Supabase used_islamic_video (ordered by most recent first)."""
+def _supabase_fetch_all_recent(limit: int = 150) -> list[dict]:
+    """Fetches all recent topics from Supabase across ALL pipelines (video, loop, post)."""
     try:
         url, key = _get_supabase_config()
         if not key or not url:
@@ -71,10 +68,9 @@ def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
             "Content-Type": "application/json"
         }
         
-        # 1. Try used_islamic_video — order by id desc so most recently inserted is first
-        for tbl in ["used_islamic_video", "used_islamic_videos"]:
+        for tbl in ["used_islamic_video", "used_islamic_videos", "used_videos"]:
             try:
-                req_url = f"{url}/{tbl}?source=like.{source_prefix}*&select=id,title,source&order=id.desc&limit={limit}"
+                req_url = f"{url}/{tbl}?select=id,title,source&order=id.desc&limit={limit}"
                 req = urllib.request.Request(req_url, headers=headers, method="GET")
                 with urllib.request.urlopen(req, timeout=5) as resp:
                     if resp.status == 200:
@@ -83,15 +79,6 @@ def _supabase_fetch_recent(source_prefix: str, limit: int = 50) -> list[dict]:
                             return data
             except Exception:
                 pass
-
-        # 2. Fallback to used_videos
-        req_url = f"{url}/used_videos?source=like.{source_prefix}*&select=id,title,source&order=id.desc&limit={limit}"
-        req = urllib.request.Request(req_url, headers=headers, method="GET")
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            if resp.status == 200:
-                data = json.loads(resp.read().decode("utf-8"))
-                if isinstance(data, list):
-                    return data
     except Exception as e:
         logger.warning(f"Supabase fetch notice: {e}")
     return []
@@ -126,9 +113,104 @@ def save_history(data: dict):
     except Exception as e:
         logger.error(f"Failed to save local history file: {e}")
 
+def get_all_used_topics_global(limit: int = 150) -> list[str]:
+    """
+    Returns a UNIFIED global list of ALL used topics, Hadiths, and concepts across:
+    - 🎙️ AI Voiceover Reels
+    - 📖 7s Quran Loop Reels
+    - 🖼️ Facebook & Instagram Image Cards
+    Ensures absolute zero cross-pipeline duplication.
+    """
+    unified_list = []
+    seen = set()
+
+    # 1. Fetch from Supabase Cloud
+    cloud_items = _supabase_fetch_all_recent(limit=limit)
+    for item in cloud_items:
+        t = (item.get("title") or "").strip()
+        if t and t not in seen:
+            seen.add(t)
+            unified_list.append(t)
+
+    # 2. Fetch from Local History Log
+    hist = load_history()
+    for v in hist.get("videos", []):
+        t = v.get("title", "").strip()
+        c = v.get("core_concept", "").strip()
+        label = f"{t} (Concept: {c})" if c and c != "N/A" else t
+        if label and label not in seen:
+            seen.add(label)
+            unified_list.append(label)
+
+    for p in hist.get("posts", []):
+        ref = p.get("reference", "").strip()
+        q = p.get("quote", "").strip()
+        label = f"[{ref}] {q[:60]}" if ref else q[:60]
+        if label and label not in seen:
+            seen.add(label)
+            unified_list.append(label)
+
+    # 3. Fetch from local SQLite if available
+    try:
+        from app.database import get_connection
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT title FROM topics ORDER BY id DESC LIMIT 100")
+        for row in cursor.fetchall():
+            t = (row[0] or "").strip()
+            if t and t not in seen:
+                seen.add(t)
+                unified_list.append(t)
+        cursor.execute("SELECT quote, reference FROM posts ORDER BY id DESC LIMIT 100")
+        for row in cursor.fetchall():
+            q, ref = row[0] or "", row[1] or ""
+            label = f"[{ref}] {q[:60]}" if ref else q[:60]
+            if label and label not in seen:
+                seen.add(label)
+                unified_list.append(label)
+        conn.close()
+    except Exception:
+        pass
+
+    return unified_list[:limit]
+
+def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.65) -> bool:
+    """
+    Checks if a candidate topic/quote/hadith has already been covered anywhere in the system.
+    """
+    if not new_topic_text or len(new_topic_text.strip()) < 5:
+        return False
+        
+    all_used = get_all_used_topics_global(limit=200)
+    cleaned_new = re.sub(r'[^\w\s]', '', new_topic_text).lower()
+    new_words = set(cleaned_new.split())
+    
+    for past in all_used:
+        cleaned_past = re.sub(r'[^\w\s]', '', past).lower()
+        past_words = set(cleaned_past.split())
+        if not past_words:
+            continue
+            
+        # Exact reference match (e.g., ১১৫৪ or ৩৩৭৪)
+        new_numbers = set(re.findall(r'\d+', new_topic_text))
+        past_numbers = set(re.findall(r'\d+', past))
+        if new_numbers and past_numbers and len(new_numbers.intersection(past_numbers)) >= 1:
+            if "বুখারী" in new_topic_text and "বুখারী" in past:
+                logger.warning(f"Duplicate Hadith reference detected: {new_topic_text} vs {past}")
+                return True
+                
+        # Word overlap Jaccard similarity
+        intersection = new_words.intersection(past_words)
+        union = new_words.union(past_words)
+        similarity = len(intersection) / len(union) if union else 0
+        if similarity >= threshold:
+            logger.warning(f"High similarity ({similarity:.2f}) with past content: '{new_topic_text}' vs '{past}'")
+            return True
+            
+    return False
+
 def record_video_history(title: str, category: str, core_concept: str = ""):
     """Records a generated video topic to Supabase and local cache."""
-    # 1. Update local cache
     hist = load_history()
     hist["last_video_pillar"] = category
     entry = {
@@ -138,21 +220,19 @@ def record_video_history(title: str, category: str, core_concept: str = ""):
         "timestamp": int(time.time()),
         "date_str": time.strftime("%Y-%m-%d %H:%M:%S")
     }
-    hist["videos"] = [entry] + [v for v in hist.get("videos", []) if v.get("title") != title][:149]
+    hist["videos"] = [entry] + [v for v in hist.get("videos", []) if v.get("title") != title][:199]
     save_history(hist)
 
-    # 2. Sync to Supabase in real-time
     full_title = f"{title} (Concept: {core_concept})" if core_concept else title
     v_id = f"vid_{int(time.time())}"
     ok = _supabase_insert({"id": v_id, "title": full_title, "source": f"video_{category}"})
     if ok:
-        logger.info(f"Recorded video topic to Supabase (used_videos): '{title}'")
+        logger.info(f"Globally recorded video topic to Supabase: '{title}'")
     else:
-        logger.info(f"Recorded video topic locally: '{title}'")
+        logger.info(f"Globally recorded video topic locally: '{title}'")
 
 def record_post_history(title: str, category: str, quote: str, reference: str):
     """Records a generated social media post to Supabase and local cache."""
-    # 1. Update local cache
     hist = load_history()
     hist["last_post_pillar"] = category
     entry = {
@@ -163,58 +243,39 @@ def record_post_history(title: str, category: str, quote: str, reference: str):
         "timestamp": int(time.time()),
         "date_str": time.strftime("%Y-%m-%d %H:%M:%S")
     }
-    hist["posts"] = [entry] + [p for p in hist.get("posts", []) if p.get("reference") != reference][:149]
+    hist["posts"] = [entry] + [p for p in hist.get("posts", []) if p.get("reference") != reference][:199]
     save_history(hist)
 
-    # 2. Sync to Supabase in real-time
     post_label = f"[{reference}] {quote[:70]}" if reference else title
     p_id = f"post_{int(time.time())}"
     ok = _supabase_insert({"id": p_id, "title": post_label, "source": f"post_{category}"})
     if ok:
-        logger.info(f"Recorded post topic to Supabase (used_videos): [{reference}]")
+        logger.info(f"Globally recorded post topic to Supabase: [{reference}]")
     else:
-        logger.info(f"Recorded post topic locally: [{reference}]")
+        logger.info(f"Globally recorded post topic locally: [{reference}]")
 
-def get_recent_video_titles(limit: int = 50) -> list[str]:
-    """Returns list of recently covered video titles/concepts from Supabase (fallback to local)."""
-    # Try Supabase first
-    cloud_items = _supabase_fetch_recent("video_", limit=limit)
-    if cloud_items:
-        return [item["title"] for item in cloud_items if item.get("title")]
-        
-    # Local fallback
-    hist = load_history()
-    titles = []
-    for v in hist.get("videos", [])[:limit]:
-        t = v.get("title", "")
-        c = v.get("core_concept", "")
-        if c and c != "N/A":
-            titles.append(f"{t} (Concept: {c})")
-        elif t:
-            titles.append(t)
-    return titles
+def get_recent_video_titles(limit: int = 60) -> list[str]:
+    """Returns list of recently covered video titles from global unified memory."""
+    return get_all_used_topics_global(limit=limit)
 
-def get_recent_post_records(limit: int = 50) -> list[dict]:
-    """Returns list of recently covered post references & quotes from Supabase (fallback to local)."""
-    cloud_items = _supabase_fetch_recent("post_", limit=limit)
-    if cloud_items:
-        return [{"reference": item["title"], "quote": item["title"]} for item in cloud_items if item.get("title")]
-        
-    hist = load_history()
-    return hist.get("posts", [])[:limit]
+def get_recent_post_records(limit: int = 60) -> list[dict]:
+    """Returns list of recently covered posts from global unified memory."""
+    all_used = get_all_used_topics_global(limit=limit)
+    return [{"reference": item, "quote": item} for item in all_used]
 
 def get_next_pillar_from_history(pillars: list, pillar_type: str = "video") -> dict:
     """
-    Computes the next pillar in fixed round-robin order using Supabase (fallback to local/deterministic).
+    Computes the next pillar in fixed round-robin order using Supabase history.
     """
+    cloud_items = _supabase_fetch_all_recent(limit=10)
     prefix = "video_" if pillar_type == "video" else "post_"
-    cloud_items = _supabase_fetch_recent(prefix, limit=1)
     last_key = None
     
-    if cloud_items:
-        src = cloud_items[0].get("source", "")
+    for item in cloud_items:
+        src = item.get("source", "")
         if src.startswith(prefix):
             last_key = src[len(prefix):]
+            break
             
     if not last_key:
         hist = load_history()
@@ -228,7 +289,6 @@ def get_next_pillar_from_history(pillars: list, pillar_type: str = "video") -> d
                 logger.info(f"Round-robin from Supabase: last was '{last_key}' -> next is '{next_p.get('category') or next_p.get('key')}'")
                 return next_p
                 
-    # Fallback to deterministic time slot (Hour + Day modulo pillars)
     day_slot = int(time.time() // 86400)
     hour_slot = int((time.time() % 86400) // (3600 * 4))
     idx = (day_slot + hour_slot) % len(pillars)

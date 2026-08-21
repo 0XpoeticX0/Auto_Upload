@@ -127,13 +127,22 @@ Output ONLY valid JSON:
     "tags": ["Islam", "DailyReminder", "Sunnah", "সহীহ_হাদিস", "দোয়া", "DailyDos", "Fajr", "Barakah"]
 }}"""
 
-    user_prompt = f"Slot: {slot_key}. Create a brand new, highly engaging Islamic Loop Reel."
-    content = extract_json(system_prompt, user_prompt, max_tokens=1500)
-    if not content:
-        raise RuntimeError("Failed to generate Loop Reel content from LLM.")
-    
-    content["slot_key"] = slot_key
-    return content
+    from app.history import is_topic_duplicate_global
+    for attempt in range(3):
+        content = extract_json(system_prompt, user_prompt, max_tokens=1500)
+        if not content:
+            logger.warning(f"Attempt {attempt+1}: Failed to parse valid Loop Reel JSON from LLM. Retrying...")
+            continue
+            
+        title_bn = content.get("title_bn", "").strip()
+        if is_topic_duplicate_global(title_bn):
+            logger.warning(f"Loop Reel topic '{title_bn}' flagged as duplicate in global history! Retrying with a fresh topic...")
+            continue
+            
+        content["slot_key"] = slot_key
+        return content
+
+    raise RuntimeError("Failed to generate a non-duplicate Loop Reel content after 3 attempts.")
 
 def format_loop_caption(data: dict) -> str:
     """Builds the comprehensive, high-value point-by-point viral caption in 100% Bangla."""

@@ -176,14 +176,33 @@ def discover_topics(limit: int = 1):
     pillar = get_next_pillar_from_history(PILLARS, pillar_type="video")
     logger.info(f"Selected Pillar: {pillar['label']} ({pillar['category']})")
     
-    # 3. Generate topic with Gemini
-    topic_data = generate_topic_for_pillar(pillar, recent_titles)
+    from app.history import is_topic_duplicate_global
+    topic_data = None
+    for attempt in range(3):
+        topic_cand = generate_topic_for_pillar(pillar, recent_titles)
+        if topic_cand and topic_cand.get("title"):
+            cand_title = topic_cand.get("title", "").strip()
+            if is_topic_duplicate_global(cand_title):
+                logger.warning(f"Attempt {attempt+1}: Discovered topic '{cand_title}' flagged as duplicate in global history! Retrying...")
+                continue
+            topic_data = topic_cand
+            break
+
     if not topic_data:
-        logger.warning(f"Failed to generate topic for {pillar['label']}. Using fallback seed.")
-        seed = random.choice(pillar.get("seed_concepts", ["রাতে হঠাৎ ঘুম ভেঙে গেলে নবীজির বিশেষ দোয়া"]))
+        logger.warning(f"Using filtered seed fallback for {pillar['label']}...")
+        seeds = pillar.get("seed_concepts", ["রাতে হঠাৎ ঘুম ভেঙে গেলে নবীজির বিশেষ দোয়া"])
+        valid_seed = None
+        for s in seeds:
+            st = s.split("[")[0].strip()
+            if not is_topic_duplicate_global(st):
+                valid_seed = s
+                break
+        if not valid_seed:
+            valid_seed = random.choice(seeds)
+            
         topic_data = {
-            "title": seed.split("[")[0].strip(),
-            "core_concept": seed,
+            "title": valid_seed.split("[")[0].strip(),
+            "core_concept": valid_seed,
             "category": pillar["category"],
             "hook_category": "relatable_moment",
             "reference": "সহীহ বুখারী",
