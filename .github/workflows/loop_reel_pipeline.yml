@@ -1,17 +1,16 @@
-name: 2-Slot Daily Prime Loop Reel Pipeline
+name: Morning Quran Loop Reel Pipeline (Bangla)
 
 on:
   schedule:
-    # 2 Daily Prime Release Windows (Always starting 30 min early, UTC+6 / BST):
-    # 1. Slot 1 (Morning & Day Prime): 06:00 AM BST (00:00 UTC) -> for 06:30 AM window
-    # 2. Slot 2 (Prime Evening & Night): 08:00 PM BST (14:00 UTC) -> for 08:30 PM window
-    - cron: '0 0,14 * * *'
+    # 1 Daily Morning Quran Aesthetic Loop Reel (30 min early for 6:30 AM Peak, UTC+6 / BST):
+    # 06:00 AM BST (00:00 UTC)
+    - cron: '0 0 * * *'
   workflow_dispatch:
     inputs:
       slot:
         description: 'Specific Slot to Run (slot_1_morning, slot_2_evening, or auto)'
         required: false
-        default: 'auto'
+        default: 'slot_1_morning'
 
 jobs:
   render-and-publish:
