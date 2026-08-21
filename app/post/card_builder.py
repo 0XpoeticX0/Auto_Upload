@@ -248,7 +248,7 @@ def create_english_post_card(post_data: dict, output_path: str) -> str:
         bbox_ref = font_ref.getbbox(ref_text)
         draw.text(((CARD_WIDTH - (bbox_ref[2] - bbox_ref[0])) // 2, CARD_HEIGHT - 120), ref_text, font=font_ref, fill=COLOR_WHITE)
         
-    watermark = "@DailyDosOfIslam"
+    watermark = "@dailydos_islam"
     bbox_wm = font_watermark.getbbox(watermark)
     draw.text(((CARD_WIDTH - (bbox_wm[2] - bbox_wm[0])) // 2, CARD_HEIGHT - 65), watermark, font=font_watermark, fill=COLOR_DIM)
     
@@ -476,7 +476,7 @@ def create_bengali_post_card(post_data: dict, output_path: str) -> str:
     ref_y = min(1205, box_start_y + box_h + 35) if box_h > 0 else 1180
     if reference:
         dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Reference,,0,0,0,,{{\\pos(540,{ref_y})}}{clean_text_ass(reference)}")
-    dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Watermark,,0,0,0,,{{\\pos(540,1275)}}@DailyDosOfIslam")
+    dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:05.00,Watermark,,0,0,0,,{{\\pos(540,1275)}}@dailydos_islam")
     
     ass_content = f"""[Script Info]
 ScriptType: v4.00+

@@ -1,11 +1,7 @@
 name: Auto Upload Bengali Video Pipeline
 
+# Scheduled runs migrated to separate 4-slot workflow (.github/workflows/loop_reel_pipeline.yml)
 on:
-  schedule:
-    # 2 Daily Video Runs (15 min early, UTC+6):
-    # 1. 6:45 AM Local (00:45 UTC) - Morning Short (for 7:00 AM)
-    # 2. 7:45 PM Local (13:45 UTC) - Evening Short (for 8:00 PM)
-    - cron: '45 0,13 * * *'
   workflow_dispatch: # Allows manual trigger from the Actions tab
 
 jobs:

@@ -280,7 +280,7 @@ CRITICAL RULES (100% STRICT):
 
    ━━━━━━━━━━━━━━━━━━━━
    📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:
-   👉 @DailyDosOfIslam
+   👉 @dailydos_islam
 
    #BanglaHadith #IslamicQuotes #DailyReminder #সহীহ_হাদিস #দ্বীন_ইসলাম #DailyDos #Sunnah #[TopicTag]
 

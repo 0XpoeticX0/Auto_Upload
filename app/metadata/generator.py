@@ -118,7 +118,7 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
     footer = (
         f"\n\n━━━━━━━━━━━━━━━━━━━━"
         f"\n📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:"
-        f"\n👉 @DailyDosOfIslam"
+        f"\n👉 @dailydos_islam"
         f"\n\n#BanglaHadith #IslamicQuotes #DailyReminder #সহীহ_হাদিস #দ্বীন_ইসলাম #DailyDos #Sunnah {topic_tag}"
     )
 
