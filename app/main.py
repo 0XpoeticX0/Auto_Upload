@@ -120,6 +120,11 @@ def main(no_upload: bool = False):
                 vtt_path = scenes[0].get("vtt_path")
                 upload_to_youtube(final_video_path, metadata, thumbnail_path, vtt_path)
                 upload_to_facebook(final_video_path, metadata)
+                try:
+                    from app.upload.tiktok import upload_to_tiktok
+                    upload_to_tiktok(final_video_path, metadata.get("youtube_title", topic_title), metadata.get("tags", []))
+                except Exception as e:
+                    logger.warning(f"TikTok upload notice: {e}")
 
     logger.info("Islamic Shorts Pipeline finished.")
     

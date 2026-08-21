@@ -343,7 +343,12 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
     fb_ok = upload_to_facebook(video_path, metadata, video_type="reel")
     logger.info(f"Facebook / Instagram Upload: {fb_ok}")
 
-    # 6. Save to Supabase for zero-topic repetition
+    # 6. Upload to TikTok
+    from app.upload.tiktok import upload_to_tiktok
+    tiktok_res = upload_to_tiktok(video_path, caption=yt_title, tags=content.get("tags", []))
+    logger.info(f"TikTok Upload: {tiktok_res.get('status')}")
+
+    # 7. Save to Supabase for zero-topic repetition
     record_payload = {
         "id": f"loop_{content.get('slot_key', 'slot')}_{int(time.time())}",
         "title": content.get("title_bn", ""),
