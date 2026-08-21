@@ -58,7 +58,8 @@ OUTPUT FORMAT — Respond with ONLY valid JSON (no markdown fences), 100% BANGLA
     "scenes": [
         {
             "scene_number": 1,
-            "narration": "হঠাৎ করে অকারণে সংসারে অশান্তি, প্রিয়জনের ওপর কথায় কথায় রাগ আর কাজে মন না বসা — এটি অনেক সময় বদনজরের মারাত্মক লক্ষণ হতে পারে!...",
+            "narration": "সারাদিনের ক্লান্তির পর ঘরে ফিরে স্ত্রীর মুখে এক লোকমা খাবার তুলে দেওয়া কিংবা হাসিমুখে কথা বলাও যে সদকা — আমরা অনেকেই এই সুন্নাহটি ভুলে যাই!...",
+            "highlight_phrase": "স্ত্রীর মুখে এক লোকমা খাবার",
             "visuals": "serene atmospheric traditional home window under warm evening twilight, photorealistic 8k, vertical 9:16, no humans"
         },
         {
@@ -68,7 +69,8 @@ OUTPUT FORMAT — Respond with ONLY valid JSON (no markdown fences), 100% BANGLA
         },
         {
             "scene_number": 3,
-            "narration": "তাই প্রতিদিন সকাল-সন্ধ্যায় এই পবিত্র দোয়াটি পাঠ করুন এবং ঘরের ভেতরে বরকত ফিরিয়ে আনুন।",
+            "narration": "তাই সংসারে বরকত ও ভালোবাসা বাড়াতে ভিত্তিহীন কুসংস্কারে কান না দিয়ে আজ থেকেই সহীহ সুন্নাহ চর্চা করুন।",
+            "highlight_phrase": "বরকত ও ভালোবাসা",
             "visuals": "majestic ancient library with antique leather manuscripts and glowing warm lantern, photorealistic 8k, vertical 9:16, no humans"
         },
         {
@@ -80,7 +82,7 @@ OUTPUT FORMAT — Respond with ONLY valid JSON (no markdown fences), 100% BANGLA
 }
 """
 
-    user_prompt = f"Generate a highly engaging, viral 30-second Islamic video script in 100% Bangla with authentic Arabic in <ARABIC> tags. Scene 1 MUST start with a gripping real-life situation/example, and Scene 3 MUST give a practical solution. Topic: {topic_title or 'Islamic Reminders'}. Category: {category}. NO ENGLISH WORDS."
+    user_prompt = f"Generate a highly engaging, viral 30-second Islamic video script in 100% Bangla with authentic Arabic in <ARABIC> tags. In Scene 1 and Scene 3, include 'highlight_phrase' with the exact 2-4 punchy real-life words (like 'স্ত্রীর মুখে এক লোকমা খাবার', 'মাসের শেষে টানাটানি', 'অকারণে সংসারে অশান্তি'). Topic: {topic_title or 'Islamic Reminders'}. Category: {category}. NO ENGLISH WORDS."
     
     script_data = extract_json(system_prompt, user_prompt, max_tokens=2500)
     if not script_data or "scenes" not in script_data:

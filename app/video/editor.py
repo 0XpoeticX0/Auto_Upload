@@ -24,13 +24,27 @@ HIGHLIGHT_KEYWORDS_CYAN = [
     "সুন্নাহটি", "সুন্নাহ", "আমলটি", "আমলগুলো", "আমল", "দোয়াটি", "দোয়াটি", "দোয়া", "দোয়া", "হেফাজত"
 ]
 
-def apply_selective_narration_highlight(text: str) -> str:
-    """Highlights max 1 punchy keyword (1-2 words) per line in Gold or Cyan, keeping base text crisp white."""
+def apply_selective_narration_highlight(text: str, custom_phrases: list = None) -> str:
+    """Highlights dynamic trigger phrase (if present) or max 1 punchy keyword in Gold or Cyan, keeping base text crisp white."""
+    # 1. Check custom trigger phrases from scenes first (e.g. 'স্ত্রীর মুখে এক লোকমা খাবার', 'মাসের শেষে টানাটানি')
+    if custom_phrases:
+        for cp in custom_phrases:
+            if not cp or not cp.strip():
+                continue
+            clean_cp = cp.strip()
+            pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(clean_cp) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
+            if re.search(pattern, text):
+                return re.sub(pattern, f"{COLOR_GOLD_ASS}\\1{COLOR_RESET_ASS}", text, count=1)
+            elif clean_cp in text:
+                return text.replace(clean_cp, f"{COLOR_GOLD_ASS}{clean_cp}{COLOR_RESET_ASS}", 1)
+
+    # 2. Try Gold keywords
     for kw in HIGHLIGHT_KEYWORDS_GOLD:
         pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(kw) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
         if re.search(pattern, text):
             return re.sub(pattern, f"{COLOR_GOLD_ASS}\\1{COLOR_RESET_ASS}", text, count=1)
             
+    # 3. Try Cyan keywords
     for kw in HIGHLIGHT_KEYWORDS_CYAN:
         pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(kw) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
         if re.search(pattern, text):
@@ -69,6 +83,9 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
         probe = ffmpeg.probe(master_audio_path)
         duration = float(probe['format']['duration'])
         logger.info(f"Audio duration: {duration:.2f}s")
+        
+        # Collect any custom highlight phrases from scenes
+        custom_phrases = [sc.get("highlight_phrase") for sc in scenes if sc.get("highlight_phrase")]
         
         # 1. Convert VTT to ASS
         ass_path = os.path.join(temp_dir, "bengali_subtitles.ass")
@@ -153,8 +170,8 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                         formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs70\\b1\\c&H3DBFF2&}}{sl}")
                         bangla_idx += 1
                 else:
-                    # Standard narration Bangla line: crisp white with selective 1-2 word highlight
-                    highlighted_sl = apply_selective_narration_highlight(sl)
+                    # Standard narration Bangla line: crisp white with dynamic trigger phrase highlight
+                    highlighted_sl = apply_selective_narration_highlight(sl, custom_phrases)
                     formatted_sub_lines.append(f"{{\\fnNoto Sans Bengali\\fs74\\b1\\c&HFFFFFF&}}{highlighted_sl}")
                     
             final_dialogue_text = "\\N".join(formatted_sub_lines) if formatted_sub_lines else f"{{\\fnNoto Sans Bengali\\fs74\\b1}}{clean_text}"
