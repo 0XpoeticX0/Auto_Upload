@@ -1,33 +1,81 @@
 import json
+import re
 from app.llm.provider import extract_json
 from app.logger import logger
-from app.database import get_connection
+
+def format_video_description(metadata_desc: str, script_data: dict) -> str:
+    """
+    Builds a professional, aesthetic, and algorithm-friendly description adhering to the new standard.
+    """
+    # 1. Main hook / summary
+    main_summary = metadata_desc.strip()
+    # Remove old hashtag sections if present
+    if "#" in main_summary:
+        main_summary = main_summary.split("#")[0].strip()
+        
+    # 2. Extract Arabic, Pronunciation, Meaning
+    arabic_text = script_data.get("arabic_text", "")
+    pronunciation = script_data.get("pronunciation", "")
+    translation = script_data.get("translation", "")
+    
+    # If not in top-level script_data, look inside scenes
+    if not arabic_text:
+        for sc in script_data.get("scenes", []):
+            if sc.get("arabic_text"):
+                arabic_text = sc.get("arabic_text")
+                pronunciation = sc.get("pronunciation", pronunciation)
+                translation = sc.get("translation", translation)
+                break
+                
+    ayah_hadith_block = ""
+    if arabic_text:
+        ayah_hadith_block = f"\n\n🌿 মূল বাক্য / আয়াত ও হাদিস:\n{arabic_text}"
+        if pronunciation:
+            ayah_hadith_block += f'\nউচ্চারণ: "{pronunciation}"'
+        if translation:
+            ayah_hadith_block += f'\nঅর্থ: "{translation}"'
+            
+    # 3. Sahih References
+    raw_refs = script_data.get("references", [script_data.get("reference", "")])
+    if isinstance(raw_refs, str):
+        raw_refs = [raw_refs]
+    valid_refs = [r.strip() for r in raw_refs if r and str(r).strip()]
+    
+    ref_block = "\n\n📖 সহীহ রেফারেন্স:\n"
+    if valid_refs:
+        ref_block += "\n".join([f"• {r}" for r in valid_refs])
+    else:
+        ref_block += "• কুরআনুল কারীম ও সহীহ হাদিস"
+        
+    # 4. Engagement CTA
+    dhikr_action = script_data.get("dhikr_action", "কমেন্টে একবার 'আলহামদুলিল্লাহ' / 'সুবহানাল্লাহ' লিখে আপনার নেকির পাল্লা ভারী করুন!")
+    cta_block = f"\n\n💬 আজকের আমল ও জিকির:\n{dhikr_action}"
+    
+    # 5. Social Links & Hashtags
+    social_block = """\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n#Shorts #IslamicReminders #Zikr #Dua #Hadith #BanglaIslamic #SahihHadith #DailyDos"""
+
+    return f"{main_summary}{ayah_hadith_block}{ref_block}{cta_block}{social_block}".strip()
 
 def generate_viral_metadata(topic_id: int, script_data: dict):
     logger.info("Generating viral metadata in Bangla for YouTube and Facebook...")
     
     system_prompt = """You are an expert viral Social Media Manager for Bengali Islamic content on YouTube Shorts and Facebook Reels.
-Generate a highly clickable, emotionally charged title, description, thumbnail hook, and tags STRICTLY in Bengali (বাংলা).
+Generate a highly clickable, emotionally charged title, description hook, thumbnail hook, and tags STRICTLY in Bengali (বাংলা).
 
 CRITICAL RULES:
-- ALL titles, descriptions, and thumbnail hooks MUST be 100% in BANGLA (বাংলা). NO ENGLISH words in titles or descriptions.
+- ALL titles and thumbnail hooks MUST be 100% in BANGLA (বাংলা).
 - Make the title short, curiosity-inducing, and deeply engaging (4 to 8 Bangla words).
-- Examples of good Bangla titles:
-  * "কিয়ামতের ভয়ংকর নিদর্শন: তওবার দরজা কখন বন্ধ হবে?"
-  * "আল্লাহর সবচেয়ে প্রিয় দুটি সহজ বাক্য যা সবার জানা উচিত"
-  * "মন খারাপ ও দুশ্চিন্তা দূর করার কার্যকরী নববী আমল"
-- Description: Write 2-3 engaging Bangla sentences summarizing the video's message, followed by an inspiring Islamic reminder in Bangla, then relevant hashtags.
-- Thumbnail Hook: 2-3 evocative Bangla words for the thumbnail (e.g. "তওবার শেষ সময়?", "দুশ্চিন্তা মুক্তি").
+- Description hook: 2-3 engaging Bangla sentences summarizing the video's message and core spiritual reflection.
+- Thumbnail Hook: 2-3 evocative Bangla words for the thumbnail (e.g. "তওবার শেষ সময়?", "পাল্লা ভারী আমল").
 
 Output JSON format (ONLY valid JSON):
 {
     "youtube_title": "ক্লিক করার মতো আকর্ষণীয় বাংলা শিরোনাম (সর্বোচ্চ ৬০ অক্ষর)",
     "facebook_title": "ফেসবুক রিলসের জন্য মন ছুঁয়ে যাওয়া বাংলা শিরোনাম",
-    "description": "ভিডিওর মূল বার্তা নিয়ে সংক্ষিপ্ত ও অনুপ্রেরণাদায়ী বাংলা বিবরণী... প্রতিদিনের সুন্দর ইসলামিক রিমাইন্ডারের জন্য পেজটি ফলো করুন। #Shorts #Islam #IslamicReminders #বাংলা",
+    "description": "কিয়ামতের দিন মিজানের পাল্লায় ভারী হওয়ার মতো সহজ ও বরকতময় আমল শিখিয়েছেন প্রিয় নবীজি...",
     "thumbnail_hook": "২-৩ শব্দের বাংলা হুক",
-    "tags": ["ইসলামিক", "কুরআন", "হাদিস", "দোয়া", "Shorts", "Islamic"]
-}
-"""
+    "tags": ["ইসলামিক", "কুরআন", "হাদিস", "দোয়া", "Shorts", "Islamic", "SahihHadith"]
+}"""
     
     narrations = " ".join([scene.get("narration", scene.get("narration_bn", "")) for scene in script_data.get("scenes", [])])
     title = script_data.get('title', script_data.get('title_bn', ''))
@@ -38,25 +86,9 @@ Output JSON format (ONLY valid JSON):
         logger.error("Failed to generate metadata.")
         return None
         
-    references = script_data.get("references", [script_data.get("reference", "")])
-    references = [r for r in references if r]
+    raw_desc = metadata.get("description", "")
+    metadata["description"] = format_video_description(raw_desc, script_data)
     
-    ref_text = "\n\n📚 সহীহ তথ্যসূত্র:\n"
-    if references:
-        ref_text += "\n".join([f"- {r}" for r in references]) + "\n\n"
-    else:
-        ref_text += "- কুরআন ও সহীহ হাদিস\n\n"
-        
-    social_links = "🔔 ইউটিউবে সাবস্ক্রাইব করুন: https://www.youtube.com/@dailydos-no1\n👍 ফেসবুকে ফলো করুন: https://www.facebook.com/DailyDosNo1\n\n"
-    
-    injection_text = ref_text + social_links
-    
-    if "description" in metadata:
-        parts = metadata["description"].split("#")
-        main_desc = parts[0].strip()
-        hashtags = " #" + " #".join([p.strip() for p in parts[1:]]) if len(parts) > 1 else "\n#Shorts #Islamic #Bangla #Quran #Hadith"
-        metadata["description"] = f"{main_desc}\n{injection_text}{hashtags}".strip()
-        
     if "youtube_title" in metadata:
         yt_t = metadata["youtube_title"].strip()
         if "#Shorts" not in yt_t and "#shorts" not in yt_t:

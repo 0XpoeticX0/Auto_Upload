@@ -1,0 +1,77 @@
+name: Islamic Quiz Reel Pipeline (2x Weekly)
+
+on:
+  schedule:
+    # 2 Weekly Runs (30 min early for 9:00 AM BST / UTC+6):
+    # 1. Monday at 8:30 AM BST (02:30 UTC) - For 9:00 AM upload
+    # 2. Friday at 8:30 AM BST (02:30 UTC) - For 9:00 AM upload
+    - cron: '30 2 * * 1,5'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  generate-and-upload-quiz:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Full Static FFmpeg (BtbN with HarfBuzz & FriBidi)
+      run: |
+        wget -qO ffmpeg.tar.xz https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz
+        tar -xf ffmpeg.tar.xz
+        sudo cp ffmpeg-master-latest-linux64-gpl/bin/ffmpeg /usr/local/bin/
+        sudo cp ffmpeg-master-latest-linux64-gpl/bin/ffprobe /usr/local/bin/
+        sudo chmod +x /usr/local/bin/ffmpeg /usr/local/bin/ffprobe
+        rm -rf ffmpeg.tar.xz ffmpeg-master-latest-linux64-gpl
+
+    - name: Install System Bengali Fonts & Register Fontconfig
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y fontconfig fonts-beng fonts-noto-core fonts-noto-extra || true
+        sudo mkdir -p /usr/local/share/fonts/bengali
+        sudo cp app/assets/fonts/*.ttf /usr/local/share/fonts/bengali/
+        sudo cp app/assets/fonts/fonts.conf /etc/fonts/local.conf
+        sudo fc-cache -f -v
+        echo "=== Verifying FFmpeg & FFprobe ==="
+        ffmpeg -version | head -n 2
+        ffprobe -version | head -n 1
+        echo "=== Verifying Fonts Registered ==="
+        fc-list : family | grep -iE 'noto|hind|amiri' || echo "WARNING: fonts not found!"
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip uninstall -y google-generativeai 2>/dev/null || true
+        pip install -r requirements.txt
+        pip install --force-reinstall google-genai
+        pip install --force-reinstall Pillow
+
+    - name: Inject YouTube Tokens
+      run: |
+        echo '${{ secrets.YOUTUBE_TOKEN_JSON }}' > token.json
+        echo '${{ secrets.YOUTUBE_CLIENT_SECRETS_JSON }}' > client_secrets.json
+
+    - name: Run Bengali Islamic Quiz Pipeline (Generate & Upload)
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GEMINI_POST_API_KEY: ${{ secrets.GEMINI_POST_API_KEY || secrets.GEMINI_API_KEY }}
+        GEMINI_BACKUP_API_KEY: ${{ secrets.GEMINI_BACKUP_API_KEY || 'AQ.Ab8RN6LXG-lJXSn7eLyJ80hTHHSaHlvS27etoOpw9xIJnRwnyg' }}
+        GEMINI_KEY_3: ${{ secrets.GEMINI_KEY_3 || 'AQ.Ab8RN6K4etu26VDAdgGRxFJYOOHWUaG_KNF8-8608wxh608pCA' }}
+        GEMINI_KEY_4: ${{ secrets.GEMINI_KEY_4 || 'AQ.Ab8RN6IqbrtQWlwYwelnZlhfyaYeSksaf_PXSnhRTok40Mfbaw' }}
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://tvezntceubxaqvcicyyc.supabase.co' }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2ZXpudGNldWJ4YXF2Y2ljeXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NTg0NjgsImV4cCI6MjA5OTMzNDQ2OH0.sx5A6WT54mQUqqMDvrDZqo-mCURidOpVri-j7JFekq0' }}
+        FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+        FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        IG_USER_ID: ${{ secrets.IG_USER_ID || '17841436824022360' }}
+      run: |
+        python -m app.quiz.main --lang bn --upload
