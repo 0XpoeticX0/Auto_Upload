@@ -32,23 +32,18 @@ def apply_selective_narration_highlight(text: str, custom_phrases: list = None) 
             if not cp or not cp.strip():
                 continue
             clean_cp = cp.strip()
-            pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(clean_cp) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
-            if re.search(pattern, text):
-                return re.sub(pattern, f"{COLOR_GOLD_ASS}\\1{COLOR_RESET_ASS}", text, count=1)
-            elif clean_cp in text:
+            if clean_cp in text:
                 return text.replace(clean_cp, f"{COLOR_GOLD_ASS}{clean_cp}{COLOR_RESET_ASS}", 1)
 
     # 2. Try Gold keywords
     for kw in HIGHLIGHT_KEYWORDS_GOLD:
-        pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(kw) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
-        if re.search(pattern, text):
-            return re.sub(pattern, f"{COLOR_GOLD_ASS}\\1{COLOR_RESET_ASS}", text, count=1)
+        if kw in text:
+            return text.replace(kw, f"{COLOR_GOLD_ASS}{kw}{COLOR_RESET_ASS}", 1)
             
     # 3. Try Cyan keywords
     for kw in HIGHLIGHT_KEYWORDS_CYAN:
-        pattern = r'(?<![a-zA-Z0-9\u0980-\u09FF])(' + re.escape(kw) + r')(?![a-zA-Z0-9\u0980-\u09FF])'
-        if re.search(pattern, text):
-            return re.sub(pattern, f"{COLOR_CYAN_ASS}\\1{COLOR_RESET_ASS}", text, count=1)
+        if kw in text:
+            return text.replace(kw, f"{COLOR_CYAN_ASS}{kw}{COLOR_RESET_ASS}", 1)
             
     return text
 
