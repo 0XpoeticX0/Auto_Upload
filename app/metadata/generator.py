@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 import re
 from app.llm.provider import extract_json
@@ -5,60 +6,119 @@ from app.logger import logger
 
 def format_video_description(metadata_desc: str, script_data: dict, english_summary: str = "") -> str:
     """
-    Builds a professional, aesthetic, and algorithm-friendly description adhering to the new standard.
+    Builds the exact same viral caption format used for photo posts.
+    Format: Hook 🌿 → Narrator + Quote → ✨ Arabic/Dua → 📖 Sources → 💡 শিক্ষা → 💬 CTA → ━━━━━━━━━━━━━━━━━━━━ → @DailyDosOfIslam → Hashtags
     """
-    # 1. Main hook / summary
-    main_summary = metadata_desc.strip()
-    # Remove old hashtag sections if present
-    if "#" in main_summary:
-        main_summary = main_summary.split("#")[0].strip()
-        
-    # 2. Extract Arabic, Pronunciation, Meaning
+    # 1. Hook title line
+    title = script_data.get("title", script_data.get("title_bn", "")).strip()
+    hook_line = metadata_desc.strip().split("\n")[0].strip() if metadata_desc else title
+    if "#" in hook_line:
+        hook_line = hook_line.split("#")[0].strip()
+    if not (hook_line.endswith("🌿") or hook_line.endswith("✨") or hook_line.endswith("🌙")):
+        hook_line = f"{hook_line} 🌿"
+
+    # 2. Narrator + Hadith Quote
+    narrator = script_data.get("header", script_data.get("narrator", "")).strip()
+    if not narrator:
+        for sc in script_data.get("scenes", []):
+            if sc.get("narrator") or sc.get("header"):
+                narrator = sc.get("narrator", sc.get("header", "")).strip()
+                break
+
+    quote = script_data.get("quote", script_data.get("hadith_text", "")).strip()
+    if not quote:
+        for sc in script_data.get("scenes", []):
+            if sc.get("quote") or sc.get("hadith_text"):
+                quote = sc.get("quote", sc.get("hadith_text", "")).strip()
+                break
+
+    narrator_block = ""
+    if narrator and quote:
+        narrator_block = f"\n\n{narrator}\n\"{quote}\""
+    elif narrator:
+        narrator_block = f"\n\n{narrator}"
+    elif quote:
+        narrator_block = f"\n\n\"{quote}\""
+
+    # 3. Arabic / Dua / Pronunciation / Meaning
     arabic_text = script_data.get("arabic_text", "")
     pronunciation = script_data.get("pronunciation", "")
-    translation = script_data.get("translation", "")
-    
-    # If not in top-level script_data, look inside scenes
+    translation = script_data.get("translation", script_data.get("meaning", ""))
+
     if not arabic_text:
         for sc in script_data.get("scenes", []):
             if sc.get("arabic_text"):
-                arabic_text = sc.get("arabic_text")
+                arabic_text = sc.get("arabic_text", "")
                 pronunciation = sc.get("pronunciation", pronunciation)
-                translation = sc.get("translation", translation)
+                translation = sc.get("translation", sc.get("meaning", translation))
                 break
-                
-    ayah_hadith_block = ""
+
+    arabic_block = ""
     if arabic_text:
-        ayah_hadith_block = f"\n\n🌿 মূল বাক্য / আয়াত ও হাদিস:\n{arabic_text}"
+        arabic_block = f"\n\n✨ সেই বরকতময় বাক্য / দোয়াটি:\n{arabic_text}"
         if pronunciation:
-            ayah_hadith_block += f'\nউচ্চারণ: "{pronunciation}"'
+            arabic_block += f'\nউচ্চারণ: "{pronunciation}"'
         if translation:
-            ayah_hadith_block += f'\nঅর্থ: "{translation}"'
-            
-    # 3. Sahih References
+            arabic_block += f'\nঅর্থ: "{translation}"'
+
+    # 4. Sahih References
     raw_refs = script_data.get("references", [script_data.get("reference", "")])
     if isinstance(raw_refs, str):
         raw_refs = [raw_refs]
     valid_refs = [r.strip() for r in raw_refs if r and str(r).strip()]
-    
-    ref_block = "\n\n📖 সহীহ রেফারেন্স:\n"
+
+    ref_block = "\n\n📖 সহীহ তথ্যসূত্র:"
     if valid_refs:
-        ref_block += "\n".join([f"• {r}" for r in valid_refs])
+        ref_block += "\n" + "\n".join([f"• {r}" for r in valid_refs])
     else:
-        ref_block += "• কুরআনুল কারীম ও সহীহ হাদিস"
-        
-    # 4. CTA Block
-    cta_block = "\n\n💬 আজকের আমল:\nকমেন্টে একবার 'সুবহানাল্লাহ' লিখে আপনার বন্ধুদের সাথে শেয়ার করুন এবং নেকির অংশীদার হোন 🤍"
+        ref_block += "\n• কুরআনুল কারীম ও সহীহ হাদিস"
 
-    # 5. English Translation Summary (For Global Search Discovery)
-    en_block = ""
-    if english_summary:
-        en_block = f"\n\n✨ In English:\n{english_summary.strip()}"
+    # 5. শিক্ষা ও আমল (explanation / takeaway)
+    explanation = script_data.get("explanation", script_data.get("lesson", "")).strip()
+    if not explanation:
+        lines = [l.strip() for l in metadata_desc.strip().split("\n") if l.strip() and "#" not in l]
+        explanation = " ".join(lines[1:3]) if len(lines) > 1 else ""
 
-    # 6. Social Links & High-Traffic Niche + Bengali Hashtags
-    social_block = f"{en_block}\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@DailyDosOfIslam\n🔹 Facebook: https://www.facebook.com/DailyDosOfIslam\n\n#Shorts #IslamicReminders #SahihHadith #BanglaIslamic #সহীহ_হাদিস #দোয়া #DailyDos #DeenOverDunya #ShortsFeed #ExplorePage"
+    lesson_block = ""
+    if explanation:
+        lesson_block = f"\n\n💡 শিক্ষা ও আমল:\n{explanation}"
 
-    return f"{main_summary}{ayah_hadith_block}{ref_block}{cta_block}\n\n{social_block}".strip()
+    # 6. CTA comment prompt
+    dhikr = "সুবহানাল্লাহ"
+    combined_text = f"{quote} {explanation} {title}"
+    if "আলহামদুলিল্লাহ" in combined_text:
+        dhikr = "আলহামদুলিল্লাহ"
+    elif "আমিন" in combined_text:
+        dhikr = "আমিন"
+    elif "ইস্তিগফার" in combined_text or "ক্ষমা" in combined_text:
+        dhikr = "আস্তাগফিরুল্লাহ"
+    cta_block = f'\n\n💬 আজকের জিকির:\nকমেন্টে একবার "{dhikr}" লিখে আপনার উপস্থিতি জানান এবং নেকির অংশীদার হোন! 🤍'
+
+    # 7. Topic-specific hashtag
+    category = str(script_data.get("category", "")).lower()
+    topic_tag_map = {
+        "dreams_and_sleep": "#ঘুমেরসুন্নাহ",
+        "dua_cures": "#দোয়া",
+        "heart_softeners": "#তাওবা",
+        "islamic_knowledge": "#ইসলামিকজ্ঞান",
+        "protection_ruqyah": "#রুকইয়াহ",
+        "rizq_barakah": "#রিজিক",
+        "husband_wife_family": "#পরিবার",
+        "halal_haram_daily": "#হালালহারাম",
+        "seerah": "#সীরাহ",
+        "islamic_stories": "#ইসলামিককাহিনী",
+    }
+    topic_tag = topic_tag_map.get(category, "#ইসলামিক")
+
+    # 8. Footer divider, Follow CTA and Curated Hashtags
+    footer = (
+        f"\n\n━━━━━━━━━━━━━━━━━━━━"
+        f"\n📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:"
+        f"\n👉 @DailyDosOfIslam"
+        f"\n\n#BanglaHadith #IslamicQuotes #DailyReminder #সহীহ_হাদিস #দ্বীন_ইসলাম #DailyDos #Sunnah {topic_tag}"
+    )
+
+    return f"{hook_line}{narrator_block}{arabic_block}{ref_block}{lesson_block}{cta_block}{footer}".strip()
 
 def generate_viral_metadata(topic_id: int, script_data: dict):
     logger.info("Generating viral metadata in Bangla & English localizations for YouTube and Facebook...")
