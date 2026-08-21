@@ -140,6 +140,7 @@ def format_quiz_metadata(quiz_script: dict) -> dict:
         desc += f"{q_n}. {q_txt}\n   👉 সঠিক উত্তর: {c_opt}\n   📖 তথ্যসূত্র: {expl}\n\n"
         
     desc += "💬 আজকের স্কোর:\nআপনার স্কোর ৫-এ কত হলো? কমেন্টে অবশ্যই জানান!\n\n"
+    desc += "✨ In English:\nInteractive 5-Question Islamic Quiz on core pillars, worship, prophets, Quran, and Sahih Hadith. Test your knowledge and comment your score!\n\n"
     desc += "━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n"
     desc += "#Shorts #IslamicQuiz #MuslimQuiz #TestYourKnowledge #BanglaIslamic #ইসলামিকপোস্ট #DailyDos #ReelsViral #ShortsFeed #সহীহ_হাদিস #LearnIslam"
     

@@ -47,12 +47,13 @@ def format_video_description(metadata_desc: str, script_data: dict) -> str:
     else:
         ref_block += "• কুরআনুল কারীম ও সহীহ হাদিস"
         
-    # 4. Engagement CTA
-    dhikr_action = script_data.get("dhikr_action", "কমেন্টে একবার 'আলহামদুলিল্লাহ' / 'সুবহানাল্লাহ' লিখে আপনার নেকির পাল্লা ভারী করুন!")
-    cta_block = f"\n\n💬 আজকের আমল ও জিকির:\n{dhikr_action}"
-    
-    # 5. Social Links & High-Traffic Niche + Bengali Hashtags
-    social_block = """\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n#Shorts #IslamicReminders #SahihHadith #BanglaIslamic #সহীহ_হাদিস #দোয়া #DailyDos #DeenOverDunya #ShortsFeed #ExplorePage"""
+    # 5. English Translation Summary (For Global Facebook & Instagram Search Discovery)
+    en_block = ""
+    if english_summary:
+        en_block = f"\n\n✨ In English:\n{english_summary.strip()}"
+
+    # 6. Social Links & High-Traffic Niche + Bengali Hashtags
+    social_block = f"""{en_block}\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n#Shorts #IslamicReminders #SahihHadith #BanglaIslamic #সহীহ_হাদিস #দোয়া #DailyDos #DeenOverDunya #ShortsFeed #ExplorePage"""
 
     return f"{main_summary}{ayah_hadith_block}{ref_block}{cta_block}{social_block}".strip()
 
@@ -91,7 +92,7 @@ Output JSON format (ONLY valid JSON):
         return None
         
     raw_desc = metadata.get("description", "")
-    metadata["description"] = format_video_description(raw_desc, script_data)
+    metadata["description"] = format_video_description(raw_desc, script_data, english_summary=metadata.get("english_description", ""))
     
     if not metadata.get("pinned_comment"):
         metadata["pinned_comment"] = "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿"
