@@ -95,10 +95,12 @@ Every video MUST follow this exact 5-slot psychological progression to maximize 
   - Examples: First person to accept Islam (খাদিজা রা.), First female martyr in Islam (সুমাইয়্যাহ রা.), The daily Dhikr lightest on tongue but heaviest on the scale (সুবহানাল্লাহি ওয়া বিহামদিহী...).
 
 CRITICAL FORMATTING & PHRASING RULES:
-1. STRICT SINGLE-TERM OPTIONS:
-   - NEVER put bracketed synonyms or translations inside options (e.g. NEVER write "ক) সালাত (নামাজ)", "খ) শাহাদাহ্ (ঈমান)", "গ) সাওম (রোজা)").
-   - Write ONLY clean, single concise terms: "ক) সালাত", "খ) শাহাদাহ্", "গ) সাওম" (or "ক) নামাজ", "খ) ঈমান", "গ) রোজা").
-   - Absolutely NO parentheses/brackets in options so text-to-speech speaks cleanly.
+1. RESPECTFUL ISLAMIC HONORIFICS (MANDATORY IN WRITING):
+   - ALWAYS write proper respectful honorifics when naming Prophets, Sahaba, and Companions:
+     * For Prophets: "ক) হযরত ইব্রাহিম (আ.)", "খ) হযরত মুসা (আ.)", "গ) হযরত ঈসা (আ.)"
+     * For Sahaba & Martyrs: "ক) হযরত খাদিজা (রা.)", "খ) হযরত সুমাইয়্যাহ (রা.)", "গ) হযরত আবু বকর (রা.)"
+     * For Prophet Muhammad: "নবীজি (সা.)" or "মুহাম্মদ (সা.)"
+   - NEVER write duplicate synonyms in brackets (e.g. DO NOT write "সালাত (নামাজ)" or "সাওম (রোজা)"). Use only "ক) সালাত" or "ক) নামাজ".
 
 2. Exactly 3 clean options per question.
 3. Exactly ONE correct option matching one of the options verbatim.

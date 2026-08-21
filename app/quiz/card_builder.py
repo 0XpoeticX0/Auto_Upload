@@ -241,11 +241,18 @@ def render_question_card(
         
     # 3 Options
     opt_y_text = 765
+    honorifics = ["(সা.)", "(আ.)", "(রা.)", "(রহ.)", "(ﷺ)", "(সা)", "(আ)", "(রা)", "(রহ)"]
     for opt in options:
         opt_str = opt.strip()
-        # Clean parenthetical duplicate words: "(নামাজ)", "(রোজা)", "(ঈমান)" so card and voice only show/say single term
-        opt_str = re.sub(r'\s*[\(\[\{][^\)\]\}]*[\)\]\}]', '', opt_str).strip()
-        opt_str = re.sub(r'\s+', ' ', opt_str)
+        # Protect respectful Islamic honorifics while stripping duplicate synonyms like (নামাজ)
+        protected = opt_str
+        for idx, h in enumerate(honorifics):
+            protected = protected.replace(h, f"__HONORIFIC_{idx}__")
+        protected = re.sub(r'\s*[\(\[\{][^\)\]\}]*[\)\]\}]', '', protected)
+        for idx, h in enumerate(honorifics):
+            protected = protected.replace(f"__HONORIFIC_{idx}__", f" {h}")
+        opt_str = re.sub(r'\s+', ' ', protected).strip()
+        
         opt_letter = opt_str[0] if opt_str else "ক"
         is_this_correct = (opt_letter == correct_letter) or (correct_opt in opt_str)
         
