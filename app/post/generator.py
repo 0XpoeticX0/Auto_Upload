@@ -275,14 +275,14 @@ CRITICAL RULES (100% STRICT):
    💡 শিক্ষা ও আমল:
    [1-2 practical action sentences for daily life]
 
-   💬 আজকের আমল / জিকির:
-   কমেন্টে একবার "[সুবহানাল্লাহ / আলহামদুলিল্লাহ / আমিন / মাশাআল্লাহ]" লিখে আপনার উপস্থিতি জানান এবং নেকির অংশীদার হোন! 🤍
+   💬 আজকের জিকির ও আমল:
+   পরবর্তীতে আমল করার জন্য পোস্টটি Save করে রাখুন এবং কমেন্টে একবার "[সুবহানাল্লাহ / আলহামদুলিল্লাহ / আমিন / মাশাআল্লাহ]" লিখে বন্ধুদের সাথে শেয়ার করে সদকায়ে জারিয়ার অংশীদার হোন! 🤍
 
    ━━━━━━━━━━━━━━━━━━━━
    📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:
    👉 @dailydos_islam
 
-   #BanglaHadith #IslamicQuotes #DailyReminder #সহীহ_হাদিস #দ্বীন_ইসলাম #DailyDos #Sunnah #[TopicTag]
+   #DeenOverDunya #IslamicReminders #MuslimUmmah #Sunnah #সহীহ_হাদিস #দ্বীন_ইসলাম #কুরআনের_আলো #ইসলামিকপোস্ট #DailyDos #[TopicTag]
 
 {past_topics_text}
 

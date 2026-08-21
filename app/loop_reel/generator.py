@@ -175,14 +175,17 @@ def format_loop_caption(data: dict) -> str:
 
     dhikr = data.get("dhikr_word", "সুবহানাল্লাহ")
     cta_block = (
-        f"💬 আজকের জিকির:\n"
-        f"কমেন্টে একবার \"{dhikr}\" লিখুন এবং বন্ধুদের সাথে শেয়ার করে সদকায়ে জারিয়ার অংশীদার হোন! 🤍\n\n"
+        f"💬 আজকের জিকির ও আমল:\n"
+        f"পরবর্তীতে আমল করার জন্য পোস্টটি Save করে রাখুন এবং কমেন্টে একবার \"{dhikr}\" লিখে বন্ধুদের সাথে শেয়ার করে সদকায়ে জারিয়ার অংশীদার হোন! 🤍\n\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
         f"📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:\n"
         f"👉 @dailydos_islam\n\n"
     )
 
-    tags = " ".join([f"#{t.strip('#')}" for t in data.get("tags", ["Islam", "DailyReminder", "Sunnah", "সহীহ_হাদিস", "DailyDos"])])
+    core_tags = ["DeenOverDunya", "IslamicReminders", "MuslimUmmah", "Sunnah", "সহীহ_হাদিস", "দ্বীন_ইসলাম", "কুরআনের_আলো", "ইসলামিকপোস্ট", "DailyDos"]
+    slot_tags = [t.strip("#") for t in data.get("tags", []) if t.strip("#") not in core_tags]
+    all_tags = core_tags + slot_tags[:4]
+    tags = " ".join([f"#{t}" for t in all_tags])
     return f"{header}{points_text}{cta_block}{tags}".strip()
 
 def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> str:
@@ -330,7 +333,7 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
         yt_title = f"{yt_title} #Shorts"
         
     fb_title = content.get("title_bn", "ইসলামিক রিলস")
-    pinned_comment = f"কমেন্টে একবার '{content.get('dhikr_word', 'সুবহানাল্লাহ')}' লিখে সদকায়ে জারিয়ার অংশীদার হোন 🌿"
+    pinned_comment = f"পরবর্তীতে আমল করার জন্য রিলটি Save করে রাখুন এবং কমেন্টে একবার '{content.get('dhikr_word', 'সুবহানাল্লাহ')}' লিখে সদকায়ে জারিয়া হিসেবে শেয়ার করুন 🌿"
 
     # 4. Upload to YouTube Shorts
     metadata = {

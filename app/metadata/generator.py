@@ -95,7 +95,7 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
         dhikr = "আমিন"
     elif "ইস্তিগফার" in combined_text or "ক্ষমা" in combined_text:
         dhikr = "আস্তাগফিরুল্লাহ"
-    cta_block = f'\n\n💬 আজকের জিকির:\nকমেন্টে একবার "{dhikr}" লিখে আপনার উপস্থিতি জানান এবং নেকির অংশীদার হোন! 🤍'
+    cta_block = f'\n\n💬 আজকের জিকির ও আমল:\nপরবর্তীতে আমল করার জন্য পোস্টটি Save করে রাখুন এবং কমেন্টে একবার "{dhikr}" লিখে বন্ধুদের সাথে শেয়ার করে সদকায়ে জারিয়ার অংশীদার হোন! 🤍'
 
     # 7. Topic-specific hashtag
     category = str(script_data.get("category", "")).lower()
@@ -119,7 +119,7 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
         f"\n\n━━━━━━━━━━━━━━━━━━━━"
         f"\n📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:"
         f"\n👉 @dailydos_islam"
-        f"\n\n#BanglaHadith #IslamicQuotes #DailyReminder #সহীহ_হাদিস #দ্বীন_ইসলাম #DailyDos #Sunnah {topic_tag}"
+        f"\n\n#DeenOverDunya #IslamicReminders #MuslimUmmah #Sunnah #সহীহ_হাদিস #দ্বীন_ইসলাম #কুরআনের_আলো #ইসলামিকপোস্ট #DailyDos {topic_tag}"
     )
 
     return f"{hook_line}{narrator_block}{arabic_block}{ref_block}{lesson_block}{cta_block}{footer}".strip()
