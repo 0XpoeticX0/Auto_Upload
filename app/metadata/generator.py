@@ -7,7 +7,7 @@ from app.logger import logger
 def format_video_description(metadata_desc: str, script_data: dict, english_summary: str = "") -> str:
     """
     Builds the exact same viral caption format used for photo posts.
-    Format: Hook 🌿 → Narrator + Quote → ✨ Arabic/Dua → 📖 Sources → 💡 শিক্ষা → 💬 CTA → ━━━━━━━━━━━━━━━━━━━━ → @DailyDosOfIslam → Hashtags
+    Format: Hook 🌿 → Narrator + Quote → ✨ Arabic/Dua (উচ্চারণ + অর্থ) → 📖 Sources → 💡 শিক্ষা ও আমল → 💬 CTA → ━━━━━━━━━━━━━━━━━━━━ → @DailyDosOfIslam → Hashtags
     """
     # 1. Hook title line
     title = script_data.get("title", script_data.get("title_bn", "")).strip()
@@ -17,40 +17,28 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
     if not (hook_line.endswith("🌿") or hook_line.endswith("✨") or hook_line.endswith("🌙")):
         hook_line = f"{hook_line} 🌿"
 
-    # 2. Narrator + Hadith Quote
-    narrator = script_data.get("header", script_data.get("narrator", "")).strip()
-    if not narrator:
+    # 2. Extract Arabic, Pronunciation, Meaning (from direct keys or <ARABIC>...</ARABIC> tags inside scenes)
+    arabic_text = script_data.get("arabic_text", "").strip()
+    pronunciation = script_data.get("pronunciation", "").strip()
+    translation = script_data.get("translation", script_data.get("meaning", "")).strip()
+
+    # Search through scenes for <ARABIC> blocks (find the main one, not the closing dhikr)
+    if not arabic_text or not translation:
         for sc in script_data.get("scenes", []):
-            if sc.get("narrator") or sc.get("header"):
-                narrator = sc.get("narrator", sc.get("header", "")).strip()
-                break
-
-    quote = script_data.get("quote", script_data.get("hadith_text", "")).strip()
-    if not quote:
-        for sc in script_data.get("scenes", []):
-            if sc.get("quote") or sc.get("hadith_text"):
-                quote = sc.get("quote", sc.get("hadith_text", "")).strip()
-                break
-
-    narrator_block = ""
-    if narrator and quote:
-        narrator_block = f"\n\n{narrator}\n\"{quote}\""
-    elif narrator:
-        narrator_block = f"\n\n{narrator}"
-    elif quote:
-        narrator_block = f"\n\n\"{quote}\""
-
-    # 3. Arabic / Dua / Pronunciation / Meaning
-    arabic_text = script_data.get("arabic_text", "")
-    pronunciation = script_data.get("pronunciation", "")
-    translation = script_data.get("translation", script_data.get("meaning", ""))
-
-    if not arabic_text:
-        for sc in script_data.get("scenes", []):
-            if sc.get("arabic_text"):
-                arabic_text = sc.get("arabic_text", "")
-                pronunciation = sc.get("pronunciation", pronunciation)
-                translation = sc.get("translation", sc.get("meaning", translation))
+            narr = sc.get("narration", "")
+            if "<ARABIC>" in narr and "</ARABIC>" in narr:
+                tags = re.findall(r"<ARABIC>(.*?)</ARABIC>", narr, flags=re.DOTALL)
+                for tag in tags:
+                    lines = [l.strip() for l in tag.strip().split("\n") if l.strip()]
+                    if len(lines) >= 3:
+                        arabic_text = lines[0]
+                        pronunciation = lines[1].strip("()")
+                        translation = lines[2].strip("()")
+                        break
+                    elif len(lines) == 2 and not arabic_text:
+                        arabic_text = lines[0]
+                        pronunciation = lines[1].strip("()")
+            if arabic_text and translation:
                 break
 
     arabic_block = ""
@@ -60,6 +48,15 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
             arabic_block += f'\nউচ্চারণ: "{pronunciation}"'
         if translation:
             arabic_block += f'\nঅর্থ: "{translation}"'
+
+    # 3. Narrator / Hadith intro block (if not already covered by hook)
+    narrator = script_data.get("header", script_data.get("narrator", "")).strip()
+    quote = script_data.get("quote", script_data.get("hadith_text", "")).strip()
+    narrator_block = ""
+    if narrator and quote:
+        narrator_block = f"\n\n{narrator}\n\"{quote}\""
+    elif narrator:
+        narrator_block = f"\n\n{narrator}"
 
     # 4. Sahih References
     raw_refs = script_data.get("references", [script_data.get("reference", "")])
@@ -71,10 +68,16 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
     if valid_refs:
         ref_block += "\n" + "\n".join([f"• {r}" for r in valid_refs])
     else:
-        ref_block += "\n• কুরআনুল কারীম ও সহীহ হাদিস"
+        ref_block += "\n• সহীহ বুখারী ও সহীহ মুসলিম"
 
-    # 5. শিক্ষা ও আমল (explanation / takeaway)
+    # 5. শিক্ষা ও আমল (Practical takeaway)
     explanation = script_data.get("explanation", script_data.get("lesson", "")).strip()
+    if not explanation:
+        # Check Scene 3 for the practical lesson
+        for sc in script_data.get("scenes", []):
+            if sc.get("scene_number") == 3:
+                explanation = sc.get("narration", "").strip()
+                break
     if not explanation:
         lines = [l.strip() for l in metadata_desc.strip().split("\n") if l.strip() and "#" not in l]
         explanation = " ".join(lines[1:3]) if len(lines) > 1 else ""
@@ -83,9 +86,9 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
     if explanation:
         lesson_block = f"\n\n💡 শিক্ষা ও আমল:\n{explanation}"
 
-    # 6. CTA comment prompt
+    # 6. Interactive CTA comment prompt
     dhikr = "সুবহানাল্লাহ"
-    combined_text = f"{quote} {explanation} {title}"
+    combined_text = f"{quote} {explanation} {title} {translation}"
     if "আলহামদুলিল্লাহ" in combined_text:
         dhikr = "আলহামদুলিল্লাহ"
     elif "আমিন" in combined_text:
@@ -103,7 +106,8 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
         "islamic_knowledge": "#ইসলামিকজ্ঞান",
         "protection_ruqyah": "#রুকইয়াহ",
         "rizq_barakah": "#রিজিক",
-        "husband_wife_family": "#পরিবার",
+        "husband_wife_family": "#দাম্পত্যসুখ #পরিবার",
+        "relationships": "#দাম্পত্যসুখ #পরিবার",
         "halal_haram_daily": "#হালালহারাম",
         "seerah": "#সীরাহ",
         "islamic_stories": "#ইসলামিককাহিনী",
@@ -137,10 +141,10 @@ Output JSON format (ONLY valid JSON):
 {
     "youtube_title": "ক্লিক করার মতো আকর্ষণীয় বাংলা শিরোনাম (সর্বোচ্চ ৬০ অক্ষর)",
     "facebook_title": "ফেসবুক রিলসের জন্য মন ছুঁয়ে যাওয়া বাংলা শিরোনাম",
-    "description": "কিয়ামতের দিন মিজানের পাল্লায় ভারী হওয়ার মতো সহজ ও বরকতময় আমল শিখিয়েছেন প্রিয় নবীজি...",
+    "description": "ক্লান্ত দিনের শেষে স্ত্রীর মুখে এক লোকমা খাবার তুলে দেওয়া বা হাসিমুখে কথা বলাও যে কত বড় ইবাদত!...",
     "pinned_comment": "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿",
-    "english_title": "Virtues of Two Blessed Words Beloved to Allah #Shorts",
-    "english_description": "A short and profound Islamic reminder on easy daily deeds with immense rewards. Subscribe for daily Sahih Islamic reminders.",
+    "english_title": "Feeding Your Wife is Charity in Islam #Shorts",
+    "english_description": "A short and profound Islamic reminder on marriage Sunnah and daily rewards. Subscribe for daily Sahih Islamic reminders.",
     "thumbnail_hook": "২-৩ শব্দের বাংলা হুক",
     "tags": ["Shorts", "IslamicReminders", "SahihHadith", "BanglaIslamic", "সহীহ_হাদিস", "দোয়া", "DailyDos", "DeenOverDunya", "ShortsFeed", "ExplorePage", "ইসলামিক"]
 }"""
