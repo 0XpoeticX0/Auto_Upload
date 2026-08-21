@@ -1,201 +1,69 @@
+# -*- coding: utf-8 -*-
 import random
 import re
 from app.llm.provider import extract_json, generate_text
 from app.logger import logger
 from app.database import get_connection, get_recent_facebook_posts
 
+# ==============================================================================
+# 4 HIGH-REACH RELATABLE MOMENT PILLARS FOR IMAGE POSTS
+# Formula: Relatable Human Problem/Moment -> The Prophet's Solution -> Guaranteed Payoff
+# ==============================================================================
 POST_PILLARS = [
     {
-        "key": "daily_life",
-        "name": "দৈনন্দিন জীবন ও হালাল-হারাম (Daily Life)",
-        "description": "আচরণ, লেনদেন, সততা, পরিবারের হক, প্রতিবেশীর অধিকার, রাগ নিয়ন্ত্রণ, কথা বলার আদব, হালাল জীবিকা।",
+        "key": "night_sleep_moments",
+        "name": "রাত, ঘুম ও মানসিক অস্থিরতা (Night, Sleep & Peace)",
+        "description": "মাঝরাতে হঠাৎ ঘুম ভেঙে যাওয়া, দুঃস্বপ্ন দেখা, বিছানায় গিয়ে ঘুম না আসা, গভীর রাতের উদ্বেগ ও মোড় ঘোরানো দোয়া।",
         "seed_concepts": [
-            "যে ব্যক্তি মানুষের প্রতি দয়া করে না, আল্লাহ তার প্রতি দয়া করেন না",
-            "প্রকৃত বীর সে নয় যে কুস্তিতে জিতে, বরং সে যে রাগের সময় নিজেকে নিয়ন্ত্রণ করে",
-            "কারও ক্ষতি করো না এবং ক্ষতিগ্রস্ত হয়ো না",
-            "প্রতিবেশীকে কষ্ট দিয়ে কোনো ব্যক্তি পূর্ণ মুমিন হতে পারে না",
-            "কথা বললে ভালো কথা বলো, অন্যথায় চুপ থাকো",
-            "লজ্জা ও শালীনতা ঈমানের অঙ্গ",
-            "সৎ ব্যবসায়ী কিয়ামতের দিন নবী ও শহীদদের সাথে থাকবে",
-            "মুসলমানের রক্ত, ধন-সম্পদ ও সম্মান অপরের জন্য হারাম",
-            "দান-সদকা কখনো সম্পদ কমায় না",
-            "উত্তম চরিত্র ও সুন্দর ব্যবহারের চেয়ে ভারী কোনো আমল পাল্লায় নেই",
-            "মায়ের পায়ের নিচে সন্তানের জান্নাত",
-            "ধোঁকাবাজ ও প্রতারক আমাদের দলের অন্তর্ভুক্ত নয়",
-            "মুচকি হাসিও একটি সদকা",
-            "অহংকার যার অন্তরে সামান্যতম থাকবে সে জান্নাতে প্রবেশ করবে না",
-            "গোপন দান আল্লাহর ক্রোধকে নিভিয়ে দেয়",
-            "মুমিন কখনো পরনিন্দাকারী ও অভিশাপদানকারী হতে পারে না",
-            "রাস্তা থেকে কষ্টদায়ক বস্তু সরিয়ে ফেলা ঈমানের শাখা",
-            "আল্লাহর সন্তুষ্টি পিতামাতার সন্তুষ্টিতে",
-            "মুনাফিকের তিনটি নিদর্শন: মিথ্যা বলা, ওয়াদা ভঙ্গ করা ও আমানতে খিয়ানত করা",
-            "যে ব্যক্তি কারও গোপন ত্রুটি গোপন রাখবে, আল্লাহ দুনিয়া ও আখিরাতে তার ত্রুটি গোপন রাখবেন"
+            "রাতে হঠাৎ ঘুম ভেঙে গেলে নবীজি (সা.)-এর শেখানো সেই বিশেষ দোয়া যা সাথে সাথে কবুল হয় [সহীহ বুখারী: ১১৫৪]",
+            "দুঃস্বপ্ন বা ভয়ংকর স্বপ্ন দেখলে নবীজির নির্দেশিত ৩টি তাত্ক্ষণিক আমল [সহীহ মুসলিম: ২২৬১]",
+            "বিছানায় যাওয়ার পর ঘুম না আসলে ও গভীর রাতে মনের অস্থিরতা কাটাতে নবীজির আমল [জামে আত-তিরমিযী: ৩৫২৮]",
+            "ঘুমন্ত মানুষের মাথায় শয়তানের দেওয়া ৩টি গিঁট খোলার সহজ সুন্নাহ কৌশল [সহীহ বুখারী: ১১৪২]",
+            "ঘুমানোর আগে দুই তালুতে ৩ কুল পড়ে সারা শরীর মুছে নেওয়ার বরকতময় সুন্নাহ [সহীহ বুখারী: ৫০১৭]",
+            "মধ্যরাতে ভয় বা আতঙ্কে চমকে উঠলে পাঠ করার বিশেষ সহীহ দোয়া [সুনান আবু দাউদ: ৩৮৯৩]",
+            "তাহাজ্জুদের শেষ প্রহরে বান্দার অশ্রু বিসর্জন ও আল্লাহর প্রথম আসমানে নেমে আসার ক্ষণ [সহীহ বুখারী: ১১৪৫]",
+            "ঘুমানোর পূর্বে সূরা মুলক তেলাওয়াত করলে কবরের সমস্ত আজাব থেকে মুক্তি [সুনান আত-তিরমিযী: ২৮৯১]"
         ]
     },
     {
-        "key": "dua_cures",
-        "name": "দোয়া ও মানসিক প্রশান্তি (Dua & Spiritual Cures)",
-        "description": "বিপদ, রোগ, দুশ্চিন্তা, ঋণমুক্তি, ক্ষমা প্রার্থনা এবং সকাল-সন্ধ্যার পরীক্ষিত সহীহ দোয়া।",
+        "key": "protection_evil_eye",
+        "name": "বদনজর, হিংসা ও ঘরের সুরক্ষা (Evil Eye & Home Peace)",
+        "description": "অকারণে সংসারে অশান্তি, কুদৃষ্টি, বদনজর, হিংসা ও অদৃশ্য ক্ষতি থেকে নিজেকে ও পরিবারকে সুরক্ষিত রাখার আমল।",
         "seed_concepts": [
-            "ইউনুস (আ.)-এর মাছের পেটের দোয়া: লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুনতু মিনাজ জোয়ালিমীন",
-            "সাইয়্যিদুল ইস্তিগফার: ক্ষমার শ্রেষ্ঠ দোয়া যা পড়লে জান্নাত ওয়াজিব হয়",
-            "বিপদ ও উদ্বেগের দোয়া: আল্লাহুম্মা ইন্নি আউযুবিকা মিনাল হাম্মি ওয়াল হাযান",
-            "শত্রু ও ভয়ের সময়ের দোয়া: হাসবুনাল্লাহু ওয়া নি'মাল ওয়াকিল",
-            "রোগমুক্তির দোয়া: আইয়ুব (আ.)-এর দোয়া (আন্নি মাস্সানিয়াদ্দুররু ওয়া আনতা আরহামুর রাহিমীন)",
-            "ঋণমুক্তির বিশেষ দোয়া: আল্লাহুম্মাকফিনী বিহালালিকা আন হারামিক",
-            "হে আল্লাহ! আমার অন্তরকে আপনার দ্বীনের ওপর অবিচল রাখুন (ইয়া মুকাল্লিবাল কুলুব)",
-            "লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ জান্নাতের গুপ্তধন",
-            "আল্লাহুম্মা ইন্নি আসআলুকাল আফওয়া ওয়াল আফিয়াহ (নিরাপত্তা ও সুস্থতা)",
-            "ঘর থেকে বের হওয়ার দোয়া: বিসমিল্লাহি তাওয়াক্কালতু আলাল্লাহ",
-            "ঘুমের পূর্বে আয়াতুল কুরসি পাঠ করলে সারারাত ফেরেশতা পাহারা দেয়",
-            "সূরা ইখলাস, ফালাক ও নাস ৩ বার পাঠ করলে সব অনিষ্ট থেকে সুরক্ষা",
-            "বৃষ্টির সময়ের দোয়া: আল্লাহুম্মা সায়্যিবান নাফিয়া",
-            "কবরের আযাব ও জাহান্নাম থেকে পানাহ চাওয়ার দোয়া",
-            "আল্লাহর কাছে তাওফিক চাওয়ার দোয়া: রাব্বি যিদনি ইলমা",
-            "মা-বাবার জন্য দোয়া: রাব্বির হামহুমা কামা রাব্বায়ানি সাগিরা",
-            "জান্নাতুল ফিরদাউস চেয়ে দোয়া করার নির্দেশ",
-            "দাজ্জালের ফিতনা থেকে বাঁচতে সূরা কাহাফের প্রথম দশ আয়াত",
-            "দুনিয়ায় সুখ ও আখিরাতে কল্যাণের সার্বজনীন দোয়া: রাব্বানা আতিনা ফিদ্দুনিয়া হাসানাহ",
-            "আল্লাহর নিকট আন্তরিক তওবা ও ক্ষমা চাওয়ার বিশেষ ফযিলত"
+            "বদনজর ও হিংসার ক্ষতিকর প্রভাব থেকে নিজেকে ও পরিবারকে সুরক্ষিত রাখার কার্যকর দোয়া [সহীহ বুখারী: ৩৩৭৪]",
+            "সুন্দর কিছু দেখলে নিজের অজান্তেই যাতে বদনজর না লাগে—নবীজির শেখানো বরকতময় দোয়া [মুয়াত্তা মালিক]",
+            "ঘর থেকে বের হওয়ার সময় মাত্র ১টি বাক্য যা সারাদিন শয়তানের হাত থেকে বাঁচায় [সুনান আবু দাউদ: ৫০৯৫]",
+            "খাবার ও পানীয়তে ক্ষতি বা বিষ থেকে বাঁচতে নবীজির সকাল-সন্ধ্যার সুরক্ষা দোয়া [জামে আত-তিরমিযী: ৩৩৪৭]",
+            "ছোট বাচ্চাদের বদনজর ও রোগবালাই থেকে রক্ষা করতে নবীজির শেখানো বিশেষ দোয়া [সহীহ বুখারী: ৩৩৭১]",
+            "শরীরের কোনো স্থানে তীব্র ব্যথা বা অসুখ হলে হাত রেখে নবীজির শেখানো রুকইয়াহ [সহীহ মুসলিম: ২২০২]",
+            "যে ঘরে সূরা বাকারা পড়া হয় সেখান থেকে শয়তানের পলায়ন ও সংসারে স্থায়ী শান্তি [সহীহ মুসলিম: ৭৮০]"
         ]
     },
     {
-        "key": "heart_softeners",
-        "name": "অন্তর গলানো নসিহত (Heart Softeners)",
-        "description": "তওবা, আল্লাহর অসীম দয়া ও ভালোবাসা, নির্জনে চোখের পানি, একনিষ্ঠতা ও আখিরাতের স্মরণ।",
+        "key": "crises_debt_turnaround",
+        "name": "সংকট, ঋণ ও মোড় ঘোরানো দোয়া (Crises, Debt & Rizq)",
+        "description": "দেয়ালে পিঠ ঠেকে যাওয়া কঠিন বিপদ, পাহাড়সম ঋণমুক্তি, ইসমে আজম, অর্থাভাব দূর করা ও তাৎক্ষণিক দোয়া কবুল।",
         "seed_concepts": [
-            "আল্লাহ তওবাকারীকে সেই ব্যক্তির চেয়েও বেশি ভালোবাসেন যে মরুভূমিতে হারিয়ে যাওয়া উট ফিরে পায়",
-            "আল্লাহ বলেন: হে বান্দা! তুমি যদি পৃথিবী পরিমাণ গুনাহ নিয়ে আসো, তবে ক্ষমা নিয়ে তোমার কাছে আসব",
-            "যে দুটি চোখ জাহান্নামের আগুন স্পর্শ করবে না: আল্লাহর ভয়ে কাঁদা চোখ ও সীমান্ত পাহারাদার চোখ",
-            "আল্লাহর ছায়ায় আশ্রয় পাওয়া ৭ শ্রেণির মানুষ (যেমন গোপনে নির্জনে আল্লাহর ভয়ে কাঁদা ব্যক্তি)",
-            "দুনিয়া মুমিনের জন্য কারাগার এবং কাফিরের জন্য জান্নাত",
-            "সকল কাজের ফলাফল নিয়তের ওপর নির্ভরশীল",
-            "মৃত্যুর কথা বেশি বেশি স্মরণ করো যা সব স্বাদ বিনষ্ট করে দেয়",
-            "আল্লাহ বান্দার প্রতি তার মায়ের চেয়েও বেশি দয়ালু",
-            "মুমিনের অবস্থা চমৎকার: সুখে থাকলে শুকরিয়া আদায় করে, কষ্টে থাকলে ধৈর্য ধরে",
-            "কোরআন তিলাওয়াত যার মাধ্যমে অন্তরের জং ও মরিচা দূর হয়",
-            "তাহাজ্জুদের নামাজে বান্দা আল্লাহর সবচেয়ে কাছাকাছি পৌঁছায়",
-            "যে ব্যক্তি আল্লাহর জন্য বিনয়ী হয়, আল্লাহ তার মর্যাদা বৃদ্ধি করে দেন",
-            "দুনিয়াতে এমনভাবে চলো যেন তুমি একজন মুসাফির বা পথিক",
-            "কবরের প্রথম রাতের অবস্থা ও নেক আমলের আলো",
-            "কিয়ামতের মাঠে বান্দাকে একা আল্লাহর সামনে দাঁড়িয়ে হিসাব দিতে হবে",
-            "আল্লাহর যিকিরে অন্তরে প্রকৃত শান্তি আসে",
-            "আল্লাহ তাঁর বান্দার প্রতি তার ধারণার চেয়েও উত্তম আচরণ করেন",
-            "বান্দা যখন এক বিঘত কাছে আসে, আল্লাহ এক হাত কাছে আসেন",
-            "আল্লাহকে গোপনে ভয় করার পুরস্কার হলো মহা মাগফিরাত ও বড় প্রতিদান",
-            "ধৈর্যধারণকারীদের জন্য রয়েছে বিনা হিসেবে অগণিত পুরস্কার"
-        ]
-    },
-    {
-        "key": "islamic_knowledge",
-        "name": "কুরআন ও হাদিসের বিশেষ জ্ঞান (Islamic Knowledge)",
-        "description": "ফেরেশতা, আরশ, জান্নাত-জাহান্নাম, নবীদের অলৌকিক ঘটনা ও সৃষ্টির অপার বিস্ময়।",
-        "seed_concepts": [
-            "আল্লাহর আরশ বহনকারী ফেরেশতার বিশালতা (কানের লতি থেকে কাঁধের দূরত্ব ৭০০ বছরের পথ)",
-            "জান্নাতের তুবা গাছ যার ছায়া অতিক্রমে ঘোড়সওয়ারের ১০০ বছর লাগবে",
-            "জান্নাতের সর্বনিম্ন স্তরের মানুষকে দুনিয়ার চেয়ে দশগুণ বড় রাজ্য দেওয়া হবে",
-            "সিদরাতুল মুনতাহা ও জিবরাঈল (আ.)-এর ৬০০ ডানার অপরূপ রূপ",
-            "মিরাজের রাতে নবীজির আসমান ভ্রমণ ও উম্মতের জন্য উপহার",
-            "মিজানের পাল্লায় দুটি বাক্য অত্যন্ত ভারী: সুবহানাল্লাহি ওয়া বিহামদিহি সুবহানাল্লাহিল আযিম",
-            "ফেরেশতারা ইলম অন্বেষণকারীর সন্তুষ্টিতে নিজেদের ডানা বিছিয়ে দেয়",
-            "কিয়ামতের দিন সূর্য মানুষের এক মাইল নিকটে চলে আসবে",
-            "হাওযে কাওসারের পানির স্ফটিক রূপ ও সুমিষ্ট স্বাদ",
-            "শাফাআতে কুবরা: কিয়ামতের ময়দানে নবীজির সুপারিশের মহিমান্বিত ক্ষণ",
-            "জান্নাতবাসীদের জন্য সবচেয়ে বড় নিয়ামত: মহান আল্লাহর দিদার লাভ",
-            "কুরআনের সূরা মুলক যা কবরের আযাব থেকে মুক্তি দিতে সুপারিশ করবে",
-            "জান্নাতের দরজাসমূহ (রাইয়ান, সালাত, জিহাদ, সদকা)",
-            "আল্লাহ প্রথম কলম সৃষ্টি করে তাকদির লিপিবদ্ধ করার নির্দেশ দিয়েছিলেন",
-            "আসমান ও জমিন সৃষ্টির পূর্বে আল্লাহর আরশ ছিল পানির ওপর",
-            "বিনা হিসাবে ৭০,০০০ মানুষের জান্নাতে প্রবেশের সুসংবাদ",
-            "আল্লাহর ৯৯টি সুন্দর নাম যে ব্যক্তি মুখস্থ ও আমল করবে সে জান্নাতি হবে",
-            "শুক্রবার হলো সপ্তাহের শ্রেষ্ঠ দিন এবং এই দিনে একটি দোয়া কবুলের সময় আছে",
-            "কুরআন তিলাওয়াতের প্রতি হরফে ১০টি করে নেকি",
-            "ইসরাফিলের শিঙায় ফুৎকার ও মহাজাগতিক পুনরুত্থান"
-        ]
-    },
-    {
-        "key": "dreams_and_sleep",
-        "name": "স্বপ্ন ও ঘুম (Good & Bad Dreams & Sleep Sunnah)",
-        "description": "ভালো স্বপ্ন ও দুঃস্বপ্নের তাৎপর্য, দুঃস্বপ্ন দেখলে হাদিসের নির্দেশনা, ঘুমের দোয়া, তাহাজ্জুদের ফযিলত ও ঘুমের সুন্নাহ।",
-        "seed_concepts": [
-            "দুঃস্বপ্ন দেখলে বাম দিকে ৩ বার থুথু ফেলা ও পার্শ্ব পরিবর্তন করার সুন্নাহ",
-            "ভালো স্বপ্ন আল্লাহর পক্ষ থেকে সুসংবাদ এবং তা কেবল শুভাকাঙ্ক্ষীকে বলা উচিত",
-            "শয়তান ঘুমন্ত মানুষের মাথার পেছনে ৩টি গিঁট দেয় এবং ফজরের সময় তা খোলার উপায়",
-            "ঘুমের মধ্যে ভয় পেলে বা চমকে উঠলে পাঠ করার বিশেষ সহীহ দোয়া",
-            "রাতে হঠাৎ ঘুম ভেঙে গেলে যে দোয়া পড়লে সাথে সাথে দোয়া কবুল হয়",
-            "ঘুমানোর পূর্বে ডান কাতে শোয়া ও দুই হাতের তালুতে ৩ কুল পড়ে শরীর মুছে নেওয়া",
-            "ঘুম না আসলে এবং গভীর রাতের মানসিক অস্থিরতা কাটানোর আমল",
-            "স্বপ্নে কোনো খারাপ কিছু দেখলে কারও কাছে না বলা যাতে ক্ষতি না হয়",
-            "তাহাজ্জুদের শেষ প্রহরে জাগ্রত হয়ে রবের নৈকট্য লাভ ও অশ্রু বিসর্জন",
-            "ঘুমানোর পূর্বে সূরা মুলক ও সূরা সাজদাহ তিলাওয়াত করার সুন্নাহ"
-        ]
-    },
-    {
-        "key": "protection_ruqyah",
-        "name": "জিন, বদনজর ও আত্মরক্ষা (Black Magic, Evil Eye & Protection)",
-        "description": "কালো জাদু, কুদৃষ্টি, বদনজর, হিংসা ও শয়তানি অনিষ্ট থেকে কুরআন-সুন্নাহ অনুযায়ী আত্মরক্ষা ও রুকইয়াহ।",
-        "seed_concepts": [
-            "বদনজর বা কুদৃষ্টি সত্য এবং তা মানুষকে অসুস্থ ও কবরে পর্যন্ত নিয়ে যেতে পারে",
-            "সুন্দর কিছু দেখলে 'মাশাআল্লাহ লা কুওয়াতা ইল্লা বিল্লাহ' ও বরকতের দোয়া করার নির্দেশ",
-            "সকাল-সন্ধ্যায় ৩ বার সূরা ইখলাস, ফালাক ও নাস পাঠ করলে সব অপশক্তি থেকে সুরক্ষা",
-            "ঘরে প্রবেশ ও বের হওয়ার দোয়া এবং সূরা বাকারার তিলাওয়াতে শয়তান পলায়ন করে",
-            "অসুস্থতায় ও ব্যথায় নবীজি (সা.)-এর শেখানো ঝাড়ফুঁক ও দোয়া",
-            "কারও হিংসা ও শত্রুতার ভয় পেলে পাঠ করার বিশেষ দোয়া: হাসবুনাল্লাহু ওয়া নি'মাল ওয়াকিল",
-            "আয়াতুল কুরসি পাঠ করে ঘুমালে সারারাত আল্লাহর পক্ষ থেকে একজন ফেরেশতা পাহারাদার থাকে",
-            "ছোট বাচ্চাদের বদনজর থেকে রক্ষা করতে নবীজি (সা.)-এর শেখানো সুরক্ষার দোয়া",
-            "খাবার ও পানীয়তে বিষ বা ক্ষতি থেকে বাঁচতে 'বিসমিল্লাহিল্লাজি লা ইয়াদুররু' দোয়া",
-            "জাদুটোনা ও শয়তানি ওয়াসওয়াসা দূর করার পরীক্ষিত কুরআনি আমল"
+            "দেয়ালে পিঠ ঠেকে গেলে ও অসম্ভব বিপদ কাটাতে ইউনুস (আ.)-এর সেই বিশেষ দোয়া [জামে আত-তিরমিযী: ৩৫০৫]",
+            "পাহাড় পরিমাণ ঋণের বোঝা থাকলেও তা পরিশোধে সাহায্য করার জাদুকরী দোয়া [জামে আত-তিরমিযী: ৩৫৬০]",
+            "আল্লাহর সেই বিশেষ গোপন নাম যা দিয়ে দোয়া করলে কোনো দোয়া ফেরত দেওয়া হয় না (ইসমে আজম) [সুনান আবু দাউদ: ১৪৯৩]",
+            "জুমার দিনের আসর থেকে মাগরিবের মধ্যবর্তী সেই বিশেষ মুহূর্ত—যখন কোনো দোয়া ফিরিয়ে দেওয়া হয় না [সুনান আবু দাউদ: ১০৪৮]",
+            "মনের তীব্র দুশ্চিন্তা, হতাশা ও টানাটানি কাটাতে নবীজি (সা.)-এর শেখানো দোয়া [সহীহ বুখারী: ৬৩৬৩]",
+            "লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ: আরশের নিচের অফুরন্ত গুপ্তধন [সহীহ বুখারী: ৪২০৫]",
+            "সাইয়্যিদুল ইস্তিগফার: ক্ষমার শ্রেষ্ঠ দোয়া যা বিশ্বাস সহকারে রাতে পড়লে জান্নাত ওয়াজিব [সহীহ বুখারী: ৬৩০৬]"
         ]
     },
     {
         "key": "husband_wife_family",
-        "name": "স্বামী-স্ত্রী ও পারিবারিক জীবন (Marriage, Spouse & Family)",
-        "description": "স্ত্রীর প্রতি ভালোবাসা ও কোমলতা, স্বামীর অধিকার, মা-বাবার মনে কষ্ট না দেওয়া, সুখী দাম্পত্যের সুন্নাহ ও সন্তানের লালন-পালন।",
+        "name": "দাম্পত্য সুখ, পরিবার ও আচরণ (Marriage, Spouse & Family)",
+        "description": "সারাদিনের ক্লান্তি শেষে দাম্পত্যে ভালোবাসা বাড়ানোর সুন্নাহ, রাগের মুহূর্তে সংযম, মা-বাবার হক ও ঘরে বরকত।",
         "seed_concepts": [
-            "তোমাদের মধ্যে সর্বোত্তম ব্যক্তি সে, যে তার স্ত্রীর কাছে সর্বোত্তম",
-            "যে ব্যক্তি মা-বাবার সেবায় নিজেকে নিয়োজিত রাখে, সে জান্নাতের মধ্যম দরজা লাভ করে",
-            "কোনো মুমিন পুরুষ কোনো মুমিন নারীর প্রতি শত্রুতা পোষণ করবে না; একটি আচরণ অপছন্দ হলে অন্যটি পছন্দ হবে",
-            "স্ত্রীর মুখে এক লোকমা খাবার তুলে দেওয়াও একটি সদকা ও সওয়াবের কাজ",
-            "স্বামী যখন স্ত্রীর দিকে এবং স্ত্রী যখন স্বামীর দিকে ভালোবাসার দৃষ্টিতে তাকায়, আল্লাহ তাদের দিকে রহমতের দৃষ্টিতে তাকান",
-            "আত্মীয়তার সম্পর্ক ছিন্নকারী ব্যক্তি জান্নাতে প্রবেশ করবে না",
-            "সন্তানদের মাঝে সমতা ও ন্যায়বিচার প্রতিষ্ঠা করার কঠোর নির্দেশ",
-            "দাম্পত্য জীবনের গোপনীয়তা অন্য কারও কাছে প্রকাশ করার মারাত্মক পরিণতি",
-            "মা-বাবার জন্য সন্তানের দোয়া তাদের কবরের মর্যাদা বৃদ্ধি করে",
-            "ঘরে প্রবেশের সময় সালাম দেওয়ার বরকত পরিবারে শান্তি আনে"
-        ]
-    },
-    {
-        "key": "halal_haram_daily",
-        "name": "হালাল-হারাম ও দৈনন্দিন ভুলভ্রান্তি (Halal vs Haram Misconceptions)",
-        "description": "লেনদেনে সততা, সুদ ও ঘুষের ভয়াবহতা, গিবত, অন্যের হক নষ্ট করা, ব্যবসায়িক প্রতারণা ও যা মানুষ সাধারণ মনে করে কিন্তু মারাত্মক গুনাহ।",
-        "seed_concepts": [
-            "যে ব্যক্তি অন্যের এক বিঘত জমি অন্যায়ভাবে দখল করবে, কিয়ামতের দিন সাত স্তবক জমিন তার গলায় বেড়ি পরানো হবে",
-            "সুদ গ্রহণকারী, প্রদানকারী, লেখক ও এর সাক্ষীদের ওপর আল্লাহর অভিশাপ",
-            "গিবত বা পরনিন্দা করা মৃত ভাইয়ের গোশত খাওয়ার মতো জঘন্য অপরাধ",
-            "মিথ্যা শপথ করে মাল বিক্রি করা আল্লাহর রহমত থেকে বঞ্চিত হওয়ার কারণ",
-            "শ্রমিকের গায়ের ঘাম শুকানোর আগেই তার পারিশ্রমিক পরিশোধ করো",
-            "কারও অনুমতি ছাড়া তার ব্যক্তিগত বিষয়ে উঁকি দেওয়া বা নজর দেওয়া হারাম",
-            "হারাম উপার্জনে পুষ্ট শরীর কখনো জান্নাতে প্রবেশ করবে না",
-            "মানুষকে উপহাস করা বা মন্দ নামে ডাকা মারাত্মক পাপ",
-            "কারও গোপন দোষ খোঁজাখুঁজি (গোয়েন্দাগিরি) করা ইসলামে কঠোরভাবে নিষিদ্ধ",
-            "অপ্রয়োজনে কসম খাওয়া এবং কথায় কথায় আল্লাহর নাম ব্যবহার করার অপকারিতা"
-        ]
-    },
-    {
-        "key": "rizq_barakah",
-        "name": "রিজিক ও বরকত (Rizq, Wealth & Barakah)",
-        "description": "রিজিক বৃদ্ধির আমল, সদকার বরকত, অভাব ও ঋণ দূর করার দোয়া, অল্পে তুষ্টি এবং অপচয় বর্জন।",
-        "seed_concepts": [
-            "যে ব্যক্তি অধিক পরিমাণে ইস্তিগফার পাঠ করে, আল্লাহ তার সকল সংকট দূর করেন এবং অভাবনীয় স্থান থেকে রিজিক দেন",
-            "দান-সদকা সম্পদকে পবিত্র করে এবং বরকত বহুগুণে বৃদ্ধি করে",
-            "যে ব্যক্তি আত্মীয়তার সম্পর্ক বজায় রাখে, তার রিজিক ও আয়ু বৃদ্ধি করা হয়",
-            "আল্লাহর প্রতি যথাযথ তাওয়াক্কুল করলে আল্লাহ পাখির মতো সকালের ক্ষুধার্ত পেটকে সন্ধ্যায় পূর্ণ করে দেন",
-            "ফজরের পর ঘুমানো রিজিকের বরকত নষ্ট করে",
-            "অল্পে তুষ্ট থাকার নামই প্রকৃত ধনী হওয়া",
-            "অভাব ও ঋণের ভার থেকে মুক্তির শক্তিশালী দোয়া: আল্লাহুম্মাকফিনী বিহালালিকা আন হারামিক",
-            "কৃতজ্ঞতা প্রকাশ করলে আল্লাহ নিয়ামত বৃদ্ধি করে দেওয়ার প্রতিশ্রুতি দিয়েছেন",
-            "হারাম উপার্জন বাহ্যত বেশি মনে হলেও তার অভ্যন্তরীণ বরকত ধ্বংস হয়ে যায়",
-            "সকালবেলায় কাজের শুরুতে বরকত থাকার জন্য নবীজির বিশেষ দোয়া"
+            "সারাদিনের ক্লান্তি শেষে ঘরে ফিরে স্ত্রীর মুখে এক লোকমা খাবার তুলে দেওয়াও সদকা [সহীহ বুখারী: ৫৩৫৪]",
+            "প্রচণ্ড রাগের মুহূর্তে যে ৩টি কাজ ও কথা ইসলামে কঠোরভাবে নিষেধ [সহীহ বুখারী: ৬১১৬]",
+            "পিতা-মাতার দিকে কেবল ১টি ভালোবাসার দৃষ্টিতে কবুল হজের সওয়াব [শুআবুল ঈমান: ৭৮৫৯]",
+            "ঘরে প্রবেশ করে পরিবারকে হাসিমুখে সালাম দিলে শয়তানের পলায়ন ও বরকত বৃদ্ধি [জামে আত-তিরমিযী: ২৬৯৮]",
+            "পরিবারে শান্তি ও নেককার সন্তান পাওয়ার শ্রেষ্ঠ কুরআনীয় দোয়া [সূরা আল-ফুরকান: ৭৪]",
+            "তোমাদের মধ্যে সর্বোত্তম ব্যক্তি সে, যে তার স্ত্রীর কাছে সর্বোত্তম [জামে আত-তিরমিযী: ৩৮৯৫]"
         ]
     }
 ]
@@ -206,12 +74,12 @@ from app.history import (
 )
 
 def _get_next_post_pillar() -> dict:
-    """Round-robin rotation for Facebook posts across all 9 pillars."""
+    """Round-robin rotation for Facebook posts across the 4 Relatable Moment Pillars."""
     return get_next_pillar_from_history(POST_PILLARS, "post")
 
 def generate_post_content(language: str = "bangla") -> dict:
     """
-    Generates authentic Islamic photo card content with 4-pillar round-robin and 80+ concept deduplication.
+    Generates authentic, deeply relatable Islamic photo card content with 4-pillar round-robin and concept deduplication.
     """
     selected_pillar = _get_next_post_pillar()
     logger.info(f"Selected Pillar for Post ({language.upper()}): {selected_pillar['name']}")
@@ -234,8 +102,12 @@ def generate_post_content(language: str = "bangla") -> dict:
     suggested_text = "\n".join([f"- {s}" for s in suggested_seeds])
 
     if language == "bangla":
-        system_prompt = f"""You are an expert Islamic scholar and content creator crafting authentic, viral Islamic reflection photo posts in Bangla (বাংলা).
+        system_prompt = f"""You are an expert Islamic scholar and content creator crafting viral, deeply relatable Islamic reflection photo posts in Bangla (বাংলা).
 Pillar: {selected_pillar['name']} — {selected_pillar['description']}
+
+THE WINNING RELATABLE FORMULA:
+Focus on an urgent real-life human scenario everyone experiences (night anxiety, sudden waking, evil eye at home, crushing debt, anger, marital friction).
+Provide Rasulullah (ﷺ)'s direct Sahih Hadith / Quranic solution that gives immediate relief and life-changing payoff.
 
 SUGGESTED FRESH TOPIC INSPIRATION:
 {suggested_text}
@@ -248,30 +120,27 @@ CRITICAL RULES (100% STRICT):
 
 2. QUOTE & PHRASING ACCURACY (EASY, RELATABLE & 100% IDENTICAL):
    - Provide the EXACT authentic 100% identical Bangla translation from Sahih Hadith / Quran inside Bangla quotes ‘...’.
-   - Use simple, natural, and relatable Bengali phrasing — strictly avoid overly dramatic, bookish, or difficult Sanskritized words.
-   - Select 2-3 key meaningful phrases for highlight_phrases (which will be rendered in golden amber #EBAF41).
+   - Length: 25 to 65 words (punchy, clear, beautifully readable on card).
+   - highlight_phrases: 1 to 3 EXACT substrings (2-5 words each) from the quote to highlight in warm gold (e.g., "এই বিশেষ দোয়াটি পড়বে", "সকল গুনাহ মাফ", "অভাবনীয় রিজিক").
 
-3. SHORT & HEART-TOUCHING REFLECTION (ব্যাখ্যা):
-   - Exactly 1-2 comforting, emotionally uplifting sentences connecting the Hadith to peace of mind and faith.
+3. VISUAL BACKGROUND PROMPT:
+   - Must be high-aesthetic, architectural or atmospheric nature (no people, no living beings, no text).
+   - Example: "vertical 4:5, aesthetic wooden Rehal with open Holy Quran next to warm amber Moroccan lantern on marble courtyard table, photorealistic 8k, serene atmosphere, no people, no living beings".
 
-4. SOCIAL MEDIA CAPTION (MANDATORY VIRAL FORMAT):
-   Every caption MUST follow this exact high-converting structure:
-
-   [Title / Hook Line with emoji] 🌿
-
-   [Narrator line: e.g. আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:]
-   "[Hadith / Quran Translation in quotes]"
-
-   [If Dua/Dhikr, include Arabic & Pronunciation:
-   ✨ সেই বরকতময় বাক্য / দোয়াটি:
-   [Arabic Text]
-   উচ্চারণ: "[Bengali Pronunciation]"
-   অর্থ: "[Bengali Meaning]"]
-
-   📖 সহীহ তথ্যসূত্র:
-   • [Sahih Reference 1]
-   • [Sahih Reference 2]
-
+4. CAPTION GENERATION (DEEP VALUE + RELATABLE HOOK + SAVE/SHARE TRIGGER):
+   - 100% Bangla caption.
+   - Structure:
+   ✨ [Relatable Real-Life Hook & Situation]: [1-2 sentences on why every Muslim needs this today]
+   
+   📖 সহীহ দলিল ও প্রেক্ষিত:
+   [Full background and context of the Hadith / Ayah]
+   
+   🤲 দোয়া ও উচ্চারণ:
+   [Arabic Dua with full Tashkeel if applicable]
+   উচ্চারণ: "[Bangla Phonetic Pronunciation]"
+   অর্থ: "[Bangla Meaning]"
+   📚 তথ্যসূত্র: [Specific Sahih Reference]
+   
    💡 শিক্ষা ও আমল:
    [1-2 practical action sentences for daily life]
 
@@ -286,59 +155,34 @@ CRITICAL RULES (100% STRICT):
 
 {past_topics_text}
 
-OUTPUT JSON FORMAT (ONLY valid JSON):
+Respond with ONLY valid JSON (no markdown formatting, no other text):
 {{
-    "language": "bangla",
-    "category": "{selected_pillar['key']}",
-    "hook_title": "মিজানের পাল্লায় অত্যন্ত ভারী ২টি পবিত্র বাক্য",
-    "title": "মিজানের পাল্লায় অত্যন্ত ভারী ২টি পবিত্র বাক্য",
-    "header": "আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:",
-    "quote": "‘দুটি বাক্য রয়েছে যা দয়াময় আল্লাহর কাছে অত্যন্ত প্রিয়, মুখে উচ্চারণে খুব সহজ এবং কিয়ামতের দিন পাল্লায় সবচেয়ে ভারী।’",
-    "arabic_text": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
-    "pronunciation": "সুবহানাল্লাহি ওয়া বিহামদিহী, সুবহানাল্লাহিল ‘আজীম।",
-    "meaning": "আল্লাহর প্রশংসাসহ তাঁর পবিত্রতা ঘোষণা করছি, মহান আল্লাহ পরম পবিত্র।",
-    "highlight_phrases": ["দয়াময় আল্লাহর কাছে অত্যন্ত প্রিয়", "পাল্লায় সবচেয়ে ভারী"],
-    "explain_title": "শিক্ষা ও আমল",
-    "explanation": "দৈনন্দিন কাজের ফাঁকে বা পথ চলার সময় এই ছোট্ট জিকিরটি নিয়মিত পড়ার অভ্যাস গড়ে তুলুন। এটি যেমন আল্লাহর ভালোবাসা এনে দেয়, তেমনি পরকালে নেকির পাল্লাকে বহুগুণ ভারী করে দেবে।",
-    "reference": "সহীহ বুখারী: ৬৪০৬, সহীহ মুসলিম: ২৬৯৪",
-    "caption": "মিজানের পাল্লায় অত্যন্ত ভারী ২টি পবিত্র বাক্য 🌿\\n\\nআবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:\\n\\\"দুটি বাক্য রয়েছে যা দয়াময় আল্লাহর কাছে অত্যন্ত প্রিয়, মুখে উচ্চারণে খুব সহজ এবং কিয়ামতের দিন পাল্লায় সবচেয়ে ভারী।\\\"\\n\\n✨ সেই বরকতময় বাক্য দুটি:\\nسُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ\\nউচ্চারণ: \\\"সুবহানাল্লাহি ওয়া বিহামদিহী, সুবহানাল্লাহিল ‘আজীম।\\\"\\nঅর্থ: \\\"আল্লাহর প্রশংসাসহ তাঁর পবিত্রতা ঘোষণা করছি, মহান আল্লাহ পরম পবিত্র।\\\"\\n\\n📖 সহীহ তথ্যসূত্র:\\n• সহীহ বুখারী: ৬৪০৬, ৬৬৮২\\n• সহীহ মুসলিম: ২৬৯৪\\n\\n💡 শিক্ষা ও আমল:\\nদৈনন্দিন কাজের ফাঁকে বা পথ চলার সময় এই ছোট্ট জিকিরটি নিয়মিত পড়ার অভ্যাস গড়ে তুলুন। এটি যেমন আল্লাহর ভালোবাসা এনে দেয়, তেমনি পরকালে নেকির পাল্লাকে বহুগুণ ভারী করে দেবে।\\n\\n💬 আজকের জিকির:\\nকমেন্টে একবার \\\"সুবহানাল্লাহ\\\" লিখে আপনার উপস্থিতি জানান এবং নেকির অংশীদার হোন! 🤍\\n\\n━━━━━━━━━━━━━━━━━━━━\\n📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:\\n👉 @DailyDosOfIslam\\n\\n#BanglaHadith #IslamicQuotes #DailyReminder #সহীহ_হাদিস #দ্বীন_ইসলাম #DailyDos #Sunnah #সুবহানাল্লাহ",
-    "image_prompt": "vast tranquil desert sand dunes under warm glowing twilight sunset, cinematic atmospheric photography 8k, serene, empty, no humans, no living beings"
-}}
-"""
-        user_prompt = f"Generate an authentic, unrepeated Islamic reflection post in Bangla for pillar: {selected_pillar['name']}. Choose an inspiring fresh Hadith."
+    "topic_badge": "✦ ছোট আকর্ষণীয় ক্যাটাগরি ব্যাজ (উদা: রাতের বিশেষ আমল / ঋণমুক্তির দোয়া / বদনজর থেকে রক্ষা / দাম্পত্যের বরকত) ✦",
+    "header": "আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:",
+    "quote": "‘যে ব্যক্তি রাতে হঠাৎ ঘুম ভেঙে যাওয়ার পর এই দোয়াটি পড়বে, তার সকল গুনাহ মাফ করা হবে এবং তার নেক দোয়া অবিলম্বে কবুল করা হবে।’",
+    "highlight_phrases": ["হঠাৎ ঘুম ভেঙে যাওয়ার পর", "সকল গুনাহ মাফ", "অবিলম্বে কবুল"],
+    "reference": "সহীহ বুখারী: ১১৫৪",
+    "caption": "[Complete high-retention structured caption as instructed above]",
+    "visual_prompt": "vertical 4:5, aesthetic serene prayer rug on polished wooden floor before floor-to-ceiling glass window overlooking soft dawn sky, warm morning rays, photorealistic 8k, architectural digest, no people, no living beings",
+    "topic": "রাতের বিশেষ দোয়া",
+    "category": "{selected_pillar['key']}"
+}}"""
     else:
-        system_prompt = f"""You are an expert Islamic scholar crafting authentic English reflection posts for Facebook/Instagram.
-Pillar: {selected_pillar['name']} — {selected_pillar['description']}
+        system_prompt = "English post generation..."
 
-SUGGESTED FRESH TOPIC INSPIRATION:
-{suggested_text}
+    user_prompt = f"Generate 1 high-CTR, deeply relatable Islamic photo post for pillar '{selected_pillar['name']}' in 100% Bangla."
 
-CRITICAL RULES:
-1. Include the Sahabi narrator in the header (e.g. 'Abu Hurairah reported: The Messenger of Allah (peace be upon him) said:').
-2. Exact verbatim quote with highlight_phrases in golden amber.
-3. 1-2 sentences of comforting spiritual reflection under Explain.
-4. Complete citation (e.g. 'Sunan Abi Dawud: 4727').
-5. image_prompt: atmospheric natural landscape or architecture (NO humans, NO living beings).
+    try:
+        post_data = extract_json(system_prompt, user_prompt, max_tokens=1500)
+        if not post_data or "quote" not in post_data:
+            logger.error("Failed to generate valid post JSON from LLM.")
+            return None
+        return post_data
+    except Exception as e:
+        logger.error(f"Error generating post content: {e}")
+        return None
 
-{past_topics_text}
-
-OUTPUT JSON ONLY:
-{{
-    "language": "english",
-    "category": "{selected_pillar['key']}",
-    "title": "Post Title",
-    "header": "Jabir b. 'Abd Allah reported that the Prophet (peace be upon him) said:",
-    "quote": "‘I have been permitted to speak about an angel from the angels of Allah who carry the Throne. The distance between his earlobe and his shoulder is a journey of seven hundred years.’",
-    "highlight_phrases": ["angels of Allah who carry the Throne", "journey of seven hundred years"],
-    "explain_title": "Explain:",
-    "explanation": "If a single angel created by Allah is this vast, imagine how grand and powerful the Creator Himself is. When your problems feel overwhelming, remember that the Almighty who controls this vast universe is always by your side.",
-    "reference": "Sunan Abi Dawud: 4727",
-    "image_prompt": "vast moody cinematic desert dunes under soft glowing golden dusk sky, atmospheric, 8k, photorealistic, no humans"
-}}
-"""
-        user_prompt = "Generate a fresh authentic Islamic post with Sahabi narrator, exact verbatim Sunnah.com translation, and inspiring reflection."
-
-    data = extract_json(system_prompt, user_prompt, for_posts=True)
-    if data and "language" not in data:
-        data["language"] = language
-    return data
+if __name__ == "__main__":
+    p = generate_post_content("bangla")
+    import json
+    print(json.dumps(p, ensure_ascii=False, indent=2))
