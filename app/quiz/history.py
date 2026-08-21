@@ -141,12 +141,12 @@ def format_quiz_metadata(quiz_script: dict) -> dict:
         
     desc += "💬 আজকের স্কোর:\nআপনার স্কোর ৫-এ কত হলো? কমেন্টে অবশ্যই জানান!\n\n"
     desc += "━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n"
-    desc += "#Shorts #IslamicQuiz #IslamicKnowledge #BanglaQuiz #Hadith #Quran #DailyDos #SahihHadith #সুবহানাল্লাহ"
+    desc += "#Shorts #IslamicQuiz #MuslimQuiz #TestYourKnowledge #BanglaIslamic #ইসলামিকপোস্ট #DailyDos #ReelsViral #ShortsFeed #সহীহ_হাদিস #LearnIslam"
     
     return {
         "youtube_title": yt_title[:100],
         "facebook_title": raw_title,
         "description": desc.strip(),
-        "tags": ["ইসলামিক", "কুইজ", "কুরআন", "হাদিস", "দোয়া", "Shorts", "IslamicQuiz", "BanglaQuiz", "SahihHadith", "DailyDos"],
+        "tags": ["Shorts", "IslamicQuiz", "MuslimQuiz", "TestYourKnowledge", "BanglaIslamic", "ইসলামিকপোস্ট", "DailyDos", "ReelsViral", "ShortsFeed", "সহীহ_হাদিস", "LearnIslam", "ExplorePage"],
         "category": "educational"
     }

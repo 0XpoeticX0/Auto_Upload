@@ -51,8 +51,8 @@ def format_video_description(metadata_desc: str, script_data: dict) -> str:
     dhikr_action = script_data.get("dhikr_action", "কমেন্টে একবার 'আলহামদুলিল্লাহ' / 'সুবহানাল্লাহ' লিখে আপনার নেকির পাল্লা ভারী করুন!")
     cta_block = f"\n\n💬 আজকের আমল ও জিকির:\n{dhikr_action}"
     
-    # 5. Social Links & Hashtags
-    social_block = """\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n#Shorts #IslamicReminders #Zikr #Dua #Hadith #BanglaIslamic #SahihHadith #DailyDos"""
+    # 5. Social Links & High-Traffic Niche + Bengali Hashtags
+    social_block = """\n\n━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n#Shorts #IslamicReminders #SahihHadith #BanglaIslamic #সহীহ_হাদিস #দোয়া #DailyDos #DeenOverDunya #ShortsFeed #ExplorePage"""
 
     return f"{main_summary}{ayah_hadith_block}{ref_block}{cta_block}{social_block}".strip()
 
@@ -74,7 +74,7 @@ Output JSON format (ONLY valid JSON):
     "facebook_title": "ফেসবুক রিলসের জন্য মন ছুঁয়ে যাওয়া বাংলা শিরোনাম",
     "description": "কিয়ামতের দিন মিজানের পাল্লায় ভারী হওয়ার মতো সহজ ও বরকতময় আমল শিখিয়েছেন প্রিয় নবীজি...",
     "thumbnail_hook": "২-৩ শব্দের বাংলা হুক",
-    "tags": ["ইসলামিক", "কুরআন", "হাদিস", "দোয়া", "Shorts", "Islamic", "SahihHadith"]
+    "tags": ["Shorts", "IslamicReminders", "SahihHadith", "BanglaIslamic", "সহীহ_হাদিস", "দোয়া", "DailyDos", "DeenOverDunya", "ShortsFeed", "ExplorePage", "ইসলামিক"]
 }"""
     
     narrations = " ".join([scene.get("narration", scene.get("narration_bn", "")) for scene in script_data.get("scenes", [])])
