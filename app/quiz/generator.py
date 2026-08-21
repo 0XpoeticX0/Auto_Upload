@@ -56,6 +56,20 @@ Options must be labelled: "A) ...", "B) ...", "C) ...".
 
 {lang_instruction}
 
+DYNAMIC SCENE 1 HOOK (MANDATORY VARIATION — DO NOT MAKE IT CONSTANT):
+The opening hook (Scene 1 headline & sub_text) MUST BE 100% UNIQUE and dynamically created for every video. NEVER repeat the same generic "আপনার জ্ঞান যাচাই করুন" headline.
+Choose dynamically from these 5 viral hook angles:
+1. CHALLENGE HOOK: "৫টিতে ৫টি সঠিক উত্তর দেওয়ার চ্যালেঞ্জ নিচ্ছেন? ☪️"
+2. CURIOSITY/GAP HOOK: "৯৯% মানুষ ৪ নম্বর প্রশ্নের উত্তর ভুল দেয়! 💡"
+3. IDENTITY HOOK: "একজন খাঁটি মুসলিম হিসেবে আজ নিজেকে যাচাই করুন! ✨"
+4. HIGH-STAKES HOOK: "আখিরাতের জ্ঞান আপনার কতটা মজবুত? আজই টেস্ট দিন! 📖"
+5. SCORE/CONFIDENCE HOOK: "আজকের ৫টি প্রশ্নে ফুল স্কোর করতে পারবেন তো? 🎯"
+
+Sub-text must also match dynamically:
+- "💡 কত স্কোর হলো কমেন্টে জানাবেন!"
+- "💡 ৪ নম্বর প্রশ্নটি কিন্তু সবচেয়ে কঠিন!"
+- "💡 সময় বেশি লাগলে ভিডিওটি পজ করুন!"
+
 VIRAL 5-QUESTION RETENTION BLUEPRINT (MANDATORY STRUCTURE):
 
 Every video MUST follow this exact 5-slot psychological progression to maximize watch time and comments:

@@ -21,12 +21,16 @@ Use these 5 styles as inspiration — choose whichever fits the topic most natur
 4. DIRECT BENEFIT: promise a specific, immediate result from the knowledge in this video.
 5. PATTERN INTERRUPT: a calm, unexpected line that makes the viewer pause and think.
 
-Topic-matching examples:
-- Topic about forgiveness → "মনে হচ্ছে আপনার পাপ অনেক বেশি?..." (You-Hook)
-- Topic about bad dreams → "দুঃস্বপ্ন দেখলে এই ১টি কাজ ভুলেও করবেন না..." (Curiosity)
-- Topic about rizq/provision → "আল্লাহর রিজিক কখনো দেরি করে, কিন্তু কখনো মিস করে না..." (Pattern Interrupt)
-- Topic about evil eye → "বদনজর থেকে বাঁচার এই আমলটি আপনি হয়তো জানেন না..." (Curiosity)
-- Topic about dua → "দোয়া করার সময় আমরা অজান্তেই এই ভুলটি করি..." (Paradigm Shift)
+Topic-matching examples across pillars:
+- Misconceptions (হালাল/হারাম ভ্রান্তি) → "আপনি যেটাকে হারাম মনে করেন, সেটা আসলে হালাল?..." or "এই কাজটি বেশিরভাগ মানুষ হালাল মনে করে, কিন্তু হাদিস কী বলে?..." (Paradigm Shift)
+- Relationships (সম্পর্ক ও পরিবার) → "স্বামী-স্ত্রীর মাঝে অশান্তি? নবীজি (সা.) যে সহজ সমাধান শিখিয়েছেন..." or "মায়ের মনে এই কষ্টটি ভুলেও দেবেন না..." (Direct Benefit / Emotional)
+- Stories & Seerah (গল্প ও সীরাহ) → "এই সাহাবীর এমন এক ত্যাগ যা শুনলে আপনার চোখ ভিজে উঠবে..." or "তায়েফের সেই রক্তঝরা দিনে নবীজি (সা.) যা বলেছিলেন..." (Curiosity / Narrative)
+- Rizq & Barakah (রিজিক ও বরকত) → "আল্লাহর এই ওয়াদা শুনলে রিজিকের সব দুশ্চিন্তা দূর হয়ে যাবে..." (Direct Benefit)
+- Youth & Modern (তরুণ প্রজন্ম) → "মনে হচ্ছে জীবনে আপনি একা? এই হাদিসটি শুধু আপনার জন্য..." (Emotional You)
+- Forgiveness & Mercy → "মনে হচ্ছে আপনার পাপ অনেক বেশি?..." (You-Hook)
+- Dreams & Sleep → "দুঃস্বপ্ন দেখলে এই ১টি কাজ ভুলেও করবেন না..." (Curiosity)
+- Evil Eye & Ruqyah → "বদনজর থেকে বাঁচার এই আমলটি আপনি হয়তো জানেন না..." (Curiosity)
+- Daily Dua → "দোয়া করার সময় আমরা অজান্তেই এই ভুলটি করি..." (Paradigm Shift)
 
 Write the hook fresh and unique — matched to the actual topic, not copied from examples.
 
@@ -86,16 +90,18 @@ OUTPUT — Respond with ONLY valid JSON (no markdown fences), 100% BANGLA & ARAB
         },
         {
             "scene_number": 4,
-            "narration": "কমেন্টে লিখুন: <ARABIC>\\nسُبْحَانَ اللَّهِ\\n(সুবহানাল্লাহ)\\n</ARABIC>",
+            "narration": "কমেন্টে লিখুন: <ARABIC>سُبْحَانَ اللَّهِ (সুবহানাল্লাহ)</ARABIC>",
             "visuals": "warm ambient glowing lantern on antique wooden table, soft shadows, peaceful dusk ambience, photorealistic 8k, vertical 9:16, no humans"
         }
     ]
 }
+
+CRITICAL: Return valid JSON only. All string fields must be clean single-line strings without unescaped raw newlines.
 """
 
     user_prompt = f"Generate a viral, heart-touching 30-second Islamic video script in 100% Bangla with authentic Arabic in <ARABIC> tags (Arabic + Bangla pronunciation). Topic: {topic_title or 'Islamic Reminders'}. Category: {category}. NO ENGLISH WORDS."
     
-    script_data = extract_json(system_prompt, user_prompt, max_tokens=1500)
+    script_data = extract_json(system_prompt, user_prompt, max_tokens=2500)
     if not script_data or "scenes" not in script_data:
         logger.error("Failed to generate script.")
         return None

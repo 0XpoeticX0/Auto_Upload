@@ -42,6 +42,31 @@ FALLBACK_PILLAR_STYLES = {
         "vertical 9:16, dark obsidian stone wall with deeply carved glowing gold islamic geometric patterns, "
         "moody volumetric side lighting, high contrast shadows, luxury spiritual aesthetic, 8k render, no people, no living beings"
     ),
+    "misconceptions": (
+        "vertical 9:16, majestic ancient library of islamic scholarship, ancient leather manuscripts and glowing brass scales of justice, "
+        "warm candle light, dark mahogany wood and antique gold aesthetics, cinematic volumetric lighting, 8k octane render, no people, no living beings"
+    ),
+    "relationships": (
+        "vertical 9:16, peaceful traditional oriental courtyard garden at sunset, tranquil fountain reflection, glowing warm lanterns, "
+        "blooming jasmine vines on stone archways, warm amber and rose-gold dusk palette, 8k resolution, serene, no people, no living beings"
+    ),
+    "islamic_stories": (
+        "vertical 9:16, breathtaking ancient historical arabian desert landscape under dramatic crimson sunset, majestic ancient stone fortress in distance, "
+        "warm atmospheric golden dust rays, cinematic historical documentary aesthetic, 8k octane render, no people, no living beings"
+    ),
+    "seerah": (
+        "vertical 9:16, serene historical prophet city aesthetic, ancient medina architecture, date palm shadows under warm golden sunrise, "
+        "ornate stone archway overlooking peaceful desert, soft divine volumetric god rays, majestic 8k render, no people, no living beings"
+    ),
+    "rizq_barakah": (
+        "vertical 9:16, lush tranquil oasis garden with crystal clear flowing stream, golden morning sunbeams cutting through date palm leaves, "
+        "abundant ripe dates and greenery, radiant warm golden light, blessing and barakah aesthetic, 8k wallpaper, no people, no living beings"
+    ),
+    "youth_modern": (
+        "vertical 9:16, modern minimalist luxury interior window overlooking dark starry night skyline, soft glowing crescent moon, "
+        "modern warm ambient desk lamp illuminating open book, deep indigo and warm amber contrast, peaceful contemplation, 8k, no people, no living beings"
+    ),
+
 }
 
 def generate_ai_visual_prompt(script_data: dict, topic_title: str = "", pillar_category: str = "daily_life") -> str:

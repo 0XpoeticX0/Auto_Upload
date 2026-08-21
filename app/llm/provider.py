@@ -95,8 +95,20 @@ def _parse_dirty_json(text: str) -> dict:
             pass
             
     # Third try: sanitize unescaped newlines and control chars inside strings
-    clean = re.sub(r'[\x00-\x1F\x7F]', lambda match: ' ' if match.group(0) in '\n\r\t' else '', raw)
-    return json.loads(clean, strict=False)
+    try:
+        clean = re.sub(r'[\x00-\x1F\x7F]', lambda match: ' ' if match.group(0) in '\n\r\t' else '', raw)
+        return json.loads(clean, strict=False)
+    except Exception:
+        pass
+        
+    # Fourth try: escape literal newlines
+    try:
+        fixed = re.sub(r'(?<!\\)\r?\n', r'\\n', raw)
+        return json.loads(fixed, strict=False)
+    except Exception:
+        pass
+
+    return {}
 
 def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, for_posts: bool = False) -> dict:
     global _SESSION_FAILED_PAIRS

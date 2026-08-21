@@ -123,9 +123,9 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         hook_voice_text = f"{hook.get('headline', 'Test your Islamic knowledge!')} ... {hook.get('sub_text', 'Pause the video if you need more time!')}"
         
     hook_voice_mp3 = os.path.join(temp_dir, "hook_voice.mp3")
-    synthesize_voice(hook_voice_text, hook_voice_mp3, voice=voice, rate="-5%")
+    synthesize_voice(hook_voice_text, hook_voice_mp3, voice=voice, rate="+10%")
     
-    hook_dur = max(3.5, get_audio_duration(hook_voice_mp3) + 0.5)
+    hook_dur = max(2.5, get_audio_duration(hook_voice_mp3) + 0.2)
     
     # Balanced comfortable audio volume for hook
     hook_audio = os.path.join(temp_dir, "hook_audio.mp3")
@@ -156,7 +156,7 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     subprocess.run(cmd_s1, check=True, capture_output=True)
     all_scene_mp4s.append(scene_1_mp4)
     
-    # ── 2. SCENES 2 to 6: 5 QUESTIONS (with 3s Timer + 3.0s Reveal) ───────────
+    # ── 2. SCENES 2 to 6: 5 QUESTIONS (with 2s Timer + 1.8s Reveal) ───────────
     questions = quiz_data.get("questions", [])
     for q_idx, q in enumerate(questions, 1):
         q_num = q.get("number", q_idx)
@@ -168,20 +168,17 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         # 1. Voice for question and options WITHOUT saying 'option/অপশন'
         q_voice_text = format_spoken_question(q_num, q_text, options, language=language)
         q_voice_mp3 = os.path.join(temp_dir, f"q_{q_num}_voice.mp3")
-        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="-5%")
+        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+12%")
         
         voice_dur = get_audio_duration(q_voice_mp3)
-        base_dur = voice_dur + 0.35  # Short comfortable pause after speaking options before countdown starts
-        countdown_dur = 3.0          # 3 seconds thinking timer
-        reveal_dur = 3.0             # 3 seconds to absorb correct answer & Sahih reference
+        base_dur = voice_dur + 0.10  # Short comfortable pause after speaking options before countdown starts
+        countdown_dur = 2.0          # 2 seconds thinking timer (2 -> 1)
+        reveal_dur = 1.8             # 1.8 seconds to absorb correct answer & Sahih reference
         total_q_dur = base_dur + countdown_dur + reveal_dur
         
         # Generate images for question states
         q_base_img = os.path.join(temp_dir, f"q_{q_num}_base.jpg")
         render_question_card(q, countdown_val=None, is_revealed=False, out_path=q_base_img)
-        
-        q_c3_img = os.path.join(temp_dir, f"q_{q_num}_c3.jpg")
-        render_question_card(q, countdown_val=3, is_revealed=False, out_path=q_c3_img)
         
         q_c2_img = os.path.join(temp_dir, f"q_{q_num}_c2.jpg")
         render_question_card(q, countdown_val=2, is_revealed=False, out_path=q_c2_img)
@@ -198,8 +195,6 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
             f.write("ffconcat version 1.0\n")
             f.write(f"file '{os.path.abspath(q_base_img).replace(chr(92), '/')}'\n")
             f.write(f"duration {base_dur:.3f}\n")
-            f.write(f"file '{os.path.abspath(q_c3_img).replace(chr(92), '/')}'\n")
-            f.write("duration 1.000\n")
             f.write(f"file '{os.path.abspath(q_c2_img).replace(chr(92), '/')}'\n")
             f.write("duration 1.000\n")
             f.write(f"file '{os.path.abspath(q_c1_img).replace(chr(92), '/')}'\n")
@@ -208,11 +203,10 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
             f.write(f"duration {reveal_dur:.3f}\n")
             f.write(f"file '{os.path.abspath(q_rev_img).replace(chr(92), '/')}'\n")
             
-        # 3. Build composite audio track with 3 clock ticks + reveal bell chime
+        # 3. Build composite audio track with 2 clock ticks + reveal bell chime
         t1 = base_dur
         t2 = base_dur + 1.0
-        t3 = base_dur + 2.0
-        t_bell = base_dur + 3.0
+        t_bell = base_dur + 2.0
         
         q_composite_audio = os.path.join(temp_dir, f"q_{q_num}_composite_audio.mp3")
         cmd_q_audio = [
@@ -220,15 +214,13 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
             "-i", q_voice_mp3,
             "-i", sfx["clock_tick"],
             "-i", sfx["clock_tick"],
-            "-i", sfx["clock_tick"],
             "-i", sfx["correct_bell"],
             "-filter_complex",
             f"[1:a]adelay={int(t1*1000)}|{int(t1*1000)},volume=0.80[tick1];"
-            f"[2:a]adelay={int(t2*1000)}|{int(t2*1000)},volume=0.80[tick2];"
-            f"[3:a]adelay={int(t3*1000)}|{int(t3*1000)},volume=0.90[tick3];"
-            f"[4:a]adelay={int(t_bell*1000)}|{int(t_bell*1000)},volume=0.85[bell];"
+            f"[2:a]adelay={int(t2*1000)}|{int(t2*1000)},volume=0.90[tick2];"
+            f"[3:a]adelay={int(t_bell*1000)}|{int(t_bell*1000)},volume=0.85[bell];"
             f"[0:a]volume=1.0[voice];"
-            f"[voice][tick1][tick2][tick3][bell]amix=inputs=5:duration=longest:dropout_transition=0:normalize=0[outa]",
+            f"[voice][tick1][tick2][bell]amix=inputs=4:duration=longest:dropout_transition=0:normalize=0[outa]",
             "-map", "[outa]",
             "-t", f"{total_q_dur:.3f}",
             "-b:a", "192k",
@@ -260,7 +252,7 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         subprocess.run(cmd_render_q, check=True, capture_output=True)
         all_scene_mp4s.append(q_scene_full)
         
-    # ── 3. SCENE 7: OUTRO & SCORE EVALUATION (4 - 5s) ─────────────────────────
+    # ── 3. SCENE 7: OUTRO & SCORE EVALUATION (2 - 3s) ─────────────────────────
     logger.info("Rendering Scene 7: Outro & Score CTA...")
     outro = quiz_data.get("outro", {})
     outro_img = os.path.join(temp_dir, "scene_7_outro.jpg")
@@ -272,9 +264,9 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         outro_voice_text = f"{outro.get('score_prompt', 'What was your score out of 5? Drop it below!')} ... {outro.get('follow_cta', 'Follow for weekly evaluation quizzes!')}"
         
     outro_voice_mp3 = os.path.join(temp_dir, "outro_voice.mp3")
-    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="-5%")
+    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="+10%")
     
-    outro_dur = max(4.0, get_audio_duration(outro_voice_mp3) + 0.5)
+    outro_dur = max(2.5, get_audio_duration(outro_voice_mp3) + 0.2)
     
     outro_audio = os.path.join(temp_dir, "outro_audio.mp3")
     cmd_mix_outro = [

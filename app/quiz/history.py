@@ -128,21 +128,10 @@ def format_quiz_metadata(quiz_script: dict) -> dict:
         
     hook_text = quiz_script.get("hook", {}).get("headline", "আপনার ইসলামিক জ্ঞান যাচাই করুন!")
     
-    desc = f"{hook_text} কুইজের ৫টি প্রশ্নের সঠিক উত্তর দিতে পেরেছেন কি? আপনার দ্বীনি জ্ঞান বৃদ্ধি করতে পুরো ভিডিওটি দেখুন এবং কমেন্টে আপনার স্কোর জানান।\n\n"
-    desc += "✨ কুইজের ৫টি প্রশ্ন, সঠিক উত্তর ও সহীহ রেফারেন্স:\n"
-    
-    bn_nums = {1: "১", 2: "২", 3: "৩", 4: "৪", 5: "৫"}
-    for q in quiz_script.get("questions", []):
-        q_n = bn_nums.get(q.get("number", 1), str(q.get("number", 1)))
-        q_txt = q.get("question", "").strip()
-        c_opt = q.get("correct_option", "").strip()
-        expl = q.get("explanation", "").strip()
-        desc += f"{q_n}. {q_txt}\n   👉 সঠিক উত্তর: {c_opt}\n   📖 তথ্যসূত্র: {expl}\n\n"
-        
-    desc += "💬 আজকের স্কোর:\nআপনার স্কোর ৫-এ কত হলো? কমেন্টে অবশ্যই জানান!\n\n"
-    desc += "✨ In English:\nInteractive 5-Question Islamic Quiz on core pillars, worship, prophets, Quran, and Sahih Hadith. Test your knowledge and comment your score!\n\n"
+    desc = f"{raw_title}\n\nআপনার ইসলামিক জ্ঞান কতটা মজবুত? ☪️\n৫টি প্রশ্নের উত্তর দিয়ে নিজের স্কোর যাচাই করুন!\n\n💡 কতগুলো সঠিক হলো? কমেন্টে আপনার স্কোর (৫/৫, ৪/৫) জানান! 👇\n\n"
+    desc += "✨ In English:\nInteractive 5-Question Islamic Quiz. Test your knowledge on core pillars, prophets, Quran, and Sahih Hadith. Share your score in the comments!\n\n"
     desc += "━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n"
-    desc += "#Shorts #IslamicQuiz #MuslimQuiz #TestYourKnowledge #BanglaIslamic #ইসলামিকপোস্ট #DailyDos #ReelsViral #ShortsFeed #সহীহ_হাদিস #LearnIslam"
+    desc += "#IslamicQuiz #BanglaIslamic #DailyDos #MuslimQuiz #ইসলামিকপোস্ট #Shorts #ReelsViral #ExplorePage"
     
     return {
         "youtube_title": yt_title[:100],
