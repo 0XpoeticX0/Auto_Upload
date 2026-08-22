@@ -38,7 +38,8 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
 
     description = metadata.get("description", "")
     title = metadata.get("facebook_title", metadata.get("youtube_title", ""))
-    full_caption = f"{title}\n\n{description}".strip()
+    # description already begins with title_bn — do NOT prepend title again or it duplicates
+    full_caption = description.strip()
     
     # Determine pinned comment
     pinned_comment = metadata.get("pinned_comment")
@@ -76,7 +77,7 @@ def _upload_as_video(page_id, access_token, video_path, title, description):
     url = f"https://graph.facebook.com/v20.0/{page_id}/videos"
     payload = {
         'title': title,
-        'description': f"{title}\n\n{description}",
+        'description': description,
         'published': 'true',
         'no_story': 'false',
         'access_token': access_token
@@ -140,7 +141,7 @@ def _upload_as_reel(page_id, access_token, video_path, title, description):
             'video_id': upload_session_id,
             'access_token': access_token,
             'video_state': 'PUBLISHED',
-            'description': f"{title}\n\n{description}",
+            'description': description,
         }
         finish_resp = requests.post(start_url, data=finish_payload, timeout=30)
         if finish_resp.status_code == 200:

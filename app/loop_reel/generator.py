@@ -146,41 +146,68 @@ Output ONLY valid JSON:
     raise RuntimeError("Failed to generate a non-duplicate Loop Reel content after 3 attempts.")
 
 def format_loop_caption(data: dict) -> str:
-    """Builds the comprehensive, high-value point-by-point viral caption in 100% Bangla."""
+    """Short, punchy, high-converting caption.
+    Hook -> Key Hadith -> Arabic/Dua -> Practical Rule -> CTA -> Hashtags.
+    """
     title_bn = data.get("title_bn", "").strip()
-    header = f"{title_bn} 🌿\n\n"
-    
-    points_text = ""
-    for pt in data.get("caption_points", []):
-        num = pt.get("number", "•")
-        p_title = pt.get("title", "")
-        points_text += f"{num}. {p_title}:\n"
-        if pt.get("hadith"):
-            points_text += f"{pt.get('hadith')}\n"
-        if pt.get("arabic"):
-            points_text += f"{pt.get('arabic')}\n"
-        if pt.get("pronunciation"):
-            points_text += f"উচ্চারণ: \"{pt.get('pronunciation')}\"\n"
-        if pt.get("meaning"):
-            points_text += f"অর্থ: \"{pt.get('meaning')}\"\n"
-        if pt.get("reference"):
-            points_text += f"📚 [{pt.get('reference')}]\n"
-        points_text += "\n"
-
     dhikr = data.get("dhikr_word", "সুবহানাল্লাহ")
-    cta_block = (
-        f"💬 আজকের জিকির ও আমল:\n"
-        f"পরবর্তীতে আমল করার জন্য পোস্টটি Save করে রাখুন এবং কমেন্টে একবার \"{dhikr}\" লিখে বন্ধুদের সাথে শেয়ার করে সদকায়ে জারিয়ার অংশীদার হোন! 🤍\n\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:\n"
-        f"👉 @dailydos_islam\n\n"
+    pts = data.get("caption_points", [])
+
+    # HOOK: use short on-screen lines, fallback to title_bn
+    hook = data.get("line_1", title_bn).strip()
+    if data.get("line_2"):
+        hook = hook + " " + data.get("line_2", "").strip()
+    caption = hook + " 🤟\n\n"
+
+    # KEY HADITH QUOTE (first point)
+    if pts:
+        pt = pts[0]
+        if pt.get("hadith"):
+            caption += "রাসূলুল্লাহ (ﷺ) বলেছেন:\n"
+            caption += "“" + pt["hadith"] + "”\n"
+            if pt.get("reference"):
+                caption += "[" + pt["reference"] + "]\n"
+            caption += "\n"
+
+    # ARABIC DUA (first point that has arabic)
+    for pt in pts:
+        if pt.get("arabic"):
+            caption += "✨ দোয়া:\n" + pt["arabic"] + "\n\n"
+            if pt.get("pronunciation"):
+                caption += "দুচ্চারণ: “" + pt["pronunciation"] + "”\n\n"
+            if pt.get("meaning"):
+                caption += "অর্থ: " + pt["meaning"] + "\n\n"
+            break
+
+    # PRACTICAL TIP (2nd non-arabic point)
+    for pt in pts[1:]:
+        if pt.get("hadith") and not pt.get("arabic"):
+            caption += "💡 " + pt.get("title", "") + ":\n" + pt["hadith"] + "\n\n"
+            break
+
+    # CTA
+    caption += (
+        "📌 আমলটি মনে রাখতে 🔖 Save করুন।\n"
+        "কমেন্টে একবার “" + dhikr + "” লিখুন — সদকায়ে জারিয়া হবে! 🤍\n\n"
+        "╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋\n"
+        "👉 @dailydos_islam\n\n"
     )
 
-    core_tags = ["DeenOverDunya", "IslamicReminders", "MuslimUmmah", "Sunnah", "সহীহ_হাদিস", "দ্বীন_ইসলাম", "কুরআনের_আলো", "ইসলামিকপোস্ট", "DailyDos"]
-    slot_tags = [t.strip("#") for t in data.get("tags", []) if t.strip("#") not in core_tags]
-    all_tags = core_tags + slot_tags[:4]
-    tags = " ".join([f"#{t}" for t in all_tags])
-    return f"{header}{points_text}{cta_block}{tags}".strip()
+    # HASHTAGS: high-reach viral Islamic + Bengali + platform reach
+    core_tags = [
+        "IslamicReminders", "Sunnah", "DailyDos",
+        "সহীহ_হাদিস", "দ্বীন_ইসলাম", "ইসলামিক_পোস্ট",
+        "QuranAndSunnah", "MuslimUmmah", "DeenOverDunya",
+        "Alhamdulillah", "Shorts", "Reels", "ViralReels"
+    ]
+    slot_tags = [
+        t.strip("#").strip() for t in data.get("tags", [])
+        if t.strip("#").strip() not in core_tags and len(t.strip("#").strip()) > 1
+    ]
+    all_tags = core_tags + slot_tags[:5]
+    tags = " ".join(["#" + t for t in all_tags])
+    return (caption + tags).strip()
+
 
 def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> str:
     """Renders 60 FPS buttery smooth 1.22x continuous zoom video with authentic Quran recitation."""
