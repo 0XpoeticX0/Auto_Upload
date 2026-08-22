@@ -174,7 +174,7 @@ def format_loop_caption(data: dict) -> str:
         if pt.get("arabic"):
             caption += "✨ দোয়া:\n" + pt["arabic"] + "\n\n"
             if pt.get("pronunciation"):
-                caption += "দুচ্চারণ: “" + pt["pronunciation"] + "”\n\n"
+                caption += "উচ্চারণ: “" + pt["pronunciation"] + "”\n\n"
             if pt.get("meaning"):
                 caption += "অর্থ: " + pt["meaning"] + "\n\n"
             break
