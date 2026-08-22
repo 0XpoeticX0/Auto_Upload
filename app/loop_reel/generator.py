@@ -263,8 +263,8 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
             img = Image.new("RGB", (1080, 1920), (12, 16, 22))
             img.save(bg_path, "JPEG")
 
-    # 2. Authentic Quran Audio
-    audio_path = get_or_download_quran_audio(duration=8.0, output_path=os.path.join(temp_dir, "audio.mp3"))
+    # 2. Authentic Quran Audio with 30-Video Anti-Repetition Guarantee
+    audio_path = get_or_download_quran_audio(duration=8.0)
 
     # 3. Build ASS Subtitle with Series Branding, Warm Gold highlights, and Visual Follow Trigger
     series_badge = content.get("series_title", f"✦ দৈনন্দিন সহীহ আমল • পর্ব {content.get('episode_bn', '১')} ✦")
@@ -359,7 +359,7 @@ Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\
         frame = cropped.resize((orig_w, orig_h), Image.Resampling.LANCZOS)
         try:
             proc.stdin.write(frame.tobytes())
-        except BrokenPipeError:
+        except (BrokenPipeError, OSError):
             break  # FFmpeg closed stdin, stop gracefully
 
     try:
