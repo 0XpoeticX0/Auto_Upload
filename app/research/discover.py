@@ -239,6 +239,11 @@ def discover_topics(limit: int = 1):
     logger.info(f"Discovered and recorded topic ID {topic_id}: '{title}'")
     return [topic_data]
 
+def run_discovery() -> dict | None:
+    """Convenience alias for main pipeline: returns a single discovered topic dict."""
+    topics = discover_topics(1)
+    return topics[0] if topics else None
+
 if __name__ == "__main__":
     topics = discover_topics(1)
     print(json.dumps(topics, ensure_ascii=False, indent=2))
