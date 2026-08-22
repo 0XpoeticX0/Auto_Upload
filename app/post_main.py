@@ -89,7 +89,7 @@ def run_facebook_post_pipeline(lang: str = None, no_upload: bool = False):
         return True
     else:
         logger.info("--- Publishing 4-Slide Carousel to Facebook & Instagram ---")
-        upload_success = upload_post_to_facebook(carousel_cards, caption)
+        upload_success = upload_post_to_facebook(carousel_cards, caption, video_paths=carousel_videos)
         
         if upload_success:
             logger.info(f"🎉 Daily {target_lang.capitalize()} Islamic Carousel Post Pipeline finished successfully!")

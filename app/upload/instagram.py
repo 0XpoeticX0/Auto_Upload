@@ -62,6 +62,120 @@ def upload_photo_to_instagram(image_url: str, caption: str) -> bool:
         logger.error(f"Error publishing photo to Instagram: {e}")
         return False
 
+def upload_video_carousel_to_instagram(video_paths: list[str], caption: str) -> bool:
+    """
+    Publishes a Multi-Video Carousel (Micro-Videos with Quran Audio) to Instagram via Resumable Video API.
+    """
+    token, ig_user_id = get_instagram_credentials()
+    if not token or not ig_user_id:
+        logger.warning("Instagram Video Carousel Upload Skipped: FB_ACCESS_TOKEN or IG_USER_ID not set.")
+        return False
+
+    if not video_paths or len(video_paths) < 2:
+        logger.error(f"Instagram Video Carousel requires at least 2 video files. Given: {len(video_paths) if video_paths else 0}")
+        return False
+
+    logger.info(f"Starting Instagram Video Carousel upload ({len(video_paths)} micro-videos with Quran Audio) for @{ig_user_id}...")
+    container_url = f"https://graph.facebook.com/v20.0/{ig_user_id}/media"
+    
+    child_ids = []
+    for idx, vid_path in enumerate(video_paths):
+        if not os.path.exists(vid_path):
+            logger.error(f"Video file not found: {vid_path}")
+            return False
+            
+        file_size = os.path.getsize(vid_path)
+        logger.info(f"Uploading Video Carousel slide {idx+1}/{len(video_paths)} ({file_size / 1024 / 1024:.2f} MB)...")
+        
+        # Step 1: Initialize Resumable Video Container for Carousel Item
+        init_payload = {
+            'media_type': 'VIDEO',
+            'is_carousel_item': 'true',
+            'upload_type': 'resumable',
+            'access_token': token
+        }
+        init_resp = requests.post(container_url, data=init_payload, timeout=30)
+        init_data = init_resp.json()
+        
+        if init_resp.status_code != 200 or 'id' not in init_data:
+            logger.error(f"Failed to init video carousel item {idx+1}: {init_resp.text}")
+            return False
+            
+        item_id = init_data['id']
+        rupload_uri = init_data.get('uri', f"https://rupload.facebook.com/ig-video-upload/v20.0/{item_id}")
+        
+        # Step 2: Upload Video Binary
+        headers = {
+            'Authorization': f'OAuth {token}',
+            'offset': '0',
+            'file_size': str(file_size),
+        }
+        with open(vid_path, 'rb') as vf:
+            upload_resp = requests.post(rupload_uri, headers=headers, data=vf, timeout=300)
+            
+        if upload_resp.status_code not in [200, 201]:
+            logger.error(f"Failed to upload video binary for slide {idx+1}: {upload_resp.text}")
+            return False
+            
+        logger.info(f"Binary uploaded for slide {idx+1} (ID: {item_id}). Waiting for processing...")
+        
+        # Step 3: Poll status until FINISHED
+        status_url = f"https://graph.facebook.com/v20.0/{item_id}?fields=status_code&access_token={token}"
+        is_ready = False
+        for _ in range(12):
+            time.sleep(4)
+            status_resp = requests.get(status_url, timeout=15)
+            status_data = status_resp.json()
+            status_code = status_data.get('status_code')
+            logger.info(f"Slide {idx+1} processing status: {status_code}")
+            if status_code == 'FINISHED':
+                is_ready = True
+                break
+            elif status_code == 'ERROR':
+                logger.error(f"Slide {idx+1} processing error: {status_resp.text}")
+                return False
+                
+        if not is_ready:
+            logger.error(f"Slide {idx+1} timed out processing.")
+            return False
+            
+        child_ids.append(item_id)
+
+    # Step 4: Create Carousel Parent Container
+    logger.info(f"Creating parent Video CAROUSEL container with children: {child_ids}...")
+    carousel_payload = {
+        'media_type': 'CAROUSEL',
+        'children': child_ids,
+        'caption': caption,
+        'access_token': token
+    }
+    car_resp = requests.post(container_url, json=carousel_payload, timeout=30)
+    car_data = car_resp.json()
+    
+    if car_resp.status_code != 200 or 'id' not in car_data:
+        logger.error(f"Video Carousel parent container creation failed: {car_resp.text}")
+        return False
+        
+    parent_id = car_data['id']
+    logger.info(f"Parent Video Carousel created (ID: {parent_id}). Publishing...")
+    time.sleep(5)
+    
+    # Step 5: Publish Carousel Container
+    publish_url = f"https://graph.facebook.com/v20.0/{ig_user_id}/media_publish"
+    pub_payload = {
+        'creation_id': parent_id,
+        'access_token': token
+    }
+    pub_resp = requests.post(publish_url, data=pub_payload, timeout=30)
+    pub_data = pub_resp.json()
+    
+    if pub_resp.status_code == 200 and 'id' in pub_data:
+        logger.info(f"🎉 Instagram VIDEO CAROUSEL with Quran Audio successfully published! Post ID: {pub_data['id']}")
+        return True
+    else:
+        logger.error(f"Failed to publish Instagram Video Carousel: {pub_resp.text}")
+        return False
+
 def upload_carousel_to_instagram(item_urls: list[str], caption: str, is_video: bool = False) -> bool:
     """
     Publishes a Multi-Item Carousel post to Instagram via the Instagram Graph API.

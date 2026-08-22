@@ -2,15 +2,12 @@ import os
 import requests
 import json
 from app.logger import logger
-from app.upload.instagram import upload_photo_to_instagram, upload_carousel_to_instagram
-from dotenv import load_dotenv
+from app.upload.instagram import upload_photo_to_instagram, upload_carousel_to_instagram, upload_video_carousel_to_instagram
 
-load_dotenv()
-
-def upload_post_to_facebook(image_paths: list[str] | str, caption: str) -> bool:
+def upload_post_to_facebook(image_paths: list[str] | str, caption: str, video_paths: list[str] = None) -> bool:
     """
     Publishes a Multi-Card Carousel / Album post to Facebook Page and linked Instagram account.
-    Supports both a single image path or a list of image paths (4 slides).
+    If video_paths is provided, Instagram will receive the 4-Slide Video Carousel with Quran Audio!
     """
     if isinstance(image_paths, str):
         image_paths = [image_paths]
@@ -53,7 +50,7 @@ def upload_post_to_facebook(image_paths: list[str] | str, caption: str) -> bool:
             logger.error(f"Error publishing photo to Facebook: {e}")
             return False
 
-    # 2. Multi-Photo Carousel / Album Post
+    # 2. Multi-Photo Carousel / Album Post for Facebook
     photo_ids = []
     cdn_image_urls = []
     
@@ -72,8 +69,8 @@ def upload_post_to_facebook(image_paths: list[str] | str, caption: str) -> bool:
                 photo_ids.append(p_id)
                 logger.info(f"Uploaded slide {idx+1}/{len(image_paths)} (ID: {p_id})")
                 
-                # Query CDN URL for Instagram
-                if ig_user_id:
+                # Query CDN URL for Instagram fallback
+                if ig_user_id and not video_paths:
                     img_query_url = f"https://graph.facebook.com/v20.0/{p_id}?fields=images&access_token={access_token}"
                     img_q_resp = requests.get(img_query_url, timeout=15)
                     images_data = img_q_resp.json().get('images', [])
@@ -109,12 +106,21 @@ def upload_post_to_facebook(image_paths: list[str] | str, caption: str) -> bool:
     except Exception as e:
         logger.error(f"Error creating Facebook Carousel post: {e}")
 
-    # Cross-post Carousel to Instagram
-    if ig_user_id and len(cdn_image_urls) >= 2:
-        try:
-            logger.info(f"Starting Instagram Carousel cross-posting ({len(cdn_image_urls)} slides)...")
-            upload_carousel_to_instagram(cdn_image_urls, caption)
-        except Exception as e:
-            logger.warning(f"Instagram Carousel auto-post encountered an issue: {e}")
+    # Cross-post Carousel to Instagram (Prefers Video Carousel with Quran Audio)
+    if ig_user_id:
+        if video_paths and len(video_paths) >= 2:
+            try:
+                logger.info(f"Publishing Instagram Video Carousel ({len(video_paths)} slides with Quran audio)...")
+                upload_video_carousel_to_instagram(video_paths, caption)
+            except Exception as e:
+                logger.warning(f"Instagram Video Carousel upload failed, falling back to images: {e}")
+                if len(cdn_image_urls) >= 2:
+                    upload_carousel_to_instagram(cdn_image_urls, caption)
+        elif len(cdn_image_urls) >= 2:
+            try:
+                logger.info(f"Starting Instagram Image Carousel cross-posting ({len(cdn_image_urls)} slides)...")
+                upload_carousel_to_instagram(cdn_image_urls, caption)
+            except Exception as e:
+                logger.warning(f"Instagram Carousel auto-post encountered an issue: {e}")
 
     return fb_success
