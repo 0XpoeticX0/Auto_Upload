@@ -168,9 +168,22 @@ def get_or_download_quran_audio(topic_text: str = "", duration: float = 8.0, out
     if not output_path:
         output_path = os.path.join(AUDIO_DIR, f"trimmed_{track['id']}_{int(duration)}s.mp3")
 
-    fade_out_start = max(0.5, duration - 0.5)
-    # Strip any leading dead air/silence so the Quran recitation starts instantly at 0.00s with the video
-    audio_filter = f"silenceremove=start_periods=1:start_duration=0.02:start_threshold=-35dB,afade=t=in:ss=0:d=0.05,afade=t=out:st={fade_out_start}:d=0.5"
+    fade_out_start = max(0.5, duration - 0.6)
+    # Ear-pleasing serene audio mastering:
+    # 1. silenceremove: instant 0.00s start
+    # 2. lowpass & softened treble: removes harshness & sibilance for maximum soothing warmth
+    # 3. equalizer warmth: gentle acoustic low-end resonance
+    # 4. aecho: subtle natural mosque acoustic depth
+    # 5. smooth fade in & fade out
+    audio_filter = (
+        f"silenceremove=start_periods=1:start_duration=0.02:start_threshold=-35dB,"
+        f"lowpass=f=8000,"
+        f"equalizer=f=250:width_type=o:w=1:g=2.2,"
+        f"equalizer=f=4000:width_type=o:w=1:g=-2.2,"
+        f"aecho=0.8:0.85:35:0.20,"
+        f"afade=t=in:ss=0:d=0.08,"
+        f"afade=t=out:st={fade_out_start}:d=0.6"
+    )
     cmd = [
         "ffmpeg", "-y",
         "-ss", "00:00:00",
@@ -182,5 +195,5 @@ def get_or_download_quran_audio(topic_text: str = "", duration: float = 8.0, out
         output_path
     ]
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    logger.info(f"Prepared 100% Unique Continuous Quran Audio ({track['name']}) -> {output_path}")
+    logger.info(f"Prepared 100% Unique Continuous Softened Quran Audio ({track['name']}) -> {output_path}")
     return output_path
