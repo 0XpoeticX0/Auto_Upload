@@ -45,7 +45,7 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
     if arabic_text:
         arabic_block = f"\n\n✨ সেই বরকতময় বাক্য / দোয়াটি:\n{arabic_text}"
         if pronunciation:
-            arabic_block += f'\nউচ্চারণ: "{pronunciation}"'
+            arabic_block += f'\nউচ্চারণ: "{pronunciation}"\n'
         if translation:
             arabic_block += f'\nঅর্থ: "{translation}"'
 
