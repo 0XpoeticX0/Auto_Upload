@@ -217,6 +217,11 @@ def format_loop_caption(data: dict) -> str:
         "👉 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন: @dailydos_islam\n\n"
     )
 
+    # Clean replacement of unverified/inappropriate terms
+    caption = caption.replace("অলৌকিক ৩টি পুরস্কার", "অসাধারণ ৩টি ফযিলত ও পুরস্কার")
+    caption = caption.replace("অলৌকিক পুরস্কার", "অসাধারণ ফযিলত ও পুরস্কার")
+    caption = caption.replace("অলৌকিক", "শক্তিশালী ও বরকতময়")
+
     # HASHTAGS
     core_tags = [
         "IslamicReminders", "Sunnah", "DailyDos",
@@ -242,9 +247,12 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     # 1. Background image generation
     bg_path = os.path.join(temp_dir, "background.jpg")
     visual_p = content.get("visual_prompt", SLOT_CONFIGS["slot_1_morning"]["visual_prompt"])
+    # Ensure Islamic architectural emphasis
+    if "Andalusian" not in visual_p and "mosque" not in visual_p:
+        visual_p += ", majestic ancient Islamic architecture with carved Moorish arched windows and golden sunlight"
     
     encoded = urllib.parse.quote(visual_p)
-    neg = "human, person, face, woman, man, child, living being, low quality, blurry, watermark, text"
+    neg = "human, person, face, woman, man, child, living being, hands, fingers, arm, body parts, close up fingers, low quality, blurry, watermark, text"
     url = f"https://image.pollinations.ai/prompt/{encoded}?width=1080&height=1920&model=flux&nologo=true&seed={int(time.time())}&negative={urllib.parse.quote(neg)}"
     
     downloaded = False

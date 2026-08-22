@@ -7,12 +7,9 @@ from app.logger import logger
 import re
 
 MODELS = [
-    "gemini-3.7-flash",
-    "gemini-3.6-flash",
-    "gemini-3.5-flash",
-    "gemini-3.5-flash-lite",
     "gemini-3.1-flash-lite",
-    "gemini-3.1-pro-preview"
+    "gemini-3.5-flash-lite",
+    "gemini-3.7-flash"
 ]
 
 GLOBAL_RULE = "\n\nCRITICAL SYSTEM RULE: You must cross-check all Islamic claims with authentic Quranic verses and Sahih Hadith. Do not output any misinformation, unverified stories, or false claims. All claims must be backed by authentic sources."

@@ -1,16 +1,17 @@
-name: Morning Quran Loop Reel Pipeline (Bangla)
+name: 🌅 Morning & 🌙 Evening Quran Loop Reel Pipeline (Bangla)
 
 on:
   schedule:
-    # 1 Daily Morning Quran Aesthetic Loop Reel (30 min early for 6:30 AM Peak, UTC+6 / BST):
-    # 06:00 AM BST (00:00 UTC)
-    - cron: '0 0 * * *'
+    # 2 Daily Quran Aesthetic Loop Reels (30 min before BST peak times):
+    # 1. Morning Slot: 05:30 AM BST (23:30 UTC) -> 30 min before 06:00 AM Fajr/Morning peak
+    # 2. Evening Slot: 07:30 PM BST (13:30 UTC) -> 30 min before 08:00 PM Post-Maghrib peak
+    - cron: '30 23,13 * * *'
   workflow_dispatch:
     inputs:
       slot:
         description: 'Specific Slot to Run (slot_1_morning, slot_2_evening, or auto)'
         required: false
-        default: 'slot_1_morning'
+        default: 'auto'
 
 jobs:
   render-and-publish:
