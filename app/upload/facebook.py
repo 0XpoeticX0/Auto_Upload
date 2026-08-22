@@ -49,8 +49,16 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
         else:
             pinned_comment = "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿"
 
-    # Auto-detect: if filename contains "_short" or video_type forced to "reel", use Reels API
-    is_reel = video_type == "reel" or "_short" in video_path or "quiz" in video_path.lower()
+    # Auto-detect: if filename contains "loop_reel", "_short", "reel", "slot", "episode", or "quiz", use Reels API and Instagram cross-posting
+    is_reel = (
+        video_type == "reel" or 
+        "_short" in video_path.lower() or 
+        "loop_reel" in video_path.lower() or 
+        "reel" in video_path.lower() or 
+        "slot" in video_path.lower() or 
+        "quiz" in video_path.lower() or
+        "episode" in video_path.lower()
+    )
 
     if is_reel:
         logger.info("Uploading as Facebook REEL (shown to non-followers automatically!)")
