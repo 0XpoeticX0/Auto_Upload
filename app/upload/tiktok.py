@@ -44,7 +44,8 @@ def upload_to_tiktok(video_path: str, caption: str, tags: list = None) -> dict:
                 filename=video_path,
                 description=full_caption,
                 cookies=cookie_path,
-                headless=True
+                headless=True,
+                browser="chromium"
             )
             
             if not failed_videos:
