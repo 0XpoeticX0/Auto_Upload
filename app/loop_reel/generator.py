@@ -264,7 +264,7 @@ Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs
     orig_w, orig_h = base_img.size
 
     fps = 60
-    duration = 8.0
+    duration = 6.0   # Match audio length (~6s) to avoid BrokenPipe from -shortest
     total_frames = int(fps * duration)
     zoom_total = 0.22  # 1.22x continuous monotonic push-in
 
@@ -292,7 +292,9 @@ Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 
     for i in range(total_frames):
-        p = i / float(total_frames - 1)
+        if proc.poll() is not None:
+            break  # FFmpeg exited early (e.g. audio ended), stop writing frames
+        p = i / float(total_frames - 1) if total_frames > 1 else 0.0
         current_scale = 1.0 + (zoom_total * p)
         
         crop_w = orig_w / current_scale
@@ -302,9 +304,15 @@ Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs
         
         cropped = base_img.crop((crop_x, crop_y, crop_x + crop_w, crop_y + crop_h))
         frame = cropped.resize((orig_w, orig_h), Image.Resampling.LANCZOS)
-        proc.stdin.write(frame.tobytes())
+        try:
+            proc.stdin.write(frame.tobytes())
+        except BrokenPipeError:
+            break  # FFmpeg closed stdin, stop gracefully
 
-    proc.stdin.close()
+    try:
+        proc.stdin.close()
+    except Exception:
+        pass
     proc.wait()
 
     logger.info(f"Successfully rendered 60 FPS Loop Reel: {output_video}")
