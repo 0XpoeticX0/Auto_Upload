@@ -128,6 +128,7 @@ Output ONLY valid JSON:
 }}"""
 
     from app.history import is_topic_duplicate_global
+    user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Choose a fresh, unique topic NOT in the avoided list. Return valid JSON only."
     for attempt in range(3):
         content = extract_json(system_prompt, user_prompt, max_tokens=1500)
         if not content:
