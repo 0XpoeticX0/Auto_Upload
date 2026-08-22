@@ -21,13 +21,13 @@ SLOT_CONFIGS = {
         "name": "🌅 Slot 1: Morning & Day Prime (06:00 AM BST)",
         "theme": "Morning Dua, Protection from Evil Eye, Guaranteed Duas (ইসমে আজম), Rizq Unlocking, Marriage & Family Sunnah",
         "system_instruction": "Create a high-curiosity 'MUST-KNOW / WANT-TO-KNOW' day reminder. Focus on one of these high-performing topics: (1) 3 morning deeds for immense Barakah, (2) The greatest name of Allah (ইসমে আজম) where no Dua is rejected, (3) 7 signs Allah is answering your Dua, (4) The 1 forgotten prayer that opens closed doors and relieves crushing debt, (5) 1 secret Sunnah deed between husband and wife (feeding spouse, smiling, good character), (6) 3 things forbidden in anger, or (7) Protecting your family from Evil Eye (বদনজর) with morning Azkar.",
-        "visual_prompt": "vertical 9:16, aesthetic interior of a modern serene home with an emerald green velvet prayer rug on polished wooden floor before a large floor-to-ceiling glass window overlooking misty lush morning hills and soft cloudy dawn sky after Fajr, cinematic warm morning light rays, photorealistic 8k, architectural digest, no people, no living beings"
+        "visual_prompt": "vertical 9:16, inside a majestic ancient Andalusian Islamic hall with intricate Moorish geometric arched wooden windows, golden morning dawn light rays shining onto an antique carved wooden rehal holding the Holy Quran on an emerald velvet prayer rug, floating glowing dust particles in cinematic god rays, photorealistic 8k, architectural digest, high aesthetic, deeply spiritual, no people, no living beings"
     },
     "slot_2_evening": {
         "name": "🌙 Slot 2: Prime Evening & Night (08:00 PM BST)",
         "theme": "Heart-Softeners, Grave Protection (সূরা মুলক), Sins-Wiping Prayers, Tahajjud Miracles & Night Peace",
         "system_instruction": "Create a profound, emotionally powerful 'HEART-TOUCHING' nighttime reminder. Focus on one of these high-performing topics: (1) The 30-verse Surah (সূরা মুলক) that miraculously shields you inside the grave, (2) The 1 Sunnah prayer that wipes years of sins in minutes (সালাতুত তাসবীহ / আওয়াবীন), (3) What to say if you wake up suddenly in the night with anxiety to have all Duas accepted instantly, (4) The magic of 2 Rakat Tahajjud for impossible miracles, or (5) Sayyidul Istighfar: the master repentance Dua that guarantees Jannah.",
-        "visual_prompt": "vertical 9:16, luxury balcony view looking out over the illuminated Holy Kaaba and Masjid Al-Haram in Makkah at twilight night, glowing emerald green minarets, polished marble courtyard, soft atmospheric mist, high aesthetic cinematic lighting, photorealistic 8k, architectural digest, no humans in focus"
+        "visual_prompt": "vertical 9:16, inside a serene Ottoman mosque prayer sanctuary at twilight dusk, glowing ornate brass Islamic lanterns casting warm amber geometric light, intricately carved wooden archway overlooking a peaceful courtyard, velvet crimson prayer carpet, photorealistic 8k, cinematic lighting, deeply peaceful, no people, no living beings"
     }
 }
 
@@ -81,25 +81,30 @@ CRITICAL FORMAT RULES:
      c) The Promised Outcome/Benefit (e.g. "বরকতে ভরিয়ে দেন", "দোয়া কখনো ফিরিয়ে দেন না", "সব বন্ধ দরজা খুলে যায়")
    - Specify "highlight_words": list of 2-3 exact words/phrases to be highlighted in Warm Gold and enlarged (+4px) (MUST include the numbered action, 'আল্লাহ', and the outcome).
 
-3. CRITICAL DUA COMPLETENESS RULE (MANDATORY):
+3. THEOLOGICAL AUTHENTICITY & WORD CHOICE (MANDATORY):
+   - NEVER use 'অলৌকিক' (Miraculous) or 'মুজিজা' for general Duas/Amals as 'মুজিজা/অলৌকিক' in Islamic theology is reserved strictly for Prophets.
+   - ALWAYS use authentic, reverent terms like '১টি শক্তিশালী আমল', '১টি বরকতময় দোয়া', '১টি কার্যকর সুন্নাহ', '১টি বিশেষ আমল', 'নবীজি (ﷺ)-এর শেখানো দোয়া'.
+   - Highlight the action verb + benefit (e.g. 'তা দূর করার ১টি শক্তিশালী আমল', 'বরকতে ভরিয়ে দেন').
+
+4. CRITICAL DUA COMPLETENESS RULE (MANDATORY):
    - Whenever providing a Dua (especially from Sahih Muslim, Tirmidhi, Abu Dawood, Ibn Majah, etc.), NEVER output just the opening praise or half-sentence.
    - Example for Debt Relief (Sahih Muslim: 2713):
      WRONG: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَرَبَّ الْعَرْشِ الْعَظِيمِ" (Incomplete, cut-off opening praise)
-     MANDATORY COMPLETE FORMAT:
-     Arabic: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ... اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ"
-     Pronunciation: "আল্লাহুম্মা রব্বাস সামা-ওয়া-তিস সাব‘ই ওয়া রব্বাল ‘আরশিল ‘আযীম, রব্বানা- ওয়া রব্বা কুল্লি শাই... ইক্বদ্বি ‘আন্নাদ-দাইনা ওয়া আগনিনা- মিনাল ফাক্বর।"
-     Meaning: "হে আল্লাহ! সাত আসমানের রব এবং মহান আরশের রব! আমাদের রব এবং প্রত্যেক বস্তুর রব... আমাদের সমস্ত ঋণ পরিশোধ করে দিন এবং আমাদের অভাব দূর করে স্বাবলম্বী করুন।"
-   - The Arabic text MUST contain the full core supplication request.
+     MANDATORY CLEAN COMPLETE FORMAT (Option A):
+     Arabic: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ وَرَبَّ الْعَرْشِ الْعَظِيمِ، اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ"
+     Pronunciation: "আল্লাহুম্মা রব্বাস সামা-ওয়া-তি ওয়া রব্বাল ‘আরশিল ‘আযীম, ইক্বদ্বি ‘আন্নাদ-দাইনা ওয়া আগনিনা- মিনাল ফাক্বর।"
+     Meaning: "হে আল্লাহ! আসমানসমূহের রব এবং মহান আরশের রব! আমাদের সমস্ত ঋণ পরিশোধ করে দিন এবং আমাদের অভাব দূর করে স্বাবলম্বী করুন।" (সহীহ মুসলিম: ২৭১৩)
+   - The Arabic text MUST contain the full core supplication request without unnecessary ellipses dots.
    - Bengali pronunciation and Bengali meaning MUST translate the entire Dua completely with ZERO missing sentences.
 
-4. VALUE-PACKED CAPTION:
+5. VALUE-PACKED CAPTION:
    - Must provide the COMPLETE point-by-point answers and exact Sahih Hadith / Quranic references!
    - Numbered steps (১, ২, ৩) with clear explanations.
    - Sahih book references: [সহীহ বুখারী / সহীহ মুসলিম / সহীহ আন-নাসায়ী / সহীহ ইবনে মাজাহ / জামে আত-তিরমিযী].
    - Community Dhikr comment prompt.
    - Follow credit MUST be 👉 @dailydos_islam
 
-5. TOPICS RECENTLY COVERED (DO NOT REPEAT ANY OF THESE):
+6. TOPICS RECENTLY COVERED (DO NOT REPEAT ANY OF THESE):
 - {avoid_context}
 
 Output ONLY valid JSON:
@@ -263,8 +268,9 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
             img = Image.new("RGB", (1080, 1920), (12, 16, 22))
             img.save(bg_path, "JPEG")
 
-    # 2. Authentic Quran Audio with 30-Video Anti-Repetition Guarantee
-    audio_path = get_or_download_quran_audio(duration=8.0)
+    # 2. Authentic Quran Audio with 30-Video Anti-Repetition Guarantee & Topic Alignment
+    topic_keywords = f"{content.get('title_bn', '')} {content.get('theme', '')} {content.get('line_1', '')} {content.get('line_2', '')}"
+    audio_path = get_or_download_quran_audio(topic_text=topic_keywords, duration=8.0)
 
     # 3. Build ASS Subtitle with Series Branding, Warm Gold highlights, and Visual Follow Trigger
     series_badge = content.get("series_title", f"✦ দৈনন্দিন সহীহ আমল • পর্ব {content.get('episode_bn', '১')} ✦")
@@ -292,24 +298,24 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: SeriesBadge,Noto Sans Bengali,36,&H0041AFEB&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,2.0,1.0,8,60,60,200,1
-Style: MainHook,Noto Sans Bengali,66,&H00FFFFFF&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,5,70,70,0,1
-Style: CaptionCTA,Noto Sans Bengali,48,&H0041AFEB&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,430,1
-Style: FollowTrigger,Noto Sans Bengali,32,&H00D0FFD0&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,2.0,1.0,2,60,60,360,1
+Style: SeriesBadge,Noto Sans Bengali,38,&H0041AFEB&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
+Style: MainHook,Noto Sans Bengali,62,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.2,3.0,5,70,70,0,1
+Style: CaptionCTA,Noto Sans Bengali,44,&H0041AFEB&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,420,1
+Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,60,60,350,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs36\\b1\\c&H0041AFEB&}}{series_badge}
-Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs66\\b1\\c&HFFFFFF&}}{full_hook_text}
-Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs48\\b1\\c&H0041AFEB&}}👉 বিস্তারিত ক্যাপশনে পড়ুন 👇{{\\c&HFFFFFF&}}
-Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c&H00D0FFD0&}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন 👉 @dailydos_islam
+Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c&H0041AFEB&}}{series_badge}
+Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs62\\b1\\c&HFFFFFF&}}{full_hook_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c&H0041AFEB&}}👉 বিস্তারিত ক্যাপশনে পড়ুন 👇{{\\c&HFFFFFF&}}
+Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c&HFFFFFF&}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন 👉 @dailydos_islam
 """
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
 
     rel_ass = os.path.relpath(ass_path).replace("\\", "/")
 
-    # 4. Render 60 FPS Sub-pixel Lanczos continuous zoom video
+    # 4. Render 60 FPS Sub-pixel Lanczos continuous zoom video (Clean typography directly over Islamic visual)
     output_video = os.path.join(output_dir, f"loop_reel_{content.get('slot_key', 'slot')}_{int(time.time())}.mp4")
     
     base_img = Image.open(bg_path).convert("RGB")
