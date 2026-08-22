@@ -1,12 +1,7 @@
 name: Islamic Quiz Reel Pipeline (2x Weekly)
 
 on:
-  schedule:
-    # 2 Weekly Runs (30 min early for 9:00 AM BST / UTC+6):
-    # 1. Monday at 8:30 AM BST (02:30 UTC) - For 9:00 AM upload
-    # 2. Friday at 8:30 AM BST (02:30 UTC) - For 9:00 AM upload
-    - cron: '30 2 * * 1,5'
-  workflow_dispatch: # Allows manual trigger from the Actions tab
+  workflow_dispatch: # Manual trigger only
 
 jobs:
   generate-and-upload-quiz:

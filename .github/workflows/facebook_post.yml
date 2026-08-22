@@ -1,13 +1,7 @@
 name: Daily Facebook & Instagram Post Pipeline (Bangla)
 
 on:
-  schedule:
-    # 2 Daily Bangla Image Reflection Card Runs (Always starting 30 min early, UTC+6 / BST):
-    # 1. Midday Peak: 12:00 PM BST (06:00 UTC) -> for 12:30 PM window
-    - cron: '0 6 * * *'
-    # 2. Afternoon Reminder: 04:15 PM BST (10:15 UTC) -> for 04:45 PM window
-    - cron: '15 10 * * *'
-  workflow_dispatch: # Allows manual trigger from the Actions tab
+  workflow_dispatch: # Manual trigger only
     inputs:
       language:
         description: 'Select Post Language'

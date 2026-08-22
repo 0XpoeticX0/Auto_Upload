@@ -1,11 +1,7 @@
 name: Evening AI Voiceover Hadith Reel Pipeline (Bangla)
 
 on:
-  schedule:
-    # 1 Daily Evening AI Voiceover Narrative Reel (30 min early for 8:30 PM Peak, UTC+6 / BST):
-    # 8:00 PM BST (14:00 UTC)
-    - cron: '0 14 * * *'
-  workflow_dispatch: # Allows manual trigger from the Actions tab
+  workflow_dispatch: # Manual trigger only
 
 jobs:
   generate-and-upload:

@@ -295,3 +295,17 @@ def get_next_pillar_from_history(pillars: list, pillar_type: str = "video") -> d
     chosen = pillars[idx]
     logger.info(f"Deterministic slot fallback: selected pillar '{chosen.get('category') or chosen.get('key')}'")
     return chosen
+
+def to_bangla_digits(number: int) -> str:
+    """Converts standard digits to Bengali numerals."""
+    en_to_bn = {'0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'}
+    return "".join(en_to_bn.get(ch, ch) for ch in str(number))
+
+def get_next_episode_number() -> tuple[int, str]:
+    """Calculates continuous series episode number for branding (e.g. 15 -> '১৫')."""
+    hist = load_history()
+    videos_count = len(hist.get("videos", []))
+    cloud_items = _supabase_fetch_all_recent(limit=300)
+    ep_num = max(1, max(videos_count, len(cloud_items)) + 1)
+    return ep_num, to_bangla_digits(ep_num)
+

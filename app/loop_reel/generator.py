@@ -10,7 +10,7 @@ from PIL import Image
 
 from app.logger import logger
 from app.llm.provider import extract_json
-from app.history import _supabase_insert, get_recent_video_titles
+from app.history import _supabase_insert, get_recent_video_titles, get_next_episode_number
 from app.loop_reel.audio_library import get_or_download_quran_audio
 from app.upload.youtube import upload_to_youtube
 from app.upload.facebook import upload_to_facebook
@@ -54,10 +54,14 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
     recent_titles = get_recent_video_titles(limit=60)
     avoid_context = "\n- ".join(recent_titles[:30]) if recent_titles else "None"
 
+    # Calculate Series Episode Number
+    ep_int, ep_bn = get_next_episode_number()
+
     system_prompt = f"""You are a master viral Islamic content creator specializing in the high-retention "7-Second Aesthetic Loop + High-Value Point-by-Point Caption" Reel format.
 
 THEME: {cfg['theme']}
 INSTRUCTION: {cfg['system_instruction']}
+SERIES CONTEXT: "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
 
 CRITICAL FORMAT RULES:
 1. VIRAL HOOK ARCHETYPES (Cycle dynamically through these high-converting angles):
@@ -77,23 +81,30 @@ CRITICAL FORMAT RULES:
      c) The Promised Outcome/Benefit (e.g. "বরকতে ভরিয়ে দেন", "দোয়া কখনো ফিরিয়ে দেন না", "সব বন্ধ দরজা খুলে যায়")
    - Specify "highlight_words": list of 2-3 exact words/phrases to be highlighted in Warm Gold and enlarged (+4px) (MUST include the numbered action, 'আল্লাহ', and the outcome).
 
-3. VALUE-PACKED CAPTION:
+3. CRITICAL DUA COMPLETENESS RULE (MANDATORY):
+   - Whenever providing a Dua (especially from Sahih Muslim, Tirmidhi, Abu Dawood, Ibn Majah, etc.), NEVER output just the opening praise or half-sentence.
+   - Example for Debt Relief (Sahih Muslim: 2713):
+     WRONG: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَرَبَّ الْعَرْشِ الْعَظِيمِ" (Incomplete, cut-off opening praise)
+     MANDATORY COMPLETE FORMAT:
+     Arabic: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ... اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ"
+     Pronunciation: "আল্লাহুম্মা রব্বাস সামা-ওয়া-তিস সাব‘ই ওয়া রব্বাল ‘আরশিল ‘আযীম, রব্বানা- ওয়া রব্বা কুল্লি শাই... ইক্বদ্বি ‘আন্নাদ-দাইনা ওয়া আগনিনা- মিনাল ফাক্বর।"
+     Meaning: "হে আল্লাহ! সাত আসমানের রব এবং মহান আরশের রব! আমাদের রব এবং প্রত্যেক বস্তুর রব... আমাদের সমস্ত ঋণ পরিশোধ করে দিন এবং আমাদের অভাব দূর করে স্বাবলম্বী করুন।"
+   - The Arabic text MUST contain the full core supplication request.
+   - Bengali pronunciation and Bengali meaning MUST translate the entire Dua completely with ZERO missing sentences.
+
+4. VALUE-PACKED CAPTION:
    - Must provide the COMPLETE point-by-point answers and exact Sahih Hadith / Quranic references!
    - Numbered steps (১, ২, ৩) with clear explanations.
-   - For Duas: Arabic text + Bengali pronunciation + Bengali meaning.
    - Sahih book references: [সহীহ বুখারী / সহীহ মুসলিম / সহীহ আন-নাসায়ী / সহীহ ইবনে মাজাহ / জামে আত-তিরমিযী].
    - Community Dhikr comment prompt.
    - Follow credit MUST be 👉 @dailydos_islam
-
-4. AUDIENCE PSYCHOLOGY & HIGH-DEMAND CURIOSITY:
-   - Always choose high-stakes, relatable topics people DESPERATELY WANT OR NEED TO KNOW (e.g. overcoming debt/anxiety, unblocking trapped Rizq, signs your Dua is accepted, protection against Evil Eye/বদনজর, marital peace, secrets of Tahajjud, grave protection, astronomical reward prayers).
-   - NEVER create dry, generic, or boring textbook lessons. Every reel must answer an urgent spiritual or life question.
 
 5. TOPICS RECENTLY COVERED (DO NOT REPEAT ANY OF THESE):
 - {avoid_context}
 
 Output ONLY valid JSON:
 {{
+    "series_title": "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}",
     "title_bn": "ফজরের পর এই ৩টি আমল করুন এবং দেখুন কীভাবে আল্লাহ আপনার পুরো দিনকে বরকতে ভরিয়ে দেন",
     "title_en": "Do these 3 things after Fajr and watch Allah fill your day with barakah #Shorts",
     "line_1": "ফজরের পর এই ৩টি আমল করুন",
@@ -128,7 +139,7 @@ Output ONLY valid JSON:
 }}"""
 
     from app.history import is_topic_duplicate_global
-    user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Choose a fresh, unique topic NOT in the avoided list. Return valid JSON only."
+    user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Series episode: {ep_bn}. Choose a fresh, unique topic NOT in the avoided list. Return valid JSON only."
     for attempt in range(3):
         content = extract_json(system_prompt, user_prompt, max_tokens=1500)
         if not content:
@@ -141,59 +152,67 @@ Output ONLY valid JSON:
             continue
             
         content["slot_key"] = slot_key
+        content["episode_number"] = ep_int
+        content["episode_bn"] = ep_bn
+        if not content.get("series_title"):
+            content["series_title"] = f"দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
         return content
 
     raise RuntimeError("Failed to generate a non-duplicate Loop Reel content after 3 attempts.")
 
 def format_loop_caption(data: dict) -> str:
-    """Short, punchy, high-converting caption.
-    Hook -> Key Hadith -> Arabic/Dua -> Practical Rule -> CTA -> Hashtags.
-    """
+    """Short, punchy, high-converting caption with complete Dua and Series Branding."""
     title_bn = data.get("title_bn", "").strip()
+    series_title = data.get("series_title", "দৈনন্দিন সহীহ আমল")
     dhikr = data.get("dhikr_word", "সুবহানাল্লাহ")
     pts = data.get("caption_points", [])
 
-    # HOOK: use short on-screen lines, fallback to title_bn
+    # SERIES BRANDING & HOOK HEADER
+    caption = f"✨ {series_title} ✨\n"
     hook = data.get("line_1", title_bn).strip()
     if data.get("line_2"):
         hook = hook + " " + data.get("line_2", "").strip()
-    caption = hook + " 🤟\n\n"
+    caption += hook + " 🤲\n\n"
 
     # KEY HADITH QUOTE (first point)
     if pts:
         pt = pts[0]
         if pt.get("hadith"):
-            caption += "রাসূলুল্লাহ (ﷺ) বলেছেন:\n"
+            caption += "📖 রাসূলুল্লাহ (ﷺ) বলেছেন:\n"
             caption += "“" + pt["hadith"] + "”\n"
             if pt.get("reference"):
-                caption += "[" + pt["reference"] + "]\n"
+                caption += "📚 [" + pt["reference"] + "]\n"
             caption += "\n"
 
-    # ARABIC DUA (first point that has arabic)
+    # COMPLETE ARABIC DUA
     for pt in pts:
         if pt.get("arabic"):
-            caption += "✨ দোয়া:\n" + pt["arabic"] + "\n\n"
+            caption += "🤲 পূর্ণাঙ্গ দোয়া:\n" + pt["arabic"] + "\n\n"
             if pt.get("pronunciation"):
-                caption += "উচ্চারণ: “" + pt["pronunciation"] + "”\n\n"
+                caption += "🗣️ উচ্চারণ: “" + pt["pronunciation"] + "”\n\n"
             if pt.get("meaning"):
-                caption += "অর্থ: " + pt["meaning"] + "\n\n"
+                caption += "🌿 অর্থ: “" + pt["meaning"] + "”\n\n"
+            if pt.get("reference") and pt != pts[0]:
+                caption += "📚 [" + pt["reference"] + "]\n\n"
             break
 
     # PRACTICAL TIP (2nd non-arabic point)
     for pt in pts[1:]:
         if pt.get("hadith") and not pt.get("arabic"):
-            caption += "💡 " + pt.get("title", "") + ":\n" + pt["hadith"] + "\n\n"
+            caption += "💡 " + pt.get("title", "আমলের নিয়ম") + ":\n" + pt["hadith"] + "\n\n"
+            if pt.get("reference"):
+                caption += "📚 [" + pt["reference"] + "]\n\n"
             break
 
-    # CTA
+    # CLEAR CTA & FOLLOW TRIGGER
     caption += (
-        "📌 আমলটি মনে রাখতে 🔖 Save করুন।\n"
-        "কমেন্টে একবার “" + dhikr + "” লিখুন — সদকায়ে জারিয়া হবে! 🤍\n\n"
-        "╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋\n"
-        "👉 @dailydos_islam\n\n"
+        "📌 পরবর্তীতে আমল করার জন্য রিলটি 🔖 Save করুন।\n"
+        "💬 কমেন্টে একবার “" + dhikr + "” লিখুন — সদকায়ে জারিয়া হবে! 🤍\n\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
+        "👉 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন: @dailydos_islam\n\n"
     )
 
-    # HASHTAGS: high-reach viral Islamic + Bengali + platform reach
+    # HASHTAGS
     core_tags = [
         "IslamicReminders", "Sunnah", "DailyDos",
         "সহীহ_হাদিস", "দ্বীন_ইসলাম", "ইসলামিক_পোস্ট",
@@ -210,7 +229,7 @@ def format_loop_caption(data: dict) -> str:
 
 
 def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> str:
-    """Renders 60 FPS buttery smooth 1.22x continuous zoom video with authentic Quran recitation."""
+    """Renders 60 FPS buttery smooth 1.22x continuous zoom video with Series Branding & Visual Follow Trigger."""
     os.makedirs(output_dir, exist_ok=True)
     temp_dir = os.path.join("data", "temp", "loop_reel_run")
     os.makedirs(temp_dir, exist_ok=True)
@@ -219,7 +238,6 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     bg_path = os.path.join(temp_dir, "background.jpg")
     visual_p = content.get("visual_prompt", SLOT_CONFIGS["slot_1_morning"]["visual_prompt"])
     
-    # Try Pollinations Flux first
     encoded = urllib.parse.quote(visual_p)
     neg = "human, person, face, woman, man, child, living being, low quality, blurry, watermark, text"
     url = f"https://image.pollinations.ai/prompt/{encoded}?width=1080&height=1920&model=flux&nologo=true&seed={int(time.time())}&negative={urllib.parse.quote(neg)}"
@@ -235,24 +253,28 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
         logger.warning(f"Pollinations notice: {e}")
 
     if not downloaded:
-        # Fallback to local default aesthetic images if available
         sample_img = "data/temp/loop_reel_sample/fajr_prayer_mat.jpg"
         if os.path.exists(sample_img):
             import shutil
             shutil.copyfile(sample_img, bg_path)
             logger.info("Using cached high-aesthetic background.")
         else:
-            raise RuntimeError("Could not generate or find background image.")
+            # Fallback canvas
+            img = Image.new("RGB", (1080, 1920), (12, 16, 22))
+            img.save(bg_path, "JPEG")
 
     # 2. Authentic Quran Audio
     audio_path = get_or_download_quran_audio(duration=8.0, output_path=os.path.join(temp_dir, "audio.mp3"))
 
-    # 3. Build ASS Subtitle with enlarged Warm Gold highlights
+    # 3. Build ASS Subtitle with Series Branding, Warm Gold highlights, and Visual Follow Trigger
+    series_badge = content.get("series_title", f"✦ দৈনন্দিন সহীহ আমল • পর্ব {content.get('episode_bn', '১')} ✦")
+    if not series_badge.startswith("✦"):
+        series_badge = f"✦ {series_badge} ✦"
+
     l1 = content.get("line_1", "")
     l2 = content.get("line_2", "")
     l3 = content.get("line_3", "")
     
-    # Apply Warm Gold & fs74 size bump to highlighted words
     hw_list = content.get("highlight_words", ["৩টি আমল", "আল্লাহ", "বরকতে ভরিয়ে দেন"])
     full_hook_text = f"{l1}\\N{l2}\\N{l3}" if l2 else l1
     
@@ -270,13 +292,17 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: MainHook,Noto Sans Bengali,66,&H00FFFFFF,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,5,70,70,0,1
-Style: CaptionCTA,Noto Sans Bengali,48,&H0041AFEB,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,420,1
+Style: SeriesBadge,Noto Sans Bengali,36,&H0041AFEB&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,2.0,1.0,8,60,60,200,1
+Style: MainHook,Noto Sans Bengali,66,&H00FFFFFF&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,5,70,70,0,1
+Style: CaptionCTA,Noto Sans Bengali,48,&H0041AFEB&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,430,1
+Style: FollowTrigger,Noto Sans Bengali,32,&H00D0FFD0&,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,1,2.0,1.0,2,60,60,360,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs36\\b1\\c&H0041AFEB&}}{series_badge}
 Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs66\\b1\\c&HFFFFFF&}}{full_hook_text}
-Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs50\\b1\\c&H0041AFEB&}}👉 বিস্তারিত ক্যাপশনে পড়ুন 👇{{\\c&HFFFFFF&}}
+Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs48\\b1\\c&H0041AFEB&}}👉 বিস্তারিত ক্যাপশনে পড়ুন 👇{{\\c&HFFFFFF&}}
+Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c&H00D0FFD0&}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন 👉 @dailydos_islam
 """
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
