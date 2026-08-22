@@ -84,7 +84,7 @@ def get_or_download_quran_audio(duration: float = 8.0, output_path: str = None) 
                 raise RuntimeError(f"No Quran audio available: {e}")
 
     if not output_path:
-        output_path = os.path.join(AUDIO_DIR, f"trimmed_{int(duration)}s.mp3")
+        output_path = os.path.join(AUDIO_DIR, f"trimmed_{track['name']}_{int(duration)}s.mp3")
 
     fade_out_start = max(0.5, duration - 0.5)
     cmd = [
