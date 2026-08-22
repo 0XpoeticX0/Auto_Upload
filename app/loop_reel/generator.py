@@ -10,7 +10,7 @@ from PIL import Image
 
 from app.logger import logger
 from app.llm.provider import extract_json
-from app.history import _supabase_insert, _supabase_fetch_recent, get_recent_video_titles
+from app.history import _supabase_insert, get_recent_video_titles
 from app.loop_reel.audio_library import get_or_download_quran_audio
 from app.upload.youtube import upload_to_youtube
 from app.upload.facebook import upload_to_facebook
