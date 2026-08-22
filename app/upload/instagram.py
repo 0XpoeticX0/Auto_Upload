@@ -62,6 +62,95 @@ def upload_photo_to_instagram(image_url: str, caption: str) -> bool:
         logger.error(f"Error publishing photo to Instagram: {e}")
         return False
 
+def upload_carousel_to_instagram(item_urls: list[str], caption: str, is_video: bool = False) -> bool:
+    """
+    Publishes a Multi-Item Carousel post to Instagram via the Instagram Graph API.
+    Step 1: Create individual item containers with is_carousel_item=true.
+    Step 2: Create a CAROUSEL container with children IDs and caption.
+    Step 3: Publish the carousel container.
+    """
+    token, ig_user_id = get_instagram_credentials()
+    if not token or not ig_user_id:
+        logger.warning("Instagram Carousel Upload Skipped: FB_ACCESS_TOKEN or IG_USER_ID not set.")
+        return False
+
+    if not item_urls or len(item_urls) < 2:
+        logger.error(f"Instagram Carousel requires at least 2 items. Given: {len(item_urls) if item_urls else 0}")
+        return False
+
+    logger.info(f"Creating Instagram Carousel ({len(item_urls)} items) for @{ig_user_id}...")
+    container_url = f"https://graph.facebook.com/v20.0/{ig_user_id}/media"
+    
+    child_ids = []
+    for idx, url in enumerate(item_urls):
+        try:
+            logger.info(f"Creating carousel item {idx+1}/{len(item_urls)}...")
+            payload = {
+                'is_carousel_item': 'true',
+                'access_token': token
+            }
+            if is_video:
+                payload['media_type'] = 'VIDEO'
+                payload['video_url'] = url
+            else:
+                payload['image_url'] = url
+                
+            resp = requests.post(container_url, data=payload, timeout=30)
+            res_data = resp.json()
+            if resp.status_code == 200 and 'id' in res_data:
+                child_id = res_data['id']
+                child_ids.append(child_id)
+                logger.info(f"Carousel item {idx+1} container created (ID: {child_id})")
+            else:
+                logger.error(f"Failed to create carousel item {idx+1}: {resp.text}")
+                return False
+        except Exception as e:
+            logger.error(f"Error creating carousel item {idx+1}: {e}")
+            return False
+            
+    # Wait for all child items to be ready
+    time.sleep(5)
+    
+    # Step 2: Create Carousel Parent Container
+    try:
+        logger.info(f"Creating parent CAROUSEL container with children: {child_ids}...")
+        carousel_payload = {
+            'media_type': 'CAROUSEL',
+            'children': child_ids,
+            'caption': caption,
+            'access_token': token
+        }
+        car_resp = requests.post(container_url, json=carousel_payload, timeout=30)
+        car_data = car_resp.json()
+        
+        if car_resp.status_code != 200 or 'id' not in car_data:
+            logger.error(f"Instagram Carousel parent container creation failed: {car_resp.text}")
+            return False
+            
+        carousel_id = car_data['id']
+        logger.info(f"Carousel parent container created (ID: {carousel_id}). Publishing in 5s...")
+        time.sleep(5)
+        
+        # Step 3: Publish Carousel
+        publish_url = f"https://graph.facebook.com/v20.0/{ig_user_id}/media_publish"
+        pub_payload = {
+            'creation_id': carousel_id,
+            'access_token': token
+        }
+        pub_resp = requests.post(publish_url, data=pub_payload, timeout=30)
+        pub_data = pub_resp.json()
+        
+        if pub_resp.status_code == 200 and 'id' in pub_data:
+            logger.info(f"🎉 Instagram CAROUSEL successfully published! Post ID: {pub_data['id']}")
+            return True
+        else:
+            logger.error(f"Instagram Carousel publish failed: {pub_resp.text}")
+            return False
+            
+    except Exception as e:
+        logger.error(f"Error publishing Carousel to Instagram: {e}")
+        return False
+
 def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
     """
     Publishes a 9:16 vertical video as an Instagram REEL via Instagram Graph API.

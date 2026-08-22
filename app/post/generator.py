@@ -6,64 +6,51 @@ from app.logger import logger
 from app.database import get_connection, get_recent_facebook_posts
 
 # ==============================================================================
-# 4 HIGH-REACH RELATABLE MOMENT PILLARS FOR IMAGE POSTS
-# Formula: Relatable Human Problem/Moment -> The Prophet's Solution -> Guaranteed Payoff
+# 4 HIGH-RETENTION CAROUSEL TOPIC FORMATS (VIRAL BLUEPRINTS)
 # ==============================================================================
-POST_PILLARS = [
+CAROUSEL_FORMATS = [
     {
-        "key": "night_sleep_moments",
-        "name": "রাত, ঘুম ও মানসিক অস্থিরতা (Night, Sleep & Peace)",
-        "description": "মাঝরাতে হঠাৎ ঘুম ভেঙে যাওয়া, দুঃস্বপ্ন দেখা, বিছানায় গিয়ে ঘুম না আসা, গভীর রাতের উদ্বেগ ও মোড় ঘোরানো দোয়া।",
+        "key": "practical_blueprint",
+        "name": "The Step-by-Step Practical Blueprint (কার্যকর সমাধান)",
+        "description": "দোয়া কবুল না হওয়ার কারণ ও প্রতিকার, গুনাহ মাফের নিশ্চিত উপায়, নামাজে মনোযোগ বাড়ানোর ৩টি গোপন কৌশল।",
         "seed_concepts": [
-            "রাতে হঠাৎ ঘুম ভেঙে গেলে নবীজি (সা.)-এর শেখানো সেই বিশেষ দোয়া যা সাথে সাথে কবুল হয় [সহীহ বুখারী: ১১৫৪]",
-            "দুঃস্বপ্ন বা ভয়ংকর স্বপ্ন দেখলে নবীজির নির্দেশিত ৩টি তাত্ক্ষণিক আমল [সহীহ মুসলিম: ২২৬১]",
-            "বিছানায় যাওয়ার পর ঘুম না আসলে ও গভীর রাতে মনের অস্থিরতা কাটাতে নবীজির আমল [জামে আত-তিরমিযী: ৩৫২৮]",
-            "ঘুমন্ত মানুষের মাথায় শয়তানের দেওয়া ৩টি গিঁট খোলার সহজ সুন্নাহ কৌশল [সহীহ বুখারী: ১১৪২]",
-            "ঘুমানোর আগে দুই তালুতে ৩ কুল পড়ে সারা শরীর মুছে নেওয়ার বরকতময় সুন্নাহ [সহীহ বুখারী: ৫০১৭]",
-            "মধ্যরাতে ভয় বা আতঙ্কে চমকে উঠলে পাঠ করার বিশেষ সহীহ দোয়া [সুনান আবু দাউদ: ৩৮৯৩]",
-            "তাহাজ্জুদের শেষ প্রহরে বান্দার অশ্রু বিসর্জন ও আল্লাহর প্রথম আসমানে নেমে আসার ক্ষণ [সহীহ বুখারী: ১১৪৫]",
-            "ঘুমানোর পূর্বে সূরা মুলক তেলাওয়াত করলে কবরের সমস্ত আজাব থেকে মুক্তি [সুনান আত-তিরমিযী: ২৮৯১]"
+            "দোয়া কবুল না হওয়ার প্রধান ৩টি কারণ ও এর সুন্নাহ সমাধান [সহীহ মুসলিম: ১০১৫, সহীহ বুখারী: ৬৩৪০]",
+            "নামাজে দাঁড়িয়ে মনের অস্থিরতা ও শয়তানের ওয়াসওয়াসা কাটানোর ৩টি কৌশল [সহীহ মুসলিম: ২২০৩]",
+            "বিশাল পাহাড়সম ঋণ ও অর্থাভাব দূর করার ৩টি প্রমাণিত আমল [তিরমিযী: ৩৫৬০, আবু দাউদ: ১৫৫৫]",
+            "অভাবনীয় রিজিক পাওয়ার ৩টি সহজ কুরআনিক আমল যা জীবনে বরকত আনে [সূরা নূহ: ১০-১২, সূরা তালাক: ২-৩]"
         ]
     },
     {
-        "key": "protection_evil_eye",
-        "name": "বদনজর, হিংসা ও ঘরের সুরক্ষা (Evil Eye & Home Peace)",
-        "description": "অকারণে সংসারে অশান্তি, কুদৃষ্টি, বদনজর, হিংসা ও অদৃশ্য ক্ষতি থেকে নিজেকে ও পরিবারকে সুরক্ষিত রাখার আমল।",
+        "key": "problem_sunnah_remedy",
+        "name": "The Problem -> Sunnah Remedy Formula (সমস্যা ও সুন্নাহ নিরাময়)",
+        "description": "অতিরিক্ত মানসিক দুশ্চিন্তা ও হতাশা, রাতে ঘুম না আসা, বদনজর ও সংসারে অশান্তি দূর করার সুন্নাহ প্রেসক্রিপশন।",
         "seed_concepts": [
-            "বদনজর ও হিংসার ক্ষতিকর প্রভাব থেকে নিজেকে ও পরিবারকে সুরক্ষিত রাখার কার্যকর দোয়া [সহীহ বুখারী: ৩৩৭৪]",
-            "সুন্দর কিছু দেখলে নিজের অজান্তেই যাতে বদনজর না লাগে—নবীজির শেখানো বরকতময় দোয়া [মুয়াত্তা মালিক]",
-            "ঘর থেকে বের হওয়ার সময় মাত্র ১টি বাক্য যা সারাদিন শয়তানের হাত থেকে বাঁচায় [সুনান আবু দাউদ: ৫০৯৫]",
-            "খাবার ও পানীয়তে ক্ষতি বা বিষ থেকে বাঁচতে নবীজির সকাল-সন্ধ্যার সুরক্ষা দোয়া [জামে আত-তিরমিযী: ৩৩৪৭]",
-            "ছোট বাচ্চাদের বদনজর ও রোগবালাই থেকে রক্ষা করতে নবীজির শেখানো বিশেষ দোয়া [সহীহ বুখারী: ৩৩৭১]",
-            "শরীরের কোনো স্থানে তীব্র ব্যথা বা অসুখ হলে হাত রেখে নবীজির শেখানো রুকইয়াহ [সহীহ মুসলিম: ২২০২]",
-            "যে ঘরে সূরা বাকারা পড়া হয় সেখান থেকে শয়তানের পলায়ন ও সংসারে স্থায়ী শান্তি [সহীহ মুসলিম: ৭৮০]"
+            "অতিরিক্ত মানসিক দুশ্চিন্তা ও হতাশা দূর করার ৩টি সুন্নাহ আমল [সহীহ বুখারী: ৬৩৬৩, মুসনাদে আহমদ: ২২৩৩]",
+            "মাঝরাতে হঠাৎ ঘুম ভেঙে যাওয়া ও দুঃস্বপ্ন দেখলে নবীজির নির্দেশিত ৩টি তাত্ক্ষণিক আমল [সহীহ বুখারী: ১১৫৪, সহীহ মুসলিম: ২২৬১]",
+            "সংসারে অকারণে অশান্তি ও বদনজর কাটাতে নবীজির শেখানো ৩টি সুরক্ষা আমল [সহীহ বুখারী: ৩৩৭৪, সহীহ মুসলিম: ৭৮০]",
+            "প্রচণ্ড রাগের মুহূর্তে যে ৩টি কাজ ইসলামে কঠোরভাবে নিষেধ ও এর তাৎক্ষণিক নিরাময় [সহীহ বুখারী: ৬১১৬]"
         ]
     },
     {
-        "key": "crises_debt_turnaround",
-        "name": "সংকট, ঋণ ও মোড় ঘোরানো দোয়া (Crises, Debt & Rizq)",
-        "description": "দেয়ালে পিঠ ঠেকে যাওয়া কঠিন বিপদ, পাহাড়সম ঋণমুক্তি, ইসমে আজম, অর্থাভাব দূর করা ও তাৎক্ষণিক দোয়া কবুল।",
+        "key": "everyday_checklist",
+        "name": "The Halal vs. Haram Everyday Checklist (সচেতনতা ও সতর্কতা)",
+        "description": "দৈনন্দিন জীবনের সাধারণ ভুল যা অজান্তেই আমল ধ্বংস করে, গীবত, অফিসের ফাঁকি, সামাজিক মাধ্যমের সতর্কতা।",
         "seed_concepts": [
-            "দেয়ালে পিঠ ঠেকে গেলে ও অসম্ভব বিপদ কাটাতে ইউনুস (আ.)-এর সেই বিশেষ দোয়া [জামে আত-তিরমিযী: ৩৫০৫]",
-            "পাহাড় পরিমাণ ঋণের বোঝা থাকলেও তা পরিশোধে সাহায্য করার জাদুকরী দোয়া [জামে আত-তিরমিযী: ৩৫৬০]",
-            "আল্লাহর সেই বিশেষ গোপন নাম যা দিয়ে দোয়া করলে কোনো দোয়া ফেরত দেওয়া হয় না (ইসমে আজম) [সুনান আবু দাউদ: ১৪৯৩]",
-            "জুমার দিনের আসর থেকে মাগরিবের মধ্যবর্তী সেই বিশেষ মুহূর্ত—যখন কোনো দোয়া ফিরিয়ে দেওয়া হয় না [সুনান আবু দাউদ: ১০৪৮]",
-            "মনের তীব্র দুশ্চিন্তা, হতাশা ও টানাটানি কাটাতে নবীজি (সা.)-এর শেখানো দোয়া [সহীহ বুখারী: ৬৩৬৩]",
-            "লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ: আরশের নিচের অফুরন্ত গুপ্তধন [সহীহ বুখারী: ৪২০৫]",
-            "সাইয়্যিদুল ইস্তিগফার: ক্ষমার শ্রেষ্ঠ দোয়া যা বিশ্বাস সহকারে রাতে পড়লে জান্নাত ওয়াজিব [সহীহ বুখারী: ৬৩০৬]"
+            "দৈনন্দিন জীবনের ৩টি সাধারণ ভুল যা অজান্তেই নেক আমল ধ্বংস করে দেয় [সহীহ মুসলিম: ২৫৮১]",
+            "অজান্তেই পরিবারের বরকত কেড়ে নেওয়া ৩টি বদভ্যাস ও এর সুন্নাহ প্রতিকার [সুনান আবু দাউদ: ৫০৯৫]",
+            "সামাজিক মাধ্যম ও মুখের ৩টি বড় গুনাহ যা মানুষ হালকা মনে করে [সহীহ বুখারী: ৬৪৭৪]",
+            "মা-বাবা ও স্ত্রীর সাথে আচরণের ৩টি সূক্ষ্ম ভুল যা বড় গুনাহ ডেকে আনে [সহীহ বুখারী: ৫৩৫৪, জামে আত-তিরমিযী: ৩৮৯৫]"
         ]
     },
     {
-        "key": "husband_wife_family",
-        "name": "দাম্পত্য সুখ, পরিবার ও আচরণ (Marriage, Spouse & Family)",
-        "description": "সারাদিনের ক্লান্তি শেষে দাম্পত্যে ভালোবাসা বাড়ানোর সুন্নাহ, রাগের মুহূর্তে সংযম, মা-বাবার হক ও ঘরে বরকত।",
+        "key": "sunnah_routines",
+        "name": "Night & Morning Sunnah Routines (দৈনিক রুটিন ও আমল)",
+        "description": "রাতে ঘুমানোর আগের ৩টি ছোট আমল (সারা রাত সুরক্ষায়), ফজরের পরের ৩টি বরকতময় আমল, জুমার দিনের গোপন মুহূর্ত।",
         "seed_concepts": [
-            "সারাদিনের ক্লান্তি শেষে ঘরে ফিরে স্ত্রীর মুখে এক লোকমা খাবার তুলে দেওয়াও সদকা [সহীহ বুখারী: ৫৩৫৪]",
-            "প্রচণ্ড রাগের মুহূর্তে যে ৩টি কাজ ও কথা ইসলামে কঠোরভাবে নিষেধ [সহীহ বুখারী: ৬১১৬]",
-            "পিতা-মাতার দিকে কেবল ১টি ভালোবাসার দৃষ্টিতে কবুল হজের সওয়াব [শুআবুল ঈমান: ৭৮৫৯]",
-            "ঘরে প্রবেশ করে পরিবারকে হাসিমুখে সালাম দিলে শয়তানের পলায়ন ও বরকত বৃদ্ধি [জামে আত-তিরমিযী: ২৬৯৮]",
-            "পরিবারে শান্তি ও নেককার সন্তান পাওয়ার শ্রেষ্ঠ কুরআনীয় দোয়া [সূরা আল-ফুরকান: ৭৪]",
-            "তোমাদের মধ্যে সর্বোত্তম ব্যক্তি সে, যে তার স্ত্রীর কাছে সর্বোত্তম [জামে আত-তিরমিযী: ৩৮৯৫]"
+            "রাতে ঘুমানোর আগের ৩টি ছোট আমল (যা সারা রাত মহান আল্লাহর সুরক্ষায় রাখবে) [সহীহ বুখারী: ৫০১৭, ৫০৪০, ২৩১১]",
+            "ফজরের নামাজের পর যে ৩টি আমল করলে সারাদিন অফুরন্ত বরকত মেলে [সহীহ মুসলিম: ৭০৭, সুনান আন-নাসায়ী: ৯৯২৮]",
+            "জুমার দিনের আসর থেকে মাগরিব: সেই গোপন মুহূর্তে দোয়া কবুলের ৩টি গোপন নিয়ম [সুনান আবু দাউদ: ১০৪৮]",
+            "ঘর থেকে বের হওয়া ও ঘরে প্রবেশের ৩টি বরকতময় সুন্নাহ [সুনান আবু দাউদ: ৫০৯৫, জামে আত-তিরমিযী: ২৬৯৮]"
         ]
     }
 ]
@@ -73,16 +60,72 @@ from app.history import (
     get_recent_post_records
 )
 
-def _get_next_post_pillar() -> dict:
-    """Round-robin rotation for Facebook posts across the 4 Relatable Moment Pillars."""
-    return get_next_pillar_from_history(POST_PILLARS, "post")
+def _get_next_format() -> dict:
+    """Round-robin rotation across the 4 High-Retention Carousel Formats."""
+    return get_next_pillar_from_history(CAROUSEL_FORMATS, "post")
+
+def format_carousel_caption(post_data: dict) -> str:
+    """Builds a short, informative, high-converting caption with zero duplication."""
+    cover_lines = post_data.get("cover", {}).get("title_lines", [])
+    hook = " ".join(cover_lines).strip() if cover_lines else post_data.get("title", "বরকতময় সুন্নাহ আমল")
+    
+    caption = f"{hook} 🤲\n\n"
+    
+    slides = post_data.get("slides", [])
+    for idx, s in enumerate(slides):
+        title = s.get("title", "")
+        main_t = s.get("main_text", "").strip("‘ ’'\"")
+        arabic = s.get("arabic", "").strip()
+        pron = s.get("pronunciation", "").strip()
+        meaning = s.get("meaning", "").strip()
+        sol = s.get("solution", "").strip()
+        ref = s.get("reference", "").strip()
+        
+        if title:
+            caption += f"✨ {title}:\n"
+        if main_t:
+            caption += f'"{main_t}"\n'
+        if arabic:
+            caption += f"{arabic}\n"
+        if pron:
+            caption += f'উচ্চারণ: "{pron}"\n\n'
+        if meaning:
+            caption += f'অর্থ: "{meaning}"\n\n'
+        if sol:
+            caption += f"{sol}\n"
+        if ref:
+            caption += f"[{ref}]\n"
+        caption += "\n"
+        
+    last_slide = slides[-1] if slides else {}
+    dhikr = last_slide.get("dhikr_word", "আমিন")
+    
+    caption += (
+        f"📌 আমলটি মনে রাখতে পোস্টটি 🔖 Save করুন।\n"
+        f"কমেন্টে একবার \"{dhikr}\" লিখুন — সদকায়ে জারিয়া হবে! 🤍\n\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"👉 @dailydos_islam\n\n"
+    )
+    
+    core_tags = [
+        "IslamicReminders", "Sunnah", "DailyDos",
+        "সহীহ_হাদিস", "দ্বীন_ইসলাম", "ইসলামিক_পোস্ট",
+        "QuranAndSunnah", "MuslimUmmah", "DeenOverDunya",
+        "Alhamdulillah", "Reels", "Carousel"
+    ]
+    slot_tags = [t.strip("#").strip() for t in post_data.get("tags", [])
+                 if t.strip("#").strip() not in core_tags and len(t.strip("#").strip()) > 1]
+    all_tags = core_tags + slot_tags[:5]
+    tags = " ".join([f"#{t}" for t in all_tags])
+    
+    return (caption + tags).strip()
 
 def generate_post_content(language: str = "bangla") -> dict:
     """
-    Generates authentic, deeply relatable Islamic photo card content with 4-pillar round-robin and concept deduplication.
+    Generates authentic, deeply relatable 4-Slide Islamic Carousel content using the 4 High-Retention Formats.
     """
-    selected_pillar = _get_next_post_pillar()
-    logger.info(f"Selected Pillar for Post ({language.upper()}): {selected_pillar['name']}")
+    selected_format = _get_next_format()
+    logger.info(f"Selected Carousel Format ({language.upper()}): {selected_format['name']}")
     
     recent_posts = get_recent_post_records(limit=60)
     past_topics_list = []
@@ -97,104 +140,109 @@ def generate_post_content(language: str = "bangla") -> dict:
     if past_topics_list:
         past_topics_text = "STRICTLY FORBIDDEN PREVIOUS TOPICS/HADITHS (DO NOT REPEAT ANY OF THESE):\n" + "\n".join(past_topics_list[:30])
 
-    available_seeds = selected_pillar.get("seed_concepts", [])
-    suggested_seeds = random.sample(available_seeds, min(3, len(available_seeds)))
+    available_seeds = selected_format.get("seed_concepts", [])
+    suggested_seeds = random.sample(available_seeds, min(2, len(available_seeds)))
     suggested_text = "\n".join([f"- {s}" for s in suggested_seeds])
 
-    if language == "bangla":
-        system_prompt = f"""You are an expert Islamic scholar and content creator crafting viral, deeply relatable Islamic reflection photo posts in Bangla (বাংলা).
-Pillar: {selected_pillar['name']} — {selected_pillar['description']}
+    system_prompt = f"""You are an expert Islamic scholar and viral content creator designing a high-retention 4-Slide Islamic Swipe Carousel for Instagram & Facebook in 100% Bangla (বাংলা).
+Format Style: {selected_format['name']} — {selected_format['description']}
 
-THE WINNING RELATABLE FORMULA:
-Focus on an urgent real-life human scenario everyone experiences (night anxiety, sudden waking, evil eye at home, crushing debt, anger, marital friction).
-Provide Rasulullah (ﷺ)'s direct Sahih Hadith / Quranic solution that gives immediate relief and life-changing payoff.
+THE WINNING 4-SLIDE HIGH-RETENTION FORMULA:
+- Slide 1 (Hook Cover): Curiosity-driven cover title (2-3 lines) with category badge and gold highlights (e.g., "দোয়া কবুল না হওয়ার প্রধান ৩টি কারণ ও সমাধান 🤲 (সোয়াইপ করুন 👉)").
+- Slide 2 (Point 1 / Hadith 1): First cause/amol/mistake + Sahih Hadith + highlighted keywords + practical Sunnah remedy.
+- Slide 3 (Point 2 / Hadith 2 or Dua): Second cause/amol/Dua + authentic Arabic text (if applicable) with pronunciation & meaning + Sahih reference.
+- Slide 4 (Point 3 / Action Blueprint & Save CTA): Final amol / actionable checklist + community Save 🔖 & Share comment prompt.
 
-SUGGESTED FRESH TOPIC INSPIRATION:
+SUGGESTED FRESH INSPIRATION:
 {suggested_text}
 
 CRITICAL RULES (100% STRICT):
 1. AUTHENTICITY & SAHABI ATTRIBUTION:
    - Must be 100% authentic from Sahih Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami` at-Tirmidhi, or the Holy Quran.
-   - For Hadiths: Always include the Sahabi narrator in the header (e.g. 'জাবির ইবনে আব্দুল্লাহ (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:' or 'আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:').
-   - For Quranic Ayahs: 'মহান আল্লাহ তা'আলা পবিত্র কুরআনে এরশাদ করেছেন:'.
+   - For Hadiths: Include Sahabi narrator in header (e.g. 'আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (ﷺ) বলেছেন:').
 
-2. QUOTE & PHRASING ACCURACY (EASY, RELATABLE & 100% IDENTICAL):
-   - Provide the EXACT authentic 100% identical Bangla translation from Sahih Hadith / Quran inside Bangla quotes ‘...’.
-   - Length: 25 to 65 words (punchy, clear, beautifully readable on card).
-   - highlight_phrases: 1 to 3 EXACT substrings (2-5 words each) from the quote to highlight in warm gold (e.g., "এই বিশেষ দোয়াটি পড়বে", "সকল গুনাহ মাফ", "অভাবনীয় রিজিক").
+2. QUOTE & PHRASING ACCURACY (PUNCHY, RELATABLE & 100% IDENTICAL):
+   - Provide the EXACT authentic Bangla translation inside quotes ‘...’.
+   - highlight_phrases: 1 to 3 EXACT substrings (2-5 words each) to highlight in warm gold.
 
 3. VISUAL BACKGROUND PROMPT:
-   - Must be high-aesthetic, architectural or atmospheric nature (no people, no living beings, no text).
-   - Example: "vertical 4:5, aesthetic wooden Rehal with open Holy Quran next to warm amber Moroccan lantern on marble courtyard table, photorealistic 8k, serene atmosphere, no people, no living beings".
-
-4. CAPTION GENERATION (DEEP VALUE + RELATABLE HOOK + SAVE/SHARE TRIGGER):
-   - 100% Bangla caption.
-   - Structure:
-   ✨ [Relatable Real-Life Hook & Situation]: [1-2 sentences on why every Muslim needs this today]
-   
-   📖 সহীহ দলিল ও প্রেক্ষিত:
-   [Full background and context of the Hadith / Ayah]
-   
-   🤲 দোয়া ও উচ্চারণ:
-   [Arabic Dua with full Tashkeel if applicable]
-   উচ্চারণ: "[Bangla Phonetic Pronunciation]"
-   
-   অর্থ: "[Bangla Meaning]"
-   📚 তথ্যসূত্র: [Specific Sahih Reference]
-   
-   💡 শিক্ষা ও আমল:
-   [1-2 practical action sentences for daily life]
-
-   💬 আজকের জিকির ও আমল:
-   পরবর্তীতে আমল করার জন্য পোস্টটি Save করে রাখুন এবং কমেন্টে একবার "[সুবহানাল্লাহ / আলহামদুলিল্লাহ / আমিন / মাশাআল্লাহ]" লিখে বন্ধুদের সাথে শেয়ার করে সদকায়ে জারিয়ার অংশীদার হোন! 🤍
-
-   ━━━━━━━━━━━━━━━━━━━━
-   📌 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন:
-   👉 @dailydos_islam
-
-   #DeenOverDunya #IslamicReminders #MuslimUmmah #Sunnah #সহীহ_হাদিস #দ্বীন_ইসলাম #কুরআনের_আলো #ইসলামিকপোস্ট #DailyDos #[TopicTag]
+   - Must be high-aesthetic, architectural or atmospheric nature in 4:5 portrait (no people, no living beings, no text).
+   - Example: "vertical 4:5, aesthetic wooden Rehal with open Holy Quran next to warm amber Moroccan lantern on marble courtyard table at twilight, photorealistic 8k, serene atmosphere, no people, no living beings".
 
 {past_topics_text}
 
 Respond with ONLY valid JSON (no markdown formatting, no other text):
 {{
-    "topic_badge": "✦ ছোট আকর্ষণীয় ক্যাটাগরি ব্যাজ (উদা: রাতের বিশেষ আমল / ঋণমুক্তির দোয়া / বদনজর থেকে রক্ষা / দাম্পত্যের বরকত) ✦",
-    "header": "আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (সা.) বলেছেন:",
-    "quote": "‘যে ব্যক্তি রাতে হঠাৎ ঘুম ভেঙে যাওয়ার পর এই দোয়াটি পড়বে, তার সকল গুনাহ মাফ করা হবে এবং তার নেক দোয়া অবিলম্বে কবুল করা হবে।’",
-    "highlight_phrases": ["হঠাৎ ঘুম ভেঙে যাওয়ার পর", "সকল গুনাহ মাফ", "অবিলম্বে কবুল"],
-    "reference": "সহীহ বুখারী: ১১৫৪",
-    "caption": "[Complete high-retention structured caption as instructed above]",
-    "visual_prompt": "vertical 4:5, aesthetic serene prayer rug on polished wooden floor before floor-to-ceiling glass window overlooking soft dawn sky, warm morning rays, photorealistic 8k, architectural digest, no people, no living beings",
-    "topic": "রাতের বিশেষ দোয়া",
-    "category": "{selected_pillar['key']}"
+    "format_type": "{selected_format['key']}",
+    "topic_badge": "✦ দোয়া কবুল ও আত্মশুদ্ধি ✦",
+    "title": "দোয়া কবুল না হওয়ার ৩টি কারণ ও সমাধান",
+    "category": "{selected_format['key']}",
+    "visual_prompt": "vertical 4:5, aesthetic serene wooden Rehal with Holy Quran next to warm amber Moroccan lantern on marble table, soft sunset twilight, photorealistic 8k, no people",
+    "cover": {{
+        "title_lines": [
+            "দোয়া কবুল না হওয়ার",
+            "প্রধান ৩টি কারণ ও এর সমাধান",
+            "যা অনেকেরই অজানা"
+        ],
+        "highlight_phrases": ["দোয়া কবুল না হওয়ার", "৩টি কারণ ও এর সমাধান", "অনেকেরই অজানা"]
+    }},
+    "slides": [
+        {{
+            "slide_number": 2,
+            "title": "১. হারাম উপার্জন ও অসচেতন মন",
+            "header": "রাসূলুল্লাহ (ﷺ) বলেছেন:",
+            "main_text": "‘এক ব্যক্তি ধূলিধূসর অবস্থায় আকাশের দিকে হাত তুলে দোয়া করে, অথচ তার খাদ্য হারাম, পানীয় হারাম, পোশাক হারাম এবং তার জীবিকা হারাম—তবে কীভাবে তার দোয়া কবুল হবে?’",
+            "highlight_phrases": ["খাদ্য হারাম, পানীয় হারাম", "কীভাবে তার দোয়া কবুল হবে"],
+            "solution": "💡 সুন্নাহ সমাধান: দোয়া কবুলের প্রথম শর্ত হলো হালাল রুজি এবং একাগ্র চিত্তে আল্লাহর কাছে প্রার্থনা করা।",
+            "reference": "সহীহ মুসলিম: ১০১৫"
+        }},
+        {{
+            "slide_number": 3,
+            "title": "২. তাড়াহুড়ো করা ও নিরাশ হওয়া",
+            "header": "আবু হুরায়রা (রা.) থেকে বর্ণিত, রাসূলুল্লাহ (ﷺ) বলেছেন:",
+            "main_text": "‘তোমাদের প্রত্যেকের দোয়া কবুল করা হয়, যতক্ষণ না সে তাড়াহুড়ো করে বলে—আমি তো দোয়া করলাম কিন্তু কবুল হলো না।’",
+            "highlight_phrases": ["তাড়াহুড়ো করে", "আমি তো দোয়া করলাম কিন্তু কবুল হলো না"],
+            "solution": "💡 সুন্নাহ সমাধান: পূর্ণ দৃঢ় বিশ্বাস রাখুন। আল্লাহ অবিলম্বে দান করবেন, নয়তো পরকালের জন্য জমা রাখবেন বা কোনো বিপদ দূর করবেন।",
+            "reference": "সহীহ বুখারী: ৬৩৪০"
+        }},
+        {{
+            "slide_number": 4,
+            "title": "৩. দোয়া কবুলের সঠিক পদ্ধতি ও আমল",
+            "main_text": "১. আল্লাহর প্রশংসা ও নবীজি (ﷺ)-এর ওপর দুরুদ পড়ে শুরু করুন।\n২. কাবার দিকে ফিরে দুই হাত তুলে বিনম্র কণ্ঠে চান।\n৩. ইসমে আজম পাঠ করে আপনার মনের আরজি জানান।",
+            "solution": "💡 বরকতময় মুহূর্ত: শেষ রাত, সেজদারত অবস্থায় এবং জুমার দিনের আসরের শেষ সময়ে দোয়া করুন।",
+            "dhikr_word": "আমিন"
+        }}
+    ],
+    "tags": ["IslamicReminders", "Sunnah", "DailyDos", "সহীহ_হাদিস", "দ্বীন_ইসলাম", "ইসলামিক_পোস্ট", "Shorts", "Reels", "Carousel"]
 }}"""
-    else:
-        system_prompt = "English post generation..."
 
-    user_prompt = f"Generate 1 high-CTR, deeply relatable Islamic photo post for pillar '{selected_pillar['name']}' in 100% Bangla."
+    user_prompt = f"Generate 1 high-CTR, deeply relatable 4-Slide Islamic Swipe Carousel using format '{selected_format['name']}' in 100% Bangla."
 
-    from app.history import is_topic_duplicate_global, record_post_history
+    from app.history import is_topic_duplicate_global
     for attempt in range(3):
         try:
-            post_data = extract_json(system_prompt, user_prompt, max_tokens=1500)
-            if not post_data or "quote" not in post_data:
-                logger.warning(f"Attempt {attempt+1}: Failed to parse valid post JSON from LLM. Retrying...")
+            post_data = extract_json(system_prompt, user_prompt, max_tokens=2200, for_posts=True)
+            if not post_data or "cover" not in post_data or "slides" not in post_data or len(post_data.get("slides", [])) < 2:
+                logger.warning(f"Attempt {attempt+1}: Failed to parse valid Carousel JSON from LLM. Retrying...")
                 continue
                 
-            quote = post_data.get("quote", "")
-            ref = post_data.get("reference", "")
-            topic_str = f"[{ref}] {quote}"
+            first_slide = post_data.get("slides", [])[0]
+            main_q = first_slide.get("main_text", "")
+            ref = first_slide.get("reference", "")
+            topic_str = f"[{ref}] {main_q}"
             
             # Cross-pipeline deduplication check
             if is_topic_duplicate_global(topic_str):
                 logger.warning(f"Topic '{topic_str}' flagged as duplicate in global history! Retrying with a fresh topic...")
                 continue
                 
+            # Build unified caption
+            post_data["caption"] = format_carousel_caption(post_data)
             return post_data
         except Exception as e:
-            logger.error(f"Error on post generation attempt {attempt+1}: {e}")
+            logger.error(f"Error on carousel generation attempt {attempt+1}: {e}")
             
-    logger.error("Failed to generate a non-duplicate post after 3 attempts.")
+    logger.error("Failed to generate a non-duplicate Carousel after 3 attempts.")
     return None
 
 if __name__ == "__main__":
