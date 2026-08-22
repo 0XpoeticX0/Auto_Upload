@@ -424,14 +424,14 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
     tiktok_res = upload_to_tiktok(video_path, caption=yt_title, tags=content.get("tags", []))
     logger.info(f"TikTok Upload: {tiktok_res.get('status')}")
 
-    # 7. Save to Supabase for zero-topic repetition
+    # 7. Save to Supabase for series tracking and zero-topic repetition
     record_payload = {
         "id": f"loop_{content.get('slot_key', 'slot')}_{int(time.time())}",
-        "title": content.get("title_bn", ""),
-        "source": f"loop_{content.get('slot_key', 'slot')}"
+        "title": f"[পর্ব {content.get('episode_bn', '')}] {content.get('title_bn', '')}",
+        "source": "loop_reel_series"
     }
     _supabase_insert(record_payload)
-    logger.info(f"Saved Loop Reel topic to Supabase: '{content.get('title_bn')}'")
+    logger.info(f"Saved Loop Reel Episode {content.get('episode_bn', '')} to Supabase: '{content.get('title_bn')}'")
 
     logger.info("=== LOOP REEL PIPELINE COMPLETED SUCCESSFULLY ===")
     return True

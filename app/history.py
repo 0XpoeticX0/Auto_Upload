@@ -302,10 +302,32 @@ def to_bangla_digits(number: int) -> str:
     return "".join(en_to_bn.get(ch, ch) for ch in str(number))
 
 def get_next_episode_number() -> tuple[int, str]:
-    """Calculates continuous series episode number for branding (e.g. 15 -> '১৫')."""
-    hist = load_history()
-    videos_count = len(hist.get("videos", []))
+    """
+    Calculates continuous series episode number for 'দৈনন্দিন সহীহ আমল'.
+    Tracks actual loop reel series episodes from Supabase, accurately starting from Episode 2 -> 3 -> 4.
+    """
     cloud_items = _supabase_fetch_all_recent(limit=300)
-    ep_num = max(1, max(videos_count, len(cloud_items)) + 1)
-    return ep_num, to_bangla_digits(ep_num)
+    
+    max_ep = 2  # Baseline start (after episode 1 and 2)
+    bn_map = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'}
+    
+    for item in cloud_items:
+        src = item.get("source", "")
+        title = item.get("title", "")
+        
+        if src.startswith("loop") or "loop" in item.get("id", ""):
+            match = re.search(r"পর্ব\s*([০-৯\d]+)", title)
+            if match:
+                bn_digits = match.group(1)
+                en_str = "".join(bn_map.get(ch, ch) for ch in bn_digits)
+                try:
+                    ep_val = int(en_str)
+                    if 2 <= ep_val < 50:
+                        if ep_val > max_ep:
+                            max_ep = ep_val
+                except Exception:
+                    pass
+
+    next_ep = max_ep + 1
+    return next_ep, to_bangla_digits(next_ep)
 
