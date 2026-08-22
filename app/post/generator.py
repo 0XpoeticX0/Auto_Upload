@@ -138,6 +138,7 @@ CRITICAL RULES (100% STRICT):
    🤲 দোয়া ও উচ্চারণ:
    [Arabic Dua with full Tashkeel if applicable]
    উচ্চারণ: "[Bangla Phonetic Pronunciation]"
+   
    অর্থ: "[Bangla Meaning]"
    📚 তথ্যসূত্র: [Specific Sahih Reference]
    
