@@ -63,48 +63,41 @@ THEME: {cfg['theme']}
 INSTRUCTION: {cfg['system_instruction']}
 SERIES CONTEXT: "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
 
-CRITICAL FORMAT RULES:
-1. VIRAL HOOK ARCHETYPES (Cycle dynamically through these high-converting angles):
-   • Archetype 1 [The Guaranteed Dua]: "রাসূলুল্লাহ (ﷺ) বলেছেন: আল্লাহর এমন ১টি নাম আছে, যা দিয়ে দোয়া করলে আল্লাহ তা কখনো ফিরিয়ে দেন না..." (ইসমে আজম)
-   • Archetype 2 [Spiritual Signs]: "৭টি নিশ্চিত লক্ষণ যা প্রমাণ করে আল্লাহ আপনার দোয়া কবুল করছেন — যদিও আপনি তা এখনই দেখতে পাচ্ছেন না..."
-   • Archetype 3 [The Forgotten Key Prayer]: "এমন ১টি অবহেলিত সুন্নাহ নামাজ যা আপনার জীবনের সমস্ত বন্ধ দরজা খুলে দিতে পারে..."
-   • Archetype 4 [Mind-Blowing Quranic Miracle]: "কুরআনে কেন আল্লাহ কিয়ামতকে অতীত কাল (Past Tense) দিয়ে বর্ণনা করেছেন তা জানলে আপনি বিস্মিত হবেন..."
-   • Archetype 5 [Astronomical Rewards / Sins Wiping]: "এমন ১টি সুন্নাহ আমল... যা মাত্র কয়েক মিনিটে বহু বছরের গুনাহ ধুয়ে ফেলে..."
-   • Archetype 6 [Time-Locked Barakah]: "ফজরের পর মাত্র ৫ মিনিটে এই ৩টি আমল করুন এবং দেখুন কীভাবে আল্লাহ পুরো দিনকে বরকতে ভরিয়ে দেন..."
+THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY FOR ALL GENERATIONS):
+Rule 1: Name the Authority First
+- Start with an instant trust marker ("রাসূলুল্লাহ (ﷺ) বলেছেন...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন...").
+- Why: People stop scrolling immediately when they see a credible, sacred source.
 
-2. ON-SCREEN TEXT & NUMBER PSYCHOLOGY (MANDATORY):
-   - Every title and on-screen hook MUST contain a specific number (e.g. "৩টি আমল", "৭টি নিশ্চিত লক্ষণ", "১টি বিশেষ দোয়া", "২ রাকাত নামাজ", "১টি মারাত্মক ভুল", "৫ মিনিটে", "১২ বছরের গুনাহ"). Numbered hooks drive the highest engagement and retention!
-   - A single, curiosity-driving sentence in 2-3 short lines in authentic BANGLA (বাংলা).
-   - Must specify:
-     a) The Numbered Action/Topic (e.g. "৩টি আমল", "১টি নাম", "২ রাকাত নামাজ", "৭টি লক্ষণ")
-     b) The Divine Entity ("আল্লাহ")
-     c) The Promised Outcome/Benefit (e.g. "বরকতে ভরিয়ে দেন", "দোয়া কখনো ফিরিয়ে দেন না", "সব বন্ধ দরজা খুলে যায়")
-   - Specify "highlight_words": list of 2-3 exact words/phrases to be highlighted in Warm Gold and enlarged (+4px) (MUST include the numbered action, 'আল্লাহ', and the outcome).
+Rule 2: Promise High Gain with Low Effort
+- Use specific, small numbers ("মাত্র ১টি আমল", "প্রতিদিন ৩০ সেকেন্ড", "ঘুমানোর আগে ৩ বার", "মাত্র ৫ মিনিটে").
+- Why: Specific numbers feel achievable. Vague advice gets skipped.
 
-3. THEOLOGICAL AUTHENTICITY & WORD CHOICE (MANDATORY):
-   - NEVER use 'অলৌকিক' (Miraculous) or 'মুজিজা' for general Duas/Amals as 'মুজিজা/অলৌকিক' in Islamic theology is reserved strictly for Prophets.
-   - ALWAYS use authentic, reverent terms like '১টি শক্তিশালী আমল', '১টি বরকতময় দোয়া', '১টি কার্যকর সুন্নাহ', '১টি বিশেষ আমল', 'নবীজি (ﷺ)-এর শেখানো দোয়া'.
-   - Highlight the action verb + benefit (e.g. 'তা দূর করার ১টি শক্তিশালী আমল', 'বরকতে ভরিয়ে দেন').
+Rule 3: Target a Pain Point or Deep Desire
+- Connect directly to real-life worries:
+  * Rizq / Money: অভাব দূর হওয়া, দেনা পরিশোধ, ব্যবসায় বরকত
+  * Peace / Anxiety: মনের অস্থিরতা, দুশ্চিন্তা থেকে মুক্তি, মানসিক প্রশান্তি
+  * Protection: বিপদ-আপদ থেকে বেঁচে থাকা, কবরের আযাব থেকে মুক্তি, দোয়া কবুল হওয়া
 
-4. CRITICAL DUA COMPLETENESS RULE (MANDATORY):
-   - Whenever providing a Dua (especially from Sahih Muslim, Tirmidhi, Abu Dawood, Ibn Majah, etc.), NEVER output just the opening praise or half-sentence.
-   - Example for Debt Relief (Sahih Muslim: 2713):
-     WRONG: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَرَبَّ الْعَرْشِ الْعَظِيمِ" (Incomplete, cut-off opening praise)
-     MANDATORY CLEAN COMPLETE FORMAT (Option A):
-     Arabic: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ وَرَبَّ الْعَرْشِ الْعَظِيمِ، اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ"
-     Pronunciation: "আল্লাহুম্মা রব্বাস সামা-ওয়া-তি ওয়া রব্বাল ‘আরশিল ‘আযীম, ইক্বদ্বি ‘আন্নাদ-দাইনা ওয়া আগনিনা- মিনাল ফাক্বর।"
-     Meaning: "হে আল্লাহ! আসমানসমূহের রব এবং মহান আরশের রব! আমাদের সমস্ত ঋণ পরিশোধ করে দিন এবং আমাদের অভাব দূর করে স্বাবলম্বী করুন।" (সহীহ মুসলিম: ২৭১৩)
-   - The Arabic text MUST contain the full core supplication request without unnecessary ellipses dots.
-   - Bengali pronunciation and Bengali meaning MUST translate the entire Dua completely with ZERO missing sentences.
+Rule 4: Leave the Loop Open (Never reveal the answer on screen)
+- End the on-screen sentence with an unfinished promise ("...যা পড়লে বান্দার কোনো চাওয়া অপূর্ণ থাকে না", "...যা আপনার ভাগ্য বদলে দিতে পারে").
+- Why: It forces the viewer to watch the whole loop and open the caption to find the actual answer.
 
-5. VALUE-PACKED CAPTION:
-   - Must provide the COMPLETE point-by-point answers and exact Sahih Hadith / Quranic references!
-   - Numbered steps (১, ২, ৩) with clear explanations.
-   - Sahih book references: [সহীহ বুখারী / সহীহ মুসলিম / সহীহ আন-নাসায়ী / সহীহ ইবনে মাজাহ / জামে আত-তিরমিযী].
-   - Community Dhikr comment prompt.
-   - Follow credit MUST be 👉 @dailydos_islam
+UNIVERSAL HOOK TEMPLATES (PLUG & PLAY):
+1. Guaranteed Result: [Authority] + এমন ১টি [আমল/দোয়া] আছে + যা করলে [বড় সমাধান]...
+   Example: "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি ছোট দোয়া আছে, যা পড়লে পাহাড় সমান ঋণও আল্লাহ দূর করে দেন..."
+2. Mistake / Warning: আমরা প্রতিদিন এই ১টি ভুল করি + যার কারণে [বড় ক্ষতি/দোয়া আটকে যায়]...
+   Example: "প্রতিদিন দোয়া করার সময় আমরা এমন ১টি ভুল করি, যার কারণে দোয়া কবুল হতে দেরি হয়..."
+3. Instant Protection: ঘর থেকে বের হওয়ার সময় / ঘুমানোর আগে + মাত্র ৩ সেকেন্ডে এই ১টি আমল...
+   Example: "বিছানায় যাওয়ার আগে মাত্র ২০ সেকেন্ডের এই আমলটি আপনাকে সারারাত সব বিপদ থেকে নিরাপদে রাখবে..."
+4. Urgent Curiosity: আপনি কি জানেন + [সহজ কাজ] করলে আল্লাহ বান্দার জন্য কি প্রস্তুত রাখেন?
+   Example: "আপনি কি জানেন, প্রতিদিন মাত্র ১ বার এই তাসবীহ পড়লে আল্লাহ আপনার জীবনের সব দুশ্চিন্তা কিভাবে দূর করে দেন?"
 
-6. TOPICS RECENTLY COVERED (DO NOT REPEAT ANY OF THESE):
+CRITICAL DUA & CAPTION RULES (MANDATORY):
+1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
+2. Value-Packed Caption: Point-by-point breakdown with exact references (সহীহ বুখারী / সহীহ মুসলিম / জামে আত-তিরমিযী / সহীহ আন-নাসায়ী / সহীহ ইবনে মাজাহ).
+3. Community Dhikr CTA + Follow Credit: 👉 @dailydos_islam
+
+TOPICS RECENTLY COVERED (DO NOT REPEAT):
 - {avoid_context}
 
 Output ONLY valid JSON:

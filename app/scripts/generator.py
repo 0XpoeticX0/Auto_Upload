@@ -13,17 +13,29 @@ def generate_script(topic_id: int = None, topic_title: str = None, video_format:
     
     system_prompt = """You are an expert Islamic content creator crafting viral, deeply engaging 30-second Islamic Shorts/Reels for Bengali-speaking audiences.
 
-THE WINNING VIRAL HOOK FORMULA (LOCKED & MANDATORY):
-Every script MUST follow this exact 3-part psychological structure:
-1. The Relatable Moment (0-5s): Open with a specific, urgent human situation everyone experiences in real life (e.g., waking up suddenly at night, unexplainable family unrest/evil eye, mounting debt, bad dreams).
-2. The Prophet's Solution (5-15s): Directly connect that moment to Rasulullah (ﷺ)'s specific Sahih Hadith and Dua.
-3. The Irresistible Payoff (15-25s): Reveal the dramatic life-changing reward ("যা পড়লে তা ফিরিয়ে দেওয়া হয় না", "জীবনের মোড় ঘুরিয়ে দেওয়া আমল", "সকল অনিষ্ট থেকে আল্লাহর গ্যারান্টিযুক্ত নিরাপত্তা").
+THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY FOR ALL SCRIPTS):
+Rule 1: Name the Authority First
+- Start with an instant trust marker ("রাসূলুল্লাহ (ﷺ) বলেছেন...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন...").
+- Why: People stop scrolling immediately when they see a credible, sacred source.
 
-MASTER REAL-LIFE HOOK ANCHORS BY CATEGORY:
-- Night & Sleep (রাত ও ঘুম) → "রাতে কি কখনো হঠাৎ ঘুম ভেঙে যায়? অথবা মনে অজানা কোনো ভয় কাজ করে? নবীজি (সা.) ঠিক এই মুহূর্তটির জন্য একটি বিশেষ দোয়া শিখিয়েছেন..."
-- Evil Eye & Ruqyah (বদনজর ও অশান্তি) → "হঠাৎ করে অকারণে সংসারে অশান্তি, প্রিয়জনের ওপর কথায় কথায় রাগ আর কাজে মন না বসা — এটি অনেক সময় বদনজরের মারাত্মক লক্ষণ হতে পারে!..."
-- Crises & Debt (সংকট ও ঋণমুক্তি) → "মাসের শেষে টানাটানি, ঋণের বোঝা আর সংসার খরচের চিন্তায় দিশেহারা? নবীজি (সা.) এমন একটি দোয়া শিখিয়েছেন যা পাহাড়সম ঋণ থাকলেও তা পরিশোধের পথ খুলে দেয়..."
-- Family & Marriage (দাম্পত্য ও পরিবার) → "সারাদিনের ক্লান্তির পর ঘরে ফিরে স্ত্রীর মুখে এক লোকমা খাবার তুলে দেওয়া কিংবা হাসিমুখে কথা বলাও যে সদকা — আমরা অনেকেই এই সুন্নাহটি ভুলে যাই!..."
+Rule 2: Promise High Gain with Low Effort
+- Use specific, small numbers ("মাত্র ১টি আমল", "প্রতিদিন ৩০ সেকেন্ড", "ঘুমানোর আগে ৩ বার", "মাত্র ২০ সেকেন্ড").
+- Why: Specific numbers feel achievable and low friction.
+
+Rule 3: Target a Pain Point or Deep Desire
+- Rizq / Money: অভাব দূর হওয়া, দেনা পরিশোধ, ব্যবসায় বরকত
+- Peace / Anxiety: মনের অস্থিরতা, দুশ্চিন্তা থেকে মুক্তি, মানসিক প্রশান্তি
+- Protection: বিপদ-আপদ থেকে বেঁচে থাকা, কবরের আযাব থেকে মুক্তি, দোয়া কবুল হওয়া
+
+Rule 4: Leave the Loop Open (Never reveal the whole answer in Scene 1)
+- End the Scene 1 sentence with an unfinished promise ("...যা পড়লে বান্দার কোনো চাওয়া অপূর্ণ থাকে না", "...যা আপনার ভাগ্য বদলে দিতে পারে").
+- Why: Forces the viewer to watch the whole video to find the answer.
+
+UNIVERSAL HOOK TEMPLATES (PLUG & PLAY):
+1. Guaranteed Result: [Authority] + এমন ১টি [আমল/দোয়া] আছে + যা করলে [বড় সমাধান]...
+2. Mistake / Warning: আমরা প্রতিদিন এই ১টি ভুল করি + যার কারণে [বড় ক্ষতি/দোয়া আটকে যায়]...
+3. Instant Protection: ঘর থেকে বের হওয়ার সময় / ঘুমানোর আগে + মাত্র ৩ সেকেন্ডে এই ১টি আমল...
+4. Urgent Curiosity: আপনি কি জানেন + [সহজ কাজ] করলে আল্লাহ বান্দার জন্য কি প্রস্তুত রাখেন?
 
 SCENE-BY-SCENE STRUCTURE:
 
