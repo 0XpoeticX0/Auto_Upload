@@ -3,6 +3,11 @@ data/*
 .env
 token.json
 client_secrets.json
+tiktok_cookies.txt
+*.mp4
+*.zip
+*.sqlite
+scratch/
 __pycache__/
 **/__pycache__/
 *.pyc

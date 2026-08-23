@@ -144,8 +144,8 @@ Output ONLY valid JSON:
 }}"""
 
     from app.history import is_topic_duplicate_global
-    user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Series episode: {ep_bn}. Choose a fresh, unique topic NOT in the avoided list. Return valid JSON only."
-    for attempt in range(3):
+    user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Series episode: {ep_bn}. Choose a fresh, unique topic NOT in the avoided list. Every generation MUST include a complete Arabic Dua with pronunciation and meaning in caption_points. Return valid JSON only."
+    for attempt in range(4):
         content = extract_json(system_prompt, user_prompt, max_tokens=1500)
         if not content:
             logger.warning(f"Attempt {attempt+1}: Failed to parse valid Loop Reel JSON from LLM. Retrying...")
@@ -156,6 +156,12 @@ Output ONLY valid JSON:
             logger.warning(f"Loop Reel topic '{title_bn}' flagged as duplicate in global history! Retrying with a fresh topic...")
             continue
             
+        # Check that complete Arabic Dua is included
+        has_arabic = any(pt.get("arabic") and (pt.get("meaning") or pt.get("pronunciation")) for pt in content.get("caption_points", []))
+        if not has_arabic and not content.get("arabic"):
+            logger.warning(f"Attempt {attempt+1}: Generated content is missing mandatory complete Arabic Dua/Meaning! Retrying...")
+            continue
+            
         content["slot_key"] = slot_key
         content["episode_number"] = ep_int
         content["episode_bn"] = ep_bn
@@ -163,7 +169,7 @@ Output ONLY valid JSON:
             content["series_title"] = f"দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
         return content
 
-    raise RuntimeError("Failed to generate a non-duplicate Loop Reel content after 3 attempts.")
+    raise RuntimeError("Failed to generate a non-duplicate Loop Reel content with complete Dua after 4 attempts.")
 
 def format_loop_caption(data: dict) -> str:
     """Short, punchy, high-converting caption with complete Dua and Series Branding."""
@@ -189,17 +195,29 @@ def format_loop_caption(data: dict) -> str:
                 caption += "📚 [" + pt["reference"] + "]\n"
             caption += "\n"
 
-    # COMPLETE ARABIC DUA
+    # COMPLETE ARABIC DUA (MANDATORY SECTION)
+    dua_found = False
     for pt in pts:
         if pt.get("arabic"):
-            caption += "🤲 পূর্ণাঙ্গ দোয়া:\n" + pt["arabic"] + "\n\n"
+            caption += "🤲 পূর্ণাঙ্গ দোয়া:\n" + pt["arabic"].strip() + "\n\n"
             if pt.get("pronunciation"):
-                caption += "🗣️ উচ্চারণ: “" + pt["pronunciation"] + "”\n\n"
+                caption += "🗣️ উচ্চারণ: “" + pt["pronunciation"].strip() + "”\n\n"
             if pt.get("meaning"):
-                caption += "🌿 অর্থ: “" + pt["meaning"] + "”\n\n"
+                caption += "🌿 অর্থ: “" + pt["meaning"].strip() + "”\n\n"
             if pt.get("reference") and pt != pts[0]:
-                caption += "📚 [" + pt["reference"] + "]\n\n"
+                caption += "📚 [" + pt["reference"].strip() + "]\n\n"
+            dua_found = True
             break
+
+    # If top-level arabic keys exist
+    if not dua_found and data.get("arabic"):
+        caption += "🤲 পূর্ণাঙ্গ দোয়া:\n" + data["arabic"].strip() + "\n\n"
+        if data.get("pronunciation"):
+            caption += "🗣️ উচ্চারণ: “" + data["pronunciation"].strip() + "”\n\n"
+        if data.get("meaning"):
+            caption += "🌿 অর্থ: “" + data["meaning"].strip() + "”\n\n"
+        if data.get("reference"):
+            caption += "📚 [" + data["reference"].strip() + "]\n\n"
 
     # PRACTICAL TIP (2nd non-arabic point)
     for pt in pts[1:]:
