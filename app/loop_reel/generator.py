@@ -63,34 +63,23 @@ THEME: {cfg['theme']}
 INSTRUCTION: {cfg['system_instruction']}
 SERIES CONTEXT: "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
 
-THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY FOR ALL GENERATIONS):
-Rule 1: Name the Authority First
-- Start with an instant trust marker ("রাসূলুল্লাহ (ﷺ) বলেছেন...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন...").
-- Why: People stop scrolling immediately when they see a credible, sacred source.
+DUAL-APPROACH STRATEGY (WHEN TO USE WHICH):
+1. Use the 4 Foundation Plug & Play Templates for daily universal topics (Rizq, Debt, Protection, Anxiety).
+2. Generate Custom Rule-Based Hooks for specific occasions (Tahajjud, Jummah, entering home, waking at night, specific Hadiths) to keep the feed fresh.
 
-Rule 2: Promise High Gain with Low Effort
-- Use specific, small numbers ("মাত্র ১টি আমল", "প্রতিদিন ৩০ সেকেন্ড", "ঘুমানোর আগে ৩ বার", "মাত্র ৫ মিনিটে").
-- Why: Specific numbers feel achievable. Vague advice gets skipped.
+THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
+Rule 1: Name the Authority First ("রাসূলুল্লাহ (ﷺ) বলেছেন...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন...")
+Rule 2: Promise High Gain with Low Effort (small numbers: "মাত্র ১টি আমল", "প্রতিদিন ৩০ সেকেন্ড", "ঘুমানোর আগে ৩ বার", "মাত্র ২ রাকাত", "মাত্র ৫ সেকেন্ড")
+Rule 3: Target a Pain Point or Deep Desire (Rizq/Money, Peace/Anxiety, Protection/Kaborer Azab)
+Rule 4: Leave the Loop Open (End with unfinished promise "...যা পড়লে মনের চাওয়া আল্লাহ পূরণ করেন", "...যা আপনার ভাগ্য বদলে দিতে পারে")
 
-Rule 3: Target a Pain Point or Deep Desire
-- Connect directly to real-life worries:
-  * Rizq / Money: অভাব দূর হওয়া, দেনা পরিশোধ, ব্যবসায় বরকত
-  * Peace / Anxiety: মনের অস্থিরতা, দুশ্চিন্তা থেকে মুক্তি, মানসিক প্রশান্তি
-  * Protection: বিপদ-আপদ থেকে বেঁচে থাকা, কবরের আযাব থেকে মুক্তি, দোয়া কবুল হওয়া
-
-Rule 4: Leave the Loop Open (Never reveal the answer on screen)
-- End the on-screen sentence with an unfinished promise ("...যা পড়লে বান্দার কোনো চাওয়া অপূর্ণ থাকে না", "...যা আপনার ভাগ্য বদলে দিতে পারে").
-- Why: It forces the viewer to watch the whole loop and open the caption to find the actual answer.
-
-UNIVERSAL HOOK TEMPLATES (PLUG & PLAY):
-1. Guaranteed Result: [Authority] + এমন ১টি [আমল/দোয়া] আছে + যা করলে [বড় সমাধান]...
-   Example: "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি ছোট দোয়া আছে, যা পড়লে পাহাড় সমান ঋণও আল্লাহ দূর করে দেন..."
-2. Mistake / Warning: আমরা প্রতিদিন এই ১টি ভুল করি + যার কারণে [বড় ক্ষতি/দোয়া আটকে যায়]...
-   Example: "প্রতিদিন দোয়া করার সময় আমরা এমন ১টি ভুল করি, যার কারণে দোয়া কবুল হতে দেরি হয়..."
-3. Instant Protection: ঘর থেকে বের হওয়ার সময় / ঘুমানোর আগে + মাত্র ৩ সেকেন্ডে এই ১টি আমল...
-   Example: "বিছানায় যাওয়ার আগে মাত্র ২০ সেকেন্ডের এই আমলটি আপনাকে সারারাত সব বিপদ থেকে নিরাপদে রাখবে..."
-4. Urgent Curiosity: আপনি কি জানেন + [সহজ কাজ] করলে আল্লাহ বান্দার জন্য কি প্রস্তুত রাখেন?
-   Example: "আপনি কি জানেন, প্রতিদিন মাত্র ১ বার এই তাসবীহ পড়লে আল্লাহ আপনার জীবনের সব দুশ্চিন্তা কিভাবে দূর করে দেন?"
+PROVEN HOOK EXAMPLES TO MODEL AFTER:
+• Model 1 (Tahajjud / Specific Time): "রাতের শেষ তৃতীয়াংশে মাত্র ২ রাকাতের এমন ১টি আমল আছে, যা করলে মনের যেকোনো চাওয়া আল্লাহ পূরণ করেন..."
+• Model 2 (Mental Relief / Peace): "রাসূলুল্লাহ (ﷺ) বলেছেন: যখন মন অতিরিক্ত অশান্ত হয়ে যায়, তখন এই ৩ শব্দের ছোট দোয়াটি পড়লে সমস্ত চিন্তা দূর হয়ে যায়..."
+• Model 3 (Family / Home Barakah): "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের এই ১টি সহজ সুন্নত পালন করলে শয়তান ও অভাব কখনো ঘরে ঢুকতে পারে না..."
+• Model 4 (Daily Habit Mistake): "প্রতিদিন অজু বা সালাতের পর আমরা এমন ১টি ভুল করি, যার কারণে লাখো নেকির সুযোগ হাতছাড়া হয়ে যায়..."
+• Model 5 (Instant Forgiveness): "রাসূলুল্লাহ (ﷺ) বলেছেন: দিনের যেকোনো সময় মাত্র ১ মিনিট এই ইস্তিগফারটি পড়লে অতীতের সমস্ত ছোট গুনাহ মাফ হয়ে যায়..."
+• Model 6 (Guaranteed Rizq/Debt): "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি ছোট দোয়া আছে, যা পড়লে পাহাড় সমান ঋণও আল্লাহ দূর করে দেন..."
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
