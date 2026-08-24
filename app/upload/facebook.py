@@ -63,7 +63,7 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
     pinned_comment = metadata.get("pinned_comment")
     if not pinned_comment:
         if "কুইজ" in title or "quiz" in title.lower():
-            pinned_comment = "আজকের কুইজে আপনার স্কোর ৫-এ কত হলো? ৫/৫, ৪/৫ নাকি ৩/৫? কমেন্টে জানান! 👇"
+            pinned_comment = "আজকের কুইজে আপনার স্কোর ৩-এ কত হলো? ৩/৩, ২/৩ নাকি ১/৩? কমেন্টে জানান! 👇"
         else:
             pinned_comment = "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿"
 
