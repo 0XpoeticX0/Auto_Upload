@@ -69,53 +69,40 @@ Example format:
 Options must be labelled: "A) ...", "B) ...", "C) ...".
 """
 
-    system_prompt = f"""You are an expert viral short-form video producer specializing in high-retention 3-Question interactive Islamic quiz videos for YouTube Shorts, Instagram Reels, and Facebook Reels (Target Duration: ~35 Seconds).
+    system_prompt = f"""You are an expert viral short-form video producer specializing in high-retention 3-Question interactive Islamic quiz videos for YouTube Shorts, Instagram Reels, and Facebook Reels (Target Duration: Under 40 Seconds).
 
 {lang_instruction}
 
-VIRAL 3-QUESTION RETENTION FRAMEWORK (CHOOSE 3 RELATABLE QUESTIONS ACROSS THESE THEMES):
+CONTENT STYLE & TONE (MANDATORY):
+- Use simple, everyday conversational Bangla words (no overly complex, archaic, or bookish terms).
+- Focus strictly on relatable, high-engagement topics that everyday Muslims know or care deeply about.
 
-Every video MUST generate EXACTLY 3 simple, highly relatable questions from the following high-engagement categories:
+VIRAL 3-QUESTION BREAKDOWN FORMULA (MANDATORY STRUCTURE):
 
-1. DAILY LIFE & SALAH (Everyday Habits):
-   - পাঁচ ওয়াক্ত সালাতে মোট ফরজ নামাজ কয় রাকাত? (১৭ রাকাত)
-   - দিনে ও রাতে কোন ফরজ সালাতে কেরাত আস্তে পড়তে হয়? (যোহর ও আসর)
-   - সালাতের সিজদায় আমরা কোন তাসবীহ পাঠ করি? (সুবহানা রাব্বিয়াল আ'লা)
-   - সালাতের রুকুতে কোন তাসবীহ পাঠ করতে হয়? (সুবহানা রাব্বিয়াল আজীম)
+Every video MUST follow this exact 3-tier psychological progression:
 
-2. HALAL VS. HARAM (Everyday Situations):
-   - ব্যাংকের ফিক্সড ডিপোজিট বা সুদের টাকা খাওয়া কি হালাল নাকি হারাম? (সম্পূর্ণ হারাম)
-   - পণ্য বিক্রির সময় পণ্যের আসল দোষ লুকিয়ে রাখা কি জায়েজ? (হারাম ও প্রতারণা)
-   - কারো অনুপস্থিতিতে তার অপ্রিয় সত্য দোষ আলোচনা করাকে কী বলে? (গীবত ও হারাম)
+• Q1: 1 EASY CONFIDENCE BUILDER (Stop the Scroll):
+  - Easy, universally known Daily Salah or basic Deen fact that gives an instant confident "Yes!"
+  - Examples: ৫ ওয়াক্তে মোট ফরজ নামাজ কয় রাকাত? (১৭ রাকাত), সিজদায় কোন তাসবীহ পাঠ করি? (সুবহানা রাব্বিয়াল আ'লা), কোন নামাজে কেরাত আস্তে পড়তে হয়? (যোহর ও আসর).
 
-3. MARRIAGE & RELATIONSHIPS (High Comment Drivers):
-   - বিয়ের ক্ষেত্রে মোহরানা পরিশোধ করা বরের জন্য কী? (ফরজ ও বাধ্যতামূলক)
-   - বিয়ের আগে গায়রে মাহরাম নারী-পুরুষের নির্জনে দেখা করা কি জায়েজ? (সম্পূর্ণ নিষেধ / হারাম)
-   - রাসূলুল্লাহ (ﷺ) কার সাথে ভালো ব্যবহারকারীকে সর্বোত্তম বলেছেন? (নিজের স্ত্রীর সাথে)
+• Q2: 1 RELATABLE HALAL/HARAM OR MARRIAGE/FAMILY (High Engagement & Debate):
+  - Everyday Halal vs. Haram, Marriage Sunnah, or Family/Parent relationship.
+  - Examples: বিয়ের মোহরানা দেওয়া বরের জন্য কী? (ফরজ ও বাধ্যতামূলক), কারো অনুপস্থিতিতে দোষ চর্চাকে কী বলে? (গীবত ও হারাম), ব্যাংকের সুদের টাকা খাওয়া কী? (সম্পূর্ণ হারাম), রাসূলুল্লাহ (ﷺ) কার সাথে ভালো ব্যবহারকারীকে সর্বোত্তম বলেছেন? (নিজের স্ত্রীর সাথে).
 
-4. PARENTS & FAMILY (Emotional Shares):
-   - পিতা-মাতার মৃত্যুর পর তাদের জন্য সন্তানের কোন কাজটি সদকায়ে জারিয়া? (সন্তানের নেক আমল ও দোয়া)
-   - পিতা-মাতার সাথে কেমন আচরণে আল্লাহ কুরআনে 'উফ' বলতেও নিষেধ করেছেন? (রাগ বা বিরক্তি প্রকাশ)
-
-5. BASIC QURAN & PROPHETS (Inspiring Stories):
-   - পবিত্র কুরআনের হৃদয় বা 'হার্ট' বলা হয় কোন সূরাকে? (সূরা ইয়াসীন)
-   - কুরআনের সবচেয়ে ছোট সূরার নাম কী? (সূরা আল-কাওসার)
-   - কোন সূরা ১ বার পড়লে এক-তৃতীয়াংশ কুরআন খতমের সওয়াব? (সূরা আল-ইখলাস)
-   - কোন নবীকে মাছের পেট থেকে আল্লাহ রক্ষা করেছিলেন? (হযরত ইউনুস আ.)
-   - কোন নবীর জন্য আগুন ফুলবাগান হয়ে গিয়েছিল? (হযরত ইব্রাহিম আ.)
-   - ইসলামের প্রথম খলিফা কে ছিলেন? (হযরত আবু বকর রা.)
-   - ইসলামের প্রথম শহীদ নারী কে ছিলেন? (হযরত সুমাইয়্যাহ রা.)
+• Q3: 1 THOUGHT-PROVOKING / SURPRISING (Prophet Story / Quran Secret / Score Driver):
+  - Inspiring Prophet miracle, Surah secret, or Islamic fact that drives viewers to comment their final score (3/3).
+  - Examples: কোন নবীকে মাছের পেট থেকে আল্লাহ রক্ষা করেছিলেন? (হযরত ইউনুস আ.), কুরআনের হৃদয় বলা হয় কোন সূরাকে? (সূরা ইয়াসীন), কোন নবীর জন্য আগুন ফুলবাগান হয়েছিল? (হযরত ইব্রাহিম আ.), ১ বার পড়লে ১/৩ কুরআন খতমের সওয়াব কোন সূরায়? (সূরা আল-ইখলাস).
 
 CRITICAL FORMATTING RULES:
-1. Generate EXACTLY 3 questions (diverse themes per video).
-2. Short & Punchy: Keep question text under 9 words.
+1. Generate EXACTLY 3 questions following the Q1 (Easy) -> Q2 (Relatable Halal/Marriage) -> Q3 (Surprising/Prophet) formula.
+2. Short & Punchy: Keep question text under 8-9 words.
 3. Options: Exactly 3 clean, concise options per question (1-3 words each).
-4. Respectful Honorifics: Use "হযরত ... (আ.)", "হযরত ... (রা.)", "নবীজি (সা.)".
+4. Respectful Honorifics: Use "হযরত ... (আ.)", "হযরত ... (রা.)", "নবীজি (সা.)" in options.
 {avoid_section}
 
 Respond with ONLY valid JSON (no markdown wrapping, no code blocks):"""
 
-    user_prompt = f"Generate a fresh, high-retention 3-Question Islamic Quiz Reel script in {language.upper()} strictly following the 3-Slot Formula (Q1 Daily Salah/Habit -> Q2 Basic Quran/Dua -> Q3 Beloved Prophet Story). Keep questions short and punchy under 8 words. Return ONLY JSON."
+    user_prompt = f"Generate a fresh, high-retention 3-Question Islamic Quiz Reel script in {language.upper()} following the exact 3-tier formula (Q1 Easy Salah/Habit -> Q2 Relatable Halal/Marriage -> Q3 Surprising Prophet/Quran Secret). Use simple everyday conversational Bangla. Return ONLY JSON."
 
     data = extract_json(system_prompt, user_prompt, max_tokens=2500)
     if not data or "questions" not in data or len(data["questions"]) != 3:
