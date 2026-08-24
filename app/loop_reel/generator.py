@@ -74,29 +74,30 @@ Rule 3: Target a Pain Point or Deep Desire (Rizq/Money, Peace/Anxiety, Protectio
 Rule 4: Leave the Loop Open (End with unfinished promise "...যা পড়লে মনের চাওয়া আল্লাহ পূরণ করেন", "...যা আপনার ভাগ্য বদলে দিতে পারে")
 
 CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY):
-In "highlight_words", you MUST provide 2 to 3 exact phrases from your lines covering:
-1. The Divine Name: "আল্লাহ" or "আল্লাহর" (MUST BE HIGHLIGHTED IN GOLD)
-2. The Numbered Action: e.g. "১টি আমল", "৩টি আয়াত", "৫ সেকেন্ডের আমল", "২ রাকাতের আমল" (MUST BE HIGHLIGHTED IN GOLD)
-3. The Ultimate Reward/Outcome: e.g. "কখনো ফিরিয়ে দেন না", "সব বিপদ থেকে রক্ষা করবেন", "ভাগ্যের তালা খুলে দেয়", "সব দুশ্চিন্তা দূর হয়" (MUST BE HIGHLIGHTED IN GOLD)
+In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines covering:
+1. The Sacred Authority: "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "রাসূলুল্লাহ (ﷺ)" (MUST BE HIGHLIGHTED IN GOLD whenever present!)
+2. The Divine Name: "আল্লাহ" or "আল্লাহর" (MUST BE HIGHLIGHTED IN GOLD)
+3. The Numbered Action: e.g. "১টি আমল", "৩টি আয়াত", "৫ সেকেন্ডের আমল", "২ রাকাতের আমল" (MUST BE HIGHLIGHTED IN GOLD)
+4. The Ultimate Reward/Outcome: e.g. "কখনো ফিরিয়ে দেন না", "সব বিপদ থেকে রক্ষা করবেন", "ভাগ্যের তালা খুলে দেয়", "সব দুশ্চিন্তা দূর করে দেবেন" (MUST BE HIGHLIGHTED IN GOLD)
 
 PROVEN HOOK EXAMPLES TO MODEL AFTER:
-• Model 1 (Tahajjud / Late Night):
-  line_1: "রাতের শেষ প্রহরে"
-  line_2: "এমন ১টি আমল আছে যা করলে"
-  line_3: "আল্লাহ মনের যেকোনো চাওয়া পূরণ করেন..."
-  highlight_words: ["শেষ প্রহরে", "১টি আমল", "আল্লাহ", "যেকোনো চাওয়া পূরণ করেন"]
-
-• Model 2 (Mental Relief / Peace):
+• Model 1 (Mental Relief / Peace):
   line_1: "রাসূলুল্লাহ (ﷺ) বলেছেন: মন অশান্ত হলে"
   line_2: "মাত্র ৫ সেকেন্ডের এই দোয়াটি পড়ুন,"
   line_3: "আল্লাহ আপনার সমস্ত দুশ্চিন্তা দূর করে দেবেন..."
-  highlight_words: ["মন অশান্ত হলে", "৫ সেকেন্ডের এই দোয়াটি", "আল্লাহ", "সমস্ত দুশ্চিন্তা দূর করে দেবেন"]
+  highlight_words: ["রাসূলুল্লাহ (ﷺ) বলেছেন:", "৫ সেকেন্ডের এই দোয়াটি", "আল্লাহ", "সমস্ত দুশ্চিন্তা দূর করে দেবেন"]
 
-• Model 3 (Family / Home Barakah):
-  line_1: "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের"
-  line_2: "এই ১টি সহজ সুন্নত পালন করলে"
-  line_3: "আল্লাহ আপনার ঘরে বরকত ও শান্তি বাড়িয়ে দেন..."
-  highlight_words: ["৫ সেকেন্ডের", "১টি সহজ সুন্নত", "আল্লাহ", "বরকত ও শান্তি বাড়িয়ে দেন"]
+• Model 2 (Guaranteed Dua / Isme Azam):
+  line_1: "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি দোয়া আছে"
+  line_2: "যা পাঠ করলে আল্লাহ বান্দার কোনো চাওয়া"
+  line_3: "কখনো ফিরিয়ে দেন না..."
+  highlight_words: ["রাসূলুল্লাহ (ﷺ) বলেছেন:", "এমন ১টি দোয়া আছে", "আল্লাহ", "কখনো ফিরিয়ে দেন না"]
+
+• Model 3 (Tahajjud / Late Night):
+  line_1: "রাতের শেষ প্রহরে এমন ১টি আমল আছে"
+  line_2: "যা নিয়মিত পালন করলে আল্লাহ"
+  line_3: "মনের যেকোনো অসম্ভব চাওয়া পূরণ করেন..."
+  highlight_words: ["শেষ প্রহরে", "এমন ১টি আমল আছে", "আল্লাহ", "যেকোনো অসম্ভব চাওয়া পূরণ করেন"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.

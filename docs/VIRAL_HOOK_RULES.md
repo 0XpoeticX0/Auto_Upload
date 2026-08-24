@@ -44,6 +44,16 @@ Connect the hook directly to everyday worries and aspirations:
 
 ---
 
+## 🌟 The 4-Pillar Golden Highlight Framework (`#FFD52B` / `&H002BD5FF&`)
+
+Every on-screen hook MUST highlight these 4 key pillars in **Vibrant Golden Yellow**:
+1. **Sacred Authority**: `[রাসূলুল্লাহ (ﷺ) বলেছেন:]` / `[রাসূলুল্লাহ (ﷺ)]` / `[আল্লাহর প্রতিশ্রুতি]`
+2. **The Divine Entity**: `[আল্লাহ]` / `[আল্লাহর]`
+3. **The Numbered Action**: `[১টি আমল]` / `[৩টি আয়াত]` / `[৫ সেকেন্ডের দোয়াটি]` / `[২ রাকাতের আমল]`
+4. **The Ultimate Reward/Solution**: `[কখনো ফিরিয়ে দেন না...]` / `[সব দুশ্চিন্তা দূর করে দেবেন]` / `[ভাগ্যের তালা খুলে দেয়]`
+
+---
+
 ## ⚡ The 4 Foundation Templates (Plug & Play)
 
 | Angle | Bangla Template Structure | Example in Everyday Language |
