@@ -280,21 +280,24 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     topic_keywords = f"{content.get('title_bn', '')} {content.get('theme', '')} {content.get('line_1', '')} {content.get('line_2', '')}"
     audio_path = get_or_download_quran_audio(topic_text=topic_keywords, duration=8.0)
 
-    # 3. Build ASS Subtitle with Series Branding, Warm Gold highlights, and Visual Follow Trigger
-    series_badge = content.get("series_title", f"✦ দৈনন্দিন সহীহ আমল • পর্ব {content.get('episode_bn', '১')} ✦")
-    if not series_badge.startswith("✦"):
-        series_badge = f"✦ {series_badge} ✦"
-
-    l1 = content.get("line_1", "")
-    l2 = content.get("line_2", "")
-    l3 = content.get("line_3", "")
+    # 3. Build ASS Subtitle with Golden Yellow highlights (&H002BD5FF&), Top Watermark, and Reference CTA
+    l1 = content.get("line_1", "").strip()
+    l2 = content.get("line_2", "").strip()
+    l3 = content.get("line_3", "").strip()
     
-    hw_list = content.get("highlight_words", ["৩টি আমল", "আল্লাহ", "বরকতে ভরিয়ে দেন"])
+    hw_list = content.get("highlight_words", ["আল্লাহর", "১টি মহান নাম", "কখনো ফিরিয়ে দেন না"])
     full_hook_text = f"{l1}\\N{l2}\\N{l3}" if l2 else l1
+    if l3 and l3 not in full_hook_text:
+        full_hook_text += f"\\N{l3}"
+    
+    # Apply Vibrant Golden/Yellow highlighting (&H002BD5FF&) to keywords
+    GOLD_COLOR = "&H002BD5FF&"
+    WHITE_COLOR = "&H00FFFFFF&"
     
     for hw in hw_list:
-        if hw in full_hook_text:
-            full_hook_text = full_hook_text.replace(hw, f"{{\\fs74\\c&H0041AFEB&}}{hw}{{\\fs66\\c&HFFFFFF&}}", 1)
+        hw_clean = hw.strip()
+        if hw_clean and hw_clean in full_hook_text:
+            full_hook_text = full_hook_text.replace(hw_clean, f"{{\\c{GOLD_COLOR}}}{hw_clean}{{\\c{WHITE_COLOR}}}", 1)
 
     ass_path = os.path.join(temp_dir, "overlay.ass")
     ass_content = f"""[Script Info]
@@ -306,17 +309,15 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: SeriesBadge,Noto Sans Bengali,38,&H0041AFEB&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
-Style: MainHook,Noto Sans Bengali,62,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.2,3.0,5,70,70,0,1
-Style: CaptionCTA,Noto Sans Bengali,44,&H0041AFEB&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,420,1
-Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,60,60,350,1
+Style: Watermark,Noto Sans Bengali,34,&H80FFFFFF&,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2.0,1.5,8,60,60,140,1
+Style: MainHook,Noto Sans Bengali,60,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.5,3.0,5,70,70,0,1
+Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,440,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c&H0041AFEB&}}{series_badge}
-Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs62\\b1\\c&HFFFFFF&}}{full_hook_text}
-Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c&H0041AFEB&}}👉 বিস্তারিত ক্যাপশনে পড়ুন 👇{{\\c&HFFFFFF&}}
-Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c&HFFFFFF&}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন 👉 @dailydos_islam
+Dialogue: 0,0:00:00.00,0:00:08.00,Watermark,,0,0,0,,{{\\fnNoto Sans Bengali\\fs34\\b1\\c&H80FFFFFF&}}@dailydos_islam
+Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs60\\b1\\c{WHITE_COLOR}}}{full_hook_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}☞ বিস্তারিত ক্যাপশনে পড়ুন 👇
 """
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
