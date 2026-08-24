@@ -68,18 +68,35 @@ DUAL-APPROACH STRATEGY (WHEN TO USE WHICH):
 2. Generate Custom Rule-Based Hooks for specific occasions (Tahajjud, Jummah, entering home, waking at night, specific Hadiths) to keep the feed fresh.
 
 THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
-Rule 1: Name the Authority First ("রাসূলুল্লাহ (ﷺ) বলেছেন...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন...")
+Rule 1: Name the Authority First ("রাসূলুল্লাহ (ﷺ) বলেছেন...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন...") — ALWAYS use "(ﷺ)", NEVER "(সা.)".
 Rule 2: Promise High Gain with Low Effort (small numbers: "মাত্র ১টি আমল", "প্রতিদিন ৩০ সেকেন্ড", "ঘুমানোর আগে ৩ বার", "মাত্র ২ রাকাত", "মাত্র ৫ সেকেন্ড")
 Rule 3: Target a Pain Point or Deep Desire (Rizq/Money, Peace/Anxiety, Protection/Kaborer Azab)
 Rule 4: Leave the Loop Open (End with unfinished promise "...যা পড়লে মনের চাওয়া আল্লাহ পূরণ করেন", "...যা আপনার ভাগ্য বদলে দিতে পারে")
 
+CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY):
+In "highlight_words", you MUST provide 2 to 3 exact phrases from your lines covering:
+1. The Divine Name: "আল্লাহ" or "আল্লাহর" (MUST BE HIGHLIGHTED IN GOLD)
+2. The Numbered Action: e.g. "১টি আমল", "৩টি আয়াত", "৫ সেকেন্ডের আমল", "২ রাকাতের আমল" (MUST BE HIGHLIGHTED IN GOLD)
+3. The Ultimate Reward/Outcome: e.g. "কখনো ফিরিয়ে দেন না", "সব বিপদ থেকে রক্ষা করবেন", "ভাগ্যের তালা খুলে দেয়", "সব দুশ্চিন্তা দূর হয়" (MUST BE HIGHLIGHTED IN GOLD)
+
 PROVEN HOOK EXAMPLES TO MODEL AFTER:
-• Model 1 (Tahajjud / Specific Time): "রাতের শেষ তৃতীয়াংশে মাত্র ২ রাকাতের এমন ১টি আমল আছে, যা করলে মনের যেকোনো চাওয়া আল্লাহ পূরণ করেন..."
-• Model 2 (Mental Relief / Peace): "রাসূলুল্লাহ (ﷺ) বলেছেন: যখন মন অতিরিক্ত অশান্ত হয়ে যায়, তখন এই ৩ শব্দের ছোট দোয়াটি পড়লে সমস্ত চিন্তা দূর হয়ে যায়..."
-• Model 3 (Family / Home Barakah): "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের এই ১টি সহজ সুন্নত পালন করলে শয়তান ও অভাব কখনো ঘরে ঢুকতে পারে না..."
-• Model 4 (Daily Habit Mistake): "প্রতিদিন অজু বা সালাতের পর আমরা এমন ১টি ভুল করি, যার কারণে লাখো নেকির সুযোগ হাতছাড়া হয়ে যায়..."
-• Model 5 (Instant Forgiveness): "রাসূলুল্লাহ (ﷺ) বলেছেন: দিনের যেকোনো সময় মাত্র ১ মিনিট এই ইস্তিগফারটি পড়লে অতীতের সমস্ত ছোট গুনাহ মাফ হয়ে যায়..."
-• Model 6 (Guaranteed Rizq/Debt): "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি ছোট দোয়া আছে, যা পড়লে পাহাড় সমান ঋণও আল্লাহ দূর করে দেন..."
+• Model 1 (Tahajjud / Late Night):
+  line_1: "রাতের শেষ প্রহরে"
+  line_2: "এমন ১টি আমল আছে যা করলে"
+  line_3: "আল্লাহ মনের যেকোনো চাওয়া পূরণ করেন..."
+  highlight_words: ["শেষ প্রহরে", "১টি আমল", "আল্লাহ", "যেকোনো চাওয়া পূরণ করেন"]
+
+• Model 2 (Mental Relief / Peace):
+  line_1: "রাসূলুল্লাহ (ﷺ) বলেছেন: মন অশান্ত হলে"
+  line_2: "মাত্র ৫ সেকেন্ডের এই দোয়াটি পড়ুন,"
+  line_3: "আল্লাহ আপনার সমস্ত দুশ্চিন্তা দূর করে দেবেন..."
+  highlight_words: ["মন অশান্ত হলে", "৫ সেকেন্ডের এই দোয়াটি", "আল্লাহ", "সমস্ত দুশ্চিন্তা দূর করে দেবেন"]
+
+• Model 3 (Family / Home Barakah):
+  line_1: "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের"
+  line_2: "এই ১টি সহজ সুন্নত পালন করলে"
+  line_3: "আল্লাহ আপনার ঘরে বরকত ও শান্তি বাড়িয়ে দেন..."
+  highlight_words: ["৫ সেকেন্ডের", "১টি সহজ সুন্নত", "আল্লাহ", "বরকত ও শান্তি বাড়িয়ে দেন"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
@@ -280,12 +297,16 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     topic_keywords = f"{content.get('title_bn', '')} {content.get('theme', '')} {content.get('line_1', '')} {content.get('line_2', '')}"
     audio_path = get_or_download_quran_audio(topic_text=topic_keywords, duration=8.0)
 
-    # 3. Build ASS Subtitle with Golden Yellow highlights (&H002BD5FF&), Top Watermark, and Reference CTA
+    # 3. Build ASS Subtitle matching Reference Post (Top Series Badge, Golden Highlights, Caption CTA, Follow Trigger)
+    series_badge = content.get("series_title", f"দৈনন্দিন সহীহ আমল • পর্ব {content.get('episode_bn', '১')}")
+    if not series_badge.startswith("✦"):
+        series_badge = f"✦ {series_badge} ✦"
+
     l1 = content.get("line_1", "").strip()
     l2 = content.get("line_2", "").strip()
     l3 = content.get("line_3", "").strip()
     
-    hw_list = content.get("highlight_words", ["আল্লাহর", "১টি মহান নাম", "কখনো ফিরিয়ে দেন না"])
+    hw_list = content.get("highlight_words", ["৩টি আয়াত", "আল্লাহ", "রক্ষা করবেন"])
     full_hook_text = f"{l1}\\N{l2}\\N{l3}" if l2 else l1
     if l3 and l3 not in full_hook_text:
         full_hook_text += f"\\N{l3}"
@@ -294,9 +315,14 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     GOLD_COLOR = "&H002BD5FF&"
     WHITE_COLOR = "&H00FFFFFF&"
     
+    # Sort hw_list by longest string first so longer phrases match before substrings
+    hw_list = sorted(hw_list, key=len, reverse=True)
+    
     for hw in hw_list:
         hw_clean = hw.strip()
-        if hw_clean and hw_clean in full_hook_text:
+        if not hw_clean:
+            continue
+        if hw_clean in full_hook_text:
             full_hook_text = full_hook_text.replace(hw_clean, f"{{\\c{GOLD_COLOR}}}{hw_clean}{{\\c{WHITE_COLOR}}}", 1)
 
     ass_path = os.path.join(temp_dir, "overlay.ass")
@@ -309,15 +335,17 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Watermark,Noto Sans Bengali,34,&H80FFFFFF&,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2.0,1.5,8,60,60,140,1
-Style: MainHook,Noto Sans Bengali,60,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.5,3.0,5,70,70,0,1
-Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,440,1
+Style: SeriesBadge,Noto Sans Bengali,38,&H002BD5FF&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
+Style: MainHook,Noto Sans Bengali,62,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.5,3.0,5,70,70,0,1
+Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,420,1
+Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,60,60,350,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,Watermark,,0,0,0,,{{\\fnNoto Sans Bengali\\fs34\\b1\\c&H80FFFFFF&}}@dailydos_islam
-Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs60\\b1\\c{WHITE_COLOR}}}{full_hook_text}
-Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}☞ বিস্তারিত ক্যাপশনে পড়ুন 👇
+Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c{GOLD_COLOR}}}{series_badge}
+Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs62\\b1\\c{WHITE_COLOR}}}{full_hook_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}☞ বিস্তারিত ক্যাপশনে পড়ুন 👇{{\\c{WHITE_COLOR}}}
+Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ☞ @dailydos_islam
 """
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
