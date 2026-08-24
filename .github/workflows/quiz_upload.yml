@@ -1,7 +1,12 @@
-name: Islamic Quiz Reel Pipeline (2x Weekly)
+name: 🧠 Islamic Quiz Reel Pipeline (Friday 7 AM & Monday 11 AM BST)
 
 on:
-  workflow_dispatch: # Manual trigger only
+  schedule:
+    # 1. Friday Morning: 07:00 AM BST (01:00 AM UTC, day 5)
+    - cron: '0 1 * * 5'
+    # 2. Monday Morning: 11:00 AM BST (05:00 AM UTC, day 1)
+    - cron: '0 5 * * 1'
+  workflow_dispatch: # Manual trigger fallback
 
 jobs:
   generate-and-upload-quiz:
