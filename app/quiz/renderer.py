@@ -5,12 +5,41 @@ from app.logger import logger
 from app.quiz.sfx import ensure_sfx_assets
 from app.quiz.card_builder import render_hook_card, render_question_card, render_outro_card, clean_text_ass
 
-BANGLA_VOICE = "bn-IN-BashkarNeural"
+BANGLA_VOICE = "bn-BD-PradeepNeural"
 ENGLISH_VOICE = "en-US-ChristopherNeural"
 
-def synthesize_voice(text: str, out_mp3: str, voice: str = BANGLA_VOICE, rate: str = "-5%") -> bool:
-    """Synthesizes voiceover narration using free Edge TTS with calm, natural pacing."""
-    clean_t = clean_text_ass(text)
+def enhance_islamic_pronunciation(text: str) -> str:
+    """Pre-processes Arabic/Islamic terms to phonetic Bengali spellings that Edge-TTS pronounces with natural accuracy."""
+    if not text:
+        return ""
+    phonetic_map = {
+        r'\bসুমাইয়্যাহ\b': 'সুমাইয়া',
+        r'\bসুমাইয়্যা\b': 'সুমাইয়া',
+        r'\bসুমাইয়া\b': 'সুমাইয়া',
+        r'\bতাওবাহ\b': 'তাওবা',
+        r'\bআত-তাওবাহ\b': 'আত-তাওবা',
+        r'\bহযরত\b': 'হজরত',
+        r'\bসূরা\b': 'সুরা',
+        r'\bসূরার\b': 'সুরার',
+        r'\bসালাত\b': 'সালাত',
+        r'\bসালাতের\b': 'সালাতের',
+        r'\bমিরাজ\b': 'মেরাজ',
+        r'\bজিবরাঈল\b': 'জিবরাইল',
+        r'\bমিকাইল\b': 'মিকায়িল',
+        r'\bইসরাফিল\b': 'ইসরাফিল',
+        r'\bআজরাইল\b': 'আজরাইল',
+        r'\bআয়িশা\b': 'আয়েশা',
+        r'\bখাদিজাহ\b': 'খাদিজা',
+        r'\bফাতিমাহ\b': 'ফাতেমা',
+    }
+    res = text
+    for pattern, replacement in phonetic_map.items():
+        res = re.sub(pattern, replacement, res)
+    return res
+
+def synthesize_voice(text: str, out_mp3: str, voice: str = BANGLA_VOICE, rate: str = "+25%") -> bool:
+    """Synthesizes energetic, human-like voiceover narration using Edge TTS at +25% (1.25x) speed."""
+    clean_t = enhance_islamic_pronunciation(clean_text_ass(text))
     cmd = [
         "edge-tts",
         f"--voice={voice}",
@@ -41,7 +70,7 @@ def expand_honorifics_spoken(text: str) -> str:
     female_names = ["আয়েশা", "খাদিজা", "ফাতেমা", "ফাতিমা", "সুমাইয়া", "হাফসা", "মরিয়ম", "মারিয়াম", "যয়নব", "যায়নব", "উম্মে কুলসুম", "রুকাইয়্যাহ", "সাওদা", "জুওয়াইরিয়া", "সফিয়্যাহ", "মাইমুনা"]
     
     # Expand (সা.) and (ﷺ)
-    res = re.sub(r'\(\s*(?:সা\.|সা|ﷺ)\s*\)', 'সাল্লাল্লাহু আলাইহি ওয়াসাল্লাম', text)
+    res = re.sub(r'\(\s*(?:সা\.|সা|ﷺ)\s*\)', 'সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম', text)
     # Expand (আ.)
     res = re.sub(r'\(\s*(?:আ\.|আ)\s*\)', 'আলাইহিস সালাম', res)
     # Expand (রহ.)
@@ -62,20 +91,21 @@ def expand_honorifics_spoken(text: str) -> str:
 def format_spoken_question(q_num: int, q_text: str, options: list[str], language: str = "bn") -> str:
     """
     Formats spoken question:
+    - Fast, natural conversational delivery without artificial awkward pauses
     - No literal 'অপশন' / 'Option'
     - Strips 'ক)', 'খ)', 'গ)' (does NOT speak them)
     - Inserts 'নাকি' (or 'or') before the last option
     - Fully expands (সা.), (রা.), (আ.) honorifics
     """
-    q_clean = expand_honorifics_spoken(clean_text_ass(q_text)).rstrip("।? ")
+    q_clean = enhance_islamic_pronunciation(expand_honorifics_spoken(clean_text_ass(q_text))).rstrip("।? ")
     
     opts_clean = []
     for opt in options:
         # Strip prefixes like "ক) ", "খ) ", "গ) ", "A) ", "B) ", "C) "
         opt_t = re.sub(r'^[কখগঘABCDEFabcdef\d]+[\)\.\:\-]\s*', '', opt.strip())
-        # Strip parenthetical synonyms/duplicates like "(নামাজ)", "(রোজা)", "(ঈমান)" so voice never speaks double words
+        # Strip parenthetical synonyms/duplicates
         opt_t = re.sub(r'\s*[\(\[\{][^\)\]\}]*[\)\]\}]', '', opt_t).strip()
-        opt_t = expand_honorifics_spoken(clean_text_ass(opt_t)).strip()
+        opt_t = enhance_islamic_pronunciation(expand_honorifics_spoken(clean_text_ass(opt_t))).strip()
         opt_t = re.sub(r'\s+', ' ', opt_t)
         opts_clean.append(opt_t)
         
@@ -84,24 +114,24 @@ def format_spoken_question(q_num: int, q_text: str, options: list[str], language
     
     if language == "bn":
         if len(opts_clean) >= 3:
-            spoken_opts = f"{opts_clean[0]}, ... {opts_clean[1]}, ... নাকি {opts_clean[2]}?"
+            spoken_opts = f"{opts_clean[0]}, {opts_clean[1]}, নাকি {opts_clean[2]}?"
         elif len(opts_clean) == 2:
-            spoken_opts = f"{opts_clean[0]}, ... নাকি {opts_clean[1]}?"
+            spoken_opts = f"{opts_clean[0]}, নাকি {opts_clean[1]}?"
         else:
-            spoken_opts = " ... ".join(opts_clean)
-        return f"প্রশ্ন {num_str}। {q_clean}? ... {spoken_opts}"
+            spoken_opts = ", ".join(opts_clean)
+        return f"প্রশ্ন {num_str}। {q_clean}? {spoken_opts}"
     else:
         if len(opts_clean) >= 3:
-            spoken_opts = f"{opts_clean[0]}, ... {opts_clean[1]}, ... or {opts_clean[2]}?"
+            spoken_opts = f"{opts_clean[0]}, {opts_clean[1]}, or {opts_clean[2]}?"
         elif len(opts_clean) == 2:
-            spoken_opts = f"{opts_clean[0]}, ... or {opts_clean[1]}?"
+            spoken_opts = f"{opts_clean[0]}, or {opts_clean[1]}?"
         else:
-            spoken_opts = " ... ".join(opts_clean)
-        return f"Question {q_num}. {q_clean}? ... {spoken_opts}"
+            spoken_opts = ", ".join(opts_clean)
+        return f"Question {q_num}. {q_clean}? {spoken_opts}"
 
 def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_sample_video.mp4", language: str = "bn") -> str | None:
     """
-    Renders the complete 5-question interactive Quiz video (9:16) with frame-perfect audio/visual sync.
+    Renders the complete 5-question interactive Quiz video (9:16) with fast-paced audio & visual sync (~45s).
     """
     temp_dir = "data/temp/quiz_render"
     os.makedirs(temp_dir, exist_ok=True)
@@ -111,21 +141,21 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     voice = BANGLA_VOICE if language == "bn" else ENGLISH_VOICE
     all_scene_mp4s = []
     
-    # ── 1. SCENE 1: HOOK (0 - 4s) ─────────────────────────────────────────────
+    # ── 1. SCENE 1: HOOK (0 - 3s) ─────────────────────────────────────────────
     logger.info("Rendering Scene 1: Hook...")
     hook = quiz_data.get("hook", {})
     hook_img = os.path.join(temp_dir, "scene_1_hook.jpg")
     render_hook_card(hook, hook_img)
     
     if language == "bn":
-        hook_voice_text = f"{hook.get('headline', 'ইসলামিক জ্ঞান যাচাই করুন!')} ... {hook.get('sub_text', 'সময় বেশি লাগলে ভিডিওটি পজ করুন!')}"
+        hook_voice_text = f"{hook.get('headline', 'ইসলামিক জ্ঞান যাচাই করুন!')} {hook.get('sub_text', 'সময় বেশি লাগলে ভিডিওটি পজ করুন!')}"
     else:
-        hook_voice_text = f"{hook.get('headline', 'Test your Islamic knowledge!')} ... {hook.get('sub_text', 'Pause the video if you need more time!')}"
+        hook_voice_text = f"{hook.get('headline', 'Test your Islamic knowledge!')} {hook.get('sub_text', 'Pause the video if you need more time!')}"
         
     hook_voice_mp3 = os.path.join(temp_dir, "hook_voice.mp3")
-    synthesize_voice(hook_voice_text, hook_voice_mp3, voice=voice, rate="+10%")
+    synthesize_voice(hook_voice_text, hook_voice_mp3, voice=voice, rate="+25%")
     
-    hook_dur = max(2.5, get_audio_duration(hook_voice_mp3) + 0.2)
+    hook_dur = max(2.0, get_audio_duration(hook_voice_mp3) + 0.15)
     
     # Balanced comfortable audio volume for hook
     hook_audio = os.path.join(temp_dir, "hook_audio.mp3")
@@ -156,7 +186,7 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     subprocess.run(cmd_s1, check=True, capture_output=True)
     all_scene_mp4s.append(scene_1_mp4)
     
-    # ── 2. SCENES 2 to 6: 5 QUESTIONS (with 2s Timer + 1.8s Reveal) ───────────
+    # ── 2. SCENES 2 to 6: 5 QUESTIONS (with Fast 1.5s Timer + 1.4s Reveal) ────
     questions = quiz_data.get("questions", [])
     for q_idx, q in enumerate(questions, 1):
         q_num = q.get("number", q_idx)
@@ -168,12 +198,12 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         # 1. Voice for question and options WITHOUT saying 'option/অপশন'
         q_voice_text = format_spoken_question(q_num, q_text, options, language=language)
         q_voice_mp3 = os.path.join(temp_dir, f"q_{q_num}_voice.mp3")
-        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+12%")
+        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+25%")
         
         voice_dur = get_audio_duration(q_voice_mp3)
-        base_dur = voice_dur + 0.10  # Short comfortable pause after speaking options before countdown starts
-        countdown_dur = 2.0          # 2 seconds thinking timer (2 -> 1)
-        reveal_dur = 1.8             # 1.8 seconds to absorb correct answer & Sahih reference
+        base_dur = voice_dur + 0.05  # Snappy transition to countdown
+        countdown_dur = 1.5          # Fast 1.5s thinking timer
+        reveal_dur = 1.4             # 1.4s clear reveal
         total_q_dur = base_dur + countdown_dur + reveal_dur
         
         # Generate images for question states
@@ -259,14 +289,14 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     render_outro_card(outro, outro_img)
     
     if language == "bn":
-        outro_voice_text = f"{outro.get('score_prompt', '৫-এ আপনার স্কোর কত হলো? কমেন্টে জানান!')} ... {outro.get('follow_cta', 'দ্বীনি জ্ঞান বৃদ্ধি করতে আমাদের ফলো করুন!')}"
+        outro_voice_text = f"{outro.get('score_prompt', '৫-এ আপনার স্কোর কত হলো? কমেন্টে জানান!')} {outro.get('follow_cta', 'দ্বীনি জ্ঞান বৃদ্ধি করতে আমাদের ফলো করুন!')}"
     else:
-        outro_voice_text = f"{outro.get('score_prompt', 'What was your score out of 5? Drop it below!')} ... {outro.get('follow_cta', 'Follow for weekly evaluation quizzes!')}"
+        outro_voice_text = f"{outro.get('score_prompt', 'What was your score out of 5? Drop it below!')} {outro.get('follow_cta', 'Follow for weekly evaluation quizzes!')}"
         
     outro_voice_mp3 = os.path.join(temp_dir, "outro_voice.mp3")
-    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="+10%")
+    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="+25%")
     
-    outro_dur = max(2.5, get_audio_duration(outro_voice_mp3) + 0.2)
+    outro_dur = max(2.0, get_audio_duration(outro_voice_mp3) + 0.15)
     
     outro_audio = os.path.join(temp_dir, "outro_audio.mp3")
     cmd_mix_outro = [

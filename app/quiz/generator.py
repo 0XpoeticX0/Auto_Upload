@@ -102,10 +102,10 @@ CRITICAL FORMATTING & PHRASING RULES:
      * For Prophet Muhammad: "নবীজি (সা.)" or "মুহাম্মদ (সা.)"
    - NEVER write duplicate synonyms in brackets (e.g. DO NOT write "সালাত (নামাজ)" or "সাওম (রোজা)"). Use only "ক) সালাত" or "ক) নামাজ".
 
-2. Exactly 3 clean options per question.
+2. Exactly 3 clean, concise options per question (keep options 1-3 words each).
 3. Exactly ONE correct option matching one of the options verbatim.
 4. Authentic Sahih references only (Sahih Bukhari, Sahih Muslim, Quran Surah:Ayah) in the explanation.
-5. Keep question text punchy and easy to read in 2 seconds on a mobile screen.
+5. SHORT & PUNCHY QUESTIONS (MANDATORY): Keep question text concise (max 6 to 9 words, e.g. "কুরআনের সবচেয়ে বড় সূরা কোনটি?", "ইসলামের প্রথম মুয়াজ্জিন কে ছিলেন?"). Concise phrasing ensures fast, energetic narration and maximum retention!
 {avoid_section}
 
 Respond with ONLY valid JSON (no markdown wrapping, no code blocks):"""
