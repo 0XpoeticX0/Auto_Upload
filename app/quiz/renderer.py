@@ -37,8 +37,8 @@ def enhance_islamic_pronunciation(text: str) -> str:
         res = re.sub(pattern, replacement, res)
     return res
 
-def synthesize_voice(text: str, out_mp3: str, voice: str = BANGLA_VOICE, rate: str = "+25%") -> bool:
-    """Synthesizes energetic, human-like voiceover narration using Edge TTS at +25% (1.25x) speed."""
+def synthesize_voice(text: str, out_mp3: str, voice: str = BANGLA_VOICE, rate: str = "+5%") -> bool:
+    """Synthesizes natural, calm voiceover narration using Edge TTS at +5% (1.05x) speed."""
     clean_t = enhance_islamic_pronunciation(clean_text_ass(text))
     cmd = [
         "edge-tts",
@@ -153,7 +153,7 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         hook_voice_text = f"{hook.get('headline', 'Test your Islamic knowledge!')} {hook.get('sub_text', 'Pause the video if you need more time!')}"
         
     hook_voice_mp3 = os.path.join(temp_dir, "hook_voice.mp3")
-    synthesize_voice(hook_voice_text, hook_voice_mp3, voice=voice, rate="+25%")
+    synthesize_voice(hook_voice_text, hook_voice_mp3, voice=voice, rate="+5%")
     
     hook_dur = max(2.0, get_audio_duration(hook_voice_mp3) + 0.15)
     
@@ -186,11 +186,11 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     subprocess.run(cmd_s1, check=True, capture_output=True)
     all_scene_mp4s.append(scene_1_mp4)
     
-    # ── 2. SCENES 2 to 6: 5 QUESTIONS (with Fast 1.5s Timer + 1.4s Reveal) ────
+    # ── 2. SCENES 2 to 4: 3 QUESTIONS (with 1.5s Timer + 1.4s Reveal) ─────────
     questions = quiz_data.get("questions", [])
     for q_idx, q in enumerate(questions, 1):
         q_num = q.get("number", q_idx)
-        logger.info(f"Rendering Question {q_num}/5...")
+        logger.info(f"Rendering Question {q_num}/3...")
         
         q_text = q.get("question", "")
         options = q.get("options", [])
@@ -198,11 +198,11 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         # 1. Voice for question and options WITHOUT saying 'option/অপশন'
         q_voice_text = format_spoken_question(q_num, q_text, options, language=language)
         q_voice_mp3 = os.path.join(temp_dir, f"q_{q_num}_voice.mp3")
-        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+25%")
+        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+5%")
         
         voice_dur = get_audio_duration(q_voice_mp3)
         base_dur = voice_dur + 0.05  # Snappy transition to countdown
-        countdown_dur = 1.5          # Fast 1.5s thinking timer
+        countdown_dur = 1.5          # 1.5s thinking timer
         reveal_dur = 1.4             # 1.4s clear reveal
         total_q_dur = base_dur + countdown_dur + reveal_dur
         
@@ -289,12 +289,12 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     render_outro_card(outro, outro_img)
     
     if language == "bn":
-        outro_voice_text = f"{outro.get('score_prompt', '৫-এ আপনার স্কোর কত হলো? কমেন্টে জানান!')} {outro.get('follow_cta', 'দ্বীনি জ্ঞান বৃদ্ধি করতে আমাদের ফলো করুন!')}"
+        outro_voice_text = f"{outro.get('score_prompt', '৩টিতে আপনার স্কোর কত হলো? কমেন্টে জানান!')} {outro.get('follow_cta', 'দ্বীনি জ্ঞান বৃদ্ধি করতে আমাদের ফলো করুন!')}"
     else:
-        outro_voice_text = f"{outro.get('score_prompt', 'What was your score out of 5? Drop it below!')} {outro.get('follow_cta', 'Follow for weekly evaluation quizzes!')}"
+        outro_voice_text = f"{outro.get('score_prompt', 'What was your score out of 3? Drop it below!')} {outro.get('follow_cta', 'Follow for weekly evaluation quizzes!')}"
         
     outro_voice_mp3 = os.path.join(temp_dir, "outro_voice.mp3")
-    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="+25%")
+    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="+5%")
     
     outro_dur = max(2.0, get_audio_duration(outro_voice_mp3) + 0.15)
     

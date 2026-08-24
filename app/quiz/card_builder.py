@@ -117,7 +117,7 @@ def render_hook_card(hook_data: dict, out_path: str) -> str:
         hl_y += 85
         
     dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,SubHook,,0,0,0,,{{\\pos(540,1272)}}{sub_text}")
-    dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,Footer,,0,0,0,,{{\\pos(540,1600)}}৫টি প্রশ্ন • আপনার দ্বীন যাচাই করুন • লেভেল ১")
+    dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,Footer,,0,0,0,,{{\\pos(540,1600)}}৩টি প্রশ্ন • আপনার দ্বীন যাচাই করুন • লেভেল ১")
 
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
@@ -168,6 +168,8 @@ def render_question_card(
     correct_opt = q_data.get("correct_option", "ক").strip()
     explanation = q_data.get("explanation", "")
     
+    total_q = q_data.get("total_questions", 3)
+    
     # 1. Base Canvas with Boxes
     img = create_base_canvas()
     draw = ImageDraw.Draw(img)
@@ -211,14 +213,14 @@ def render_question_card(
         if explanation:
             draw_rounded_rect(draw, (70, bottom_y, WIDTH - 70, bottom_y + 190), radius=25, fill=(20, 48, 36), outline=CORRECT_GREEN, width=2)
             
-    # Footer 5 Progress Dots
+    # Footer Progress Dots
     dots_y = 1680
-    dot_spacing = 50
-    start_dots_x = (WIDTH - (5 * dot_spacing)) // 2
-    for i in range(1, 6):
+    dot_spacing = 55
+    start_dots_x = (WIDTH - (total_q * dot_spacing)) // 2
+    for i in range(1, total_q + 1):
         dx = start_dots_x + (i - 1) * dot_spacing
         dot_color = CORRECT_GREEN if i < q_num else (ACCENT_GOLD_BORDER if i == q_num else (45, 70, 60))
-        draw.ellipse((dx, dots_y, dx + 22, dots_y + 22), fill=dot_color)
+        draw.ellipse((dx, dots_y, dx + 24, dots_y + 24), fill=dot_color)
         
     img.save(base_bg, quality=95)
     
@@ -227,7 +229,7 @@ def render_question_card(
         # Top Header Brand
         f"Dialogue: 0,0:00:00.00,0:00:10.00,Brand,,0,0,0,,{{\\pos(230,195)}}ডেইলি ডোজ ইসলাম",
         # Question Pill
-        f"Dialogue: 0,0:00:00.00,0:00:10.00,Progress,,0,0,0,,{{\\pos(900,195)}}প্রশ্ন {q_num}/৫",
+        f"Dialogue: 0,0:00:00.00,0:00:10.00,Progress,,0,0,0,,{{\\pos(900,195)}}প্রশ্ন {q_num}/{total_q}",
         # Category Tag
         f"Dialogue: 0,0:00:00.00,0:00:10.00,Category,,0,0,0,,{{\\pos(540,325)}}•  {category}  •"
     ]
