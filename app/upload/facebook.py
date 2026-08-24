@@ -7,6 +7,21 @@ load_dotenv()
 
 from app.upload.instagram import upload_reel_to_instagram
 
+def get_page_access_token(page_id: str, base_token: str) -> str:
+    """If base_token is a System User / User token, fetches the specific Page Access Token."""
+    try:
+        url = f"https://graph.facebook.com/v20.0/me/accounts?access_token={base_token}"
+        res = requests.get(url, timeout=15)
+        if res.status_code == 200:
+            accounts = res.json().get("data", [])
+            for acc in accounts:
+                if acc.get("id") == str(page_id) and acc.get("access_token"):
+                    logger.info(f"Retrieved dedicated Page Access Token for Page {page_id}")
+                    return acc["access_token"]
+    except Exception as e:
+        logger.warning(f"Could not query me/accounts: {e}")
+    return base_token
+
 def _post_facebook_comment(page_id: str, access_token: str, video_id: str, comment_text: str):
     """Posts an automatic first comment on the newly uploaded Facebook Reel / Video."""
     if not comment_text or not video_id:
@@ -29,12 +44,15 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
     logger.info(f"Starting Facebook & Instagram Upload for {video_path}")
     
     page_id = os.getenv("FB_PAGE_ID")
-    access_token = os.getenv("FB_ACCESS_TOKEN")
+    base_token = os.getenv("FB_ACCESS_TOKEN")
     ig_user_id = os.getenv("IG_USER_ID")
     
-    if not page_id or not access_token:
+    if not page_id or not base_token:
         logger.warning("Facebook Upload Skipped: FB_PAGE_ID or FB_ACCESS_TOKEN not set in .env")
         return False
+
+    # Obtain Page Access Token (works for both System User tokens and direct Page tokens)
+    access_token = get_page_access_token(page_id, base_token)
 
     description = metadata.get("description", "")
     title = metadata.get("facebook_title", metadata.get("youtube_title", ""))
