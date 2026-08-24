@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 import os
+import re
 import json
 import time
 import datetime
@@ -177,8 +177,25 @@ Output ONLY valid JSON:
 
     raise RuntimeError("Failed to generate a non-duplicate Loop Reel content with complete Dua after 4 attempts.")
 
+def clean_hadith_body(text: str) -> str:
+    """Strips duplicate leading authority prefixes and quotes so caption never stutters."""
+    if not text:
+        return ""
+    t = text.strip()
+    t = re.sub(r'^[“"\'‘\s]+', '', t).strip()
+    prefixes = [
+        r'^(?:রাসূলুল্লাহ|রাসূল|নবীজি|আল্লাহর\s*রাসূল)\s*\([ﷺসা\.]+\)\s*বলেছেন\s*[:ঃ\-–—\s]*',
+        r'^(?:রাসূলুল্লাহ|রাসূল|নবীজি|আল্লাহর\s*রাসূল)\s*বলেছেন\s*[:ঃ\-–—\s]*',
+        r'^(?:হাদিসে|হাদীসে|হাদিস\s*শরীফে)\s*এসেছে\s*[:ঃ\-–—\s]*',
+    ]
+    for p in prefixes:
+        t = re.sub(p, '', t, flags=re.IGNORECASE).strip()
+    t = re.sub(r'^[“"\'‘\s]+', '', t).strip()
+    t = re.sub(r'[”"\'’\s]+$', '', t).strip()
+    return t
+
 def format_loop_caption(data: dict) -> str:
-    """Short, punchy, high-converting caption with complete Dua and Series Branding."""
+    """Short, punchy, high-converting caption with complete Dua/Ayah and Series Branding."""
     title_bn = data.get("title_bn", "").strip()
     series_title = data.get("series_title", "দৈনন্দিন সহীহ আমল")
     dhikr = data.get("dhikr_word", "সুবহানাল্লাহ")
@@ -195,17 +212,23 @@ def format_loop_caption(data: dict) -> str:
     if pts:
         pt = pts[0]
         if pt.get("hadith"):
-            caption += "📖 রাসূলুল্লাহ (ﷺ) বলেছেন:\n"
-            caption += "“" + pt["hadith"] + "”\n"
+            clean_h = clean_hadith_body(pt["hadith"])
+            caption += "📖 হাদীস শরীফে এসেছে:\n"
+            caption += "“" + clean_h + "”\n"
             if pt.get("reference"):
                 caption += "📚 [" + pt["reference"] + "]\n"
             caption += "\n"
 
-    # COMPLETE ARABIC DUA (MANDATORY SECTION)
+    # Determine Dua vs. Quranic Ayah Header
+    combined_ctx = (title_bn + " " + hook + " " + data.get("arabic", "")).lower()
+    is_quranic = any(k in combined_ctx for k in ["সূরা", "সুরা", "আয়াত", "আয়াত", "আয়াতুল কুরসী", "কুরআন", "কোরআন"])
+    dua_header = "📖 সূরার বরকতময় আয়াত:" if is_quranic else "🤲 পূর্ণাঙ্গ দোয়া:"
+
+    # COMPLETE ARABIC DUA / AYAH
     dua_found = False
     for pt in pts:
         if pt.get("arabic"):
-            caption += "🤲 পূর্ণাঙ্গ দোয়া:\n" + pt["arabic"].strip() + "\n\n"
+            caption += f"{dua_header}\n" + pt["arabic"].strip() + "\n\n"
             if pt.get("pronunciation"):
                 caption += "🗣️ উচ্চারণ: “" + pt["pronunciation"].strip() + "”\n\n"
             if pt.get("meaning"):
@@ -217,7 +240,7 @@ def format_loop_caption(data: dict) -> str:
 
     # If top-level arabic keys exist
     if not dua_found and data.get("arabic"):
-        caption += "🤲 পূর্ণাঙ্গ দোয়া:\n" + data["arabic"].strip() + "\n\n"
+        caption += f"{dua_header}\n" + data["arabic"].strip() + "\n\n"
         if data.get("pronunciation"):
             caption += "🗣️ উচ্চারণ: “" + data["pronunciation"].strip() + "”\n\n"
         if data.get("meaning"):
@@ -228,7 +251,8 @@ def format_loop_caption(data: dict) -> str:
     # PRACTICAL TIP (2nd non-arabic point)
     for pt in pts[1:]:
         if pt.get("hadith") and not pt.get("arabic"):
-            caption += "💡 " + pt.get("title", "আমলের নিয়ম") + ":\n" + pt["hadith"] + "\n\n"
+            clean_tip = clean_hadith_body(pt["hadith"])
+            caption += "💡 " + pt.get("title", "আমলের নিয়ম") + ":\n" + clean_tip + "\n\n"
             if pt.get("reference"):
                 caption += "📚 [" + pt["reference"] + "]\n\n"
             break
