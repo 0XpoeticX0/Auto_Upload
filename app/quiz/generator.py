@@ -20,30 +20,47 @@ def generate_quiz_script(recent_questions: list[str] = None, language: str = "bn
 Options must be labelled with Bengali letters: "ক) ...", "খ) ...", "গ) ...".
 Example format:
 {
-  "title": "ইসলামিক জ্ঞান কুইজ ☪️ (৫-এ আপনার স্কোর কত?)",
+  "title": "সহজ ৩টি ইসলামিক প্রশ্ন ☪️ (৩-এ আপনার স্কোর কত?)",
   "hook": {
-    "headline": "আপনার ইসলামিক জ্ঞান যাচাই করুন! ☪️",
+    "headline": "সহজ ৩টি ইসলামিক প্রশ্ন—৩-এ আপনার স্কোর কত? ☪️",
     "sub_text": "💡 সময় বেশি লাগলে ভিডিওটি পজ করুন!",
     "sfx": "whoosh"
   },
   "questions": [
     {
       "number": 1,
-      "category": "মৌলিক জ্ঞান",
-      "question": "ইসলামের সর্বপ্রথম ও মূল স্তম্ভ কোনটি?",
-      "options": ["ক) সালাত", "খ) শাহাদাহ্", "গ) সাওম"],
-      "correct_option": "খ) শাহাদাহ্",
-      "explanation": "সহীহ বুখারী: ৮ (ইসলাম পাঁচটি স্তম্ভের ওপর প্রতিষ্ঠিত)",
-      "question_duration_sec": 8,
-      "reveal_duration_sec": 3.5,
+      "category": "দৈনন্দিন সালাত ও আমল",
+      "question": "পাঁচ ওয়াক্ত সালাতে মোট ফরজ নামাজ কয় রাকাত?",
+      "options": ["ক) ১৫ রাকাত", "খ) ১৭ রাকাত", "গ) ২০ রাকাত"],
+      "correct_option": "খ) ১৭ রাকাত",
+      "explanation": "সহীহ বুখারী ও মুসলিম (প্রতিদিন ১৭ রাকাত ফরজ সালাত)",
+      "sfx_timer": "clock_tick",
+      "sfx_reveal": "correct_bell"
+    },
+    {
+      "number": 2,
+      "category": "কুরআন ও ফজিলত",
+      "question": "পবিত্র কুরআনের হৃদয় বা 'হার্ট' বলা হয় কোন সূরাকে?",
+      "options": ["ক) সূরা আর-রহমান", "খ) সূরা ইয়াসীন", "গ) সূরা আল-বাকারা"],
+      "correct_option": "খ) সূরা ইয়াসীন",
+      "explanation": "জামে আত-তিরমিযী: ২৮৮৭ (সূরা ইয়াসীন কুরআনের হৃদয়)",
+      "sfx_timer": "clock_tick",
+      "sfx_reveal": "correct_bell"
+    },
+    {
+      "number": 3,
+      "category": "নবী ও সাহাবীগণ",
+      "question": "কোন নবীকে মাছের পেট থেকে আল্লাহ রক্ষা করেছিলেন?",
+      "options": ["ক) হযরত আইয়ুব (আ.)", "খ) হযরত ইউনুস (আ.)", "গ) হযরত নূহ (আ.)"],
+      "correct_option": "খ) হযরত ইউনুস (আ.)",
+      "explanation": "সূরা আল-আম্বিয়া: ৮৭ (হযরত ইউনুস আ.-এর মাছের পেটের দোয়া)",
       "sfx_timer": "clock_tick",
       "sfx_reveal": "correct_bell"
     }
   ],
   "outro": {
-    "score_prompt": "আজকের কুইজে আপনার স্কোর ৫-এ কত হলো? কমেন্টে জানান! 👇",
-    "follow_cta": "দ্বীনি জ্ঞান বৃদ্ধি করতে আমাদের ফলো করুন! 🌿",
-    "duration_sec": 4,
+    "score_prompt": "আজকের ৩টি প্রশ্নে আপনার স্কোর কত হলো? কমেন্টে জানান! 👇",
+    "follow_cta": "প্রতিদিনের সহীহ ইসলামিক কুইজ ও হাদিসের জন্য Follow করুন! 🌿",
     "sfx": "outro_riser"
   }
 }"""
@@ -52,69 +69,57 @@ Example format:
 Options must be labelled: "A) ...", "B) ...", "C) ...".
 """
 
-    system_prompt = f"""You are an expert viral short-form video producer specializing in high-retention interactive Islamic quiz videos for YouTube Shorts, Instagram Reels, and Facebook Reels.
+    system_prompt = f"""You are an expert viral short-form video producer specializing in high-retention 3-Question interactive Islamic quiz videos for YouTube Shorts, Instagram Reels, and Facebook Reels (Target Duration: ~35 Seconds).
 
 {lang_instruction}
 
-DYNAMIC SCENE 1 HOOK (MANDATORY VARIATION — DO NOT MAKE IT CONSTANT):
-The opening hook (Scene 1 headline & sub_text) MUST BE 100% UNIQUE and dynamically created for every video. NEVER repeat the same generic "আপনার জ্ঞান যাচাই করুন" headline.
-Choose dynamically from these 5 viral hook angles:
-1. CHALLENGE HOOK: "৫টিতে ৫টি সঠিক উত্তর দেওয়ার চ্যালেঞ্জ নিচ্ছেন? ☪️"
-2. CURIOSITY/GAP HOOK: "৯৯% মানুষ ৪ নম্বর প্রশ্নের উত্তর ভুল দেয়! 💡"
-3. IDENTITY HOOK: "একজন খাঁটি মুসলিম হিসেবে আজ নিজেকে যাচাই করুন! ✨"
-4. HIGH-STAKES HOOK: "আখিরাতের জ্ঞান আপনার কতটা মজবুত? আজই টেস্ট দিন! 📖"
-5. SCORE/CONFIDENCE HOOK: "আজকের ৫টি প্রশ্নে ফুল স্কোর করতে পারবেন তো? 🎯"
+VIRAL 3-QUESTION RETENTION FRAMEWORK (CHOOSE 3 RELATABLE QUESTIONS ACROSS THESE THEMES):
 
-Sub-text must also match dynamically:
-- "💡 কত স্কোর হলো কমেন্টে জানাবেন!"
-- "💡 ৪ নম্বর প্রশ্নটি কিন্তু সবচেয়ে কঠিন!"
-- "💡 সময় বেশি লাগলে ভিডিওটি পজ করুন!"
+Every video MUST generate EXACTLY 3 simple, highly relatable questions from the following high-engagement categories:
 
-VIRAL 5-QUESTION RETENTION BLUEPRINT (MANDATORY STRUCTURE):
+1. DAILY LIFE & SALAH (Everyday Habits):
+   - পাঁচ ওয়াক্ত সালাতে মোট ফরজ নামাজ কয় রাকাত? (১৭ রাকাত)
+   - দিনে ও রাতে কোন ফরজ সালাতে কেরাত আস্তে পড়তে হয়? (যোহর ও আসর)
+   - সালাতের সিজদায় আমরা কোন তাসবীহ পাঠ করি? (সুবহানা রাব্বিয়াল আ'লা)
+   - সালাতের রুকুতে কোন তাসবীহ পাঠ করতে হয়? (সুবহানা রাব্বিয়াল আজীম)
 
-Every video MUST follow this exact 5-slot psychological progression to maximize watch time and comments:
+2. HALAL VS. HARAM (Everyday Situations):
+   - ব্যাংকের ফিক্সড ডিপোজিট বা সুদের টাকা খাওয়া কি হালাল নাকি হারাম? (সম্পূর্ণ হারাম)
+   - পণ্য বিক্রির সময় পণ্যের আসল দোষ লুকিয়ে রাখা কি জায়েজ? (হারাম ও প্রতারণা)
+   - কারো অনুপস্থিতিতে তার অপ্রিয় সত্য দোষ আলোচনা করাকে কী বলে? (গীবত ও হারাম)
 
-• SLOT 1 (Q1: Warm-up & Confidence Hook — Stop the Scroll):
-  - Goal: An easy, universally known Islamic fact that gives the viewer an instant confident "Yes!" so they stay hooked.
-  - Examples: Core Pillars of Islam (৫টি), Number of daily Fard prayers (৫ ওয়াক্ত), First pillar of Islam (শাহাদাহ্).
+3. MARRIAGE & RELATIONSHIPS (High Comment Drivers):
+   - বিয়ের ক্ষেত্রে মোহরানা পরিশোধ করা বরের জন্য কী? (ফরজ ও বাধ্যতামূলক)
+   - বিয়ের আগে গায়রে মাহরাম নারী-পুরুষের নির্জনে দেখা করা কি জায়েজ? (সম্পূর্ণ নিষেধ / হারাম)
+   - রাসূলুল্লাহ (ﷺ) কার সাথে ভালো ব্যবহারকারীকে সর্বোত্তম বলেছেন? (নিজের স্ত্রীর সাথে)
 
-• SLOT 2 (Q2: Prophet Stories & Miracles — Narrative Curiosity):
-  - Goal: Story-based intrigue about beloved Prophets and their miracles.
-  - Examples: Which Prophet built the Kaaba with his son? (ইব্রাহিম আ.), Days Yunus (AS) spent in the whale, Prophet known as Kaleemullah (মুসা আ.), Prophet Nuh's years of Dawah (৯৫০ বছর).
+4. PARENTS & FAMILY (Emotional Shares):
+   - পিতা-মাতার মৃত্যুর পর তাদের জন্য সন্তানের কোন কাজটি সদকায়ে জারিয়া? (সন্তানের নেক আমল ও দোয়া)
+   - পিতা-মাতার সাথে কেমন আচরণে আল্লাহ কুরআনে 'উফ' বলতেও নিষেধ করেছেন? (রাগ বা বিরক্তি প্রকাশ)
 
-• SLOT 3 (Q3: Quranic Facts & Surah Secrets — Spiritual Intrigue):
-  - Goal: "Did You Know?" Quran trivia and misconceptions that spark curiosity.
-  - Examples: Which Surah does not begin with Bismillah? (সূরা আত-তাওবাহ), Heart of the Quran (সূরা ইয়াসীন), Surah protecting from grave punishment (সূরা আল-মুলক), Friday Noor Surah (সূরা আল-কাহফ), Total years of Quran revelation (২৩ বছর).
+5. BASIC QURAN & PROPHETS (Inspiring Stories):
+   - পবিত্র কুরআনের হৃদয় বা 'হার্ট' বলা হয় কোন সূরাকে? (সূরা ইয়াসীন)
+   - কুরআনের সবচেয়ে ছোট সূরার নাম কী? (সূরা আল-কাওসার)
+   - কোন সূরা ১ বার পড়লে এক-তৃতীয়াংশ কুরআন খতমের সওয়াব? (সূরা আল-ইখলাস)
+   - কোন নবীকে মাছের পেট থেকে আল্লাহ রক্ষা করেছিলেন? (হযরত ইউনুস আ.)
+   - কোন নবীর জন্য আগুন ফুলবাগান হয়ে গিয়েছিল? (হযরত ইব্রাহিম আ.)
+   - ইসলামের প্রথম খলিফা কে ছিলেন? (হযরত আবু বকর রা.)
+   - ইসলামের প্রথম শহীদ নারী কে ছিলেন? (হযরত সুমাইয়্যাহ রা.)
 
-• SLOT 4 (Q4: The Grave, Akhirah & Day of Judgment — High-Stakes Tension):
-  - Goal: Solemn, emotional, high-stakes reflection on the Afterlife.
-  - Examples: Name of the Angel who will blow the Trumpet (ইসরাফিল আ.), The 2 Angels who question in the grave (মুনকার ও নাকির), Jannah gate reserved exclusively for fasting people (রাইয়ান), Highest level of Jannah (জান্নাতুল ফেরদাউস).
-
-• SLOT 5 (Q5: Challenging Final Boss & Debate Driver — Viral Comments):
-  - Goal: A thought-provoking Islamic history fact or Hadith detail that drives viewers to comment their score (5/5 vs 4/5) and discuss.
-  - Examples: First person to accept Islam (খাদিজা রা.), First female martyr in Islam (সুমাইয়্যাহ রা.), The daily Dhikr lightest on tongue but heaviest on the scale (সুবহানাল্লাহি ওয়া বিহামদিহী...).
-
-CRITICAL FORMATTING & PHRASING RULES:
-1. RESPECTFUL ISLAMIC HONORIFICS (MANDATORY IN WRITING):
-   - ALWAYS write proper respectful honorifics when naming Prophets, Sahaba, and Companions:
-     * For Prophets: "ক) হযরত ইব্রাহিম (আ.)", "খ) হযরত মুসা (আ.)", "গ) হযরত ঈসা (আ.)"
-     * For Sahaba & Martyrs: "ক) হযরত খাদিজা (রা.)", "খ) হযরত সুমাইয়্যাহ (রা.)", "গ) হযরত আবু বকর (রা.)"
-     * For Prophet Muhammad: "নবীজি (সা.)" or "মুহাম্মদ (সা.)"
-   - NEVER write duplicate synonyms in brackets (e.g. DO NOT write "সালাত (নামাজ)" or "সাওম (রোজা)"). Use only "ক) সালাত" or "ক) নামাজ".
-
-2. Exactly 3 clean, concise options per question (keep options 1-3 words each).
-3. Exactly ONE correct option matching one of the options verbatim.
-4. Authentic Sahih references only (Sahih Bukhari, Sahih Muslim, Quran Surah:Ayah) in the explanation.
-5. SHORT & PUNCHY QUESTIONS (MANDATORY): Keep question text concise (max 6 to 9 words, e.g. "কুরআনের সবচেয়ে বড় সূরা কোনটি?", "ইসলামের প্রথম মুয়াজ্জিন কে ছিলেন?"). Concise phrasing ensures fast, energetic narration and maximum retention!
+CRITICAL FORMATTING RULES:
+1. Generate EXACTLY 3 questions (diverse themes per video).
+2. Short & Punchy: Keep question text under 9 words.
+3. Options: Exactly 3 clean, concise options per question (1-3 words each).
+4. Respectful Honorifics: Use "হযরত ... (আ.)", "হযরত ... (রা.)", "নবীজি (সা.)".
 {avoid_section}
 
 Respond with ONLY valid JSON (no markdown wrapping, no code blocks):"""
 
-    user_prompt = f"Generate a fresh, high-retention 5-Question Islamic Quiz Reel script in {language.upper()} strictly following the 5-Slot Progression Blueprint (Q1 Warm-up -> Q2 Prophet Fact -> Q3 Quran Secret -> Q4 Grave/Akhirah -> Q5 Final Boss)."
+    user_prompt = f"Generate a fresh, high-retention 3-Question Islamic Quiz Reel script in {language.upper()} strictly following the 3-Slot Formula (Q1 Daily Salah/Habit -> Q2 Basic Quran/Dua -> Q3 Beloved Prophet Story). Keep questions short and punchy under 8 words. Return ONLY JSON."
 
-    data = extract_json(system_prompt, user_prompt, max_tokens=4000)
-    if not data or "questions" not in data or len(data["questions"]) != 5:
-        logger.error("Failed to generate valid 5-question quiz script.")
+    data = extract_json(system_prompt, user_prompt, max_tokens=2500)
+    if not data or "questions" not in data or len(data["questions"]) != 3:
+        logger.error("Failed to generate valid 3-question quiz script.")
         return None
 
     return data
