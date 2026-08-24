@@ -8,7 +8,7 @@ from app.history import _get_supabase_config
 
 LOCAL_QUIZ_HISTORY_FILE = "data/used_quiz_questions.json"
 
-def fetch_used_quiz_questions(limit: int = 50) -> list[str]:
+def fetch_used_quiz_questions(limit: int = 100) -> list[str]:
     """
     Fetches recent quiz questions from Supabase `used_quiz_questions` table
     (with local JSON cache fallback) to ensure zero question repetition across runs.

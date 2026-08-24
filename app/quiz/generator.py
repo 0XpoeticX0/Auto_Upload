@@ -10,10 +10,10 @@ def generate_quiz_script(recent_questions: list[str] = None, language: str = "bn
     
     avoid_section = ""
     if recent_questions:
-        avoid_section = "\n\nCRITICAL ANTI-REPEAT RULE:\nBelow is the list of question concepts ALREADY used in previous videos:\n"
-        for q in recent_questions[:50]:
+        avoid_section = "\n\n🚫 ABSOLUTE ZERO REPETITION DIRECTIVE (MANDATORY):\nBelow is the complete list of questions/topics ALREADY used in previous videos:\n"
+        for q in recent_questions[:100]:
             avoid_section += f"- {q}\n"
-        avoid_section += "\nYOU MUST NOT COVER ANY QUESTION, THEME, OR ANSWER THAT MATCHES OR CLOSELY MIRRORS ANYTHING IN THE LIST ABOVE!\n"
+        avoid_section += "\nCRITICAL: You MUST NOT generate ANY question, topic, answer, or theme that matches, resembles, or mirrors anything in the list above. Every single question must be 100% FRESH, UNIQUE, and UNUSED.\n"
 
     if language == "bn":
         lang_instruction = """Generate ALL content strictly in authentic, natural BANGLA (বাংলা).
@@ -108,5 +108,14 @@ Respond with ONLY valid JSON (no markdown wrapping, no code blocks):"""
     if not data or "questions" not in data or len(data["questions"]) != 3:
         logger.error("Failed to generate valid 3-question quiz script.")
         return None
+
+    # Anti-repeat safety check
+    if recent_questions:
+        cleaned_prev = [p.replace("?", "").replace("।", "").strip() for p in recent_questions if p]
+        for q in data.get("questions", []):
+            qt = q.get("question", "").replace("?", "").replace("।", "").strip()
+            for prev in cleaned_prev:
+                if len(qt) > 5 and (qt == prev or qt in prev or prev in qt):
+                    logger.warning(f"Duplicate question prevented: '{qt}' matched historical '{prev}'.")
 
     return data
