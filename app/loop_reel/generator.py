@@ -69,7 +69,9 @@ DUAL-APPROACH STRATEGY (WHEN TO USE WHICH):
 
 THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
 Rule 1: Name the Authority First (MANDATORY in Line 1): Every hook MUST explicitly state who taught or promised this in Line 1 (e.g. "রাসূলুল্লাহ (ﷺ) বলেছেন:...", "নবীজির (ﷺ) শেখানো...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন..."). ALWAYS use "(ﷺ)", NEVER "(সা.)". NEVER omit who taught it!
-Rule 2: Promise High Gain with Low Effort (small numbers: "মাত্র ১টি আমল", "প্রতিদিন ৩০ সেকেন্ড", "ঘুমানোর আগে ৩ বার", "মাত্র ২ রাকাত", "মাত্র ৫ সেকেন্ড")
+Rule 2: Promise High Gain with Micro Effort (STRICT LOW-FRICTION RULE):
+  - ❌ STRICTLY BANNED: NEVER mention large, scary numbers like "৩০টি আয়াত", "১০০ বার", "৫০ বার", "১ ঘণ্টা". Viewers get scared of the effort and immediately swipe away!
+  - ✅ ALWAYS USE EFFORTLESS MICRO-FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৫ সেকেন্ডের দোয়া", "মাত্র ২ মিনিটের আমল", "১টি ছোট আয়াত". For Surah Mulk or long Surahs, say "ঘুমানোর আগে ছোট এই সূরাটি পড়ুন" or "মাত্র ২ মিনিটের এই আমলটি", NEVER "৩০টি আয়াত"!
 Rule 3: Target a Pain Point or Deep Desire (Rizq/Money, Peace/Anxiety, Protection/Kaborer Azab)
 Rule 4: Leave the Loop Open (End with unfinished promise "...যা পড়লে মনের চাওয়া আল্লাহ পূরণ করেন", "...যা আপনার ভাগ্য বদলে দিতে পারে")
 
@@ -77,7 +79,7 @@ CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY):
 In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines covering:
 1. The Sacred Authority: "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "নবীজির (ﷺ) শেখানো" (MUST BE HIGHLIGHTED IN GOLD whenever present!)
 2. The Divine Name: "আল্লাহ" or "আল্লাহর" (MUST BE HIGHLIGHTED IN GOLD)
-3. The Numbered Action: e.g. "১টি আমল", "৩টি আয়াত", "৫ সেকেন্ডের আমল", "২ রাকাতের আমল" (MUST BE HIGHLIGHTED IN GOLD)
+3. The Numbered Action: e.g. "১টি আমল", "ছোট এই সূরাটি", "৫ সেকেন্ডের দোয়া", "২ মিনিটের আমল" (MUST BE HIGHLIGHTED IN GOLD)
 4. The Ultimate Reward/Outcome: e.g. "কখনো ফিরিয়ে দেন না", "সব বিপদ থেকে রক্ষা করবেন", "ভাগ্যের তালা খুলে দেয়", "সব দুশ্চিন্তা দূর করে দেবেন" (MUST BE HIGHLIGHTED IN GOLD)
 
 PROVEN HOOK EXAMPLES TO MODEL AFTER:

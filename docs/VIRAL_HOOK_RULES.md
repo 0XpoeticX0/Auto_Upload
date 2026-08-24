@@ -26,10 +26,15 @@ The formula for creating high-retention hooks combines **clear authority**, **lo
   - Examples: `"রাসূলুল্লাহ (ﷺ) বলেছেন:..."`, `"নবীজির (ﷺ) শেখানো..."`, `"আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন:..."`
 - **Why**: People stop scrolling immediately when they see a credible, sacred source. Never omit who taught the Sunnah/Amal!
 
-### Rule 2: Promise High Gain with Low Effort
-- **Action**: Use specific, small numbers.
-  - Examples: `"মাত্র ১টি আমল"`, `"প্রতিদিন ৩০ সেকেন্ড"`, `"ঘুমানোর আগে ৩ বার"`, `"মাত্র ২০ সেকেন্ড"`
-- **Why**: Specific numbers feel achievable and reduce psychological friction. Vague advice (*"অনেক আমল করুন"*) gets skipped.
+### Rule 2: Promise High Gain with Micro Effort (STRICT LOW-FRICTION RULE)
+- **❌ BANNED**: NEVER mention large, scary, or exhausting numbers like `"৩০টি আয়াত"`, `"১০০ বার"`, `"৫০ বার"`, `"১ ঘণ্টা"`. Viewers get overwhelmed and immediately swipe away!
+- **✅ ALLOWED**: Use effortless micro-framing:
+  - `"মাত্র ১টি আমল"`
+  - `"ছোট এই সূরাটি"`
+  - `"মাত্র ৫ সেকেন্ডের দোয়া"`
+  - `"মাত্র ২ মিনিটের আমল"`
+  - `"৩টি আয়াত"`
+- **Why**: Micro-commitments feel effortless and achievable. Viewers stop scrolling because they feel *"I can easily do this right now!"*
 
 ### Rule 3: Target a Pain Point or Deep Desire
 Connect the hook directly to everyday worries and aspirations:
