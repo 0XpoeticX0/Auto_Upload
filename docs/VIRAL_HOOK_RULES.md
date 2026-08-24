@@ -21,10 +21,10 @@ The formula for creating high-retention hooks combines **clear authority**, **lo
 
 ## 🧠 The 4 Core Psychology Rules
 
-### Rule 1: Name the Authority First
-- **Action**: Start with an instant trust marker.
-  - Examples: `"রাসূলুল্লাহ (ﷺ) বলেছেন..."`, `"আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন..."`
-- **Why**: People stop scrolling immediately when they see a credible, sacred source.
+### Rule 1: Name the Authority First (MANDATORY IN LINE 1)
+- **Action**: Line 1 MUST ALWAYS explicitly name who taught or promised this.
+  - Examples: `"রাসূলুল্লাহ (ﷺ) বলেছেন:..."`, `"নবীজির (ﷺ) শেখানো..."`, `"আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন:..."`
+- **Why**: People stop scrolling immediately when they see a credible, sacred source. Never omit who taught the Sunnah/Amal!
 
 ### Rule 2: Promise High Gain with Low Effort
 - **Action**: Use specific, small numbers.

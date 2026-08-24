@@ -68,14 +68,14 @@ DUAL-APPROACH STRATEGY (WHEN TO USE WHICH):
 2. Generate Custom Rule-Based Hooks for specific occasions (Tahajjud, Jummah, entering home, waking at night, specific Hadiths) to keep the feed fresh.
 
 THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
-Rule 1: Name the Authority First ("রাসূলুল্লাহ (ﷺ) বলেছেন...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন...") — ALWAYS use "(ﷺ)", NEVER "(সা.)".
+Rule 1: Name the Authority First (MANDATORY in Line 1): Every hook MUST explicitly state who taught or promised this in Line 1 (e.g. "রাসূলুল্লাহ (ﷺ) বলেছেন:...", "নবীজির (ﷺ) শেখানো...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন..."). ALWAYS use "(ﷺ)", NEVER "(সা.)". NEVER omit who taught it!
 Rule 2: Promise High Gain with Low Effort (small numbers: "মাত্র ১টি আমল", "প্রতিদিন ৩০ সেকেন্ড", "ঘুমানোর আগে ৩ বার", "মাত্র ২ রাকাত", "মাত্র ৫ সেকেন্ড")
 Rule 3: Target a Pain Point or Deep Desire (Rizq/Money, Peace/Anxiety, Protection/Kaborer Azab)
 Rule 4: Leave the Loop Open (End with unfinished promise "...যা পড়লে মনের চাওয়া আল্লাহ পূরণ করেন", "...যা আপনার ভাগ্য বদলে দিতে পারে")
 
 CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY):
 In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines covering:
-1. The Sacred Authority: "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "রাসূলুল্লাহ (ﷺ)" (MUST BE HIGHLIGHTED IN GOLD whenever present!)
+1. The Sacred Authority: "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "নবীজির (ﷺ) শেখানো" (MUST BE HIGHLIGHTED IN GOLD whenever present!)
 2. The Divine Name: "আল্লাহ" or "আল্লাহর" (MUST BE HIGHLIGHTED IN GOLD)
 3. The Numbered Action: e.g. "১টি আমল", "৩টি আয়াত", "৫ সেকেন্ডের আমল", "২ রাকাতের আমল" (MUST BE HIGHLIGHTED IN GOLD)
 4. The Ultimate Reward/Outcome: e.g. "কখনো ফিরিয়ে দেন না", "সব বিপদ থেকে রক্ষা করবেন", "ভাগ্যের তালা খুলে দেয়", "সব দুশ্চিন্তা দূর করে দেবেন" (MUST BE HIGHLIGHTED IN GOLD)
@@ -94,10 +94,16 @@ PROVEN HOOK EXAMPLES TO MODEL AFTER:
   highlight_words: ["রাসূলুল্লাহ (ﷺ) বলেছেন:", "এমন ১টি দোয়া আছে", "আল্লাহ", "কখনো ফিরিয়ে দেন না"]
 
 • Model 3 (Tahajjud / Late Night):
-  line_1: "রাতের শেষ প্রহরে এমন ১টি আমল আছে"
+  line_1: "রাসূলের (ﷺ) শেখানো তাহাজ্জুদের ১টি আমল"
   line_2: "যা নিয়মিত পালন করলে আল্লাহ"
   line_3: "মনের যেকোনো অসম্ভব চাওয়া পূরণ করেন..."
-  highlight_words: ["শেষ প্রহরে", "এমন ১টি আমল আছে", "আল্লাহ", "যেকোনো অসম্ভব চাওয়া পূরণ করেন"]
+  highlight_words: ["রাসূলের (ﷺ) শেখানো", "তাহাজ্জুদের ১টি আমল", "আল্লাহ", "যেকোনো অসম্ভব চাওয়া পূরণ করেন"]
+
+• Model 4 (Family / Home Barakah):
+  line_1: "রাসূলুল্লাহ (ﷺ) বলেছেন: ঘরে প্রবেশের সময়"
+  line_2: "মাত্র ৫ সেকেন্ডের এই ১টি সুন্নত মানলে"
+  line_3: "আল্লাহ পরিবারে অভাব ও অশান্তি দূর করে দেন..."
+  highlight_words: ["রাসূলুল্লাহ (ﷺ) বলেছেন:", "৫ সেকেন্ডের এই ১টি সুন্নত", "আল্লাহ", "অভাব ও অশান্তি দূর করে দেন"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
