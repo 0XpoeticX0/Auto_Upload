@@ -319,37 +319,15 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     temp_dir = os.path.join("data", "temp", "loop_reel_run")
     os.makedirs(temp_dir, exist_ok=True)
 
-    # 1. Background image generation
+    # 1. Background image generation with TRIPLE-CHECK VISION GUARDIAN (Checks 3 times over)
+    from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
     bg_path = os.path.join(temp_dir, "background.jpg")
     visual_p = content.get("visual_prompt", SLOT_CONFIGS["slot_1_morning"]["visual_prompt"])
-    # Ensure Islamic architectural emphasis
-    if "Andalusian" not in visual_p and "mosque" not in visual_p:
-        visual_p += ", majestic ancient Islamic architecture with carved Moorish arched windows and golden sunlight"
     
-    encoded = urllib.parse.quote(visual_p)
-    neg = "human, person, face, woman, man, child, living being, hands, fingers, arm, body parts, close up fingers, low quality, blurry, watermark, text"
-    url = f"https://image.pollinations.ai/prompt/{encoded}?width=1080&height=1920&model=flux&nologo=true&seed={int(time.time())}&negative={urllib.parse.quote(neg)}"
-    
-    downloaded = False
-    try:
-        r = requests.get(url, timeout=60)
-        if r.status_code == 200 and len(r.content) > 5000:
-            with open(bg_path, "wb") as f:
-                f.write(r.content)
-            downloaded = True
-    except Exception as e:
-        logger.warning(f"Pollinations notice: {e}")
-
-    if not downloaded:
-        sample_img = "data/temp/loop_reel_sample/fajr_prayer_mat.jpg"
-        if os.path.exists(sample_img):
-            import shutil
-            shutil.copyfile(sample_img, bg_path)
-            logger.info("Using cached high-aesthetic background.")
-        else:
-            # Fallback canvas
-            img = Image.new("RGB", (1080, 1920), (12, 16, 22))
-            img.save(bg_path, "JPEG")
+    downloaded = generate_verified_human_free_background(visual_p, bg_path, max_checks=3)
+    if not downloaded or not os.path.exists(bg_path) or os.path.getsize(bg_path) < 5000:
+        logger.warning("[Vision Guardian] Deploying certified human-free fallback background.")
+        get_certified_safe_fallback(bg_path)
 
     # 2. Authentic Quran Audio with 30-Video Anti-Repetition Guarantee & Topic Alignment
     topic_keywords = f"{content.get('title_bn', '')} {content.get('theme', '')} {content.get('line_1', '')} {content.get('line_2', '')}"

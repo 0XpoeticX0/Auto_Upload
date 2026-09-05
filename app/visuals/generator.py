@@ -117,60 +117,13 @@ Respond ONLY with valid JSON (no markdown):
     return FALLBACK_PILLAR_STYLES.get(pillar_category, FALLBACK_PILLAR_STYLES["daily_life"])
 
 def generate_image_for_scene(visual_prompt: str, output_filepath: str, seed: int = 42) -> bool:
-    """Generates 9:16 high-contrast vertical backgrounds via Pollinations AI (FLUX Model)."""
-    logger.info(f"Generating high-contrast Flux background image for prompt: '{visual_prompt[:40]}...'")
-    
-    # Always strip any stray human-suggesting words before sending
-    enhanced_prompt = (
-        f"{NO_HUMAN_PREFIX}{visual_prompt}, "
-        "high contrast, rich shadows, deep saturation, masterpiece, 8k resolution, "
-        "no humans, no faces, no living beings, empty scenery"
-    )
-    encoded_prompt = urllib.parse.quote(enhanced_prompt)
-    
-    base_url = "https://image.pollinations.ai/prompt/"
-    params = {
-        "width": 1080,
-        "height": 1920,
-        "seed": seed,
-        "model": "flux",  # Flux model produces deep shadows and metallic gold reflections
-        "nologo": "true",
-        "enhance": "false",
-        "negative": NEGATIVE_PROMPT,
-    }
-    query_string = urllib.parse.urlencode(params)
-    request_url = f"{base_url}{encoded_prompt}?{query_string}"
-    
-    max_retries = 3
-    for attempt in range(max_retries):
-        try:
-            response = requests.get(request_url, timeout=60)
-            if response.status_code == 200 and len(response.content) > 5000:
-                with open(output_filepath, "wb") as f:
-                    f.write(response.content)
-                logger.info(f"Background successfully generated: {output_filepath} ({len(response.content)//1024} KB)")
-                return True
-            else:
-                logger.warning(f"Attempt {attempt+1}: Status {response.status_code}")
-        except Exception as e:
-            logger.warning(f"Attempt {attempt+1}: Error generating image: {e}")
-            
-        if attempt < max_retries - 1:
-            time.sleep(5)
-            
-    # Fallback to standard model if flux times out
-    try:
-        logger.info("Attempting fallback standard model generation...")
-        fallback_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1080&height=1920&nologo=true&seed={seed}&negative={urllib.parse.quote(NEGATIVE_PROMPT)}"
-        resp = requests.get(fallback_url, timeout=60)
-        if resp.status_code == 200 and len(resp.content) > 5000:
-            with open(output_filepath, "wb") as f:
-                f.write(resp.content)
-            return True
-    except Exception as e:
-        logger.error(f"Fallback generation error: {e}")
-        
-    return False
+    """Generates 9:16 high-contrast vertical backgrounds with TRIPLE-CHECK VISION GUARDIAN (0 Living Beings Guaranteed)."""
+    from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
+    success = generate_verified_human_free_background(visual_prompt, output_filepath, max_checks=3)
+    if not success or not os.path.exists(output_filepath) or os.path.getsize(output_filepath) < 5000:
+        logger.warning("[Vision Guardian] Triggering certified fallback in generate_image_for_scene.")
+        return get_certified_safe_fallback(output_filepath)
+    return True
 
 def generate_all_images(scenes: list, topic_id: int, video_format: str = "short", pillar_category: str = "daily_life", script_data: dict = None):
     """Generates a master visual background dynamically crafted by Gemini specifically for this topic."""
