@@ -157,7 +157,7 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
             if "কুইজ" in metadata.get("youtube_title", "") or "quiz" in metadata.get("youtube_title", "").lower():
                 comment_text = "আজকের কুইজে আপনার স্কোর ৫-এ কত হলো? ৫/৫, ৪/৫ নাকি ৩/৫? কমেন্টে জানান! 👇"
             else:
-                comment_text = "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿"
+                comment_text = "সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন—রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿"
                 
         if comment_text and video_id:
             try:

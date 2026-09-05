@@ -140,7 +140,7 @@ Output JSON format (ONLY valid JSON):
     "youtube_title": "ক্লিক করার মতো আকর্ষণীয় বাংলা শিরোনাম (সর্বোচ্চ ৬০ অক্ষর)",
     "facebook_title": "ফেসবুক রিলসের জন্য মন ছুঁয়ে যাওয়া বাংলা শিরোনাম",
     "description": "ক্লান্ত দিনের শেষে স্ত্রীর মুখে এক লোকমা খাবার তুলে দেওয়া বা হাসিমুখে কথা বলাও যে কত বড় ইবাদত!...",
-    "pinned_comment": "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿",
+    "pinned_comment": "সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন—রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿",
     "english_title": "Feeding Your Wife is Charity in Islam #Shorts",
     "english_description": "A short and profound Islamic reminder on marriage Sunnah and daily rewards. Subscribe for daily Sahih Islamic reminders.",
     "thumbnail_hook": "২-৩ শব্দের বাংলা হুক",
@@ -160,7 +160,7 @@ Output JSON format (ONLY valid JSON):
     metadata["description"] = format_video_description(raw_desc, script_data, english_summary=metadata.get("english_description", ""))
     
     if not metadata.get("pinned_comment"):
-        metadata["pinned_comment"] = "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿"
+        metadata["pinned_comment"] = "সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন—রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿"
         
     if "youtube_title" in metadata:
         yt_t = metadata["youtube_title"].strip()

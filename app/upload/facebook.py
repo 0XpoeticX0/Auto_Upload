@@ -65,7 +65,7 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
         if "কুইজ" in title or "quiz" in title.lower():
             pinned_comment = "আজকের কুইজে আপনার স্কোর ৩-এ কত হলো? ৩/৩, ২/৩ নাকি ১/৩? কমেন্টে জানান! 👇"
         else:
-            pinned_comment = "কমেন্টে একবার 'সুবহানাল্লাহ' / 'আলহামদুলিল্লাহ' লিখে সদকায়ে জারিয়া হিসেবে বন্ধুদের সাথে শেয়ার করুন 🌿"
+            pinned_comment = "সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন—রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿"
 
     # Auto-detect: if filename contains "loop_reel", "_short", "reel", "slot", "episode", or "quiz", use Reels API and Instagram cross-posting
     is_reel = (

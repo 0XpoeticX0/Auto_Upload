@@ -11,7 +11,9 @@ from app.llm.provider import extract_json
 BANNED_ENGAGEMENT_TERMS = [
     r"সদকা[য়য়]?[েএ]?\s*জারি[য়য়]?[াআ]?\s*হবে",
     r"সদকা[য়য়]?[েএ]?\s*জারি[য়য়]?[াআ]?র?\s*অংশীদার",
+    r"সদকা[য়য়]?[েএ]?\s*জারি[য়য়]?[াআ]?\s*হিসেবে",
     r"কমেন্টে\s*.*লিখলে\s*সদকা",
+    r"কমেন্টে\s*.*লিখুন\s*—?\s*সদকা",
     r"অলৌকিক\s*পুরস্কার",
     r"অলৌকিক\s*৩টি",
     r"অলৌকিক\s*ফলাফল",
@@ -29,7 +31,7 @@ def check_pass_1_prohibited_terms(text: str) -> tuple[bool, str]:
     """Pass 1: Detects and rejects forbidden engagement-bait or sensationalized terms."""
     for pattern in BANNED_ENGAGEMENT_TERMS:
         if re.search(pattern, text, flags=re.IGNORECASE):
-            return False, f"Banned term detected matching pattern: '{pattern}'. Religious claims like 'সদকায়ে জারিয়া হবে' in comments are prohibited."
+            return False, f"Banned term detected matching pattern: '{pattern}'. Religious claims like 'সদকায়ে জারিয়া হবে' in comments or unverified claims are strictly prohibited."
     return True, ""
 
 def check_pass_2_reference_validity(points: list) -> tuple[bool, str]:
@@ -59,11 +61,13 @@ def check_pass_3_conflation_and_fabrication(points: list, title: str) -> tuple[b
         p_ref = pt.get("reference", "").strip()
         
         # Check for unverified fabricated ফলাফল
-        if "ফলাফল" in p_title and not pt.get("arabic"):
-            if "জান্নাত" in p_hadith or "আশ্রয়" in p_hadith:
-                if "রাসূলুল্লাহ" not in p_hadith and "নবীজি" not in p_hadith:
-                    return False, f"Point #{idx+1} ('{p_title}') contains a synthetic promise/result without direct Hadith quotation."
-                    
+        if "ফলাফল" in p_title:
+            return False, f"Point #{idx+1} is titled 'ফলাফল'. Synthetic result sections are banned; use authentic Sunnah teachings or exact Hadith citations only."
+            
+        if "জান্নাত" in p_hadith or "আশ্রয়" in p_hadith:
+            if "যে ব্যক্তি প্রতি রাতে" in p_hadith and ("বুখারী ও মুসলিম" in p_ref or "সহীহ বুখারী ও মুসলিম" in p_ref):
+                return False, f"Point #{idx+1} contains a synthetic promise falsely attributed to Bukhari & Muslim."
+                
         # Check for Surah Sajdah + Mulk grave conflation under single citation 2892
         if "সাজদাহ" in p_hadith and "মুলক" in p_hadith and "কবরের আজাব" in p_hadith:
             if "২৮৯২" in p_ref and "২৮৯১" not in p_ref:

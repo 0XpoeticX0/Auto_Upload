@@ -241,61 +241,47 @@ def format_loop_caption(data: dict) -> str:
         hook = hook + " " + data.get("line_2", "").strip()
     caption += hook + " 🤲\n\n"
 
-    # KEY HADITH QUOTE (first point)
-    if pts:
-        pt = pts[0]
-        if pt.get("hadith"):
-            clean_h = clean_hadith_body(pt["hadith"])
-            caption += "📖 হাদীস শরীফে এসেছে:\n"
-            caption += "“" + clean_h + "”\n"
-            if pt.get("reference"):
-                caption += "📚 [" + pt["reference"] + "]\n"
-            caption += "\n"
+    bn_nums = ["১", "২", "৩", "৪", "৫"]
+    for idx, pt in enumerate(pts):
+        num_str = pt.get("number") or (bn_nums[idx] if idx < len(bn_nums) else str(idx + 1))
+        title = pt.get("title", "").strip().replace("ফলাফল", "আমলের শিক্ষা ও ফযিলত")
+        hadith = pt.get("hadith", "").strip()
+        arabic = pt.get("arabic", "").strip()
+        pron = pt.get("pronunciation", "").strip()
+        meaning = pt.get("meaning", "").strip()
+        ref = pt.get("reference", "").strip()
+        note = pt.get("note", "").strip()
 
-    # Determine Dua vs. Quranic Ayah Header
-    combined_ctx = (title_bn + " " + hook + " " + data.get("arabic", "")).lower()
-    is_quranic = any(k in combined_ctx for k in ["সূরা", "সুরা", "আয়াত", "আয়াত", "আয়াতুল কুরসী", "কুরআন", "কোরআন"])
-    dua_header = "📖 সূরার বরকতময় আয়াত:" if is_quranic else "🤲 পূর্ণাঙ্গ দোয়া:"
+        if title:
+            caption += f"{num_str}. {title}:\n"
+        elif hadith or arabic:
+            caption += f"{num_str}. আমল:\n"
 
-    # COMPLETE ARABIC DUA / AYAH
-    dua_found = False
-    for pt in pts:
-        if pt.get("arabic"):
-            caption += f"{dua_header}\n" + pt["arabic"].strip() + "\n\n"
-            if pt.get("pronunciation"):
-                caption += "🗣️ উচ্চারণ: “" + pt["pronunciation"].strip() + "”\n\n"
-            if pt.get("meaning"):
-                caption += "🌿 অর্থ: “" + pt["meaning"].strip() + "”\n\n"
-            if pt.get("reference") and pt != pts[0]:
-                caption += "📚 [" + pt["reference"].strip() + "]\n\n"
-            dua_found = True
-            break
+        if hadith:
+            caption += f"“{clean_hadith_body(hadith)}”\n"
 
-    # If top-level arabic keys exist
-    if not dua_found and data.get("arabic"):
-        caption += f"{dua_header}\n" + data["arabic"].strip() + "\n\n"
-        if data.get("pronunciation"):
-            caption += "🗣️ উচ্চারণ: “" + data["pronunciation"].strip() + "”\n\n"
-        if data.get("meaning"):
-            caption += "🌿 অর্থ: “" + data["meaning"].strip() + "”\n\n"
-        if data.get("reference"):
-            caption += "📚 [" + data["reference"].strip() + "]\n\n"
+        if ref and not arabic:
+            caption += f"📚 [{ref}]\n"
 
-    # PRACTICAL TIP (2nd non-arabic point)
-    for pt in pts[1:]:
-        if pt.get("hadith") and not pt.get("arabic"):
-            clean_tip = clean_hadith_body(pt["hadith"])
-            tip_title = pt.get("title", "আমলের নিয়ম").replace("ফলাফল", "আমলের তাৎপর্য ও শিক্ষা")
-            caption += "💡 " + tip_title + ":\n" + clean_tip + "\n\n"
-            if pt.get("reference") and pt.get("reference").strip() not in ["সহীহ বুখারী ও মুসলিম", "সহীহ হাদিস সমগ্র"]:
-                caption += "📚 [" + pt["reference"] + "]\n\n"
-            break
+        if arabic:
+            caption += f"{arabic}\n\n"
+            if pron:
+                caption += f"🗣️ উচ্চারণ: “{pron}”\n\n"
+            if meaning:
+                caption += f"🌿 অর্থ: “{meaning}”\n\n"
+            if ref:
+                caption += f"📚 [{ref}]\n"
+
+        if note:
+            caption += f"*(উল্লেখ্য: {note})*\n"
+
+        caption += "\n"
 
     # CLEAR CTA & AUTHENTIC SUNNAH DAWAH TRIGGER
     caption += (
         "📌 নিয়মিত আমল করার জন্য রিলটি 🔖 Save করে রাখুন।\n"
-        "🤍 সহীহ আমলের দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন।\n"
-        "রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩]\n\n"
+        "🤍 সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন।\n"
+        "রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿\n\n"
         "━━━━━━━━━━━━━━━━━━━━\n"
         "👉 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন: @dailydos_islam\n\n"
     )
@@ -474,8 +460,10 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
     if "#Shorts" not in yt_title and "#shorts" not in yt_title:
         yt_title = f"{yt_title} #Shorts"
         
-    fb_title = content.get("title_bn", "ইসলামিক রিলস")
-    pinned_comment = f"পরবর্তীতে আমল করার জন্য রিলটি Save করে রাখুন এবং কমেন্টে একবার '{content.get('dhikr_word', 'সুবহানাল্লাহ')}' লিখে সদকায়ে জারিয়া হিসেবে শেয়ার করুন 🌿"
+    pinned_comment = (
+        f"পরবর্তীতে আমল করার জন্য রিলটি Save করে রাখুন এবং সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন—"
+        f"রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿"
+    )
 
     # 4. Upload to YouTube Shorts
     metadata = {
