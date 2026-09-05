@@ -50,34 +50,35 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
     cfg = SLOT_CONFIGS[slot_key]
     logger.info(f"Targeting {cfg['name']} ({cfg['theme']})")
 
-    # Fetch recent topics to ensure zero duplication
-    recent_titles = get_recent_video_titles(limit=60)
-    avoid_context = "\n- ".join(recent_titles[:30]) if recent_titles else "None"
+    # Fetch recent topics to ensure zero duplication across past 30-60 days
+    recent_titles = get_recent_video_titles(limit=100)
+    avoid_context = "\n- ".join(recent_titles[:40]) if recent_titles else "None"
 
-    # Calculate Series Episode Number and 30-Day Diverse Curriculum Topic
+    # Calculate Series Episode Number
     ep_int, ep_bn = get_next_episode_number()
-    from app.curriculum import get_curriculum_for_episode
-    curriculum = get_curriculum_for_episode(ep_int)
-    
-    logger.info(f"Targeting 30-Day Curriculum Day #{curriculum['day']}: {curriculum['theme']} ({curriculum['reference']})")
 
-    system_prompt = f"""You are a master viral Islamic content creator specializing in the high-retention "7-Second Aesthetic Loop + High-Value Point-by-Point Caption" Reel format.
+    logger.info(f"Dynamically selecting high-impact daily life Sunnah topic for Episode #{ep_bn}...")
 
-TODAY'S MANDATORY 30-DAY CURRICULUM TOPIC (100% UNIQUE, NO REPETITION):
-- Day #{curriculum['day']}/30: {curriculum['theme']}
-- Category: {curriculum['category']}
-- Hadith Focus: {curriculum['hadith_core']}
-- Exact Sahih Citation: {curriculum['reference']}
-- Suggested Hook Model:
-  Line 1: "{curriculum['hook_line_1']}"
-  Line 2: "{curriculum['hook_line_2']}"
+    system_prompt = f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
+
+DYNAMIC TOPIC SELECTION MANDATE (VITAL DAILY LIFE & PROPHET'S TEACHINGS):
+Do NOT pick trivial, obscure, or repetitive topics. Select a DEEPLY VITAL, highly impactful teaching of the Prophet (ﷺ) that solves a real human struggle in modern daily life.
+
+CHOOSE FROM ONE OF THESE 6 CORE DAILY LIFE DOMAINS:
+1. 🌿 মানসিক ও আত্মিক প্রশান্তি (Mental & Emotional Peace): অতিরিক্ত দুশ্চিন্তা, একাকীত্ব, অনিশ্চয়তার ভয়, এবং আল্লাহর ওপর অটল তাওয়াক্কুলের সুন্নাহ পথ।
+2. 🤝 চরিত্র ও পারস্পরিক সম্পর্ক (Character & Human Bonds): পিতা-মাতার মর্যাদা, স্বামী-স্ত্রীর আন্তরিক মমতা, কারো গোপন দোষ ঢেকে রাখা, গীবত ও অপবাদ থেকে জবান রক্ষা, অহংকার দূর করা।
+3. 💼 হালাল রিজিক ও আর্থিক সংকট (Livelihood & Debt Crises): পাহাড়সমান ঋণমুক্তির সুন্নাহ আমল, ব্যবসায় সততা ও বরকত, কাজে ফাঁকি না দেওয়া, অভাবের সময় নবীজির আমল।
+4. 🤲 নামাজ ও খাঁটি তাওবা (Prayer Focus & Repentance): নামাজে শয়তানের ওয়াসওয়াসা দূর করে মন স্থির করা, বারবার গুনাহ হয়ে গেলেও হতাশ না হয়ে সত্যিকার তাওবা করা।
+5. ⚡ রাগ ও ক্ষোভ নিয়ন্ত্রণ (Anger & Conflict Resolution): প্রচণ্ড রাগের মাথায় নবীজির শেখানো আমল, অন্যায়ভাবে কাউকে আঘাত না করা, প্রতিশোধের ক্ষমতা থাকা সত্ত্বেও ক্ষমা করার অপরিসীম মর্যাদা।
+6. 🛡️ প্রাত্যহিক জীবনের গুরুত্বপূর্ণ সুন্নাহ (Impactful Daily Sunnah): খাবার, পরিবার, প্রতিবেশী, এবং অসুস্থ মানুষের পাশে দাঁড়ানোর সেই গুরুত্বপূর্ণ সুন্নাহ যা মানুষের জীবন আলোকিত করে।
+
 SERIES CONTEXT: "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
 
 # ==============================================================================
 # RULE #1 SUPREME MANDATE: ZERO TOLERANCE FOR ISLAMIC INACCURACY & HALLUCINATION
 # ==============================================================================
 RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY & ANTI-HALLUCINATION (MANDATORY FIRST RULE):
-1. NEVER MERGE HADITHS: Never combine multiple separate Hadiths into one quotation or under one reference. E.g., Surah Sajdah before sleep (Tirmidhi 2892) and Surah Mulk grave protection (Tirmidhi 2891) are SEPARATE Hadiths. Keep distinct narrations separate with their own exact citations!
+1. NEVER MERGE HADITHS: Never combine multiple separate Hadiths into one quotation or under one reference. Keep distinct narrations separate with their own exact citations!
 2. EXACT BOOK & HADITH NUMBER ONLY: Never write vague references like "সহীহ বুখারী ও মুসলিম" or "সহীহ হাদিস সমগ্র". Every single Hadith quote MUST have the exact specific book and Hadith number (e.g., "সহীহ বুখারী: ৬৩২৪", "জামে আত-তিরমিযী: ২৮৯১", "সহীহ মুসলিম: ৭০৭", "সুনানে আবু দাউদ: ১৪০০").
 3. NO FABRICATED "ফলাফল" OR PROMISES: Never invent unverified summary promises like "যে ব্যক্তি এটি করবে সে আল্লাহর আশ্রয়ে থাকবে এবং জান্নাতের সুসংবাদ পাবে". Only state what the Prophet (ﷺ) explicitly stated in the cited Hadith!
 4. AUTHENTIC DUAS ONLY: Arabic Dua must be 100% authentic with accurate Bengali pronunciation and genuine meaning.
@@ -86,9 +87,10 @@ THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
 Rule 1: Name the Authority First (MANDATORY in Line 1): Every hook MUST explicitly state who taught or promised this in Line 1 (e.g. "রাসূলুল্লাহ (ﷺ) বলেছেন:...", "নবীজির (ﷺ) শেখানো...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন..."). ALWAYS use "(ﷺ)", NEVER "(সা.)". NEVER omit who taught it!
 Rule 2: Promise High Gain with Micro Effort (STRICT LOW-FRICTION RULE):
   - ❌ STRICTLY BANNED: NEVER mention large, scary numbers like "৩০টি আয়াত", "১০০ বার", "৫০ বার", "১ ঘণ্টা". Viewers get scared of the effort and immediately swipe away!
-  - ✅ ALWAYS USE EFFORTLESS MICRO-FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৫ সেকেন্ডের দোয়া", "মাত্র ২ মিনিটের আমল", "১টি ছোট আয়াত". For Surah Mulk or long Surahs, say "ঘুমানোর আগে ছোট এই সূরাটি পড়ুন" or "মাত্র ২ মিনিটের এই আমলটি", NEVER "৩০টি আয়াত"!
-Rule 3: Target a Pain Point or Deep Desire (Rizq/Money, Peace/Anxiety, Protection/Kaborer Azab)
-Rule 4: Leave the Loop Open (End with unfinished promise "...যা পড়লে মনের চাওয়া আল্লাহ পূরণ করেন", "...যা আপনার ভাগ্য বদলে দিতে পারে")
+  - ✅ ALWAYS USE EFFORTLESS MICRO-FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৫ সেকেন্ডের দোয়া", "মাত্র ২ মিনিটের আমল", "১টি ছোট বাক্য".
+Rule 3: Target a Pain Point or Deep Desire: Anchor in real daily emotions (মনের অশান্তি, রাগ, ঋণের চাপ, পরিবারের অমিল, নামাজের একাগ্রতা).
+Rule 4: Leave the Loop Open (End with unfinished promise "...যা নিয়মিত করলে আল্লাহ মনের অশান্তি দূর করে দেন", "...যা আপনার জীবনে বরকতের দুয়ার খুলে দেবে").
+- ❌ STRICTLY BANNED HOOK CLICHÉS: NEVER use "ভাগ্যের তালা খুলে দেবে", "ভাগ্য বদলে দেবে", "কবরের আজাব থেকে মুক্তি" (unless specifically fresh).
 
 CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY):
 In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines covering:
@@ -162,14 +164,14 @@ Output ONLY valid JSON:
         }}
     ],
     "dhikr_word": "সুবহানাল্লাহ",
-    "visual_prompt": "{curriculum.get('visual_prompt', cfg['visual_prompt'])}",
+    "visual_prompt": "{cfg['visual_prompt']}",
     "tags": ["Islam", "DailyReminder", "Sunnah", "সহীহ_হাদিস", "দোয়া", "DailyDos"]
 }}"""
 
     from app.history import is_topic_duplicate_global
     from app.quality.islamic_verifier import verify_and_enforce_islamic_accuracy
 
-    base_user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for Day #{curriculum['day']} of the 30-Day Sunnah Curriculum: '{curriculum['theme']}'. Series episode: {ep_bn}. Use the exact authentic Sahih Hadith reference: {curriculum['reference']}. Return valid JSON only."
+    base_user_prompt = f"Select 1 deeply important Sunnah teaching of the Prophet (ﷺ) solving a vital modern daily life struggle (anxiety, anger, family kindness, prayer focus, honesty, debt, guarding the tongue). Series episode: {ep_bn}. Choose a completely fresh topic NOT in the avoided list. Ensure full Arabic text with Tashkeel, Bengali pronunciation, and meaning. Return valid JSON only."
     user_prompt = base_user_prompt
 
     for attempt in range(5):
