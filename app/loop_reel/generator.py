@@ -67,6 +67,15 @@ DUAL-APPROACH STRATEGY (WHEN TO USE WHICH):
 1. Use the 4 Foundation Plug & Play Templates for daily universal topics (Rizq, Debt, Protection, Anxiety).
 2. Generate Custom Rule-Based Hooks for specific occasions (Tahajjud, Jummah, entering home, waking at night, specific Hadiths) to keep the feed fresh.
 
+# ==============================================================================
+# RULE #1 SUPREME MANDATE: ZERO TOLERANCE FOR ISLAMIC INACCURACY & HALLUCINATION
+# ==============================================================================
+RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY & ANTI-HALLUCINATION (MANDATORY FIRST RULE):
+1. NEVER MERGE HADITHS: Never combine multiple separate Hadiths into one quotation or under one reference. E.g., Surah Sajdah before sleep (Tirmidhi 2892) and Surah Mulk grave protection (Tirmidhi 2891) are SEPARATE Hadiths. Keep distinct narrations separate with their own exact citations!
+2. EXACT BOOK & HADITH NUMBER ONLY: Never write vague references like "সহীহ বুখারী ও মুসলিম" or "সহীহ হাদিস সমগ্র". Every single Hadith quote MUST have the exact specific book and Hadith number (e.g., "সহীহ বুখারী: ৬৩২৪", "জামে আত-তিরমিযী: ২৮৯১", "সহীহ মুসলিম: ৭০৭", "সুনানে আবু দাউদ: ১৪০০").
+3. NO FABRICATED "ফলাফল" OR PROMISES: Never invent unverified summary promises like "যে ব্যক্তি এটি করবে সে আল্লাহর আশ্রয়ে থাকবে এবং জান্নাতের সুসংবাদ পাবে". Only state what the Prophet (ﷺ) explicitly stated in the cited Hadith!
+4. AUTHENTIC DUAS ONLY: Arabic Dua must be 100% authentic with accurate Bengali pronunciation and genuine meaning.
+
 THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
 Rule 1: Name the Authority First (MANDATORY in Line 1): Every hook MUST explicitly state who taught or promised this in Line 1 (e.g. "রাসূলুল্লাহ (ﷺ) বলেছেন:...", "নবীজির (ﷺ) শেখানো...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন..."). ALWAYS use "(ﷺ)", NEVER "(সা.)". NEVER omit who taught it!
 Rule 2: Promise High Gain with Micro Effort (STRICT LOW-FRICTION RULE):
@@ -141,9 +150,9 @@ Output ONLY valid JSON:
         }},
         {{
             "number": "৩",
-            "title": "কিছুক্ষণ তাসবীহ ও ইস্তিগফারে থাকা",
-            "hadith": "ফজরের পর নিজের জায়নামাজে বসে কিছুক্ষণ 'সুবহানাল্লাহ', 'আলহামদুলিল্লাহ' ও 'আস্তাগফিরুল্লাহ' পাঠ করা। সূর্যোদয় পর্যন্ত এই আমলটি সারাদিনের রিজিকে অভাবনীয় বরকত এনে দেয়।",
-            "reference": "সহীহ মুসলিম"
+            "title": "সকাল-সন্ধ্যার তাসবীহের ফযিলত",
+            "hadith": "রাসূলুল্লাহ (ﷺ) বলেছেন: 'যে ব্যক্তি সকাল এবং সন্ধ্যায় ১০০ বার সুবহানাল্লাহি ওয়া বিহামদিহি পাঠ করবে, কিয়ামতের দিন তার চেয়ে উত্তম আমল নিয়ে আর কেউ উপস্থিত হতে পারবে না।'",
+            "reference": "সহীহ মুসলিম: ২৬৯২"
         }}
     ],
     "dhikr_word": "সুবহানাল্লাহ",
@@ -152,8 +161,12 @@ Output ONLY valid JSON:
 }}"""
 
     from app.history import is_topic_duplicate_global
-    user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Series episode: {ep_bn}. Choose a fresh, unique topic NOT in the avoided list. Every generation MUST include a complete Arabic Dua with pronunciation and meaning in caption_points. Return valid JSON only."
-    for attempt in range(4):
+    from app.quality.islamic_verifier import verify_and_enforce_islamic_accuracy
+
+    base_user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Series episode: {ep_bn}. Choose a fresh, unique topic NOT in the avoided list. Every generation MUST include a complete Arabic Dua with pronunciation and meaning in caption_points. Return valid JSON only."
+    user_prompt = base_user_prompt
+
+    for attempt in range(5):
         content = extract_json(system_prompt, user_prompt, max_tokens=1500)
         if not content:
             logger.warning(f"Attempt {attempt+1}: Failed to parse valid Loop Reel JSON from LLM. Retrying...")
@@ -162,14 +175,24 @@ Output ONLY valid JSON:
         title_bn = content.get("title_bn", "").strip()
         if is_topic_duplicate_global(title_bn):
             logger.warning(f"Loop Reel topic '{title_bn}' flagged as duplicate in global history! Retrying with a fresh topic...")
+            user_prompt = base_user_prompt + f"\nPrevious topic '{title_bn}' was duplicate. Choose a completely different Sahih Amal."
             continue
             
         # Check that complete Arabic Dua is included
         has_arabic = any(pt.get("arabic") and (pt.get("meaning") or pt.get("pronunciation")) for pt in content.get("caption_points", []))
         if not has_arabic and not content.get("arabic"):
             logger.warning(f"Attempt {attempt+1}: Generated content is missing mandatory complete Arabic Dua/Meaning! Retrying...")
+            user_prompt = base_user_prompt + "\nMANDATORY: Must include full Arabic Dua with pronunciation and meaning in caption_points."
             continue
-            
+
+        # RULE #1 SUPREME 5-PASS ISLAMIC VERIFICATION ENGINE
+        is_accurate, fail_reason, validated_content = verify_and_enforce_islamic_accuracy(content)
+        if not is_accurate:
+            logger.warning(f"Attempt {attempt+1} REJECTED by Islamic 5-Pass Verifier: {fail_reason}. Retrying...")
+            user_prompt = base_user_prompt + f"\nCRITICAL CORRECTION (CHECK FAILED): {fail_reason}. You MUST fix this error immediately. Ensure 100% authentic Sahih Hadith, exact book and number, and zero conflation."
+            continue
+
+        content = validated_content
         content["slot_key"] = slot_key
         content["episode_number"] = ep_int
         content["episode_bn"] = ep_bn
@@ -177,7 +200,7 @@ Output ONLY valid JSON:
             content["series_title"] = f"দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
         return content
 
-    raise RuntimeError("Failed to generate a non-duplicate Loop Reel content with complete Dua after 4 attempts.")
+    raise RuntimeError("Failed to generate a 100% verified, authentic, non-duplicate Loop Reel after 5 rigorous checks.")
 
 def clean_hadith_body(text: str) -> str:
     """Strips duplicate leading authority prefixes and quotes so caption never stutters."""
@@ -254,15 +277,17 @@ def format_loop_caption(data: dict) -> str:
     for pt in pts[1:]:
         if pt.get("hadith") and not pt.get("arabic"):
             clean_tip = clean_hadith_body(pt["hadith"])
-            caption += "💡 " + pt.get("title", "আমলের নিয়ম") + ":\n" + clean_tip + "\n\n"
-            if pt.get("reference"):
+            tip_title = pt.get("title", "আমলের নিয়ম").replace("ফলাফল", "আমলের তাৎপর্য ও শিক্ষা")
+            caption += "💡 " + tip_title + ":\n" + clean_tip + "\n\n"
+            if pt.get("reference") and pt.get("reference").strip() not in ["সহীহ বুখারী ও মুসলিম", "সহীহ হাদিস সমগ্র"]:
                 caption += "📚 [" + pt["reference"] + "]\n\n"
             break
 
-    # CLEAR CTA & FOLLOW TRIGGER
+    # CLEAR CTA & AUTHENTIC SUNNAH DAWAH TRIGGER
     caption += (
-        "📌 পরবর্তীতে আমল করার জন্য রিলটি 🔖 Save করুন।\n"
-        "💬 কমেন্টে একবার “" + dhikr + "” লিখুন — সদকায়ে জারিয়া হবে! 🤍\n\n"
+        "📌 নিয়মিত আমল করার জন্য রিলটি 🔖 Save করে রাখুন।\n"
+        "🤍 সহীহ আমলের দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন।\n"
+        "রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩]\n\n"
         "━━━━━━━━━━━━━━━━━━━━\n"
         "👉 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন: @dailydos_islam\n\n"
     )

@@ -91,11 +91,9 @@ def format_video_description(metadata_desc: str, script_data: dict, english_summ
     combined_text = f"{quote} {explanation} {title} {translation}"
     if "আলহামদুলিল্লাহ" in combined_text:
         dhikr = "আলহামদুলিল্লাহ"
-    elif "আমিন" in combined_text:
-        dhikr = "আমিন"
     elif "ইস্তিগফার" in combined_text or "ক্ষমা" in combined_text:
         dhikr = "আস্তাগফিরুল্লাহ"
-    cta_block = f'\n\n💬 আজকের জিকির ও আমল:\nপরবর্তীতে আমল করার জন্য পোস্টটি Save করে রাখুন এবং কমেন্টে একবার "{dhikr}" লিখে বন্ধুদের সাথে শেয়ার করে সদকায়ে জারিয়ার অংশীদার হোন! 🤍'
+    cta_block = f'\n\n💬 আজকের আমল ও দাওয়াত:\nপরবর্তীতে আমল করার জন্য পোস্টটি Save করে রাখুন এবং বন্ধুদের সাথে শেয়ার করুন। রাসূলুল্লাহ (ﷺ) বলেছেন: “যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।” [সহীহ মুসলিম: ১৮৯৩] 🤍'
 
     # 7. Topic-specific hashtag
     category = str(script_data.get("category", "")).lower()
