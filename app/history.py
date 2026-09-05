@@ -174,9 +174,49 @@ def get_all_used_topics_global(limit: int = 150) -> list[str]:
 
     return unified_list[:limit]
 
-def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.65) -> bool:
+SEMANTIC_TOPIC_GROUPS = [
+    {"name": "surah_mulk_kabor", "keywords": ["মুলক", "কবর", "কবরের আজাব", "কবরের বাতি", "সাজদাহ"]},
+    {"name": "morning_danger_protection", "keywords": ["সকালের আমল", "বিপদ", "অনিষ্ট", "শয়তান", "শয়তান", "ধারেকাছে", "বিপদ থেকে রক্ষা"]},
+    {"name": "destiny_turnaround_cliche", "keywords": ["ভাগ্যের তালা", "ভাগ্য বদলে", "ভাগ্য পরিবর্তন", "জীবন বদলে"]},
+    {"name": "isme_azam", "keywords": ["ইসমে আজম", "মহান নাম", "কখনো ফিরিয়ে দেন না"]},
+    {"name": "market_dua", "keywords": ["বাজারে প্রবেশ", "বাজারের দোয়া", "১০ লক্ষ নেকি"]},
+    {"name": "tahajjud_prayer", "keywords": ["তাহাজ্জুদ", "শেষ রাতে", "অসম্ভব চাওয়া"]},
+    {"name": "sayyidul_istighfar", "keywords": ["সাইয়্যিদুল ইস্তিগফার", "সেরা ইস্তিগফার", "ক্ষমার শ্রেষ্ঠ দোয়া"]},
+    {"name": "yunus_dua", "keywords": ["ইউনুস", "মাছের পেট", "লা ইলাহা ইল্লা আনতা"]},
+    {"name": "sleeping_dua", "keywords": ["ঘুমানোর দোয়া", "বিসমিকা আল্লাহুম্মা", "ঘুম ভেঙে গেলে"]},
+    {"name": "salatul_tasbeeh", "keywords": ["সালাতুত তাসবীহ", "সালাতুত তাসবিহ"]},
+    {"name": "parents_honor", "keywords": ["পিতা-মাতা", "পিতামাতা", "মা-বাবা", "মায়ের দোয়া", "বাবার হক"]},
+    {"name": "anger_control", "keywords": ["রাগ", "ক্রোধ", "রাগের মাথায়"]},
+    {"name": "prayer_waswasa", "keywords": ["নামাজে মনোযোগ", "ওয়াসওয়াসা", "খিনজাব"]},
+    {"name": "tongue_backbiting", "keywords": ["জবান", "জিহ্বা", "গীবত", "পরনিন্দা", "মুখের গুনাহ"]},
+    {"name": "halal_rizq", "keywords": ["হালাল রিজিক", "হারাম খাবার", "ব্যবসা", "সততা"]},
+    {"name": "neighbor_rights", "keywords": ["প্রতিবেশী", "প্রতিবেশীর হক"]},
+    {"name": "two_prostrations_dua", "keywords": ["দুই সিজদা", "সিজদার মাঝে"]},
+    {"name": "wudu_dua_doors", "keywords": ["অযুর পর", "অজুর পর", "৮টি দরজা"]},
+    {"name": "debt_relief", "keywords": ["ঋণ পরিশোধ", "দেনা", "পাহাড়সমান ঋণ"]},
+    {"name": "sick_visit", "keywords": ["অসুস্থ", "রোগী দেখতে", "৭০ হাজার ফেরেশতা"]},
+    {"name": "spouse_love", "keywords": ["স্বামী-স্ত্রী", "স্ত্রীর মুখে", "দাম্পত্য"]},
+    {"name": "jummah_kahf", "keywords": ["জুম্মা", "সূরা কাহাফ", "কাহফ"]},
+    {"name": "istighfar_doors", "keywords": ["ইস্তিগফার", "আস্তাগফিরুল্লাহ", "অভাব দূর"]},
+    {"name": "seven_under_shade", "keywords": ["আরশের ছায়া", "সাত শ্রেণির মানুষ"]}
+]
+
+def get_topic_semantic_group(text: str) -> str:
+    if not text:
+        return ""
+    text_lower = text.lower()
+    for group in SEMANTIC_TOPIC_GROUPS:
+        for kw in group["keywords"]:
+            # Match as whole Bengali word or multi-word phrase
+            pattern = r'(?<![\u0980-\u09ff])' + re.escape(kw.lower()) + r'(?![\u0980-\u09ff])'
+            if re.search(pattern, text_lower):
+                return group["name"]
+    return ""
+
+def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> bool:
     """
     Checks if a candidate topic/quote/hadith has already been covered anywhere in the system.
+    Uses Semantic Topic Grouping, Exact Hadith Citations, and Jaccard Word Overlap.
     """
     if not new_topic_text or len(new_topic_text.strip()) < 5:
         return False
@@ -185,21 +225,36 @@ def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.65) -> b
     cleaned_new = re.sub(r'[^\w\s]', '', new_topic_text).lower()
     new_words = set(cleaned_new.split())
     
+    # 1. Semantic Topic Grouping Check (Prevents repeating Surah Mulk/Morning Danger/Bhaggo etc within 30 days)
+    new_group = get_topic_semantic_group(new_topic_text)
+    if new_group == "destiny_turnaround_cliche":
+        logger.warning(f"Banned cliché hook detected ('destiny_turnaround_cliche'): '{new_topic_text}'")
+        return True
+        
+    if new_group:
+        # Check against recent 120 topics (full 30-day window)
+        for past in all_used[:120]:
+            past_group = get_topic_semantic_group(past)
+            if past_group and past_group == new_group:
+                logger.warning(f"Duplicate Semantic Group detected ('{new_group}'): '{new_topic_text}' matches past topic '{past}'")
+                return True
+    
     for past in all_used:
         cleaned_past = re.sub(r'[^\w\s]', '', past).lower()
         past_words = set(cleaned_past.split())
         if not past_words:
             continue
             
-        # Exact reference match (e.g., ১১৫৪ or ৩৩৭৪)
+        # 2. Exact reference / Hadith number match across all major books
         new_numbers = set(re.findall(r'\d+', new_topic_text))
         past_numbers = set(re.findall(r'\d+', past))
         if new_numbers and past_numbers and len(new_numbers.intersection(past_numbers)) >= 1:
-            if "বুখারী" in new_topic_text and "বুখারী" in past:
-                logger.warning(f"Duplicate Hadith reference detected: {new_topic_text} vs {past}")
+            major_sources = ["বুখারী", "মুসলিম", "তিরমিযী", "তিরমিজি", "দাউদ", "নাসায়ী", "নাসাঈ", "ইবনে মাজাহ", "আহমদ", "সূরা", "সুরা"]
+            if any(src in new_topic_text and src in past for src in major_sources):
+                logger.warning(f"Duplicate Hadith reference detected: '{new_topic_text}' vs '{past}'")
                 return True
                 
-        # Word overlap Jaccard similarity
+        # 3. Word overlap Jaccard similarity
         intersection = new_words.intersection(past_words)
         union = new_words.union(past_words)
         similarity = len(intersection) / len(union) if union else 0

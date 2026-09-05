@@ -54,18 +54,24 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
     recent_titles = get_recent_video_titles(limit=60)
     avoid_context = "\n- ".join(recent_titles[:30]) if recent_titles else "None"
 
-    # Calculate Series Episode Number
+    # Calculate Series Episode Number and 30-Day Diverse Curriculum Topic
     ep_int, ep_bn = get_next_episode_number()
+    from app.curriculum import get_curriculum_for_episode
+    curriculum = get_curriculum_for_episode(ep_int)
+    
+    logger.info(f"Targeting 30-Day Curriculum Day #{curriculum['day']}: {curriculum['theme']} ({curriculum['reference']})")
 
     system_prompt = f"""You are a master viral Islamic content creator specializing in the high-retention "7-Second Aesthetic Loop + High-Value Point-by-Point Caption" Reel format.
 
-THEME: {cfg['theme']}
-INSTRUCTION: {cfg['system_instruction']}
+TODAY'S MANDATORY 30-DAY CURRICULUM TOPIC (100% UNIQUE, NO REPETITION):
+- Day #{curriculum['day']}/30: {curriculum['theme']}
+- Category: {curriculum['category']}
+- Hadith Focus: {curriculum['hadith_core']}
+- Exact Sahih Citation: {curriculum['reference']}
+- Suggested Hook Model:
+  Line 1: "{curriculum['hook_line_1']}"
+  Line 2: "{curriculum['hook_line_2']}"
 SERIES CONTEXT: "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
-
-DUAL-APPROACH STRATEGY (WHEN TO USE WHICH):
-1. Use the 4 Foundation Plug & Play Templates for daily universal topics (Rizq, Debt, Protection, Anxiety).
-2. Generate Custom Rule-Based Hooks for specific occasions (Tahajjud, Jummah, entering home, waking at night, specific Hadiths) to keep the feed fresh.
 
 # ==============================================================================
 # RULE #1 SUPREME MANDATE: ZERO TOLERANCE FOR ISLAMIC INACCURACY & HALLUCINATION
@@ -156,14 +162,14 @@ Output ONLY valid JSON:
         }}
     ],
     "dhikr_word": "সুবহানাল্লাহ",
-    "visual_prompt": "{cfg['visual_prompt']}",
-    "tags": ["Islam", "DailyReminder", "Sunnah", "সহীহ_হাদিস", "দোয়া", "DailyDos", "Fajr", "Barakah"]
+    "visual_prompt": "{curriculum.get('visual_prompt', cfg['visual_prompt'])}",
+    "tags": ["Islam", "DailyReminder", "Sunnah", "সহীহ_হাদিস", "দোয়া", "DailyDos"]
 }}"""
 
     from app.history import is_topic_duplicate_global
     from app.quality.islamic_verifier import verify_and_enforce_islamic_accuracy
 
-    base_user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for the '{cfg['theme']}' theme in 100% Bangla. Series episode: {ep_bn}. Choose a fresh, unique topic NOT in the avoided list. Every generation MUST include a complete Arabic Dua with pronunciation and meaning in caption_points. Return valid JSON only."
+    base_user_prompt = f"Generate 1 high-CTR viral Islamic Loop Reel for Day #{curriculum['day']} of the 30-Day Sunnah Curriculum: '{curriculum['theme']}'. Series episode: {ep_bn}. Use the exact authentic Sahih Hadith reference: {curriculum['reference']}. Return valid JSON only."
     user_prompt = base_user_prompt
 
     for attempt in range(5):
