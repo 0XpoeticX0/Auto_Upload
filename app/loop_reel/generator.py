@@ -84,45 +84,53 @@ RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY & ANTI-HALLUCINATION (MANDATORY FIRST RULE
 4. AUTHENTIC DUAS ONLY: Arabic Dua must be 100% authentic with accurate Bengali pronunciation and genuine meaning.
 
 THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
-Rule 1: Name the Authority First (MANDATORY in Line 1): Every hook MUST explicitly state who taught or promised this in Line 1 (e.g. "রাসূলুল্লাহ (ﷺ) বলেছেন:...", "নবীজির (ﷺ) শেখানো...", "আল্লাহ তায়ালা কুরআনে প্রতিশ্রুতি দিয়েছেন..."). ALWAYS use "(ﷺ)", NEVER "(সা.)". NEVER omit who taught it!
+Rule 1: Hook Diversity (STRICT ANTI-MONOTONY RULE):
+  - ❌ STRICTLY BANNED: NEVER start every single hook with "রাসূলুল্লাহ (ﷺ) বলেছেন: মাত্র ৫ সেকেন্ডের...". That makes the channel look like an automated bot!
+  - ✅ ROTATE AMONG THESE 5 DIVERSE HOOK ARCHETYPES:
+    • Archetype 1 (Situational / Emotion First): "মন যখন অতিরিক্ত দুশ্চিন্তায় ভারী হয়ে ওঠে...", "প্রচণ্ড রেগে গিয়ে যখন নিজেকে সামলানো যায় না...", "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের ১টি সুন্নাত..."
+    • Archetype 2 (Curiosity Question): "নামাজে দাঁড়ালেই কি মন হাজারটা চিন্তায় হারিয়ে যায়?", "ঘুমের আগে শেষ কোন কাজটি করলে সারারাত আল্লাহর পাহারা মেলে?", "বিপদে পড়লে নবীজি (ﷺ) তাৎক্ষণিক কী করতে বলতেন?"
+    • Archetype 3 (Prophetic Habit / Teaching): "নবীজির (ﷺ) শেখানো অত্যন্ত প্রিয় ১টি সুন্নাহ আমল...", "সাহাবীদের কঠিন অর্থকষ্টে রাসূলুল্লাহ (ﷺ) কী শিখিয়েছিলেন?", "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি সহজ আমল আছে..."
+    • Archetype 4 (Common Habit / Contrast): "আমরা অনেকেই প্রতিদিন অজান্তেই এই ভুলটি করে ফেলি...", "খাওয়ার সময় যে ছোট ১টি ভুল শয়তানকে ডেকে আনে..."
+    • Archetype 5 (Action-First): "মাত্র ১টি ছোট বাক্য যা আপনার জীবনে বরকতের দুয়ার খুলে দেবে..."
+
 Rule 2: Promise High Gain with Micro Effort (STRICT LOW-FRICTION RULE):
-  - ❌ STRICTLY BANNED: NEVER mention large, scary numbers like "৩০টি আয়াত", "১০০ বার", "৫০ বার", "১ ঘণ্টা". Viewers get scared of the effort and immediately swipe away!
-  - ✅ ALWAYS USE EFFORTLESS MICRO-FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৫ সেকেন্ডের দোয়া", "মাত্র ২ মিনিটের আমল", "১টি ছোট বাক্য".
+  - ❌ STRICTLY BANNED: NEVER mention large numbers like "৩০টি আয়াত", "১০০ বার", "৫০ বার".
+  - ✅ ALWAYS USE EFFORTLESS FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৩০ সেকেন্ডের দোয়া", "১টি ছোট সুন্নাত".
 Rule 3: Target a Pain Point or Deep Desire: Anchor in real daily emotions (মনের অশান্তি, রাগ, ঋণের চাপ, পরিবারের অমিল, নামাজের একাগ্রতা).
-Rule 4: Leave the Loop Open (End with unfinished promise "...যা নিয়মিত করলে আল্লাহ মনের অশান্তি দূর করে দেন", "...যা আপনার জীবনে বরকতের দুয়ার খুলে দেবে").
-- ❌ STRICTLY BANNED HOOK CLICHÉS: NEVER use "ভাগ্যের তালা খুলে দেবে", "ভাগ্য বদলে দেবে", "কবরের আজাব থেকে মুক্তি" (unless specifically fresh).
+Rule 4: Leave the Loop Open (End with unfinished promise "...যা নিয়মিত করলে আল্লাহ মনের অশান্তি দূর করে দেন").
+- ❌ STRICTLY BANNED HOOK CLICHÉS: NEVER use "ভাগ্যের তালা খুলে দেবে", "ভাগ্য বদলে দেবে".
 
 CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY):
 In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines covering:
-1. The Sacred Authority: "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "নবীজির (ﷺ) শেখানো" (MUST BE HIGHLIGHTED IN GOLD whenever present!)
-2. The Divine Name: "আল্লাহ" or "আল্লাহর" (MUST BE HIGHLIGHTED IN GOLD)
-3. The Numbered Action: e.g. "১টি আমল", "ছোট এই সূরাটি", "৫ সেকেন্ডের দোয়া", "২ মিনিটের আমল" (MUST BE HIGHLIGHTED IN GOLD)
-4. The Ultimate Reward/Outcome: e.g. "কখনো ফিরিয়ে দেন না", "সব বিপদ থেকে রক্ষা করবেন", "ভাগ্যের তালা খুলে দেয়", "সব দুশ্চিন্তা দূর করে দেবেন" (MUST BE HIGHLIGHTED IN GOLD)
+1. The Core Focus / Subject (e.g. "মন অতিরিক্ত দুশ্চিন্তায়", "প্রচণ্ড রেগে গেলে", "নবীজির (ﷺ) প্রিয় সুন্নাত")
+2. The Divine Name: "আল্লাহ" or "আল্লাহর"
+3. The Action: e.g. "১টি আমল", "ছোট এই দোয়াটি", "১টি সুন্নাত"
+4. The Outcome: e.g. "মুহূর্তেই শান্তি নেমে আসে", "সব সংকট দূর করে দেন", "অভাব দূর হবে"
 
-PROVEN HOOK EXAMPLES TO MODEL AFTER:
-• Model 1 (Mental Relief / Peace):
-  line_1: "রাসূলুল্লাহ (ﷺ) বলেছেন: মন অশান্ত হলে"
-  line_2: "মাত্র ৫ সেকেন্ডের এই দোয়াটি পড়ুন,"
-  line_3: "আল্লাহ আপনার সমস্ত দুশ্চিন্তা দূর করে দেবেন..."
-  highlight_words: ["রাসূলুল্লাহ (ﷺ) বলেছেন:", "৫ সেকেন্ডের এই দোয়াটি", "আল্লাহ", "সমস্ত দুশ্চিন্তা দূর করে দেবেন"]
+PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER:
+• Model A (Situational Emotional Hook):
+  line_1: "মন যখন অতিরিক্ত দুশ্চিন্তায় ভারী হয়ে ওঠে,"
+  line_2: "নবীজির (ﷺ) শেখানো ছোট এই ১টি আমল করুন,"
+  line_3: "মুহূর্তেই হৃদয়ে গভীর প্রশান্তি নেমে আসবে..."
+  highlight_words: ["অতিরিক্ত দুশ্চিন্তায়", "নবীজির (ﷺ) শেখানো", "ছোট এই ১টি আমল", "গভীর প্রশান্তি"]
 
-• Model 2 (Guaranteed Dua / Isme Azam):
-  line_1: "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি দোয়া আছে"
-  line_2: "যা পাঠ করলে আল্লাহ বান্দার কোনো চাওয়া"
-  line_3: "কখনো ফিরিয়ে দেন না..."
-  highlight_words: ["রাসূলুল্লাহ (ﷺ) বলেছেন:", "এমন ১টি দোয়া আছে", "আল্লাহ", "কখনো ফিরিয়ে দেন না"]
+• Model B (Curiosity Question Hook):
+  line_1: "নামাজে দাঁড়ালেই কি মন দুনিয়ার চিন্তায় হারিয়ে যায়?"
+  line_2: "রাসূলুল্লাহর (ﷺ) শেখানো এই ১টি কৌশল মানলে"
+  line_3: "শয়তানের কোনো ওয়াসওয়াসা আর প্রভাব ফেলতে পারবে না..."
+  highlight_words: ["নামাজে দাঁড়ালেই কি", "রাসূলুল্লাহর (ﷺ) শেখানো", "১টি কৌশল", "কোনো ওয়াসওয়াসা"]
 
-• Model 3 (Tahajjud / Late Night):
-  line_1: "রাসূলের (ﷺ) শেখানো তাহাজ্জুদের ১টি আমল"
-  line_2: "যা নিয়মিত পালন করলে আল্লাহ"
-  line_3: "মনের যেকোনো অসম্ভব চাওয়া পূরণ করেন..."
-  highlight_words: ["রাসূলের (ﷺ) শেখানো", "তাহাজ্জুদের ১টি আমল", "আল্লাহ", "যেকোনো অসম্ভব চাওয়া পূরণ করেন"]
+• Model C (Prophetic Habit Hook):
+  line_1: "সাহাবীদের চরম আর্থিক সংকটে নবীজি (ﷺ)"
+  line_2: "নিয়মিত যে ১টি বিশেষ দোয়া পাঠ করতে বলতেন,"
+  line_3: "যা পাঠ করলে আল্লাহ অভাব দূর করে দেন..."
+  highlight_words: ["চরম আর্থিক সংকটে", "নবীজি (ﷺ)", "১টি বিশেষ দোয়া", "অভাব দূর করে দেন"]
 
-• Model 4 (Family / Home Barakah):
-  line_1: "রাসূলুল্লাহ (ﷺ) বলেছেন: ঘরে প্রবেশের সময়"
-  line_2: "মাত্র ৫ সেকেন্ডের এই ১টি সুন্নত মানলে"
-  line_3: "আল্লাহ পরিবারে অভাব ও অশান্তি দূর করে দেন..."
-  highlight_words: ["রাসূলুল্লাহ (ﷺ) বলেছেন:", "৫ সেকেন্ডের এই ১টি সুন্নত", "আল্লাহ", "অভাব ও অশান্তি দূর করে দেন"]
+• Model D (Family & Home Barakah Hook):
+  line_1: "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের এই ১টি সুন্নাত মানলে"
+  line_2: "আল্লাহ পরিবারে অভাব ও অশান্তি দূর করে দেন,"
+  line_3: "যা রাসূলুল্লাহ (ﷺ) সাহাবীদের বিশেষ উপদেশ দিয়েছিলেন..."
+  highlight_words: ["৫ সেকেন্ডের এই ১টি সুন্নাত", "আল্লাহ", "অভাব ও অশান্তি দূর", "রাসূলুল্লাহ (ﷺ)"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
@@ -181,9 +189,14 @@ Output ONLY valid JSON:
             continue
             
         title_bn = content.get("title_bn", "").strip()
-        if is_topic_duplicate_global(title_bn):
-            logger.warning(f"Loop Reel topic '{title_bn}' flagged as duplicate in global history! Retrying with a fresh topic...")
-            user_prompt = base_user_prompt + f"\nPrevious topic '{title_bn}' was duplicate. Choose a completely different Sahih Amal."
+        pts_text = " ".join([f"{pt.get('title', '')} {pt.get('hadith', '')} {pt.get('reference', '')}" for pt in content.get("caption_points", [])])
+        full_check_text = f"{title_bn} {content.get('arabic', '')} {pts_text}"
+
+        if is_topic_duplicate_global(title_bn) or is_topic_duplicate_global(full_check_text):
+            logger.warning(f"Loop Reel topic or Hadith '{title_bn}' flagged as duplicate in global history! Retrying with a fresh topic...")
+            from app.history import get_topic_semantic_group
+            grp = get_topic_semantic_group(full_check_text) or title_bn
+            user_prompt = base_user_prompt + f"\nCRITICAL: Previous topic '{title_bn}' (Theme: {grp}) was a duplicate. STRICTLY FORBIDDEN to repeat {grp}, anger, anxiety, sleeping, or tongue. You MUST choose a completely fresh domain such as: পিতা-মাতার সন্তুষ্টি ও জান্নাত, ব্যবসায় সততা ও হালাল রিজিক, রোগীকে দেখতে যাওয়ার ফজিলত, প্রতিবেশীর হক, অথবা স্বামী-স্ত্রীর আন্তরিক মমতা।"
             continue
             
         # Check that complete Arabic Dua is included
