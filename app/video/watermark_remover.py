@@ -69,6 +69,16 @@ def process_and_clean_video(
             vf_filters.append('crop=in_h*(9/16):in_h:(in_w-out_w)/2:0')
             vf_filters.append('scale=1080:1920:flags=lanczos')
 
+    elif mode == 'square_crop':
+        vf_filters.append('crop=in_h:in_h:(in_w-in_h)/2:0')
+
+    elif mode == 'center_fit_9_16':
+        # Takes central square from 16:9, places it sharp in center, and creates aesthetic blurred background
+        filter_complex = 'crop=in_h:in_h:(in_w-in_h)/2:0,split[v1][v2];[v1]scale=1080:1920:flags=lanczos,boxblur=25:5[bg];[v2]scale=1080:1080:flags=lanczos[fg];[bg][fg]overlay=0:420'
+        cmd = ['ffmpeg', '-y', '-i', input_path, '-filter_complex', filter_complex, '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-c:a', 'copy', output_path]
+        subprocess.run(cmd, check=True)
+        return output_path
+
     elif mode == 'delogo':
         if delogo_corner == 'bottom_right':
             vf_filters.append('scale=1080:1920:flags=lanczos')
