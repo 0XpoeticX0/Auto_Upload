@@ -42,6 +42,61 @@ def determine_current_slot() -> str:
     else:
         return "slot_2_evening"
 
+BANNED_HOOK_PREFIXES = [
+    (r'^(?:রাসূলুল্লাহ|রাসূল|নবীজি|আল্লাহর\s*রাসূল)\s*\([ﷺসা\.]+\)\s*বলেছেন\s*[:ঃ\s]*',
+     r'(?:রাসূলুল্লাহ|রাসূল|নবীজি|আল্লাহর\s*রাসূল)\s*\([ﷺসা\.]+\)\s*বলেছেন'),
+    (r'^(?:নবীজির|নবীজি|রাসূলের)\s*\([ﷺসা\.]+\)\s*শেখানো\s*',
+     r'(?:নবীজির|নবীজি|রাসূলের)\s*\([ﷺসা\.]+\)\s*শেখানো'),
+]
+
+BANNED_CLICHE_PHRASES = [
+    'ভাগ্যের তালা', 'ভাগ্য বদলে', 'জীবন বদলে'
+]
+
+FORMULAIC_HOOK_WORDS = [
+    '১টি আমল', '১টি গোপন আমল', '১টি কার্যকরী আমল', '১টি আমল করলে', '১টি দোয়া', '১টি বাক্য', '৫ সেকেন্ডের', '২ মিনিটের'
+]
+
+def check_hook_monotony(content: dict, recent_history: list) -> tuple[bool, str]:
+    """Strictly validates hook diversity to prevent robotic, repetitive reel openings."""
+    line_1 = (content.get("line_1") or "").strip()
+    line_2 = (content.get("line_2") or "").strip()
+    full_hook = f"{line_1} {line_2}".strip()
+
+    if not line_1:
+        return False, "Hook line_1 is missing or empty."
+
+    # 1. Ban clickbait clichés unconditionally
+    for c in BANNED_CLICHE_PHRASES:
+        if c in full_hook:
+            return False, f"Banned cliché '{c}' detected in hook! Use authentic, natural phrasing."
+
+    # 2. Prevent consecutive authority prefix repetition
+    for new_pat, prev_pat in BANNED_HOOK_PREFIXES:
+        if re.search(new_pat, line_1):
+            for prev in recent_history[:3]:
+                if re.search(prev_pat, prev):
+                    return False, f"Hook starts with repetitive prefix '{line_1[:25]}...'. Recent videos already used this opening! Rotate to an Emotional Situational Hook or Curiosity Question."
+
+    # 3. Restrict formulaic phrase frequency (e.g. '১টি আমল', '৫ সেকেন্ডের')
+    for phrase in FORMULAIC_HOOK_WORDS:
+        if phrase in full_hook:
+            count = sum(1 for prev in recent_history[:4] if phrase in prev)
+            if count >= 1:
+                return False, f"Formulaic phrase '{phrase}' appeared in recent videos. Vary the vocabulary and structure!"
+
+    # 4. Enforce syntactic dissimilarity (Jaccard on line_1)
+    cleaned_new = set(re.sub(r'[^\w\s]', '', line_1).lower().split())
+    for prev in recent_history[:8]:
+        cleaned_prev = set(re.sub(r'[^\w\s]', '', prev).lower().split())
+        if not cleaned_prev:
+            continue
+        sim = len(cleaned_new & cleaned_prev) / len(cleaned_new | cleaned_prev)
+        if sim >= 0.50:
+            return False, f"Hook line_1 is syntactically too similar ({sim:.2f}) to recent content: '{prev[:40]}...'"
+
+    return True, "OK"
+
 def generate_loop_reel_content(slot_key: str = None) -> dict:
     """Generates viral 7-second curiosity hook and high-value point-by-point caption with deduplication."""
     if not slot_key or slot_key not in SLOT_CONFIGS:
@@ -204,6 +259,13 @@ Output ONLY valid JSON:
         if not has_arabic and not content.get("arabic"):
             logger.warning(f"Attempt {attempt+1}: Generated content is missing mandatory complete Arabic Dua/Meaning! Retrying...")
             user_prompt = base_user_prompt + "\nMANDATORY: Must include full Arabic Dua with pronunciation and meaning in caption_points."
+            continue
+
+        # HOOK DIVERSITY & ANTI-MONOTONY VALIDATION
+        is_diverse, monotony_reason = check_hook_monotony(content, recent_titles)
+        if not is_diverse:
+            logger.warning(f"Attempt {attempt+1}: Hook monotony check failed: {monotony_reason}. Retrying...")
+            user_prompt = base_user_prompt + f"\nCRITICAL HOOK MONOTONY: {monotony_reason}. NEVER repeat robotic openings like 'রাসূলুল্লাহ (ﷺ) বলেছেন: মাত্র ৫ সেকেন্ডের ১টি আমল'. Choose a fresh emotional archetype (e.g. 'মন যখন অতিরিক্ত দুশ্চিন্তায় ভারী হয়ে ওঠে...' or curiosity question)."
             continue
 
         # RULE #1 SUPREME 5-PASS ISLAMIC VERIFICATION ENGINE
@@ -499,9 +561,11 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
     logger.info(f"TikTok Upload: {tiktok_res.get('status')}")
 
     # 7. Save to Supabase for series tracking and zero-topic repetition
+    hook_str = content.get("line_1", "").strip()
+    full_title_for_history = f"[পর্ব {content.get('episode_bn', '')}] {content.get('title_bn', '')} | Hook: {hook_str}"
     record_payload = {
         "id": f"loop_{content.get('slot_key', 'slot')}_{int(time.time())}",
-        "title": f"[পর্ব {content.get('episode_bn', '')}] {content.get('title_bn', '')}",
+        "title": full_title_for_history,
         "source": "loop_reel_series"
     }
     _supabase_insert(record_payload)
