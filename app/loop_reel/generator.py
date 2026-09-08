@@ -42,6 +42,41 @@ def determine_current_slot() -> str:
     else:
         return "slot_2_evening"
 
+ANGLES = [
+    {
+        "name": "Micro-Moment (ব্যক্তিগত মুহূর্ত)",
+        "desc": "মানুষের অনুভূতির গভীর বাস্তব চিত্র (যেমন: মাঝরাতে হঠাৎ ঘুম ভেঙে যাওয়া, মাথায় হাজারটা দুশ্চিন্তা, একাকীত্ব, ক্লান্তি)",
+        "example_hook": "মাঝরাতে যখন হঠাৎ ঘুম ভেঙে যায় আর মাথায় একগাদা চিন্তা ঘুরপাক খায়..."
+    },
+    {
+        "name": "Story Snippet (ঐতিহাসিক গল্প বা পেছনের প্রেক্ষাপট)",
+        "desc": "হাদিসের পেছনের বাস্তব ঘটনা বা সাহাবীর পরিস্থিতি দিয়ে শুরু",
+        "example_hook": "মসজিদে একা বসে কাঁদছিলেন এক সাহাবী; নবীজি (ﷺ) গিয়ে জিজ্ঞেস করলেন—'এখানে অসময়ে কেন?'"
+    },
+    {
+        "name": "Paradox & Contrasting (ভুল বনাম সত্য)",
+        "desc": "মানুষ যেখানে সমাধান খোঁজে বনাম আসল সমাধান",
+        "example_hook": "আমরা শান্তির খোঁজে ঘণ্টার পর ঘণ্টা ফোন স্ক্রোল করি, অথচ মন শান্ত করার রাস্তাটা ছিল ঠিক বিপরীত..."
+    },
+    {
+        "name": "Deep Observation (প্রত্যক্ষ উপলব্ধি ও মানব স্বভাব)",
+        "desc": "মানুষের সাধারণ স্বভাব ও অমূলক ভয় তুলে ধরা",
+        "example_hook": "আমরা ভবিষ্যতের এমন অনেক কিছু নিয়ে ভয় পাই, যা হয়তো জীবনে কখনোই ঘটবে না।"
+    },
+    {
+        "name": "Reflective Advice (গভীর ও শান্ত পরামর্শ)",
+        "desc": "ধীরস্থির, মমতাময়ী ও চিন্তাশীল আত্মউপলব্ধি",
+        "example_hook": "সব দায়িত্ব নিজের কাঁধে টেনে না নিয়ে কিছু বিষয় আল্লাহর ওপর ছেড়ে দেওয়া শিখতে হয়।"
+    }
+]
+
+TONES = [
+    "Emotional & Empathetic (শান্ত, হৃদয়স্পর্শী ও মমতাময়ী)",
+    "Curious & Story-driven (কৌতূহল ও গল্পের মাধ্যমে শুরু)",
+    "Reflective & Philosophical (গভীর আত্মউপলব্ধিমূলক)",
+    "Direct & Actionable (বাস্তবধর্মী সমাধান)"
+]
+
 BANNED_HOOK_PREFIXES = [
     (r'^(?:রাসূলুল্লাহ|রাসূল|নবীজি|আল্লাহর\s*রাসূল)\s*\([ﷺসা\.]+\)\s*বলেছেন\s*[:ঃ\s]*',
      r'(?:রাসূলুল্লাহ|রাসূল|নবীজি|আল্লাহর\s*রাসূল)\s*\([ﷺসা\.]+\)\s*বলেছেন'),
@@ -57,7 +92,7 @@ FORMULAIC_HOOK_WORDS = [
     '১টি আমল', '১টি গোপন আমল', '১টি কার্যকরী আমল', '১টি আমল করলে', '১টি দোয়া', '১টি বাক্য', '৫ সেকেন্ডের', '২ মিনিটের'
 ]
 
-def check_hook_monotony(content: dict, recent_history: list) -> tuple[bool, str]:
+def check_hook_monotony(content: dict, recent_history: list, last_hook_text: str = "") -> tuple[bool, str]:
     """Strictly validates hook diversity to prevent robotic, repetitive reel openings."""
     line_1 = (content.get("line_1") or "").strip()
     line_2 = (content.get("line_2") or "").strip()
@@ -71,12 +106,10 @@ def check_hook_monotony(content: dict, recent_history: list) -> tuple[bool, str]
         if c in full_hook:
             return False, f"Banned cliché '{c}' detected in hook! Use authentic, natural phrasing."
 
-    # 2. Prevent consecutive authority prefix repetition
-    for new_pat, prev_pat in BANNED_HOOK_PREFIXES:
+    # 2. Prevent authority prefix on Line 1 (Line 1 must be human-first situation/hook)
+    for new_pat, _ in BANNED_HOOK_PREFIXES:
         if re.search(new_pat, line_1):
-            for prev in recent_history[:3]:
-                if re.search(prev_pat, prev):
-                    return False, f"Hook starts with repetitive prefix '{line_1[:25]}...'. Recent videos already used this opening! Rotate to an Emotional Situational Hook or Curiosity Question."
+            return False, f"Line 1 must NOT start with Hadith preface '{line_1[:25]}...'. Open with a relatable human situation, emotion, or observation first!"
 
     # 3. Restrict formulaic phrase frequency (e.g. '১টি আমল', '৫ সেকেন্ডের')
     for phrase in FORMULAIC_HOOK_WORDS:
@@ -85,7 +118,15 @@ def check_hook_monotony(content: dict, recent_history: list) -> tuple[bool, str]
             if count >= 1:
                 return False, f"Formulaic phrase '{phrase}' appeared in recent videos. Vary the vocabulary and structure!"
 
-    # 4. Enforce syntactic dissimilarity (Jaccard on line_1)
+    # 4. Enforce Zero Grammatical/Word Overlap in first 5 words against last hook
+    if last_hook_text:
+        new_first_5 = set(re.sub(r'[^\w\s]', '', line_1).lower().split()[:5])
+        last_first_5 = set(re.sub(r'[^\w\s]', '', last_hook_text).lower().split()[:5])
+        overlap = new_first_5 & last_first_5
+        if len(overlap) >= 2:
+            return False, f"Opening words share repetitive overlap {overlap} with last hook: '{last_hook_text[:30]}...'"
+
+    # 5. Enforce syntactic dissimilarity (Jaccard on line_1)
     cleaned_new = set(re.sub(r'[^\w\s]', '', line_1).lower().split())
     for prev in recent_history[:8]:
         cleaned_prev = set(re.sub(r'[^\w\s]', '', prev).lower().split())
@@ -105,27 +146,47 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
     cfg = SLOT_CONFIGS[slot_key]
     logger.info(f"Targeting {cfg['name']} ({cfg['theme']})")
 
-    # Fetch recent topics to ensure zero duplication across past 30-60 days
+    # Fetch recent topics to ensure zero duplication
     recent_titles = get_recent_video_titles(limit=100)
-    avoid_context = "\n- ".join(recent_titles[:40]) if recent_titles else "None"
+    avoid_context = "\n- ".join(recent_titles[:30]) if recent_titles else "None"
 
     # Calculate Series Episode Number
     ep_int, ep_bn = get_next_episode_number()
 
-    logger.info(f"Dynamically selecting high-impact daily life Sunnah topic for Episode #{ep_bn}...")
+    # Dynamic Angle & Tone Rotation Matrix
+    target_angle = ANGLES[ep_int % len(ANGLES)]
+    target_tone = TONES[ep_int % len(TONES)]
+
+    # Extract last hook to contrast against
+    last_entry = recent_titles[0] if recent_titles else ""
+    last_hook_text = last_entry.split("| Hook:")[-1].strip() if "| Hook:" in last_entry else (last_entry.split("]")[-1].strip() if "]" in last_entry else last_entry)
+
+    logger.info(f"Targeting Angle: '{target_angle['name']}' | Tone: '{target_tone}' for Episode #{ep_bn}...")
 
     system_prompt = f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
 
-DYNAMIC TOPIC SELECTION MANDATE (VITAL DAILY LIFE & PROPHET'S TEACHINGS):
-Do NOT pick trivial, obscure, or repetitive topics. Select a DEEPLY VITAL, highly impactful teaching of the Prophet (ﷺ) that solves a real human struggle in modern daily life.
+CONTRASTIVE DYNAMIC ANGLE PRINCIPLE (NO TOPIC BANNING):
+Do NOT ban vital daily human topics (such as anxiety, forgiveness, prayer, debt, sleep, patience). Human beings need these reminders every day!
+Instead, diversify 100% through FRESH ANGLES, LENSES, and OPPOSITE STRUCTURE!
 
-CHOOSE FROM ONE OF THESE 6 CORE DAILY LIFE DOMAINS:
-1. 🌿 মানসিক ও আত্মিক প্রশান্তি (Mental & Emotional Peace): অতিরিক্ত দুশ্চিন্তা, একাকীত্ব, অনিশ্চয়তার ভয়, এবং আল্লাহর ওপর অটল তাওয়াক্কুলের সুন্নাহ পথ।
-2. 🤝 চরিত্র ও পারস্পরিক সম্পর্ক (Character & Human Bonds): পিতা-মাতার মর্যাদা, স্বামী-স্ত্রীর আন্তরিক মমতা, কারো গোপন দোষ ঢেকে রাখা, গীবত ও অপবাদ থেকে জবান রক্ষা, অহংকার দূর করা।
-3. 💼 হালাল রিজিক ও আর্থিক সংকট (Livelihood & Debt Crises): পাহাড়সমান ঋণমুক্তির সুন্নাহ আমল, ব্যবসায় সততা ও বরকত, কাজে ফাঁকি না দেওয়া, অভাবের সময় নবীজির আমল।
-4. 🤲 নামাজ ও খাঁটি তাওবা (Prayer Focus & Repentance): নামাজে শয়তানের ওয়াসওয়াসা দূর করে মন স্থির করা, বারবার গুনাহ হয়ে গেলেও হতাশ না হয়ে সত্যিকার তাওবা করা।
-5. ⚡ রাগ ও ক্ষোভ নিয়ন্ত্রণ (Anger & Conflict Resolution): প্রচণ্ড রাগের মাথায় নবীজির শেখানো আমল, অন্যায়ভাবে কাউকে আঘাত না করা, প্রতিশোধের ক্ষমতা থাকা সত্ত্বেও ক্ষমা করার অপরিসীম মর্যাদা।
-6. 🛡️ প্রাত্যহিক জীবনের গুরুত্বপূর্ণ সুন্নাহ (Impactful Daily Sunnah): খাবার, পরিবার, প্রতিবেশী, এবং অসুস্থ মানুষের পাশে দাঁড়ানোর সেই গুরুত্বপূর্ণ সুন্নাহ যা মানুষের জীবন আলোকিত করে।
+[ASSIGNED ANGLE & LENS FOR EPISODE #{ep_bn}]
+• Angle Archetype: {target_angle['name']}
+• Angle Focus: {target_angle['desc']}
+• Tone: {target_tone}
+• Model Hook Pattern: "{target_angle['example_hook']}"
+
+[LAST POSTED HOOK TO CONTRAST AGAINST]
+"{last_hook_text}"
+
+[CONTRASTIVE ANTI-SIMILARITY DIRECTIVE]
+1. Read the [LAST POSTED HOOK].
+2. Determine its opening style (Question? Story? Direct action? Emotion?).
+3. Create a hook with a COMPLETELY CONTRASTING structure:
+   - If the last hook was a Question -> Use a Micro-Moment Story or Direct Observation.
+   - If the last hook offered a Fast Micro-Action -> Use a Deep, Slow, Reflective Realization.
+   - If the last hook mentioned an Action -> Start with a raw, relatable Human Emotion or Situation.
+4. ZERO WORD OVERLAP: The first 5 words of Line 1 must NOT share any vocabulary or grammar pattern with the last hook.
+5. NO HADITH PREFACE IN LINE 1: Line 1 must NEVER start with "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "নবীজির শেখানো". Line 1 belongs purely to the relatable human struggle or situation. The Prophet's authentic Sunnah and Sahih citation belong in Line 2/3 and the structured caption points!
 
 SERIES CONTEXT: "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
 
@@ -248,10 +309,8 @@ Output ONLY valid JSON:
         full_check_text = f"{title_bn} {content.get('arabic', '')} {pts_text}"
 
         if is_topic_duplicate_global(title_bn) or is_topic_duplicate_global(full_check_text):
-            logger.warning(f"Loop Reel topic or Hadith '{title_bn}' flagged as duplicate in global history! Retrying with a fresh topic...")
-            from app.history import get_topic_semantic_group
-            grp = get_topic_semantic_group(full_check_text) or title_bn
-            user_prompt = base_user_prompt + f"\nCRITICAL: Previous topic '{title_bn}' (Theme: {grp}) was a duplicate. STRICTLY FORBIDDEN to repeat {grp}, anger, anxiety, sleeping, or tongue. You MUST choose a completely fresh domain such as: পিতা-মাতার সন্তুষ্টি ও জান্নাত, ব্যবসায় সততা ও হালাল রিজিক, রোগীকে দেখতে যাওয়ার ফজিলত, প্রতিবেশীর হক, অথবা স্বামী-স্ত্রীর আন্তরিক মমতা।"
+            logger.warning(f"Loop Reel wording or Hadith '{title_bn}' flagged as duplicate! Retrying with fresh wording/narration...")
+            user_prompt = base_user_prompt + f"\nCRITICAL: The previous citation or wording '{title_bn}' was covered recently. You can choose ANY vital daily struggle (anxiety, forgiveness, prayer focus, debt, patience), but you MUST use a different authentic Hadith narration and frame it through our target angle: '{target_angle['name']}'!"
             continue
             
         # Check that complete Arabic Dua is included
@@ -262,10 +321,10 @@ Output ONLY valid JSON:
             continue
 
         # HOOK DIVERSITY & ANTI-MONOTONY VALIDATION
-        is_diverse, monotony_reason = check_hook_monotony(content, recent_titles)
+        is_diverse, monotony_reason = check_hook_monotony(content, recent_titles, last_hook_text=last_hook_text)
         if not is_diverse:
             logger.warning(f"Attempt {attempt+1}: Hook monotony check failed: {monotony_reason}. Retrying...")
-            user_prompt = base_user_prompt + f"\nCRITICAL HOOK MONOTONY: {monotony_reason}. NEVER repeat robotic openings like 'রাসূলুল্লাহ (ﷺ) বলেছেন: মাত্র ৫ সেকেন্ডের ১টি আমল'. Choose a fresh emotional archetype (e.g. 'মন যখন অতিরিক্ত দুশ্চিন্তায় ভারী হয়ে ওঠে...' or curiosity question)."
+            user_prompt = base_user_prompt + f"\nCRITICAL HOOK CORRECTION: {monotony_reason}. Target Angle: '{target_angle['name']}'. Ensure Line 1 opens with a human situation/emotion without any Hadith preface."
             continue
 
         # RULE #1 SUPREME 5-PASS ISLAMIC VERIFICATION ENGINE

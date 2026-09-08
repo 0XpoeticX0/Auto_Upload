@@ -228,19 +228,11 @@ def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> b
     cleaned_new = re.sub(r'[^\w\s]', '', new_topic_text).lower()
     new_words = set(cleaned_new.split())
     
-    # 1. Semantic Topic Grouping Check (Prevents repeating Surah Mulk/Morning Danger/Bhaggo etc within 30 days)
+    # 1. Ban clickbait clichés unconditionally
     new_group = get_topic_semantic_group(new_topic_text)
     if new_group == "destiny_turnaround_cliche":
         logger.warning(f"Banned cliché hook detected ('destiny_turnaround_cliche'): '{new_topic_text}'")
         return True
-        
-    if new_group:
-        # Check against recent 120 topics (full 30-day window)
-        for past in all_used[:120]:
-            past_group = get_topic_semantic_group(past)
-            if past_group and past_group == new_group:
-                logger.warning(f"Duplicate Semantic Group detected ('{new_group}'): '{new_topic_text}' matches past topic '{past}'")
-                return True
     
     for past in all_used:
         cleaned_past = re.sub(r'[^\w\s]', '', past).lower()
