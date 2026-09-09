@@ -79,13 +79,31 @@ def main():
     }
 
     print("\nUploading to YouTube Shorts now...")
-    success = upload_to_youtube(video_path, upload_meta)
-    if success:
-        print("\n" + "=" * 60)
-        print("YOUTUBE UPLOAD COMPLETE AND VERIFIED!")
-        print("=" * 60)
+    yt_ok = upload_to_youtube(video_path, upload_meta)
+    if yt_ok:
+        print(">> YouTube Shorts Upload: SUCCESS!")
     else:
-        print("\nUpload failed. Please check logs for details.")
+        print(">> YouTube Shorts Upload: Failed or Skipped")
+
+    # Facebook and Instagram Reels
+    print("\nUploading to Facebook and Instagram Reels...")
+    try:
+        from app.upload.facebook import upload_to_facebook
+        fb_meta = {
+            "title": metadata["title"],
+            "description": metadata["title"] + "\n\n" + metadata["description"],
+            "pinned_comment": metadata["pinned_comment"]
+        }
+        fb_ok = upload_to_facebook(video_path, fb_meta, video_type="reel")
+        print(f">> Facebook / Instagram Upload: {'SUCCESS!' if fb_ok else 'Failed or Skipped'}")
+    except Exception as e:
+        print(f">> Facebook / Instagram Upload Error: {e}")
+
+    print("\n" + "=" * 60)
+    print("ALL TARGET PLATFORMS PROCESSED!")
+    print("=" * 60)
+
+    return yt_ok
 
     return success
 
