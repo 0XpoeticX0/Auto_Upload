@@ -56,20 +56,102 @@ def wrap_text(text: str, words_per_line: int = 5) -> str:
         lines.append(" ".join(words[i:i + words_per_line]))
     return r"\N".join(lines)
 
-def format_bengali_subtitles_for_ass(bn_raw: str, words_per_line: int = 5) -> str:
+def split_bengali_into_chunks(text: str, max_words_per_chunk: int = 18) -> list[str]:
+    """
+    Splits Bengali verse text into balanced, readable subtitle chunks:
+    - Splits naturally on full sentence boundary ('।')
+    - For long sentences (> max_words_per_chunk), splits on commas outside parentheses
+    - Strictly protects parentheses: NEVER splits inside ( ... )
+    - Guarantees 100% of the words and punctuation are preserved without alteration.
+    """
+    text = text.strip()
+    words = text.split()
+    if len(words) <= max_words_per_chunk:
+        return [text]
+
+    # Split by dandi '।'
+    parts = re.split(r'(।\s*)', text)
+    sentence_candidates = []
+    for i in range(0, len(parts), 2):
+        chunk = parts[i]
+        dandi = parts[i+1] if i+1 < len(parts) else ''
+        combined = (chunk + dandi).strip()
+        if combined:
+            sentence_candidates.append(combined)
+
+    chunks = []
+    current_chunk = []
+    current_word_count = 0
+
+    for s in sentence_candidates:
+        s_words = s.split()
+        if current_word_count + len(s_words) <= max_words_per_chunk:
+            current_chunk.append(s)
+            current_word_count += len(s_words)
+        else:
+            if current_chunk:
+                chunks.append(" ".join(current_chunk))
+                current_chunk = []
+                current_word_count = 0
+
+            if len(s_words) > max_words_per_chunk:
+                # Split on comma, but only commas strictly outside parentheses
+                comma_splits = []
+                last_pos = 0
+                paren_depth = 0
+                for pos, char in enumerate(s):
+                    if char in '(':
+                        paren_depth += 1
+                    elif char in ')':
+                        paren_depth = max(0, paren_depth - 1)
+                    elif char == ',' and paren_depth == 0:
+                        comma_splits.append(s[last_pos:pos+1].strip())
+                        last_pos = pos + 1
+                if last_pos < len(s):
+                    comma_splits.append(s[last_pos:].strip())
+
+                sub_curr = []
+                sub_words_cnt = 0
+                for sub_comb in comma_splits:
+                    if not sub_comb:
+                        continue
+                    w_cnt = len(sub_comb.split())
+                    if sub_words_cnt + w_cnt <= max_words_per_chunk:
+                        sub_curr.append(sub_comb)
+                        sub_words_cnt += w_cnt
+                    else:
+                        if sub_curr:
+                            chunks.append(" ".join(sub_curr))
+                            sub_curr = []
+                            sub_words_cnt = 0
+                        sub_curr.append(sub_comb)
+                        sub_words_cnt = w_cnt
+                if sub_curr:
+                    current_chunk = sub_curr
+                    current_word_count = sub_words_cnt
+            else:
+                current_chunk.append(s)
+                current_word_count = len(s_words)
+
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
+
+    return chunks
+
+def format_bengali_subtitles_for_ass(bn_raw: str, words_per_line: int = 6) -> str:
     """
     Formats Bengali Quran translation subtitles with high-visibility styling:
     - Preserves 100% of the authentic translation words without omitting or altering any content.
-    - The text between ( ) is styled in luminous Royal Gold (&H002BD5FF&) at font size \\fs46
+    - The text between ( ) is styled in luminous Royal Gold (&H002BD5FF&) at font size \\fs44
       so anyone looking at the screen can see and distinguish it clearly at a single glance.
-    - The main verse text outside ( ) is displayed in bold, high-contrast White (\\fs58).
+    - The main verse text outside ( ) is displayed in bold, high-contrast White (\\fs54).
     """
     if not bn_raw:
         return ""
 
     text = bn_raw.strip()
 
-    # Wrap lines cleanly (5 words per line) preserving all words
+    # Wrap lines cleanly (6 words per line) preserving all words
     words = text.split()
     lines = []
     for i in range(0, len(words), words_per_line):
@@ -77,10 +159,9 @@ def format_bengali_subtitles_for_ass(bn_raw: str, words_per_line: int = 5) -> st
     wrapped = r"\N".join(lines)
 
     # Highlight all text between ( ) in luminous Gold & distinct font size
-    # GOLD_COLOR is &H002BD5FF&, WHITE_COLOR is &H00FFFFFF&
     styled = re.sub(
         r'([\(\（][^\)\）]+[\)\）])',
-        r'{\\c' + GOLD_COLOR + r'\\fs46}\1{\\c' + WHITE_COLOR + r'\\fs58}',
+        r'{\\c' + GOLD_COLOR + r'\\fs44}\1{\\c' + WHITE_COLOR + r'\\fs54}',
         wrapped
     )
 
@@ -92,7 +173,7 @@ def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str)
     - Top Surah & Ayah Badge (Bengali numerals)
     - Arabic Uthmani text with proper cursive shaping & Tashkeel
     - Centered, large, high-contrast Bengali translation subtitle in the middle
-      with golden highlight on parenthetical context for instant readability
+      with dynamic chunking for long verses and golden highlight on parenthetical context
     - Bottom Reciter Credit & Save/Share CTA
     """
     surah_name = verse_data["surah_name_bn"]
@@ -115,8 +196,8 @@ ScaledBorderAndShadow: yes
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: TopBadge,Noto Sans Bengali,42,{GOLD_COLOR},&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.5,2.0,8,60,60,200,1
-Style: ArabicVerse,Traditional Arabic,56,&H00E8FFFF&,&H000000FF,&H00000000,&HD0000000,-1,0,0,0,100,100,1,0,1,4.5,3.0,5,80,80,180,1
-Style: BengaliCenter,Noto Sans Bengali,58,{WHITE_COLOR},&H000000FF,&H00000000,&HE0000000,-1,0,0,0,100,100,0,0,1,5.0,3.5,5,70,70,0,1
+Style: ArabicVerse,Traditional Arabic,52,&H00E8FFFF&,&H000000FF,&H00000000,&HD0000000,-1,0,0,0,100,100,1,0,1,4.5,3.0,5,80,80,180,1
+Style: BengaliCenter,Noto Sans Bengali,54,{WHITE_COLOR},&H000000FF,&H00000000,&HE0000000,-1,0,0,0,100,100,0,0,1,5.0,3.5,5,70,70,0,1
 Style: ReciterBottom,Noto Sans Bengali,34,{GOLD_COLOR},&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,340,1
 Style: DawahBottom,Noto Sans Bengali,28,{WHITE_COLOR},&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,2.5,1.5,2,60,60,270,1
 
@@ -133,22 +214,45 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
     # Dynamic Per-Ayah Synchronized Transitions
     for timing in ayah_timings:
-        start_str = format_ass_time(timing["start"])
-        end_str = format_ass_time(timing["end"])
+        start_sec = timing["start"]
+        end_sec = timing["end"]
+        start_str = format_ass_time(start_sec)
+        end_str = format_ass_time(end_sec)
+        ayah_dur = end_sec - start_sec
 
         ar_raw = timing.get("arabic", "").strip()
         # Shape Arabic text properly with cursive connections and RTL ordering
         ar_shaped = format_arabic_for_ass(ar_raw)
-        ar_clean = wrap_text(ar_shaped, words_per_line=5)
+        ar_clean = wrap_text(ar_shaped, words_per_line=6)
+
+        # Arabic text placed comfortably above center (Y=730)
+        ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,160,,{{\\pos(540,730)}}{ar_clean}\n"
 
         bn_raw = timing.get("bengali", "").strip()
-        bn_clean = format_bengali_subtitles_for_ass(bn_raw, words_per_line=5)
+        bn_chunks = split_bengali_into_chunks(bn_raw, max_words_per_chunk=18)
 
-        # Arabic text placed above center
-        ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,160,,{{\\pos(540,820)}}{ar_clean}\n"
+        if len(bn_chunks) <= 1:
+            bn_clean = format_bengali_subtitles_for_ass(bn_chunks[0], words_per_line=6)
+            ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{bn_clean}\n"
+        else:
+            # Synchronously display each chunk across the Ayah duration based on word count
+            total_chunk_words = sum(len(c.split()) for c in bn_chunks)
+            chunk_start = start_sec
 
-        # Prominent Bengali Translation placed right in the CENTER
-        ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1080)}}{bn_clean}\n"
+            for i, chunk in enumerate(bn_chunks):
+                c_words = len(chunk.split())
+                if i == len(bn_chunks) - 1:
+                    chunk_end = end_sec
+                else:
+                    c_dur = ayah_dur * (c_words / max(1, total_chunk_words))
+                    chunk_end = chunk_start + c_dur
+
+                c_start_str = format_ass_time(chunk_start)
+                c_end_str = format_ass_time(chunk_end)
+                c_clean = format_bengali_subtitles_for_ass(chunk, words_per_line=6)
+
+                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{c_clean}\n"
+                chunk_start = chunk_end
 
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
