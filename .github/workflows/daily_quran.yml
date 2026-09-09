@@ -1,0 +1,60 @@
+name: Daily Quran Recitation Automation
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day (06:00 AM Bangladesh Standard Time - BST)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual one-click trigger from GitHub Actions UI
+
+jobs:
+  daily-quran:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install System Dependencies (FFmpeg & Bengali/Arabic Fonts)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-extra fonts-sil-scheherazade fonts-amiri
+          fc-cache -fv
+
+      - name: Install Python Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore Credentials from Secrets
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+          TOKEN_JSON: ${{ secrets.TOKEN_JSON }}
+          CLIENT_SECRETS_JSON: ${{ secrets.CLIENT_SECRETS_JSON }}
+        run: |
+          if [ -n "$ENV_FILE" ]; then
+            echo "$ENV_FILE" > .env
+            echo "Restored .env"
+          else
+            echo "Notice: ENV_FILE secret not set, will rely on individual env variables if present."
+          fi
+
+          if [ -n "$TOKEN_JSON" ]; then
+            echo "$TOKEN_JSON" > token.json
+            echo "Restored token.json for YouTube upload"
+          fi
+
+          if [ -n "$CLIENT_SECRETS_JSON" ]; then
+            echo "$CLIENT_SECRETS_JSON" > client_secrets.json
+            echo "Restored client_secrets.json"
+          fi
+
+      - name: Run Daily Quran Recitation Generator & Upload
+        run: |
+          python -m app.quran_verse.scheduler --upload

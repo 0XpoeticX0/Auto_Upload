@@ -13,3 +13,5 @@ google-genai
 Pillow
 tiktok-uploader
 playwright
+arabic-reshaper
+python-bidi
