@@ -122,7 +122,7 @@ def render_final_video(scenes: list, topic_id: int, video_format: str = "short")
                 elif line.startswith("PlayResY:"):
                     header_lines.append(f"PlayResY: {VIDEO_HEIGHT}")
                 elif line.startswith("Style: Default,"):
-                    header_lines.append("Style: Default,Noto Sans Bengali,74,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,0,5,60,60,0,1")
+                    header_lines.append("Style: Default,Kalpurush,70,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3.2,1.8,5,80,80,0,1")
                 else:
                     header_lines.append(line)
                     

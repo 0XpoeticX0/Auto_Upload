@@ -216,13 +216,14 @@ def get_topic_semantic_group(text: str) -> str:
                 return group["name"]
     return ""
 
-def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> bool:
+def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 0.40) -> tuple[bool, str]:
     """
     Checks if a candidate topic/quote/hadith has already been covered anywhere in the system.
     Uses Semantic Topic Grouping, Exact Hadith Citations, and Jaccard Word Overlap.
+    Returns (is_duplicate: bool, reason_or_match: str).
     """
     if not new_topic_text or len(new_topic_text.strip()) < 5:
-        return False
+        return False, ""
         
     all_used = get_all_used_topics_global(limit=200)
     cleaned_new = re.sub(r'[^\w\s]', '', new_topic_text).lower()
@@ -231,8 +232,16 @@ def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> b
     # 1. Ban clickbait clichés unconditionally
     new_group = get_topic_semantic_group(new_topic_text)
     if new_group == "destiny_turnaround_cliche":
-        logger.warning(f"Banned cliché hook detected ('destiny_turnaround_cliche'): '{new_topic_text}'")
-        return True
+        msg = f"Banned cliché hook detected ('destiny_turnaround_cliche'): '{new_topic_text}'"
+        logger.warning(msg)
+        return True, msg
+
+    bn_to_en = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'}
+    def _norm_digits(s: str) -> str:
+        return "".join(bn_to_en.get(c, c) for c in s)
+
+    # Filter out small single-digit counts (<=5) like '৩টি আমল' to avoid false positives
+    new_numbers = set(n for n in re.findall(r'\d+', _norm_digits(new_topic_text)) if len(n) >= 2 or (n.isdigit() and int(n) > 5))
     
     for past in all_used:
         cleaned_past = re.sub(r'[^\w\s]', '', past).lower()
@@ -241,23 +250,33 @@ def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> b
             continue
             
         # 2. Exact reference / Hadith number match across all major books
-        new_numbers = set(re.findall(r'\d+', new_topic_text))
-        past_numbers = set(re.findall(r'\d+', past))
+        past_numbers = set(n for n in re.findall(r'\d+', _norm_digits(past)) if len(n) >= 2 or (n.isdigit() and int(n) > 5))
         if new_numbers and past_numbers and len(new_numbers.intersection(past_numbers)) >= 1:
             major_sources = ["বুখারী", "মুসলিম", "তিরমিযী", "তিরমিজি", "দাউদ", "নাসায়ী", "নাসাঈ", "ইবনে মাজাহ", "আহমদ", "সূরা", "সুরা"]
             if any(src in new_topic_text and src in past for src in major_sources):
+                matching_nums = new_numbers.intersection(past_numbers)
+                msg = f"Duplicate Hadith reference detected (number {matching_nums}): '{past}'"
                 logger.warning(f"Duplicate Hadith reference detected: '{new_topic_text}' vs '{past}'")
-                return True
+                return True, msg
                 
         # 3. Word overlap Jaccard similarity
         intersection = new_words.intersection(past_words)
         union = new_words.union(past_words)
         similarity = len(intersection) / len(union) if union else 0
         if similarity >= threshold:
+            msg = f"High similarity ({similarity:.2f}) with past content: '{past}'"
             logger.warning(f"High similarity ({similarity:.2f}) with past content: '{new_topic_text}' vs '{past}'")
-            return True
+            return True, msg
             
-    return False
+    return False, ""
+
+def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> bool:
+    """
+    Checks if a candidate topic/quote/hadith has already been covered anywhere in the system.
+    Uses Semantic Topic Grouping, Exact Hadith Citations, and Jaccard Word Overlap.
+    """
+    is_dup, _ = check_topic_duplicate_global_detail(new_topic_text, threshold)
+    return is_dup
 
 def record_video_history(title: str, category: str, core_concept: str = ""):
     """Records a generated video topic to Supabase and local cache."""

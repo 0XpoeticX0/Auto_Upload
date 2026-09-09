@@ -47,7 +47,7 @@ def check_pass_2_reference_validity(points: list) -> tuple[bool, str]:
             if re.search(vague_pat, ref, flags=re.IGNORECASE):
                 return False, f"Point #{idx+1} has vague reference '{ref}'. Must provide exact book and hadith number (e.g., 'সহীহ বুখারী: ৬৩২৪' or 'জামে আত-তিরমিযী: ২৮৯১')."
                 
-        valid_books = ["বুখারী", "মুসলিম", "তিরমিযী", "আবু দাউদ", "নাসায়ী", "নাসাঈ", "ইবনে মাজাহ", "মুসনাদে আহমদ", "মুয়াত্তা", "সূরা", "সুরা", "আল-কুরআন"]
+        valid_books = ["বুখারী", "মুসলিম", "তিরমিযী", "আবু দাউদ", "নাসায়ী", "নাসাঈ", "ইবনে মাজাহ", "মুসনাদে আহমদ", "মুয়াত্তা", "সূরা", "সুরা", "আল-কুরআন", "কুরআন", "কোরআন"]
         if ref and not any(b in ref for b in valid_books):
             return False, f"Point #{idx+1} reference '{ref}' is not a recognized Sahih Hadith or Quranic source."
             
@@ -91,14 +91,14 @@ def check_pass_4_arabic_dua_integrity(points: list) -> tuple[bool, str]:
 
 def check_pass_5_llm_scholar_fact_check(content: dict) -> tuple[bool, str, dict]:
     """Pass 5: Deep LLM-as-a-Scholar Islamic Fact-Checker that verifies exact Hadith authenticity."""
-    system_prompt = """You are a senior Islamic Hadith scholar and fact-checker.
-Your job is to strictly verify the factual authenticity of Islamic video content in Bengali.
+    system_prompt = """You are a senior Islamic scholar and fact-checker.
+Your job is to strictly verify the factual authenticity of Islamic video content in Bengali (both Quranic verses and Sahih Hadiths).
 
 CRITICAL FACT-CHECKING CRITERIA:
-1. NO CONFLATION: Ensure multiple different Hadiths are NOT merged together under one reference.
-2. ACCURATE CITATION: Ensure every book name and Hadith number actually exists and matches the stated text.
-3. NO FABRICATED VIRTUES: Ensure no fabricated guarantees (e.g., blanket promises of Jannah without Hadith text) are present.
-4. AUTHENTIC DUA: Ensure Arabic Dua matches authentic Sunnah texts with correct pronunciation and translation.
+1. NO CONFLATION: Ensure multiple different Hadiths or Quranic verses are NOT merged together under one citation.
+2. ACCURATE CITATION: Ensure every Quranic Surah & Ayah number or Hadith book & number exists and accurately matches the stated text.
+3. NO FABRICATED VIRTUES: Ensure no fabricated guarantees (e.g., blanket promises of Jannah without Quranic/Hadith proof) are present.
+4. AUTHENTIC DUA & AYAT: Ensure Arabic Dua/Ayah matches authentic Quran/Sunnah texts with correct pronunciation and translation.
 5. NO UNSOUND CLAIMS: Ensure no claim says 'commenting Subhanallah is Sadaqah Jariyah' or similar engagement bait.
 
 If you find ANY issue, specify the exact issue in 'issues' and provide the 100% corrected 'caption_points' in 'corrected_caption_points'.

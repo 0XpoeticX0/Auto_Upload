@@ -45,8 +45,8 @@ def determine_current_slot() -> str:
 ANGLES = [
     {
         "name": "Micro-Moment (ব্যক্তিগত মুহূর্ত)",
-        "desc": "মানুষের অনুভূতির গভীর বাস্তব চিত্র (যেমন: মাঝরাতে হঠাৎ ঘুম ভেঙে যাওয়া, মাথায় হাজারটা দুশ্চিন্তা, একাকীত্ব, ক্লান্তি)",
-        "example_hook": "মাঝরাতে যখন হঠাৎ ঘুম ভেঙে যায় আর মাথায় একগাদা চিন্তা ঘুরপাক খায়..."
+        "desc": "দৈনন্দিন জীবনের সূক্ষ্ম কিন্তু গভীর অনুভূতির বাস্তব চিত্র (যেমন: ভোরের নির্জনতায় একাকীত্ব, কাজে বের হওয়ার উদ্বেগ, পরিবারে ছোটখাটো মনোমালিন্য, সারাদিনের ক্লান্তি)",
+        "example_hook": "সকালে ঘুম থেকে উঠে যখন ভবিষ্যতের অনিশ্চয়তা আর দুশ্চিন্তায় মনটা ভারী হয়ে আসে..."
     },
     {
         "name": "Story Snippet (ঐতিহাসিক গল্প বা পেছনের প্রেক্ষাপট)",
@@ -138,32 +138,16 @@ def check_hook_monotony(content: dict, recent_history: list, last_hook_text: str
 
     return True, "OK"
 
-def generate_loop_reel_content(slot_key: str = None) -> dict:
-    """Generates viral 7-second curiosity hook and high-value point-by-point caption with deduplication."""
-    if not slot_key or slot_key not in SLOT_CONFIGS:
-        slot_key = determine_current_slot()
-    
-    cfg = SLOT_CONFIGS[slot_key]
-    logger.info(f"Targeting {cfg['name']} ({cfg['theme']})")
-
-    # Fetch recent topics to ensure zero duplication
-    recent_titles = get_recent_video_titles(limit=100)
-    avoid_context = "\n- ".join(recent_titles[:30]) if recent_titles else "None"
-
-    # Calculate Series Episode Number
-    ep_int, ep_bn = get_next_episode_number()
-
-    # Dynamic Angle & Tone Rotation Matrix
-    target_angle = ANGLES[ep_int % len(ANGLES)]
-    target_tone = TONES[ep_int % len(TONES)]
-
-    # Extract last hook to contrast against
-    last_entry = recent_titles[0] if recent_titles else ""
-    last_hook_text = last_entry.split("| Hook:")[-1].strip() if "| Hook:" in last_entry else (last_entry.split("]")[-1].strip() if "]" in last_entry else last_entry)
-
-    logger.info(f"Targeting Angle: '{target_angle['name']}' | Tone: '{target_tone}' for Episode #{ep_bn}...")
-
-    system_prompt = f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
+def build_loop_reel_system_prompt(
+    ep_bn: str,
+    target_angle: dict,
+    target_tone: str,
+    last_hook_text: str,
+    avoid_context: str,
+    cfg: dict
+) -> str:
+    """Builds the comprehensive system prompt customized for the specific angle, tone, slot and episode."""
+    return f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
 
 CONTRASTIVE DYNAMIC ANGLE PRINCIPLE (NO TOPIC BANNING):
 Do NOT ban vital daily human topics (such as anxiety, forgiveness, prayer, debt, sleep, patience). Human beings need these reminders every day!
@@ -292,46 +276,125 @@ Output ONLY valid JSON:
     "tags": ["Islam", "DailyReminder", "Sunnah", "সহীহ_হাদিস", "দোয়া", "DailyDos"]
 }}"""
 
-    from app.history import is_topic_duplicate_global
+def generate_loop_reel_content(slot_key: str = None) -> dict:
+    """Generates viral 7-second curiosity hook and high-value point-by-point caption with dynamic deduplication."""
+    if not slot_key or slot_key not in SLOT_CONFIGS:
+        slot_key = determine_current_slot()
+    
+    cfg = SLOT_CONFIGS[slot_key]
+    logger.info(f"Targeting {cfg['name']} ({cfg['theme']})")
+
+    # Fetch recent topics to ensure zero duplication
+    recent_titles = get_recent_video_titles(limit=100)
+    avoid_context = "\n- ".join(recent_titles[:30]) if recent_titles else "None"
+
+    # Calculate Series Episode Number
+    ep_int, ep_bn = get_next_episode_number()
+
+    # Extract last hook to contrast against
+    last_entry = recent_titles[0] if recent_titles else ""
+    last_hook_text = last_entry.split("| Hook:")[-1].strip() if "| Hook:" in last_entry else (last_entry.split("]")[-1].strip() if "]" in last_entry else last_entry)
+
+    from app.history import check_topic_duplicate_global_detail
     from app.quality.islamic_verifier import verify_and_enforce_islamic_accuracy
 
-    base_user_prompt = f"Select 1 deeply important Sunnah teaching of the Prophet (ﷺ) solving a vital modern daily life struggle (anxiety, anger, family kindness, prayer focus, honesty, debt, guarding the tongue). Series episode: {ep_bn}. Choose a completely fresh topic NOT in the avoided list. Ensure full Arabic text with Tashkeel, Bengali pronunciation, and meaning. Return valid JSON only."
-    user_prompt = base_user_prompt
+    banned_hadiths = set()
+    last_fail_reason = ""
+    max_attempts = 7
 
-    for attempt in range(5):
+    for attempt in range(max_attempts):
+        # Dynamic Angle & Tone Rotation across attempts to break deadlocks
+        angle_idx = (ep_int + attempt) % len(ANGLES)
+        tone_idx = (ep_int + attempt) % len(TONES)
+        target_angle = ANGLES[angle_idx]
+        target_tone = TONES[tone_idx]
+
+        logger.info(f"Attempt {attempt+1}/{max_attempts}: Angle '{target_angle['name']}' | Tone '{target_tone}' for Episode #{ep_bn}...")
+
+        system_prompt = build_loop_reel_system_prompt(
+            ep_bn=ep_bn,
+            target_angle=target_angle,
+            target_tone=target_tone,
+            last_hook_text=last_hook_text,
+            avoid_context=avoid_context,
+            cfg=cfg
+        )
+
+        user_prompt = (
+            f"Target Slot: {cfg['name']}\n"
+            f"Required Slot Theme: {cfg['theme']}\n"
+            f"Slot Content Guidance: {cfg['system_instruction']}\n"
+            f"Series Episode: {ep_bn}. Assigned Angle: '{target_angle['name']}' ({target_angle['desc']}). Tone: '{target_tone}'.\n"
+            f"Select 1 deeply important Sunnah teaching of the Prophet (ﷺ) solving a vital daily life struggle matching the slot theme. "
+            f"Ensure 100% authentic Sahih Hadith with exact book and number (e.g., সহীহ বুখারী: ১২৩৪ or সহীহ মুসলিম: ৫৬৭), full Arabic Dua with Tashkeel, Bengali pronunciation, and meaning. "
+            f"Do NOT select any topic/Hadith from the avoided list. Return valid JSON only."
+        )
+
+        if banned_hadiths or last_fail_reason:
+            banned_list_str = "; ".join(sorted(list(banned_hadiths))[:12])
+            user_prompt += (
+                f"\n\n[CRITICAL CORRECTION FROM PREVIOUS ATTEMPT]:\n"
+                f"{last_fail_reason}\n"
+                f"STRICTLY FORBIDDEN TOPICS / HADITHS (ALREADY USED): {banned_list_str}.\n"
+                f"You MUST choose a COMPLETELY DIFFERENT authentic Hadith and Sunnah deed from another chapter/book!"
+            )
+
         content = extract_json(system_prompt, user_prompt, max_tokens=1500)
         if not content:
             logger.warning(f"Attempt {attempt+1}: Failed to parse valid Loop Reel JSON from LLM. Retrying...")
+            last_fail_reason = "Failed to parse valid JSON from LLM response. Return strictly valid JSON."
             continue
             
         title_bn = content.get("title_bn", "").strip()
         pts_text = " ".join([f"{pt.get('title', '')} {pt.get('hadith', '')} {pt.get('reference', '')}" for pt in content.get("caption_points", [])])
         full_check_text = f"{title_bn} {content.get('arabic', '')} {pts_text}"
 
-        if is_topic_duplicate_global(title_bn) or is_topic_duplicate_global(full_check_text):
-            logger.warning(f"Loop Reel wording or Hadith '{title_bn}' flagged as duplicate! Retrying with fresh wording/narration...")
-            user_prompt = base_user_prompt + f"\nCRITICAL: The previous citation or wording '{title_bn}' was covered recently. You can choose ANY vital daily struggle (anxiety, forgiveness, prayer focus, debt, patience), but you MUST use a different authentic Hadith narration and frame it through our target angle: '{target_angle['name']}'!"
+        is_dup_title, reason_title = check_topic_duplicate_global_detail(title_bn)
+        is_dup_full, reason_full = check_topic_duplicate_global_detail(full_check_text)
+
+        if is_dup_title or is_dup_full:
+            dup_reason = reason_title or reason_full
+            logger.warning(f"Attempt {attempt+1}: Loop Reel topic flagged as duplicate: {dup_reason}")
+            if title_bn:
+                banned_hadiths.add(title_bn)
+            for pt in content.get("caption_points", []):
+                ref = pt.get("reference", "").strip()
+                if ref:
+                    banned_hadiths.add(ref)
+                pt_title = pt.get("title", "").strip()
+                if pt_title:
+                    banned_hadiths.add(pt_title)
+            for num in re.findall(r'\d+', dup_reason):
+                banned_hadiths.add(f"Hadith #{num}")
+            past_match = re.search(r"'(.*?)'", dup_reason)
+            if past_match:
+                banned_hadiths.add(past_match.group(1)[:50])
+            last_fail_reason = f"Duplicate topic or Hadith detected: {dup_reason}"
             continue
             
         # Check that complete Arabic Dua is included
         has_arabic = any(pt.get("arabic") and (pt.get("meaning") or pt.get("pronunciation")) for pt in content.get("caption_points", []))
         if not has_arabic and not content.get("arabic"):
             logger.warning(f"Attempt {attempt+1}: Generated content is missing mandatory complete Arabic Dua/Meaning! Retrying...")
-            user_prompt = base_user_prompt + "\nMANDATORY: Must include full Arabic Dua with pronunciation and meaning in caption_points."
+            last_fail_reason = "MANDATORY: Must include full Arabic Dua with Tashkeel, Bengali pronunciation, and meaning in caption_points."
             continue
 
         # HOOK DIVERSITY & ANTI-MONOTONY VALIDATION
         is_diverse, monotony_reason = check_hook_monotony(content, recent_titles, last_hook_text=last_hook_text)
         if not is_diverse:
             logger.warning(f"Attempt {attempt+1}: Hook monotony check failed: {monotony_reason}. Retrying...")
-            user_prompt = base_user_prompt + f"\nCRITICAL HOOK CORRECTION: {monotony_reason}. Target Angle: '{target_angle['name']}'. Ensure Line 1 opens with a human situation/emotion without any Hadith preface."
+            last_fail_reason = f"Hook monotony check failed: {monotony_reason}. Target Angle: '{target_angle['name']}'. Ensure Line 1 opens with a relatable human situation/emotion without any Hadith preface."
             continue
 
         # RULE #1 SUPREME 5-PASS ISLAMIC VERIFICATION ENGINE
         is_accurate, fail_reason, validated_content = verify_and_enforce_islamic_accuracy(content)
         if not is_accurate:
             logger.warning(f"Attempt {attempt+1} REJECTED by Islamic 5-Pass Verifier: {fail_reason}. Retrying...")
-            user_prompt = base_user_prompt + f"\nCRITICAL CORRECTION (CHECK FAILED): {fail_reason}. You MUST fix this error immediately. Ensure 100% authentic Sahih Hadith, exact book and number, and zero conflation."
+            last_fail_reason = f"Islamic Authenticity Check Failed: {fail_reason}. Ensure 100% authentic Sahih Hadith, exact book and number, and zero conflation."
+            for pt in content.get("caption_points", []):
+                ref = pt.get("reference", "").strip()
+                if ref:
+                    banned_hadiths.add(ref)
             continue
 
         content = validated_content
@@ -342,7 +405,7 @@ Output ONLY valid JSON:
             content["series_title"] = f"দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
         return content
 
-    raise RuntimeError("Failed to generate a 100% verified, authentic, non-duplicate Loop Reel after 5 rigorous checks.")
+    raise RuntimeError(f"Failed to generate a 100% verified, authentic, non-duplicate Loop Reel after {max_attempts} rigorous checks.")
 
 def clean_hadith_body(text: str) -> str:
     """Strips duplicate leading authority prefixes and quotes so caption never stutters."""

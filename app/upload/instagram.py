@@ -309,15 +309,19 @@ def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
         logger.info(f"Instagram Reel container created (ID: {container_id}). Uploading video binary...")
 
         # Step 2: Upload Video Binary
+        with open(video_path, 'rb') as vf:
+            video_bytes = vf.read()
+
         headers = {
             'Authorization': f'OAuth {token}',
             'offset': '0',
-            'file_size': str(file_size),
+            'file_size': str(len(video_bytes)),
+            'Content-Length': str(len(video_bytes)),
+            'Content-Type': 'video/mp4'
         }
-        with open(video_path, 'rb') as vf:
-            upload_resp = requests.post(rupload_uri, headers=headers, data=vf, timeout=600)
+        upload_resp = requests.post(rupload_uri, headers=headers, data=video_bytes, timeout=600)
             
-        if upload_resp.status_code not in [200, 201]:
+        if upload_resp.status_code not in [200, 201] or not upload_resp.json().get('success'):
             logger.error(f"Instagram Reel binary upload failed: {upload_resp.text}")
             return False
 

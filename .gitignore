@@ -13,3 +13,6 @@ __pycache__/
 *.pyc
 *.pyo
 logs/
+incoming_audio/
+*.wav
+*.mp3
