@@ -25,17 +25,43 @@ def get_authenticated_service():
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             try:
+                logger.info("Attempting to refresh YouTube access token...")
                 creds.refresh(Request())
+                logger.info("Successfully refreshed YouTube token!")
             except Exception as e:
-                logger.warning(f"Failed to refresh YouTube credentials: {e}")
+                logger.warning(f"Failed to refresh YouTube credentials (expired or revoked): {e}")
+                if os.path.exists('token.json'):
+                    try:
+                        os.remove('token.json')
+                        logger.info("Removed stale token.json")
+                    except Exception:
+                        pass
                 creds = None
+
         if not creds:
             if not os.path.exists('client_secrets.json'):
                 logger.error("client_secrets.json missing. Cannot authenticate YouTube.")
                 return None
             try:
-                flow = InstalledAppFlow.from_client_secrets_file('client_secrets.json', SCOPES)
-                creds = flow.run_local_server(port=0)
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    'client_secrets.json',
+                    SCOPES,
+                    redirect_uri='http://localhost:8080/'
+                )
+                auth_url, _ = flow.authorization_url(prompt='consent', access_type='offline')
+                print("\n" + "=" * 70)
+                print("[!] YOUTUBE GOOGLE OAUTH AUTHORIZATION REQUIRED")
+                print(">> Please open or click this URL to log in with your YouTube Google account:")
+                print(f"{auth_url}")
+                print("=" * 70 + "\n", flush=True)
+
+                creds = flow.run_local_server(
+                    host='localhost',
+                    port=8080,
+                    open_browser=True,
+                    prompt='consent',
+                    access_type='offline'
+                )
             except Exception as e:
                 logger.error(f"OAuth flow failed: {e}")
                 return None
