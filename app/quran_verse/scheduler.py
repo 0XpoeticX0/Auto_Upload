@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Automated Scheduler & Slot Manager for Quran Recitation Videos (< 90s).
-Optimized for peak Islamic engagement hours in Bangladesh Time (BST / UTC+6):
-1. 🌅 Slot 1: Fajr & Dawn Prime (05:30 AM BST) - Morning Barakah, Hope, Protection
-2. 🌇 Slot 2: Asr & Maghrib Prime (05:45 PM BST) - Solace, Forgiveness, Rizq & Tawakkul
-3. 🌙 Slot 3: Night & Tahajjud Peace (10:15 PM BST) - Night Tranquility, Al-Mulk, Protection
+Automated Daily Scheduler & Slot Manager for Quran Recitation Videos (< 90s).
+Configured for: Exactly 1 Daily High-Impact Video at 06:00 AM BST (Dawn / Morning Prime).
+Automatically alternates daily between:
+- Sheikh Mishary Rashid Alafasy (শায়খ মিশারি রশিদ আল-আফাসি)
+- Sheikh Yasser Al-Dossari (শায়খ ইয়াসির আদ-দাওসারি)
 """
 
 import sys
@@ -19,79 +19,54 @@ from app.quran_verse.quran_data import RECITERS_CONFIG
 
 BST = timezone(timedelta(hours=6))
 
-QURAN_SLOTS = {
-    "dawn": {
-        "id": "dawn",
-        "name": "🌅 Slot 1: Fajr & Dawn Prime (05:30 AM BST)",
-        "theme": "Morning Barakah, Solace, Ayat al-Kursi, Divine Ease & Protection",
-        "preferred_surahs": [94, 93, 1, 2, 112, 113, 114],
-        "default_reciter": "alafasy"
-    },
-    "evening": {
-        "id": "evening",
-        "name": "🌇 Slot 2: Asr & Maghrib Prime (05:45 PM BST)",
-        "theme": "Evening Reflection, Relief from Grief, Yunus Dua, Names of Allah, Rizq",
-        "preferred_surahs": [59, 21, 65, 55, 3, 28],
-        "default_reciter": "dossari"
-    },
-    "night": {
-        "id": "night",
-        "name": "🌙 Slot 3: Night & Tahajjud Peace (10:15 PM BST)",
-        "theme": "Night Peace, Surah Al-Mulk, Amanar Rasul, The Peaceful Soul",
-        "preferred_surahs": [67, 2, 89, 25, 39],
-        "default_reciter": "alafasy"
-    }
-}
+DAILY_QURAN_TIME = "06:00 AM BST"
 
-def detect_current_slot() -> str:
-    """Determines the active Quran video slot based on current BST time."""
+def get_daily_alternating_reciter() -> str:
+    """
+    Alternates daily between Alafasy and Dossari based on the calendar day.
+    Even days: alafasy
+    Odd days: dossari
+    """
+    day_num = datetime.now(BST).toordinal()
+    return "alafasy" if day_num % 2 == 0 else "dossari"
+
+def execute_daily_quran_run(upload: bool = True, reciter_id: str = None) -> dict:
+    """
+    Executes the Daily 1 Quran Recitation video pipeline:
+    1. Alternates reciter (Alafasy / Dossari)
+    2. Selects meaningful self-contained Quranic passage
+    3. 3-Stage Gemini Clearance Gate
+    4. Downloads authentic audio & studio vocal mastering
+    5. Renders 1080x1920 60FPS video with centered subtitles
+    6. Automatically publishes to YouTube Shorts, Facebook & Instagram
+    """
     now_bst = datetime.now(BST)
-    hour = now_bst.hour
-
-    if 4 <= hour < 12:
-        return "dawn"
-    elif 12 <= hour < 19:
-        return "evening"
-    else:
-        return "night"
-
-def execute_scheduled_quran_run(slot_id: str = "auto", upload: bool = True, reciter_id: str = None) -> dict:
-    """
-    Executes a scheduled Quran recitation video run with 3-Stage Gemini Clearance.
-    """
-    if not slot_id or slot_id == "auto":
-        slot_id = detect_current_slot()
-
-    slot_info = QURAN_SLOTS.get(slot_id, QURAN_SLOTS["dawn"])
-    logger.info(f"=== LAUNCHING SCHEDULED QURAN RECITATION RUN ===")
-    logger.info(f"Active Slot: {slot_info['name']}")
-    logger.info(f"Slot Theme: {slot_info['theme']}")
-
-    # Select Reciter (alternate or use slot preference if not specified)
+    date_str = now_bst.strftime("%Y-%m-%d")
+    
     if not reciter_id:
-        reciter_id = slot_info.get("default_reciter", "alafasy")
+        reciter_id = get_daily_alternating_reciter()
 
-    logger.info(f"Chosen Reciter: {reciter_id} ({RECITERS_CONFIG[reciter_id]['name_bn']})")
+    reciter = RECITERS_CONFIG[reciter_id]
+    logger.info(f"=== LAUNCHING DAILY 1 QURAN RECITATION VIDEO PIPELINE ===")
+    logger.info(f"Date: {date_str} | Target Time: {DAILY_QURAN_TIME}")
+    logger.info(f"Daily Reciter: {reciter['name_bn']} ({reciter['name_en']})")
 
-    # Run complete pipeline (Passage Selection -> 3-Stage Clearance -> Audio Download -> Render -> Upload)
     result = run_quran_verse_pipeline(
         reciter_id=reciter_id,
         upload=upload
     )
 
-    logger.info(f"Scheduled Quran run for {slot_info['name']} completed successfully!")
+    logger.info("🎉 Daily 1 Quran video execution completed successfully!")
     return result
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Quran Video Automated Scheduler")
-    parser.add_argument("--slot", choices=["auto", "dawn", "evening", "night"], default="auto", help="Target Quran slot")
-    parser.add_argument("--reciter", choices=["alafasy", "dossari"], default=None, help="Reciter choice")
-    parser.add_argument("--upload", action="store_true", default=True, help="Auto upload to YouTube, Facebook, Instagram")
+    parser = argparse.ArgumentParser(description="Daily 1 Quran Video Automated Scheduler")
+    parser.add_argument("--reciter", choices=["alafasy", "dossari"], default=None, help="Force specific reciter")
+    parser.add_argument("--upload", action="store_true", default=True, help="Auto upload to social media")
     parser.add_argument("--no-upload", dest="upload", action="store_false", help="Render video only without uploading")
 
     args = parser.parse_args()
-    execute_scheduled_quran_run(
-        slot_id=args.slot,
+    execute_daily_quran_run(
         upload=args.upload,
         reciter_id=args.reciter
     )

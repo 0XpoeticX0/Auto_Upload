@@ -1,40 +1,25 @@
 @echo off
-REM Registers Windows Scheduled Tasks for Pure Quran Recitation Videos
-REM Runs at:
-REM 1. 05:30 AM BST (Dawn Prime)
-REM 2. 05:45 PM BST (Maghrib Prime)
-REM 3. 10:15 PM BST (Night Peace)
+REM Registers Windows Scheduled Task for Daily 1 Quran Recitation Video
+REM Runs once every morning at 06:00 AM BST
 
-echo ============================================
-echo  Pure Quran Automation - Scheduler Setup
-echo ============================================
+echo ====================================================
+echo  Daily 1 Quran Video Automation - Scheduler Setup
+echo ====================================================
 echo.
 
-schtasks /create /tn "QuranRecitation_Dawn" /tr "E:\Project\youtube_video\schedule_quran.bat" /sc daily /st 05:30 /f /rl highest
+schtasks /create /tn "Daily_Quran_Recitation" /tr "E:\Project\youtube_video\schedule_quran.bat" /sc daily /st 06:00 /f /rl highest
 if %errorlevel% == 0 (
-    echo [OK] Dawn task created - runs at 05:30 AM every day
+    echo [OK] Daily Quran task registered successfully!
+    echo Runs automatically every day at 06:00 AM BST.
 ) else (
-    echo [FAILED] Could not create dawn task
-)
-
-schtasks /create /tn "QuranRecitation_Evening" /tr "E:\Project\youtube_video\schedule_quran.bat" /sc daily /st 17:45 /f /rl highest
-if %errorlevel% == 0 (
-    echo [OK] Evening task created - runs at 05:45 PM every day
-) else (
-    echo [FAILED] Could not create evening task
-)
-
-schtasks /create /tn "QuranRecitation_Night" /tr "E:\Project\youtube_video\schedule_quran.bat" /sc daily /st 22:15 /f /rl highest
-if %errorlevel% == 0 (
-    echo [OK] Night task created - runs at 10:15 PM every day
-) else (
-    echo [FAILED] Could not create night task
+    echo [FAILED] Could not register scheduled task. Make sure to Run as Administrator!
 )
 
 echo.
-echo ============================================
-echo  Done! Pure Quran videos are now scheduled
-echo  daily at 05:30 AM, 05:45 PM, and 10:15 PM.
-echo ============================================
+echo ====================================================
+echo  Done! Exactly 1 Pure Quran video will be generated
+echo  and published daily at 06:00 AM.
+echo  Alternates daily between Alafasy and Al-Dossari.
+echo ====================================================
 echo.
 pause
