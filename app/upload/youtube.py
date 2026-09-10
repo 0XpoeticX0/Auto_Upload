@@ -104,13 +104,17 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
                 'defaultAudioLanguage': 'bn'
             },
             'status': {
-                'privacyStatus': 'public',
+                'privacyStatus': 'private' if metadata.get('publish_at') else metadata.get('privacy_status', 'public'),
                 'selfDeclaredMadeForKids': False,
                 'embeddable': True,
                 'publicStatsViewable': True,
                 'license': 'youtube'
             }
         }
+
+        if metadata.get('publish_at'):
+            body['status']['publishAt'] = metadata['publish_at']
+            logger.info(f"YouTube Video scheduled for: {metadata['publish_at']}")
         
         # Multi-Language Localizations (Global English Search Reach)
         en_title = metadata.get("english_title")
@@ -142,8 +146,9 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
         logger.info(f"🎉 YouTube Video uploaded successfully! Video ID: {video_id} (https://youtube.com/shorts/{video_id})")
         
         # 1. Upload Custom Thumbnail if provided
+        thumbnail_path = thumbnail_path or metadata.get('thumbnail_path')
         if thumbnail_path and os.path.exists(thumbnail_path):
-            logger.info("Uploading custom thumbnail to YouTube...")
+            logger.info(f"Uploading custom thumbnail to YouTube: {thumbnail_path}")
             try:
                 youtube.thumbnails().set(
                     videoId=video_id,

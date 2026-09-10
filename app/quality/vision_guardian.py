@@ -123,6 +123,7 @@ def get_certified_safe_fallback(target_path: str) -> bool:
     """
     import shutil
     certified_candidates = [
+        "app/assets/quran_rehal_master.jpg",
         "data/assets/certified_clean_bg.jpg",
         "data/output/luxury_test/bg_full.jpg",
         "app/assets/clean_geometric_bg.jpg"

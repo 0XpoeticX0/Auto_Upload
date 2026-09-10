@@ -81,15 +81,18 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
         "episode" in video_path.lower()
     )
 
+    thumbnail_path = thumbnail_path or metadata.get("thumbnail_path")
+    scheduled_publish_time = metadata.get("scheduled_publish_time")
+
     if is_reel:
         logger.info("Uploading as Facebook REEL (shown to non-followers automatically!)")
-        success, video_id = _upload_as_reel(page_id, access_token, video_path, title, description)
+        success, video_id = _upload_as_reel(page_id, access_token, video_path, title, description, scheduled_publish_time=scheduled_publish_time)
     else:
         logger.info("Uploading as Facebook VIDEO (shown on Page timeline)")
-        success, video_id = _upload_as_video(page_id, access_token, video_path, title, description)
+        success, video_id = _upload_as_video(page_id, access_token, video_path, title, description, scheduled_publish_time=scheduled_publish_time)
 
     # Post auto-first comment
-    if success and video_id and pinned_comment:
+    if success and video_id and pinned_comment and not scheduled_publish_time:
         _post_facebook_comment(page_id, access_token, video_id, pinned_comment)
 
     # Upload custom thumbnail if provided
@@ -114,8 +117,8 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
         except Exception as e:
             logger.warning(f"Facebook custom thumbnail notice: {e}")
 
-    # Cross-post to Instagram Reels if IG_USER_ID is configured
-    if is_reel and ig_user_id and metadata.get("crosspost_instagram", True):
+    # Cross-post to Instagram Reels if IG_USER_ID is configured and not scheduled
+    if is_reel and ig_user_id and metadata.get("crosspost_instagram", True) and not scheduled_publish_time:
         try:
             logger.info(f"Starting Instagram REEL cross-posting for @{ig_user_id}...")
             upload_reel_to_instagram(video_path, full_caption, cover_url=cover_cdn_url)
@@ -124,15 +127,21 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
 
     return video_id if success else False
 
-def _upload_as_video(page_id, access_token, video_path, title, description):
+def _upload_as_video(page_id, access_token, video_path, title, description, scheduled_publish_time=None):
     url = f"https://graph.facebook.com/v20.0/{page_id}/videos"
     payload = {
         'title': title,
         'description': description,
-        'published': 'true',
         'no_story': 'false',
         'access_token': access_token
     }
+    if scheduled_publish_time:
+        payload['published'] = 'false'
+        payload['scheduled_publish_time'] = str(int(scheduled_publish_time))
+        logger.info(f"Scheduling Facebook Video for timestamp: {scheduled_publish_time}")
+    else:
+        payload['published'] = 'true'
+
     try:
         with open(video_path, 'rb') as video_file:
             response = requests.post(url, data=payload, files={'source': video_file}, timeout=600)
@@ -148,12 +157,12 @@ def _upload_as_video(page_id, access_token, video_path, title, description):
         logger.error(f"Error uploading video to Facebook: {e}")
         return False, None
 
-def _upload_as_reel(page_id, access_token, video_path, title, description):
+def _upload_as_reel(page_id, access_token, video_path, title, description, scheduled_publish_time=None):
     """
     Upload using Facebook Reels API - reaches non-followers organically.
     Step 1: Initialize upload session
     Step 2: Upload video binary
-    Step 3: Publish the Reel
+    Step 3: Publish or Schedule the Reel
     """
     try:
         file_size = os.path.getsize(video_path)
@@ -184,22 +193,29 @@ def _upload_as_reel(page_id, access_token, video_path, title, description):
         if not upload_resp.json().get('success'):
             logger.error(f"Reel binary upload failed: {upload_resp.text}")
             return False, None
-        logger.info("Reel binary uploaded successfully. Publishing...")
+        logger.info("Reel binary uploaded successfully. Publishing or Scheduling...")
 
-        # Step 3: Publish the Reel
+        # Step 3: Publish or Schedule the Reel
         finish_payload = {
             'upload_phase': 'finish',
             'video_id': upload_session_id,
             'access_token': access_token,
-            'video_state': 'PUBLISHED',
             'description': description,
         }
+        if scheduled_publish_time:
+            finish_payload['video_state'] = 'SCHEDULED'
+            finish_payload['scheduled_publish_time'] = str(int(scheduled_publish_time))
+            logger.info(f"Scheduling Facebook Reel for timestamp: {scheduled_publish_time}")
+        else:
+            finish_payload['video_state'] = 'PUBLISHED'
+
         finish_resp = requests.post(start_url, data=finish_payload, timeout=30)
         if finish_resp.status_code == 200:
-            logger.info(f"🎉 Facebook REEL published! Video ID: {upload_session_id}")
+            status_word = "SCHEDULED" if scheduled_publish_time else "published"
+            logger.info(f"🎉 Facebook REEL {status_word}! Video ID: {upload_session_id}")
             return True, upload_session_id
         else:
-            logger.error(f"Reel publish failed: {finish_resp.text}")
+            logger.error(f"Reel publish/schedule failed: {finish_resp.text}")
             return False, None
 
     except Exception as e:

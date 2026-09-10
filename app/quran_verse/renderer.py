@@ -8,6 +8,7 @@ synced per-Ayah transitions, Arabic Uthmani text, and reciter branding.
 import os
 import re
 import json
+import shutil
 import subprocess
 from app.logger import logger
 from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
@@ -420,20 +421,24 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     end = verse_data["ayah_end"]
     reciter_id = verse_data.get("reciter_id", "alafasy")
 
-    # 1. Background Image with Vision Guardian
+    # 1. Master Sacred Background (Holy Quran on Carved Wooden Rehal with Golden God Rays)
+    master_bg = os.path.abspath(r"app\assets\quran_rehal_master.jpg")
     bg_path = os.path.join(temp_dir, "quran_bg.jpg")
-    visual_prompt = (
-        "vertical 9:16, inside a majestic ancient Andalusian Islamic sanctuary, "
-        "intricate Moorish geometric arched wooden windows, soft morning dawn golden light rays "
-        "illuminating an antique carved wooden rehal holding the Holy Quran on an emerald velvet prayer rug, "
-        "floating glowing dust particles in cinematic god rays, photorealistic 8k, architectural digest, "
-        "high aesthetic, deeply spiritual, no people, no living beings"
-    )
-
-    downloaded = generate_verified_human_free_background(visual_prompt, bg_path, max_checks=2)
-    if not downloaded or not os.path.exists(bg_path) or os.path.getsize(bg_path) < 5000:
-        logger.warning("[Vision Guardian] Deploying certified safe fallback background.")
-        get_certified_safe_fallback(bg_path)
+    if os.path.exists(master_bg):
+        shutil.copyfile(master_bg, bg_path)
+        logger.info(f"Loaded master sacred Quran Rehal visual: {master_bg}")
+    else:
+        visual_prompt = (
+            "vertical 9:16, inside a majestic ancient Andalusian Islamic sanctuary, "
+            "intricate Moorish geometric arched wooden windows, soft morning dawn golden light rays "
+            "illuminating an antique carved wooden rehal holding the Holy Quran on an emerald velvet prayer rug, "
+            "floating glowing dust particles in cinematic god rays, photorealistic 8k, architectural digest, "
+            "high aesthetic, deeply spiritual, no people, no living beings"
+        )
+        downloaded = generate_verified_human_free_background(visual_prompt, bg_path, max_checks=2)
+        if not downloaded or not os.path.exists(bg_path) or os.path.getsize(bg_path) < 5000:
+            logger.warning("[Vision Guardian] Deploying certified safe fallback background.")
+            get_certified_safe_fallback(bg_path)
 
     # 2. Build Subtitles
     ass_path = os.path.join(temp_dir, "quran_subtitles.ass")
