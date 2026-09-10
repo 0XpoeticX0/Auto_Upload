@@ -13,6 +13,11 @@ import time
 import random
 import argparse
 from datetime import datetime, timezone, timedelta
+from dotenv import load_dotenv
+
+# Ensure environment variables are loaded immediately
+load_dotenv()
+
 from app.logger import logger
 from app.quran_verse.generator import run_quran_verse_pipeline
 from app.quran_verse.quran_data import RECITERS_CONFIG

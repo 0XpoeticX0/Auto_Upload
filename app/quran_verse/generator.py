@@ -13,6 +13,11 @@ import sys
 import time
 import random
 import argparse
+from dotenv import load_dotenv
+
+# Ensure environment variables are loaded immediately
+load_dotenv()
+
 from app.logger import logger
 from app.history import get_recent_video_titles, _supabase_insert
 from app.quran_verse.quran_data import (
