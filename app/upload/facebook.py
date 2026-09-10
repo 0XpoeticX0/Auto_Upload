@@ -40,7 +40,7 @@ def _post_facebook_comment(page_id: str, access_token: str, video_id: str, comme
     except Exception as e:
         logger.warning(f"Failed to post auto-first comment on Facebook: {e}")
 
-def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"):
+def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto", thumbnail_path: str = None):
     logger.info(f"Starting Facebook & Instagram Upload for {video_path}")
     
     page_id = os.getenv("FB_PAGE_ID")
@@ -53,6 +53,9 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
 
     # Obtain Page Access Token (works for both System User tokens and direct Page tokens)
     access_token = get_page_access_token(page_id, base_token)
+
+    if isinstance(metadata, str):
+        metadata = {"description": metadata}
 
     description = metadata.get("description", "")
     title = metadata.get("facebook_title", metadata.get("youtube_title", ""))
@@ -89,15 +92,37 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
     if success and video_id and pinned_comment:
         _post_facebook_comment(page_id, access_token, video_id, pinned_comment)
 
+    # Upload custom thumbnail if provided
+    cover_cdn_url = None
+    if success and video_id and thumbnail_path and os.path.exists(thumbnail_path):
+        try:
+            logger.info(f"Uploading custom thumbnail to Facebook Reel {video_id}...")
+            with open(thumbnail_path, 'rb') as tf:
+                thumb_resp = requests.post(
+                    f"https://graph.facebook.com/v20.0/{video_id}/thumbnails",
+                    data={'is_preferred': 'true', 'access_token': access_token},
+                    files={'source': tf},
+                    timeout=30
+                )
+            if thumb_resp.status_code == 200:
+                logger.info("✅ Facebook Reel custom thumbnail uploaded successfully!")
+                t_list = requests.get(f"https://graph.facebook.com/v20.0/{video_id}/thumbnails?access_token={access_token}", timeout=15).json()
+                for item in reversed(t_list.get('data', [])):
+                    if item.get('is_preferred'):
+                        cover_cdn_url = item.get('uri')
+                        break
+        except Exception as e:
+            logger.warning(f"Facebook custom thumbnail notice: {e}")
+
     # Cross-post to Instagram Reels if IG_USER_ID is configured
-    if is_reel and ig_user_id:
+    if is_reel and ig_user_id and metadata.get("crosspost_instagram", True):
         try:
             logger.info(f"Starting Instagram REEL cross-posting for @{ig_user_id}...")
-            upload_reel_to_instagram(video_path, full_caption)
+            upload_reel_to_instagram(video_path, full_caption, cover_url=cover_cdn_url)
         except Exception as e:
             logger.warning(f"Instagram Reel auto-post encountered an issue: {e}")
 
-    return success
+    return video_id if success else False
 
 def _upload_as_video(page_id, access_token, video_path, title, description):
     url = f"https://graph.facebook.com/v20.0/{page_id}/videos"

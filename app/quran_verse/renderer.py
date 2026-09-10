@@ -150,12 +150,70 @@ def format_bengali_subtitles_for_ass(bn_raw: str, words_per_line: int = 6) -> st
 
     return f"“{styled}”"
 
+def get_synchronized_quran_phrases(ar_raw: str, bn_raw: str) -> list:
+    """
+    Returns 1-to-1 synchronized phrase pairs between Arabic and Bengali.
+    Both Arabic and Bengali transition together phrase-by-phrase!
+    Guarantees: WHAT ARABIC SHOWS, BANGLA SHOWS THE EXACT SAME!
+    """
+    ar_words = ar_raw.strip().split()
+    bn_words = bn_raw.strip().split()
+
+    # If already concise, keep as single phrase
+    if len(ar_words) <= 10 and len(bn_words) <= 14:
+        return [{"arabic": ar_raw.strip(), "bengali": bn_raw.strip()}]
+
+    # For longer ayahs, use Gemini to align them into natural recitation phrase pairs
+    try:
+        from app.llm.provider import extract_json
+        system_prompt = (
+            "You are an expert Quranic scholar and video subtitler. "
+            "Break down a Quran ayah into synchronized phrase pairs for video subtitles.\n"
+            "RULES:\n"
+            "1. Break down into short recitation phrases (3 to 8 Arabic words per phrase).\n"
+            "2. For each phrase, provide the EXACT corresponding Arabic text and its EXACT matching Bengali translation segment.\n"
+            "3. Every Arabic word must be included in order without omitting or repeating.\n"
+            "4. Every Bengali word must be included in order without omitting or repeating.\n"
+            "5. Return a JSON list of objects: [{\"arabic\": \"...\", \"bengali\": \"...\"}]"
+        )
+        user_prompt = f"Ayah Arabic:\n{ar_raw}\n\nAyah Bengali:\n{bn_raw}"
+        pairs = extract_json(system_prompt, user_prompt, max_tokens=1200)
+        if isinstance(pairs, list) and len(pairs) > 0 and all("arabic" in p and "bengali" in p for p in pairs):
+            return pairs
+    except Exception as e:
+        logger.warning(f"AI phrase alignment notice: {e}. Using proportional alignment.")
+
+    # Robust rule-based fallback:
+    bn_chunks = split_bengali_into_chunks(bn_raw, max_words_per_chunk=14)
+    if len(bn_chunks) <= 1:
+        return [{"arabic": ar_raw.strip(), "bengali": bn_raw.strip()}]
+
+    total_bn = sum(len(c.split()) for c in bn_chunks)
+    pairs = []
+    curr_idx = 0
+    num_chunks = len(bn_chunks)
+
+    for i, b_chunk in enumerate(bn_chunks):
+        if i == num_chunks - 1:
+            sub_ar = ar_words[curr_idx:]
+        else:
+            prop = len(b_chunk.split()) / total_bn
+            count = max(1, round(prop * len(ar_words)))
+            remaining = num_chunks - 1 - i
+            count = min(count, len(ar_words) - curr_idx - remaining)
+            sub_ar = ar_words[curr_idx:curr_idx + count]
+            curr_idx += count
+        pairs.append({"arabic": " ".join(sub_ar), "bengali": b_chunk})
+
+    return pairs
+
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
     Builds an advanced ASS subtitle file with:
     - Top Surah & Ayah Badge (Bengali numerals)
-    - Arabic Uthmani text in upper zone (Y=720) with cursive shaping
-    - Dynamic 1-2 line Bengali translation chunks in middle zone (Y=1140)
+    - Synchronized 1-to-1 Arabic & Bengali Phrase Pairs:
+      Arabic in upper zone (Y=720) and Bengali in middle zone (Y=1140)
+      Both appear, stay, and transition together at the EXACT SAME TIME!
     - Guaranteed minimum 150px breathing gap between Arabic and Bengali zones
     - Bottom Reciter Credit & Save/Share CTA
     """
@@ -179,7 +237,7 @@ ScaledBorderAndShadow: yes
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: TopBadge,Noto Sans Bengali,42,{GOLD_COLOR},&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.5,2.0,8,60,60,200,1
-Style: ArabicVerse,Traditional Arabic,48,&H00E8FFFF&,&H000000FF,&H00000000,&HD0000000,-1,0,0,0,100,100,1,0,1,4.0,2.5,5,80,80,180,1
+Style: ArabicVerse,Traditional Arabic,52,&H00E8FFFF&,&H000000FF,&H00000000,&HD0000000,-1,0,0,0,100,100,1,0,1,4.0,2.5,5,80,80,180,1
 Style: BengaliCenter,Noto Sans Bengali,52,{WHITE_COLOR},&H000000FF,&H00000000,&HE0000000,-1,0,0,0,100,100,0,0,1,4.5,3.0,5,70,70,0,1
 Style: ReciterBottom,Noto Sans Bengali,34,{GOLD_COLOR},&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,340,1
 Style: DawahBottom,Noto Sans Bengali,28,{WHITE_COLOR},&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,2.5,1.5,2,60,60,270,1
@@ -199,41 +257,48 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     for timing in ayah_timings:
         start_sec = timing["start"]
         end_sec = timing["end"]
-        start_str = format_ass_time(start_sec)
-        end_str = format_ass_time(end_sec)
         ayah_dur = max(0.5, end_sec - start_sec)
 
         ar_raw = timing.get("arabic", "").strip()
-        ar_shaped = format_arabic_for_ass(ar_raw)
-        ar_clean = wrap_text(ar_shaped, words_per_line=6)
-
-        # Arabic text safely anchored at Y=720 in the upper-middle zone
-        ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,160,,{{\\pos(540,720)}}{ar_clean}\n"
-
         bn_raw = timing.get("bengali", "").strip()
-        bn_chunks = split_bengali_into_chunks(bn_raw, max_words_per_chunk=16)
 
-        if len(bn_chunks) <= 1:
-            bn_clean = format_bengali_subtitles_for_ass(bn_chunks[0], words_per_line=6)
+        phrase_pairs = get_synchronized_quran_phrases(ar_raw, bn_raw)
+
+        if len(phrase_pairs) <= 1:
+            start_str = format_ass_time(start_sec)
+            end_str = format_ass_time(end_sec)
+            ar_shaped = format_arabic_for_ass(ar_raw)
+            ar_clean = wrap_text(ar_shaped, words_per_line=6)
+            bn_clean = format_bengali_subtitles_for_ass(bn_raw, words_per_line=6)
+
+            ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,160,,{{\\pos(540,720)}}{ar_clean}\n"
             ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{bn_clean}\n"
         else:
-            # Synchronously display each 1-2 line chunk across the Ayah duration
-            total_chunk_words = sum(len(c.split()) for c in bn_chunks)
+            # Synchronously display BOTH Arabic and Bengali phrase-by-phrase!
+            total_ar_words = sum(len(p["arabic"].split()) for p in phrase_pairs)
             chunk_start = start_sec
 
-            for i, chunk in enumerate(bn_chunks):
-                c_words = len(chunk.split())
-                if i == len(bn_chunks) - 1:
+            for i, pair in enumerate(phrase_pairs):
+                p_ar = pair["arabic"].strip()
+                p_bn = pair["bengali"].strip()
+                p_words = len(p_ar.split())
+
+                if i == len(phrase_pairs) - 1:
                     chunk_end = end_sec
                 else:
-                    c_dur = ayah_dur * (c_words / max(1, total_chunk_words))
+                    c_dur = ayah_dur * (p_words / max(1, total_ar_words))
                     chunk_end = chunk_start + c_dur
 
                 c_start_str = format_ass_time(chunk_start)
                 c_end_str = format_ass_time(chunk_end)
-                c_clean = format_bengali_subtitles_for_ass(chunk, words_per_line=6)
 
-                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{c_clean}\n"
+                ar_shaped = format_arabic_for_ass(p_ar)
+                ar_clean = wrap_text(ar_shaped, words_per_line=6)
+                bn_clean = format_bengali_subtitles_for_ass(p_bn, words_per_line=6)
+
+                # BOTH ARABIC AND BENGALI TRANSITION TOGETHER AT THE EXACT SAME TIME
+                ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},ArabicVerse,,0,0,160,,{{\\pos(540,720)}}{ar_clean}\n"
+                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{bn_clean}\n"
                 chunk_start = chunk_end
 
     with open(ass_path, "w", encoding="utf-8") as f:

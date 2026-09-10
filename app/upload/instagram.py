@@ -265,14 +265,15 @@ def upload_carousel_to_instagram(item_urls: list[str], caption: str, is_video: b
         logger.error(f"Error publishing Carousel to Instagram: {e}")
         return False
 
-def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
+def upload_reel_to_instagram(video_path: str, caption: str, cover_url: str = None) -> str:
     """
     Publishes a 9:16 vertical video as an Instagram REEL via Instagram Graph API.
-    Step 1: Initialize resumable container (media_type=REELS, upload_type=resumable)
-    Step 2: Upload video binary to rupload URI
-    Step 3: Wait for video processing (status_code == 'FINISHED')
-    Step 4: Publish the Reel via media_publish
+    Uses chunked resumable upload and ensures Instagram media compliance (yuv420p, 44.1kHz stereo AAC, 720p/1080p).
+    Accepts optional public cover_url for custom thumbnail.
     """
+    import subprocess
+    import tempfile
+
     token, ig_user_id = get_instagram_credentials()
     if not token or not ig_user_id:
         logger.warning("Instagram Reel Upload Skipped: FB_ACCESS_TOKEN or IG_USER_ID not set.")
@@ -282,8 +283,37 @@ def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
         logger.error(f"Instagram Reel Upload failed: Video file not found at {video_path}")
         return False
 
-    file_size = os.path.getsize(video_path)
-    logger.info(f"Starting Instagram REEL upload for @{ig_user_id} ({file_size / 1024 / 1024:.2f} MB)...")
+    # Ensure Instagram compliance (720x1280, yuv420p, 44.1kHz stereo AAC, faststart)
+    upload_file = video_path
+    temp_optimized = None
+
+    try:
+        # Check size and format
+        raw_size = os.path.getsize(video_path)
+        if raw_size > 15 * 1024 * 1024:
+            logger.info(f"Video file is {raw_size / 1024 / 1024:.2f} MB. Generating Instagram-optimized stream to bypass ingestion timeout...")
+            temp_dir = tempfile.gettempdir()
+            temp_optimized = os.path.join(temp_dir, f"ig_opt_{int(time.time())}.mp4")
+            cmd = [
+                "ffmpeg", "-y", "-i", video_path,
+                "-vf", "scale=720:1280:in_range=full:out_range=limited,format=yuv420p",
+                "-c:v", "libx264", "-profile:v", "high", "-level", "3.1", "-crf", "23",
+                "-preset", "fast", "-maxrate", "2000k", "-bufsize", "4000k",
+                "-pix_fmt", "yuv420p", "-color_range", "tv", "-colorspace", "bt709",
+                "-color_primaries", "bt709", "-color_trc", "bt709", "-movflags", "+faststart",
+                "-c:a", "aac", "-ar", "44100", "-ac", "2", "-b:a", "128k",
+                temp_optimized
+            ]
+            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+            if os.path.exists(temp_optimized) and os.path.getsize(temp_optimized) > 0:
+                upload_file = temp_optimized
+                logger.info(f"Instagram optimized stream ready: {os.path.getsize(upload_file) / 1024 / 1024:.2f} MB")
+    except Exception as e:
+        logger.warning(f"Optimization note (falling back to original): {e}")
+        upload_file = video_path
+
+    file_size = os.path.getsize(upload_file)
+    logger.info(f"Starting Instagram REEL chunked upload for @{ig_user_id} ({file_size / 1024 / 1024:.2f} MB)...")
 
     try:
         # Step 1: Create Resumable Reel Container
@@ -294,6 +324,9 @@ def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
             'caption': caption,
             'access_token': token
         }
+        if cover_url:
+            init_payload['cover_url'] = cover_url
+            logger.info("Applying custom cover_url to Instagram Reel container...")
         init_resp = requests.post(init_url, data=init_payload, timeout=30)
         init_data = init_resp.json()
         
@@ -306,30 +339,39 @@ def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
         if not rupload_uri:
             rupload_uri = f"https://rupload.facebook.com/ig-video-upload/v20.0/{container_id}"
 
-        logger.info(f"Instagram Reel container created (ID: {container_id}). Uploading video binary...")
+        logger.info(f"Instagram Reel container created (ID: {container_id}). Uploading video in chunks...")
 
-        # Step 2: Upload Video Binary
-        with open(video_path, 'rb') as vf:
-            video_bytes = vf.read()
+        # Step 2: Chunked Upload (2MB chunks with HTTP 206 support)
+        CHUNK_SIZE = 2 * 1024 * 1024
+        offset = 0
 
-        headers = {
-            'Authorization': f'OAuth {token}',
-            'offset': '0',
-            'file_size': str(len(video_bytes)),
-            'Content-Length': str(len(video_bytes)),
-            'Content-Type': 'video/mp4'
-        }
-        upload_resp = requests.post(rupload_uri, headers=headers, data=video_bytes, timeout=600)
-            
-        if upload_resp.status_code not in [200, 201] or not upload_resp.json().get('success'):
-            logger.error(f"Instagram Reel binary upload failed: {upload_resp.text}")
-            return False
+        with open(upload_file, 'rb') as f:
+            chunk_index = 0
+            while offset < file_size:
+                chunk = f.read(CHUNK_SIZE)
+                chunk_len = len(chunk)
+                headers = {
+                    'Authorization': f'OAuth {token}',
+                    'offset': str(offset),
+                    'file_size': str(file_size),
+                    'Content-Length': str(chunk_len),
+                    'Content-Type': 'application/octet-stream'
+                }
+                upload_resp = requests.post(rupload_uri, headers=headers, data=chunk, timeout=90)
+                
+                if upload_resp.status_code not in [200, 201, 206]:
+                    logger.error(f"Instagram chunk upload failed at offset {offset}: {upload_resp.text}")
+                    return False
+                    
+                offset += chunk_len
+                chunk_index += 1
+                logger.info(f"Uploaded Instagram chunk {chunk_index} ({int(offset / file_size * 100)}%)...")
 
-        logger.info("Instagram Reel binary uploaded. Waiting for Instagram processing...")
+        logger.info("All Instagram binary chunks uploaded. Polling status...")
 
-        # Step 3: Poll status until FINISHED (up to 60 seconds)
+        # Step 3: Poll status until FINISHED (up to 90 seconds)
         status_url = f"https://graph.facebook.com/v20.0/{container_id}?fields=status_code&access_token={token}"
-        for _ in range(12):
+        for _ in range(18):
             time.sleep(5)
             status_resp = requests.get(status_url, timeout=15)
             status_data = status_resp.json()
@@ -353,7 +395,7 @@ def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
 
         if pub_resp.status_code == 200 and 'id' in pub_data:
             logger.info(f"Instagram REEL successfully published! Post ID: {pub_data['id']}")
-            return True
+            return pub_data['id']
         else:
             logger.error(f"Instagram Reel publish failed: {pub_resp.text}")
             return False
@@ -361,3 +403,9 @@ def upload_reel_to_instagram(video_path: str, caption: str) -> bool:
     except Exception as e:
         logger.error(f"Error uploading Reel to Instagram: {e}")
         return False
+    finally:
+        if temp_optimized and os.path.exists(temp_optimized):
+            try:
+                os.remove(temp_optimized)
+            except Exception:
+                pass

@@ -205,7 +205,7 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
             except Exception as e:
                 logger.warning(f"Notice: Could not post first comment on YouTube: {e}")
                 
-        return True
+        return video_id
         
     except HttpError as e:
         logger.error(f"An HTTP error {e.resp.status} occurred during YouTube upload: {e.content}")
