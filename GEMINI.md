@@ -15,10 +15,9 @@
   - Margins: Left 70, Right 70 (guaranteeing >150px safe margins, ZERO text clipping).
 
 ## 2. Visual Standards & Generation Rules
-- **No Low-Res / Watermarked AI**: NEVER use generic free endpoints (such as Pollinations AI) that output blurry, washed-out images or stamp watermarks/logos (e.g. `pollinations.ai`).
-- **High-Definition Master Visuals**: Always use native high-resolution tools (`generate_image`) with 9:16 aspect ratio, dramatic volumetric lighting, and 8K octane/cinematic prompts.
-- **Strict Shariah Compliance (Zero Living Beings)**: Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals. Pure atmospheric architecture, landscapes, celestial skies, and symbolic objects.
-- **Fast-Paced Cinematic Cuts**: Cut scenes every **4 to 8 seconds** (7–10 scenes per ~75s part). NEVER hold a static image for 20–25 seconds. Incorporate real video B-roll clips (e.g. `data/temp/broll/ocean_720.mp4`, `desert_720.mp4`).
+- **Zero Watermarks & High-Definition**: Never use low-quality or watermarked AI endpoints (`pollinations.ai`). Use 8K photorealistic cinematic generation (`generate_image`) and authentic video B-rolls (`ocean_720.mp4`, `desert_720.mp4`, etc.).
+- **Strict Shariah Compliance**: Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals. Pure atmospheric architecture, landscapes, celestial skies, and symbolic objects.
+- **Dynamic Pacing**: Fast-paced 4 to 8-second scene cuts (7–10 scenes per ~75s part)—never holding static images for 20+ seconds.
 
 ## 3. Multi-Part Pacing & Silent Outro
 - **Tempo**: 1.08x speed for clear, engaging Bengali narration.
