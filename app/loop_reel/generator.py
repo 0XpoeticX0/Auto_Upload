@@ -32,15 +32,13 @@ SLOT_CONFIGS = {
 }
 
 def determine_current_slot() -> str:
-    """Calculates the current peak slot based on BST (UTC+6) time (2 runs per day)."""
-    now_utc = datetime.datetime.now(datetime.timezone.utc)
-    now_bst = now_utc + datetime.timedelta(hours=6)
-    hour = now_bst.hour
+    """
+    Determines the active slot.
+    Morning slot is held (dedicated to Daily Quran Recitation at 06:00 AM BST).
+    The Hadith Loop Reel pipeline runs exclusively once daily for the Prime Evening Slot (08:00 PM BST).
+    """
+    return "slot_2_evening"
 
-    if 3 <= hour < 15:
-        return "slot_1_morning"
-    else:
-        return "slot_2_evening"
 
 ANGLES = [
     {
