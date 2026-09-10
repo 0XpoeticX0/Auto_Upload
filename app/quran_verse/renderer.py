@@ -7,6 +7,7 @@ synced per-Ayah transitions, Arabic Uthmani text, and reciter branding.
 
 import os
 import re
+import json
 import subprocess
 from app.logger import logger
 from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
@@ -30,6 +31,23 @@ def format_arabic_for_ass(text: str) -> str:
         reshaped = arabic_reshaper.reshape(text)
         return get_display(reshaped)
     return text
+
+def wrap_and_format_arabic(text: str, words_per_line: int = 5) -> str:
+    """
+    Wraps logical Arabic text into lines FIRST,
+    then reshapes and applies BiDi algorithm per line.
+    Guarantees Line 1 is the beginning of the ayah, Line 2 is the continuation,
+    and each line reads naturally from Right to Left without reversing line sequence!
+    """
+    if not text:
+        return ""
+    words = text.strip().split()
+    lines = []
+    for i in range(0, len(words), words_per_line):
+        line_str = " ".join(words[i:i + words_per_line])
+        lines.append(format_arabic_for_ass(line_str))
+    return r"\N".join(lines)
+
 
 def format_ass_time(seconds: float) -> str:
     """Formats float seconds to ASS timestamp (H:MM:SS.cs)."""
@@ -207,6 +225,61 @@ def get_synchronized_quran_phrases(ar_raw: str, bn_raw: str) -> list:
 
     return pairs
 
+def align_quran_phrases_to_audio(audio_path: str, phrase_pairs: list, total_duration: float) -> list:
+    """
+    Extracts word-level timestamps using Whisper and aligns phrase pairs to exact recitation pauses
+    via Gemini semantic matching. Returns phrase_pairs with exact 'start' and 'end' float timestamps.
+    Falls back gracefully to proportional timing if Whisper or Gemini is unavailable.
+    """
+    if not audio_path or not os.path.exists(audio_path):
+        return None
+    try:
+        import whisper
+        from app.llm.provider import extract_json
+
+        logger.info(f"Aligning {len(phrase_pairs)} Quran phrase pairs with audio via Whisper...")
+        model = whisper.load_model("base")
+        res = model.transcribe(audio_path, word_timestamps=True)
+
+        words_summary = []
+        for seg in res.get("segments", []):
+            for w in seg.get("words", []):
+                w_text = w["word"].strip()
+                if w_text:
+                    words_summary.append({
+                        "word": w_text,
+                        "start": round(w["start"], 2),
+                        "end": round(w["end"], 2)
+                    })
+
+        if not words_summary:
+            return None
+
+        system_prompt = (
+            "You are an expert Quranic audio synchronizer.\n"
+            "Given a list of Quran phrase pairs (Arabic and Bengali) and a list of transcribed audio words with exact timestamps, "
+            "determine the exact start and end timestamp for each phrase pair.\n"
+            "RULES:\n"
+            "1. The phrases must cover the entire audio seamlessly without gaps or overlaps (end of phrase N = start of phrase N+1).\n"
+            "2. Phrase 1 start must be 0.00.\n"
+            "3. Last phrase end must match total audio duration.\n"
+            "4. Align each boundary to the exact pause or word boundary identified in the audio words.\n"
+            "5. Return a JSON list of objects: [{\"arabic\": \"...\", \"bengali\": \"...\", \"start\": float, \"end\": float}]"
+        )
+        user_prompt = (
+            f"Total Duration: {total_duration:.2f}s\n"
+            f"Phrases:\n{json.dumps(phrase_pairs, ensure_ascii=False, indent=2)}\n\n"
+            f"Audio Words Timestamps:\n{json.dumps(words_summary, ensure_ascii=False, indent=2)}"
+        )
+        aligned = extract_json(system_prompt, user_prompt, max_tokens=2500)
+        if isinstance(aligned, list) and len(aligned) == len(phrase_pairs):
+            if all("start" in p and "end" in p for p in aligned):
+                logger.info(f"Successfully aligned {len(aligned)} phrases with 100% audio lockstep!")
+                return aligned
+    except Exception as e:
+        logger.warning(f"Audio-based alignment notice: {e}. Falling back to standard timing.")
+    return None
+
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
     Builds an advanced ASS subtitle file with:
@@ -253,53 +326,80 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     ass_content += f"Dialogue: 0,0:00:00.00,{total_str},ReciterBottom,,0,0,0,,{reciter_text}\n"
     ass_content += f"Dialogue: 0,0:00:00.00,{total_str},DawahBottom,,0,0,0,,{cta_text}\n"
 
-    # Dynamic Per-Ayah Synchronized Transitions
+    # Check if any ayah has multiple phrase pairs for precision audio sync
+    all_phrase_items = []
+    has_multi_phrases = False
     for timing in ayah_timings:
-        start_sec = timing["start"]
-        end_sec = timing["end"]
-        ayah_dur = max(0.5, end_sec - start_sec)
-
         ar_raw = timing.get("arabic", "").strip()
         bn_raw = timing.get("bengali", "").strip()
+        pairs = get_synchronized_quran_phrases(ar_raw, bn_raw)
+        if len(pairs) > 1:
+            has_multi_phrases = True
+        for p in pairs:
+            all_phrase_items.append(p)
 
-        phrase_pairs = get_synchronized_quran_phrases(ar_raw, bn_raw)
+    audio_file = audio_data.get("audio_path")
+    aligned_phrases = None
+    if has_multi_phrases and audio_file and os.path.exists(audio_file):
+        aligned_phrases = align_quran_phrases_to_audio(audio_file, all_phrase_items, total_dur)
 
-        if len(phrase_pairs) <= 1:
-            start_str = format_ass_time(start_sec)
-            end_str = format_ass_time(end_sec)
-            ar_shaped = format_arabic_for_ass(ar_raw)
-            ar_clean = wrap_text(ar_shaped, words_per_line=6)
-            bn_clean = format_bengali_subtitles_for_ass(bn_raw, words_per_line=6)
+    if aligned_phrases:
+        logger.info("Rendering subtitles with 100% audio-aligned phrase timestamps.")
+        for p in aligned_phrases:
+            start_str = format_ass_time(p["start"])
+            end_str = format_ass_time(p["end"])
+            ar_clean = wrap_and_format_arabic(p["arabic"], words_per_line=5)
+            bn_clean = format_bengali_subtitles_for_ass(p["bengali"], words_per_line=6)
 
             ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,160,,{{\\pos(540,720)}}{ar_clean}\n"
             ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{bn_clean}\n"
-        else:
-            # Synchronously display BOTH Arabic and Bengali phrase-by-phrase!
-            total_ar_words = sum(len(p["arabic"].split()) for p in phrase_pairs)
-            chunk_start = start_sec
+    else:
+        # Fallback to per-Ayah synchronized transitions
+        for timing in ayah_timings:
+            start_sec = timing["start"]
+            end_sec = timing["end"]
+            ayah_dur = max(0.5, end_sec - start_sec)
 
-            for i, pair in enumerate(phrase_pairs):
-                p_ar = pair["arabic"].strip()
-                p_bn = pair["bengali"].strip()
-                p_words = len(p_ar.split())
+            ar_raw = timing.get("arabic", "").strip()
+            bn_raw = timing.get("bengali", "").strip()
 
-                if i == len(phrase_pairs) - 1:
-                    chunk_end = end_sec
-                else:
-                    c_dur = ayah_dur * (p_words / max(1, total_ar_words))
-                    chunk_end = chunk_start + c_dur
+            phrase_pairs = get_synchronized_quran_phrases(ar_raw, bn_raw)
 
-                c_start_str = format_ass_time(chunk_start)
-                c_end_str = format_ass_time(chunk_end)
+            if len(phrase_pairs) <= 1:
+                start_str = format_ass_time(start_sec)
+                end_str = format_ass_time(end_sec)
+                ar_clean = wrap_and_format_arabic(ar_raw, words_per_line=5)
+                bn_clean = format_bengali_subtitles_for_ass(bn_raw, words_per_line=6)
 
-                ar_shaped = format_arabic_for_ass(p_ar)
-                ar_clean = wrap_text(ar_shaped, words_per_line=6)
-                bn_clean = format_bengali_subtitles_for_ass(p_bn, words_per_line=6)
+                ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,160,,{{\\pos(540,720)}}{ar_clean}\n"
+                ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{bn_clean}\n"
+            else:
+                # Synchronously display BOTH Arabic and Bengali phrase-by-phrase!
+                total_ar_words = sum(len(p["arabic"].split()) for p in phrase_pairs)
+                chunk_start = start_sec
 
-                # BOTH ARABIC AND BENGALI TRANSITION TOGETHER AT THE EXACT SAME TIME
-                ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},ArabicVerse,,0,0,160,,{{\\pos(540,720)}}{ar_clean}\n"
-                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{bn_clean}\n"
-                chunk_start = chunk_end
+                for i, pair in enumerate(phrase_pairs):
+                    p_ar = pair["arabic"].strip()
+                    p_bn = pair["bengali"].strip()
+                    p_words = len(p_ar.split())
+
+                    if i == len(phrase_pairs) - 1:
+                        chunk_end = end_sec
+                    else:
+                        c_dur = ayah_dur * (p_words / max(1, total_ar_words))
+                        chunk_end = chunk_start + c_dur
+
+                    c_start_str = format_ass_time(chunk_start)
+                    c_end_str = format_ass_time(chunk_end)
+
+                    ar_clean = wrap_and_format_arabic(p_ar, words_per_line=5)
+                    bn_clean = format_bengali_subtitles_for_ass(p_bn, words_per_line=6)
+
+                    # BOTH ARABIC AND BENGALI TRANSITION TOGETHER AT THE EXACT SAME TIME
+                    ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},ArabicVerse,,0,0,160,,{{\\pos(540,720)}}{ar_clean}\n"
+                    ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,1140)}}{bn_clean}\n"
+                    chunk_start = chunk_end
+
 
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)

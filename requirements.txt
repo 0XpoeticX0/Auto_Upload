@@ -15,3 +15,5 @@ tiktok-uploader
 playwright
 arabic-reshaper
 python-bidi
+openai-whisper
+
