@@ -431,24 +431,27 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
 
     img_quran_master = os.path.abspath(r"app/assets/quran_rehal_master.jpg")
     img_quran_sunbeam = os.path.abspath(r"app/assets/scenes/quran_rehal_sunbeam.jpg")
+    img_quran_cinematic = os.path.abspath(r"app/assets/scenes/quran_rehal_cinematic.jpg")
+    img_quran_closeup = os.path.abspath(r"app/assets/scenes/quran_rehal_closeup.jpg")
+    img_quran_sanctuary = os.path.abspath(r"app/assets/scenes/quran_rehal_sanctuary.jpg")
     img_calligraphy = os.path.abspath(r"app/assets/scenes/glowing_calligraphy.jpg")
     img_palace = os.path.abspath(r"app/assets/scenes/moorish_palace_arches.jpg")
     img_sunrise = os.path.abspath(r"app/assets/scenes/desert_dawn_sunrise.jpg")
     img_port = os.path.abspath(r"app/assets/scenes/ancient_port_twilight.jpg")
     img_shield = os.path.abspath(r"app/assets/scenes/divine_sanctuary_shield.jpg")
 
-    # Sequence blueprint: Sacred Quran Rehal anchored, interspersed with authentic B-rolls & architecture
+    # Sequence blueprint: Rich 8K Holy Quran Rehal perspectives anchored, interwoven with authentic B-rolls
     sequence_pool = [
-        {"type": "image", "file": img_quran_master, "motion": "zoom_in"},
+        {"type": "image", "file": img_quran_cinematic, "motion": "zoom_in"},
         {"type": "broll", "file": broll_clouds},
-        {"type": "image", "file": img_palace, "motion": "pan_up"},
+        {"type": "image", "file": img_quran_closeup, "motion": "zoom_out"},
         {"type": "broll", "file": broll_ocean},
+        {"type": "image", "file": img_quran_sanctuary, "motion": "pan_up"},
         {"type": "image", "file": img_calligraphy, "motion": "zoom_in"},
-        {"type": "image", "file": img_quran_sunbeam, "motion": "zoom_out"},
         {"type": "broll", "file": broll_desert},
-        {"type": "image", "file": img_sunrise, "motion": "pan_up"},
         {"type": "image", "file": img_quran_master, "motion": "zoom_in"},
-        {"type": "image", "file": img_port, "motion": "pan_up"},
+        {"type": "image", "file": img_palace, "motion": "pan_up"},
+        {"type": "image", "file": img_quran_sunbeam, "motion": "zoom_out"},
     ]
 
     scene_clips = []
