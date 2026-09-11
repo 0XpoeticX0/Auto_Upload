@@ -8,6 +8,7 @@ synced per-Ayah transitions, Arabic Uthmani text, and reciter branding.
 import os
 import re
 import json
+import math
 import shutil
 import subprocess
 from app.logger import logger
@@ -407,9 +408,130 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
     logger.info(f"Generated Quran ASS subtitles at: {ass_path}")
 
+def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
+    """
+    Renders a fast-paced, multi-scene visual track adhering to permanent Visual Standards:
+    - 4 to 8-second cuts (7 to 10 scenes per ~50-80s video) — NEVER holding static for 20+ seconds!
+    - Zero watermarks, zero low-quality endpoints (banned pollinations.ai).
+    - Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals.
+    - Weaves authentic video B-rolls (ocean, clouds, desert) and 8K master Quran Rehal visuals.
+    """
+    os.makedirs(temp_dir, exist_ok=True)
+    master_visual_path = os.path.join(temp_dir, "master_visual_track.mp4")
+
+    # Target scene cuts between 4.5 and 7.0 seconds (e.g. 8-10 scenes for 50-70s audio)
+    num_scenes = max(3, int(math.ceil(total_dur / 6.0)))
+    base_scene_dur = total_dur / num_scenes
+    logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.1f}s each) across {total_dur:.1f}s.")
+
+    # Curated asset pool (100% Shariah compliant: 0 living beings)
+    broll_ocean = os.path.abspath(r"app/assets/broll/ocean_720.mp4")
+    broll_clouds = os.path.abspath(r"app/assets/broll/clouds_720.mp4")
+    broll_desert = os.path.abspath(r"app/assets/broll/desert_720.mp4")
+
+    img_quran_master = os.path.abspath(r"app/assets/quran_rehal_master.jpg")
+    img_quran_sunbeam = os.path.abspath(r"app/assets/scenes/quran_rehal_sunbeam.jpg")
+    img_calligraphy = os.path.abspath(r"app/assets/scenes/glowing_calligraphy.jpg")
+    img_palace = os.path.abspath(r"app/assets/scenes/moorish_palace_arches.jpg")
+    img_sunrise = os.path.abspath(r"app/assets/scenes/desert_dawn_sunrise.jpg")
+    img_port = os.path.abspath(r"app/assets/scenes/ancient_port_twilight.jpg")
+    img_shield = os.path.abspath(r"app/assets/scenes/divine_sanctuary_shield.jpg")
+
+    # Sequence blueprint: Sacred Quran Rehal anchored, interspersed with authentic B-rolls & architecture
+    sequence_pool = [
+        {"type": "image", "file": img_quran_master, "motion": "zoom_in"},
+        {"type": "broll", "file": broll_clouds},
+        {"type": "image", "file": img_palace, "motion": "pan_up"},
+        {"type": "broll", "file": broll_ocean},
+        {"type": "image", "file": img_calligraphy, "motion": "zoom_in"},
+        {"type": "image", "file": img_quran_sunbeam, "motion": "zoom_out"},
+        {"type": "broll", "file": broll_desert},
+        {"type": "image", "file": img_sunrise, "motion": "pan_up"},
+        {"type": "image", "file": img_quran_master, "motion": "zoom_in"},
+        {"type": "image", "file": img_port, "motion": "pan_up"},
+    ]
+
+    scene_clips = []
+    current_time = 0.0
+
+    for i in range(num_scenes):
+        scene_cfg = sequence_pool[i % len(sequence_pool)]
+        if i == num_scenes - 1:
+            scene_dur = total_dur - current_time
+        else:
+            scene_dur = round(base_scene_dur, 2)
+        current_time += scene_dur
+
+        clip_out = os.path.join(temp_dir, f"scene_clip_{i:02d}.mp4")
+        asset_file = scene_cfg["file"]
+        if not os.path.exists(asset_file):
+            asset_file = img_quran_master
+
+        if scene_cfg["type"] == "broll" and os.path.exists(asset_file) and asset_file.endswith(".mp4"):
+            cmd = [
+                "ffmpeg", "-y",
+                "-stream_loop", "-1",
+                "-i", asset_file,
+                "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30",
+                "-c:v", "libx264",
+                "-preset", "veryfast",
+                "-crf", "18",
+                "-t", f"{scene_dur:.2f}",
+                "-an",
+                "-pix_fmt", "yuv420p",
+                clip_out
+            ]
+        else:
+            motion = scene_cfg.get("motion", "zoom_in")
+            frames = int(scene_dur * 30)
+            if motion == "zoom_in":
+                zp = f"zoompan=z='min(zoom+0.0012,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1080x1920:fps=30"
+            elif motion == "zoom_out":
+                zp = f"zoompan=z='if(lte(zoom,1.0),1.15,max(1.0,zoom-0.0012))':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1080x1920:fps=30"
+            elif motion == "pan_up":
+                zp = f"zoompan=z=1.10:x='iw/2-(iw/zoom/2)':y='(ih-ih/zoom)*(1-on/{frames})':d={frames}:s=1080x1920:fps=30"
+            else:
+                zp = f"zoompan=z='min(zoom+0.0010,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1080x1920:fps=30"
+
+            cmd = [
+                "ffmpeg", "-y",
+                "-loop", "1",
+                "-i", asset_file,
+                "-vf", f"scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,{zp}",
+                "-c:v", "libx264",
+                "-preset", "veryfast",
+                "-crf", "18",
+                "-t", f"{scene_dur:.2f}",
+                "-an",
+                "-pix_fmt", "yuv420p",
+                clip_out
+            ]
+
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=True)
+        scene_clips.append(clip_out)
+
+    concat_list_file = os.path.join(temp_dir, "scenes_concat_list.txt")
+    with open(concat_list_file, "w", encoding="utf-8") as f:
+        for clip in scene_clips:
+            safe_clip = os.path.basename(clip)
+            f.write(f"file '{safe_clip}'\n")
+
+    concat_cmd = [
+        "ffmpeg", "-y",
+        "-f", "concat",
+        "-safe", "0",
+        "-i", concat_list_file,
+        "-c", "copy",
+        master_visual_path
+    ]
+    subprocess.run(concat_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=True)
+    logger.info(f"Dynamic Quran Master Visual Track built successfully: {master_visual_path}")
+    return master_visual_path
+
 def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str = "data/output") -> str:
     """
-    Renders end-to-end 60 FPS 1080x1920 vertical video with centered subtitles.
+    Renders end-to-end 1080x1920 vertical video with dynamic 4-8s cuts,
+    centered Arabic/Bengali subtitles, and authentic B-rolls.
     Returns path to rendered MP4 video.
     """
     os.makedirs(output_dir, exist_ok=True)
@@ -420,25 +542,11 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     start = verse_data["ayah_start"]
     end = verse_data["ayah_end"]
     reciter_id = verse_data.get("reciter_id", "alafasy")
+    audio_file = audio_data["audio_path"]
+    total_dur = audio_data["total_duration"]
 
-    # 1. Master Sacred Background (Holy Quran on Carved Wooden Rehal with Golden God Rays)
-    master_bg = os.path.abspath(r"app\assets\quran_rehal_master.jpg")
-    bg_path = os.path.join(temp_dir, "quran_bg.jpg")
-    if os.path.exists(master_bg):
-        shutil.copyfile(master_bg, bg_path)
-        logger.info(f"Loaded master sacred Quran Rehal visual: {master_bg}")
-    else:
-        visual_prompt = (
-            "vertical 9:16, inside a majestic ancient Andalusian Islamic sanctuary, "
-            "intricate Moorish geometric arched wooden windows, soft morning dawn golden light rays "
-            "illuminating an antique carved wooden rehal holding the Holy Quran on an emerald velvet prayer rug, "
-            "floating glowing dust particles in cinematic god rays, photorealistic 8k, architectural digest, "
-            "high aesthetic, deeply spiritual, no people, no living beings"
-        )
-        downloaded = generate_verified_human_free_background(visual_prompt, bg_path, max_checks=2)
-        if not downloaded or not os.path.exists(bg_path) or os.path.getsize(bg_path) < 5000:
-            logger.warning("[Vision Guardian] Deploying certified safe fallback background.")
-            get_certified_safe_fallback(bg_path)
+    # 1. Build Dynamic Multi-Scene Visual Track (4-8s cuts, B-rolls, Holy Quran on Rehal)
+    master_visual_path = build_dynamic_quran_visual_track(total_dur, temp_dir)
 
     # 2. Build Subtitles
     ass_path = os.path.join(temp_dir, "quran_subtitles.ass")
@@ -448,28 +556,15 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     out_filename = f"Quran_Surah_{surah}_{start}_{end}_{reciter_id}.mp4"
     final_output_path = os.path.join(output_dir, out_filename)
 
-    audio_file = audio_data["audio_path"]
-    total_dur = audio_data["total_duration"]
-
     # Normalize paths for FFmpeg filter on Windows
     safe_ass_path = ass_path.replace("\\", "/").replace(":", "\\:")
 
-    # 4. FFmpeg Video Filter:
-    # Scale & crop to 1080x1920, apply smooth 1.15x slow zoompan, subtle dark vignette for text readability, and burn ASS subtitles
-    vf_filter = (
-        f"scale=1080:1920:force_original_aspect_ratio=increase,"
-        f"crop=1080:1920,"
-        f"zoompan=z='min(zoom+0.0003,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={int(total_dur*60)}:s=1080x1920:fps=60,"
-        f"colorlevels=rimin=0.03:gimin=0.03:bimin=0.03:rimax=0.92:gimax=0.92:bimax=0.92,"
-        f"ass='{safe_ass_path}'"
-    )
-
+    # 4. Burn ASS Subtitles & Merge Audio
     cmd = [
         "ffmpeg", "-y",
-        "-loop", "1",
-        "-i", bg_path,
+        "-i", master_visual_path,
         "-i", audio_file,
-        "-vf", vf_filter,
+        "-vf", f"colorlevels=rimin=0.03:gimin=0.03:bimin=0.03:rimax=0.92:gimax=0.92:bimax=0.92,ass='{safe_ass_path}'",
         "-c:v", "libx264",
         "-preset", "fast",
         "-crf", "18",
@@ -480,7 +575,7 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
         final_output_path
     ]
 
-    logger.info(f"Rendering Quran video: {final_output_path} ({total_dur:.1f}s, 60fps)...")
+    logger.info(f"Rendering Dynamic Quran video: {final_output_path} ({total_dur:.1f}s, dynamic cuts)...")
     res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
     logger.info(f"Quran video successfully rendered at: {final_output_path}")
 

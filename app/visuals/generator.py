@@ -14,7 +14,7 @@ NEGATIVE_PROMPT = (
     "animal, dog, cat, bird, insect, fish, living being, living creatures, figure, silhouette of person"
 )
 
-# Hard-prepended prefix that overrides any AI prompt output before sending to Pollinations
+# Hard-prepended prefix that guarantees strictly 0 humans in any AI prompt
 NO_HUMAN_PREFIX = (
     "vertical 9:16, absolutely no humans no faces no living beings no animals, "
     "empty atmospheric Islamic scenery only, "

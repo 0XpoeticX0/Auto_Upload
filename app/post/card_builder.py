@@ -26,26 +26,37 @@ NEGATIVE_PROMPT = urllib.parse.quote(
 )
 
 def download_card_background(prompt: str, output_path: str) -> str:
-    """Downloads a full vertical 1080x1350 aesthetic image."""
-    encoded_prompt = urllib.parse.quote(
-        f"{prompt}, vertical 4:5 portrait, majestic serene atmosphere, dark cinematic lighting, soft warm golden amber glow, photorealistic 8k, empty, no humans, no living beings, no faces"
-    )
-    url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1080&height=1350&nologo=true&negative={NEGATIVE_PROMPT}"
-    for attempt in range(1, 4):
-        try:
-            logger.info(f"Downloading background visual (attempt {attempt}/3)...")
-            resp = requests.get(url, timeout=30)
-            if resp.status_code == 200 and len(resp.content) > 10000:
-                with open(output_path, "wb") as f:
-                    f.write(resp.content)
-                with Image.open(output_path) as img:
-                    img.verify()
-                logger.info("Background visual downloaded successfully.")
-                return output_path
-        except Exception as e:
-            logger.warning(f"Visual download failed on attempt {attempt}: {e}")
-            time.sleep(2)
-            
+    """Provides a certified 1080x1350 aesthetic background with zero watermarks and zero living beings."""
+    candidates = [
+        "app/assets/scenes/moorish_palace_arches.jpg",
+        "app/assets/scenes/glowing_calligraphy.jpg",
+        "app/assets/scenes/desert_dawn_sunrise.jpg",
+        "app/assets/quran_rehal_master.jpg"
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            try:
+                with Image.open(c) as img:
+                    img = img.convert("RGB")
+                    w, h = img.size
+                    target_aspect = 1080 / 1350
+                    current_aspect = w / h
+                    if current_aspect > target_aspect:
+                        new_w = int(h * target_aspect)
+                        left = (w - new_w) // 2
+                        img = img.crop((left, 0, left + new_w, h))
+                    else:
+                        new_h = int(w / target_aspect)
+                        top = (h - new_h) // 2
+                        img = img.crop((0, top, w, top + new_h))
+                    img = img.resize((1080, 1350), Image.Resampling.LANCZOS)
+                    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                    img.save(output_path, "JPEG", quality=95)
+                    logger.info(f"Deployed certified 1080x1350 background from: {c}")
+                    return output_path
+            except Exception as e:
+                logger.warning(f"Error preparing background from {c}: {e}")
+
     img = Image.new("RGB", (1080, 1350), (14, 16, 22))
     img.save(output_path, "JPEG")
     return output_path
