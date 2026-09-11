@@ -10,6 +10,7 @@ import re
 import json
 import math
 import shutil
+import random
 import subprocess
 from app.logger import logger
 from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
@@ -440,8 +441,20 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
     img_port = os.path.abspath(r"app/assets/scenes/ancient_port_twilight.jpg")
     img_shield = os.path.abspath(r"app/assets/scenes/divine_sanctuary_shield.jpg")
 
-    # Sequence blueprint: Rich 8K Holy Quran Rehal perspectives anchored, interwoven with authentic B-rolls
-    sequence_pool = [
+    # Style A: 100% Pure Holy Quran on Rehal (Alternating 5 distinct 8K angles & cinematic motions)
+    style_a_pool = [
+        {"type": "image", "file": img_quran_cinematic, "motion": "zoom_in"},
+        {"type": "image", "file": img_quran_closeup, "motion": "zoom_out"},
+        {"type": "image", "file": img_quran_sanctuary, "motion": "pan_up"},
+        {"type": "image", "file": img_quran_sunbeam, "motion": "zoom_in"},
+        {"type": "image", "file": img_quran_master, "motion": "zoom_out"},
+        {"type": "image", "file": img_quran_closeup, "motion": "pan_up"},
+        {"type": "image", "file": img_quran_cinematic, "motion": "zoom_out"},
+        {"type": "image", "file": img_quran_sanctuary, "motion": "zoom_in"},
+    ]
+
+    # Style B: Balanced Hybrid (Holy Quran on Rehal anchored + authentic video B-rolls & architecture)
+    style_b_pool = [
         {"type": "image", "file": img_quran_cinematic, "motion": "zoom_in"},
         {"type": "broll", "file": broll_clouds},
         {"type": "image", "file": img_quran_closeup, "motion": "zoom_out"},
@@ -453,6 +466,15 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
         {"type": "image", "file": img_palace, "motion": "pan_up"},
         {"type": "image", "file": img_quran_sunbeam, "motion": "zoom_out"},
     ]
+
+    # Randomly select between Style A (100% Pure Quran on Rehal) and Style B (Hybrid with Nature B-rolls)
+    chosen_style = random.choice(["style_a", "style_b"])
+    if chosen_style == "style_a":
+        logger.info("🎬 [Dynamic Visual Engine] Selected Style A: 100% Pure Holy Quran on Rehal angles")
+        sequence_pool = style_a_pool
+    else:
+        logger.info("🎬 [Dynamic Visual Engine] Selected Style B: Balanced Hybrid (Holy Quran on Rehal + Nature B-rolls)")
+        sequence_pool = style_b_pool
 
     scene_clips = []
     current_time = 0.0

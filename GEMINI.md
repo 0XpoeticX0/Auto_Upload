@@ -31,3 +31,6 @@
 - **Dedicated Sacred Visual (Open Quran on Rehal)**: For ALL Quran recitation videos, the visual MUST ALWAYS feature the **Holy Quran open on an antique carved wooden Rehal (রেহাল)** placed on a traditional emerald prayer carpet inside a grand, serene mosque/sanctuary, illuminated by soft golden morning sunbeams/god rays and floating glowing dust particles (`app/assets/quran_rehal_master.jpg`).
 - **Strictly No Empty Corridors**: NEVER use plain empty hallways, generic corridors, or abstract loops without the Holy Quran on the Rehal.
 - **Zero Living Beings**: Strictly 0 humans, 0 faces, 0 silhouettes. The focal sacred object is the Holy Quran on the Rehal.
+- **Dual Visual Styles (Selected at Random)**:
+  - **Style A (100% Pure Quran on Rehal)**: Fast-paced 4 to 7-second scene cuts cycling purely between 5 distinct 8K angles and camera motions (`zoom_in`, `zoom_out`, `pan_up`) of the Holy Quran on the wooden Rehal.
+  - **Style B (Balanced Hybrid)**: Holy Quran on the Rehal anchored every few seconds, interwoven with authentic nature video B-rolls (`ocean_720.mp4`, `clouds_720.mp4`, `desert_720.mp4`) and sacred calligraphy.
