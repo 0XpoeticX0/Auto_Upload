@@ -252,25 +252,26 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
             bangla_lines = [l for l in lines if not any('\u0600' <= c <= '\u06FF' for c in l)]
             
             spoken_arabic = clean_arabic_for_audio(raw_arabic_block)
-            # The entire card (Arabic + transliteration + translation) stays displayed together continuously
-            display_card = raw_arabic_block
+            # Display ONLY Arabic text (max 2 lines) during Arabic recitation
+            arabic_display_card = "\n".join(arabic_lines)
             
             # Extract ONLY the translation to speak (skip the transliteration/spelling line)
             spoken_translation = ""
+            trans_display_card = ""
             if len(bangla_lines) >= 2:
-                # First bangla line is spelling/pronunciation (DO NOT SPEAK)
-                # Second bangla line is translation (SPEAK THIS)
-                raw_trans = ' '.join(bangla_lines[1:]).strip()
+                # First bangla line is spelling/pronunciation
+                # Second bangla line is translation
+                trans_lines = bangla_lines[1:]
+                trans_display_card = "\n".join(trans_lines)
+                raw_trans = ' '.join(trans_lines).strip()
                 clean_trans = re.sub(r'[\(\)\[\]]', '', raw_trans).strip()
                 clean_trans = re.sub(r'^(বাংলা অর্থ|অর্থ|উচ্চারণ|অনুবাদ)\s*[:ঃ\-—]\s*', '', clean_trans).strip()
                 spoken_translation = clean_trans
             elif len(bangla_lines) == 1:
                 line = bangla_lines[0].strip()
-                # If the only Bangla line is in parentheses → it's the pronunciation/spelling
-                # line (e.g. "(আলহামদুলিল্লাহ)"). NEVER speak this — it shows on screen only.
                 is_pronunciation = line.startswith('(') and line.endswith(')')
                 if not is_pronunciation:
-                    # It's an actual translation line without parens — speak it
+                    trans_display_card = line
                     if '—' in line or '–' in line or '-' in line or ':' in line:
                         parts_split = re.split(r'[—–\-:]', line, maxsplit=1)
                         clean_trans = re.sub(r'[\(\)\[\]]', '', parts_split[1]).strip()
@@ -280,18 +281,21 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                         short_dhikrs = {'সুবহানাল্লাহ', 'আলহামদুলিল্লাহ', 'আল্লাহু আকবার', 'আস্তাগফিরুল্লাহ', 'মাশাআল্লাহ', 'ইনশাআল্লাহ', 'লা ইলাহা ইল্লাল্লাহ'}
                         if len(clean_trans.split()) > 2 or not any(d in clean_trans for d in short_dhikrs):
                             spoken_translation = clean_trans
+                else:
+                    if len(line.split()) <= 6:
+                        arabic_display_card += f"\n{line}"
                         
             if any(c.isalnum() or ('\u0600' <= c <= '\u06FF') for c in spoken_arabic):
                 segments.append({
                     "type": "arabic",
                     "voice": ARABIC_VOICE,
                     "spoken_text": spoken_arabic,
-                    "display_text": display_card,
+                    "display_text": arabic_display_card,
                     "rate": ARABIC_RATE,
                     "pitch": "-2Hz"
                 })
                 
-            # If translation text exists, speak ONLY the Bangla translation with the same display_card
+            # If translation text exists, speak ONLY the Bangla translation with trans_display_card
             if spoken_translation and should_speak_bangla_translation(spoken_translation):
                 spoken_bangla_trans = spoken_translation
                 for p, r in HONORIFIC_SPOKEN_REPLACEMENTS.items():
@@ -301,12 +305,22 @@ def generate_scene_audio(text: str, scene_idx: int, temp_dir: str):
                 spoken_bangla_trans = spoken_bangla_trans.replace('।', '। ').replace(',', ', ').replace('?', '? ')
                 spoken_bangla_trans = re.sub(r'[\(\)\[\]]', ' ', spoken_bangla_trans).strip()
                 
+                # Format trans_display_card into balanced max 2 lines
+                trans_clean = re.sub(r'[\(\)\[\]]', '', trans_display_card or spoken_translation).strip()
+                trans_clean = re.sub(r'^(বাংলা অর্থ|অর্থ|অনুবাদ)\s*[:ঃ\-—]\s*', '', trans_clean).strip()
+                t_words = trans_clean.split()
+                if len(t_words) > 7:
+                    mid = len(t_words) // 2
+                    trans_card = " ".join(t_words[:mid]) + "\n" + " ".join(t_words[mid:])
+                else:
+                    trans_card = trans_clean
+                
                 if any(c.isalnum() for c in spoken_bangla_trans):
                     segments.append({
                         "type": "bangla",
                         "voice": BANGLA_VOICE,
                         "spoken_text": spoken_bangla_trans,
-                        "display_text": display_card,
+                        "display_text": trans_card,
                         "rate": "+0%",
                         "pitch": "+0Hz"
                     })

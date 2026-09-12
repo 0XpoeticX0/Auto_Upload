@@ -322,6 +322,7 @@ def upload_reel_to_instagram(video_path: str, caption: str, cover_url: str = Non
             'media_type': 'REELS',
             'upload_type': 'resumable',
             'caption': caption,
+            'share_to_feed': 'true',
             'access_token': token
         }
         if cover_url:

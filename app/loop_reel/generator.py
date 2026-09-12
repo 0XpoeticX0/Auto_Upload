@@ -15,29 +15,83 @@ from app.loop_reel.audio_library import get_or_download_quran_audio
 from app.upload.youtube import upload_to_youtube
 from app.upload.facebook import upload_to_facebook
 
-# 2 Daily Prime Slots (BST / GMT+6) with Merged High-Demand Topics
-SLOT_CONFIGS = {
-    "slot_1_morning": {
-        "name": "🌅 Slot 1: Morning & Day Prime (06:00 AM BST)",
-        "theme": "Morning Dua, Protection from Evil Eye, Guaranteed Duas (ইসমে আজম), Rizq Unlocking, Marriage & Family Sunnah",
-        "system_instruction": "Create a high-curiosity 'MUST-KNOW / WANT-TO-KNOW' day reminder. Focus on one of these high-performing topics: (1) 3 morning deeds for immense Barakah, (2) The greatest name of Allah (ইসমে আজম) where no Dua is rejected, (3) 7 signs Allah is answering your Dua, (4) The 1 forgotten prayer that opens closed doors and relieves crushing debt, (5) 1 secret Sunnah deed between husband and wife (feeding spouse, smiling, good character), (6) 3 things forbidden in anger, or (7) Protecting your family from Evil Eye (বদনজর) with morning Azkar.",
-        "visual_prompt": "vertical 9:16, inside a majestic ancient Andalusian Islamic hall with intricate Moorish geometric arched wooden windows, golden morning dawn light rays shining onto an antique carved wooden rehal holding the Holy Quran on an emerald velvet prayer rug, floating glowing dust particles in cinematic god rays, photorealistic 8k, architectural digest, high aesthetic, deeply spiritual, no people, no living beings"
+# 12 Diverse Islamic Knowledge & Sunnah Domains (Rotates across all facets of Sahih Hadith)
+DYNAMIC_ISLAMIC_DOMAINS = [
+    {
+        "name": "ব্যবসায়িক সততা ও লেনদেন (Business & Trade Ethics)",
+        "theme": "সঠিক মাপে দেওয়া, ক্রয়-বিক্রয়ে সত্যবাদিতা, ভেজালমুক্ত ব্যবসা, শ্রমিকের পারিশ্রমিক",
+        "guidance": "Focus on Sahih Hadiths regarding honesty in commerce, returning trusts, not hiding defects in goods, paying workers promptly before their sweat dries."
     },
-    "slot_2_evening": {
-        "name": "🌙 Slot 2: Prime Evening & Night (08:00 PM BST)",
-        "theme": "Heart-Softeners, Grave Protection (সূরা মুলক), Sins-Wiping Prayers, Tahajjud Miracles & Night Peace",
-        "system_instruction": "Create a profound, emotionally powerful 'HEART-TOUCHING' nighttime reminder. Focus on one of these high-performing topics: (1) The 30-verse Surah (সূরা মুলক) that miraculously shields you inside the grave, (2) The 1 Sunnah prayer that wipes years of sins in minutes (সালাতুত তাসবীহ / আওয়াবীন), (3) What to say if you wake up suddenly in the night with anxiety to have all Duas accepted instantly, (4) The magic of 2 Rakat Tahajjud for impossible miracles, or (5) Sayyidul Istighfar: the master repentance Dua that guarantees Jannah.",
-        "visual_prompt": "vertical 9:16, inside a serene Ottoman mosque prayer sanctuary at twilight dusk, glowing ornate brass Islamic lanterns casting warm amber geometric light, intricately carved wooden archway overlooking a peaceful courtyard, velvet crimson prayer carpet, photorealistic 8k, cinematic lighting, deeply peaceful, no people, no living beings"
+    {
+        "name": "প্রতিবেশী ও সমাজের হক (Neighbor & Social Rights)",
+        "theme": "প্রতিবেশীর প্রতি সদাচরণ, কষ্ট না দেওয়া, খাবার হাদিয়া দেওয়া, মেহমানদারি",
+        "guidance": "Focus on the immense rights of neighbors in Sahih Hadiths (Jibreel AS advising so much the Prophet thought neighbors would inherit), honoring guests, smiling, removing harmful objects."
+    },
+    {
+        "name": "মুখ ও জিহ্বার হেফাজত (Guarding the Tongue)",
+        "theme": "গীবত বর্জন, কথা কম বলা, সত্য বলা অথবা চুপ থাকা, কটূক্তি পরিহার",
+        "guidance": "Focus on Hadiths about guarding the tongue and private parts guaranteeing Jannah, 'whoever believes in Allah and the Last Day let him speak good or remain silent'."
+    },
+    {
+        "name": "অহংকার বর্জন ও বিনয় (Humility vs Arrogance)",
+        "theme": "অন্তরে সরিষার দানা পরিমাণ অহংকার, বিনয়ীদের আল্লাহ সম্মান দেন, পোশাক ও চালচলন",
+        "guidance": "Focus on authentic Hadiths about arrogance preventing entry to Jannah, the virtue of humble character, greeting poorer people, walking with humility."
+    },
+    {
+        "name": "মা-বাবা ও আত্মীয়তার সম্পর্ক (Parents & Kinship)",
+        "theme": "পিতা-মাতার খেদমত, রক্ত সম্পর্কীয় আত্মীয়দের সাথে সম্পর্ক বজায় রাখা (সিলাহ রাহমি)",
+        "guidance": "Focus on Silah Rahmi expanding Rizq and life span, kindness to mother and father, not breaking ties even if relatives cut ties."
+    },
+    {
+        "name": "জীবজন্তু ও প্রকৃতির প্রতি দয়া (Kindness to Animals & Nature)",
+        "theme": "পিপাসার্ত কুকুরকে পানি পান করিয়ে ক্ষমা, গাছ লাগানো সাদকা, পানি অপচয় না করা",
+        "guidance": "Focus on authentic narrations of forgiveness through mercy to animals, planting trees that birds or humans eat from counting as ongoing Sadaqah."
+    },
+    {
+        "name": "দৈনন্দিন ছোট সুন্নাহ ও আদব (Everyday Manners & Micro-Sunnahs)",
+        "theme": "সালামের প্রসার, ডান দিক থেকে শুরু, হাঁচির জবাব, মেসওয়াকের ফযিলত",
+        "guidance": "Focus on simple beautiful daily Sunnahs that carry huge rewards: spreading Salam among acquaintances and strangers, smiling, Sunnah of eating/drinking."
+    },
+    {
+        "name": "রাগ নিয়ন্ত্রণ ও ক্ষমা (Anger Control & Forgiving People)",
+        "theme": "রাগ দমনের পুরস্কার, যে ক্ষমা করে আল্লাহ তার সম্মান বাড়িয়ে দেন, বিবাদ মিটমাট",
+        "guidance": "Focus on 'The strong man is not the wrestler, but the one who controls anger', forgiving others so Allah forgives you, reconciling between two Muslims."
+    },
+    {
+        "name": "সুস্থতা ও রুগ্ন ব্যক্তিকে দেখতে যাওয়া (Visiting the Sick & Health)",
+        "theme": "অসুস্থ ব্যক্তিকে দেখতে যাওয়ার ফযিলত (৭০,০০০ ফেরেশতার দোয়া), আল্লাহর নিয়ামত স্বাস্থ্য",
+        "guidance": "Focus on authentic Hadiths on visiting the sick, picking fruits of Jannah, angels praying for the visitor, taking care of one's health."
+    },
+    {
+        "name": "সহজীকরণ ও মানুষের উপকার (Making Things Easy & Helping Others)",
+        "theme": "যে মানুষের কষ্ট দূর করে আল্লাহ তার কিয়ামতের কষ্ট দূর করবেন, দ্বীন সহজ",
+        "guidance": "Focus on 'Allah helps His servant as long as the servant helps his brother', making matters easy and not creating hardship, relieving distress."
+    },
+    {
+        "name": "ইলম ও দ্বীনের জ্ঞান অর্জন (Seeking Knowledge & Sincerity)",
+        "theme": "জ্ঞান অর্জনের পথে চলা জান্নাতের পথ, যে ব্যক্তি নিয়ত খাঁটি রাখে",
+        "guidance": "Focus on the angels lowering their wings for the seeker of knowledge, sincerity of deeds (ইখলাস), purity of heart."
+    },
+    {
+        "name": "দান-সদকা ও গোপন নেক আমল (Sadaqah & Secret Deeds)",
+        "theme": "এক টুকরো খেজুর দিয়ে হলেও জাহান্নাম থেকে বাঁচা, গোপন সদকা আল্লাহর রাগ নিভিয়ে দেয়",
+        "guidance": "Focus on small consistent charities, secret good deeds between a servant and Allah, feeding the hungry, helping an orphan."
+    }
+]
+
+SLOT_CONFIGS = {
+    "dynamic": {
+        "name": "🌟 Dynamic Sahih Sunnah Feed",
+        "theme": "Authentic Hadiths Across All Spheres of Islamic Life",
+        "system_instruction": "Select a 100% fresh, unexplored Sunnah teaching.",
+        "visual_prompt": "vertical 9:16, inside an ancient Islamic sanctuary, photorealistic 8k, no people, no living beings"
     }
 }
 
 def determine_current_slot() -> str:
-    """
-    Determines the active slot.
-    Morning slot is held (dedicated to Daily Quran Recitation at 06:00 AM BST).
-    The Hadith Loop Reel pipeline runs exclusively once daily for the Prime Evening Slot (08:00 PM BST).
-    """
-    return "slot_2_evening"
+    """Returns dynamic slot key."""
+    return "dynamic"
+
 
 
 ANGLES = [
@@ -142,14 +196,30 @@ def build_loop_reel_system_prompt(
     target_tone: str,
     last_hook_text: str,
     avoid_context: str,
-    cfg: dict
+    cfg: dict,
+    assigned_domain: dict = None
 ) -> str:
-    """Builds the comprehensive system prompt customized for the specific angle, tone, slot and episode."""
+    """Builds the comprehensive system prompt customized for the specific angle, tone, domain and episode."""
+    domain_name = assigned_domain['name'] if assigned_domain else "দৈনন্দিন সুন্নাহ ও চারিত্রিক সৌন্দর্য"
+    domain_guidance = assigned_domain['guidance'] if assigned_domain else "Authentic Sahih Hadith from major books."
+
     return f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
 
-CONTRASTIVE DYNAMIC ANGLE PRINCIPLE (NO TOPIC BANNING):
-Do NOT ban vital daily human topics (such as anxiety, forgiveness, prayer, debt, sleep, patience). Human beings need these reminders every day!
-Instead, diversify 100% through FRESH ANGLES, LENSES, and OPPOSITE STRUCTURE!
+# ==============================================================================
+# STRICT 100-VIDEO ZERO-SIMILARITY & FRESH TOPIC MANDATE
+# ==============================================================================
+STRICT ZERO-SIMILARITY MANDATE (LAST 100 VIDEOS):
+You must select a 100% FRESH, NOVEL, and UNEXPLORED Sahih Hadith topic that has ZERO similarity to any of the last 100 videos.
+STRICTLY FORBIDDEN TO REPEAT RECENT OR OVERSATURATED THEMES:
+- ❌ NO Sleep / Bedtime / Night waking (ঘুমানোর আমল, বিছানায় যাওয়া, দুঃস্বপ্ন, তাহাজ্জুদ)
+- ❌ NO Grave / Torment of the grave / Surah Mulk (কবর, কবরের আজাব, সূরা মুলক)
+- ❌ NO Anxiety / Depression / Mental agitation / Heaviness (দুশ্চিন্তা, পেরেশানি, মানসিক অশান্তি, মন খারাপ)
+- ❌ NO Debt / Money crises / Poverty (ঋণ পরিশোধ, দেনা, পাহাড়সমান ঋণ)
+- ❌ NO Sins erasing like sea foam (সমুদ্রের ফেনা, পাহাড় পরিমাণ গুনাহ মাফ)
+
+ASSIGNED SPECIFIC ISLAMIC DOMAIN FOR THIS REEL:
+• Domain: {domain_name}
+• Specific Focus: {domain_guidance}
 
 [ASSIGNED ANGLE & LENS FOR EPISODE #{ep_bn}]
 • Angle Archetype: {target_angle['name']}
@@ -282,9 +352,9 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
     cfg = SLOT_CONFIGS[slot_key]
     logger.info(f"Targeting {cfg['name']} ({cfg['theme']})")
 
-    # Fetch recent topics to ensure zero duplication
+    # Fetch recent 100 topics to guarantee 100% zero duplication across the channel
     recent_titles = get_recent_video_titles(limit=100)
-    avoid_context = "\n- ".join(recent_titles[:30]) if recent_titles else "None"
+    avoid_context = "\n- ".join(recent_titles[:100]) if recent_titles else "None"
 
     # Calculate Series Episode Number
     ep_int, ep_bn = get_next_episode_number()
@@ -301,13 +371,16 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
     max_attempts = 7
 
     for attempt in range(max_attempts):
-        # Dynamic Angle & Tone Rotation across attempts to break deadlocks
+        # Dynamic Angle, Tone & Islamic Domain Rotation across attempts to break deadlocks
         angle_idx = (ep_int + attempt) % len(ANGLES)
         tone_idx = (ep_int + attempt) % len(TONES)
+        domain_idx = (ep_int - 1 + attempt) % len(DYNAMIC_ISLAMIC_DOMAINS)
+        
         target_angle = ANGLES[angle_idx]
         target_tone = TONES[tone_idx]
+        assigned_domain = DYNAMIC_ISLAMIC_DOMAINS[domain_idx]
 
-        logger.info(f"Attempt {attempt+1}/{max_attempts}: Angle '{target_angle['name']}' | Tone '{target_tone}' for Episode #{ep_bn}...")
+        logger.info(f"Attempt {attempt+1}/{max_attempts}: Domain '{assigned_domain['name']}' | Angle '{target_angle['name']}' | Tone '{target_tone}' for Episode #{ep_bn}...")
 
         system_prompt = build_loop_reel_system_prompt(
             ep_bn=ep_bn,
@@ -315,17 +388,19 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
             target_tone=target_tone,
             last_hook_text=last_hook_text,
             avoid_context=avoid_context,
-            cfg=cfg
+            cfg=cfg,
+            assigned_domain=assigned_domain
         )
 
         user_prompt = (
-            f"Target Slot: {cfg['name']}\n"
-            f"Required Slot Theme: {cfg['theme']}\n"
-            f"Slot Content Guidance: {cfg['system_instruction']}\n"
-            f"Series Episode: {ep_bn}. Assigned Angle: '{target_angle['name']}' ({target_angle['desc']}). Tone: '{target_tone}'.\n"
-            f"Select 1 deeply important Sunnah teaching of the Prophet (ﷺ) solving a vital daily life struggle matching the slot theme. "
-            f"Ensure 100% authentic Sahih Hadith with exact book and number (e.g., সহীহ বুখারী: ১২৩৪ or সহীহ মুসলিম: ৫৬৭), full Arabic Dua with Tashkeel, Bengali pronunciation, and meaning. "
-            f"Do NOT select any topic/Hadith from the avoided list. Return valid JSON only."
+            f"Series Episode: {ep_bn}.\n"
+            f"Assigned Islamic Domain: {assigned_domain['name']}\n"
+            f"Domain Theme: {assigned_domain['theme']}\n"
+            f"Guidance: {assigned_domain['guidance']}\n"
+            f"Assigned Hook Angle: '{target_angle['name']}' ({target_angle['desc']}). Hook Tone: '{target_tone}'.\n"
+            f"Select 1 deeply inspiring, authentic Sahih Hadith strictly within the domain '{assigned_domain['name']}'. "
+            f"Ensure 100% authentic Sahih Hadith with exact book and number (e.g., সহীহ বুখারী: ২০৭৯ or সহীহ মুসলিম: ১৮৯৩), full Arabic Dua or Ayah with Tashkeel, Bengali pronunciation, and meaning. "
+            f"STRICTLY FORBIDDEN: Do NOT select any topic from the avoided list below or any repetition of sleep, grave/Mulk, debt, or anxiety. Return valid JSON only."
         )
 
         if banned_hadiths or last_fail_reason:
@@ -508,14 +583,16 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     temp_dir = os.path.join("data", "temp", "loop_reel_run")
     os.makedirs(temp_dir, exist_ok=True)
 
-    # 1. Background image generation with TRIPLE-CHECK VISION GUARDIAN (Checks 3 times over)
-    from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
+    # 1. Background image selection: Guaranteed non-repeating across recent videos from 16 certified 8K scenes
+    from app.history import get_unique_background
+    import shutil
     bg_path = os.path.join(temp_dir, "background.jpg")
-    visual_p = content.get("visual_prompt", SLOT_CONFIGS["slot_1_morning"]["visual_prompt"])
-    
-    downloaded = generate_verified_human_free_background(visual_p, bg_path, max_checks=3)
-    if not downloaded or not os.path.exists(bg_path) or os.path.getsize(bg_path) < 5000:
-        logger.warning("[Vision Guardian] Deploying certified human-free fallback background.")
+    chosen_bg = get_unique_background()
+    if chosen_bg and os.path.exists(chosen_bg):
+        shutil.copyfile(chosen_bg, bg_path)
+        logger.info(f"🎨 Non-repeating 8K background deployed for Loop Reel: {os.path.basename(chosen_bg)}")
+    else:
+        from app.quality.vision_guardian import get_certified_safe_fallback
         get_certified_safe_fallback(bg_path)
 
     # 2. Authentic Quran Audio with 30-Video Anti-Repetition Guarantee & Topic Alignment
@@ -689,7 +766,9 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
         "source": "loop_reel_series"
     }
     _supabase_insert(record_payload)
-    logger.info(f"Saved Loop Reel Episode {content.get('episode_bn', '')} to Supabase: '{content.get('title_bn')}'")
+    from app.history import record_video_history
+    record_video_history(full_title_for_history, "loop_reel", content.get("line_1", ""))
+    logger.info(f"Saved Loop Reel Episode {content.get('episode_bn', '')} to history: '{content.get('title_bn')}'")
 
     logger.info("=== LOOP REEL PIPELINE COMPLETED SUCCESSFULLY ===")
     return True

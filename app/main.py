@@ -80,7 +80,7 @@ def main(no_upload: bool = False):
 
     for v_format in ["short"]:
         logger.info(f"--- Rendering Video ({v_format}) ---")
-        final_video_path = render_final_video(scenes, topic_id, v_format)
+        final_video_path = render_final_video(scenes, topic_id, v_format, pillar_category=topic_category)
         
         if not final_video_path:
             logger.error(f"Video rendering failed for {v_format}")
@@ -88,7 +88,8 @@ def main(no_upload: bool = False):
             
         logger.info(f"--- Generating Thumbnail ({v_format}) ---")
         base_image = scenes[0].get("image_path") if scenes else None
-        thumbnail_path = generate_thumbnail(script_data.get("title", topic_title), topic_id, base_image)
+        thumb_title = script_data.get("thumbnail_hook") or script_data.get("title") or topic_title
+        thumbnail_path = generate_thumbnail(thumb_title, topic_id, base_image, category=topic_category)
         
         # Deepcopy metadata so we can safely modify it per format
         metadata = copy.deepcopy(base_metadata) if base_metadata else None

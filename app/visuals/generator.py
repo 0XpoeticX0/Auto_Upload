@@ -116,17 +116,17 @@ Respond ONLY with valid JSON (no markdown):
     logger.info("Using curated pillar style fallback...")
     return FALLBACK_PILLAR_STYLES.get(pillar_category, FALLBACK_PILLAR_STYLES["daily_life"])
 
-def generate_image_for_scene(visual_prompt: str, output_filepath: str, seed: int = 42) -> bool:
+def generate_image_for_scene(visual_prompt: str, output_filepath: str, seed: int = 42, pillar_category: str = "daily_life") -> bool:
     """Generates 9:16 high-contrast vertical backgrounds with TRIPLE-CHECK VISION GUARDIAN (0 Living Beings Guaranteed)."""
     from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
-    success = generate_verified_human_free_background(visual_prompt, output_filepath, max_checks=3)
+    success = generate_verified_human_free_background(visual_prompt, output_filepath, max_checks=3, category=pillar_category)
     if not success or not os.path.exists(output_filepath) or os.path.getsize(output_filepath) < 5000:
         logger.warning("[Vision Guardian] Triggering certified fallback in generate_image_for_scene.")
-        return get_certified_safe_fallback(output_filepath)
+        return get_certified_safe_fallback(output_filepath, category=pillar_category)
     return True
 
 def generate_all_images(scenes: list, topic_id: int, video_format: str = "short", pillar_category: str = "daily_life", script_data: dict = None):
-    """Generates a master visual background dynamically crafted by Gemini specifically for this topic."""
+    """Generates a master visual background dynamically crafted specifically for this topic category."""
     updated_scenes = []
     base_dir = os.path.join("data", "temp", f"{topic_id}_{video_format}")
     os.makedirs(base_dir, exist_ok=True)
@@ -137,10 +137,10 @@ def generate_all_images(scenes: list, topic_id: int, video_format: str = "short"
     if script_data:
         dynamic_prompt = generate_ai_visual_prompt(script_data, pillar_category=pillar_category)
     else:
-        dynamic_prompt = FALLBACK_PILLAR_STYLES.get(pillar_category, FALLBACK_PILLAR_STYLES["daily_life"])
+        dynamic_prompt = FALLBACK_PILLAR_STYLES.get(pillar_category, FALLBACK_PILLAR_STYLES.get("daily_life", ""))
         
-    logger.info(f"Generating Master Background Image with Flux Engine...")
-    success = generate_image_for_scene(dynamic_prompt, master_image_path, seed=topic_id)
+    logger.info(f"Selecting theme-tailored 8K master visual for {pillar_category}...")
+    success = generate_image_for_scene(dynamic_prompt, master_image_path, seed=topic_id, pillar_category=pillar_category)
     
     for scene in scenes:
         scene["image_path"] = master_image_path if success else None

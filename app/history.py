@@ -175,33 +175,43 @@ def get_all_used_topics_global(limit: int = 150) -> list[str]:
     return unified_list[:limit]
 
 SEMANTIC_TOPIC_GROUPS = [
-    {"name": "surah_mulk_kabor", "keywords": ["মুলক", "কবর", "কবরের আজাব", "কবরের বাতি", "সাজদাহ"]},
-    {"name": "morning_danger_protection", "keywords": ["সকালের আমল", "বিপদ", "অনিষ্ট", "শয়তান", "শয়তান", "ধারেকাছে", "বিপদ থেকে রক্ষা"]},
+    {"name": "surah_mulk_kabor", "keywords": ["মুলক", "কবর", "কবরের আজাব", "কবরের বাতি", "সাজদাহ", "কবরের", "কবরে", "মুনকার", "নাকির", "বারজাখ"]},
+    {"name": "morning_danger_protection", "keywords": ["সকালের আমল", "সকাল-সন্ধ্যা", "বিপদ", "অনিষ্ট", "শয়তান", "শয়তান", "ধারেকাছে", "বিপদ থেকে রক্ষা", "বিসমিল্লাহিল্লাজি"]},
     {"name": "destiny_turnaround_cliche", "keywords": ["ভাগ্যের তালা", "ভাগ্য বদলে", "ভাগ্য পরিবর্তন", "জীবন বদলে"]},
-    {"name": "anxiety_and_depression", "keywords": ["দুশ্চিন্তা", "পেরেশানি", "অস্থিরতা", "মানসিক অশান্তি", "হতাশা", "মন খারাপ", "ভয় ও শঙ্কা", "ভয় ও শঙ্কা"]},
+    {"name": "anxiety_and_depression", "keywords": ["দুশ্চিন্তা", "পেরেশানি", "অস্থিরতা", "মানসিক অশান্তি", "হতাশা", "মন খারাপ", "ভয় ও শঙ্কা", "ভয় ও শঙ্কা", "ক্লান্তি", "অশান্তি", "শান্তি পাওয়ার"]},
     {"name": "hammi_wal_hazan_dua", "keywords": ["হাম্মি", "হাযানি", "আল-হাম্মি", "৬৩৬৯", "আবু উমামাহ"]},
     {"name": "hasbiyallahu_dua", "keywords": ["হাসবিয়াল্লাহু", "নি‘মাল ওয়াকিল", "৪৫৬৩", "আগুনে নিক্ষিপ্ত"]},
     {"name": "isme_azam", "keywords": ["ইসমে আজম", "মহান নাম", "কখনো ফিরিয়ে দেন না"]},
-    {"name": "market_dua", "keywords": ["বাজারে প্রবেশ", "বাজারের দোয়া", "১০ লক্ষ নেকি"]},
-    {"name": "tahajjud_prayer", "keywords": ["তাহাজ্জুদ", "শেষ রাতে", "অসম্ভব চাওয়া"]},
+    {"name": "market_dua", "keywords": ["বাজারে প্রবেশ", "বাজারের দোয়া", "১০ লক্ষ নেকি", "বাজারে", "হাটে"]},
+    {"name": "tahajjud_prayer", "keywords": ["তাহাজ্জুদ", "শেষ রাতে", "অসম্ভব চাওয়া", "তাহাজ্জুদের", "রাতের নামাজ"]},
     {"name": "sayyidul_istighfar", "keywords": ["সাইয়্যিদুল ইস্তিগফার", "সেরা ইস্তিগফার", "ক্ষমার শ্রেষ্ঠ দোয়া"]},
     {"name": "yunus_dua", "keywords": ["ইউনুস", "মাছের পেট", "লা ইলাহা ইল্লা আনতা"]},
-    {"name": "sleeping_dua", "keywords": ["ঘুমানোর দোয়া", "বিসমিকা আল্লাহুম্মা", "ঘুম ভেঙে গেলে"]},
-    {"name": "salatul_tasbeeh", "keywords": ["সালাতুত তাসবীহ", "সালাতুত তাসবিহ"]},
-    {"name": "parents_honor", "keywords": ["পিতা-মাতা", "পিতামাতা", "মা-বাবা", "মায়ের দোয়া", "বাবার হক"]},
-    {"name": "anger_control", "keywords": ["রাগ", "ক্রোধ", "রাগের মাথায়"]},
+    {"name": "sleeping_dua", "keywords": ["ঘুমানোর", "ঘুমাতে", "ঘুম", "ঘুমন্ত", "বিসমিকা আল্লাহুম্মা", "মাঝরাতে", "দুঃস্বপ্ন", "বিছানায়", "বিছানা", "শয্যা", "ঘুম ভাঙলে"]},
+    {"name": "evil_eye_badnazar", "keywords": ["বদনজর", "কুদৃষ্টি", "হিংসা", "৩৩৭১", "৩৩৭৪", "নজর লাগা", "জাদু", "আছর", "রুকইয়া"]},
+    {"name": "forgiveness_sins", "keywords": ["পাহাড় পরিমাণ গুনাহ", "পৃথিবী সমান গুনাহ", "সমুদ্রের ফেনা", "তওবা", "ক্ষমা করবেন আল্লাহ", "ক্ষমার শ্রেষ্ঠ", "পাপ মোচন", "ক্ষমা"]},
+    {"name": "salatul_tasbeeh", "keywords": ["সালাতুত তাসবীহ", "সালাতুত তাসবিহ", "আওয়াবীন"]},
+    {"name": "parents_honor", "keywords": ["পিতা-মাতা", "পিতামাতা", "মা-বাবা", "মায়ের দোয়া", "বাবার হক", "মায়ের", "বাবার"]},
+    {"name": "anger_control", "keywords": ["রাগ", "ক্রোধ", "রাগের মাথায়", "রাগ নিয়ন্ত্রণ"]},
     {"name": "prayer_waswasa", "keywords": ["নামাজে মনোযোগ", "ওয়াসওয়াসা", "খিনজাব"]},
-    {"name": "tongue_backbiting", "keywords": ["জবান", "জিহ্বা", "গীবত", "পরনিন্দা", "মুখের গুনাহ"]},
-    {"name": "halal_rizq", "keywords": ["হালাল রিজিক", "হারাম খাবার", "ব্যবসা", "সততা"]},
-    {"name": "neighbor_rights", "keywords": ["প্রতিবেশী", "প্রতিবেশীর হক"]},
-    {"name": "two_prostrations_dua", "keywords": ["দুই সিজদা", "সিজদার মাঝে"]},
-    {"name": "wudu_dua_doors", "keywords": ["অযুর পর", "অজুর পর", "৮টি দরজা"]},
-    {"name": "debt_relief", "keywords": ["ঋণ পরিশোধ", "দেনা", "পাহাড়সমান ঋণ"]},
-    {"name": "sick_visit", "keywords": ["অসুস্থ", "রোগী দেখতে", "৭০ হাজার ফেরেশতা"]},
-    {"name": "spouse_love", "keywords": ["স্বামী-স্ত্রী", "স্ত্রীর মুখে", "দাম্পত্য"]},
-    {"name": "jummah_kahf", "keywords": ["জুম্মা", "সূরা কাহাফ", "কাহফ"]},
+    {"name": "tongue_backbiting", "keywords": ["জবান", "জিহ্বা", "গীবত", "পরনিন্দা", "মুখের গুনাহ", "কথা বলা"]},
+    {"name": "halal_rizq", "keywords": ["হালাল রিজিক", "হারাম খাবার", "ব্যবসা", "সততা", "উপার্জন"]},
+    {"name": "neighbor_rights", "keywords": ["প্রতিবেশী", "প্রতিবেশীর হক", "প্রতিবেশীর"]},
+    {"name": "two_prostrations_dua", "keywords": ["দুই সিজদা", "সিজদার মাঝে", "সিজদায়"]},
+    {"name": "wudu_dua_doors", "keywords": ["অযুর পর", "অজুর পর", "৮টি দরজা", "ওজু", "অজু"]},
+    {"name": "debt_relief", "keywords": ["ঋণ পরিশোধ", "দেনা", "পাহাড়সমান ঋণ", "৩৫৬০", "ঋণমুক্তি", "ঋণ", "ঋণের", "অর্থকষ্ট", "আর্থিক সংকট"]},
+    {"name": "sick_visit", "keywords": ["অসুস্থ", "রোগী দেখতে", "৭০ হাজার ফেরেশতা", "রোগমুক্তি", "শিফা"]},
+    {"name": "spouse_love", "keywords": ["স্বামী-স্ত্রী", "স্ত্রীর মুখে", "দাম্পত্য", "পরিবার", "সংসার", "স্ত্রী", "স্বামী"]},
+    {"name": "jummah_kahf", "keywords": ["জুম্মা", "সূরা কাহাফ", "কাহফ", "জুমার"]},
     {"name": "istighfar_doors", "keywords": ["ইস্তিগফার", "আস্তাগফিরুল্লাহ", "অভাব দূর"]},
-    {"name": "seven_under_shade", "keywords": ["আরশের ছায়া", "সাত শ্রেণির মানুষ"]}
+    {"name": "seven_under_shade", "keywords": ["আরশের ছায়া", "সাত শ্রেণির মানুষ"]},
+    {"name": "azan_dua", "keywords": ["আজান", "আজানের", "মুয়াজ্জিন", "ইকামত", "আজানের পর"]},
+    {"name": "salam_greeting", "keywords": ["সালাম", "সালামের", "আসসালামু আলাইকুম"]},
+    {"name": "patience_sabr", "keywords": ["ধৈর্য", "সবর", "মুসিবত", "বিপদাপদ"]},
+    {"name": "charity_sadaqah", "keywords": ["সদকা", "দান", "খয়রাত", "গরিব", "অসহায়"]},
+    {"name": "truth_honesty", "keywords": ["সত্যবাদিতা", "মিথ্যা", "আমানত", "প্রতারণা"]},
+    {"name": "arrogance_kibr", "keywords": ["অহংকার", "গর্ব", "দাম্ভিকতা", "বিনয়"]},
+    {"name": "cleanliness_taharah", "keywords": ["পবিত্রতা", "পরিচ্ছন্নতা", "ঈমানের অঙ্গ"]},
+    {"name": "guest_hospitality", "keywords": ["মেহমান", "অতিথি", "মেহমানদারি"]}
 ]
 
 def get_topic_semantic_group(text: str) -> str:
@@ -210,22 +220,20 @@ def get_topic_semantic_group(text: str) -> str:
     text_lower = text.lower()
     for group in SEMANTIC_TOPIC_GROUPS:
         for kw in group["keywords"]:
-            # Match as whole Bengali word or multi-word phrase
-            pattern = r'(?<![\u0980-\u09ff])' + re.escape(kw.lower()) + r'(?![\u0980-\u09ff])'
-            if re.search(pattern, text_lower):
+            if kw.lower() in text_lower:
                 return group["name"]
     return ""
 
-def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 0.40) -> tuple[bool, str]:
+def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 0.25) -> tuple[bool, str]:
     """
-    Checks if a candidate topic/quote/hadith has already been covered anywhere in the system.
+    Checks if a candidate topic/quote/hadith has already been covered in the LAST 100 VIDEOS.
     Uses Semantic Topic Grouping, Exact Hadith Citations, and Jaccard Word Overlap.
     Returns (is_duplicate: bool, reason_or_match: str).
     """
     if not new_topic_text or len(new_topic_text.strip()) < 5:
         return False, ""
         
-    all_used = get_all_used_topics_global(limit=200)
+    all_used = get_all_used_topics_global(limit=100)
     cleaned_new = re.sub(r'[^\w\s]', '', new_topic_text).lower()
     new_words = set(cleaned_new.split())
     
@@ -236,6 +244,15 @@ def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 
         logger.warning(msg)
         return True, msg
 
+    # 2. Block semantic category repetition (Strict 100-video cooldown across identical themes)
+    if new_group:
+        for past in all_used[:100]:
+            past_group = get_topic_semantic_group(past)
+            if past_group == new_group:
+                msg = f"Semantic category '{new_group}' was already covered in past 100 videos: '{past}'"
+                logger.warning(msg)
+                return True, msg
+
     bn_to_en = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'}
     def _norm_digits(s: str) -> str:
         return "".join(bn_to_en.get(c, c) for c in s)
@@ -243,36 +260,36 @@ def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 
     # Filter out small single-digit counts (<=5) like '৩টি আমল' to avoid false positives
     new_numbers = set(n for n in re.findall(r'\d+', _norm_digits(new_topic_text)) if len(n) >= 2 or (n.isdigit() and int(n) > 5))
     
-    for past in all_used:
+    for past in all_used[:100]:
         cleaned_past = re.sub(r'[^\w\s]', '', past).lower()
         past_words = set(cleaned_past.split())
         if not past_words:
             continue
             
-        # 2. Exact reference / Hadith number match across all major books
+        # 3. Exact reference / Hadith number match across all major books
         past_numbers = set(n for n in re.findall(r'\d+', _norm_digits(past)) if len(n) >= 2 or (n.isdigit() and int(n) > 5))
         if new_numbers and past_numbers and len(new_numbers.intersection(past_numbers)) >= 1:
             major_sources = ["বুখারী", "মুসলিম", "তিরমিযী", "তিরমিজি", "দাউদ", "নাসায়ী", "নাসাঈ", "ইবনে মাজাহ", "আহমদ", "সূরা", "সুরা"]
             if any(src in new_topic_text and src in past for src in major_sources):
                 matching_nums = new_numbers.intersection(past_numbers)
-                msg = f"Duplicate Hadith reference detected (number {matching_nums}): '{past}'"
+                msg = f"Duplicate Hadith reference detected (number {matching_nums}) in last 100 videos: '{past}'"
                 logger.warning(f"Duplicate Hadith reference detected: '{new_topic_text}' vs '{past}'")
                 return True, msg
                 
-        # 3. Word overlap Jaccard similarity
+        # 4. Word overlap Jaccard similarity across last 100 videos
         intersection = new_words.intersection(past_words)
         union = new_words.union(past_words)
         similarity = len(intersection) / len(union) if union else 0
         if similarity >= threshold:
-            msg = f"High similarity ({similarity:.2f}) with past content: '{past}'"
+            msg = f"High similarity ({similarity:.2f}) with past 100 videos: '{past}'"
             logger.warning(f"High similarity ({similarity:.2f}) with past content: '{new_topic_text}' vs '{past}'")
             return True, msg
             
     return False, ""
 
-def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> bool:
+def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.25) -> bool:
     """
-    Checks if a candidate topic/quote/hadith has already been covered anywhere in the system.
+    Checks if a candidate topic/quote/hadith has already been covered in the last 100 videos.
     Uses Semantic Topic Grouping, Exact Hadith Citations, and Jaccard Word Overlap.
     """
     is_dup, _ = check_topic_duplicate_global_detail(new_topic_text, threshold)
@@ -399,4 +416,52 @@ def get_next_episode_number() -> tuple[int, str]:
 
     next_ep = max_ep + 1
     return next_ep, to_bangla_digits(next_ep)
+
+def get_unique_background(category: str = None) -> str:
+    """
+    Returns an 8K background guaranteed to be non-repeating across the last 15-20 videos.
+    Cycles through all available 8K scenes without consecutive duplicate images.
+    If category is supplied, prioritizes assets tailored to that category.
+    """
+    from app.quality.vision_guardian import PILLAR_THEMATIC_ASSETS
+    
+    scenes_dir = os.path.abspath("app/assets/scenes")
+    candidates = []
+    
+    if category and category in PILLAR_THEMATIC_ASSETS:
+        candidates = [os.path.abspath(c) for c in PILLAR_THEMATIC_ASSETS[category] if os.path.exists(c)]
+        
+    if not candidates and os.path.exists(scenes_dir):
+        for f in os.listdir(scenes_dir):
+            if f.endswith(".jpg") and "clean_bg" not in f:
+                candidates.append(os.path.join(scenes_dir, f))
+        quran_master = os.path.abspath("app/assets/quran_rehal_master.jpg")
+        if os.path.exists(quran_master):
+            candidates.append(quran_master)
+
+    if not candidates:
+        return ""
+
+    hist = load_history()
+    recent_bg = hist.get("recent_backgrounds", [])
+
+    # Filter out any background used in recent runs (up to len(candidates) - 2)
+    cutoff = max(1, min(len(candidates) - 2, 20))
+    recently_used_names = set(os.path.basename(p) for p in recent_bg[-cutoff:])
+
+    available = [c for c in candidates if os.path.basename(c) not in recently_used_names]
+    if not available:
+        available = candidates
+
+    import random
+    chosen = random.choice(available)
+    
+    # Record usage
+    recent_bg.append(os.path.basename(chosen))
+    hist["recent_backgrounds"] = recent_bg[-50:]
+    save_history(hist)
+    
+    logger.info(f"🎨 Non-repeating background selected: {os.path.basename(chosen)} (Excluded recent: {len(recently_used_names)})")
+    return chosen
+
 

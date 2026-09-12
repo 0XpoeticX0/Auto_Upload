@@ -231,18 +231,31 @@ CURATED_COMPLETE_PASSAGES = [
     }
 ]
 
-def clean_html_tags(text: str) -> str:
-    """Strips footnote and HTML markers from translations."""
+def clean_bengali_translation(text: str) -> str:
+    """Strips footnote and HTML markers and cleans excessive parenthetical commentary from translations."""
     if not text:
         return ""
+    # Strip HTML tags
     text = re.sub(r'<[^>]+>', '', text)
+    # Strip footnote numbers like [১], [২], [1], [2]
+    text = re.sub(r'\[[০-৯0-9]+\]', '', text)
+    # Strip excessively long commentary in parentheses (tafsir explanations inserted by translators)
+    text = re.sub(r'\([^\)]{12,}\)', '', text)
+    # Remove remaining standalone parentheses while retaining the text inside
+    text = re.sub(r'[\(\)]', '', text)
+    # Normalize spaces
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
+def clean_html_tags(text: str) -> str:
+    """Backward compatibility wrapper."""
+    return clean_bengali_translation(text)
+
 def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
     """
-    Fetches Arabic text with Tashkeel and Bengali translation for the verse range
+    Fetches Arabic text with Tashkeel and authentic Bengali translation for the verse range
     directly from api.quran.com/api/v4/.
+    Prioritizes Rawai Al-bayan (162) and Sheikh Mujibur Rahman (163) for direct, concise phrasing.
     """
     if ayah_end is None or ayah_end < ayah_start:
         ayah_end = ayah_start
@@ -255,29 +268,38 @@ def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
     full_bengali = []
 
     for ayah in range(ayah_start, ayah_end + 1):
-        url = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?language=bn&translations=161&fields=text_uthmani"
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=8) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                v = data.get("verse", {})
-                ar_text = v.get("text_uthmani", "").strip()
-                
-                bn_text = ""
-                trans = v.get("translations", [])
-                if trans:
-                    bn_text = clean_html_tags(trans[0].get("text", ""))
+        # Prioritize 162 (Rawai Al-bayan) for pure verse translation, fallback to 163 and 161
+        bn_text = ""
+        ar_text = ""
 
-                verses_list.append({
-                    "ayah_number": ayah,
-                    "arabic": ar_text,
-                    "bengali": bn_text
-                })
-                full_arabic.append(ar_text)
-                full_bengali.append(bn_text)
-        except Exception as e:
-            logger.error(f"Failed to fetch {surah}:{ayah} from Quran.com: {e}")
-            raise RuntimeError(f"Could not retrieve verse {surah}:{ayah} from Quran.com API: {e}")
+        for trans_id in [162, 163, 161]:
+            url = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?language=bn&translations={trans_id}&fields=text_uthmani"
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=8) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    v = data.get("verse", {})
+                    ar_text = v.get("text_uthmani", "").strip()
+                    trans = v.get("translations", [])
+                    if trans and trans[0].get("text"):
+                        candidate_bn = clean_bengali_translation(trans[0].get("text", ""))
+                        if candidate_bn:
+                            bn_text = candidate_bn
+                            break
+            except Exception as e:
+                logger.warning(f"Translation {trans_id} fetch notice for {surah}:{ayah}: {e}")
+                continue
+
+        if not ar_text:
+            raise RuntimeError(f"Could not retrieve Arabic text for {surah}:{ayah} from Quran.com API")
+
+        verses_list.append({
+            "ayah_number": ayah,
+            "arabic": ar_text,
+            "bengali": bn_text
+        })
+        full_arabic.append(ar_text)
+        full_bengali.append(bn_text)
 
     verse_range_str = f"{ayah_start}" if ayah_start == ayah_end else f"{ayah_start}-{ayah_end}"
 

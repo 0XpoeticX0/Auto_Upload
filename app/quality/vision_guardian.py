@@ -115,38 +115,102 @@ Respond ONLY with valid JSON:
     logger.warning("Vision check could not complete; relying on rule-based validation.")
     return True, "Passed (Vision fallback)"
 
-def get_certified_safe_fallback(target_path: str) -> bool:
-    """
-    Check 3 (Fail-Safe Certified Human-Free Background Guarantee):
-    If AI image generation repeatedly produces humans, copies a guaranteed 100% human-free
-    certified background asset.
-    """
-    import shutil
-    certified_candidates = [
-        "app/assets/quran_rehal_master.jpg",
-        "data/assets/certified_clean_bg.jpg",
-        "data/output/luxury_test/bg_full.jpg",
-        "app/assets/clean_geometric_bg.jpg"
+PILLAR_THEMATIC_ASSETS = {
+    "islamic_stories": [
+        "app/assets/scenes/crimson_desert_fortress.jpg",
+        "app/assets/scenes/caravan_dunes_dusk.jpg",
+        "app/assets/scenes/mountain_cave_dawn.jpg",
+        "app/assets/scenes/desert_oasis_palms.jpg",
+        "app/assets/scenes/ancient_port_twilight.jpg",
+        "app/assets/scenes/coastal_terrace.jpg",
+        "app/assets/scenes/desert_dawn_sunrise.jpg",
+        "app/assets/scenes/ancient_islamic_library.jpg",
+    ],
+    "akhirah_unseen": [
+        "app/assets/scenes/celestial_minaret.jpg",
+        "app/assets/scenes/golden_dome_night.jpg",
+        "app/assets/scenes/celestial_night_crescent.jpg",
+        "app/assets/scenes/divine_sanctuary_shield.jpg",
+        "app/assets/scenes/marble_colonnade.jpg",
+        "app/assets/scenes/desert_dawn_sunrise.jpg",
+        "app/assets/scenes/ocean_waves_sunset.jpg",
+    ],
+    "seerah": [
+        "app/assets/scenes/mountain_cave_dawn.jpg",
+        "app/assets/scenes/caravan_dunes_dusk.jpg",
+        "app/assets/scenes/desert_oasis_palms.jpg",
+        "app/assets/scenes/golden_dome_night.jpg",
+        "app/assets/scenes/crimson_desert_fortress.jpg",
+        "app/assets/scenes/celestial_night_crescent.jpg",
+        "app/assets/scenes/ancient_islamic_library.jpg",
+    ],
+    "misconceptions": [
+        "app/assets/scenes/candlelit_study.jpg",
+        "app/assets/scenes/ancient_islamic_library.jpg",
+        "app/assets/scenes/glowing_calligraphy.jpg",
+        "app/assets/scenes/marble_colonnade.jpg",
+        "app/assets/scenes/moorish_palace_arches.jpg",
+    ],
+    "character_dealings": [
+        "app/assets/scenes/andalusian_pool.jpg",
+        "app/assets/scenes/ottoman_garden.jpg",
+        "app/assets/scenes/tranquil_courtyard_fountain.jpg",
+        "app/assets/scenes/desert_oasis_palms.jpg",
+        "app/assets/scenes/moorish_palace_arches.jpg",
+    ],
+    "crises_debt_turnaround": [
+        "app/assets/scenes/solitude_sanctuary_lamp.jpg",
+        "app/assets/scenes/coastal_terrace.jpg",
+        "app/assets/scenes/ocean_waves_sunset.jpg",
+        "app/assets/scenes/divine_sanctuary_shield.jpg",
+        "app/assets/scenes/celestial_minaret.jpg",
+        "app/assets/scenes/glowing_calligraphy.jpg",
+    ],
+    "daily_sunnah": [
+        "app/assets/scenes/ottoman_garden.jpg",
+        "app/assets/scenes/solitude_sanctuary_lamp.jpg",
+        "app/assets/scenes/tranquil_courtyard_fountain.jpg",
+        "app/assets/scenes/glowing_calligraphy.jpg",
+        "app/assets/scenes/moorish_palace_arches.jpg",
+        "app/assets/scenes/desert_oasis_palms.jpg",
+    ],
+    "family_marriage_sunnah": [
+        "app/assets/scenes/andalusian_pool.jpg",
+        "app/assets/scenes/ottoman_garden.jpg",
+        "app/assets/scenes/tranquil_courtyard_fountain.jpg",
+        "app/assets/scenes/moorish_palace_arches.jpg",
+        "app/assets/scenes/desert_oasis_palms.jpg",
     ]
-    for candidate in certified_candidates:
-        if os.path.exists(candidate):
-            os.makedirs(os.path.dirname(target_path), exist_ok=True)
-            shutil.copyfile(candidate, target_path)
-            logger.info(f"Check 3: Successfully deployed certified human-free asset: {candidate}")
-            return True
+}
+
+def get_certified_safe_fallback(target_path: str, category: str = "daily_life") -> bool:
+    """
+    Deploys a guaranteed 100% human-free certified 8K asset specifically matched
+    to the topic's category. Rotates assets so consecutive videos never look identical.
+    """
+    from app.history import get_unique_background
+    import shutil
+    chosen = get_unique_background(category=category)
+    if chosen and os.path.exists(chosen):
+        os.makedirs(os.path.dirname(target_path), exist_ok=True)
+        shutil.copyfile(chosen, target_path)
+        logger.info(f"Check 3: Deployed certified 8K theme-tailored visual ({category}): {os.path.basename(chosen)}")
+        return True
+
     return False
 
-def generate_verified_human_free_background(visual_prompt: str, output_path: str, max_checks: int = 3) -> bool:
+
+def generate_verified_human_free_background(visual_prompt: str, output_path: str, max_checks: int = 3, category: str = "daily_life") -> bool:
     """
     Master 3-Layer Vision Pipeline (Zero Watermarks, 100% Shariah Compliant):
     Strictly bans low-quality/watermarked AI endpoints like pollinations.ai.
-    Deploys 100% certified 8K photorealistic human-free assets from app/assets.
+    Deploys 100% certified 8K photorealistic human-free assets from app/assets/scenes
+    specifically tailored to the Islamic topic category.
     """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    logger.info("[Vision Guardian] Selecting certified 8K human-free master visual...")
+    logger.info(f"[Vision Guardian] Selecting certified 8K human-free master visual for category '{category}'...")
 
-    # Attempt certified master asset selection
-    if get_certified_safe_fallback(output_path):
+    if get_certified_safe_fallback(output_path, category=category):
         logger.info(f"🎉 [Vision Guardian] Successfully deployed verified 8K human-free visual: {output_path}")
         return True
 

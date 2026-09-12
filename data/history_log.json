@@ -1,7 +1,14 @@
 {
-  "last_video_pillar": "morning_protection_dua",
+  "last_video_pillar": "islamic_stories",
   "last_post_pillar": "protection_dua",
   "videos": [
+    {
+      "title": "দাওয়াত কবুলের শ্রেষ্ঠ মুহূর্ত: আজানের পর এই একটি কাজ কি আপনি করেন?",
+      "category": "islamic_stories",
+      "core_concept": "আজান এবং ইকামতের মধ্যবর্তী সময়টি দোয়া কবুলের জন্য অত্যন্ত গুরুত্বপূর্ণ, যা রাসূলুল্লাহ (সা.) নির্দেশ করেছেন।",
+      "timestamp": 1789238861,
+      "date_str": "2026-09-13 00:47:41"
+    },
     {
       "title": "ঘর থেকে বের হওয়ার সময় মাত্র ৩ সেকেন্ডের এই ১টি শক্তিশালী দোয়া পড়ুন, আল্লাহ সমস্ত বিপদ থেকে আপনাকে রক্ষা করবেন",
       "category": "morning_protection_dua",
@@ -185,5 +192,15 @@
       "timestamp": 1786960000,
       "date_str": "2026-08-17 15:39:58"
     }
+  ],
+  "recent_backgrounds": [
+    "crimson_desert_fortress.jpg",
+    "celestial_night_crescent.jpg",
+    "moorish_palace_arches.jpg",
+    "quran_rehal_sanctuary.jpg",
+    "divine_sanctuary_shield.jpg",
+    "quran_rehal_closeup.jpg",
+    "desert_oasis_palms.jpg",
+    "ancient_port_twilight.jpg"
   ]
 }
