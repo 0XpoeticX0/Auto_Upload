@@ -356,77 +356,84 @@ def render_subpixel_smooth_scene_clip(image_path: str, duration: float, motion_t
 
 def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
     """
-    Renders a fast-paced, multi-scene visual track adhering to permanent Visual Standards:
-    - 4 to 8-second cuts (7 to 10 scenes per ~50-80s video) — NEVER holding static for 20+ seconds!
-    - Zero watermarks, zero low-quality endpoints (banned pollinations.ai).
-    - Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals.
-    - Weaves authentic video B-rolls (ocean, clouds, desert) and 8K master Quran Rehal visuals.
-    - 100% Sub-pixel butter-smooth 60 FPS motion (Zero zoompan shaking/jitter).
+    Renders a fast-paced, 100% VIDEO-ONLY visual track adhering strictly to Quran Video Mandates:
+    - Cuts STRICTLY between 2.5s and 3.5s (NEVER exceeding 4.0s!).
+    - ONLY VIDEO: 100% authentic 60 FPS .mp4 video clips (Holy Quran on Rehal + Nature/Sanctuary video motion).
+    - 0 humans, 0 faces, 0 animals, 0 static images.
+    - 60 FPS butter-smooth playback with zero jitter.
     """
     os.makedirs(temp_dir, exist_ok=True)
     master_visual_path = os.path.join(temp_dir, "master_visual_track.mp4")
 
-    # Target scene cuts between 4.5 and 7.0 seconds (e.g. 8-10 scenes for 50-70s audio)
-    num_scenes = max(3, int(math.ceil(total_dur / 6.0)))
+    # Strict Attention Pacing: Target cuts between 2.8s and 3.5s (strictly <= 4.0s)
+    target_cut_dur = 3.2
+    num_scenes = max(4, int(math.ceil(total_dur / target_cut_dur)))
     base_scene_dur = total_dur / num_scenes
-    logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.1f}s each) across {total_dur:.1f}s.")
+    logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.2f}s each, strictly <= 4.0s) across {total_dur:.1f}s.")
 
-    # Curated asset pool (100% Shariah compliant: 0 living beings)
-    broll_ocean = os.path.abspath(r"app/assets/broll/ocean_720.mp4")
-    broll_clouds = os.path.abspath(r"app/assets/broll/clouds_720.mp4")
-    broll_desert = os.path.abspath(r"app/assets/broll/desert_720.mp4")
+    # 100% Real 60 FPS Video Assets (.mp4 ONLY)
+    vid_quran_master = os.path.abspath("app/assets/video_scenes/quran_rehal_master.mp4")
+    vid_quran_sunbeam = os.path.abspath("app/assets/video_scenes/quran_rehal_sunbeam.mp4")
+    vid_quran_cinematic = os.path.abspath("app/assets/video_scenes/quran_rehal_cinematic.mp4")
+    vid_quran_closeup = os.path.abspath("app/assets/video_scenes/quran_rehal_closeup.mp4")
+    vid_quran_sanctuary = os.path.abspath("app/assets/video_scenes/quran_rehal_sanctuary.mp4")
 
-    img_quran_master = os.path.abspath(r"app/assets/quran_rehal_master.jpg")
-    img_quran_sunbeam = os.path.abspath(r"app/assets/scenes/quran_rehal_sunbeam.jpg")
-    img_quran_cinematic = os.path.abspath(r"app/assets/scenes/quran_rehal_cinematic.jpg")
-    img_quran_closeup = os.path.abspath(r"app/assets/scenes/quran_rehal_closeup.jpg")
-    img_quran_sanctuary = os.path.abspath(r"app/assets/scenes/quran_rehal_sanctuary.jpg")
-    img_calligraphy = os.path.abspath(r"app/assets/scenes/glowing_calligraphy.jpg")
-    img_palace = os.path.abspath(r"app/assets/scenes/moorish_palace_arches.jpg")
-    img_sunrise = os.path.abspath(r"app/assets/scenes/desert_dawn_sunrise.jpg")
-    img_port = os.path.abspath(r"app/assets/scenes/ancient_port_twilight.jpg")
-    img_shield = os.path.abspath(r"app/assets/scenes/divine_sanctuary_shield.jpg")
+    vid_ocean = os.path.abspath("app/assets/broll/ocean_720.mp4")
+    vid_clouds = os.path.abspath("app/assets/broll/clouds_720.mp4")
+    vid_desert = os.path.abspath("app/assets/broll/desert_720.mp4")
+    
+    vid_golden_dome = os.path.abspath("app/assets/video_scenes/01_golden_dome_night.mp4")
+    vid_andalusian_pool = os.path.abspath("app/assets/video_scenes/03_andalusian_pool.mp4")
+    vid_coastal_terrace = os.path.abspath("app/assets/video_scenes/09_coastal_terrace.mp4")
+    vid_solitude_lamp = os.path.abspath("app/assets/video_scenes/10_solitude_sanctuary_lamp.mp4")
 
-    # Style A: 100% Pure Holy Quran on Rehal (Alternating 5 distinct 8K angles & cinematic motions)
+    # Style A: 100% Pure Holy Quran on Rehal 60 FPS Motion Videos (Alternating 5 distinct angles)
     style_a_pool = [
-        {"type": "image", "file": img_quran_cinematic, "motion": "zoom_in"},
-        {"type": "image", "file": img_quran_closeup, "motion": "zoom_out"},
-        {"type": "image", "file": img_quran_sanctuary, "motion": "pan_up"},
-        {"type": "image", "file": img_quran_sunbeam, "motion": "zoom_in"},
-        {"type": "image", "file": img_quran_master, "motion": "zoom_out"},
-        {"type": "image", "file": img_quran_closeup, "motion": "pan_up"},
-        {"type": "image", "file": img_quran_cinematic, "motion": "zoom_out"},
-        {"type": "image", "file": img_quran_sanctuary, "motion": "zoom_in"},
+        vid_quran_master,
+        vid_quran_sunbeam,
+        vid_quran_cinematic,
+        vid_quran_closeup,
+        vid_quran_sanctuary,
+        vid_quran_master,
+        vid_quran_closeup,
+        vid_quran_cinematic
     ]
 
-    # Style B: Balanced Hybrid (Holy Quran on Rehal anchored + authentic video B-rolls & architecture)
+    # Style B: Balanced Hybrid (Holy Quran on Rehal + 60 FPS Nature & Sanctuary Videos)
     style_b_pool = [
-        {"type": "image", "file": img_quran_cinematic, "motion": "zoom_in"},
-        {"type": "broll", "file": broll_clouds},
-        {"type": "image", "file": img_quran_closeup, "motion": "zoom_out"},
-        {"type": "broll", "file": broll_ocean},
-        {"type": "image", "file": img_quran_sanctuary, "motion": "pan_up"},
-        {"type": "image", "file": img_calligraphy, "motion": "zoom_in"},
-        {"type": "broll", "file": broll_desert},
-        {"type": "image", "file": img_quran_master, "motion": "zoom_in"},
-        {"type": "image", "file": img_palace, "motion": "pan_up"},
-        {"type": "image", "file": img_quran_sunbeam, "motion": "zoom_out"},
+        vid_quran_master,
+        vid_clouds,
+        vid_quran_closeup,
+        vid_ocean,
+        vid_quran_sunbeam,
+        vid_desert,
+        vid_quran_cinematic,
+        vid_andalusian_pool,
+        vid_quran_sanctuary,
+        vid_golden_dome,
+        vid_quran_master,
+        vid_coastal_terrace
     ]
 
     # Randomly select between Style A (100% Pure Quran on Rehal) and Style B (Hybrid with Nature B-rolls)
     chosen_style = random.choice(["style_a", "style_b"])
     if chosen_style == "style_a":
-        logger.info("🎬 [Dynamic Visual Engine] Selected Style A: 100% Pure Holy Quran on Rehal angles")
+        logger.info("🎬 [Dynamic Visual Engine] Selected Style A: 100% Pure Holy Quran on Rehal 60 FPS motion videos")
         sequence_pool = style_a_pool
     else:
-        logger.info("🎬 [Dynamic Visual Engine] Selected Style B: Balanced Hybrid (Holy Quran on Rehal + Nature B-rolls)")
+        logger.info("🎬 [Dynamic Visual Engine] Selected Style B: Balanced Hybrid (Holy Quran on Rehal + Nature & Sanctuary 60 FPS videos)")
         sequence_pool = style_b_pool
+
+    # Ensure only valid files are used
+    sequence_pool = [v for v in sequence_pool if os.path.exists(v)]
+    if not sequence_pool:
+        sequence_pool = [vid_quran_master]
 
     scene_clips = []
     current_time = 0.0
 
     for i in range(num_scenes):
-        scene_cfg = sequence_pool[i % len(sequence_pool)]
+        asset_file = sequence_pool[i % len(sequence_pool)]
         if i == num_scenes - 1:
             scene_dur = total_dur - current_time
         else:
@@ -434,29 +441,22 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
         current_time += scene_dur
 
         clip_out = os.path.join(temp_dir, f"scene_clip_{i:02d}.mp4")
-        asset_file = scene_cfg["file"]
-        if not os.path.exists(asset_file):
-            asset_file = img_quran_master
 
-        if scene_cfg["type"] == "broll" and os.path.exists(asset_file) and asset_file.endswith(".mp4"):
-            cmd = [
-                "ffmpeg", "-y",
-                "-stream_loop", "-1",
-                "-i", asset_file,
-                "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=60",
-                "-c:v", "libx264",
-                "-preset", "veryfast",
-                "-crf", "18",
-                "-t", f"{scene_dur:.2f}",
-                "-an",
-                "-pix_fmt", "yuv420p",
-                clip_out
-            ]
-            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-        else:
-            motion = scene_cfg.get("motion", "zoom_in")
-            render_subpixel_smooth_scene_clip(asset_file, scene_dur, motion, clip_out, fps=60)
-
+        # Slice 60 FPS video clip with exact duration
+        cmd = [
+            "ffmpeg", "-y",
+            "-stream_loop", "-1",
+            "-i", asset_file,
+            "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=60",
+            "-c:v", "libx264",
+            "-preset", "veryfast",
+            "-crf", "18",
+            "-t", f"{scene_dur:.2f}",
+            "-an",
+            "-pix_fmt", "yuv420p",
+            clip_out
+        ]
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
         scene_clips.append(clip_out)
 
     concat_list_file = os.path.join(temp_dir, "scenes_concat_list.txt")
