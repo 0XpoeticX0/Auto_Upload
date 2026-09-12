@@ -372,62 +372,56 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
     logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.2f}s each, strictly <= 4.0s) across {total_dur:.1f}s.")
 
     # 100% Real 60 FPS Video Assets (.mp4 ONLY)
-    vid_quran_master = os.path.abspath("app/assets/video_scenes/quran_rehal_master.mp4")
-    vid_quran_sunbeam = os.path.abspath("app/assets/video_scenes/quran_rehal_sunbeam.mp4")
-    vid_quran_cinematic = os.path.abspath("app/assets/video_scenes/quran_rehal_cinematic.mp4")
-    vid_quran_closeup = os.path.abspath("app/assets/video_scenes/quran_rehal_closeup.mp4")
-    vid_quran_sanctuary = os.path.abspath("app/assets/video_scenes/quran_rehal_sanctuary.mp4")
-
-    vid_ocean = os.path.abspath("app/assets/broll/ocean_720.mp4")
-    vid_clouds = os.path.abspath("app/assets/broll/clouds_720.mp4")
-    vid_desert = os.path.abspath("app/assets/broll/desert_720.mp4")
-    
-    vid_golden_dome = os.path.abspath("app/assets/video_scenes/01_golden_dome_night.mp4")
-    vid_andalusian_pool = os.path.abspath("app/assets/video_scenes/03_andalusian_pool.mp4")
-    vid_coastal_terrace = os.path.abspath("app/assets/video_scenes/09_coastal_terrace.mp4")
-    vid_solitude_lamp = os.path.abspath("app/assets/video_scenes/10_solitude_sanctuary_lamp.mp4")
-
-    # Style A: 100% Pure Holy Quran on Rehal 60 FPS Motion Videos (Alternating 5 distinct angles)
-    style_a_pool = [
-        vid_quran_master,
-        vid_quran_sunbeam,
-        vid_quran_cinematic,
-        vid_quran_closeup,
-        vid_quran_sanctuary,
-        vid_quran_master,
-        vid_quran_closeup,
-        vid_quran_cinematic
+    # 10 Distinct Holy Quran on Rehal 60 FPS Motion Videos (Different angles, lighting & sanctuaries)
+    rehal_videos = [
+        os.path.abspath("app/assets/video_scenes/quran_rehal_master.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_sunbeam.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_cinematic.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_closeup.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_sanctuary.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_night_lantern.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_dawn_tahajjud.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_macro_verses.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_golden_hour.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_regal_amber.mp4"),
     ]
+    rehal_videos = [v for v in rehal_videos if os.path.exists(v)]
 
-    # Style B: Balanced Hybrid (Holy Quran on Rehal + 60 FPS Nature & Sanctuary Videos)
-    style_b_pool = [
-        vid_quran_master,
-        vid_clouds,
-        vid_quran_closeup,
-        vid_ocean,
-        vid_quran_sunbeam,
-        vid_desert,
-        vid_quran_cinematic,
-        vid_andalusian_pool,
-        vid_quran_sanctuary,
-        vid_golden_dome,
-        vid_quran_master,
-        vid_coastal_terrace
+    # 8 Authentic Nature & Sacred Sanctuary 60 FPS Video B-Rolls
+    broll_videos = [
+        os.path.abspath("app/assets/broll/ocean_720.mp4"),
+        os.path.abspath("app/assets/broll/clouds_720.mp4"),
+        os.path.abspath("app/assets/broll/desert_720.mp4"),
+        os.path.abspath("app/assets/video_scenes/01_golden_dome_night.mp4"),
+        os.path.abspath("app/assets/video_scenes/03_andalusian_pool.mp4"),
+        os.path.abspath("app/assets/video_scenes/04_mountain_cave_dawn.mp4"),
+        os.path.abspath("app/assets/video_scenes/09_coastal_terrace.mp4"),
+        os.path.abspath("app/assets/video_scenes/10_solitude_sanctuary_lamp.mp4"),
     ]
+    broll_videos = [v for v in broll_videos if os.path.exists(v)]
 
-    # Randomly select between Style A (100% Pure Quran on Rehal) and Style B (Hybrid with Nature B-rolls)
+    # Style A (100% Pure Quran on Rehal): Shuffled across all 10 distinct angles
+    # Style B (Balanced Hybrid): Strictly alternates between Quran on Rehal & Nature/Sanctuary video
     chosen_style = random.choice(["style_a", "style_b"])
-    if chosen_style == "style_a":
-        logger.info("🎬 [Dynamic Visual Engine] Selected Style A: 100% Pure Holy Quran on Rehal 60 FPS motion videos")
-        sequence_pool = style_a_pool
-    else:
-        logger.info("🎬 [Dynamic Visual Engine] Selected Style B: Balanced Hybrid (Holy Quran on Rehal + Nature & Sanctuary 60 FPS videos)")
-        sequence_pool = style_b_pool
+    shuffled_rehal = list(rehal_videos)
+    random.shuffle(shuffled_rehal)
+    shuffled_broll = list(broll_videos)
+    random.shuffle(shuffled_broll)
 
-    # Ensure only valid files are used
-    sequence_pool = [v for v in sequence_pool if os.path.exists(v)]
+    sequence_pool = []
+    if chosen_style == "style_a" or not shuffled_broll:
+        logger.info("🎬 [Dynamic Visual Engine] Selected Style A: 100% Pure Holy Quran on Rehal (10 Shuffled 60 FPS Angles)")
+        sequence_pool = shuffled_rehal
+    else:
+        logger.info("🎬 [Dynamic Visual Engine] Selected Style B: Balanced Hybrid (Alternating Holy Quran on Rehal + 8 Nature B-Rolls)")
+        max_len = max(len(shuffled_rehal), len(shuffled_broll))
+        for idx in range(max_len):
+            sequence_pool.append(shuffled_rehal[idx % len(shuffled_rehal)])
+            sequence_pool.append(shuffled_broll[idx % len(shuffled_broll)])
+
     if not sequence_pool:
-        sequence_pool = [vid_quran_master]
+        sequence_pool = [os.path.abspath("app/assets/video_scenes/quran_rehal_master.mp4")]
+
 
     scene_clips = []
     current_time = 0.0
