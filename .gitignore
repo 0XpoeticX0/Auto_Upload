@@ -1,5 +1,7 @@
 data/*
 !data/history_log.json
+!data/video_registry.json
+!data/stock_video_catalog.json
 .env
 token.json
 client_secrets.json

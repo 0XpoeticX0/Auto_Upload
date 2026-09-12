@@ -34,7 +34,8 @@ def generate_quran_verse_video(
     surah: int = None,
     ayah_start: int = None,
     ayah_end: int = None,
-    reciter_id: str = None
+    reciter_id: str = None,
+    video_slot: int = None
 ) -> dict:
     """
     End-to-end generation of a Quran video under 90s.
@@ -97,7 +98,7 @@ def generate_quran_verse_video(
     metadata = generate_quran_metadata(verse_data, audio_data)
 
     # 5. Render Video (1080x1920 60FPS) with Centered Bengali Translation Subtitles
-    video_path = render_quran_verse_video(verse_data, audio_data)
+    video_path = render_quran_verse_video(verse_data, audio_data, video_slot=video_slot)
 
     return {
         "video_path": video_path,
@@ -111,12 +112,13 @@ def run_quran_verse_pipeline(
     ayah_start: int = None,
     ayah_end: int = None,
     reciter_id: str = None,
+    video_slot: int = None,
     upload: bool = False
 ) -> dict:
     """
     Executes the Quran video pipeline, with optional automated social media upload.
     """
-    result = generate_quran_verse_video(surah, ayah_start, ayah_end, reciter_id)
+    result = generate_quran_verse_video(surah, ayah_start, ayah_end, reciter_id, video_slot=video_slot)
     video_path = result["video_path"]
     metadata = result["metadata"]
 

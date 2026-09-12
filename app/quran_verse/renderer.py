@@ -354,11 +354,11 @@ def render_subpixel_smooth_scene_clip(image_path: str, duration: float, motion_t
         pass
     proc.wait()
 
-def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
+def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot: int = None) -> str:
     """
-    Renders a fast-paced, 100% VIDEO-ONLY visual track adhering strictly to Quran Video Mandates:
-    - Cuts STRICTLY between 2.5s and 3.5s (NEVER exceeding 4.0s!).
-    - ONLY VIDEO: 100% authentic 60 FPS .mp4 video clips (Holy Quran on Rehal + Nature/Sanctuary video motion).
+    Builds a fast-paced dynamic visual track composed of 100% authentic video clips.
+    - Zero matching clips across 10 videos (powered by data/video_registry.json).
+    - Cuts strictly between 2.5s and 3.5s (never exceeding 4.0s).
     - 0 humans, 0 faces, 0 animals, 0 static images.
     - 60 FPS butter-smooth playback with zero jitter.
     """
@@ -371,56 +371,75 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
     base_scene_dur = total_dur / num_scenes
     logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.2f}s each, strictly <= 4.0s) across {total_dur:.1f}s.")
 
-    # 100% Real 60 FPS Video Assets (.mp4 ONLY)
-    # 10 Distinct Holy Quran on Rehal 60 FPS Motion Videos (Different angles, lighting & sanctuaries)
-    rehal_videos = [
+    registry_file = os.path.abspath("data/video_registry.json")
+    chosen_clips = []
+    slot_num = 1
+
+    if os.path.exists(registry_file):
+        try:
+            with open(registry_file, "r", encoding="utf-8") as f:
+                reg_data = json.load(f)
+
+            if video_slot is None:
+                slot_num = reg_data.get("current_slot", 1)
+                video_key = f"video_{slot_num:02d}"
+                next_slot = (slot_num % 10) + 1
+                reg_data["current_slot"] = next_slot
+                with open(registry_file, "w", encoding="utf-8") as f:
+                    json.dump(reg_data, f, indent=2)
+                logger.info(f"🎬 [Zero-Overlap Registry] Auto-assigned Bucket: {video_key} (Next video will use video_{next_slot:02d})")
+            else:
+                slot_num = video_slot
+                video_key = f"video_{slot_num:02d}"
+                logger.info(f"🎬 [Zero-Overlap Registry] Explicitly selected Bucket: {video_key}")
+
+            if video_key in reg_data:
+                slot_info = reg_data[video_key]
+                chosen_clips = [os.path.abspath(c) for c in slot_info.get("clips", []) if os.path.exists(c)]
+                logger.info(f"🎬 [Zero-Overlap Registry] Loaded {len(chosen_clips)} exclusive real video clips for {video_key} (Categories: {slot_info.get('categories', [])[:4]})")
+        except Exception as e:
+            logger.warning(f"Failed to read registry: {e}")
+
+    # Fallback to authentic nature B-rolls if registry not populated
+    if not chosen_clips:
+        broll_fallback = [
+            os.path.abspath("app/assets/broll/ocean_720.mp4"),
+            os.path.abspath("app/assets/broll/clouds_720.mp4"),
+            os.path.abspath("app/assets/broll/desert_720.mp4"),
+        ]
+        chosen_clips = [b for b in broll_fallback if os.path.exists(b)]
+
+    # 10 Distinct Sacred Quran Anchor Visuals (1 per slot)
+    quran_anchors = [
         os.path.abspath("app/assets/video_scenes/quran_rehal_master.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_sunbeam.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_dawn_tahajjud.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_night_lantern.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_golden_hour.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_macro_verses.mp4"),
         os.path.abspath("app/assets/video_scenes/quran_rehal_cinematic.mp4"),
+        os.path.abspath("app/assets/video_scenes/quran_rehal_sunbeam.mp4"),
         os.path.abspath("app/assets/video_scenes/quran_rehal_closeup.mp4"),
         os.path.abspath("app/assets/video_scenes/quran_rehal_sanctuary.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_night_lantern.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_dawn_tahajjud.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_macro_verses.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_golden_hour.mp4"),
         os.path.abspath("app/assets/video_scenes/quran_rehal_regal_amber.mp4"),
     ]
-    rehal_videos = [v for v in rehal_videos if os.path.exists(v)]
+    quran_anchors = [q for q in quran_anchors if os.path.exists(q)]
+    anchor_visual = quran_anchors[(slot_num - 1) % len(quran_anchors)] if quran_anchors else None
 
-    # 8 Authentic Nature & Sacred Sanctuary 60 FPS Video B-Rolls
-    broll_videos = [
-        os.path.abspath("app/assets/broll/ocean_720.mp4"),
-        os.path.abspath("app/assets/broll/clouds_720.mp4"),
-        os.path.abspath("app/assets/broll/desert_720.mp4"),
-        os.path.abspath("app/assets/video_scenes/01_golden_dome_night.mp4"),
-        os.path.abspath("app/assets/video_scenes/03_andalusian_pool.mp4"),
-        os.path.abspath("app/assets/video_scenes/04_mountain_cave_dawn.mp4"),
-        os.path.abspath("app/assets/video_scenes/09_coastal_terrace.mp4"),
-        os.path.abspath("app/assets/video_scenes/10_solitude_sanctuary_lamp.mp4"),
-    ]
-    broll_videos = [v for v in broll_videos if os.path.exists(v)]
-
-    # Style A (100% Pure Quran on Rehal): Shuffled across all 10 distinct angles
-    # Style B (Balanced Hybrid): Strictly alternates between Quran on Rehal & Nature/Sanctuary video
-    chosen_style = random.choice(["style_a", "style_b"])
-    shuffled_rehal = list(rehal_videos)
-    random.shuffle(shuffled_rehal)
-    shuffled_broll = list(broll_videos)
-    random.shuffle(shuffled_broll)
+    # Shuffle this video's unique clips to create an engaging visual sequence
+    shuffled_clips = list(chosen_clips)
+    random.shuffle(shuffled_clips)
 
     sequence_pool = []
-    if chosen_style == "style_a" or not shuffled_broll:
-        logger.info("🎬 [Dynamic Visual Engine] Selected Style A: 100% Pure Holy Quran on Rehal (10 Shuffled 60 FPS Angles)")
-        sequence_pool = shuffled_rehal
-    else:
-        logger.info("🎬 [Dynamic Visual Engine] Selected Style B: Balanced Hybrid (Alternating Holy Quran on Rehal + 8 Nature B-Rolls)")
-        max_len = max(len(shuffled_rehal), len(shuffled_broll))
-        for idx in range(max_len):
-            sequence_pool.append(shuffled_rehal[idx % len(shuffled_rehal)])
-            sequence_pool.append(shuffled_broll[idx % len(shuffled_broll)])
+    # Scene 1: Sacred Quran Anchor opening hook
+    if anchor_visual:
+        sequence_pool.append(anchor_visual)
+
+    # Subsequent scenes: 100% unique real motion video clips (waves, clouds, stars, mountains, desert...)
+    for clip in shuffled_clips:
+        sequence_pool.append(clip)
 
     if not sequence_pool:
-        sequence_pool = [os.path.abspath("app/assets/video_scenes/quran_rehal_master.mp4")]
+        sequence_pool = [os.path.abspath("app/assets/broll/ocean_720.mp4")]
 
 
     scene_clips = []
@@ -471,7 +490,7 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str) -> str:
     logger.info(f"Dynamic Quran Master Visual Track built successfully: {master_visual_path}")
     return master_visual_path
 
-def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str = "data/output") -> str:
+def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str = "data/output", video_slot: int = None) -> str:
     """
     Renders end-to-end 1080x1920 vertical video with dynamic 4-8s cuts,
     centered Arabic/Bengali subtitles, and authentic B-rolls.
@@ -488,8 +507,8 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     audio_file = audio_data["audio_path"]
     total_dur = audio_data["total_duration"]
 
-    # 1. Build Dynamic Multi-Scene Visual Track (4-8s cuts, B-rolls, Holy Quran on Rehal)
-    master_visual_path = build_dynamic_quran_visual_track(total_dur, temp_dir)
+    # 1. Build Dynamic Multi-Scene Visual Track with Zero-Overlap Slot
+    master_visual_path = build_dynamic_quran_visual_track(total_dur, temp_dir, video_slot=video_slot)
 
     # 2. Build Subtitles
     ass_path = os.path.join(temp_dir, "quran_subtitles.ass")

@@ -1,0 +1,191 @@
+{
+  "current_slot": 1,
+  "video_01": {
+    "video_id": "video_01",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\clouds\\4170.mp4",
+      "app/assets/video_library\\stars\\39768.mp4",
+      "app/assets/video_library\\sunrise\\5027.mp4",
+      "app/assets/video_library\\sea\\2168.mp4",
+      "app/assets/video_library\\ocean\\15169.mp4",
+      "app/assets/video_library\\desert\\47724.mp4",
+      "app/assets/video_library\\river\\15919.mp4",
+      "app/assets/video_library\\sunrise\\5372.mp4",
+      "app/assets/video_library\\sunrise\\6734.mp4",
+      "app/assets/video_library\\sky\\1168.mp4",
+      "app/assets/video_library\\night\\830.mp4",
+      "app/assets/video_library\\forest\\3351.mp4"
+    ]
+  },
+  "video_02": {
+    "video_id": "video_02",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\light\\4240.mp4",
+      "app/assets/video_library\\waterfall\\8014.mp4",
+      "app/assets/video_library\\light\\49845.mp4",
+      "app/assets/video_library\\ocean\\44389.mp4",
+      "app/assets/video_library\\river\\18162.mp4",
+      "app/assets/video_library\\waves\\1170.mp4",
+      "app/assets/video_library\\sunrise\\26532.mp4",
+      "app/assets/video_library\\desert\\52012.mp4",
+      "app/assets/video_library\\sea\\1191.mp4",
+      "app/assets/video_library\\candle\\17426.mp4",
+      "app/assets/video_library\\river\\43605.mp4",
+      "app/assets/video_library\\sea\\4692.mp4"
+    ]
+  },
+  "video_03": {
+    "video_id": "video_03",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\mountains\\4148.mp4",
+      "app/assets/video_library\\sky\\1926.mp4",
+      "app/assets/video_library\\clouds\\4070.mp4",
+      "app/assets/video_library\\architecture\\4086.mp4",
+      "app/assets/video_library\\sky\\4119.mp4",
+      "app/assets/video_library\\sea\\44495.mp4",
+      "app/assets/video_library\\forest\\50847.mp4",
+      "app/assets/video_library\\sunrise\\50266.mp4",
+      "app/assets/video_library\\rain\\6890.mp4",
+      "app/assets/video_library\\sea\\1164.mp4",
+      "app/assets/video_library\\stars\\48014.mp4",
+      "app/assets/video_library\\rain\\2846.mp4"
+    ]
+  },
+  "video_04": {
+    "video_id": "video_04",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\night\\11.mp4",
+      "app/assets/video_library\\sand\\2890.mp4",
+      "app/assets/video_library\\mountains\\1944.mp4",
+      "app/assets/video_library\\ocean\\44392.mp4",
+      "app/assets/video_library\\river\\10993.mp4",
+      "app/assets/video_library\\mountains\\51689.mp4",
+      "app/assets/video_library\\waterfall\\11060.mp4",
+      "app/assets/video_library\\night\\40640.mp4",
+      "app/assets/video_library\\sky\\1187.mp4",
+      "app/assets/video_library\\sea\\44378.mp4",
+      "app/assets/video_library\\rain\\2187.mp4",
+      "app/assets/video_library\\night\\41375.mp4"
+    ]
+  },
+  "video_05": {
+    "video_id": "video_05",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\sunrise\\4878.mp4",
+      "app/assets/video_library\\forest\\41401.mp4",
+      "app/assets/video_library\\ocean\\48525.mp4",
+      "app/assets/video_library\\sand\\1925.mp4",
+      "app/assets/video_library\\forest\\41573.mp4",
+      "app/assets/video_library\\sunrise\\31629.mp4",
+      "app/assets/video_library\\night\\30605.mp4",
+      "app/assets/video_library\\sunset\\1013.mp4",
+      "app/assets/video_library\\waves\\1086.mp4",
+      "app/assets/video_library\\river\\4457.mp4",
+      "app/assets/video_library\\clouds\\1178.mp4",
+      "app/assets/video_library\\rain\\1894.mp4"
+    ]
+  },
+  "video_06": {
+    "video_id": "video_06",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\desert\\4028.mp4",
+      "app/assets/video_library\\stars\\14540.mp4",
+      "app/assets/video_library\\river\\4150.mp4",
+      "app/assets/video_library\\sunrise\\4397.mp4",
+      "app/assets/video_library\\sunset\\1780.mp4",
+      "app/assets/video_library\\waterfall\\571.mp4",
+      "app/assets/video_library\\clouds\\4132.mp4",
+      "app/assets/video_library\\forest\\41575.mp4",
+      "app/assets/video_library\\night\\46893.mp4",
+      "app/assets/video_library\\mountains\\4396.mp4",
+      "app/assets/video_library\\clouds\\4368.mp4",
+      "app/assets/video_library\\sea\\5016.mp4"
+    ]
+  },
+  "video_07": {
+    "video_id": "video_07",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\desert\\4149.mp4",
+      "app/assets/video_library\\river\\51600.mp4",
+      "app/assets/video_library\\rain\\2738.mp4",
+      "app/assets/video_library\\candle\\5111.mp4",
+      "app/assets/video_library\\light\\49878.mp4",
+      "app/assets/video_library\\sunrise\\6850.mp4",
+      "app/assets/video_library\\night\\4451.mp4",
+      "app/assets/video_library\\night\\44545.mp4",
+      "app/assets/video_library\\clouds\\51105.mp4",
+      "app/assets/video_library\\ocean\\11268.mp4",
+      "app/assets/video_library\\sunset\\40657.mp4",
+      "app/assets/video_library\\waves\\1078.mp4"
+    ]
+  },
+  "video_08": {
+    "video_id": "video_08",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\stars\\14185.mp4",
+      "app/assets/video_library\\sunset\\3128.mp4",
+      "app/assets/video_library\\forest\\1218.mp4",
+      "app/assets/video_library\\stars\\4034.mp4",
+      "app/assets/video_library\\night\\4433.mp4",
+      "app/assets/video_library\\waterfall\\2186.mp4",
+      "app/assets/video_library\\sunrise\\4831.mp4",
+      "app/assets/video_library\\forest\\2716.mp4",
+      "app/assets/video_library\\architecture\\27543.mp4",
+      "app/assets/video_library\\waves\\25163.mp4",
+      "app/assets/video_library\\waterfall\\45315.mp4",
+      "app/assets/video_library\\rain\\25375.mp4"
+    ]
+  },
+  "video_09": {
+    "video_id": "video_09",
+    "clip_count": 12,
+    "clips": [
+      "app/assets/video_library\\waves\\1116.mp4",
+      "app/assets/video_library\\rain\\118.mp4",
+      "app/assets/video_library\\waterfall\\539.mp4",
+      "app/assets/video_library\\stars\\14428.mp4",
+      "app/assets/video_library\\sky\\1186.mp4",
+      "app/assets/video_library\\stars\\1610.mp4",
+      "app/assets/video_library\\forest\\5039.mp4",
+      "app/assets/video_library\\sand\\1931.mp4",
+      "app/assets/video_library\\sunset\\4800.mp4",
+      "app/assets/video_library\\sea\\42498.mp4",
+      "app/assets/video_library\\river\\3422.mp4",
+      "app/assets/video_library\\light\\42343.mp4"
+    ]
+  },
+  "video_10": {
+    "video_id": "video_10",
+    "clip_count": 20,
+    "clips": [
+      "app/assets/video_library\\light\\18140.mp4",
+      "app/assets/video_library\\waterfall\\540.mp4",
+      "app/assets/video_library\\waves\\7194.mp4",
+      "app/assets/video_library\\candle\\48919.mp4",
+      "app/assets/video_library\\rain\\18312.mp4",
+      "app/assets/video_library\\sea\\1197.mp4",
+      "app/assets/video_library\\clouds\\4695.mp4",
+      "app/assets/video_library\\sand\\1088.mp4",
+      "app/assets/video_library\\waterfall\\46384.mp4",
+      "app/assets/video_library\\waves\\1082.mp4",
+      "app/assets/video_library\\sky\\26108.mp4",
+      "app/assets/video_library\\desert\\12759.mp4",
+      "app/assets/video_library\\waves\\51506.mp4",
+      "app/assets/video_library\\desert\\51793.mp4",
+      "app/assets/video_library\\waves\\9294.mp4",
+      "app/assets/video_library\\light\\49.mp4",
+      "app/assets/video_library\\mountains\\4036.mp4",
+      "app/assets/video_library\\stars\\46119.mp4",
+      "app/assets/video_library\\candle\\3458.mp4",
+      "app/assets/video_library\\light\\34317.mp4"
+    ]
+  }
+}
