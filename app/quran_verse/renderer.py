@@ -365,11 +365,13 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot
     os.makedirs(temp_dir, exist_ok=True)
     master_visual_path = os.path.join(temp_dir, "master_visual_track.mp4")
 
-    # Strict Attention Pacing: Target cuts between 2.8s and 3.5s (strictly <= 4.0s)
-    target_cut_dur = 3.2
-    num_scenes = max(4, int(math.ceil(total_dur / target_cut_dur)))
+    # Optimal Attention Retention Pacing:
+    # 3.8s to 4.5s per cut (target ~4.2s).
+    # Allows viewers to absorb the sacred recitation, read subtitles calmly, and watch real motion develop without feeling rushed.
+    target_cut_dur = 4.2
+    num_scenes = max(2, int(round(total_dur / target_cut_dur)))
     base_scene_dur = total_dur / num_scenes
-    logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.2f}s each, strictly <= 4.0s) across {total_dur:.1f}s.")
+    logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.2f}s each, optimal retention pacing) across {total_dur:.1f}s.")
 
     registry_file = os.path.abspath("data/video_registry.json")
     chosen_clips = []

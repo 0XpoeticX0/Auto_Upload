@@ -2,20 +2,18 @@
   "current_slot": 1,
   "video_01": {
     "video_id": "video_01",
-    "clip_count": 12,
+    "clip_count": 10,
     "clips": [
       "app/assets/video_library\\clouds\\4170.mp4",
       "app/assets/video_library\\stars\\39768.mp4",
       "app/assets/video_library\\sunrise\\5027.mp4",
-      "app/assets/video_library\\sea\\2168.mp4",
       "app/assets/video_library\\ocean\\15169.mp4",
       "app/assets/video_library\\desert\\47724.mp4",
       "app/assets/video_library\\river\\15919.mp4",
       "app/assets/video_library\\sunrise\\5372.mp4",
       "app/assets/video_library\\sunrise\\6734.mp4",
       "app/assets/video_library\\sky\\1168.mp4",
-      "app/assets/video_library\\night\\830.mp4",
-      "app/assets/video_library\\forest\\3351.mp4"
+      "app/assets/video_library\\night\\830.mp4"
     ]
   },
   "video_02": {
