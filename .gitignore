@@ -6,6 +6,7 @@ client_secrets.json
 tiktok_cookies.txt
 *.mp4
 !app/assets/broll/*.mp4
+!app/assets/video_scenes/*.mp4
 *.zip
 *.sqlite
 scratch/
