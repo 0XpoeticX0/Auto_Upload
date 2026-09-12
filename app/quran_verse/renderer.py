@@ -20,7 +20,7 @@ GOLD_COLOR = "&H002BD5FF&"
 WHITE_COLOR = "&H00FFFFFF&"
 CYAN_COLOR = "&H00FFFF00&"
 
-def wrap_and_format_arabic(text: str, words_per_line: int = 6) -> str:
+def wrap_and_format_arabic(text: str, words_per_line: int = 5) -> str:
     """
     Wraps logical Arabic text into lines with balanced splits.
     Raw Uthmani Arabic is passed directly to libass, where HarfBuzz-ng and FriBidi
@@ -156,9 +156,8 @@ def format_bengali_subtitles_for_ass(bn_raw: str, words_per_line: int = 5) -> st
 
 def split_long_ayah_clauses(ar_text: str, bn_text: str, total_ayah_dur: float, start_sec: float) -> list:
     """
-    Splits long ayahs (> 9.5 seconds) into natural recitation clauses at Quranic waqf marks
-    or sentence pauses, ensuring each clause is at least 3.0s and both Arabic & Bengali
-    transition together in lockstep.
+    Splits long ayahs (> 8.5 seconds or > 8 words) into natural recitation clauses at Quranic waqf marks,
+    sentence pauses, or proportional midpoints, ensuring each clause fits the screen cleanly.
     """
     waqf_pattern = r'([ۚۗۖۘۙۛۜ])'
     ar_parts = [p.strip() for p in re.split(waqf_pattern, ar_text) if p.strip()]
@@ -177,40 +176,70 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, total_ayah_dur: float, s
         else:
             merged_bn.append(b)
 
-    if len(merged_ar) <= 1 or len(merged_bn) <= 1 or len(merged_ar) != len(merged_bn):
-        return [{
-            "start": start_sec,
-            "end": start_sec + total_ayah_dur,
-            "arabic": ar_text,
-            "bengali": bn_text
-        }]
+    if len(merged_ar) > 1 and len(merged_ar) == len(merged_bn):
+        total_ar_words = sum(len(p.split()) for p in merged_ar)
+        curr_start = start_sec
+        clauses = []
+        for i in range(len(merged_ar)):
+            p_words = len(merged_ar[i].split())
+            if i == len(merged_ar) - 1:
+                curr_end = start_sec + total_ayah_dur
+            else:
+                prop = p_words / max(1, total_ar_words)
+                c_dur = max(3.0, total_ayah_dur * prop)
+                curr_end = min(start_sec + total_ayah_dur - 2.5, curr_start + c_dur)
+            clauses.append({
+                "start": curr_start,
+                "end": curr_end,
+                "arabic": merged_ar[i],
+                "bengali": merged_bn[i]
+            })
+            curr_start = curr_end
+        return clauses
 
-    total_ar_words = sum(len(p.split()) for p in merged_ar)
-    curr_start = start_sec
-    clauses = []
-    for i in range(len(merged_ar)):
-        p_words = len(merged_ar[i].split())
-        if i == len(merged_ar) - 1:
-            curr_end = start_sec + total_ayah_dur
-        else:
-            prop = p_words / max(1, total_ar_words)
-            c_dur = max(3.0, total_ayah_dur * prop)
-            curr_end = min(start_sec + total_ayah_dur - 2.5, curr_start + c_dur)
-        clauses.append({
-            "start": curr_start,
-            "end": curr_end,
-            "arabic": merged_ar[i],
-            "bengali": merged_bn[i]
-        })
-        curr_start = curr_end
-    return clauses
+    # Proportional split fallback for long ayahs lacking waqf symbols
+    bn_words = bn_text.strip().split()
+    ar_words = ar_text.strip().split()
+    if total_ayah_dur > 8.0 and (len(bn_words) > 8 or len(ar_words) > 7):
+        bn_mid = (len(bn_words) + 1) // 2
+        split_idx = bn_mid
+        for idx, w in enumerate(bn_words):
+            if any(p in w for p in ['।', ',', ';']) and 2 <= idx <= len(bn_words) - 3:
+                split_idx = idx + 1
+                break
+        
+        ar_mid = (len(ar_words) + 1) // 2
+        ar_prop = ar_mid / len(ar_words)
+        split_time = start_sec + round(total_ayah_dur * ar_prop, 2)
+
+        return [
+            {
+                "start": start_sec,
+                "end": split_time,
+                "arabic": " ".join(ar_words[:ar_mid]),
+                "bengali": " ".join(bn_words[:split_idx])
+            },
+            {
+                "start": split_time,
+                "end": start_sec + total_ayah_dur,
+                "arabic": " ".join(ar_words[ar_mid:]),
+                "bengali": " ".join(bn_words[split_idx:])
+            }
+        ]
+
+    return [{
+        "start": start_sec,
+        "end": start_sec + total_ayah_dur,
+        "arabic": ar_text,
+        "bengali": bn_text
+    }]
 
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
-    Builds professional ASS subtitles with:
-    - Top Surah & Ayah Badge (Bengali numerals) at Y=220
-    - Raw Uthmani Arabic in font Amiri at Y=820
-    - Clean Bengali translation in font Kalpurush (Strict 2 lines max) at Y=1050
+    Builds high-impact ASS subtitles with:
+    - Top Surah & Ayah Badge (Bengali numerals) at Y=220 (Fontsize 48)
+    - Raw Uthmani Arabic in font Amiri at Y=460 (Fontsize 86)
+    - Clean Bengali translation in font Kalpurush (Strict 2 lines max) at Y=710 (Fontsize 74)
     - 100% AUDIO-VISUAL LOCKSTEP: Subtitles transition in sync with every Ayah recited
     - Bottom Reciter Credit & Save/Share CTA
     """
@@ -233,11 +262,11 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: TopBadge,Kalpurush,42,{GOLD_COLOR},&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,1.8,8,60,60,220,1
-Style: ArabicVerse,Amiri,64,{WHITE_COLOR},&H000000FF,&H00000000,&HD0000000,1,0,0,0,100,100,0,0,1,3.5,2.0,5,80,80,0,1
-Style: BengaliCenter,Kalpurush,54,{WHITE_COLOR},&H000000FF,&H00000000,&HD0000000,0,0,0,0,100,100,0,0,1,3.8,2.2,5,70,70,0,1
-Style: ReciterBottom,Kalpurush,34,{GOLD_COLOR},&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,200,1
-Style: DawahBottom,Kalpurush,28,{WHITE_COLOR},&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,2.5,1.5,2,60,60,140,1
+Style: TopBadge,Kalpurush,48,{GOLD_COLOR},&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.5,2.0,8,60,60,220,1
+Style: ArabicVerse,Amiri,86,{WHITE_COLOR},&H000000FF,&H00000000,&HD0000000,1,0,0,0,100,100,0,0,1,4.2,2.5,5,80,80,0,1
+Style: BengaliCenter,Kalpurush,74,{WHITE_COLOR},&H000000FF,&H00000000,&HD0000000,0,0,0,0,100,100,0,0,1,4.5,2.8,5,70,70,0,1
+Style: ReciterBottom,Kalpurush,38,{GOLD_COLOR},&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,200,1
+Style: DawahBottom,Kalpurush,30,{WHITE_COLOR},&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,2.5,1.5,2,60,60,140,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -258,26 +287,26 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         ar_raw = timing.get("arabic", "").strip()
         bn_raw = timing.get("bengali", "").strip()
 
-        # If ayah duration is standard (<= 9.5s), display as single unified ayah
-        if dur <= 9.5 or len(ar_raw.split()) <= 10:
+        # If ayah duration is standard (<= 8.5s and <= 8 Bengali words), display as single unified ayah
+        if dur <= 8.5 and len(bn_raw.split()) <= 8 and len(ar_raw.split()) <= 7:
             start_str = format_ass_time(start_sec)
             end_str = format_ass_time(end_sec)
-            ar_clean = wrap_and_format_arabic(ar_raw, words_per_line=6)
+            ar_clean = wrap_and_format_arabic(ar_raw, words_per_line=5)
             bn_clean = format_bengali_subtitles_for_ass(bn_raw, words_per_line=5)
 
             ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,0,,{{\\pos(540,460)}}{ar_clean}\n"
-            ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,680)}}{bn_clean}\n"
+            ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,710)}}{bn_clean}\n"
         else:
-            # Long Ayahs (> 9.5s) split cleanly at waqf marks
+            # Long Ayahs split cleanly at waqf marks or natural clauses
             clauses = split_long_ayah_clauses(ar_raw, bn_raw, dur, start_sec)
             for c in clauses:
                 c_start_str = format_ass_time(c["start"])
                 c_end_str = format_ass_time(c["end"])
-                ar_clean = wrap_and_format_arabic(c["arabic"], words_per_line=6)
+                ar_clean = wrap_and_format_arabic(c["arabic"], words_per_line=5)
                 bn_clean = format_bengali_subtitles_for_ass(c["bengali"], words_per_line=5)
 
                 ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},ArabicVerse,,0,0,0,,{{\\pos(540,460)}}{ar_clean}\n"
-                ass_content += f"Dialogue: 2,{c_start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,680)}}{bn_clean}\n"
+                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,710)}}{bn_clean}\n"
 
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
