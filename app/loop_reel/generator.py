@@ -693,7 +693,9 @@ Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\
         if proc.poll() is not None:
             break  # FFmpeg exited early (e.g. audio ended), stop writing frames
         p = i / float(total_frames - 1) if total_frames > 1 else 0.0
-        current_scale = 1.0 + (zoom_total * p)
+        # Cosine ease for organic, buttery-smooth cinematic push-in
+        p_eased = 0.5 * (1.0 - math.cos(math.pi * p))
+        current_scale = 1.0 + (zoom_total * p_eased)
         
         crop_w = orig_w / current_scale
         crop_h = orig_h / current_scale

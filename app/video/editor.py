@@ -59,8 +59,8 @@ def build_dynamic_general_visual_track(total_dur: float, temp_dir: str, pillar_c
     os.makedirs(temp_dir, exist_ok=True)
     master_visual_path = os.path.join(temp_dir, "master_visual_track.mp4")
 
-    # Target 4.5 to 7.0-second scene cuts (e.g. 8-12 scenes for 50-80s audio)
-    num_scenes = max(3, int(math.ceil(total_dur / 6.0)))
+    # Target 3.5 to 4.2-second fast-paced scene cuts for maximum YouTube Shorts audience retention
+    num_scenes = max(4, int(math.ceil(total_dur / 3.8)))
     base_scene_dur = total_dur / num_scenes
     logger.info(f"Dynamic Visual Track: Slicing into {num_scenes} scenes (~{base_scene_dur:.1f}s each) across {total_dur:.1f}s for '{pillar_category}'")
 
@@ -83,86 +83,115 @@ def build_dynamic_general_visual_track(total_dur: float, temp_dir: str, pillar_c
     img_fountain = os.path.abspath("app/assets/scenes/tranquil_courtyard_fountain.jpg")
     img_quran_master = os.path.abspath("app/assets/quran_rehal_master.jpg")
 
+    # The 10 High-Attention 8K Master Scenes
+    img_golden_dome = os.path.abspath("app/assets/scenes/golden_dome_night.jpg")
+    img_caravan_dunes = os.path.abspath("app/assets/scenes/caravan_dunes_dusk.jpg")
+    img_andalusian_pool = os.path.abspath("app/assets/scenes/andalusian_pool.jpg")
+    img_mountain_cave = os.path.abspath("app/assets/scenes/mountain_cave_dawn.jpg")
+    img_marble_colonnade = os.path.abspath("app/assets/scenes/marble_colonnade.jpg")
+    img_celestial_minaret = os.path.abspath("app/assets/scenes/celestial_minaret.jpg")
+    img_candlelit_study = os.path.abspath("app/assets/scenes/candlelit_study.jpg")
+    img_ottoman_garden = os.path.abspath("app/assets/scenes/ottoman_garden.jpg")
+    img_coastal_terrace = os.path.abspath("app/assets/scenes/coastal_terrace.jpg")
+    img_solitude_lamp = os.path.abspath("app/assets/scenes/solitude_sanctuary_lamp.jpg")
+
     pillar_sequences = {
         "islamic_stories": [
-            {"type": "image", "file": img_fortress, "motion": "zoom_in"},
+            {"type": "image", "file": img_caravan_dunes, "motion": "zoom_in"},
             {"type": "broll", "file": broll_desert},
-            {"type": "image", "file": img_oasis, "motion": "pan_up"},
+            {"type": "image", "file": img_mountain_cave, "motion": "pan_up"},
             {"type": "broll", "file": broll_clouds},
-            {"type": "image", "file": img_port, "motion": "zoom_out"},
-            {"type": "image", "file": img_sunrise, "motion": "zoom_in"},
-            {"type": "image", "file": img_library, "motion": "zoom_out"},
+            {"type": "image", "file": img_fortress, "motion": "zoom_out"},
+            {"type": "image", "file": img_coastal_terrace, "motion": "zoom_in"},
             {"type": "broll", "file": broll_ocean},
+            {"type": "image", "file": img_oasis, "motion": "pan_up"},
+            {"type": "image", "file": img_port, "motion": "zoom_out"},
+            {"type": "image", "file": img_library, "motion": "zoom_in"},
         ],
         "akhirah_unseen": [
-            {"type": "image", "file": img_night, "motion": "zoom_in"},
+            {"type": "image", "file": img_celestial_minaret, "motion": "zoom_in"},
             {"type": "broll", "file": broll_clouds},
-            {"type": "image", "file": img_ocean_sunset, "motion": "zoom_out"},
+            {"type": "image", "file": img_golden_dome, "motion": "zoom_out"},
             {"type": "broll", "file": broll_ocean},
+            {"type": "image", "file": img_marble_colonnade, "motion": "pan_up"},
+            {"type": "image", "file": img_night, "motion": "zoom_in"},
+            {"type": "image", "file": img_ocean_sunset, "motion": "zoom_out"},
             {"type": "image", "file": img_shield, "motion": "pan_up"},
-            {"type": "image", "file": img_sunrise, "motion": "zoom_in"},
-            {"type": "image", "file": img_calligraphy, "motion": "zoom_out"},
+            {"type": "image", "file": img_calligraphy, "motion": "zoom_in"},
         ],
         "seerah": [
-            {"type": "image", "file": img_oasis, "motion": "zoom_in"},
+            {"type": "image", "file": img_mountain_cave, "motion": "zoom_in"},
             {"type": "broll", "file": broll_desert},
-            {"type": "image", "file": img_fortress, "motion": "zoom_out"},
+            {"type": "image", "file": img_caravan_dunes, "motion": "pan_up"},
             {"type": "broll", "file": broll_clouds},
-            {"type": "image", "file": img_night, "motion": "pan_up"},
-            {"type": "image", "file": img_library, "motion": "zoom_out"},
+            {"type": "image", "file": img_golden_dome, "motion": "zoom_out"},
+            {"type": "image", "file": img_oasis, "motion": "zoom_in"},
+            {"type": "broll", "file": broll_ocean},
+            {"type": "image", "file": img_fortress, "motion": "zoom_out"},
+            {"type": "image", "file": img_library, "motion": "pan_up"},
             {"type": "image", "file": img_quran_closeup, "motion": "zoom_in"},
         ],
         "misconceptions": [
-            {"type": "image", "file": img_library, "motion": "zoom_in"},
-            {"type": "image", "file": img_calligraphy, "motion": "pan_up"},
+            {"type": "image", "file": img_candlelit_study, "motion": "zoom_in"},
+            {"type": "image", "file": img_marble_colonnade, "motion": "pan_up"},
             {"type": "broll", "file": broll_clouds},
+            {"type": "image", "file": img_library, "motion": "zoom_out"},
+            {"type": "image", "file": img_calligraphy, "motion": "pan_up"},
+            {"type": "broll", "file": broll_desert},
             {"type": "image", "file": img_arches, "motion": "zoom_out"},
             {"type": "image", "file": img_quran_sanctuary, "motion": "zoom_in"},
-            {"type": "broll", "file": broll_desert},
-            {"type": "image", "file": img_port, "motion": "zoom_out"},
         ],
         "character_dealings": [
-            {"type": "image", "file": img_fountain, "motion": "zoom_in"},
+            {"type": "image", "file": img_andalusian_pool, "motion": "zoom_in"},
             {"type": "broll", "file": broll_clouds},
+            {"type": "image", "file": img_ottoman_garden, "motion": "pan_up"},
+            {"type": "image", "file": img_fountain, "motion": "zoom_out"},
+            {"type": "broll", "file": broll_ocean},
             {"type": "image", "file": img_oasis, "motion": "pan_up"},
             {"type": "image", "file": img_arches, "motion": "zoom_out"},
-            {"type": "broll", "file": broll_ocean},
             {"type": "image", "file": img_library, "motion": "zoom_in"},
         ],
         "crises_debt_turnaround": [
-            {"type": "image", "file": img_ocean_sunset, "motion": "zoom_in"},
+            {"type": "image", "file": img_solitude_lamp, "motion": "zoom_in"},
             {"type": "broll", "file": broll_ocean},
-            {"type": "image", "file": img_shield, "motion": "pan_up"},
+            {"type": "image", "file": img_coastal_terrace, "motion": "pan_up"},
             {"type": "broll", "file": broll_clouds},
-            {"type": "image", "file": img_night, "motion": "zoom_out"},
-            {"type": "image", "file": img_calligraphy, "motion": "zoom_in"},
+            {"type": "image", "file": img_celestial_minaret, "motion": "zoom_out"},
+            {"type": "image", "file": img_ocean_sunset, "motion": "zoom_in"},
+            {"type": "image", "file": img_shield, "motion": "pan_up"},
+            {"type": "image", "file": img_calligraphy, "motion": "zoom_out"},
         ],
         "daily_sunnah": [
-            {"type": "image", "file": img_fountain, "motion": "zoom_in"},
-            {"type": "image", "file": img_calligraphy, "motion": "pan_up"},
+            {"type": "image", "file": img_ottoman_garden, "motion": "zoom_in"},
             {"type": "broll", "file": broll_clouds},
-            {"type": "image", "file": img_arches, "motion": "zoom_out"},
+            {"type": "image", "file": img_solitude_lamp, "motion": "pan_up"},
+            {"type": "image", "file": img_fountain, "motion": "zoom_out"},
             {"type": "broll", "file": broll_desert},
-            {"type": "image", "file": img_oasis, "motion": "zoom_in"},
+            {"type": "image", "file": img_calligraphy, "motion": "zoom_in"},
+            {"type": "image", "file": img_arches, "motion": "pan_up"},
+            {"type": "image", "file": img_oasis, "motion": "zoom_out"},
         ],
         "family_marriage_sunnah": [
-            {"type": "image", "file": img_fountain, "motion": "zoom_in"},
+            {"type": "image", "file": img_andalusian_pool, "motion": "zoom_in"},
             {"type": "broll", "file": broll_clouds},
-            {"type": "image", "file": img_arches, "motion": "pan_up"},
+            {"type": "image", "file": img_ottoman_garden, "motion": "pan_up"},
             {"type": "broll", "file": broll_ocean},
+            {"type": "image", "file": img_fountain, "motion": "zoom_out"},
+            {"type": "image", "file": img_arches, "motion": "pan_up"},
             {"type": "image", "file": img_oasis, "motion": "zoom_out"},
             {"type": "image", "file": img_night, "motion": "zoom_in"},
         ],
     }
 
     fallback_sequence = [
-        {"type": "image", "file": img_library, "motion": "zoom_in"},
+        {"type": "image", "file": img_golden_dome, "motion": "zoom_in"},
         {"type": "broll", "file": broll_clouds},
-        {"type": "image", "file": img_fountain, "motion": "zoom_out"},
+        {"type": "image", "file": img_andalusian_pool, "motion": "pan_up"},
         {"type": "broll", "file": broll_ocean},
-        {"type": "image", "file": img_calligraphy, "motion": "pan_up"},
+        {"type": "image", "file": img_candlelit_study, "motion": "zoom_out"},
         {"type": "broll", "file": broll_desert},
-        {"type": "image", "file": img_arches, "motion": "zoom_in"},
+        {"type": "image", "file": img_ottoman_garden, "motion": "zoom_in"},
+        {"type": "image", "file": img_coastal_terrace, "motion": "pan_up"},
     ]
 
     seq_pool = pillar_sequences.get(pillar_category, fallback_sequence)
@@ -176,6 +205,8 @@ def build_dynamic_general_visual_track(total_dur: float, temp_dir: str, pillar_c
 
     scene_clips = []
     current_time = 0.0
+
+    from app.quran_verse.renderer import render_subpixel_smooth_scene_clip
 
     for i in range(num_scenes):
         scene_cfg = pool_with_primary[i % len(pool_with_primary)]
@@ -195,7 +226,7 @@ def build_dynamic_general_visual_track(total_dur: float, temp_dir: str, pillar_c
                 "ffmpeg", "-y",
                 "-stream_loop", "-1",
                 "-i", asset_file,
-                "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30",
+                "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=60",
                 "-c:v", "libx264",
                 "-preset", "veryfast",
                 "-crf", "18",
@@ -204,37 +235,20 @@ def build_dynamic_general_visual_track(total_dur: float, temp_dir: str, pillar_c
                 "-pix_fmt", "yuv420p",
                 clip_out
             ]
+            try:
+                subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=True)
+                scene_clips.append(clip_out)
+            except subprocess.CalledProcessError as e:
+                logger.warning(f"Failed to generate broll clip {i}: {e.stderr.decode('utf-8', errors='ignore')}")
         else:
             motion = scene_cfg.get("motion", "zoom_in")
-            frames = max(30, int(scene_dur * 30))
-            if motion == "zoom_in":
-                zp = f"zoompan=z='min(zoom+0.0012,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1080x1920:fps=30"
-            elif motion == "zoom_out":
-                zp = f"zoompan=z='if(lte(zoom,1.0),1.15,max(1.0,zoom-0.0012))':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1080x1920:fps=30"
-            elif motion == "pan_up":
-                zp = f"zoompan=z=1.10:x='iw/2-(iw/zoom/2)':y='(ih-ih/zoom)*(1-on/{frames})':d={frames}:s=1080x1920:fps=30"
-            else:
-                zp = f"zoompan=z='min(zoom+0.0010,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1080x1920:fps=30"
+            try:
+                render_subpixel_smooth_scene_clip(asset_file, scene_dur, motion, clip_out, fps=60)
+                if os.path.exists(clip_out) and os.path.getsize(clip_out) > 5000:
+                    scene_clips.append(clip_out)
+            except Exception as e:
+                logger.warning(f"Subpixel render failed for scene {i}: {e}")
 
-            cmd = [
-                "ffmpeg", "-y",
-                "-loop", "1",
-                "-i", asset_file,
-                "-vf", f"scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,{zp}",
-                "-c:v", "libx264",
-                "-preset", "veryfast",
-                "-crf", "18",
-                "-t", f"{scene_dur:.2f}",
-                "-an",
-                "-pix_fmt", "yuv420p",
-                clip_out
-            ]
-
-        try:
-            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=True)
-            scene_clips.append(clip_out)
-        except subprocess.CalledProcessError as e:
-            logger.warning(f"Failed to generate scene clip {i}: {e.stderr.decode('utf-8', errors='ignore')}")
 
     if not scene_clips:
         logger.error("No dynamic scene clips could be rendered; falling back to single image loop.")
