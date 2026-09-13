@@ -383,24 +383,77 @@ def render_subpixel_smooth_scene_clip(image_path: str, duration: float, motion_t
         pass
     proc.wait()
 
-def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot: int = None) -> str:
+def plan_calm_quran_scenes(total_dur: float, ayah_timings: list = None, min_dur: float = 7.5, max_dur: float = 13.0) -> list:
     """
-    Builds a fast-paced dynamic visual track composed of 100% authentic video clips.
+    Plans serene, dignified scene pacing:
+    - Target scene duration: 8.5s to 12.0s (average ~10-11s).
+    - Transitions occur on natural Ayah boundaries.
+    - Never shorter than 7.0s, never longer than 13.5s.
+    """
+    if not ayah_timings:
+        target = 9.5
+        n = max(1, int(round(total_dur / target)))
+        dur = total_dur / n
+        return [{"start": round(i*dur, 2), "end": round((i+1)*dur, 2), "duration": round(dur, 2)} for i in range(n)]
+
+    ayah_ends = [round(t["end"], 2) for t in ayah_timings if t.get("end", 0) < total_dur - 2.0]
+    scenes = []
+    curr = 0.0
+
+    while curr < total_dur - 1.0:
+        rem_total = total_dur - curr
+        if rem_total <= max_dur:
+            scenes.append({"start": round(curr, 2), "end": round(total_dur, 2), "duration": round(total_dur - curr, 2)})
+            break
+
+        # Find best ayah end within [curr + min_dur, curr + max_dur]
+        valid_ends = [e for e in ayah_ends if curr + min_dur <= e <= curr + max_dur]
+
+        if valid_ends:
+            target_pt = curr + 10.0
+            best_end = min(valid_ends, key=lambda x: abs(x - target_pt))
+        else:
+            near_ends = [e for e in ayah_ends if curr + min_dur <= e <= curr + max_dur + 1.5]
+            if near_ends:
+                best_end = near_ends[0]
+            else:
+                best_end = round(curr + 9.5, 2)
+
+        # Guarantee remaining time isn't too short (< min_dur)
+        if total_dur - best_end < min_dur:
+            combined = total_dur - curr
+            if combined > 14.0:
+                mid = round(curr + combined / 2.0, 2)
+                mid_ends = [e for e in ayah_ends if curr + 6.0 <= e <= total_dur - 6.0]
+                if mid_ends:
+                    mid = min(mid_ends, key=lambda x: abs(x - (curr + combined/2.0)))
+                scenes.append({"start": round(curr, 2), "end": round(mid, 2), "duration": round(mid - curr, 2)})
+                scenes.append({"start": round(mid, 2), "end": round(total_dur, 2), "duration": round(total_dur - mid, 2)})
+            else:
+                scenes.append({"start": round(curr, 2), "end": round(total_dur, 2), "duration": round(total_dur - curr, 2)})
+            break
+
+        scenes.append({"start": round(curr, 2), "end": round(best_end, 2), "duration": round(best_end - curr, 2)})
+        curr = best_end
+
+    return scenes
+
+def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot: int = None, ayah_timings: list = None) -> str:
+    """
+    Builds a serene, dignified visual track composed of 100% authentic video clips.
     - Zero matching clips across 10 videos (powered by data/video_registry.json).
-    - Cuts strictly between 2.5s and 3.5s (never exceeding 4.0s).
+    - Calm, tranquil scene durations (7.5s to 12.0s per scene, average ~10s).
+    - Transitions synchronized directly with Quranic Ayah boundaries.
     - 0 humans, 0 faces, 0 animals, 0 static images.
     - 60 FPS butter-smooth playback with zero jitter.
     """
     os.makedirs(temp_dir, exist_ok=True)
     master_visual_path = os.path.join(temp_dir, "master_visual_track.mp4")
 
-    # Optimal Attention Retention Pacing:
-    # 3.8s to 4.5s per cut (target ~4.2s).
-    # Allows viewers to absorb the sacred recitation, read subtitles calmly, and watch real motion develop without feeling rushed.
-    target_cut_dur = 4.2
-    num_scenes = max(2, int(round(total_dur / target_cut_dur)))
-    base_scene_dur = total_dur / num_scenes
-    logger.info(f"Dynamic Quran Visual: Slicing into {num_scenes} scenes (~{base_scene_dur:.2f}s each, optimal retention pacing) across {total_dur:.1f}s.")
+    # Calm Attention-Retention Pacing (7.5s to 12.0s per scene, locked to Ayahs):
+    planned_scenes = plan_calm_quran_scenes(total_dur, ayah_timings)
+    num_scenes = len(planned_scenes)
+    logger.info(f"Calm Quran Visual Track: Planned {num_scenes} tranquil scenes (~8-12s each, locked to Ayah boundaries) across {total_dur:.1f}s.")
 
     registry_file = os.path.abspath("data/video_registry.json")
     chosen_clips = []
@@ -474,15 +527,10 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot
 
 
     scene_clips = []
-    current_time = 0.0
 
-    for i in range(num_scenes):
+    for i, sc in enumerate(planned_scenes):
         asset_file = sequence_pool[i % len(sequence_pool)]
-        if i == num_scenes - 1:
-            scene_dur = total_dur - current_time
-        else:
-            scene_dur = round(base_scene_dur, 2)
-        current_time += scene_dur
+        scene_dur = sc["duration"]
 
         clip_out = os.path.join(temp_dir, f"scene_clip_{i:02d}.mp4")
 
@@ -538,8 +586,9 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     audio_file = audio_data["audio_path"]
     total_dur = audio_data["total_duration"]
 
-    # 1. Build Dynamic Multi-Scene Visual Track with Zero-Overlap Slot
-    master_visual_path = build_dynamic_quran_visual_track(total_dur, temp_dir, video_slot=video_slot)
+    # 1. Build Dynamic Multi-Scene Visual Track with Zero-Overlap Slot & Ayah-Synced Pacing
+    ayah_timings = audio_data.get("ayah_timings", [])
+    master_visual_path = build_dynamic_quran_visual_track(total_dur, temp_dir, video_slot=video_slot, ayah_timings=ayah_timings)
 
     # 2. Build Subtitles
     ass_path = os.path.join(temp_dir, "quran_subtitles.ass")
