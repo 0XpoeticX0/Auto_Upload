@@ -32,7 +32,8 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
     description = (
         f"✨ পবিত্র কুরআন তিলাওয়াত ও বাংলা অনুবাদ ✨\n"
         f"📖 {surah_name} • আয়াত {range_str}\n"
-        f"🎙️ তিলাওয়াত: {reciter_bn}\n\n"
+        f"🎙️ তিলাওয়াত: {reciter_bn}\n"
+        f"📖 উৎস: EveryAyah.com / Quran.com API (Free Religious & Educational Public Distribution)\n\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
         f"📜 আয়াত ও বাংলা অর্থ:\n\n"
     )

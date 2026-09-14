@@ -396,24 +396,49 @@ def determine_best_reciter_for_passage(surah: int, ayah_start: int, ayah_end: in
     - 'alafasy': Soothing, warm, melodic baritone -> Ideal for solace, hope, mercy, repentance, Dua, Jannah.
     - 'dossari': Dramatic, thunderous, high dynamic range -> Ideal for divine power, majesty, Qiyamah, firm decree.
     """
+    end = ayah_end or ayah_start
+
     # 1. Check curated passages
     for p in CURATED_COMPLETE_PASSAGES:
         if p["surah"] == surah and p["ayah_start"] == ayah_start:
             return p.get("ideal_reciter", "alafasy")
 
-    # 2. Known emotional mapping
+    # 2. Check landmark Ayahs with strong theological identity
+    if surah == 2 and (ayah_start <= 255 <= end):
+        # Ayatul Kursi -> Supreme sovereignty and majestic throne
+        return "dossari"
+    elif surah == 2 and (ayah_start >= 285):
+        # Amanar Rasul -> Mercy, forgiveness and soul peace
+        return "alafasy"
+    elif surah == 3 and (173 <= ayah_start <= 174):
+        # Hasbunallahu wa ni'mal wakil -> Courage & steadfast resolve
+        return "dossari"
+    elif surah == 21 and (87 <= ayah_start <= 88):
+        # Yunus (AS) Dua -> Repentance, tears and relief
+        return "alafasy"
+    elif surah == 28 and ayah_start == 24:
+        # Musa (AS) Dua -> Helplessness and intimate prayer
+        return "alafasy"
+    elif surah == 59 and ayah_start >= 22:
+        # Al-Hashr Ism-e-Azam -> Grandeur of divine attributes
+        return "dossari"
+    elif surah == 65 and (2 <= ayah_start <= 3):
+        # At-Talaq -> Unfathomable provision & absolute Tawakkul
+        return "dossari"
+
+    # 3. Thematic Surah mapping
     # Alafasy territory: Softening sorrow, comfort, prayer, family, Jannah
-    alafasy_surahs = {94, 93, 55, 12, 19, 76, 89, 90, 91, 92, 108, 110, 113, 114}
+    alafasy_surahs = {94, 93, 55, 12, 14, 19, 20, 25, 36, 76, 89, 90, 91, 92, 95, 108, 110, 112, 113, 114}
     # Dossari territory: Majesty, sovereignty, Day of Judgment, warnings, battle
-    dossari_surahs = {65, 67, 69, 75, 77, 78, 79, 81, 82, 85, 101, 104, 50, 59}
+    dossari_surahs = {50, 65, 67, 69, 75, 77, 78, 79, 81, 82, 85, 100, 101, 104}
 
     if surah in alafasy_surahs:
         return "alafasy"
-    if surah in dossari_surahs:
+    elif surah in dossari_surahs:
         return "dossari"
-
-    # Default balance
-    return "alafasy"
+    else:
+        # Guaranteed safe default
+        return "alafasy"
 
 def select_meaningful_passage_ai(reciter_id: str = None, recent_history: list = None) -> dict:
     """
