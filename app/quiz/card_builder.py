@@ -169,13 +169,15 @@ def render_question_card(
     explanation = q_data.get("explanation", "")
     
     total_q = q_data.get("total_questions", 3)
+    debate_prompt = q_data.get("debate_prompt", "উত্তর দেখার আগেই কমেন্টে লিখুন!")
+    is_debate_q = (q_num == 2) or ("debate" in str(q_data.get("tier", "")).lower())
     
     # 1. Base Canvas with Boxes
     img = create_base_canvas()
     draw = ImageDraw.Draw(img)
     
-    # Progress pill top right
-    draw_rounded_rect(draw, (790, 165, 1010, 225), radius=20, fill=(30, 50, 42), outline=ACCENT_GOLD_BORDER, width=2)
+    # Score gamification pill top right
+    draw_rounded_rect(draw, (770, 165, 1010, 225), radius=20, fill=(30, 50, 42), outline=ACCENT_GOLD_BORDER, width=2)
     
     # Main Question Box
     qcard_y = 280
@@ -196,19 +198,36 @@ def render_question_card(
         box_coords = (70, opt_y, WIDTH - 70, opt_y + opt_h)
         
         if is_revealed and is_this_correct:
+            # Glowing bright emerald green box with white border on reveal
             draw_rounded_rect(draw, box_coords, radius=25, fill=CORRECT_GREEN, outline=(255, 255, 255), width=3)
+        elif is_revealed:
+            # Dimmed muted box for wrong options
+            draw_rounded_rect(draw, box_coords, radius=25, fill=(12, 22, 18), outline=(20, 38, 32), width=1)
         else:
-            fill_c = (22, 40, 35) if not is_revealed else (15, 28, 25)
-            border_c = (45, 80, 70) if not is_revealed else (25, 45, 40)
-            draw_rounded_rect(draw, box_coords, radius=25, fill=fill_c, outline=border_c, width=2)
+            # Normal state
+            draw_rounded_rect(draw, box_coords, radius=25, fill=(22, 40, 35), outline=(45, 80, 70), width=2)
             
         opt_y += opt_h + opt_gap
         
-    # Bottom Box: Timer OR Sahih Reference
+    # Bottom Box: Timer Progress Bar OR Debate Prompt OR Sahih Reference
     bottom_y = 1260
     if not is_revealed:
-        t_color = (255, 100, 100) if countdown_val == 1 else ACCENT_GOLD_BORDER
-        draw_rounded_rect(draw, (180, bottom_y - 10, WIDTH - 180, bottom_y + 80), radius=25, fill=(30, 45, 38), outline=t_color, width=2)
+        if countdown_val == 3:
+            # 3s Remaining: Wide Green-Gold Bar
+            draw_rounded_rect(draw, (140, bottom_y - 10, WIDTH - 140, bottom_y + 80), radius=25, fill=(24, 48, 38), outline=CORRECT_GREEN, width=2)
+        elif countdown_val == 2:
+            # 2s Remaining: Medium Amber Bar
+            draw_rounded_rect(draw, (200, bottom_y - 10, WIDTH - 200, bottom_y + 80), radius=25, fill=(40, 42, 20), outline=ACCENT_GOLD_BORDER, width=2)
+        elif countdown_val == 1:
+            # 1s Remaining: Urgent Red Bar
+            draw_rounded_rect(draw, (260, bottom_y - 10, WIDTH - 260, bottom_y + 80), radius=25, fill=(50, 22, 22), outline=(255, 80, 80), width=3)
+        else:
+            # Pre-countdown (while question is spoken)
+            if is_debate_q:
+                # High-contrast debate prompt box on Question 2
+                draw_rounded_rect(draw, (100, bottom_y - 10, WIDTH - 100, bottom_y + 80), radius=25, fill=(45, 36, 12), outline=ACCENT_GOLD_BORDER, width=2)
+            else:
+                draw_rounded_rect(draw, (180, bottom_y - 10, WIDTH - 180, bottom_y + 80), radius=25, fill=(30, 45, 38), outline=CARD_BORDER, width=2)
     else:
         if explanation:
             draw_rounded_rect(draw, (70, bottom_y, WIDTH - 70, bottom_y + 190), radius=25, fill=(20, 48, 36), outline=CORRECT_GREEN, width=2)
@@ -228,8 +247,8 @@ def render_question_card(
     dialogues = [
         # Top Header Brand
         f"Dialogue: 0,0:00:00.00,0:00:10.00,Brand,,0,0,0,,{{\\pos(230,195)}}ডেইলি ডোজ ইসলাম",
-        # Question Pill
-        f"Dialogue: 0,0:00:00.00,0:00:10.00,Progress,,0,0,0,,{{\\pos(900,195)}}প্রশ্ন {q_num}/{total_q}",
+        # Gamified Score Pill
+        f"Dialogue: 0,0:00:00.00,0:00:10.00,Progress,,0,0,0,,{{\\pos(890,195)}}স্কোর: ?/{total_q}",
         # Category Tag
         f"Dialogue: 0,0:00:00.00,0:00:10.00,Category,,0,0,0,,{{\\pos(540,325)}}•  {category}  •"
     ]
@@ -246,7 +265,6 @@ def render_question_card(
     honorifics = ["(সা.)", "(আ.)", "(রা.)", "(রহ.)", "(ﷺ)", "(সা)", "(আ)", "(রা)", "(রহ)"]
     for opt in options:
         opt_str = opt.strip()
-        # Protect respectful Islamic honorifics while stripping duplicate synonyms like (নামাজ)
         protected = opt_str
         for idx, h in enumerate(honorifics):
             protected = protected.replace(h, f"__HONORIFIC_{idx}__")
@@ -259,7 +277,8 @@ def render_question_card(
         is_this_correct = (opt_letter == correct_letter) or (correct_opt in opt_str)
         
         if is_revealed and is_this_correct:
-            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,OptGreen,,0,0,0,,{{\\pos(540,{opt_y_text})}}{opt_str}")
+            # Bold checkmark on winning option
+            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,OptGreen,,0,0,0,,{{\\pos(540,{opt_y_text})}}✅  {opt_str}")
         elif is_revealed:
             dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,OptMuted,,0,0,0,,{{\\pos(540,{opt_y_text})}}{opt_str}")
         else:
@@ -267,17 +286,19 @@ def render_question_card(
             
         opt_y_text += 165
         
-    # Bottom: Timer or Sahih Reference
+    # Bottom: Timer or Debate Prompt or Sahih Reference
     if not is_revealed:
-        if countdown_val is not None and countdown_val > 0:
-            # Map numbers to Bengali numerals if preferred
-            bn_nums = {5: "৫", 4: "৪", 3: "৩", 2: "২", 1: "১"}
-            bn_n = bn_nums.get(countdown_val, str(countdown_val))
-            t_text = f"উত্তর আসছে:  {bn_n} সেকেন্ড"
-            style_name = "TimerRed" if countdown_val == 1 else "TimerGold"
-            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,{style_name},,0,0,0,,{{\\pos(540,{bottom_y + 35})}}{t_text}")
+        if countdown_val == 3:
+            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,TimerGreen,,0,0,0,,{{\\pos(540,{bottom_y + 35})}}⏳ সময় বাকি: ৩ সেকেন্ড...")
+        elif countdown_val == 2:
+            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,TimerGold,,0,0,0,,{{\\pos(540,{bottom_y + 35})}}⏳ সময় বাকি: ২ সেকেন্ড...")
+        elif countdown_val == 1:
+            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,TimerRed,,0,0,0,,{{\\pos(540,{bottom_y + 35})}}⏳ দ্রুত ভাবুন: ১ সেকেন্ড...!")
         else:
-            dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,TimerGold,,0,0,0,,{{\\pos(540,{bottom_y + 35})}}সঠিক উত্তর কোনটি ভাবুন...")
+            if is_debate_q:
+                dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,DebatePrompt,,0,0,0,,{{\\pos(540,{bottom_y + 35})}}👇 {debate_prompt}")
+            else:
+                dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,TimerGold,,0,0,0,,{{\\pos(540,{bottom_y + 35})}}সঠিক উত্তর কোনটি ভাবুন...")
     else:
         if explanation:
             dialogues.append(f"Dialogue: 0,0:00:00.00,0:00:10.00,RefBadge,,0,0,0,,{{\\pos(540,{bottom_y + 35})}}•  সহীহ তথ্যসূত্র  •")
@@ -302,7 +323,9 @@ Style: OptNormal,Noto Sans Bengali,44,&H00FFFFFF,&H000000FF,&H00000000,&H8000000
 Style: OptGreen,Noto Sans Bengali,46,&H000F1905,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
 Style: OptMuted,Noto Sans Bengali,44,&H00878C78,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
 Style: TimerGold,Noto Sans Bengali,42,&H0041AFEB,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
-Style: TimerRed,Noto Sans Bengali,44,&H006464FF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: TimerGreen,Noto Sans Bengali,42,&H0076E600,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: TimerRed,Noto Sans Bengali,44,&H005050FF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+Style: DebatePrompt,Noto Sans Bengali,38,&H0041AFEB,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
 Style: RefBadge,Noto Sans Bengali,30,&H0076E600,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
 Style: RefBody,Noto Sans Bengali,34,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,1
 

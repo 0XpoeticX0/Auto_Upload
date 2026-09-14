@@ -88,46 +88,20 @@ def expand_honorifics_spoken(text: str) -> str:
     res = re.sub(r'\(\s*(?:রা\.|রা)\s*\)', repl_ra, res)
     return res
 
-def format_spoken_question(q_num: int, q_text: str, options: list[str], language: str = "bn") -> str:
+def format_spoken_question(q_num: int, q_text: str, options: list[str] = None, language: str = "bn") -> str:
     """
     Formats spoken question:
-    - Fast, natural conversational delivery without artificial awkward pauses
-    - No literal 'অপশন' / 'Option'
-    - Strips 'ক)', 'খ)', 'গ)' (does NOT speak them)
-    - Inserts 'নাকি' (or 'or') before the last option
-    - Fully expands (সা.), (রা.), (আ.) honorifics
+    - Fast, punchy, energetic question delivery.
+    - DOES NOT read out the options (options are read on-screen by the viewer during the 3-second timer).
+    - Saves 5-7 seconds of boring audio per question, boosting watch-time and visual engagement!
     """
     q_clean = enhance_islamic_pronunciation(expand_honorifics_spoken(clean_text_ass(q_text))).rstrip("।? ")
-    
-    opts_clean = []
-    for opt in options:
-        # Strip prefixes like "ক) ", "খ) ", "গ) ", "A) ", "B) ", "C) "
-        opt_t = re.sub(r'^[কখগঘABCDEFabcdef\d]+[\)\.\:\-]\s*', '', opt.strip())
-        # Strip parenthetical synonyms/duplicates
-        opt_t = re.sub(r'\s*[\(\[\{][^\)\]\}]*[\)\]\}]', '', opt_t).strip()
-        opt_t = enhance_islamic_pronunciation(expand_honorifics_spoken(clean_text_ass(opt_t))).strip()
-        opt_t = re.sub(r'\s+', ' ', opt_t)
-        opts_clean.append(opt_t)
-        
     bn_nums = {1: "১", 2: "২", 3: "৩", 4: "৪", 5: "৫"}
     num_str = bn_nums.get(q_num, str(q_num))
-    
     if language == "bn":
-        if len(opts_clean) >= 3:
-            spoken_opts = f"{opts_clean[0]}, {opts_clean[1]}, নাকি {opts_clean[2]}?"
-        elif len(opts_clean) == 2:
-            spoken_opts = f"{opts_clean[0]}, নাকি {opts_clean[1]}?"
-        else:
-            spoken_opts = ", ".join(opts_clean)
-        return f"প্রশ্ন {num_str}। {q_clean}? {spoken_opts}"
+        return f"প্রশ্ন {num_str}। {q_clean}?"
     else:
-        if len(opts_clean) >= 3:
-            spoken_opts = f"{opts_clean[0]}, {opts_clean[1]}, or {opts_clean[2]}?"
-        elif len(opts_clean) == 2:
-            spoken_opts = f"{opts_clean[0]}, or {opts_clean[1]}?"
-        else:
-            spoken_opts = ", ".join(opts_clean)
-        return f"Question {q_num}. {q_clean}? {spoken_opts}"
+        return f"Question {q_num}. {q_clean}?"
 
 def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_sample_video.mp4", language: str = "bn") -> str | None:
     """
@@ -195,20 +169,23 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         q_text = q.get("question", "")
         options = q.get("options", [])
         
-        # 1. Voice for question and options WITHOUT saying 'option/অপশন'
-        q_voice_text = format_spoken_question(q_num, q_text, options, language=language)
+        # 1. Voice for question ONLY (punchy, energetic delivery at +8% speed)
+        q_voice_text = format_spoken_question(q_num, q_text, language=language)
         q_voice_mp3 = os.path.join(temp_dir, f"q_{q_num}_voice.mp3")
-        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+5%")
+        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+8%")
         
         voice_dur = get_audio_duration(q_voice_mp3)
-        base_dur = voice_dur + 0.05  # Snappy transition to countdown
-        countdown_dur = 1.5          # 1.5s thinking timer
-        reveal_dur = 1.4             # 1.4s clear reveal
+        base_dur = voice_dur + 0.10  # Snappy transition to countdown
+        countdown_dur = 3.0          # 3.0s thinking timer (3... 2... 1...)
+        reveal_dur = 2.0             # 2.0s clear reveal with explanation
         total_q_dur = base_dur + countdown_dur + reveal_dur
         
         # Generate images for question states
         q_base_img = os.path.join(temp_dir, f"q_{q_num}_base.jpg")
         render_question_card(q, countdown_val=None, is_revealed=False, out_path=q_base_img)
+        
+        q_c3_img = os.path.join(temp_dir, f"q_{q_num}_c3.jpg")
+        render_question_card(q, countdown_val=3, is_revealed=False, out_path=q_c3_img)
         
         q_c2_img = os.path.join(temp_dir, f"q_{q_num}_c2.jpg")
         render_question_card(q, countdown_val=2, is_revealed=False, out_path=q_c2_img)
@@ -225,6 +202,8 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
             f.write("ffconcat version 1.0\n")
             f.write(f"file '{os.path.abspath(q_base_img).replace(chr(92), '/')}'\n")
             f.write(f"duration {base_dur:.3f}\n")
+            f.write(f"file '{os.path.abspath(q_c3_img).replace(chr(92), '/')}'\n")
+            f.write("duration 1.000\n")
             f.write(f"file '{os.path.abspath(q_c2_img).replace(chr(92), '/')}'\n")
             f.write("duration 1.000\n")
             f.write(f"file '{os.path.abspath(q_c1_img).replace(chr(92), '/')}'\n")
@@ -233,10 +212,11 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
             f.write(f"duration {reveal_dur:.3f}\n")
             f.write(f"file '{os.path.abspath(q_rev_img).replace(chr(92), '/')}'\n")
             
-        # 3. Build composite audio track with 2 clock ticks + reveal bell chime
+        # 3. Build composite audio track with 3 clock ticks + reveal bell chime
         t1 = base_dur
         t2 = base_dur + 1.0
-        t_bell = base_dur + 2.0
+        t3 = base_dur + 2.0
+        t_bell = base_dur + 3.0
         
         q_composite_audio = os.path.join(temp_dir, f"q_{q_num}_composite_audio.mp3")
         cmd_q_audio = [
@@ -244,13 +224,15 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
             "-i", q_voice_mp3,
             "-i", sfx["clock_tick"],
             "-i", sfx["clock_tick"],
+            "-i", sfx["clock_tick"],
             "-i", sfx["correct_bell"],
             "-filter_complex",
             f"[1:a]adelay={int(t1*1000)}|{int(t1*1000)},volume=0.80[tick1];"
-            f"[2:a]adelay={int(t2*1000)}|{int(t2*1000)},volume=0.90[tick2];"
-            f"[3:a]adelay={int(t_bell*1000)}|{int(t_bell*1000)},volume=0.85[bell];"
+            f"[2:a]adelay={int(t2*1000)}|{int(t2*1000)},volume=0.85[tick2];"
+            f"[3:a]adelay={int(t3*1000)}|{int(t3*1000)},volume=1.0[tick3];"
+            f"[4:a]adelay={int(t_bell*1000)}|{int(t_bell*1000)},volume=0.90[bell];"
             f"[0:a]volume=1.0[voice];"
-            f"[voice][tick1][tick2][bell]amix=inputs=4:duration=longest:dropout_transition=0:normalize=0[outa]",
+            f"[voice][tick1][tick2][tick3][bell]amix=inputs=5:duration=longest:dropout_transition=0:normalize=0[outa]",
             "-map", "[outa]",
             "-t", f"{total_q_dur:.3f}",
             "-b:a", "192k",

@@ -117,29 +117,30 @@ def record_used_quiz_questions(quiz_script: dict, video_id: int | None = None) -
 
 def format_quiz_metadata(quiz_script: dict) -> dict:
     """
-    Generates high-converting, SEO-optimized metadata for the Quiz video
-    including all 5 questions, correct answers, and Sahih references.
+    Generates high-converting, SEO-optimized metadata for the 3-Question Quiz video
+    including dynamic pinned comments and score challenge copy.
     """
-    raw_title = quiz_script.get("title", "ইসলামিক জ্ঞান কুইজ ☪️ (৫-এ আপনার স্কোর কত?)")
+    raw_title = quiz_script.get("title", "৯৯% মানুষ ৩ নম্বর প্রশ্নে আটকে যায়! 🧠 (৩-এ আপনার স্কোর কত?)")
     if "#Shorts" not in raw_title and "#shorts" not in raw_title:
         yt_title = f"{raw_title} #Shorts"
     else:
         yt_title = raw_title
         
-    hook_text = quiz_script.get("hook", {}).get("headline", "আপনার ইসলামিক জ্ঞান যাচাই করুন!")
+    hook_text = quiz_script.get("hook", {}).get("headline", "৯৯% মানুষ ২ ও ৩ নম্বর প্রশ্নে আটকে যায়! 🧠")
+    outro_pinned = quiz_script.get("outro", {}).get("pinned_comment", "৩/৩ কার কার হয়েছে? কমেন্টে 'মাশাআল্লাহ' লিখুন! 👇 আর ২ নম্বর প্রশ্নের উত্তর আপনি কি আগে জানতেন?")
     
-    desc = f"{raw_title}\n\nআপনার ইসলামিক জ্ঞান কতটা মজবুত? ☪️\n৫টি প্রশ্নের উত্তর দিয়ে নিজের স্কোর যাচাই করুন!\n\n💡 কতগুলো সঠিক হলো? কমেন্টে আপনার স্কোর (৫/৫, ৪/৫) জানান! 👇\n\n"
-    desc += "✨ In English:\nInteractive 5-Question Islamic Quiz. Test your knowledge on core pillars, prophets, Quran, and Sahih Hadith. Share your score in the comments!\n\n"
+    desc = f"{raw_title}\n\nআপনার ইসলামিক জ্ঞান কতটা মজবুত? ☪️\n৩টি আকর্ষণীয় প্রশ্নের উত্তর দিয়ে নিজের স্কোর যাচাই করুন!\n\n💡 কতগুলো সঠিক হলো? সততার সাথে কমেন্টে আপনার স্কোর (৩/৩, ২/৩) জানান! 👇\n\n"
+    desc += "✨ In English:\nInteractive 3-Question Islamic Quiz. Test your knowledge on core pillars, common misconceptions, prophets, and Quran secrets. Share your score in the comments!\n\n"
     desc += "━━━━━━━━━━━━━━━━━━━━\n📌 আমাদের সাথে যুক্ত থাকুন:\n🔹 YouTube: https://www.youtube.com/@dailydos-no1\n🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n"
-    desc += "#IslamicQuiz #BanglaIslamic #DailyDos #MuslimQuiz #ইসলামিকপোস্ট #Shorts #ReelsViral #ExplorePage"
+    desc += "#IslamicQuiz #BanglaIslamic #DailyDos #MuslimQuiz #ইসলামিককুইজ #Shorts #ReelsViral #ExplorePage"
     
     return {
         "youtube_title": yt_title[:100],
         "facebook_title": raw_title,
         "description": desc.strip(),
-        "pinned_comment": "আজকের কুইজে আপনার স্কোর ৫-এ কত হলো? ৫/৫, ৪/৫ নাকি ৩/৫? কমেন্টে জানান! 👇",
-        "english_title": "Islamic Knowledge Quiz: Test Your Deen #Shorts",
-        "english_description": "Interactive 5-question Islamic quiz on core pillars, worship, prophets, Quran, and Sahih Hadith. Test your knowledge and share your score in the comments.",
-        "tags": ["Shorts", "IslamicQuiz", "MuslimQuiz", "TestYourKnowledge", "BanglaIslamic", "ইসলামিকপোস্ট", "DailyDos", "ReelsViral", "ShortsFeed", "সহীহ_হাদিস", "LearnIslam", "ExplorePage"],
+        "pinned_comment": outro_pinned,
+        "english_title": "Islamic Knowledge Quiz: 99% Fail Q3! Can You Score 3/3? #Shorts",
+        "english_description": "Interactive 3-question Islamic quiz on daily worship, common misconceptions, and Quran secrets. Test your knowledge and share your score in the comments.",
+        "tags": ["Shorts", "IslamicQuiz", "MuslimQuiz", "TestYourKnowledge", "BanglaIslamic", "ইসলামিককুইজ", "DailyDos", "ReelsViral", "ShortsFeed", "সহীহ_হাদিস", "LearnIslam", "ExplorePage"],
         "category": "educational"
     }
