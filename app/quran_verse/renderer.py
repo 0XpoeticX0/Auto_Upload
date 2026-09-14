@@ -181,10 +181,39 @@ def format_english_subtitles_for_ass(en_raw: str, max_words_per_line: int = 7) -
         wrapped = f"{line1}\\N{line2}"
     return f'"{wrapped}"'
 
+def split_into_n_chunks(text: str, n: int, lang: str = 'bn') -> list:
+    """Splits text into n balanced chunks at natural punctuation boundaries."""
+    if not text or n <= 1:
+        return [text]
+    words = text.split()
+    total_words = len(words)
+    if total_words <= n:
+        return [text]
+    
+    target_len = total_words / float(n)
+    chunks = []
+    curr_idx = 0
+    delims = ['।', '!', '?', ';', '—', ','] if lang == 'bn' else ['.', '!', '?', ';', ':', '—', ',']
+    
+    for c_i in range(n - 1):
+        target_idx = int(round((c_i + 1) * target_len))
+        best_split = target_idx
+        search_range = range(max(curr_idx + 2, target_idx - 4), min(total_words - 2, target_idx + 5))
+        for idx in search_range:
+            if any(words[idx].endswith(d) or words[idx].startswith(d) for d in delims):
+                best_split = idx + 1
+                break
+        chunk = ' '.join(words[curr_idx:best_split])
+        chunks.append(chunk)
+        curr_idx = best_split
+    
+    chunks.append(' '.join(words[curr_idx:]))
+    return chunks
+
 def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah_dur: float, start_sec: float) -> list:
     """
-    Splits long ayahs (> 8.5 seconds or > 8 words) into natural recitation clauses at Quranic waqf marks,
-    sentence pauses, or proportional midpoints, ensuring Arabic, Bengali, and English all fit the screen cleanly.
+    Splits long ayahs (> 8.5 seconds or > 8 words) into natural recitation clauses,
+    ensuring Arabic, Bengali, and English all fit the screen cleanly and symmetrically.
     """
     waqf_pattern = r'([ۚۗۖۘۙۛۜ])'
     ar_parts = [p.strip() for p in re.split(waqf_pattern, ar_text) if p.strip()]
@@ -195,97 +224,46 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah
         else:
             merged_ar.append(p)
 
-    bn_parts = [b.strip() for b in re.split(r'([।;,—])', bn_text) if b.strip()]
-    merged_bn = []
-    for b in bn_parts:
-        if b in '।;,—' and merged_bn:
-            merged_bn[-1] += b
+    # Determine optimal number of chunks:
+    if len(merged_ar) >= 2 and all(len(c.split()) >= 3 for c in merged_ar):
+        ar_chunks = merged_ar
+        n = len(merged_ar)
+    else:
+        # Target ~8-11s per clause
+        n = max(2, int(round(total_ayah_dur / 9.5)))
+        ar_words = ar_text.split()
+        w_per_chunk = max(1, int(round(len(ar_words) / float(n))))
+        ar_chunks = []
+        for i in range(n - 1):
+            ar_chunks.append(" ".join(ar_words[i * w_per_chunk : (i + 1) * w_per_chunk]))
+        ar_chunks.append(" ".join(ar_words[(n - 1) * w_per_chunk:]))
+
+    bn_chunks = split_into_n_chunks(bn_text, n, 'bn')
+    en_chunks = split_into_n_chunks(en_text, n, 'en') if en_text else [""] * n
+
+    total_ar_words = sum(len(c.split()) for c in ar_chunks)
+    curr_start = start_sec
+    clauses = []
+
+    for i in range(n):
+        p_words = len(ar_chunks[i].split())
+        if i == n - 1:
+            curr_end = start_sec + total_ayah_dur
         else:
-            merged_bn.append(b)
+            prop = p_words / max(1, total_ar_words)
+            c_dur = max(3.0, total_ayah_dur * prop)
+            curr_end = min(start_sec + total_ayah_dur - 2.5, round(curr_start + c_dur, 2))
 
-    en_parts = [e.strip() for e in re.split(r'([;,:—])', en_text) if e.strip()] if en_text else []
-    merged_en = []
-    for e in en_parts:
-        if e in ';,:—' and merged_en:
-            merged_en[-1] += e
-        else:
-            merged_en.append(e)
+        clauses.append({
+            "start": curr_start,
+            "end": curr_end,
+            "arabic": ar_chunks[i],
+            "bengali": bn_chunks[i] if i < len(bn_chunks) else "",
+            "english": en_chunks[i] if i < len(en_chunks) else ""
+        })
+        curr_start = curr_end
 
-    if len(merged_ar) > 1 and len(merged_ar) == len(merged_bn):
-        total_ar_words = sum(len(p.split()) for p in merged_ar)
-        curr_start = start_sec
-        clauses = []
-        for i in range(len(merged_ar)):
-            p_words = len(merged_ar[i].split())
-            if i == len(merged_ar) - 1:
-                curr_end = start_sec + total_ayah_dur
-            else:
-                prop = p_words / max(1, total_ar_words)
-                c_dur = max(3.0, total_ayah_dur * prop)
-                curr_end = min(start_sec + total_ayah_dur - 2.5, curr_start + c_dur)
-
-            en_chunk = merged_en[i] if i < len(merged_en) else ""
-            if not en_chunk and en_text:
-                en_words = en_text.split()
-                w_per_part = max(1, len(en_words) // len(merged_ar))
-                en_chunk = " ".join(en_words[i*w_per_part : (i+1)*w_per_part if i < len(merged_ar)-1 else None])
-
-            clauses.append({
-                "start": curr_start,
-                "end": curr_end,
-                "arabic": merged_ar[i],
-                "bengali": merged_bn[i],
-                "english": en_chunk
-            })
-            curr_start = curr_end
-        return clauses
-
-    bn_words = bn_text.strip().split()
-    ar_words = ar_text.strip().split()
-    en_words = en_text.strip().split() if en_text else []
-
-    if total_ayah_dur > 8.0 and (len(bn_words) > 8 or len(ar_words) > 7 or len(en_words) > 8):
-        bn_mid = (len(bn_words) + 1) // 2
-        split_idx = bn_mid
-        for idx, w in enumerate(bn_words):
-            if any(p in w for p in ['।', ',', ';', '—']) and 2 <= idx <= len(bn_words) - 3:
-                split_idx = idx + 1
-                break
-        
-        ar_mid = (len(ar_words) + 1) // 2
-        ar_prop = ar_mid / max(1, len(ar_words))
-        split_time = start_sec + round(total_ayah_dur * ar_prop, 2)
-
-        en_split_idx = (len(en_words) + 1) // 2 if en_words else 0
-        for idx, w in enumerate(en_words):
-            if any(p in w for p in [':', ';', ',', '.', '—']) and 2 <= idx <= len(en_words) - 3:
-                en_split_idx = idx + 1
-                break
-
-        return [
-            {
-                "start": start_sec,
-                "end": split_time,
-                "arabic": " ".join(ar_words[:ar_mid]),
-                "bengali": " ".join(bn_words[:split_idx]),
-                "english": " ".join(en_words[:en_split_idx]) if en_words else ""
-            },
-            {
-                "start": split_time,
-                "end": start_sec + total_ayah_dur,
-                "arabic": " ".join(ar_words[ar_mid:]),
-                "bengali": " ".join(bn_words[split_idx:]),
-                "english": " ".join(en_words[en_split_idx:]) if en_words else ""
-            }
-        ]
-
-    return [{
-        "start": start_sec,
-        "end": start_sec + total_ayah_dur,
-        "arabic": ar_text,
-        "bengali": bn_text,
-        "english": en_text
-    }]
+    return clauses
 
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
