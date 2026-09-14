@@ -16,4 +16,5 @@ playwright
 arabic-reshaper
 python-bidi
 openai-whisper
-
+deepfilternet
+gradio_client

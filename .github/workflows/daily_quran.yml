@@ -62,6 +62,7 @@ jobs:
           TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://tvezntceubxaqvcicyyc.supabase.co' }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2ZXpudGNldWJ4YXF2Y2ljeXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NTg0NjgsImV4cCI6MjA5OTMzNDQ2OH0.sx5A6WT54mQUqqMDvrDZqo-mCURidOpVri-j7JFekq0' }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           if [ -n "$ENV_FILE" ]; then
             echo "$ENV_FILE" > .env
@@ -92,6 +93,7 @@ jobs:
           [ -n "$TIKTOK_ACCESS_TOKEN" ] && ! grep -q "TIKTOK_ACCESS_TOKEN=" .env 2>/dev/null && echo "TIKTOK_ACCESS_TOKEN=$TIKTOK_ACCESS_TOKEN" >> .env
           [ -n "$SUPABASE_URL" ] && ! grep -q "SUPABASE_URL=" .env 2>/dev/null && echo "SUPABASE_URL=$SUPABASE_URL" >> .env
           [ -n "$SUPABASE_KEY" ] && ! grep -q "SUPABASE_KEY=" .env 2>/dev/null && echo "SUPABASE_KEY=$SUPABASE_KEY" >> .env
+          [ -n "$HF_TOKEN" ] && ! grep -q "HF_TOKEN=" .env 2>/dev/null && echo "HF_TOKEN=$HF_TOKEN" >> .env
           echo "Successfully configured all environment secrets."
 
       - name: Run Daily Quran Recitation Generator & Upload
@@ -104,6 +106,7 @@ jobs:
           TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://tvezntceubxaqvcicyyc.supabase.co' }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2ZXpudGNldWJ4YXF2Y2ljeXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NTg0NjgsImV4cCI6MjA5OTMzNDQ2OH0.sx5A6WT54mQUqqMDvrDZqo-mCURidOpVri-j7JFekq0' }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           python -m app.quran_verse.scheduler --upload
 

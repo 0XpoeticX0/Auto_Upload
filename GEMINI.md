@@ -34,3 +34,8 @@
 - **Dual Visual Styles (Selected at Random)**:
   - **Style A (100% Pure Quran on Rehal)**: Fast-paced 4 to 7-second scene cuts cycling purely between 5 distinct 8K angles and camera motions (`zoom_in`, `zoom_out`, `pan_up`) of the Holy Quran on the wooden Rehal.
   - **Style B (Balanced Hybrid)**: Holy Quran on the Rehal anchored every few seconds, interwoven with authentic nature video B-rolls (`ocean_720.mp4`, `clouds_720.mp4`, `desert_720.mp4`) and sacred calligraphy.
+
+## 5. Reciter & Audio Enhancement Mandate (Permanent Standard)
+- **Strictly 2 Approved Reciters**: ONLY use **Sheikh Yasser Ad-Dossari** (`dossari`) and **Sheikh Mishary Rashid Alafasy** (`alafasy`). Strictly NO other reciters.
+- **Resemble Enhance Full Studio AI**: All recitation audio MUST be processed using **Resemble Enhance** (CFM ODE Midpoint solver, De-Reverb + high-frequency voice harmonic restoration) to deliver close-mic, intimate, crystal-clear studio acoustics. Fallback to DeepFilterNet3 only if cloud access is unavailable.
+

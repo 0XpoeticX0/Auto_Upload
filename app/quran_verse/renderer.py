@@ -265,13 +265,24 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah
 
     return clauses
 
+def highlight_sacred_words(text: str) -> str:
+    """Highlights sacred theological words in Royal Gold (&H0041AFEB&) with strict Bengali Unicode boundaries to prevent broken glyphs."""
+    if not text:
+        return ""
+    # Clean zero-width directional marks that cause dotted circle font errors
+    text = text.replace('\u200e', '').replace('\u200f', '').replace('\u200b', '')
+    sacred = ['আল্লাহর?', 'আল্লাহকে', 'আল্লাহই', 'রব', 'রবের', 'তাওয়াক্কুল', 'রিযিক্ব?', 'রিযক', 'রহমত', 'রহমতের', 'জান্নাত', 'ঈমান', 'পরকাল']
+    pattern = re.compile(r'(?<![ঀ-৾])(' + '|'.join(sacred) + r')(?![ঀ-৾])')
+    return pattern.sub(r'{\\c&H0041AFEB&}\1{\\c&H00FFFFFF&}', text)
+
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
     Builds ASS subtitles strictly matching the Top 20% Video + Bottom 80% Black Lyrics Card aesthetic:
+    - Elegant Gold Islamic Divider at Y=410
     - Permanent Header badge at Y=490 (Kalpurush 48 Gold)
     - Permanent SubHeader badge at Y=555 (Segoe UI 34 Silver)
     - Synchronized Arabic verse at Y=780 (Amiri 82 White)
-    - Synchronized Bengali translation at Y=1030 (Kalpurush 68 White)
+    - Synchronized Bengali translation at Y=1030 (Kalpurush 68 White with Royal Gold sacred highlights)
     - Synchronized English translation at Y=1260 (Segoe UI 40 Silver)
     """
     surah_name_bn = verse_data["surah_name_bn"]
@@ -293,6 +304,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Divider,Segoe UI,18,&H0015CCFA,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1.0,0.5,5,20,20,20,1
 Style: Header,Kalpurush,48,&H0015CCFA,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.8,1.5,5,60,60,40,1
 Style: SubHeader,Segoe UI,34,&H00A0A0A0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1.8,1.0,5,60,60,40,1
 Style: Arabic,Amiri,82,&H00FFFFFF,&H000000FF,&H00101010,&H80000000,1,0,0,0,100,100,0,0,1,3.2,2.2,5,50,50,50,1
@@ -301,10 +313,13 @@ Style: English,Segoe UI,40,&H00D0D0D0,&H000000FF,&H00000000,&H80000000,0,0,0,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+; Permanent Luxury Divider Line
+Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},Divider,,0,0,0,,{{\\pos(540,410)\\fad(400,400)}}{{\\c&H0015CCFA&}}───────────  ✦  ───────────
 ; Permanent Header Badge
 Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},Header,,0,0,0,,{{\\pos(540,490)\\fad(400,400)}}{top_badge_bn}
 Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubHeader,,0,0,0,,{{\\pos(540,555)\\fad(400,400)}}{top_badge_en}
 """
+
     for timing in ayah_timings:
         start_sec = timing["start"]
         end_sec = timing["end"]
@@ -317,7 +332,7 @@ Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubHeader,,0,0,0,,{{\\pos(54
             start_str = format_ass_time(start_sec)
             end_str = format_ass_time(end_sec)
             ar_clean = wrap_and_format_arabic(ar_raw, words_per_line=5)
-            bn_clean = format_bengali_subtitles_for_ass(bn_raw, words_per_line=5)
+            bn_clean = highlight_sacred_words(format_bengali_subtitles_for_ass(bn_raw, words_per_line=5))
             en_clean = format_english_subtitles_for_ass(en_raw, max_words_per_line=7)
 
             ass_content += f"Dialogue: 1,{start_str},{end_str},Arabic,,0,0,0,,{{\\pos(540,780)\\fad(350,300)}}{ar_clean}\n"
@@ -330,7 +345,7 @@ Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubHeader,,0,0,0,,{{\\pos(54
                 c_start_str = format_ass_time(c["start"])
                 c_end_str = format_ass_time(c["end"])
                 ar_clean = wrap_and_format_arabic(c["arabic"], words_per_line=5)
-                bn_clean = format_bengali_subtitles_for_ass(c["bengali"], words_per_line=5)
+                bn_clean = highlight_sacred_words(format_bengali_subtitles_for_ass(c["bengali"], words_per_line=5))
                 en_clean = format_english_subtitles_for_ass(c["english"], max_words_per_line=7)
 
                 ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},Arabic,,0,0,0,,{{\\pos(540,780)\\fad(350,300)}}{ar_clean}\n"
@@ -342,6 +357,7 @@ Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubHeader,,0,0,0,,{{\\pos(54
         f.write(ass_content)
 
     logger.info(f"Generated Quran ASS subtitles at: {ass_path}")
+
 
 def render_subpixel_smooth_scene_clip(image_path: str, duration: float, motion_type: str, out_path: str, fps: int = 60):
     """
