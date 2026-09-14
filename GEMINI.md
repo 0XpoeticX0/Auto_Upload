@@ -37,7 +37,9 @@
 
 ## 5. Reciter & Audio Enhancement Mandate (Permanent Standard)
 - **Strictly 2 Approved Reciters**: ONLY use **Sheikh Yasser Ad-Dossari** (`dossari`) and **Sheikh Mishary Rashid Alafasy** (`alafasy`). Strictly NO other reciters.
+- **Thematic Emotion-to-Voice Matching**: Intelligently match the passage's emotional frequency to the ideal reciter: assign **Sheikh Mishary Rashid Alafasy** to comfort, solace, mercy, hope, repentance, Dua, family, and Jannah (soothing warm baritone); assign **Sheikh Yasser Ad-Dossari** to divine majesty, sovereignty, Day of Judgment (Qiyamah), absolute Tawakkul, and cosmic oaths (commanding thunderous delivery).
 - **Resemble Enhance Full Studio AI**: All recitation audio MUST be processed using **Resemble Enhance** (CFM ODE Midpoint solver, De-Reverb + high-frequency voice harmonic restoration) to deliver close-mic, intimate, crystal-clear studio acoustics. Fallback to DeepFilterNet3 only if cloud access is unavailable.
+
 
 ## 6. Zero-Duplication & Anti-Repetition Mandate (Last 30 Videos)
 - **Strict 30-Video Memory**: Programmatically block and reject any Quranic Surah, Ayah range, passage, or theme that has been published within the **last 30 videos** (tracked across Supabase cloud memory and local video history).

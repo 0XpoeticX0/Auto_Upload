@@ -183,77 +183,88 @@ CURATED_COMPLETE_PASSAGES = [
         "ayah_start": 1,
         "ayah_end": 8,
         "theme_hint": "কষ্টের পরেই স্বস্তির মহাপ্রতিশ্রুতি (Surah Ash-Sharh Complete)",
-        "reflection_bn": "আল্লাহ তায়ালা মুমিনকে সান্ত্বনা দিয়ে নিশ্চিত করেছেন যে, প্রতিটি সংকটের সাথেই আল্লাহ মুক্তির পথ ও প্রশান্তি নির্ধারণ করে রেখেছেন।"
+        "reflection_bn": "আল্লাহ তায়ালা মুমিনকে সান্ত্বনা দিয়ে নিশ্চিত করেছেন যে, প্রতিটি সংকটের সাথেই আল্লাহ মুক্তির পথ ও প্রশান্তি নির্ধারণ করে রেখেছেন।",
+        "ideal_reciter": "alafasy"  # Comfort, gentle solace & heart healing
     },
     {
         "surah": 93,
         "ayah_start": 1,
         "ayah_end": 11,
         "theme_hint": "হতাশা দূরীকরণ ও আল্লাহর গভীর অনুগ্রহ (Surah Ad-Duha Complete)",
-        "reflection_bn": "আল্লাহ কখনো তাঁর বান্দাকে ত্যাগ করেন না। অন্ধকার রাতের পর যেমন সোনালী সকাল আসে, তেমনি জীবনের কঠিন সময়ও কেটে যায়।"
+        "reflection_bn": "আল্লাহ কখনো তাঁর বান্দাকে ত্যাগ করেন না। অন্ধকার রাতের পর যেমন সোনালী সকাল আসে, তেমনি জীবনের কঠিন সময়ও কেটে যায়।",
+        "ideal_reciter": "alafasy"  # Warm reassurance & divine affection
     },
     {
         "surah": 65,
-        "ayah_start": 3,
+        "ayah_start": 2,
         "ayah_end": 3,
-        "theme_hint": "তাকওয়া, অভাবনীয় রিজিক ও তাওয়াক্কুল (Surah At-Talaq 3)",
-        "reflection_bn": "যে ব্যক্তি আল্লাহর ওপর তাওয়াক্কুল করে, আল্লাহ তাঁর জন্য এমন উৎস থেকে রিজিক দেন যা মানুষ কল্পনাও করতে পারে না এবং তার জন্য আল্লাহই যথেষ্ট।"
+        "theme_hint": "তাকওয়া, অভাবনীয় রিজিক ও তাওয়াক্কুল (Surah At-Talaq 2-3)",
+        "reflection_bn": "যে ব্যক্তি আল্লাহর ওপর তাওয়াক্কুল করে, আল্লাহ তাঁর জন্য এমন উৎস থেকে রিজিক দেন যা মানুষ কল্পনাও করতে পারে না এবং তার জন্য আল্লাহই যথেষ্ট।",
+        "ideal_reciter": "dossari"  # Absolute Tawakkul, firm decree & high authority
     },
     {
         "surah": 3,
         "ayah_start": 173,
         "ayah_end": 174,
         "theme_hint": "হাসবুনাল্লাহু ওয়া নি'মাল ওয়াকিল ও নিরাপত্তা (Surah Al-Imran 173-174)",
-        "reflection_bn": "বিপদে আল্লাহর ওপর পূর্ণ আস্থা রাখলে মহান আল্লাহ বান্দাকে অপূরণীয় বরকত ও নিরাপত্তা দান করেন।"
+        "reflection_bn": "বিপদে আল্লাহর ওপর পূর্ণ আস্থা রাখলে মহান আল্লাহ বান্দাকে অপূরণীয় বরকত ও নিরাপত্তা দান করেন।",
+        "ideal_reciter": "dossari"  # Courage, steadfastness & battlefield resolve
     },
     {
         "surah": 21,
         "ayah_start": 87,
         "ayah_end": 88,
         "theme_hint": "ইউনুস (আ.)-এর দোয়া ও সর্বসংকট মুক্তি (Surah Al-Anbiya 87-88)",
-        "reflection_bn": "মাছের পেটের মতো ঘোর অন্ধকারেও যখন নবী ইউনুস (আ.) খাঁটি তওবা করে ডাক দিয়েছিলেন, আল্লাহ সেই অসম্ভব সংকট থেকেও তাঁকে উদ্ধার করেছিলেন।"
+        "reflection_bn": "মাছের পেটের মতো ঘোর অন্ধকারেও যখন নবী ইউনুস (আ.) খাঁটি তওবা করে ডাক দিয়েছিলেন, আল্লাহ সেই অসম্ভব সংকট থেকেও তাঁকে উদ্ধার করেছিলেন।",
+        "ideal_reciter": "alafasy"  # Heartfelt repentance, sorrowful Dua & relief
     },
     {
         "surah": 2,
         "ayah_start": 255,
         "ayah_end": 255,
         "theme_hint": "আয়াতুল কুরসী—আল্লাহর সার্বভৌমত্ব ও পরাক্রম (Surah Al-Baqarah 255)",
-        "reflection_bn": "পবিত্র কুরআনের সর্বশ্রেষ্ঠ এই আয়াতে আল্লাহর মহত্ত্ব, জীবন্ত সত্তা এবং নিখিল বিশ্বের ওপর তাঁর পূর্ণ কর্তৃত্বের প্রকাশ ঘটেছে।"
+        "reflection_bn": "পবিত্র কুরআনের সর্বশ্রেষ্ঠ এই আয়াতে আল্লাহর মহত্ত্ব, জীবন্ত সত্তা এবং নিখিল বিশ্বের ওপর তাঁর পূর্ণ কর্তৃত্বের প্রকাশ ঘটেছে।",
+        "ideal_reciter": "dossari"  # Supreme majesty, divine sovereignty & awe
     },
     {
         "surah": 59,
         "ayah_start": 22,
         "ayah_end": 24,
         "theme_hint": "আল্লাহর গুণবাচক শ্রেষ্ঠ নামসমূহ—ইসমে আজম (Surah Al-Hashr 22-24)",
-        "reflection_bn": "আল্লাহর পবিত্র গুণবাচক নামগুলোর জিকির হৃদয়ে গভীর ভয় ও শ্রদ্ধা জাগিয়ে তোলে।"
+        "reflection_bn": "আল্লাহর পবিত্র গুণবাচক নামগুলোর জিকির হৃদয়ে গভীর ভয় ও শ্রদ্ধা জাগিয়ে তোলে।",
+        "ideal_reciter": "dossari"  # Grandeur of divine attributes & cosmic reverence
     },
     {
         "surah": 2,
         "ayah_start": 285,
         "ayah_end": 286,
         "theme_hint": "আমানার রাসূলু—ক্ষমা, রহমত ও শক্তি চাওয়ার সেরা দোয়া (Surah Al-Baqarah 285-286)",
-        "reflection_bn": "আল্লাহ কোনো আত্মাকে তার সাধ্যের অতিরিক্ত দায়িত্ব চাপান না। এই আয়াতদ্বয় রাতের বেলা পাঠ করলে সব অনিষ্ট থেকে সুরক্ষার জন্য যথেষ্ট।"
+        "reflection_bn": "আল্লাহ কোনো আত্মাকে তার সাধ্যের অতিরিক্ত দায়িত্ব চাপান না। এই আয়াতদ্বয় রাতের বেলা পাঠ করলে সব অনিষ্ট থেকে সুরক্ষার জন্য যথেষ্ট।",
+        "ideal_reciter": "alafasy"  # Supplication for mercy, forgiveness & soul peace
     },
     {
         "surah": 28,
         "ayah_start": 24,
         "ayah_end": 24,
         "theme_hint": "মুসা (আ.)-এর অভাব দূর ও সাহায্যের দোয়া (Surah Al-Qasas 24)",
-        "reflection_bn": "মুসা (আ.) যখন একাকী, ক্ষুধার্ত ও সহায়হীন অবস্থায় গাছের ছায়ায় বসে কাতর কণ্ঠে এই দোয়া করেছিলেন, আল্লাহ তাৎক্ষণিক তাঁর খাদ্য, নিরাপত্তা ও পরিবারের ব্যবস্থা করে দিয়েছিলেন।"
+        "reflection_bn": "মুসা (আ.) যখন একাকী, ক্ষুধার্ত ও সহায়হীন অবস্থায় গাছের ছায়ায় বসে কাতর কণ্ঠে এই দোয়া করেছিলেন, আল্লাহ তাৎক্ষণিক তাঁর খাদ্য, নিরাপত্তা ও পরিবারের ব্যবস্থা করে দিয়েছিলেন।",
+        "ideal_reciter": "alafasy"  # Humble helplessness & intimate prayer
     },
     {
         "surah": 25,
         "ayah_start": 74,
         "ayah_end": 74,
         "theme_hint": "নেককার সন্তান ও সুখী দাম্পত্যের সেরা দোয়া (Surah Al-Furqan 74)",
-        "reflection_bn": "পারিবারিক শান্তি ও চোখ জুড়ানো নেককার সন্তানের জন্য রহমানুর রাহীমের কাছে প্রার্থনার এক অনন্য শিক্ষা।"
+        "reflection_bn": "পারিবারিক শান্তি ও চোখ জুড়ানো নেককার সন্তানের জন্য রহমানুর রাহীমের কাছে প্রার্থনার এক অনন্য শিক্ষা।",
+        "ideal_reciter": "alafasy"  # Gentle family love & righteous lineage
     },
     {
         "surah": 89,
         "ayah_start": 27,
         "ayah_end": 30,
         "theme_hint": "প্রশান্ত আত্মার জন্য জান্নাতের ডাক (Surah Al-Fajr 27-30)",
-        "reflection_bn": "যে আত্মা আল্লাহর ওপর সন্তুষ্ট থাকে, মৃত্যুর সময় আল্লাহ নিজে তাকে পরম সমাদরে জান্নাতে ডেকে নেন।"
+        "reflection_bn": "যে আত্মা আল্লাহর ওপর সন্তুষ্ট থাকে, মৃত্যুর সময় আল্লাহ নিজে তাকে পরম সমাদরে জান্নাতে ডেকে নেন।",
+        "ideal_reciter": "alafasy"  # Tranquility, peace & welcome into Jannah
     }
 ]
 
@@ -378,26 +389,50 @@ def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
         "combined_english": " ".join(full_english)
     }
 
-def select_meaningful_passage_ai(reciter_id: str = "alafasy", recent_history: list = None) -> dict:
+def determine_best_reciter_for_passage(surah: int, ayah_start: int, ayah_end: int = None) -> str:
+    """
+    Intelligently assigns the best matching reciter (Alafasy vs. Dossari)
+    based on the theological theme and emotional frequency of the Surah / Ayah range:
+    - 'alafasy': Soothing, warm, melodic baritone -> Ideal for solace, hope, mercy, repentance, Dua, Jannah.
+    - 'dossari': Dramatic, thunderous, high dynamic range -> Ideal for divine power, majesty, Qiyamah, firm decree.
+    """
+    # 1. Check curated passages
+    for p in CURATED_COMPLETE_PASSAGES:
+        if p["surah"] == surah and p["ayah_start"] == ayah_start:
+            return p.get("ideal_reciter", "alafasy")
+
+    # 2. Known emotional mapping
+    # Alafasy territory: Softening sorrow, comfort, prayer, family, Jannah
+    alafasy_surahs = {94, 93, 55, 12, 19, 76, 89, 90, 91, 92, 108, 110, 113, 114}
+    # Dossari territory: Majesty, sovereignty, Day of Judgment, warnings, battle
+    dossari_surahs = {65, 67, 69, 75, 77, 78, 79, 81, 82, 85, 101, 104, 50, 59}
+
+    if surah in alafasy_surahs:
+        return "alafasy"
+    if surah in dossari_surahs:
+        return "dossari"
+
+    # Default balance
+    return "alafasy"
+
+def select_meaningful_passage_ai(reciter_id: str = None, recent_history: list = None) -> dict:
     """
     Uses Gemini to intelligently select a complete, self-contained passage from the Quran
     that has 100% complete meaning, zero missing context, and can finish recitation within 85 seconds.
-    Falls back gracefully to curated passages.
+    Intelligently assigns the most appealing reciter (Alafasy vs. Dossari) based on the passage's emotion.
     """
     avoid_list = "\n- ".join(recent_history[:30]) if recent_history else "None"
-    reciter = RECITERS_CONFIG.get(reciter_id, RECITERS_CONFIG["alafasy"])
 
-    system_prompt = """You are a senior Quran scholar and video producer.
-Your goal is to select a complete, self-contained Quranic passage (under 90 seconds recitation length) that provides a deeply moving, complete message to the viewer.
+    system_prompt = """You are a senior Quran scholar, master audio director, and video producer.
+Your goal is to select a complete, self-contained Quranic passage (under 90 seconds recitation length) that provides a deeply moving, complete message to the viewer, and assign the IDEAL vocal reciter for maximum emotional appeal.
 
 CRITICAL PASSAGE RULES (MANDATORY):
 1. ZERO SIMILAR CONTENT (STRICT ANTI-DUPLICATION): Strictly DO NOT select any Surah, Ayah range, or theme that appears in the last 30 videos listed below. It MUST be a completely fresh, distinct passage.
 2. COMPLETE MEANING & ZERO CUT-OFFS: The passage MUST form a complete, self-contained unit of thought. Never cut off in the middle of a sentence, list, or argument!
 3. DURATION LIMIT: Total recitation length of the verse(s) MUST be between 25 and 85 seconds (typically 1 to 8 ayahs depending on verse length).
-4. EXAMPLES OF COMPLETE UNITS:
-   - A complete short Surah (e.g. Surah Ash-Sharh 94:1-8, Surah Ad-Duha 93:1-11, Surah Al-Fajr 89:27-30, Surah Al-Ikhlas 112:1-4).
-   - A complete Quranic Dua (e.g. Surah Al-Anbiya 21:87-88 Yunus, Surah Taha 20:25-28 Musa, Surah Al-Furqan 25:74, Surah Al-Qasas 28:24).
-   - A complete divine promise or law (e.g. Surah At-Talaq 65:2-3, Surah Al-Imran 3:173-174, Surah Al-Baqarah 2:285-286, Surah Al-Hashr 59:22-24).
+4. THEMATIC VOICE MATCHING (CHOOSE BETWEEN ALAFASY OR DOSSARI):
+   - 'alafasy' (Sheikh Mishary Rashid Alafasy): Choose for comfort, relief from grief, hope, mercy, divine forgiveness, sincere supplication (Dua), family love, gentle reflection, and peace of Paradise. (His warm, melodic, soothing baritone provides deep emotional healing).
+   - 'dossari' (Sheikh Yasser Ad-Dossari): Choose for divine power, supreme sovereignty, majesty, Day of Judgment (Qiyamah), warnings against arrogance, absolute Tawakkul in trials, and cosmic oaths. (His thunderous, high-dynamic, commanding delivery creates awe and reverence).
 
 Output ONLY valid JSON:
 {
@@ -405,17 +440,20 @@ Output ONLY valid JSON:
     "ayah_start": 1,
     "ayah_end": 8,
     "theme_headline": "কঠিন সময়ে মন শান্ত করার পরম সান্ত্বনা",
-    "reflection_bn": "আল্লাহ তায়ালা এই সূরায় জানিয়ে দিয়েছেন যে কষ্টের পরই স্বস্তি আসে। ধৈর্য ধারণ করলে আল্লাহ নিজে সব জটিলতা সহজ করে দেন।"
+    "reflection_bn": "আল্লাহ তায়ালা এই সূরায় জানিয়ে দিয়েছেন যে কষ্টের পরই স্বস্তি আসে। ধৈর্য ধারণ করলে আল্লাহ নিজে সব জটিলতা সহজ করে দেন।",
+    "recommended_reciter": "alafasy",
+    "reciter_rationale": "Surah Ash-Sharh is a gentle message of divine solace; Alafasy's warm, comforting baritone maximizes emotional appeal."
 }"""
 
+    reciter_hint = f"Pre-selected reciter: {reciter_id}" if reciter_id else "Select the best matching reciter ('alafasy' or 'dossari') based on the theological emotion."
+
     user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation.
-Reciter: {reciter['name_bn']} ({reciter['name_en']}).
+{reciter_hint}
 
 MANDATORY AVOID LIST (Last 30 Videos - DO NOT REPEAT ANY OF THESE):
 - {avoid_list}
 
-Select a fresh, unique, inspiring passage not found in the list above with 100% complete contextual integrity. Return valid JSON only."""
-
+Select a fresh, unique, inspiring passage not found in the list above with 100% complete contextual integrity and assign the winning reciter. Return valid JSON only."""
 
     try:
         data = extract_json(system_prompt, user_prompt, max_tokens=600)
@@ -424,12 +462,25 @@ Select a fresh, unique, inspiring passage not found in the list above with 100% 
             start = int(data["ayah_start"])
             end = int(data.get("ayah_end") or start)
             
+            # Determine winning reciter
+            chosen_reciter_id = reciter_id
+            if not chosen_reciter_id:
+                rec_candidate = str(data.get("recommended_reciter") or data.get("reciter_id") or "").lower().strip()
+                if rec_candidate in RECITERS_CONFIG:
+                    chosen_reciter_id = rec_candidate
+                else:
+                    chosen_reciter_id = determine_best_reciter_for_passage(surah, start, end)
+
+            reciter = RECITERS_CONFIG.get(chosen_reciter_id, RECITERS_CONFIG["alafasy"])
+            logger.info(f"🎙️ [Voice-Theme Matcher] Assigned {reciter['name_en']} ({chosen_reciter_id}) for Surah {surah}:{start}-{end}. Rationale: {data.get('reciter_rationale', 'Thematic resonance')}")
+
             # Fetch data from API
             verse_data = fetch_verse_data(surah, start, end)
             verse_data["theme_headline"] = data.get("theme_headline", "কোরআনের আলো ও হেদায়াত")
             verse_data["reflection_bn"] = data.get("reflection_bn", "")
-            verse_data["reciter_id"] = reciter_id
+            verse_data["reciter_id"] = chosen_reciter_id
             verse_data["reciter"] = reciter
+            verse_data["reciter_rationale"] = data.get("reciter_rationale", "")
             return verse_data
     except Exception as e:
         logger.warning(f"AI passage selection notice: {e}. Falling back to curated bank.")
@@ -437,9 +488,14 @@ Select a fresh, unique, inspiring passage not found in the list above with 100% 
     # Fallback to curated rotation
     import random
     choice = random.choice(CURATED_COMPLETE_PASSAGES)
+    chosen_reciter_id = reciter_id or choice.get("ideal_reciter", "alafasy")
+    reciter = RECITERS_CONFIG.get(chosen_reciter_id, RECITERS_CONFIG["alafasy"])
+
     verse_data = fetch_verse_data(choice["surah"], choice["ayah_start"], choice["ayah_end"])
     verse_data["theme_headline"] = choice["theme_hint"]
     verse_data["reflection_bn"] = choice["reflection_bn"]
-    verse_data["reciter_id"] = reciter_id
+    verse_data["reciter_id"] = chosen_reciter_id
     verse_data["reciter"] = reciter
+    verse_data["reciter_rationale"] = f"Curated optimal match for {verse_data['surah_name_en']}"
     return verse_data
+

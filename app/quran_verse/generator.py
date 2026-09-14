@@ -23,7 +23,8 @@ from app.history import get_recent_video_titles, _supabase_insert
 from app.quran_verse.quran_data import (
     RECITERS_CONFIG,
     fetch_verse_data,
-    select_meaningful_passage_ai
+    select_meaningful_passage_ai,
+    determine_best_reciter_for_passage
 )
 from app.quran_verse.verifier import verify_quran_passage_3x
 from app.quran_verse.audio_manager import prepare_recitation_audio
@@ -48,12 +49,10 @@ def generate_quran_verse_video(
     """
     logger.info("=== STARTING PURE QURAN RECITATION VIDEO PIPELINE ===")
 
-    # 1. Select reciter (rotate between Alafasy and Dossari if not specified)
-    if not reciter_id or reciter_id not in RECITERS_CONFIG:
-        reciter_id = random.choice(["alafasy", "dossari"])
-
-    reciter = RECITERS_CONFIG[reciter_id]
-    logger.info(f"Selected Reciter: {reciter['name_bn']} ({reciter['name_en']})")
+    # 1. Check if caller forced a specific reciter, otherwise let AI match emotion-to-voice
+    forced_reciter_id = reciter_id if reciter_id in RECITERS_CONFIG else None
+    if forced_reciter_id:
+        logger.info(f"User forced reciter: {RECITERS_CONFIG[forced_reciter_id]['name_en']}")
 
     # 2. Select & Clear Quran Verse Passage via 3-Stage Gemini Clearance Gate
     recent_history = get_recent_video_titles(limit=60)
@@ -63,13 +62,17 @@ def generate_quran_verse_video(
     for attempt in range(1, max_selection_retries + 1):
         if surah and ayah_start:
             end = ayah_end or ayah_start
+            chosen_rec = forced_reciter_id or determine_best_reciter_for_passage(surah, ayah_start, end)
+            reciter = RECITERS_CONFIG[chosen_rec]
             v_cand = fetch_verse_data(surah, ayah_start, end)
-            v_cand["reciter_id"] = reciter_id
+            v_cand["reciter_id"] = chosen_rec
             v_cand["reciter"] = reciter
             v_cand["theme_headline"] = f"{v_cand['surah_name_bn']} (আয়াত {v_cand['verse_range_str']})"
             v_cand["reflection_bn"] = ""
         else:
-            v_cand = select_meaningful_passage_ai(reciter_id=reciter_id, recent_history=recent_history)
+            # Let Gemini pick the passage and the winning emotional vocal match (Alafasy vs. Dossari)
+            v_cand = select_meaningful_passage_ai(reciter_id=forced_reciter_id, recent_history=recent_history)
+
 
         # STRICT ANTI-DUPLICATION GATE: Check against last 30 videos
         cand_surah = v_cand.get("surah_name_bn", "")

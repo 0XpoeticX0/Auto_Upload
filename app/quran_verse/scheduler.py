@@ -48,13 +48,12 @@ def execute_daily_quran_run(upload: bool = True, reciter_id: str = None) -> dict
     now_bst = datetime.now(BST)
     date_str = now_bst.strftime("%Y-%m-%d")
     
-    if not reciter_id:
-        reciter_id = get_daily_alternating_reciter()
-
-    reciter = RECITERS_CONFIG[reciter_id]
     logger.info(f"=== LAUNCHING DAILY 1 QURAN RECITATION VIDEO PIPELINE ===")
     logger.info(f"Date: {date_str} | Target Time: {DAILY_QURAN_TIME}")
-    logger.info(f"Daily Reciter: {reciter['name_bn']} ({reciter['name_en']})")
+    if reciter_id and reciter_id in RECITERS_CONFIG:
+        logger.info(f"Manual Reciter Forced: {RECITERS_CONFIG[reciter_id]['name_en']}")
+    else:
+        logger.info("Mode: Intelligent Emotion-to-Voice Matching (Alafasy vs. Dossari)")
 
     result = run_quran_verse_pipeline(
         reciter_id=reciter_id,
