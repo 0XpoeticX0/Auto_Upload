@@ -15,6 +15,7 @@ import subprocess
 from PIL import Image
 from app.logger import logger
 from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
+from app.quran_verse.quran_data import SURAH_NAMES_EN
 
 GOLD_COLOR = "&H002BD5FF&"
 WHITE_COLOR = "&H00FFFFFF&"
@@ -136,28 +137,54 @@ def split_bengali_into_chunks(bn_text: str, max_words_per_chunk: int = 16) -> li
 
 def format_bengali_subtitles_for_ass(bn_raw: str, words_per_line: int = 5) -> str:
     """
-    Formats Bengali Quran translation subtitles strictly adhering to GEMINI.md standards:
+    Formats Bengali Quran translation subtitles:
     - 1 or 2 lines maximum in the center. Never 3+ lines.
     - Balanced split in the middle when word count >= 5.
-    - Enclosed in clean Bengali quotation marks “...”.
     """
     if not bn_raw:
         return ""
-    text = bn_raw.strip()
+    text = bn_raw.strip().strip('“').strip('”').strip('"')
     words = text.split()
     if len(words) <= 4:
+        return text
+    mid = (len(words) + 1) // 2
+    for idx in range(max(2, mid - 2), min(len(words) - 2, mid + 3)):
+        if any(p in words[idx] for p in ['।', ',', ';', '—', '-']):
+            mid = idx + 1
+            break
+    line1 = " ".join(words[:mid])
+    line2 = " ".join(words[mid:])
+    return f"{line1}\\N{line2}"
+
+def format_english_subtitles_for_ass(en_raw: str, max_words_per_line: int = 7) -> str:
+    """
+    Formats English Quran translation for ASS subtitles:
+    - 1 or 2 lines maximum.
+    - Balanced split in the middle or natural punctuation (: , ; .) when word count > 6.
+    - Enclosed in clean quotation marks "...".
+    """
+    if not en_raw:
+        return ""
+    text = en_raw.strip().strip('"').strip("'")
+    words = text.split()
+    if len(words) <= max_words_per_line:
         wrapped = text
     else:
         mid = (len(words) + 1) // 2
-        line1 = " ".join(words[:mid])
-        line2 = " ".join(words[mid:])
+        split_idx = mid
+        for idx in range(max(2, mid - 2), min(len(words) - 2, mid + 3)):
+            if words[idx].endswith((':', ';', ',', '.', '—')):
+                split_idx = idx + 1
+                break
+        line1 = " ".join(words[:split_idx])
+        line2 = " ".join(words[split_idx:])
         wrapped = f"{line1}\\N{line2}"
-    return f"“{wrapped}”"
+    return f'"{wrapped}"'
 
-def split_long_ayah_clauses(ar_text: str, bn_text: str, total_ayah_dur: float, start_sec: float) -> list:
+def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah_dur: float, start_sec: float) -> list:
     """
     Splits long ayahs (> 8.5 seconds or > 8 words) into natural recitation clauses at Quranic waqf marks,
-    sentence pauses, or proportional midpoints, ensuring each clause fits the screen cleanly.
+    sentence pauses, or proportional midpoints, ensuring Arabic, Bengali, and English all fit the screen cleanly.
     """
     waqf_pattern = r'([ۚۗۖۘۙۛۜ])'
     ar_parts = [p.strip() for p in re.split(waqf_pattern, ar_text) if p.strip()]
@@ -168,13 +195,21 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, total_ayah_dur: float, s
         else:
             merged_ar.append(p)
 
-    bn_parts = [b.strip() for b in re.split(r'([।;,])', bn_text) if b.strip()]
+    bn_parts = [b.strip() for b in re.split(r'([।;,—])', bn_text) if b.strip()]
     merged_bn = []
     for b in bn_parts:
-        if b in '।;,' and merged_bn:
+        if b in '।;,—' and merged_bn:
             merged_bn[-1] += b
         else:
             merged_bn.append(b)
+
+    en_parts = [e.strip() for e in re.split(r'([;,:—])', en_text) if e.strip()] if en_text else []
+    merged_en = []
+    for e in en_parts:
+        if e in ';,:—' and merged_en:
+            merged_en[-1] += e
+        else:
+            merged_en.append(e)
 
     if len(merged_ar) > 1 and len(merged_ar) == len(merged_bn):
         total_ar_words = sum(len(p.split()) for p in merged_ar)
@@ -188,42 +223,59 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, total_ayah_dur: float, s
                 prop = p_words / max(1, total_ar_words)
                 c_dur = max(3.0, total_ayah_dur * prop)
                 curr_end = min(start_sec + total_ayah_dur - 2.5, curr_start + c_dur)
+
+            en_chunk = merged_en[i] if i < len(merged_en) else ""
+            if not en_chunk and en_text:
+                en_words = en_text.split()
+                w_per_part = max(1, len(en_words) // len(merged_ar))
+                en_chunk = " ".join(en_words[i*w_per_part : (i+1)*w_per_part if i < len(merged_ar)-1 else None])
+
             clauses.append({
                 "start": curr_start,
                 "end": curr_end,
                 "arabic": merged_ar[i],
-                "bengali": merged_bn[i]
+                "bengali": merged_bn[i],
+                "english": en_chunk
             })
             curr_start = curr_end
         return clauses
 
-    # Proportional split fallback for long ayahs lacking waqf symbols
     bn_words = bn_text.strip().split()
     ar_words = ar_text.strip().split()
-    if total_ayah_dur > 8.0 and (len(bn_words) > 8 or len(ar_words) > 7):
+    en_words = en_text.strip().split() if en_text else []
+
+    if total_ayah_dur > 8.0 and (len(bn_words) > 8 or len(ar_words) > 7 or len(en_words) > 8):
         bn_mid = (len(bn_words) + 1) // 2
         split_idx = bn_mid
         for idx, w in enumerate(bn_words):
-            if any(p in w for p in ['।', ',', ';']) and 2 <= idx <= len(bn_words) - 3:
+            if any(p in w for p in ['।', ',', ';', '—']) and 2 <= idx <= len(bn_words) - 3:
                 split_idx = idx + 1
                 break
         
         ar_mid = (len(ar_words) + 1) // 2
-        ar_prop = ar_mid / len(ar_words)
+        ar_prop = ar_mid / max(1, len(ar_words))
         split_time = start_sec + round(total_ayah_dur * ar_prop, 2)
+
+        en_split_idx = (len(en_words) + 1) // 2 if en_words else 0
+        for idx, w in enumerate(en_words):
+            if any(p in w for p in [':', ';', ',', '.', '—']) and 2 <= idx <= len(en_words) - 3:
+                en_split_idx = idx + 1
+                break
 
         return [
             {
                 "start": start_sec,
                 "end": split_time,
                 "arabic": " ".join(ar_words[:ar_mid]),
-                "bengali": " ".join(bn_words[:split_idx])
+                "bengali": " ".join(bn_words[:split_idx]),
+                "english": " ".join(en_words[:en_split_idx]) if en_words else ""
             },
             {
                 "start": split_time,
                 "end": start_sec + total_ayah_dur,
                 "arabic": " ".join(ar_words[ar_mid:]),
-                "bengali": " ".join(bn_words[split_idx:])
+                "bengali": " ".join(bn_words[split_idx:]),
+                "english": " ".join(en_words[en_split_idx:]) if en_words else ""
             }
         ]
 
@@ -231,82 +283,82 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, total_ayah_dur: float, s
         "start": start_sec,
         "end": start_sec + total_ayah_dur,
         "arabic": ar_text,
-        "bengali": bn_text
+        "bengali": bn_text,
+        "english": en_text
     }]
 
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
-    Builds high-impact ASS subtitles with:
-    - Top Surah & Ayah Badge (Bengali numerals) at Y=220 (Fontsize 48)
-    - Raw Uthmani Arabic in font Amiri at Y=460 (Fontsize 86)
-    - Clean Bengali translation in font Kalpurush (Strict 2 lines max) at Y=710 (Fontsize 74)
-    - 100% AUDIO-VISUAL LOCKSTEP: Subtitles transition in sync with every Ayah recited
-    - Bottom Reciter Credit & Save/Share CTA
+    Builds ASS subtitles strictly matching the Top 20% Video + Bottom 80% Black Lyrics Card aesthetic:
+    - Permanent Header badge at Y=490 (Kalpurush 48 Gold)
+    - Permanent SubHeader badge at Y=555 (Segoe UI 34 Silver)
+    - Synchronized Arabic verse at Y=780 (Amiri 82 White)
+    - Synchronized Bengali translation at Y=1030 (Kalpurush 68 White)
+    - Synchronized English translation at Y=1260 (Segoe UI 40 Silver)
     """
-    surah_name = verse_data["surah_name_bn"]
-    range_str = to_bangla_digits(verse_data["verse_range_str"])
-    reciter_name = audio_data["reciter"]["name_bn"]
+    surah_name_bn = verse_data["surah_name_bn"]
+    surah_name_en = verse_data.get("surah_name_en") or SURAH_NAMES_EN.get(verse_data["surah"], f"Surah {verse_data['surah']}")
+    surah = verse_data["surah"]
+    verse_range_str = verse_data["verse_range_str"]
+    range_str_bn = to_bangla_digits(verse_range_str)
     total_dur = audio_data["total_duration"]
     ayah_timings = audio_data["ayah_timings"]
 
-    top_badge_text = f"✦ {surah_name} • আয়াত {range_str} ✦"
-    reciter_text = f"🎙️ তিলাওয়াত: {reciter_name}"
-    cta_text = "🔖 নিয়মিত তিলাওয়াত শোনার জন্য Save ও Share করুন 🤲"
+    top_badge_bn = f"[ {surah_name_bn}  •  আয়াত {range_str_bn} ]"
+    top_badge_en = f"Surah {surah_name_en}  •  {surah}:{verse_range_str}"
 
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
 PlayResY: 1920
-WrapStyle: 0
 ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: TopBadge,Kalpurush,48,{GOLD_COLOR},&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.5,2.0,8,60,60,220,1
-Style: ArabicVerse,Amiri,86,{WHITE_COLOR},&H000000FF,&H00000000,&HD0000000,1,0,0,0,100,100,0,0,1,4.2,2.5,5,80,80,0,1
-Style: BengaliCenter,Kalpurush,74,{WHITE_COLOR},&H000000FF,&H00000000,&HD0000000,0,0,0,0,100,100,0,0,1,4.5,2.8,5,70,70,0,1
-Style: ReciterBottom,Kalpurush,38,{GOLD_COLOR},&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.0,2.0,2,60,60,200,1
-Style: DawahBottom,Kalpurush,30,{WHITE_COLOR},&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,2.5,1.5,2,60,60,140,1
+Style: Header,Kalpurush,48,&H0015CCFA,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.8,1.5,5,60,60,40,1
+Style: SubHeader,Segoe UI,34,&H00A0A0A0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1.8,1.0,5,60,60,40,1
+Style: Arabic,Amiri,82,&H00FFFFFF,&H000000FF,&H00101010,&H80000000,1,0,0,0,100,100,0,0,1,3.2,2.2,5,50,50,50,1
+Style: Bengali,Kalpurush,68,&H00FFFFFF,&H000000FF,&H00101010,&H80000000,0,0,0,0,100,100,0,0,1,3.5,2.2,5,60,60,50,1
+Style: English,Segoe UI,40,&H00D0D0D0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.0,1.2,5,60,60,50,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+; Permanent Header Badge
+Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},Header,,0,0,0,,{{\\pos(540,490)\\fad(400,400)}}{top_badge_bn}
+Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubHeader,,0,0,0,,{{\\pos(540,555)\\fad(400,400)}}{top_badge_en}
 """
-
-    total_str = format_ass_time(total_dur)
-
-    # Permanent Static Top & Bottom Badges
-    ass_content += f"Dialogue: 0,0:00:00.00,{total_str},TopBadge,,0,0,0,,{top_badge_text}\n"
-    ass_content += f"Dialogue: 0,0:00:00.00,{total_str},ReciterBottom,,0,0,0,,{reciter_text}\n"
-    ass_content += f"Dialogue: 0,0:00:00.00,{total_str},DawahBottom,,0,0,0,,{cta_text}\n"
-
-    # Per-Ayah Synchronized Transitions
     for timing in ayah_timings:
         start_sec = timing["start"]
         end_sec = timing["end"]
         dur = max(0.5, end_sec - start_sec)
         ar_raw = timing.get("arabic", "").strip()
         bn_raw = timing.get("bengali", "").strip()
+        en_raw = timing.get("english", "").strip()
 
-        # If ayah duration is standard (<= 8.5s and <= 8 Bengali words), display as single unified ayah
         if dur <= 8.5 and len(bn_raw.split()) <= 8 and len(ar_raw.split()) <= 7:
             start_str = format_ass_time(start_sec)
             end_str = format_ass_time(end_sec)
             ar_clean = wrap_and_format_arabic(ar_raw, words_per_line=5)
             bn_clean = format_bengali_subtitles_for_ass(bn_raw, words_per_line=5)
+            en_clean = format_english_subtitles_for_ass(en_raw, max_words_per_line=7)
 
-            ass_content += f"Dialogue: 1,{start_str},{end_str},ArabicVerse,,0,0,0,,{{\\pos(540,460)}}{ar_clean}\n"
-            ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,710)}}{bn_clean}\n"
+            ass_content += f"Dialogue: 1,{start_str},{end_str},Arabic,,0,0,0,,{{\\pos(540,780)\\fad(350,300)}}{ar_clean}\n"
+            ass_content += f"Dialogue: 2,{start_str},{end_str},Bengali,,0,0,0,,{{\\pos(540,1030)\\fad(350,300)}}{bn_clean}\n"
+            if en_clean:
+                ass_content += f"Dialogue: 3,{start_str},{end_str},English,,0,0,0,,{{\\pos(540,1260)\\fad(350,300)}}{en_clean}\n"
         else:
-            # Long Ayahs split cleanly at waqf marks or natural clauses
-            clauses = split_long_ayah_clauses(ar_raw, bn_raw, dur, start_sec)
+            clauses = split_long_ayah_clauses(ar_raw, bn_raw, en_raw, dur, start_sec)
             for c in clauses:
                 c_start_str = format_ass_time(c["start"])
                 c_end_str = format_ass_time(c["end"])
                 ar_clean = wrap_and_format_arabic(c["arabic"], words_per_line=5)
                 bn_clean = format_bengali_subtitles_for_ass(c["bengali"], words_per_line=5)
+                en_clean = format_english_subtitles_for_ass(c["english"], max_words_per_line=7)
 
-                ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},ArabicVerse,,0,0,0,,{{\\pos(540,460)}}{ar_clean}\n"
-                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,710)}}{bn_clean}\n"
+                ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},Arabic,,0,0,0,,{{\\pos(540,780)\\fad(350,300)}}{ar_clean}\n"
+                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},Bengali,,0,0,0,,{{\\pos(540,1030)\\fad(350,300)}}{bn_clean}\n"
+                if en_clean:
+                    ass_content += f"Dialogue: 3,{c_start_str},{c_end_str},English,,0,0,0,,{{\\pos(540,1260)\\fad(350,300)}}{en_clean}\n"
 
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
@@ -601,12 +653,25 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     # Normalize paths for FFmpeg filter on Windows
     safe_ass_path = ass_path.replace("\\", "/").replace(":", "\\:")
 
-    # 4. Burn ASS Subtitles & Merge Audio
+    # 4. Burn ASS Subtitles & Merge Audio in Exact "Top 20% Video + Bottom 80% Black Lyrics" Layout
+    # Canvas: 1080x1920 (9:16)
+    # Top 20%: height = 384, width = 1080
+    # Video filter: hflip, scaled and cropped to 1080x384
+    # Bottom 80%: height = 1536 black background with burned ASS subtitles
+    filter_complex = (
+        "[0:v]hflip,scale=1080:384:force_original_aspect_ratio=increase,crop=1080:384[vid];"
+        "[1:v][vid]overlay=0:0:shortest=1[base];"
+        f"[base]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
+    )
+
     cmd = [
         "ffmpeg", "-y",
         "-i", master_visual_path,
+        "-f", "lavfi", "-i", "color=c=black:s=1080x1920",
         "-i", audio_file,
-        "-vf", f"colorlevels=rimin=0.03:gimin=0.03:bimin=0.03:rimax=0.92:gimax=0.92:bimax=0.92,ass='{safe_ass_path}':fontsdir=app/assets/fonts",
+        "-filter_complex", filter_complex,
+        "-map", "[outv]",
+        "-map", "2:a",
         "-c:v", "libx264",
         "-preset", "fast",
         "-crf", "18",
@@ -617,8 +682,11 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
         final_output_path
     ]
 
-    logger.info(f"Rendering Dynamic Quran video: {final_output_path} ({total_dur:.1f}s, dynamic cuts)...")
+    logger.info(f"Rendering Top20/Bottom80 Quran video: {final_output_path} ({total_dur:.1f}s)...")
     res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+    if res.returncode != 0:
+        logger.error(f"FFmpeg error: {res.stderr[-500:]}")
+        raise RuntimeError(f"FFmpeg rendering failed with exit code {res.returncode}")
     logger.info(f"Quran video successfully rendered at: {final_output_path}")
 
     # 5. Extract Visual Verification Frame to Guarantee Clean Layout

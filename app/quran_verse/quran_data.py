@@ -150,6 +150,32 @@ SURAH_NAMES_BN = {
     114: "সূরা আন-নাস"
 }
 
+SURAH_NAMES_EN = {
+    1: "Al-Fatihah", 2: "Al-Baqarah", 3: "Ali 'Imran", 4: "An-Nisa", 5: "Al-Ma'idah",
+    6: "Al-An'am", 7: "Al-A'raf", 8: "Al-Anfal", 9: "At-Tawbah", 10: "Yunus",
+    11: "Hud", 12: "Yusuf", 13: "Ar-Ra'd", 14: "Ibrahim", 15: "Al-Hijr",
+    16: "An-Nahl", 17: "Al-Isra", 18: "Al-Kahf", 19: "Maryam", 20: "Taha",
+    21: "Al-Anbiya", 22: "Al-Hajj", 23: "Al-Mu'minun", 24: "An-Nur", 25: "Al-Furqan",
+    26: "Ash-Shu'ara", 27: "An-Naml", 28: "Al-Qasas", 29: "Al-'Ankabut", 30: "Ar-Rum",
+    31: "Luqman", 32: "As-Sajdah", 33: "Al-Ahzab", 34: "Saba", 35: "Fatir",
+    36: "Ya-Sin", 37: "As-Saffat", 38: "Sad", 39: "Az-Zumar", 40: "Ghafir",
+    41: "Fussilat", 42: "Ash-Shura", 43: "Az-Zukhruf", 44: "Ad-Dukhan", 45: "Al-Jathiyah",
+    46: "Al-Ahqaf", 47: "Muhammad", 48: "Al-Fath", 49: "Al-Hujurat", 50: "Qaf",
+    51: "Adh-Dhariyat", 52: "At-Tur", 53: "An-Najm", 54: "Al-Qamar", 55: "Ar-Rahman",
+    56: "Al-Waqi'ah", 57: "Al-Hadid", 58: "Al-Mujadila", 59: "Al-Hashr", 60: "Al-Mumtahanah",
+    61: "As-Saf", 62: "Al-Jumu'ah", 63: "Al-Munafiqun", 64: "At-Taghabun", 65: "At-Talaq",
+    66: "At-Tahrim", 67: "Al-Mulk", 68: "Al-Qalam", 69: "Al-Haqqah", 70: "Al-Ma'arij",
+    71: "Nuh", 72: "Al-Jinn", 73: "Al-Muzzammil", 74: "Al-Muddaththir", 75: "Al-Qiyamah",
+    76: "Al-Insan", 77: "Al-Mursalat", 78: "An-Naba", 79: "An-Nazi'at", 80: "'Abasa",
+    81: "At-Takwir", 82: "Al-Infitar", 83: "Al-Mutaffifin", 84: "Al-Inshiqaq", 85: "Al-Buruj",
+    86: "At-Tariq", 87: "Al-A'la", 88: "Al-Ghashiyah", 89: "Al-Fajr", 90: "Al-Balad",
+    91: "Ash-Shams", 92: "Al-Layl", 93: "Ad-Duha", 94: "Ash-Sharh", 95: "At-Tin",
+    96: "Al-'Alaq", 97: "Al-Qadr", 98: "Al-Bayyinah", 99: "Az-Zalzalah", 100: "Al-'Adiyat",
+    101: "Al-Qari'ah", 102: "At-Takathur", 103: "Al-'Asr", 104: "Al-Humazah", 105: "Al-Fil",
+    106: "Quraysh", 107: "Al-Ma'un", 108: "Al-Kawthar", 109: "Al-Kafirun", 110: "An-Nasr",
+    111: "Al-Masad", 112: "Al-Ikhlas", 113: "Al-Falaq", 114: "An-Nas"
+}
+
 # Curated bank of guaranteed complete self-contained passages under 90s (Fallback & Rotation)
 CURATED_COMPLETE_PASSAGES = [
     {
@@ -237,13 +263,15 @@ def clean_bengali_translation(text: str) -> str:
         return ""
     # Strip HTML tags
     text = re.sub(r'<[^>]+>', '', text)
+    # Strip footnote explanations starting with asterisk (e.g. *অর্থ কুরবানী কর)
+    text = re.sub(r'\*[^\*।]*।?', '', text)
     # Strip footnote numbers like [১], [২], [1], [2]
     text = re.sub(r'\[[০-৯0-9]+\]', '', text)
     # Strip excessively long commentary in parentheses (tafsir explanations inserted by translators)
     text = re.sub(r'\([^\)]{12,}\)', '', text)
     # Remove remaining standalone parentheses while retaining the text inside
     text = re.sub(r'[\(\)]', '', text)
-    # Normalize spaces
+    # Normalize spaces and trailing punctuation
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
@@ -251,26 +279,39 @@ def clean_html_tags(text: str) -> str:
     """Backward compatibility wrapper."""
     return clean_bengali_translation(text)
 
+def clean_english_translation(text: str) -> str:
+    """Strips HTML tags, footnote indices, and normalizes spaces for English translations."""
+    if not text:
+        return ""
+    text = re.sub(r'<[^>]+>', '', text)
+    text = re.sub(r'\[[0-9]+\]', '', text)
+    # Strip footnote numbers attached to trailing punctuation or words (e.g. 'off.1' -> 'off.')
+    text = re.sub(r'(?<=[a-zA-Z\.?!,;])\d+', '', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
 def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
     """
-    Fetches Arabic text with Tashkeel and authentic Bengali translation for the verse range
-    directly from api.quran.com/api/v4/.
-    Prioritizes Rawai Al-bayan (162) and Sheikh Mujibur Rahman (163) for direct, concise phrasing.
+    Fetches Arabic text with Tashkeel, authentic Bengali translation, and English translation (Saheeh International)
+    for the verse range directly from api.quran.com/api/v4/.
     """
     if ayah_end is None or ayah_end < ayah_start:
         ayah_end = ayah_start
 
     surah_name_bn = SURAH_NAMES_BN.get(surah, f"সূরা নম্বর {surah}")
-    logger.info(f"Fetching {surah_name_bn} (Ayah {ayah_start}-{ayah_end}) from Quran.com API...")
+    surah_name_en = SURAH_NAMES_EN.get(surah, f"Surah {surah}")
+    logger.info(f"Fetching {surah_name_bn} / {surah_name_en} (Ayah {ayah_start}-{ayah_end}) from Quran.com API...")
 
     verses_list = []
     full_arabic = []
     full_bengali = []
+    full_english = []
 
     for ayah in range(ayah_start, ayah_end + 1):
         # Prioritize 162 (Rawai Al-bayan) for pure verse translation, fallback to 163 and 161
         bn_text = ""
         ar_text = ""
+        en_text = ""
 
         for trans_id in [162, 163, 161]:
             url = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?language=bn&translations={trans_id}&fields=text_uthmani"
@@ -290,16 +331,37 @@ def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
                 logger.warning(f"Translation {trans_id} fetch notice for {surah}:{ayah}: {e}")
                 continue
 
+        # Fetch English translation (Resource 20: Saheeh International, fallback 85: Abdel Haleem)
+        for en_trans_id in [20, 85]:
+            url_en = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?translations={en_trans_id}"
+            try:
+                req_en = urllib.request.Request(url_en, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req_en, timeout=8) as resp:
+                    data_en = json.loads(resp.read().decode("utf-8"))
+                    v_en = data_en.get("verse", {})
+                    trans_en = v_en.get("translations", [])
+                    if trans_en and trans_en[0].get("text"):
+                        candidate_en = clean_english_translation(trans_en[0].get("text", ""))
+                        if candidate_en:
+                            en_text = candidate_en
+                            break
+            except Exception as e:
+                logger.warning(f"English translation {en_trans_id} fetch notice for {surah}:{ayah}: {e}")
+                continue
+
         if not ar_text:
             raise RuntimeError(f"Could not retrieve Arabic text for {surah}:{ayah} from Quran.com API")
 
         verses_list.append({
             "ayah_number": ayah,
             "arabic": ar_text,
-            "bengali": bn_text
+            "bengali": bn_text,
+            "english": en_text
         })
         full_arabic.append(ar_text)
         full_bengali.append(bn_text)
+        if en_text:
+            full_english.append(en_text)
 
     verse_range_str = f"{ayah_start}" if ayah_start == ayah_end else f"{ayah_start}-{ayah_end}"
 
@@ -309,9 +371,11 @@ def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
         "ayah_end": ayah_end,
         "verse_range_str": verse_range_str,
         "surah_name_bn": surah_name_bn,
+        "surah_name_en": surah_name_en,
         "verses": verses_list,
         "combined_arabic": " • ".join(full_arabic),
-        "combined_bengali": " ".join(full_bengali)
+        "combined_bengali": " ".join(full_bengali),
+        "combined_english": " ".join(full_english)
     }
 
 def select_meaningful_passage_ai(reciter_id: str = "alafasy", recent_history: list = None) -> dict:

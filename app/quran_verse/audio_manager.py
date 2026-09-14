@@ -85,7 +85,8 @@ def prepare_recitation_audio(verse_data: dict, output_dir: str = "data/temp/qura
             "end": round(current_time + dur, 2),
             "duration": round(dur, 2),
             "arabic": v_info.get("arabic", ""),
-            "bengali": v_info.get("bengali", "")
+            "bengali": v_info.get("bengali", ""),
+            "english": v_info.get("english", "")
         }
         ayah_timings.append(timing_entry)
         current_time += dur
