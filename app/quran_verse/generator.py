@@ -56,8 +56,8 @@ def generate_quran_verse_video(
     logger.info(f"Selected Reciter: {reciter['name_bn']} ({reciter['name_en']})")
 
     # 2. Select & Clear Quran Verse Passage via 3-Stage Gemini Clearance Gate
-    recent_history = get_recent_video_titles(limit=40)
-    max_selection_retries = 3
+    recent_history = get_recent_video_titles(limit=60)
+    max_selection_retries = 5
     verse_data = None
 
     for attempt in range(1, max_selection_retries + 1):
@@ -70,6 +70,21 @@ def generate_quran_verse_video(
             v_cand["reflection_bn"] = ""
         else:
             v_cand = select_meaningful_passage_ai(reciter_id=reciter_id, recent_history=recent_history)
+
+        # STRICT ANTI-DUPLICATION GATE: Check against last 30 videos
+        cand_surah = v_cand.get("surah_name_bn", "")
+        cand_range = str(v_cand.get("verse_range_str", ""))
+        is_duplicate = False
+
+        for past_entry in recent_history[:30]:
+            # If past video title or concept contains both this Surah and Ayah range
+            if cand_surah and cand_surah in past_entry and cand_range and cand_range in past_entry:
+                logger.warning(f"[Zero-Duplication Gate] REJECTED: {cand_surah} (Ayah {cand_range}) was already published in the last 30 videos ({past_entry})!")
+                is_duplicate = True
+                break
+
+        if is_duplicate:
+            continue
 
         cleared, clearance_report = verify_quran_passage_3x(v_cand)
         if cleared:

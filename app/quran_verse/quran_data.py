@@ -384,16 +384,17 @@ def select_meaningful_passage_ai(reciter_id: str = "alafasy", recent_history: li
     that has 100% complete meaning, zero missing context, and can finish recitation within 85 seconds.
     Falls back gracefully to curated passages.
     """
-    avoid_list = "\n- ".join(recent_history[:15]) if recent_history else "None"
+    avoid_list = "\n- ".join(recent_history[:30]) if recent_history else "None"
     reciter = RECITERS_CONFIG.get(reciter_id, RECITERS_CONFIG["alafasy"])
 
     system_prompt = """You are a senior Quran scholar and video producer.
 Your goal is to select a complete, self-contained Quranic passage (under 90 seconds recitation length) that provides a deeply moving, complete message to the viewer.
 
 CRITICAL PASSAGE RULES (MANDATORY):
-1. COMPLETE MEANING & ZERO CUT-OFFS: The passage MUST form a complete, self-contained unit of thought. Never cut off in the middle of a sentence, list, or argument!
-2. DURATION LIMIT: Total recitation length of the verse(s) MUST be between 25 and 85 seconds (typically 1 to 8 ayahs depending on verse length).
-3. EXAMPLES OF COMPLETE UNITS:
+1. ZERO SIMILAR CONTENT (STRICT ANTI-DUPLICATION): Strictly DO NOT select any Surah, Ayah range, or theme that appears in the last 30 videos listed below. It MUST be a completely fresh, distinct passage.
+2. COMPLETE MEANING & ZERO CUT-OFFS: The passage MUST form a complete, self-contained unit of thought. Never cut off in the middle of a sentence, list, or argument!
+3. DURATION LIMIT: Total recitation length of the verse(s) MUST be between 25 and 85 seconds (typically 1 to 8 ayahs depending on verse length).
+4. EXAMPLES OF COMPLETE UNITS:
    - A complete short Surah (e.g. Surah Ash-Sharh 94:1-8, Surah Ad-Duha 93:1-11, Surah Al-Fajr 89:27-30, Surah Al-Ikhlas 112:1-4).
    - A complete Quranic Dua (e.g. Surah Al-Anbiya 21:87-88 Yunus, Surah Taha 20:25-28 Musa, Surah Al-Furqan 25:74, Surah Al-Qasas 28:24).
    - A complete divine promise or law (e.g. Surah At-Talaq 65:2-3, Surah Al-Imran 3:173-174, Surah Al-Baqarah 2:285-286, Surah Al-Hashr 59:22-24).
@@ -409,10 +410,12 @@ Output ONLY valid JSON:
 
     user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation.
 Reciter: {reciter['name_bn']} ({reciter['name_en']}).
-Avoid these recently used passages/titles:
+
+MANDATORY AVOID LIST (Last 30 Videos - DO NOT REPEAT ANY OF THESE):
 - {avoid_list}
 
-Select a fresh, inspiring passage with 100% complete contextual integrity. Return valid JSON only."""
+Select a fresh, unique, inspiring passage not found in the list above with 100% complete contextual integrity. Return valid JSON only."""
+
 
     try:
         data = extract_json(system_prompt, user_prompt, max_tokens=600)
