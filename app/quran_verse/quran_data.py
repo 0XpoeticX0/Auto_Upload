@@ -265,6 +265,86 @@ CURATED_COMPLETE_PASSAGES = [
         "theme_hint": "প্রশান্ত আত্মার জন্য জান্নাতের ডাক (Surah Al-Fajr 27-30)",
         "reflection_bn": "যে আত্মা আল্লাহর ওপর সন্তুষ্ট থাকে, মৃত্যুর সময় আল্লাহ নিজে তাকে পরম সমাদরে জান্নাতে ডেকে নেন।",
         "ideal_reciter": "alafasy"  # Tranquility, peace & welcome into Jannah
+    },
+    {
+        "surah": 55,
+        "ayah_start": 1,
+        "ayah_end": 13,
+        "theme_hint": "পরম দয়াময় আল্লাহ ও তাঁর অপার নিয়ামত (Surah Ar-Rahman 1-13)",
+        "reflection_bn": "রহমান শিখিয়েছেন কুরআন, সৃষ্টি করেছেন মানবজাতি এবং দান করেছেন অফুরন্ত নিয়ামত। অতএব তোমরা তোমাদের রবের কোন কোন নিয়ামতকে অস্বীকার করবে?",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 50,
+        "ayah_start": 16,
+        "ayah_end": 19,
+        "theme_hint": "আল্লাহ মানুষের গলার রগের চেয়েও নিকটে (Surah Qaf 16-19)",
+        "reflection_bn": "মানুষের মনের প্রতিটি দ্বিধাদ্বন্দ্ব আল্লাহ জানেন। তিনি মানুষের শাহরগের চেয়েও অতি নিকটে বিরাজমান।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 14,
+        "ayah_start": 39,
+        "ayah_end": 41,
+        "theme_hint": "ইব্রাহিম (আ.)-এর দোআ—নামাজ ও পিতা-মাতার জন্য ক্ষমা (Surah Ibrahim 39-41)",
+        "reflection_bn": "ইব্রাহিম (আ.) আল্লাহর কাছে প্রার্থনা করেছিলেন যেন তিনি ও তাঁর বংশধরেরা আজীবন নামাজের ওপর প্রতিষ্ঠিত থাকতে পারেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 18,
+        "ayah_start": 107,
+        "ayah_end": 110,
+        "theme_hint": "জান্নাতুল ফিরদাউস ও রবের মহিমান্বিত বাক্য (Surah Al-Kahf 107-110)",
+        "reflection_bn": "যাঁরা বিশ্বাস স্থাপন করেছে ও সৎকর্ম করেছে, তাঁদের আপ্যায়নের জন্য রয়েছে জান্নাতুল ফিরদাউস। রবের প্রশংসা সাগরের কালিতেও শেষ হবে না।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 13,
+        "ayah_start": 28,
+        "ayah_end": 28,
+        "theme_hint": "আল্লাহর জিকিরেই কেবল অন্তর প্রশান্ত হয় (Surah Ar-Rad 28)",
+        "reflection_bn": "যারা ঈমান এনেছে তাদের অন্তর আল্লাহর স্মরণেই নিশ্চিত প্রশান্তি লাভ করে। জেনে রেখো, আল্লাহর জিকিরেই কেবল মানব হৃদয় শান্ত হয়।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 36,
+        "ayah_start": 55,
+        "ayah_end": 58,
+        "theme_hint": "জান্নাতবাসীদের অনাবিল আনন্দ ও রবের সালাম (Surah Ya-Sin 55-58)",
+        "reflection_bn": "জান্নাতবাসীরা সেদিন চিরসুখে আনন্দমগ্ন থাকবে এবং পরম দয়ালু রবের পক্ষ থেকে তাদের প্রতি উচ্চারিত হবে শান্তির সম্ভাষণ: সালাম।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 30,
+        "ayah_start": 21,
+        "ayah_end": 21,
+        "theme_hint": "দাম্পত্য জীবনের ভালোবাসা ও প্রশান্তি (Surah Ar-Rum 21)",
+        "reflection_bn": "আল্লাহর অন্যতম সেরা নিদর্শন যে তিনি আমাদের মধ্য থেকে জীবনসঙ্গী সৃষ্টি করেছেন এবং পরস্পরের মাঝে গভীর ভালোবাসা ও মায়া স্থাপন করেছেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 2,
+        "ayah_start": 186,
+        "ayah_end": 186,
+        "theme_hint": "আমি তো অতি নিকটে, প্রার্থনাকারীর ডাকে সাড়া দিই (Surah Al-Baqarah 186)",
+        "reflection_bn": "বান্দা যখনই আল্লাহকে ডাকে, আল্লাহ তার অতি নিকটে থাকেন এবং আহ্বানকারীর আহ্বানে তাৎক্ষণিক সাড়া দেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 67,
+        "ayah_start": 1,
+        "ayah_end": 4,
+        "theme_hint": "মহিমান্বিত সার্বভৌমত্ব ও সৃষ্টির নিখুঁত ভারসাম্য (Surah Al-Mulk 1-4)",
+        "reflection_bn": "বরকতময় সেই মহান সত্তা যাঁর হাতে নিখিল জাহানের রাজত্ব। পরম করুণাময়ের সৃষ্টিতে তুমি কোনো ত্রুটি দেখতে পাবে না।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 39,
+        "ayah_start": 53,
+        "ayah_end": 53,
+        "theme_hint": "হতাশা ও পাপের অন্ধকারে আল্লাহর অপার রহমত (Surah Az-Zumar 53)",
+        "reflection_bn": "হে আমার বান্দাগণ যারা নিজেদের ওপর অবিচার করেছ, তোমরা আল্লাহর রহমত থেকে কখনো নিরাশ হইও না। নিশ্চয় আল্লাহ সব পাপ ক্ষমা করে দেন।",
+        "ideal_reciter": "alafasy"
     }
 ]
 
@@ -440,19 +520,41 @@ def determine_best_reciter_for_passage(surah: int, ayah_start: int, ayah_end: in
         # Guaranteed safe default
         return "alafasy"
 
-def select_meaningful_passage_ai(reciter_id: str = None, recent_history: list = None) -> dict:
+def select_meaningful_passage_ai(reciter_id: str = None, recent_history: list = None, used_ayahs_map: dict = None) -> dict:
     """
     Uses Gemini to intelligently select a complete, self-contained passage from the Quran
     that has 100% complete meaning, zero missing context, and can finish recitation within 85 seconds.
     Intelligently assigns the most appealing reciter (Alafasy vs. Dossari) based on the passage's emotion.
+    Enforces strict zero-duplication: already-used Ayahs within the last 30 videos are strictly forbidden.
+    (Note: Different Ayahs of the same Surah ARE allowed, but duplicate Ayahs are forbidden).
     """
+    used_ayahs_map = used_ayahs_map or {}
     avoid_list = "\n- ".join(recent_history[:30]) if recent_history else "None"
 
-    system_prompt = """You are a senior Quran scholar, master audio director, and video producer.
+    # Build clear already-used Ayahs text per Surah
+    used_items = []
+    for s_num in sorted(used_ayahs_map.keys()):
+        bn_name = SURAH_NAMES_BN.get(s_num, "")
+        en_name = SURAH_NAMES_EN.get(s_num, "")
+        ayah_list = sorted(list(used_ayahs_map[s_num]))
+        if len(ayah_list) == 1:
+            ayah_desc = f"Ayah {ayah_list[0]}"
+        elif len(ayah_list) == (ayah_list[-1] - ayah_list[0] + 1):
+            ayah_desc = f"Ayahs {ayah_list[0]}-{ayah_list[-1]}"
+        else:
+            ayah_desc = f"Ayahs {', '.join(str(a) for a in ayah_list)}"
+        used_items.append(f"- Surah {s_num}: {en_name} ({bn_name}) -> ALREADY RECITED: {ayah_desc}")
+    used_ayahs_section = "\n".join(used_items) if used_items else "None"
+
+    system_prompt = f"""You are a senior Quran scholar, master audio director, and video producer.
 Your goal is to select a complete, self-contained Quranic passage (under 90 seconds recitation length) that provides a deeply moving, complete message to the viewer, and assign the IDEAL vocal reciter for maximum emotional appeal.
 
 CRITICAL PASSAGE RULES (MANDATORY):
-1. ZERO SIMILAR CONTENT (STRICT ANTI-DUPLICATION): Strictly DO NOT select any Surah, Ayah range, or theme that appears in the last 30 videos listed below. It MUST be a completely fresh, distinct passage.
+1. ZERO DUPLICATION OF ALREADY RECITED AYAHS:
+   - The following specific Ayahs were ALREADY RECITED in the last 30 videos:
+{used_ayahs_section}
+   - STRICTLY DO NOT select any passage containing or overlapping with any of the already-recited Ayahs listed above!
+   - You MAY select from any Surah of the Holy Quran (including other unrecited verses of these same Surahs, or any other Surah), but there must be ZERO OVERLAP with the already-used Ayahs.
 2. COMPLETE MEANING & ZERO CUT-OFFS: The passage MUST form a complete, self-contained unit of thought. Never cut off in the middle of a sentence, list, or argument!
 3. DURATION LIMIT: Total recitation length of the verse(s) MUST be between 25 and 85 seconds (typically 1 to 8 ayahs depending on verse length).
 4. THEMATIC VOICE MATCHING (CHOOSE BETWEEN ALAFASY OR DOSSARI):
@@ -460,7 +562,7 @@ CRITICAL PASSAGE RULES (MANDATORY):
    - 'dossari' (Sheikh Yasser Ad-Dossari): Choose for divine power, supreme sovereignty, majesty, Day of Judgment (Qiyamah), warnings against arrogance, absolute Tawakkul in trials, and cosmic oaths. (His thunderous, high-dynamic, commanding delivery creates awe and reverence).
 
 Output ONLY valid JSON:
-{
+{{
     "surah": 94,
     "ayah_start": 1,
     "ayah_end": 8,
@@ -468,17 +570,20 @@ Output ONLY valid JSON:
     "reflection_bn": "আল্লাহ তায়ালা এই সূরায় জানিয়ে দিয়েছেন যে কষ্টের পরই স্বস্তি আসে। ধৈর্য ধারণ করলে আল্লাহ নিজে সব জটিলতা সহজ করে দেন।",
     "recommended_reciter": "alafasy",
     "reciter_rationale": "Surah Ash-Sharh is a gentle message of divine solace; Alafasy's warm, comforting baritone maximizes emotional appeal."
-}"""
+}}"""
 
     reciter_hint = f"Pre-selected reciter: {reciter_id}" if reciter_id else "Select the best matching reciter ('alafasy' or 'dossari') based on the theological emotion."
 
     user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation.
 {reciter_hint}
 
-MANDATORY AVOID LIST (Last 30 Videos - DO NOT REPEAT ANY OF THESE):
+ALREADY RECITED AYAHS IN LAST 30 VIDEOS (STRICTLY FORBIDDEN TO REPEAT THESE AYAHS):
+{used_ayahs_section}
+
+RECENT TITLES IN HISTORY:
 - {avoid_list}
 
-Select a fresh, unique, inspiring passage not found in the list above with 100% complete contextual integrity and assign the winning reciter. Return valid JSON only."""
+Select a fresh, inspiring passage with 100% complete contextual integrity. Ensure ZERO OVERLAP with the already recited Ayahs above. Return valid JSON only."""
 
     try:
         data = extract_json(system_prompt, user_prompt, max_tokens=600)
@@ -487,6 +592,15 @@ Select a fresh, unique, inspiring passage not found in the list above with 100% 
             start = int(data["ayah_start"])
             end = int(data.get("ayah_end") or start)
             
+            # Check for Ayah-level overlap
+            cand_ayahs = set(range(start, end + 1))
+            banned_ayahs = used_ayahs_map.get(surah, set())
+            overlap = cand_ayahs & banned_ayahs
+            if overlap:
+                raise ValueError(
+                    f"AI selected Surah {surah}:{start}-{end} which overlaps with already used Ayahs {sorted(list(overlap))}"
+                )
+
             # Determine winning reciter
             chosen_reciter_id = reciter_id
             if not chosen_reciter_id:
@@ -510,9 +624,21 @@ Select a fresh, unique, inspiring passage not found in the list above with 100% 
     except Exception as e:
         logger.warning(f"AI passage selection notice: {e}. Falling back to curated bank.")
 
-    # Fallback to curated rotation
+    # Fallback to curated rotation - STRICTLY EXCLUDE PASSAGES OVERLAPPING ALREADY USED AYAHS
     import random
-    choice = random.choice(CURATED_COMPLETE_PASSAGES)
+    available_curated = []
+    for p in CURATED_COMPLETE_PASSAGES:
+        p_surah = p["surah"]
+        p_ayahs = set(range(p["ayah_start"], p["ayah_end"] + 1))
+        banned_ayahs = used_ayahs_map.get(p_surah, set())
+        if not (p_ayahs & banned_ayahs):
+            available_curated.append(p)
+
+    if not available_curated:
+        logger.warning("All curated passages overlapped with recent history! Using complete curated bank as emergency fallback.")
+        available_curated = CURATED_COMPLETE_PASSAGES
+
+    choice = random.choice(available_curated)
     chosen_reciter_id = reciter_id or choice.get("ideal_reciter", "alafasy")
     reciter = RECITERS_CONFIG.get(chosen_reciter_id, RECITERS_CONFIG["alafasy"])
 

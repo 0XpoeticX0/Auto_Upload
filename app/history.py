@@ -70,7 +70,7 @@ def _supabase_fetch_all_recent(limit: int = 150) -> list[dict]:
         
         for tbl in ["used_islamic_video", "used_islamic_videos", "used_videos"]:
             try:
-                req_url = f"{url}/{tbl}?select=id,title,source&order=id.desc&limit={limit}"
+                req_url = f"{url}/{tbl}?select=id,title,source,created_at&order=created_at.desc&limit={limit}"
                 req = urllib.request.Request(req_url, headers=headers, method="GET")
                 with urllib.request.urlopen(req, timeout=5) as resp:
                     if resp.status == 200:
@@ -78,17 +78,179 @@ def _supabase_fetch_all_recent(limit: int = 150) -> list[dict]:
                         if isinstance(data, list) and data:
                             return data
             except Exception:
-                pass
+                # Fallback to id.desc if created_at column is missing on secondary tables
+                try:
+                    req_url = f"{url}/{tbl}?select=id,title,source&order=id.desc&limit={limit}"
+                    req = urllib.request.Request(req_url, headers=headers, method="GET")
+                    with urllib.request.urlopen(req, timeout=5) as resp:
+                        if resp.status == 200:
+                            data = json.loads(resp.read().decode("utf-8"))
+                            if isinstance(data, list) and data:
+                                return data
+                except Exception:
+                    pass
     except Exception as e:
         logger.warning(f"Supabase fetch notice: {e}")
     return []
+
+def fetch_recent_quran_pipeline_history(limit: int = 50) -> list[dict]:
+    """
+    Fetches the dedicated chronological history of published Quran recitation videos
+    strictly sorted by real timestamp (created_at.desc) from Supabase and local cache.
+    Extracts Surah number and title to guarantee zero duplicate Surahs/Ayahs.
+    """
+    records = []
+    try:
+        url, key = _get_supabase_config()
+        if url and key:
+            headers = {
+                "apikey": key,
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json"
+            }
+            req_url = f"{url}/used_islamic_video?source=eq.quran_verse_pipeline&order=created_at.desc&limit={limit}"
+            req = urllib.request.Request(req_url, headers=headers, method="GET")
+            with urllib.request.urlopen(req, timeout=6) as resp:
+                if resp.status == 200:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    if isinstance(data, list):
+                        records.extend(data)
+    except Exception as e:
+        logger.warning(f"Failed to fetch dedicated Quran history from Supabase: {e}")
+
+    # Fallback to general Supabase search if specific query returned empty
+    if not records:
+        try:
+            cloud_all = _supabase_fetch_all_recent(limit=100)
+            records = [r for r in cloud_all if r.get("source") == "quran_verse_pipeline" or "[কুরআন তিলাওয়াত]" in r.get("title", "")]
+        except Exception:
+            records = []
+
+    # Also merge local cache records from load_history()
+    try:
+        hist = load_history()
+        local_quran = hist.get("quran_videos", [])
+        seen_ids = {str(r.get("id")) for r in records if r.get("id")}
+        for lq in local_quran:
+            if str(lq.get("id")) not in seen_ids:
+                records.append(lq)
+    except Exception:
+        pass
+
+    parsed_records = []
+    for r in records:
+        row_id = str(r.get("id", ""))
+        title = str(r.get("title", ""))
+        created_at = r.get("created_at")
+
+        surah_num = r.get("surah")
+        if surah_num is None:
+            parts = row_id.split("_")
+            if len(parts) >= 3 and parts[1].isdigit():
+                surah_num = int(parts[1])
+
+        # If surah_num is still None, attempt to detect from title
+        if surah_num is None and title:
+            try:
+                from app.quran_verse.quran_data import SURAH_NAMES_BN, SURAH_NAMES_EN
+                for num, bn_name in SURAH_NAMES_BN.items():
+                    if bn_name in title:
+                        surah_num = num
+                        break
+                if surah_num is None:
+                    for num, en_name in SURAH_NAMES_EN.items():
+                        if en_name.lower() in title.lower():
+                            surah_num = num
+                            break
+            except Exception:
+                pass
+
+        # Extract Ayah range from record, row_id, or title
+        ayah_start = r.get("ayah_start")
+        ayah_end = r.get("ayah_end")
+
+        if ayah_start is None:
+            parts = row_id.split("_")
+            if len(parts) >= 5 and parts[0] == "quran" and parts[1].isdigit() and parts[2].isdigit() and parts[3].isdigit():
+                ayah_start = int(parts[2])
+                ayah_end = int(parts[3])
+
+        if ayah_start is None and title:
+            t = title
+            for bn_digit, en_digit in zip('০১২৩৪৫৬৭৮৯', '0123456789'):
+                t = t.replace(bn_digit, en_digit)
+            m = re.search(r'\((?:আয়াত|ayah|verses?)\s*:?\s*(\d+)(?:\s*[-–—]\s*(\d+))?\)', t, re.IGNORECASE)
+            if m:
+                ayah_start = int(m.group(1))
+                ayah_end = int(m.group(2)) if m.group(2) else ayah_start
+
+        parsed_records.append({
+            "id": row_id,
+            "title": title,
+            "surah": surah_num,
+            "ayah_start": ayah_start,
+            "ayah_end": ayah_end,
+            "created_at": created_at
+        })
+
+    return parsed_records
+
+def get_used_ayahs_map(quran_history: list[dict], limit: int = 30) -> dict[int, set[int]]:
+    """
+    Builds a mapping of {surah_number: set_of_used_ayah_numbers}
+    from the last `limit` published Quran videos.
+    Allows different Ayahs of the same Surah to be recited while strictly
+    forbidding duplicate recitation of already-used Ayahs.
+    """
+    used_map = {}
+    for r in quran_history[:limit]:
+        s = r.get("surah")
+        a_s = r.get("ayah_start")
+        a_e = r.get("ayah_end") or a_s
+        if s and a_s:
+            if s not in used_map:
+                used_map[s] = set()
+            for a in range(a_s, a_e + 1):
+                used_map[s].add(a)
+    return used_map
+
+def record_quran_history(surah: int, ayah_start: int, ayah_end: int, title: str, reciter_id: str = ""):
+    """Records a published Quran video to both Supabase and local history cache."""
+    hist = load_history()
+    if "quran_videos" not in hist:
+        hist["quran_videos"] = []
+
+    rec_id = f"quran_{surah}_{ayah_start}_{ayah_end}_{int(time.time())}"
+    entry = {
+        "id": rec_id,
+        "surah": surah,
+        "ayah_start": ayah_start,
+        "ayah_end": ayah_end,
+        "title": title,
+        "reciter_id": reciter_id,
+        "timestamp": int(time.time()),
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    }
+    hist["quran_videos"] = [entry] + [v for v in hist["quran_videos"] if v.get("title") != title][:99]
+    save_history(hist)
+
+    ok = _supabase_insert({
+        "id": rec_id,
+        "title": title,
+        "source": "quran_verse_pipeline"
+    })
+    if ok:
+        logger.info(f"Globally recorded Quran video to Supabase: '{title}'")
+    else:
+        logger.info(f"Recorded Quran video locally: '{title}'")
 
 def _init_history_structure() -> dict:
     return {
         "last_video_pillar": None,
         "last_post_pillar": None,
         "videos": [],
-        "posts": []
+        "posts": [],
+        "quran_videos": []
     }
 
 def load_history() -> dict:

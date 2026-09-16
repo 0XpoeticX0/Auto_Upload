@@ -19,9 +19,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app.logger import logger
-from app.history import get_recent_video_titles, _supabase_insert
+from app.history import (
+    get_recent_video_titles,
+    _supabase_insert,
+    fetch_recent_quran_pipeline_history,
+    record_quran_history,
+    get_used_ayahs_map
+)
 from app.quran_verse.quran_data import (
     RECITERS_CONFIG,
+    SURAH_NAMES_BN,
+    SURAH_NAMES_EN,
     fetch_verse_data,
     select_meaningful_passage_ai,
     determine_best_reciter_for_passage
@@ -55,8 +63,17 @@ def generate_quran_verse_video(
         logger.info(f"User forced reciter: {RECITERS_CONFIG[forced_reciter_id]['name_en']}")
 
     # 2. Select & Clear Quran Verse Passage via 3-Stage Gemini Clearance Gate
-    recent_history = get_recent_video_titles(limit=60)
-    max_selection_retries = 5
+    # Dedicated chronological history of published Quran videos from Supabase + local cache
+    quran_history = fetch_recent_quran_pipeline_history(limit=50)
+    used_ayahs_map = get_used_ayahs_map(quran_history, limit=30)
+    past_titles = [r.get("title", "") for r in quran_history[:30] if r.get("title")]
+
+    logger.info(f"🚫 [Zero-Duplication Gate] Tracking already used Ayahs across {len(used_ayahs_map)} Surahs in last 30 videos:")
+    for s_num, ayahs in sorted(used_ayahs_map.items()):
+        bn_s = SURAH_NAMES_BN.get(s_num, "")
+        logger.info(f"   - Surah {s_num} ({bn_s}): used Ayahs {sorted(list(ayahs))}")
+
+    max_selection_retries = 8
     verse_data = None
 
     for attempt in range(1, max_selection_retries + 1):
@@ -71,23 +88,43 @@ def generate_quran_verse_video(
             v_cand["reflection_bn"] = ""
         else:
             # Let Gemini pick the passage and the winning emotional vocal match (Alafasy vs. Dossari)
-            v_cand = select_meaningful_passage_ai(reciter_id=forced_reciter_id, recent_history=recent_history)
+            v_cand = select_meaningful_passage_ai(
+                reciter_id=forced_reciter_id,
+                recent_history=past_titles,
+                used_ayahs_map=used_ayahs_map
+            )
 
+        # STRICT ZERO-DUPLICATION ENFORCEMENT GATE: AYAH-LEVEL REJECTION
+        cand_surah = v_cand.get("surah")
+        cand_start = v_cand.get("ayah_start")
+        cand_end = v_cand.get("ayah_end") or cand_start
+        cand_surah_name_bn = v_cand.get("surah_name_bn", "")
+        cand_range_str = str(v_cand.get("verse_range_str", ""))
 
-        # STRICT ANTI-DUPLICATION GATE: Check against last 30 videos
-        cand_surah = v_cand.get("surah_name_bn", "")
-        cand_range = str(v_cand.get("verse_range_str", ""))
-        is_duplicate = False
+        if not (surah and ayah_start):
+            # Check 1: Ayah-level overlap check (rejection occurs ONLY if specific Ayahs have been used)
+            cand_ayahs = set(range(cand_start, cand_end + 1))
+            banned_ayahs = used_ayahs_map.get(cand_surah, set())
+            overlap = cand_ayahs & banned_ayahs
+            if overlap:
+                logger.warning(
+                    f"🚫 [Zero-Duplication Gate] REJECTED (Attempt {attempt}/{max_selection_retries}): "
+                    f"Surah {cand_surah} ({cand_surah_name_bn}) Ayahs {cand_range_str} overlaps with already used Ayahs: {sorted(list(overlap))}!"
+                )
+                continue
 
-        for past_entry in recent_history[:30]:
-            # If past video title or concept contains both this Surah and Ayah range
-            if cand_surah and cand_surah in past_entry and cand_range and cand_range in past_entry:
-                logger.warning(f"[Zero-Duplication Gate] REJECTED: {cand_surah} (Ayah {cand_range}) was already published in the last 30 videos ({past_entry})!")
-                is_duplicate = True
-                break
-
-        if is_duplicate:
-            continue
+            # Check 2: Exact duplicate title check against past 30 Quran titles
+            is_title_duplicate = False
+            for past_entry in past_titles[:30]:
+                if cand_surah_name_bn in past_entry and f"আয়াত {cand_range_str}" in past_entry:
+                    logger.warning(
+                        f"🚫 [Zero-Duplication Gate] REJECTED (Attempt {attempt}/{max_selection_retries}): "
+                        f"{cand_surah_name_bn} (আয়াত {cand_range_str}) already found in past title '{past_entry}'!"
+                    )
+                    is_title_duplicate = True
+                    break
+            if is_title_duplicate:
+                continue
 
         cleared, clearance_report = verify_quran_passage_3x(v_cand)
         if cleared:
@@ -173,15 +210,21 @@ def run_quran_verse_pipeline(
         except Exception as e:
             logger.warning(f"TikTok upload notice: {e}")
 
-        # Record to Supabase
-        rec_id = f"quran_{result['verse_data']['surah']}_{int(time.time())}"
+        # Record to Supabase & Local History Cache
+        surah_num = result['verse_data']['surah']
+        a_start = result['verse_data']['ayah_start']
+        a_end = result['verse_data']['ayah_end']
         history_title = f"[কুরআন তিলাওয়াত] {metadata['title']}"
-        _supabase_insert({
-            "id": rec_id,
-            "title": history_title,
-            "source": "quran_verse_pipeline"
-        })
-        logger.info(f"Recorded to Supabase: '{history_title}'")
+        reciter_id = result['verse_data'].get('reciter_id', '')
+
+        record_quran_history(
+            surah=surah_num,
+            ayah_start=a_start,
+            ayah_end=a_end,
+            title=history_title,
+            reciter_id=reciter_id
+        )
+        logger.info(f"Recorded to Quran History: Surah {surah_num}:{a_start}-{a_end} ('{history_title}')")
 
     logger.info("=== QURAN PIPELINE EXECUTION FINISHED SUCCESSFULLY ===")
     return result
