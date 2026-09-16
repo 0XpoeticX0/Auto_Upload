@@ -16,7 +16,7 @@ from app.loop_reel.audio_library import get_or_download_quran_audio
 from app.upload.youtube import upload_to_youtube
 from app.upload.facebook import upload_to_facebook
 
-# 12 Diverse Islamic Knowledge & Sunnah Domains (Rotates across all facets of Sahih Hadith)
+# Emotionally-weighted Islamic Domains (Hot domains 2x, cold domains 1x — Bangla audience psychology)
 DYNAMIC_ISLAMIC_DOMAINS = [
     {
         "name": "ব্যবসায়িক সততা ও লেনদেন (Business & Trade Ethics)",
@@ -77,6 +77,27 @@ DYNAMIC_ISLAMIC_DOMAINS = [
         "name": "দান-সদকা ও গোপন নেক আমল (Sadaqah & Secret Deeds)",
         "theme": "এক টুকরো খেজুর দিয়ে হলেও জাহান্নাম থেকে বাঁচা, গোপন সদকা আল্লাহর রাগ নিভিয়ে দেয়",
         "guidance": "Focus on small consistent charities, secret good deeds between a servant and Allah, feeding the hungry, helping an orphan."
+    },
+    # ── 2x HIGH-EMOTION duplicates (Bangla audience responds most to these) ────
+    {
+        "name": "মা-বাবা ও আত্মীয়তার সম্পর্ক — গভীর আবেগ (Parents — Emotional Depth)",
+        "theme": "পিতার চোখের জল, মায়ের দোয়া, সিলাহ রাহমিতে রিজিক বৃদ্ধি, সন্তানের কর্তব্য",
+        "guidance": "Deep emotional focus: a mother's dua opening doors of Rizq, a father's anger being Allah's anger, the Hadith on children neglecting parents and its consequences."
+    },
+    {
+        "name": "রাগ নিয়ন্ত্রণ — পারিবারিক শান্তি (Anger — Family Peace)",
+        "theme": "স্বামী-স্ত্রীর মনোমালিন্য, ক্ষমার মাধ্যমে সম্পর্ক মেরামত, রাগে শয়তানের প্রবেশ",
+        "guidance": "Focus on domestic peace: forgiving spouse, controlling anger to protect family bond, Hadith on Shaytan's power during anger and how to neutralize it."
+    },
+    {
+        "name": "দৈনন্দিন ছোট সুন্নাহ — অদৃশ্য বরকত (Everyday Sunnah — Hidden Barakah)",
+        "theme": "ঘরে প্রবেশের সুন্নাহ, খাবারে বিসমিল্লাহ ভুললে শয়তান শরিক হয়, রাতের ঘুমের সুন্নাহ আমল",
+        "guidance": "Focus on micro-sunnahs most people miss daily: Bismillah when entering home, right hand sunnah, specific duas for ordinary moments that bring unseen barakah."
+    },
+    {
+        "name": "দান-সদকা — হাতের কাছের আমল (Sadaqah — Acts Within Reach)",
+        "theme": "হাসি সদকা, রাস্তা থেকে কষ্টদায়ক বস্তু সরানো, প্রতিবেশীকে এক বাটি তরকারি দেওয়া",
+        "guidance": "Focus on the smallest sadaqahs people overlook: a genuine smile, removing a stone from the road, sharing one bowl of food with a neighbor — each counted by Allah."
     }
 ]
 
@@ -241,7 +262,7 @@ ASSIGNED SPECIFIC ISLAMIC DOMAIN FOR THIS REEL:
 4. ZERO WORD OVERLAP: The first 5 words of Line 1 must NOT share any vocabulary or grammar pattern with the last hook.
 5. NO HADITH PREFACE IN LINE 1: Line 1 must NEVER start with "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "নবীজির শেখানো". Line 1 belongs purely to the relatable human struggle or situation. The Prophet's authentic Sunnah and Sahih citation belong in Line 2/3 and the structured caption points!
 
-SERIES CONTEXT: "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
+SERIES CONTEXT: "আজকের আমল • পর্ব {ep_bn}"
 
 # ==============================================================================
 # RULE #1 SUPREME MANDATE: ZERO TOLERANCE FOR ISLAMIC INACCURACY & HALLUCINATION
@@ -269,12 +290,15 @@ Rule 3: Target a Pain Point or Deep Desire: Anchor in real daily emotions (ম�
 Rule 4: Leave the Loop Open (End with unfinished promise "...যা নিয়মিত করলে আল্লাহ মনের অশান্তি দূর করে দেন").
 - ❌ STRICTLY BANNED HOOK CLICHÉS: NEVER use "ভাগ্যের তালা খুলে দেবে", "ভাগ্য বদলে দেবে".
 
-CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY):
-In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines covering:
-1. The Core Focus / Subject (e.g. "মন অতিরিক্ত দুশ্চিন্তায়", "প্রচণ্ড রেগে গেলে", "নবীজির (ﷺ) প্রিয় সুন্নাত")
-2. The Divine Name: "আল্লাহ" or "আল্লাহর"
-3. The Action: e.g. "১টি আমল", "ছোট এই দোয়াটি", "১টি সুন্নাত"
-4. The Outcome: e.g. "মুহূর্তেই শান্তি নেমে আসে", "সব সংকট দূর করে দেন", "অভাব দূর হবে"
+CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY — Emotional Salience Priority):
+In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines.
+Pick words using this EMOTIONAL PRIORITY ORDER (the brain reacts STRONGEST to these):
+Priority 1 — FEAR / REWARD words (highest attention): জান্নাত, জাহান্নাম, ক্ষমা, বিপদ, সুরক্ষা, শাস্তি, সওয়াব, ফযিলত
+Priority 2 — IDENTITY words (self-relevance): মুমিন, সাহাবী, রাসূলুল্লাহ (ﷺ), আল্লাহ, নবীজি (ﷺ)
+Priority 3 — ACTION verbs (engagement): পড়লে, করলে, বললে, মানলে, শিখুন
+Priority 4 — NUMBERS & QUANTITIES (specificity): ১০০ গুণ, ১ মিনিট, ৩টি, প্রতিদিন
+Always include at least ONE Priority 1 or Priority 2 word. Example:
+  highlight_words: ["জান্নাতের ৮টি দরজা", "আল্লাহ", "১টি আমল করলে", "প্রতিদিন সুরক্ষা"]
 
 PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER:
 • Model A (Situational Emotional Hook):
@@ -311,7 +335,7 @@ TOPICS RECENTLY COVERED (DO NOT REPEAT):
 
 Output ONLY valid JSON:
 {{
-    "series_title": "দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}",
+    "series_title": "আজকের আমল • পর্ব {ep_bn}",
     "title_bn": "ফজরের পর এই ৩টি আমল করুন এবং দেখুন কীভাবে আল্লাহ আপনার পুরো দিনকে বরকতে ভরিয়ে দেন",
     "title_en": "Do these 3 things after Fajr and watch Allah fill your day with barakah #Shorts",
     "line_1": "ফজরের পর এই ৩টি আমল করুন",
@@ -476,7 +500,7 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
         content["episode_number"] = ep_int
         content["episode_bn"] = ep_bn
         if not content.get("series_title"):
-            content["series_title"] = f"দৈনন্দিন সহীহ আমল • পর্ব {ep_bn}"
+            content["series_title"] = f"আজকের আমল • পর্ব {ep_bn}"
         return content
 
     raise RuntimeError(f"Failed to generate a 100% verified, authentic, non-duplicate Loop Reel after {max_attempts} rigorous checks.")
@@ -548,11 +572,12 @@ def format_loop_caption(data: dict) -> str:
 
         caption += "\n"
 
-    # CLEAR CTA & AUTHENTIC SUNNAH DAWAH TRIGGER
+    # PSYCHOLOGY-DRIVEN ENGAGEMENT CTA (Identity Trigger + Foot-in-the-Door + Loss Aversion)
     caption += (
-        "📌 নিয়মিত আমল করার জন্য রিলটি 🔖 Save করে রাখুন।\n"
-        "🤍 সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন।\n"
-        "রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿\n\n"
+        "📌 আজকের এই আমলটি 🔖 Save করে রাখুন — যেন ভুলে না যান!\n"
+        "👇 আপনি কি এই আমলটি আগে জানতেন? কমেন্টে জানান!\n"
+        "🤍 প্রিয় একজনকে Tag করে জানিয়ে দিন — "
+        "রাসূলুল্লাহ (ﷺ) বলেছেন: 'যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।' [সহীহ মুসলিম: ১৮৯৩] 🌿\n\n"
         "━━━━━━━━━━━━━━━━━━━━\n"
         "👉 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন: @dailydos_islam\n\n"
     )
@@ -601,13 +626,26 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     audio_path = get_or_download_quran_audio(topic_text=topic_keywords, duration=8.0)
 
     # 3. Build ASS Subtitle matching Reference Post (Top Series Badge, Golden Highlights, Caption CTA, Follow Trigger)
-    series_badge = content.get("series_title", f"দৈনন্দিন সহীহ আমল • পর্ব {content.get('episode_bn', '১')}")
+    series_badge = content.get("series_title", f"আজকের আমল • পর্ব {content.get('episode_bn', '১')}")
+    # Inject temporal urgency: "আজকের" triggers FOMO (Zeigarnik Effect)
+    series_badge = series_badge.replace("দৈনন্দিন সহীহ আমল", "আজকের আমল")
     if not series_badge.startswith("✦"):
         series_badge = f"✦ {series_badge} ✦"
 
     l1 = content.get("line_1", "").strip()
     l2 = content.get("line_2", "").strip()
     l3 = content.get("line_3", "").strip()
+
+    # Rotating psychology-driven CTA hooks (Curiosity Gap + Loss Aversion)
+    import random as _rnd
+    _CTA_HOOKS = [
+        "☞ এই আমলের পুরো ফযিলত ক্যাপশনে 👇",
+        "☞ দলিলসহ বিস্তারিত ক্যাপশনে পড়ুন 👇",
+        "☞ বেশিরভাগ মানুষ এটা জানেন না → ক্যাপশনে 👇",
+        "☞ না জানলে সওয়াব মিস হচ্ছে → ক্যাপশনে 👇",
+        "☞ হাদিস নম্বরসহ ক্যাপশনে পড়ুন 📖",
+    ]
+    caption_cta_text = _rnd.choice(_CTA_HOOKS)
     
     hw_list = content.get("highlight_words", ["৩টি আয়াত", "আল্লাহ", "রক্ষা করবেন"])
     full_hook_text = f"{l1}\\N{l2}\\N{l3}" if l2 else l1
@@ -647,7 +685,7 @@ Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c{GOLD_COLOR}}}{series_badge}
 Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs62\\b1\\c{WHITE_COLOR}}}{full_hook_text}
-Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}☞ বিস্তারিত ক্যাপশনে পড়ুন 👇{{\\c{WHITE_COLOR}}}
+Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}{caption_cta_text}{{\\c{WHITE_COLOR}}}
 Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ☞ @dailydos_islam
 """
     with open(ass_path, "w", encoding="utf-8") as f:
@@ -735,10 +773,31 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
     if "#Shorts" not in yt_title and "#shorts" not in yt_title:
         yt_title = f"{yt_title} #Shorts"
         
-    pinned_comment = (
-        f"পরবর্তীতে আমল করার জন্য রিলটি Save করে রাখুন এবং সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন—"
-        f"রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿"
-    )
+    # Rotating Pinned Comment — Foot-in-the-Door Psychology (easy 1-word action first → then share)
+    import random as _rnd2
+    _PINNED_COMMENTS = [
+        (
+            "আপনি কি এই আমলটি আগে জানতেন? 👇\n"
+            "কমেন্টে লিখুন: 'জানতাম ✅' অথবা 'জানতাম না ❌'\n\n"
+            "উপকার হলে প্রিয় একজনকে Tag করুন 🤍\n"
+            "রাসূলুল্লাহ (ﷺ) বলেছেন: 'যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।' [সহীহ মুসলিম: ১৮৯৩] 🌿"
+        ),
+        (
+            "এই আমলটি কি আপনি নিয়মিত করেন? 👇\n"
+            "কমেন্টে লিখুন: 'করি ✅' অথবা 'আজ থেকে শুরু করব 🤲'\n\n"
+            "একজন প্রিয়জনকে Tag করে জানিয়ে দিন 🤍"
+        ),
+        (
+            "সবচেয়ে কাছের মানুষটিকে এটা জানাতে এখনই Tag করুন 👇🤍\n\n"
+            "রাসূলুল্লাহ (ﷺ) বলেছেন: 'যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।' [সহীহ মুসলিম: ১৮৯৩] 🌿"
+        ),
+        (
+            "এই হাদিসটি পড়ে আপনার মনে প্রথম কী অনুভূতি হলো? 👇\n"
+            "একটি শব্দে কমেন্টে লিখুন 🤍\n\n"
+            "পরবর্তীতে আমল করতে রিলটি 🔖 Save করে রাখুন।"
+        ),
+    ]
+    pinned_comment = _rnd2.choice(_PINNED_COMMENTS)
 
     # 4. Upload to YouTube Shorts
     metadata = {
