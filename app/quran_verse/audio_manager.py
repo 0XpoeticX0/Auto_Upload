@@ -110,17 +110,21 @@ def apply_neural_studio_enhancement(input_path: str, output_path: str) -> str:
     Applies Permanent Studio Vocal Mastering:
     1. Primary: Resemble Enhance (Full Neural Studio AI) with De-Reverb + Harmonics synthesis.
     2. Fallback: DeepFilterNet3 local neural de-reverberation.
-    3. Broadcast Master: Clean, comfortable -18 LUFS normalization with zero harshness.
+    3. Emergency Fallback: FFmpeg afftdn (FFT denoiser) — always available, no dependencies.
+    4. Broadcast Master: Clean, comfortable -18 LUFS normalization with zero harshness.
     """
     temp_resemble_wav = input_path + ".resemble_enhanced.wav"
     temp_df_wav = input_path + ".df_enhanced.wav"
+    temp_afftdn_wav = input_path + ".afftdn_clean.wav"
     source_to_master = input_path
+    enhance_method = "none"
 
-    # Step 1: Attempt Resemble Enhance
+    # Step 1: Attempt Resemble Enhance (best quality — full neural de-reverb + harmonics)
     if enhance_with_resemble_ai(input_path, temp_resemble_wav):
         source_to_master = temp_resemble_wav
+        enhance_method = "resemble_enhance"
     else:
-        # Step 2: Fallback to DeepFilterNet3
+        # Step 2: Fallback to DeepFilterNet3 (good quality — local neural de-reverb)
         model, df_state = get_deepfilter_model()
         if model and df_state:
             try:
@@ -130,14 +134,42 @@ def apply_neural_studio_enhancement(input_path: str, output_path: str) -> str:
                 enhanced = enhance(model, df_state, audio, atten_lim_db=18.0)
                 save_audio(temp_df_wav, enhanced, df_state.sr())
                 source_to_master = temp_df_wav
+                enhance_method = "deepfilternet3"
                 logger.info("DeepFilterNet3 enhancement completed.")
             except Exception as e:
-                logger.warning(f"DeepFilterNet3 notice: {e}, using direct audio.")
-                source_to_master = input_path
+                logger.warning(f"DeepFilterNet3 notice: {e}")
+
+        # Step 3: Emergency fallback — FFmpeg afftdn (always available, no pip dependencies)
+        if enhance_method == "none":
+            try:
+                logger.info("Both Resemble & DeepFilter unavailable — applying FFmpeg afftdn de-reverb fallback...")
+                afftdn_filter = (
+                    "highpass=f=75,"
+                    "afftdn=nf=-20:nt=w,"
+                    "lowpass=f=10000,"
+                    "equalizer=f=3500:width_type=o:w=1.5:g=-3.0"
+                )
+                cmd_afftdn = [
+                    "ffmpeg", "-y", "-i", input_path,
+                    "-af", afftdn_filter,
+                    "-c:a", "pcm_s16le",
+                    temp_afftdn_wav
+                ]
+                subprocess.run(cmd_afftdn, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+                if os.path.exists(temp_afftdn_wav) and os.path.getsize(temp_afftdn_wav) > 1000:
+                    source_to_master = temp_afftdn_wav
+                    enhance_method = "ffmpeg_afftdn"
+                    logger.info("FFmpeg afftdn de-reverb fallback applied successfully.")
+            except Exception as e:
+                logger.warning(f"FFmpeg afftdn fallback notice: {e}")
+
+    logger.info(f"🎵 Audio Enhancement Method Used: {enhance_method}")
 
     # Clean, Relaxed & Transparent Studio Mastering (Zero Distortion / Zero Harshness):
+    # lowpass=10000 suppresses remaining reverb tails in high frequencies
     master_filter = (
         "highpass=f=75,"
+        "lowpass=f=10000,"
         "equalizer=f=350:width_type=q:w=1.5:g=-2.0,"
         "loudnorm=I=-18.0:TP=-2.0:LRA=11.0"
     )
@@ -150,7 +182,7 @@ def apply_neural_studio_enhancement(input_path: str, output_path: str) -> str:
     subprocess.run(cmd_master, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
     # Cleanup temp wavs
-    for p in [temp_resemble_wav, temp_df_wav]:
+    for p in [temp_resemble_wav, temp_df_wav, temp_afftdn_wav]:
         if os.path.exists(p):
             try:
                 os.remove(p)
