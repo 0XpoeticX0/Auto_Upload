@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+Quran Audio Library for Loop Reel Pipeline.
+Strictly uses ONLY 2 approved reciters (GEMINI.md mandate):
+  - Sheikh Mishary Rashid Alafasy (warm, soothing — comfort/mercy/hope themes)
+  - Sheikh Yasser Ad-Dossari (commanding, powerful — majesty/judgment themes)
+"""
 import os
 import json
 import random
@@ -8,57 +14,55 @@ from app.logger import logger
 
 AUDIO_DIR = os.path.abspath("data/quran_audio")
 
-# Rich curated repository of 40 distinct, authentic, long continuous Quran recitation tracks (>12s to 45s)
+# ═══════════════════════════════════════════════════════════════════════════════
+# STRICTLY 2 APPROVED RECITERS ONLY — Alafasy & Dossari (GEMINI.md Rule #5)
+# 30 curated tracks covering all major thematic categories for topic-matching.
+# ═══════════════════════════════════════════════════════════════════════════════
 RECITER_TRACKS = [
-    # --- DUA YUNUS & RELIEF FROM DEBT / CRISIS / DISTRESS (> 15s) ---
-    {"id": "hani_rifai_dua_yunus", "name": "Hani Ar-Rifai - Dua Yunus (Al-Anbiya: 87)", "reciter": "Sheikh Hani Ar-Rifai", "url": "https://everyayah.com/data/Hani_Rifai_192kbps/021087.mp3", "filename": "hani_rifai_dua_yunus.mp3", "tags": ["debt", "crisis", "distress", "ঋণ", "বিপদ", "কষ্ট", "হতাশা", "দোয়া ইউনুস", "উদ্ধার", "সমস্যা"]},
+    # ── DUA YUNUS & RELIEF FROM CRISIS / DISTRESS ──────────────────────────────
+    {"id": "alafasy_dua_yunus", "name": "Alafasy - Dua Yunus (Al-Anbiya: 87)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/021087.mp3", "filename": "alafasy_dua_yunus.mp3", "tags": ["debt", "crisis", "distress", "ঋণ", "বিপদ", "কষ্ট", "হতাশা", "দোয়া ইউনুস", "উদ্ধার", "সমস্যা"]},
+    {"id": "dossari_dua_yunus", "name": "Dossari - Dua Yunus (Al-Anbiya: 87)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/021087.mp3", "filename": "dossari_dua_yunus.mp3", "tags": ["debt", "crisis", "distress", "ঋণ", "বিপদ", "কষ্ট", "হতাশা", "দোয়া ইউনুস"]},
     {"id": "alafasy_surah_imran_mulk", "name": "Alafasy - Surah Al-Imran (Maalikal Mulk: 26)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/003026.mp3", "filename": "alafasy_surah_imran_mulk.mp3", "tags": ["debt", "rizq", "crisis", "wealth", "ঋণ", "রিজিক", "উদ্ধার", "বরকত", "ক্ষমতা"]},
     {"id": "alafasy_surah_tawbah_hasbiyallah", "name": "Alafasy - Surah At-Tawbah (Hasbiyallahu: 129)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/009129.mp3", "filename": "alafasy_surah_tawbah_hasbiyallah.mp3", "tags": ["crisis", "distress", "peace", "protection", "বিপদ", "কষ্ট", "পেরেশানি", "ভরসা"]},
-    {"id": "dossari_surah_ibrahim", "name": "Yasser Al-Dossari - Surah Ibrahim (Gratitude: 40)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/014040.mp3", "filename": "dossari_surah_ibrahim.mp3", "tags": ["gratitude", "prayer", "family", "ইব্রাহিম", "নামাজ", "পরিবার", "শুকরিয়া"]},
+    {"id": "dossari_surah_ibrahim", "name": "Dossari - Surah Ibrahim (Gratitude: 40)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/014040.mp3", "filename": "dossari_surah_ibrahim.mp3", "tags": ["gratitude", "prayer", "family", "ইব্রাহিম", "নামাজ", "পরিবার", "শুকরিয়া"]},
+
+    # ── QURAN MERCY & PROTECTION DUAS ──────────────────────────────────────────
     {"id": "alafasy_surah_kahf_rahmah", "name": "Alafasy - Surah Al-Kahf (Dua for Mercy: 10)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/018010.mp3", "filename": "alafasy_surah_kahf_rahmah.mp3", "tags": ["kahf", "mercy", "protection", "কাহফ", "রহমত", "হেফাজত"]},
-    {"id": "alafasy_surah_qasas_musa", "name": "Alafasy - Surah Al-Qasas (Musa's Dua for Rizq: 24)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/028024.mp3", "filename": "alafasy_surah_qasas_musa.mp3", "tags": ["rizq", "marriage", "help", "রিজিক", "মুসা", "দোয়া", "সাহায্য"]},
+    {"id": "alafasy_surah_qasas_musa", "name": "Alafasy - Surah Al-Qasas (Musa's Dua for Rizq: 24)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/028024.mp3", "filename": "alafasy_surah_qasas_musa.mp3", "tags": ["rizq", "marriage", "help", "রিজিক", "মুসা", "দোয়া", "সাহায্য"]},
     {"id": "alafasy_surah_fatir_rahmah", "name": "Alafasy - Surah Fatir (Unlocking Mercy: 2)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/035002.mp3", "filename": "alafasy_surah_fatir_rahmah.mp3", "tags": ["rizq", "mercy", "doors", "রিজিক", "রহমত", "বন্ধ দরজা"]},
+    {"id": "dossari_surah_fatir_rahmah", "name": "Dossari - Surah Fatir (Unlocking Mercy: 2)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/035002.mp3", "filename": "dossari_surah_fatir_rahmah.mp3", "tags": ["rizq", "mercy", "doors", "রিজিক", "রহমত"]},
 
-    # --- AYAT AL-KURSI & PROTECTION FROM EVIL EYE / SHAITAN / ACCIDENT (> 35s) ---
-    {"id": "alafasy_ayat_kursi", "name": "Alafasy - Ayat Al-Kursi (Al-Baqarah: 255)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/002255.mp3", "filename": "alafasy_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "bedtime", "আয়াতুল কুরসী", "বদনজর", "জিন", "শয়তান", "হেফাজত", "সুরক্ষা", "বিপদ", "ঘর থেকে বের হওয়া"]},
-    {"id": "maher_ayat_kursi", "name": "Maher Al-Muaiqly - Ayat Al-Kursi", "reciter": "Sheikh Maher Al-Muaiqly", "url": "https://everyayah.com/data/MaherAlMuaiqly128kbps/002255.mp3", "filename": "maher_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী", "বদনজর", "হেফাজত", "বিপদ"]},
-    {"id": "sudais_ayat_kursi", "name": "Al-Sudais - Ayat Al-Kursi", "reciter": "Sheikh Abdul Rahman Al-Sudais", "url": "https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/002255.mp3", "filename": "sudais_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী", "বদনজর"]},
-    {"id": "dossari_ayat_kursi", "name": "Yasser Al-Dossari - Ayat Al-Kursi", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/002255.mp3", "filename": "dossari_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
-    {"id": "qatami_ayat_kursi", "name": "Nasser Al-Qatami - Ayat Al-Kursi", "reciter": "Sheikh Nasser Al-Qatami", "url": "https://everyayah.com/data/Nasser_Alqatami_128kbps/002255.mp3", "filename": "qatami_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
-    {"id": "shuraim_ayat_kursi", "name": "Saud Al-Shuraim - Ayat Al-Kursi", "reciter": "Sheikh Saud Al-Shuraim", "url": "https://everyayah.com/data/Saood_ash-Shuraym_128kbps/002255.mp3", "filename": "shuraim_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
-    {"id": "hani_rifai_ayat_kursi", "name": "Hani Ar-Rifai - Ayat Al-Kursi", "reciter": "Sheikh Hani Ar-Rifai", "url": "https://everyayah.com/data/Hani_Rifai_192kbps/002255.mp3", "filename": "hani_rifai_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
-    {"id": "shatree_ayat_kursi", "name": "Ash-Shaatree - Ayat Al-Kursi", "reciter": "Sheikh Abu Bakr Ash-Shaatree", "url": "https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps/002255.mp3", "filename": "shatree_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
-    {"id": "abdulbasit_ayat_kursi", "name": "Abdul Basit - Ayat Al-Kursi (Mujawwad)", "reciter": "Sheikh Abdul Basit Abdul Samad", "url": "https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/002255.mp3", "filename": "abdulbasit_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
-    {"id": "minshawi_ayat_kursi", "name": "Al-Minshawi - Ayat Al-Kursi", "reciter": "Sheikh Muhammad Siddiq Al-Minshawi", "url": "https://everyayah.com/data/Minshawy_Mujawwad_192kbps/002255.mp3", "filename": "minshawi_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
-    {"id": "jibreel_ayat_kursi", "name": "Muhammad Jibreel - Ayat Al-Kursi", "reciter": "Sheikh Muhammad Jibreel", "url": "https://everyayah.com/data/Muhammad_Jibreel_128kbps/002255.mp3", "filename": "jibreel_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী"]},
+    # ── AYAT AL-KURSI & PROTECTION ─────────────────────────────────────────────
+    {"id": "alafasy_ayat_kursi", "name": "Alafasy - Ayat Al-Kursi (Al-Baqarah: 255)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/002255.mp3", "filename": "alafasy_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "bedtime", "আয়াতুল কুরসী", "বদনজর", "জিন", "শয়তান", "হেফাজত", "সুরক্ষা", "বিপদ", "ঘর থেকে বের হওয়া"]},
+    {"id": "dossari_ayat_kursi", "name": "Dossari - Ayat Al-Kursi (Al-Baqarah: 255)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/002255.mp3", "filename": "dossari_ayat_kursi.mp3", "tags": ["kursi", "protection", "evil_eye", "আয়াতুল কুরসী", "বদনজর", "হেফাজত"]},
 
-    # --- SURAH AL-MULK & GRAVE PROTECTION / NIGHT PEACE (> 15s) ---
+    # ── SURAH AL-MULK & GRAVE / NIGHT ──────────────────────────────────────────
     {"id": "alafasy_surah_mulk", "name": "Alafasy - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/067002.mp3", "filename": "alafasy_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক", "মৃত্যু", "রাত", "আজাব"]},
-    {"id": "maher_surah_mulk", "name": "Maher Al-Muaiqly - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Maher Al-Muaiqly", "url": "https://everyayah.com/data/MaherAlMuaiqly128kbps/067002.mp3", "filename": "maher_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
-    {"id": "sudais_surah_mulk", "name": "Al-Sudais - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Abdul Rahman Al-Sudais", "url": "https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/067002.mp3", "filename": "sudais_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
-    {"id": "dossari_surah_mulk", "name": "Yasser Al-Dossari - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/067002.mp3", "filename": "dossari_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
-    {"id": "shuraim_surah_mulk", "name": "Saud Al-Shuraim - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Saud Al-Shuraim", "url": "https://everyayah.com/data/Saood_ash-Shuraym_128kbps/067002.mp3", "filename": "shuraim_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
-    {"id": "hani_rifai_surah_mulk", "name": "Hani Ar-Rifai - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Hani Ar-Rifai", "url": "https://everyayah.com/data/Hani_Rifai_192kbps/067002.mp3", "filename": "hani_rifai_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
-    {"id": "shatree_surah_mulk", "name": "Ash-Shaatree - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Abu Bakr Ash-Shaatree", "url": "https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps/067002.mp3", "filename": "shatree_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
-    {"id": "jibreel_surah_mulk", "name": "Muhammad Jibreel - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Muhammad Jibreel", "url": "https://everyayah.com/data/Muhammad_Jibreel_128kbps/067002.mp3", "filename": "jibreel_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
+    {"id": "dossari_surah_mulk", "name": "Dossari - Surah Al-Mulk (Ayah 2)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/067002.mp3", "filename": "dossari_surah_mulk.mp3", "tags": ["mulk", "grave", "night", "কবর", "মুলক"]},
 
-    # --- SURAH MARYAM & PROPHETIC DUAS (> 15s) ---
-    {"id": "alafasy_surah_maryam_zakariya", "name": "Alafasy - Surah Maryam (Zakariya's Accepted Dua: 4)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/019004.mp3", "filename": "alafasy_surah_maryam_zakariya.mp3", "tags": ["dua", "family", "marriage", "children", "মরিয়ম", "দোয়া", "পরিবার", "বিয়ে", "সন্তান"]},
-    {"id": "maher_surah_maryam_zakariya", "name": "Maher Al-Muaiqly - Surah Maryam (Zakariya's Accepted Dua: 4)", "reciter": "Sheikh Maher Al-Muaiqly", "url": "https://everyayah.com/data/MaherAlMuaiqly128kbps/019004.mp3", "filename": "maher_surah_maryam_zakariya.mp3", "tags": ["dua", "family", "marriage", "মরিয়ম", "পরিবার"]},
-    {"id": "alafasy_surah_anbiya_zakariya", "name": "Alafasy - Surah Al-Anbiya (Rabbi La Tadharni: 89)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/021089.mp3", "filename": "alafasy_surah_anbiya_zakariya.mp3", "tags": ["dua", "family", "marriage", "সন্তান", "পরিবার", "দোয়া"]},
-    {"id": "qatami_surah_furqan", "name": "Nasser Al-Qatami - Surah Al-Furqan (Servants of Rahman: 63)", "reciter": "Sheikh Nasser Al-Qatami", "url": "https://everyayah.com/data/Nasser_Alqatami_128kbps/025063.mp3", "filename": "qatami_surah_furqan.mp3", "tags": ["servants", "sunnah", "character", "ফুরকান", "চরিত্র", "আমল"]},
+    # ── PROPHETIC DUAS (Maryam, Anbiya, Furqan) ────────────────────────────────
+    {"id": "alafasy_surah_maryam_zakariya", "name": "Alafasy - Surah Maryam (Zakariya's Dua: 4)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/019004.mp3", "filename": "alafasy_surah_maryam_zakariya.mp3", "tags": ["dua", "family", "marriage", "children", "মরিয়ম", "দোয়া", "পরিবার", "বিয়ে", "সন্তান"]},
+    {"id": "dossari_surah_maryam_zakariya", "name": "Dossari - Surah Maryam (Zakariya's Dua: 4)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/019004.mp3", "filename": "dossari_surah_maryam_zakariya.mp3", "tags": ["dua", "family", "marriage", "children", "মরিয়ম", "দোয়া", "পরিবার"]},
+    {"id": "alafasy_surah_anbiya_zakariya", "name": "Alafasy - Surah Al-Anbiya (Rabbi La Tadharni: 89)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/021089.mp3", "filename": "alafasy_surah_anbiya_zakariya.mp3", "tags": ["dua", "family", "marriage", "সন্তান", "পরিবার", "দোয়া"]},
+    {"id": "alafasy_surah_furqan_servants", "name": "Alafasy - Surah Al-Furqan (Servants of Rahman: 63)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/025063.mp3", "filename": "alafasy_surah_furqan_servants.mp3", "tags": ["servants", "sunnah", "character", "ফুরকান", "চরিত্র", "আমল"]},
 
-    # --- SURAH AL-HASHAR & ISM-E-AZAM (NAMES OF ALLAH) (> 15s) ---
+    # ── NAMES OF ALLAH (Surah Al-Hashr) ────────────────────────────────────────
     {"id": "alafasy_surah_hashr_22", "name": "Alafasy - Surah Al-Hashr (Huwallahul Ladhi: 22)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/059022.mp3", "filename": "alafasy_surah_hashr_22.mp3", "tags": ["hashr", "names_of_allah", "ইসমে আজম", "হাশর", "আল্লাহর নাম"]},
     {"id": "alafasy_surah_hashr_23", "name": "Alafasy - Surah Al-Hashr (Al-Malikul Quddus: 23)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/059023.mp3", "filename": "alafasy_surah_hashr_23.mp3", "tags": ["hashr", "names_of_allah", "ইসমে আজম", "হাশর", "আল্লাহর নাম"]},
-    {"id": "abdulbasit_surah_hashr_22", "name": "Abdul Basit - Surah Al-Hashr (Mujawwad: 22)", "reciter": "Sheikh Abdul Basit Abdul Samad", "url": "https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/059022.mp3", "filename": "abdulbasit_surah_hashr_22.mp3", "tags": ["hashr", "names_of_allah", "ইসমে আজম", "হাশর"]},
-    {"id": "abdulbasit_surah_hashr_23", "name": "Abdul Basit - Surah Al-Hashr (Mujawwad: 23)", "reciter": "Sheikh Abdul Basit Abdul Samad", "url": "https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/059023.mp3", "filename": "abdulbasit_surah_hashr_23.mp3", "tags": ["hashr", "names_of_allah", "ইসমে আজম", "হাশর"]},
+    {"id": "dossari_surah_hashr_22", "name": "Dossari - Surah Al-Hashr (Huwallahul Ladhi: 22)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/059022.mp3", "filename": "dossari_surah_hashr_22.mp3", "tags": ["hashr", "names_of_allah", "ইসমে আজম", "হাশর"]},
+    {"id": "dossari_surah_hashr_23", "name": "Dossari - Surah Al-Hashr (Al-Malikul Quddus: 23)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/059023.mp3", "filename": "dossari_surah_hashr_23.mp3", "tags": ["hashr", "names_of_allah", "ইসমে আজম", "হাশর"]},
 
-    # --- SURAH AL-BAQARAH END & UNIVERSAL DUAS (> 16s - 45s) ---
-    {"id": "alafasy_baqarah_rabbana", "name": "Alafasy - Surah Al-Baqarah (Rabbana Aatina: 201)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/002201.mp3", "filename": "alafasy_baqarah_rabbana.mp3", "tags": ["rabbana", "dunya", "akhirah", "বারাকাহ", "দোয়া", "আমল"]},
+    # ── UNIVERSAL DUAS (Baqarah, Fatiha) ───────────────────────────────────────
+    {"id": "alafasy_baqarah_rabbana", "name": "Alafasy - Surah Al-Baqarah (Rabbana Aatina: 201)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/002201.mp3", "filename": "alafasy_baqarah_rabbana.mp3", "tags": ["rabbana", "dunya", "akhirah", "বারাকাহ", "দোয়া", "আমল"]},
     {"id": "alafasy_baqarah_end_286", "name": "Alafasy - Surah Al-Baqarah (Amanar Rasul: 286)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/002286.mp3", "filename": "alafasy_baqarah_end_286.mp3", "tags": ["baqarah", "night", "protection", "বাকারা", "রাত", "আমল", "হেফাজত"]},
-    {"id": "minshawi_surah_fatiha_full", "name": "Al-Minshawi - Surah Al-Fatiha (Iyyaaka Na'budu: 5)", "reciter": "Sheikh Muhammad Siddiq Al-Minshawi", "url": "https://everyayah.com/data/Minshawy_Mujawwad_192kbps/001005.mp3", "filename": "minshawi_surah_fatiha_full.mp3", "tags": ["fatiha", "cure", "general", "ফাতিহা", "শেফা", "আমল", "হাদিস"]},
-    {"id": "abdulbasit_surah_fatiha_full", "name": "Abdul Basit - Surah Al-Fatiha (Iyyaaka Na'budu: 5)", "reciter": "Sheikh Abdul Basit Abdul Samad", "url": "https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001005.mp3", "filename": "abdulbasit_surah_fatiha_full.mp3", "tags": ["fatiha", "cure", "general", "ফাতিহা", "শেফা", "আমল"]},
+    {"id": "dossari_baqarah_rabbana", "name": "Dossari - Surah Al-Baqarah (Rabbana Aatina: 201)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/002201.mp3", "filename": "dossari_baqarah_rabbana.mp3", "tags": ["rabbana", "dunya", "akhirah", "বারাকাহ", "দোয়া"]},
+    {"id": "alafasy_surah_fatiha_5", "name": "Alafasy - Surah Al-Fatiha (Iyyaaka Na'budu: 5)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/001005.mp3", "filename": "alafasy_surah_fatiha_5.mp3", "tags": ["fatiha", "cure", "general", "ফাতিহা", "শেফা", "আমল", "হাদিস"]},
+    {"id": "dossari_surah_fatiha_5", "name": "Dossari - Surah Al-Fatiha (Iyyaaka Na'budu: 5)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/001005.mp3", "filename": "dossari_surah_fatiha_5.mp3", "tags": ["fatiha", "cure", "general", "ফাতিহা", "শেফা"]},
+
+    # ── TAWAKKUL & SOVEREIGNTY ─────────────────────────────────────────────────
+    {"id": "dossari_surah_talaq_tawakkul", "name": "Dossari - Surah At-Talaq (Tawakkul: 3)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/065003.mp3", "filename": "dossari_surah_talaq_tawakkul.mp3", "tags": ["tawakkul", "rizq", "trust", "তাওয়াক্কুল", "রিজিক", "ভরসা", "আল্লাহ"]},
+    {"id": "alafasy_surah_zumar_mercy", "name": "Alafasy - Surah Az-Zumar (Despair Not of Mercy: 53)", "reciter": "Sheikh Mishary Rashid Alafasy", "url": "https://everyayah.com/data/Alafasy_128kbps/039053.mp3", "filename": "alafasy_surah_zumar_mercy.mp3", "tags": ["mercy", "forgiveness", "hope", "ক্ষমা", "রহমত", "আশা", "তওবা", "মাফ"]},
+    {"id": "dossari_surah_zumar_mercy", "name": "Dossari - Surah Az-Zumar (Despair Not of Mercy: 53)", "reciter": "Sheikh Yasser Al-Dossari", "url": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/039053.mp3", "filename": "dossari_surah_zumar_mercy.mp3", "tags": ["mercy", "forgiveness", "hope", "ক্ষমা", "রহমত", "তওবা"]},
 ]
 
 AUDIO_HISTORY_FILE = os.path.abspath("data/audio_history.json")
@@ -113,6 +117,7 @@ def match_tracks_by_topic(topic_text: str) -> list[dict]:
 def get_or_download_quran_audio(topic_text: str = "", duration: float = 8.0, output_path: str = None) -> str:
     """
     Selects a THEMATICALLY-ALIGNED authentic Quran recitation with STRICT 30-video anti-repetition guarantee.
+    Only uses approved reciters: Alafasy & Dossari (GEMINI.md Rule #5).
     """
     os.makedirs(AUDIO_DIR, exist_ok=True)
     
@@ -133,7 +138,7 @@ def get_or_download_quran_audio(topic_text: str = "", duration: float = 8.0, out
         logger.info("All candidate tracks in active pool recently used. Broadening pool to all non-recent tracks...")
         available_tracks = [t for t in RECITER_TRACKS if t["id"] not in recent_ids]
         if not available_tracks:
-            logger.info("All 40 Quran tracks cycled! Resetting rotation cycle...")
+            logger.info("All approved Quran tracks cycled! Resetting rotation cycle...")
             available_tracks = RECITER_TRACKS
 
     # 4. Select fresh track
@@ -169,18 +174,20 @@ def get_or_download_quran_audio(topic_text: str = "", duration: float = 8.0, out
         output_path = os.path.join(AUDIO_DIR, f"trimmed_{track['id']}_{int(duration)}s.mp3")
 
     fade_out_start = max(0.5, duration - 0.6)
-    # Ear-pleasing serene audio mastering:
-    # 1. silenceremove: instant 0.00s start
-    # 2. lowpass & softened treble: removes harshness & sibilance for maximum soothing warmth
-    # 3. equalizer warmth: gentle acoustic low-end resonance
-    # 4. aecho: subtle natural mosque acoustic depth
+    # Clean studio-quality audio mastering (NO artificial echo, NO harsh lowpass):
+    # 1. silenceremove: instant start (skip leading silence)
+    # 2. highpass 75Hz: remove rumble/wind noise
+    # 3. gentle warm EQ: +1.5dB at 200Hz warmth, -1dB at 4kHz (reduce sibilance gently)
+    # 4. loudnorm: broadcast-standard -18 LUFS loudness normalization
     # 5. smooth fade in & fade out
+    # ❌ REMOVED: aecho (was adding muddy double-reverb on mosque recordings)
+    # ❌ REMOVED: lowpass=8000 (was cutting treble, making audio sound muffled)
     audio_filter = (
         f"silenceremove=start_periods=1:start_duration=0.02:start_threshold=-35dB,"
-        f"lowpass=f=8000,"
-        f"equalizer=f=250:width_type=o:w=1:g=2.2,"
-        f"equalizer=f=4000:width_type=o:w=1:g=-2.2,"
-        f"aecho=0.8:0.85:35:0.20,"
+        f"highpass=f=75,"
+        f"equalizer=f=200:width_type=o:w=1:g=1.5,"
+        f"equalizer=f=4000:width_type=o:w=1:g=-1.0,"
+        f"loudnorm=I=-18.0:TP=-2.0:LRA=11.0,"
         f"afade=t=in:ss=0:d=0.08,"
         f"afade=t=out:st={fade_out_start}:d=0.6"
     )
@@ -191,9 +198,9 @@ def get_or_download_quran_audio(topic_text: str = "", duration: float = 8.0, out
         "-i", local_source,
         "-af", audio_filter,
         "-c:a", "libmp3lame",
-        "-b:a", "192k",
+        "-b:a", "256k",
         output_path
     ]
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    logger.info(f"Prepared 100% Unique Continuous Softened Quran Audio ({track['name']}) -> {output_path}")
+    logger.info(f"Prepared Studio-Quality Quran Audio ({track['name']}) -> {output_path}")
     return output_path
