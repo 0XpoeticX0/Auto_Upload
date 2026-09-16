@@ -174,19 +174,21 @@ def get_or_download_quran_audio(topic_text: str = "", duration: float = 8.0, out
         output_path = os.path.join(AUDIO_DIR, f"trimmed_{track['id']}_{int(duration)}s.mp3")
 
     fade_out_start = max(0.5, duration - 0.6)
-    # Clean studio-quality audio mastering (NO artificial echo, NO harsh lowpass):
+    # Proven clean audio mastering (matches old clean sound + loudnorm improvement):
     # 1. silenceremove: instant start (skip leading silence)
-    # 2. highpass 75Hz: remove rumble/wind noise
-    # 3. gentle warm EQ: +1.5dB at 200Hz warmth, -1dB at 4kHz (reduce sibilance gently)
-    # 4. loudnorm: broadcast-standard -18 LUFS loudness normalization
-    # 5. smooth fade in & fade out
-    # ❌ REMOVED: aecho (was adding muddy double-reverb on mosque recordings)
-    # ❌ REMOVED: lowpass=8000 (was cutting treble, making audio sound muffled)
+    # 2. highpass 75Hz: remove low-end rumble/wind noise
+    # 3. lowpass 10kHz: suppress mosque reverb tails in high frequencies (clean dry sound)
+    # 4. warm EQ: +2.0dB at 250Hz warmth, -2.0dB at 4kHz (reduce sibilance + reverb harshness)
+    # 5. subtle room thickening (35ms / 0.20 decay — imperceptible as echo, just warmth)
+    # 6. loudnorm: broadcast-standard -18 LUFS (consistent volume across ALL videos)
+    # 7. smooth fade in & fade out
     audio_filter = (
         f"silenceremove=start_periods=1:start_duration=0.02:start_threshold=-35dB,"
         f"highpass=f=75,"
-        f"equalizer=f=200:width_type=o:w=1:g=1.5,"
-        f"equalizer=f=4000:width_type=o:w=1:g=-1.0,"
+        f"lowpass=f=10000,"
+        f"equalizer=f=250:width_type=o:w=1:g=2.0,"
+        f"equalizer=f=4000:width_type=o:w=1:g=-2.0,"
+        f"aecho=0.8:0.85:35:0.20,"
         f"loudnorm=I=-18.0:TP=-2.0:LRA=11.0,"
         f"afade=t=in:ss=0:d=0.08,"
         f"afade=t=out:st={fade_out_start}:d=0.6"
