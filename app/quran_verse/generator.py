@@ -220,7 +220,7 @@ def run_quran_verse_pipeline(
         # Facebook & Instagram Reels
         try:
             from app.upload.facebook import upload_to_facebook
-            fb_ok = upload_to_facebook(video_path, upload_meta, video_type="reel")
+            fb_ok = upload_to_facebook(video_path, upload_meta, video_type="reel", thumbnail_path=thumbnail_path)
             logger.info(f"Facebook/Instagram Reels Upload: {fb_ok}")
         except Exception as e:
             logger.warning(f"Facebook upload notice: {e}")
