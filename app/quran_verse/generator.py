@@ -155,8 +155,30 @@ def generate_quran_verse_video(
     # 5. Render Video (1080x1920 60FPS) with Centered Bengali Translation Subtitles
     video_path = render_quran_verse_video(verse_data, audio_data, video_slot=video_slot)
 
+    # 6. Extract a clean thumbnail frame at t=3.0s from the rendered video
+    thumbnail_path = None
+    try:
+        import subprocess as _sp
+        thumb_filename = os.path.splitext(os.path.basename(video_path))[0] + "_thumb.jpg"
+        thumb_out = os.path.join("data", "output", thumb_filename)
+        sample_t = min(3.0, audio_data.get("total_duration", 10.0) - 1.0)
+        _sp.run([
+            "ffmpeg", "-y",
+            "-ss", str(sample_t),
+            "-i", video_path,
+            "-vframes", "1",
+            "-q:v", "2",
+            thumb_out
+        ], check=True, capture_output=True)
+        if os.path.exists(thumb_out):
+            thumbnail_path = thumb_out
+            logger.info(f"✅ Quran thumbnail extracted at t={sample_t:.1f}s: {thumbnail_path}")
+    except Exception as e:
+        logger.warning(f"Thumbnail extraction notice: {e}")
+
     return {
         "video_path": video_path,
+        "thumbnail_path": thumbnail_path,
         "metadata": metadata,
         "verse_data": verse_data,
         "audio_data": audio_data
@@ -175,6 +197,7 @@ def run_quran_verse_pipeline(
     """
     result = generate_quran_verse_video(surah, ayah_start, ayah_end, reciter_id, video_slot=video_slot)
     video_path = result["video_path"]
+    thumbnail_path = result.get("thumbnail_path")
     metadata = result["metadata"]
 
     if upload:
@@ -189,7 +212,7 @@ def run_quran_verse_pipeline(
         # YouTube Shorts
         try:
             from app.upload.youtube import upload_to_youtube
-            yt_ok = upload_to_youtube(video_path, upload_meta)
+            yt_ok = upload_to_youtube(video_path, upload_meta, thumbnail_path=thumbnail_path)
             logger.info(f"YouTube Shorts Upload: {yt_ok}")
         except Exception as e:
             logger.warning(f"YouTube upload notice: {e}")
