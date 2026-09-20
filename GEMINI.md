@@ -38,7 +38,7 @@
 ## 5. Reciter & Audio Enhancement Mandate (Permanent Standard)
 - **Strictly 2 Approved Reciters**: ONLY use **Sheikh Yasser Ad-Dossari** (`dossari`) and **Sheikh Mishary Rashid Alafasy** (`alafasy`). Strictly NO other reciters.
 - **Thematic Emotion-to-Voice Matching**: Intelligently match the passage's emotional frequency to the ideal reciter: assign **Sheikh Mishary Rashid Alafasy** to comfort, solace, mercy, hope, repentance, Dua, family, and Jannah (soothing warm baritone); assign **Sheikh Yasser Ad-Dossari** to divine majesty, sovereignty, Day of Judgment (Qiyamah), absolute Tawakkul, and cosmic oaths (commanding thunderous delivery).
-- **Resemble Enhance Full Studio AI**: All recitation audio MUST be processed using **Resemble Enhance** (CFM ODE Midpoint solver, De-Reverb + high-frequency voice harmonic restoration) to deliver close-mic, intimate, crystal-clear studio acoustics. Fallback to DeepFilterNet3 only if cloud access is unavailable.
+- **100% Pure Authentic EveryAyah Recitation**: For all Quran recitation videos, use 100% pure, authentic EveryAyah audio directly WITHOUT AI de-reverb or destructive filtering. Preserves the full natural sacred acoustic resonance, soulful warmth, and spiritual emotion of Sheikh Mishary Rashid Alafasy and Sheikh Yasser Ad-Dossari. Apply ONLY standard broadcast loudness normalization (`-18.0 LUFS`) at 256kbps for comfortable, consistent playback volume across all platforms.
 
 
 ## 6. Zero-Duplication & Anti-Repetition Mandate (Last 30 Videos)
