@@ -345,6 +345,103 @@ CURATED_COMPLETE_PASSAGES = [
         "theme_hint": "হতাশা ও পাপের অন্ধকারে আল্লাহর অপার রহমত (Surah Az-Zumar 53)",
         "reflection_bn": "হে আমার বান্দাগণ যারা নিজেদের ওপর অবিচার করেছ, তোমরা আল্লাহর রহমত থেকে কখনো নিরাশ হইও না। নিশ্চয় আল্লাহ সব পাপ ক্ষমা করে দেন।",
         "ideal_reciter": "alafasy"
+    },
+    # ── ICONIC MELODIOUS PASSAGES (EXCEPTIONALLY SWEET & EAR-PLEASING) ──
+    {
+        "surah": 19,
+        "ayah_start": 1,
+        "ayah_end": 7,
+        "theme_hint": "জাকারিয়া (আ.)-এর গোপন কান্না ও অসম্ভবকে সম্ভব করার দোয়া (Surah Maryam 1-7)",
+        "reflection_bn": "জাকারিয়া (আ.) বার্ধক্যে নিভৃতে কেঁদে রবকে ডেকেছিলেন। আল্লাহ অসম্ভবকেও নিমিষে সম্ভব করে দেন।",
+        "ideal_reciter": "alafasy"  # Famous for heartfelt tearful Maqam Saba / Bayati
+    },
+    {
+        "surah": 20,
+        "ayah_start": 1,
+        "ayah_end": 8,
+        "theme_hint": "কুরআন কষ্ট দেওয়ার জন্য নয়, পরম দয়াময়ের স্মরণ (Surah Taha 1-8)",
+        "reflection_bn": "কুরআন মানুষকে কষ্ট দেওয়ার জন্য নাজিল হয়নি, বরং অন্তরে শান্তি ও খোদাভীতির জন্য। পরম দয়ালু আল্লাহ আরশে সমুন্নত।",
+        "ideal_reciter": "alafasy"  # Flowing, rhythmic, soothing cadence
+    },
+    {
+        "surah": 76,
+        "ayah_start": 12,
+        "ayah_end": 22,
+        "theme_hint": "সবরের মহাপুরস্কার জান্নাতের নয়নাভিরাম সৌন্দর্য (Surah Al-Insan 12-22)",
+        "reflection_bn": "ধৈর্যের বিনিময়ে আল্লাহ মুমিনদের জন্য সাজিয়ে রেখেছেন জান্নাতের রেশমি পোশাক, কর্পূরের ঝরনা ও চিরশান্তির নিবাস।",
+        "ideal_reciter": "alafasy"  # Incredibly melodious descriptions of Jannah
+    },
+    {
+        "surah": 56,
+        "ayah_start": 27,
+        "ayah_end": 38,
+        "theme_hint": "ডানদিকের সৌভাগ্যবানদের জন্য অফুরন্ত জান্নাতী নেয়ামত (Surah Al-Waqi'ah 27-38)",
+        "reflection_bn": "কাঁটাহীন কুলগাছ, কাঁদিভরা কলাগাছ, প্রলম্বিত ছায়া ও প্রবাহমান ঝরনাধারা—সৌভাগ্যবানদের জন্য তৈরি স্বর্গীয় উদ্যান।",
+        "ideal_reciter": "dossari"  # Rhythmic, cascading poetic meter
+    },
+    {
+        "surah": 23,
+        "ayah_start": 1,
+        "ayah_end": 11,
+        "theme_hint": "সফল মুমিনদের ৭টি গুণ ও জান্নাতুল ফিরদাউসের উত্তরাধিকার (Surah Al-Mu'minun 1-11)",
+        "reflection_bn": "যাঁরা নামাজে বিনয়ী, অর্থহীন কথা থেকে দূরে থাকে এবং আমানত রক্ষা করে—তাঁরাই জান্নাতুল ফিরদাউসের চিরস্থায়ী ওয়ারিশ।",
+        "ideal_reciter": "dossari"  # Majestic triumph & eternal reward
+    },
+    {
+        "surah": 53,
+        "ayah_start": 1,
+        "ayah_end": 18,
+        "theme_hint": "নক্ষত্রের শপথ, মিরাজ ও সিদরাতুল মুনতাহা (Surah An-Najm 1-18)",
+        "reflection_bn": "নক্ষত্র যখন অস্ত যায়, রাসুল (সা.) আপন খেয়ালে কথা বলেন না। তিনি সিদরাতুল মুনতাহার পাশে রবের শ্রেষ্ঠ নিদর্শন প্রত্যক্ষ করেছিলেন।",
+        "ideal_reciter": "dossari"  # Cosmic mystery, short rhyming cadence
+    },
+    {
+        "surah": 87,
+        "ayah_start": 1,
+        "ayah_end": 15,
+        "theme_hint": "সর্বোচ্চ রবের মহিমা ঘোষণা ও আত্মার পবিত্রতা (Surah Al-A'la 1-15)",
+        "reflection_bn": "পবিত্রতা ঘোষণা করুন আপনার রবের, যিনি সৃষ্টি করেছেন এবং সুষম করেছেন। সফল সেই ব্যক্তি, যে নিজেকে পাপমুক্ত রাখে।",
+        "ideal_reciter": "alafasy"  # Harmonious, gentle, ear-soothing melody
+    },
+    {
+        "surah": 91,
+        "ayah_start": 1,
+        "ayah_end": 10,
+        "theme_hint": "মহাজাগতিক ৭টি শপথ ও অন্তরের পরিশুদ্ধি (Surah Ash-Shams 1-10)",
+        "reflection_bn": "সূর্য, চাঁদ, দিন ও রাতের শপথ—যে ব্যক্তি নিজের আত্মাকে পরিশুদ্ধ করেছে সে-ই সফলকাম হয়েছে।",
+        "ideal_reciter": "alafasy"  # Poetic rolling -aha end-rhymes
+    },
+    {
+        "surah": 82,
+        "ayah_start": 6,
+        "ayah_end": 12,
+        "theme_hint": "হে মানুষ! কোন জিনিস তোমাকে তোমার দয়ালু রব থেকে দূরে রাখল? (Surah Al-Infitar 6-12)",
+        "reflection_bn": "হে মানবজাতি! কোন্ প্রবঞ্চনা তোমাকে তোমার মহানুভব প্রতিপালক সম্পর্কে বিভ্রান্ত করল, যিনি তোমাকে সুঠাম করে সৃষ্টি করেছেন?",
+        "ideal_reciter": "dossari"  # Heart-shattering acoustic resonance
+    },
+    {
+        "surah": 57,
+        "ayah_start": 16,
+        "ayah_end": 16,
+        "theme_hint": "মুমিনের হৃদয় কি আল্লাহর স্মরণে বিগলিত হওয়ার সময় আসেনি? (Surah Al-Hadid 16)",
+        "reflection_bn": "ঈমানদারদের জন্য কি এখনো সেই সময় আসেনি যে তাদের অন্তর আল্লাহর স্মরণে ও নাজিলকৃত সত্যের সামনে শ্রদ্ধায় বিগলিত হয়ে যাবে?",
+        "ideal_reciter": "alafasy"  # Heart-melting emotional awakening
+    },
+    {
+        "surah": 48,
+        "ayah_start": 28,
+        "ayah_end": 29,
+        "theme_hint": "মুহাম্মদ (ﷺ) আল্লাহর রাসুল—তাঁদের চেহারায় সিজদার নূর (Surah Al-Fath 28-29)",
+        "reflection_bn": "মুহাম্মদ (ﷺ) আল্লাহর রাসুল। সত্যের সাক্ষ্য হিসেবে আল্লাহই যথেষ্ট। সিজদার প্রভাবে তাঁদের মুখমণ্ডলে রয়েছে বিশেষ জ্যোতি।",
+        "ideal_reciter": "dossari"  # Deeply authoritative, uplifting delivery
+    },
+    {
+        "surah": 55,
+        "ayah_start": 26,
+        "ayah_end": 30,
+        "theme_hint": "সবকিছু নশ্বর, কেবল অবশিষ্ট থাকবে মহিমান্বিত রবের সত্ত্বা (Surah Ar-Rahman 26-30)",
+        "reflection_bn": "পৃথিবীর সবকিছুই ধ্বংসশীল, কেবল চিরস্থায়ী থাকবে মহিমান্বিত ও পরম দয়ালু রবের চিরভাস্বর সত্ত্বা।",
+        "ideal_reciter": "alafasy"  # Iconic soothing cadence
     }
 ]
 
@@ -560,6 +657,13 @@ CRITICAL PASSAGE RULES (MANDATORY):
 4. THEMATIC VOICE MATCHING (CHOOSE BETWEEN ALAFASY OR DOSSARI):
    - 'alafasy' (Sheikh Mishary Rashid Alafasy): Choose for comfort, relief from grief, hope, mercy, divine forgiveness, sincere supplication (Dua), family love, gentle reflection, and peace of Paradise. (His warm, melodic, soothing baritone provides deep emotional healing).
    - 'dossari' (Sheikh Yasser Ad-Dossari): Choose for divine power, supreme sovereignty, majesty, Day of Judgment (Qiyamah), warnings against arrogance, absolute Tawakkul in trials, and cosmic oaths. (His thunderous, high-dynamic, commanding delivery creates awe and reverence).
+5. EAR-PLEASING AUDITORY MELODY & PHONETIC SWEETNESS (MANDATORY):
+   - The selected Ayah(s) MUST sound exceptionally sweet, soothing, rhythmic, and captivating to human ears when recited aloud.
+   - PRIORITIZE:
+     a) Rhythmic rhyming end-cadences (Fawāṣil al-Āyāt) with flowing open vowels (e.g. -ūn, -īn, -ā, -hā).
+     b) Passages celebrated for profound emotional auditory bliss: Jannah descriptions, divine affection, cosmic oaths, heartfelt prophet Duas (Zakariya, Musa, Ibrahim, Yunus), dawn/night serenity, and heart-melting reassurance.
+     c) Verses where Sheikh Mishary Alafasy or Sheikh Yasser Ad-Dossari deliver their most famous, tearful, or awe-inspiring vocal melodies (e.g. Surah Maryam, Surah Taha, Surah Al-Insan, Surah Al-Waqi'ah, Surah Ar-Rahman, Surah Al-Fajr, Surah Ad-Duha, Surah Qaf, Surah Al-Hadid).
+   - STRICTLY AVOID: Dry administrative, legalistic, commercial transactions, inheritance shares, or procedural verses that lack lyrical phonetic flow when listened to as audio. Every video must deliver an unforgettable, heart-soothing acoustic experience.
 
 Output ONLY valid JSON:
 {{
@@ -574,7 +678,7 @@ Output ONLY valid JSON:
 
     reciter_hint = f"Pre-selected reciter: {reciter_id}" if reciter_id else "Select the best matching reciter ('alafasy' or 'dossari') based on the theological emotion."
 
-    user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation.
+    user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation that sounds exceptionally melodious and soothing to the ears.
 {reciter_hint}
 
 ALREADY RECITED AYAHS IN LAST 30 VIDEOS (STRICTLY FORBIDDEN TO REPEAT THESE AYAHS):
@@ -583,7 +687,7 @@ ALREADY RECITED AYAHS IN LAST 30 VIDEOS (STRICTLY FORBIDDEN TO REPEAT THESE AYAH
 RECENT TITLES IN HISTORY:
 - {avoid_list}
 
-Select a fresh, inspiring passage with 100% complete contextual integrity. Ensure ZERO OVERLAP with the already recited Ayahs above. Return valid JSON only."""
+Select a fresh, inspiring, and ear-pleasing melodious passage with 100% complete contextual integrity. Ensure ZERO OVERLAP with the already recited Ayahs above. Return valid JSON only."""
 
     try:
         data = extract_json(system_prompt, user_prompt, max_tokens=600)
