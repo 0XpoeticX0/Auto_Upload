@@ -145,8 +145,28 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
         video_id = response.get('id')
         logger.info(f"🎉 YouTube Video uploaded successfully! Video ID: {video_id} (https://youtube.com/shorts/{video_id})")
         
-        # 1. Upload Custom Thumbnail if provided
+        # 1. Upload Custom Thumbnail if provided, or auto-extract at 3.0s
         thumbnail_path = thumbnail_path or metadata.get('thumbnail_path')
+        temp_extracted_thumb = None
+        if not thumbnail_path or not os.path.exists(thumbnail_path):
+            try:
+                import subprocess
+                import tempfile
+                temp_extracted_thumb = os.path.join(tempfile.gettempdir(), f"yt_thumb_{video_id}.jpg")
+                subprocess.run([
+                    "ffmpeg", "-y",
+                    "-ss", "3.0",
+                    "-i", video_path,
+                    "-vframes", "1",
+                    "-q:v", "2",
+                    temp_extracted_thumb
+                ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+                if os.path.exists(temp_extracted_thumb) and os.path.getsize(temp_extracted_thumb) > 0:
+                    thumbnail_path = temp_extracted_thumb
+                    logger.info(f"Auto-extracted crisp thumbnail at t=3.0s for YouTube: {thumbnail_path}")
+            except Exception as e:
+                logger.warning(f"YouTube auto-thumbnail extraction notice: {e}")
+
         if thumbnail_path and os.path.exists(thumbnail_path):
             logger.info(f"Uploading custom thumbnail to YouTube: {thumbnail_path}")
             try:
@@ -159,6 +179,12 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
                 logger.warning(f"Could not upload thumbnail: {e}")
             except Exception as e:
                 logger.error(f"Failed to upload thumbnail: {e}")
+            finally:
+                if temp_extracted_thumb and os.path.exists(temp_extracted_thumb):
+                    try:
+                        os.remove(temp_extracted_thumb)
+                    except Exception:
+                        pass
                 
         # 2. Upload Captions (VTT) if provided
         if vtt_path and os.path.exists(vtt_path):

@@ -66,6 +66,17 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
         f"#IslamicReminders #MuslimUmmah #DeenOverDunya #Alhamdulillah #Shorts #Reels #ViralReels"
     )
 
+    # Hard safety guard: Instagram limit is 2,200 chars. Ensure description stays under 2,050 chars.
+    if len(description) > 2050 and reflection:
+        excess = len(description) - 2000
+        avail_refl = max(60, len(reflection) - excess)
+        trimmed_refl = reflection[:avail_refl]
+        if "।" in trimmed_refl:
+            trimmed_refl = trimmed_refl.rsplit("।", 1)[0] + "।"
+        else:
+            trimmed_refl = trimmed_refl + "..."
+        description = description.replace(f"🌿 কুরআনের বার্তা ও সান্ত্বনা:\n{reflection}\n\n", f"🌿 কুরআনের বার্তা ও সান্ত্বনা:\n{trimmed_refl}\n\n")
+
     pinned_comment = (
         f"আলহামদুলিল্লাহ! পবিত্র কুরআনের এই আয়াতটি আপনার হৃদয়ে কেমন অনুভূতি সৃষ্টি করেছে? "
         f"মন্তব্যে শেয়ার করুন এবং সহীহ দ্বীনি দাওয়াত ছড়িয়ে দিতে ভিডিওটি Share করুন। 🤲🌿"

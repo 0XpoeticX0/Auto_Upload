@@ -11,6 +11,55 @@ def get_instagram_credentials():
     ig_user_id = os.getenv("IG_USER_ID")
     return token, ig_user_id
 
+def sanitize_instagram_caption(caption: str, max_chars: int = 2150) -> str:
+    """
+    Ensures caption strictly complies with Instagram's 2,200 character hard limit.
+    If caption exceeds max_chars (default 2,150 for safe unicode margin):
+    - Preserves trailing hashtags
+    - Truncates body at the nearest clean sentence or line boundary
+    - Appends ellipsis (...)
+    """
+    if not caption or len(caption) <= max_chars:
+        return caption or ""
+
+    logger.warning(f"⚠️ Instagram caption length ({len(caption)}) exceeds safe limit ({max_chars}). Sanitizing...")
+
+    # Extract trailing hashtags if present
+    lines = caption.strip().split("\n")
+    hashtags_block = ""
+    i = len(lines) - 1
+    while i >= 0 and (lines[i].strip().startswith("#") or lines[i].strip() == ""):
+        if lines[i].strip().startswith("#"):
+            hashtags_block = lines[i].strip() + ("\n" + hashtags_block if hashtags_block else "")
+        i -= 1
+
+    content_text = "\n".join(lines[:i + 1]).strip()
+
+    # Reserve space for hashtags + newline separator
+    reserved_len = len(hashtags_block) + 4 if hashtags_block else 0
+    available_chars = max(200, max_chars - reserved_len)
+
+    if len(content_text) > available_chars:
+        trimmed = content_text[:available_chars]
+        last_break = max(
+            trimmed.rfind("\n\n"),
+            trimmed.rfind("।"),
+            trimmed.rfind(". "),
+            trimmed.rfind("!\n"),
+            trimmed.rfind("\n")
+        )
+        if last_break > available_chars * 0.6:
+            content_text = trimmed[:last_break].strip() + "\n..."
+        else:
+            content_text = trimmed.strip() + "..."
+
+    if hashtags_block:
+        final_caption = f"{content_text}\n\n{hashtags_block}".strip()
+    else:
+        final_caption = content_text.strip()
+
+    return final_caption[:max_chars]
+
 def upload_photo_to_instagram(image_url: str, caption: str) -> bool:
     """
     Publishes a photo post to Instagram via the Instagram Graph API.
@@ -22,6 +71,7 @@ def upload_photo_to_instagram(image_url: str, caption: str) -> bool:
         logger.warning("Instagram Upload Skipped: FB_ACCESS_TOKEN or IG_USER_ID not set.")
         return False
 
+    caption = sanitize_instagram_caption(caption)
     logger.info(f"Creating Instagram photo container for @{ig_user_id}...")
     container_url = f"https://graph.facebook.com/v20.0/{ig_user_id}/media"
     payload = {
@@ -142,6 +192,7 @@ def upload_video_carousel_to_instagram(video_paths: list[str], caption: str) -> 
         child_ids.append(item_id)
 
     # Step 4: Create Carousel Parent Container
+    caption = sanitize_instagram_caption(caption)
     logger.info(f"Creating parent Video CAROUSEL container with children: {child_ids}...")
     carousel_payload = {
         'media_type': 'CAROUSEL',
@@ -227,6 +278,7 @@ def upload_carousel_to_instagram(item_urls: list[str], caption: str, is_video: b
     
     # Step 2: Create Carousel Parent Container
     try:
+        caption = sanitize_instagram_caption(caption)
         logger.info(f"Creating parent CAROUSEL container with children: {child_ids}...")
         carousel_payload = {
             'media_type': 'CAROUSEL',
@@ -265,10 +317,11 @@ def upload_carousel_to_instagram(item_urls: list[str], caption: str, is_video: b
         logger.error(f"Error publishing Carousel to Instagram: {e}")
         return False
 
-def upload_reel_to_instagram(video_path: str, caption: str, cover_url: str = None) -> str:
+def upload_reel_to_instagram(video_path: str, caption: str, cover_url: str = None, thumb_offset_ms: int = 3000) -> str:
     """
     Publishes a 9:16 vertical video as an Instagram REEL via Instagram Graph API.
-    Uses chunked resumable upload and ensures Instagram media compliance (yuv420p, 44.1kHz stereo AAC, 720p/1080p).
+    Uses chunked resumable upload and ensures Instagram media compliance (yuv420p, 44.1kHz stereo AAC, 720p/1080p, max 90s).
+    Automatically sets thumb_offset (default 3000ms / 3.0s) so cover thumbnail features visible text, badge, and subtitles.
     Accepts optional public cover_url for custom thumbnail.
     """
     import subprocess
@@ -283,19 +336,37 @@ def upload_reel_to_instagram(video_path: str, caption: str, cover_url: str = Non
         logger.error(f"Instagram Reel Upload failed: Video file not found at {video_path}")
         return False
 
-    # Ensure Instagram compliance (720x1280, yuv420p, 44.1kHz stereo AAC, faststart)
+    # Probe duration using ffprobe
+    vid_duration = 0.0
+    try:
+        probe_cmd = [
+            "ffprobe", "-v", "error",
+            "-show_entries", "format=duration",
+            "-of", "default=noprint_wrappers=1:nokey=1",
+            video_path
+        ]
+        vid_duration = float(subprocess.check_output(probe_cmd).decode().strip())
+    except Exception as e:
+        logger.warning(f"Could not probe duration for Instagram Reel: {e}")
+
+    # Ensure Instagram compliance (max 90.0s, 720x1280, yuv420p, 44.1kHz stereo AAC, faststart)
     upload_file = video_path
     temp_optimized = None
 
     try:
-        # Check size and format
         raw_size = os.path.getsize(video_path)
-        if raw_size > 15 * 1024 * 1024:
-            logger.info(f"Video file is {raw_size / 1024 / 1024:.2f} MB. Generating Instagram-optimized stream to bypass ingestion timeout...")
+        needs_transcode = (raw_size > 15 * 1024 * 1024) or (vid_duration > 90.0)
+        
+        if needs_transcode:
+            reason = f"Duration {vid_duration:.1f}s > 90s" if vid_duration > 90.0 else f"Size {raw_size/1024/1024:.1f}MB > 15MB"
+            logger.info(f"Generating Instagram-optimized stream ({reason}) to ensure compliance...")
             temp_dir = tempfile.gettempdir()
             temp_optimized = os.path.join(temp_dir, f"ig_opt_{int(time.time())}.mp4")
-            cmd = [
-                "ffmpeg", "-y", "-i", video_path,
+            
+            cmd = ["ffmpeg", "-y", "-i", video_path]
+            if vid_duration > 90.0:
+                cmd.extend(["-t", "89.5"])
+            cmd.extend([
                 "-vf", "scale=720:1280:in_range=full:out_range=limited,format=yuv420p",
                 "-c:v", "libx264", "-profile:v", "high", "-level", "3.1", "-crf", "23",
                 "-preset", "fast", "-maxrate", "2000k", "-bufsize", "4000k",
@@ -303,7 +374,7 @@ def upload_reel_to_instagram(video_path: str, caption: str, cover_url: str = Non
                 "-color_primaries", "bt709", "-color_trc", "bt709", "-movflags", "+faststart",
                 "-c:a", "aac", "-ar", "44100", "-ac", "2", "-b:a", "128k",
                 temp_optimized
-            ]
+            ])
             subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
             if os.path.exists(temp_optimized) and os.path.getsize(temp_optimized) > 0:
                 upload_file = temp_optimized
@@ -316,13 +387,15 @@ def upload_reel_to_instagram(video_path: str, caption: str, cover_url: str = Non
     logger.info(f"Starting Instagram REEL chunked upload for @{ig_user_id} ({file_size / 1024 / 1024:.2f} MB)...")
 
     try:
-        # Step 1: Create Resumable Reel Container
+        # Step 1: Create Resumable Reel Container with thumb_offset at 3.0s (3000ms)
+        caption = sanitize_instagram_caption(caption)
         init_url = f"https://graph.facebook.com/v20.0/{ig_user_id}/media"
         init_payload = {
             'media_type': 'REELS',
             'upload_type': 'resumable',
             'caption': caption,
             'share_to_feed': 'true',
+            'thumb_offset': str(int(thumb_offset_ms)),
             'access_token': token
         }
         if cover_url:

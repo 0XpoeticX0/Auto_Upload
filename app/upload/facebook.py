@@ -121,7 +121,7 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
     if is_reel and ig_user_id and metadata.get("crosspost_instagram", True) and not scheduled_publish_time:
         try:
             logger.info(f"Starting Instagram REEL cross-posting for @{ig_user_id}...")
-            upload_reel_to_instagram(video_path, full_caption, cover_url=cover_cdn_url)
+            upload_reel_to_instagram(video_path, full_caption, cover_url=cover_cdn_url, thumb_offset_ms=3000)
         except Exception as e:
             logger.warning(f"Instagram Reel auto-post encountered an issue: {e}")
 
