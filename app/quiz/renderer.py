@@ -3,7 +3,7 @@ import re
 import subprocess
 from app.logger import logger
 from app.quiz.sfx import ensure_sfx_assets
-from app.quiz.card_builder import render_hook_card, render_question_card, render_outro_card, clean_text_ass
+from app.quiz.card_builder import render_question_card, render_outro_card, clean_text_ass
 
 BANGLA_VOICE = "bn-BD-PradeepNeural"
 ENGLISH_VOICE = "en-US-ChristopherNeural"
@@ -115,53 +115,9 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     voice = BANGLA_VOICE if language == "bn" else ENGLISH_VOICE
     all_scene_mp4s = []
     
-    # ── 1. SCENE 1: HOOK (0 - 3s) ─────────────────────────────────────────────
-    logger.info("Rendering Scene 1: Hook...")
-    hook = quiz_data.get("hook", {})
-    hook_img = os.path.join(temp_dir, "scene_1_hook.jpg")
-    render_hook_card(hook, hook_img)
-    
-    if language == "bn":
-        hook_voice_text = f"{hook.get('headline', 'ইসলামিক জ্ঞান যাচাই করুন!')} {hook.get('sub_text', 'সময় বেশি লাগলে ভিডিওটি পজ করুন!')}"
-    else:
-        hook_voice_text = f"{hook.get('headline', 'Test your Islamic knowledge!')} {hook.get('sub_text', 'Pause the video if you need more time!')}"
-        
-    hook_voice_mp3 = os.path.join(temp_dir, "hook_voice.mp3")
-    synthesize_voice(hook_voice_text, hook_voice_mp3, voice=voice, rate="+5%")
-    
-    hook_dur = max(2.0, get_audio_duration(hook_voice_mp3) + 0.15)
-    
-    # Balanced comfortable audio volume for hook
-    hook_audio = os.path.join(temp_dir, "hook_audio.mp3")
-    cmd_hook_audio = [
-        "ffmpeg", "-y",
-        "-i", hook_voice_mp3,
-        "-i", sfx["whoosh"],
-        "-filter_complex", "[0:a]volume=1.0[voice];[1:a]volume=0.30[sfx];[voice][sfx]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[a]",
-        "-map", "[a]",
-        "-b:a", "192k",
-        hook_audio
-    ]
-    subprocess.run(cmd_hook_audio, capture_output=True)
-    if not os.path.exists(hook_audio):
-        hook_audio = hook_voice_mp3
-        
-    scene_1_mp4 = os.path.join(temp_dir, "scene_1_full.mp4")
-    cmd_s1 = [
-        "ffmpeg", "-y",
-        "-loop", "1", "-t", f"{hook_dur:.3f}",
-        "-i", hook_img,
-        "-i", hook_audio,
-        "-c:v", "libx264", "-crf", "18", "-preset", "ultrafast", "-r", "25",
-        "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-pix_fmt", "yuv420p",
-        "-shortest",
-        scene_1_mp4
-    ]
-    subprocess.run(cmd_s1, check=True, capture_output=True)
-    all_scene_mp4s.append(scene_1_mp4)
-    
-    # ── 2. SCENES 2 to 4: 3 QUESTIONS (with 1.5s Timer + 1.4s Reveal) ─────────
+    # ── 1. QUESTIONS (Direct start from Question 1 - 0s intro screen) ─────────
     questions = quiz_data.get("questions", [])
+    logger.info(f"Rendering Quiz: Direct start with Question 1 ({len(questions)} total questions)...")
     for q_idx, q in enumerate(questions, 1):
         q_num = q.get("number", q_idx)
         logger.info(f"Rendering Question {q_num}/3...")

@@ -273,57 +273,69 @@ RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY & ANTI-HALLUCINATION (MANDATORY FIRST RULE
 3. NO FABRICATED "ফলাফল" OR PROMISES: Never invent unverified summary promises like "যে ব্যক্তি এটি করবে সে আল্লাহর আশ্রয়ে থাকবে এবং জান্নাতের সুসংবাদ পাবে". Only state what the Prophet (ﷺ) explicitly stated in the cited Hadith!
 4. AUTHENTIC DUAS ONLY: Arabic Dua must be 100% authentic with accurate Bengali pronunciation and genuine meaning.
 
+# ==============================================================================
+# RULE #2 SUPREME MANDATE: SIMPLE, CONVERSATIONAL BENGALI (সহজ মুখের ভাষা)
+# ==============================================================================
+LANGUAGE SIMPLICITY (MANDATORY — ZERO TOLERANCE FOR LITERARY/COMPLEX BENGALI):
+- ❌ STRICTLY BANNED: Overly literary, poetic, or complex Bengali words and sentence structures.
+  Examples of BANNED complex phrases: "একাকী জীবনের ব্যস্ততায়", "বিশাল দুয়ার বন্ধ হয়ে যায়", "অনাবিল প্রশান্তি", "সুমধুর পরিবেশ", "হৃদয়ে গভীর প্রশান্তি নেমে আসবে", "অভাবনীয় বরকত"
+- ✅ ALWAYS USE: Simple, everyday spoken Bengali (মুখের ভাষা) that a 12-year-old Bangladeshi student can instantly understand.
+  Good examples: "ঘরে ঢোকার সময়", "মন খারাপ লাগলে", "রাগ উঠলে", "টাকার সমস্যা হলে", "আল্লাহ সাহায্য করবেন", "জান্নাতে যেতে পারবে"
+- Write like you're talking to a friend — NOT writing a newspaper article or Bangla literature essay.
+- Keep sentences SHORT and DIRECT. No unnecessary adjectives or flowery descriptions.
+- Use common words: "সাহায্য" not "সহায়তা", "ঘর" not "গৃহ", "খুশি" not "পরিতৃপ্ত", "ভালো" not "উত্তম", "দরজা" not "দুয়ার"
+
 THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
 Rule 1: Hook Diversity (STRICT ANTI-MONOTONY RULE):
   - ❌ STRICTLY BANNED: NEVER start every single hook with "রাসূলুল্লাহ (ﷺ) বলেছেন: মাত্র ৫ সেকেন্ডের...". That makes the channel look like an automated bot!
   - ✅ ROTATE AMONG THESE 5 DIVERSE HOOK ARCHETYPES:
-    • Archetype 1 (Situational / Emotion First): "মন যখন অতিরিক্ত দুশ্চিন্তায় ভারী হয়ে ওঠে...", "প্রচণ্ড রেগে গিয়ে যখন নিজেকে সামলানো যায় না...", "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের ১টি সুন্নাত..."
-    • Archetype 2 (Curiosity Question): "নামাজে দাঁড়ালেই কি মন হাজারটা চিন্তায় হারিয়ে যায়?", "ঘুমের আগে শেষ কোন কাজটি করলে সারারাত আল্লাহর পাহারা মেলে?", "বিপদে পড়লে নবীজি (ﷺ) তাৎক্ষণিক কী করতে বলতেন?"
-    • Archetype 3 (Prophetic Habit / Teaching): "নবীজির (ﷺ) শেখানো অত্যন্ত প্রিয় ১টি সুন্নাহ আমল...", "সাহাবীদের কঠিন অর্থকষ্টে রাসূলুল্লাহ (ﷺ) কী শিখিয়েছিলেন?", "রাসূলুল্লাহ (ﷺ) বলেছেন: এমন ১টি সহজ আমল আছে..."
-    • Archetype 4 (Common Habit / Contrast): "আমরা অনেকেই প্রতিদিন অজান্তেই এই ভুলটি করে ফেলি...", "খাওয়ার সময় যে ছোট ১টি ভুল শয়তানকে ডেকে আনে..."
-    • Archetype 5 (Action-First): "মাত্র ১টি ছোট বাক্য যা আপনার জীবনে বরকতের দুয়ার খুলে দেবে..."
+    • Archetype 1 (Situational / Emotion First): "মন খারাপ লাগলে এই ১টি কাজ করুন...", "রাগ উঠলে নবীজি (ﷺ) যা করতে বলতেন...", "ঘরে ঢোকার সময় এই ১টি সুন্নাত মানুন..."
+    • Archetype 2 (Curiosity Question): "নামাজে দাঁড়ালে কি মন অন্য দিকে চলে যায়?", "ঘুমানোর আগে কোন কাজটি করলে সারারাত আল্লাহর রহমত পাওয়া যায়?", "বিপদে পড়লে নবীজি (ﷺ) কী করতে বলতেন?"
+    • Archetype 3 (Prophetic Habit / Teaching): "নবীজির (ﷺ) সবচেয়ে পছন্দের ১টি আমল...", "টাকার সমস্যায় নবীজি (ﷺ) কী শিখিয়েছিলেন?", "নবীজি (ﷺ) বলেছেন: এই ১টি সহজ আমল আছে..."
+    • Archetype 4 (Common Habit / Contrast): "আমরা প্রতিদিন না জেনে এই ভুলটি করি...", "খাওয়ার সময় যে ছোট ভুলটি শয়তানকে ডেকে আনে..."
+    • Archetype 5 (Action-First): "মাত্র ১টি ছোট কাজ যা আপনার জীবনে বরকত আনবে..."
 
 Rule 2: Promise High Gain with Micro Effort (STRICT LOW-FRICTION RULE):
-  - ❌ STRICTLY BANNED: NEVER mention large numbers like "৩০টি আয়াত", "১০০ বার", "৫০ বার".
-  - ✅ ALWAYS USE EFFORTLESS FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৩০ সেকেন্ডের দোয়া", "১টি ছোট সুন্নাত".
-Rule 3: Target a Pain Point or Deep Desire: Anchor in real daily emotions (মনের অশান্তি, রাগ, ঋণের চাপ, পরিবারের অমিল, নামাজের একাগ্রতা).
-Rule 4: Leave the Loop Open (End with unfinished promise "...যা নিয়মিত করলে আল্লাহ মনের অশান্তি দূর করে দেন").
-- ❌ STRICTLY BANNED HOOK CLICHÉS: NEVER use "ভাগ্যের তালা খুলে দেবে", "ভাগ্য বদলে দেবে".
+  - ❌ STRICTLY BANNED: NEVER mention large numbers like "৩০টি আয়াত", "১০০ বার", "৫০ বার".
+  - ✅ ALWAYS USE EFFORTLESS FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৩০ সেকেন্ডের দোয়া", "১টি ছোট সুন্নাত".
+Rule 3: Target a Pain Point or Deep Desire: Anchor in real daily emotions (মন খারাপ, রাগ, টাকার চাপ, পরিবারে ঝগড়া, নামাজে মন বসে না).
+Rule 4: Leave the Loop Open (End with unfinished promise "...যা নিয়মিত করলে আল্লাহ সাহায্য করবেন").
+- ❌ STRICTLY BANNED HOOK CLICHÉS: NEVER use "ভাগ্যের তালা খুলে দেবে", "ভাগ্য বদলে দেবে", "বিশাল দুয়ার".
 
 CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY — Emotional Salience Priority):
 In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines.
 Pick words using this EMOTIONAL PRIORITY ORDER (the brain reacts STRONGEST to these):
-Priority 1 — FEAR / REWARD words (highest attention): জান্নাত, জাহান্নাম, ক্ষমা, বিপদ, সুরক্ষা, শাস্তি, সওয়াব, ফযিলত
+Priority 1 — FEAR / REWARD words (highest attention): জান্নাত, জাহান্নাম, ক্ষমা, বিপদ, সুরক্ষা, শাস্তি, সওয়াব
 Priority 2 — IDENTITY words (self-relevance): মুমিন, সাহাবী, রাসূলুল্লাহ (ﷺ), আল্লাহ, নবীজি (ﷺ)
 Priority 3 — ACTION verbs (engagement): পড়লে, করলে, বললে, মানলে, শিখুন
 Priority 4 — NUMBERS & QUANTITIES (specificity): ১০০ গুণ, ১ মিনিট, ৩টি, প্রতিদিন
 Always include at least ONE Priority 1 or Priority 2 word. Example:
   highlight_words: ["জান্নাতের ৮টি দরজা", "আল্লাহ", "১টি আমল করলে", "প্রতিদিন সুরক্ষা"]
 
-PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER:
+PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER (SIMPLE BENGALI):
 • Model A (Situational Emotional Hook):
-  line_1: "মন যখন অতিরিক্ত দুশ্চিন্তায় ভারী হয়ে ওঠে,"
-  line_2: "নবীজির (ﷺ) শেখানো ছোট এই ১টি আমল করুন,"
-  line_3: "মুহূর্তেই হৃদয়ে গভীর প্রশান্তি নেমে আসবে..."
-  highlight_words: ["অতিরিক্ত দুশ্চিন্তায়", "নবীজির (ﷺ) শেখানো", "ছোট এই ১টি আমল", "গভীর প্রশান্তি"]
+  line_1: "মন খারাপ লাগলে এই ১টি কাজ করুন,"
+  line_2: "নবীজি (ﷺ) নিজে এটা করতেন,"
+  line_3: "আল্লাহ মনে শান্তি দিয়ে দেবেন..."
+  highlight_words: ["মন খারাপ লাগলে", "নবীজি (ﷺ)", "১টি কাজ", "শান্তি দিয়ে দেবেন"]
 
 • Model B (Curiosity Question Hook):
-  line_1: "নামাজে দাঁড়ালেই কি মন দুনিয়ার চিন্তায় হারিয়ে যায়?"
-  line_2: "রাসূলুল্লাহর (ﷺ) শেখানো এই ১টি কৌশল মানলে"
-  line_3: "শয়তানের কোনো ওয়াসওয়াসা আর প্রভাব ফেলতে পারবে না..."
-  highlight_words: ["নামাজে দাঁড়ালেই কি", "রাসূলুল্লাহর (ﷺ) শেখানো", "১টি কৌশল", "কোনো ওয়াসওয়াসা"]
+  line_1: "নামাজে দাঁড়ালে কি মন অন্য দিকে চলে যায়?"
+  line_2: "নবীজি (ﷺ) এর শেখানো এই ১টি কাজ করুন"
+  line_3: "শয়তান আর বিরক্ত করতে পারবে না..."
+  highlight_words: ["নামাজে দাঁড়ালে কি", "নবীজি (ﷺ)", "১টি কাজ", "শয়তান"]
 
 • Model C (Prophetic Habit Hook):
-  line_1: "সাহাবীদের চরম আর্থিক সংকটে নবীজি (ﷺ)"
-  line_2: "নিয়মিত যে ১টি বিশেষ দোয়া পাঠ করতে বলতেন,"
-  line_3: "যা পাঠ করলে আল্লাহ অভাব দূর করে দেন..."
-  highlight_words: ["চরম আর্থিক সংকটে", "নবীজি (ﷺ)", "১টি বিশেষ দোয়া", "অভাব দূর করে দেন"]
+  line_1: "টাকার অভাবে কষ্ট পাচ্ছেন?"
+  line_2: "নবীজি (ﷺ) এই ১টি দোয়া পড়তে বলেছেন,"
+  line_3: "আল্লাহ রিজিকের রাস্তা খুলে দেবেন..."
+  highlight_words: ["টাকার অভাবে", "নবীজি (ﷺ)", "১টি দোয়া", "রিজিকের রাস্তা"]
 
-• Model D (Family & Home Barakah Hook):
-  line_1: "ঘরে প্রবেশের সময় মাত্র ৫ সেকেন্ডের এই ১টি সুন্নাত মানলে"
-  line_2: "আল্লাহ পরিবারে অভাব ও অশান্তি দূর করে দেন,"
-  line_3: "যা রাসূলুল্লাহ (ﷺ) সাহাবীদের বিশেষ উপদেশ দিয়েছিলেন..."
-  highlight_words: ["৫ সেকেন্ডের এই ১টি সুন্নাত", "আল্লাহ", "অভাব ও অশান্তি দূর", "রাসূলুল্লাহ (ﷺ)"]
+• Model D (Family & Home Hook):
+  line_1: "ঘরে ঢোকার সময় এই ১টি সুন্নাত মানুন"
+  line_2: "আল্লাহ ঘর থেকে অশান্তি দূর করে দেবেন,"
+  line_3: "নবীজি (ﷺ) সাহাবীদের শিখিয়েছিলেন..."
+  highlight_words: ["ঘরে ঢোকার সময়", "আল্লাহ", "অশান্তি দূর", "নবীজি (ﷺ)"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.

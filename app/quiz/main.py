@@ -45,11 +45,30 @@ def run_quiz_pipeline(language: str = "bn", output_path: str = "data/output/quiz
         metadata = format_quiz_metadata(quiz_script)
         logger.info(f"Uploading Quiz Video: '{metadata.get('youtube_title')}'...")
         
+        # Extract clean Question 1 thumbnail at t=2.0s
+        thumbnail_path = None
+        try:
+            import subprocess
+            thumb_path = os.path.splitext(video_path)[0] + "_thumb.jpg"
+            subprocess.run([
+                "ffmpeg", "-y",
+                "-ss", "2.0",
+                "-i", video_path,
+                "-vframes", "1",
+                "-q:v", "2",
+                thumb_path
+            ], check=True, capture_output=True)
+            if os.path.exists(thumb_path) and os.path.getsize(thumb_path) > 0:
+                thumbnail_path = thumb_path
+                logger.info(f"✅ Quiz Question 1 thumbnail extracted at t=2.0s: {thumbnail_path}")
+        except Exception as e:
+            logger.warning(f"Quiz thumbnail extraction notice: {e}")
+
         # Upload to YouTube Shorts
         yt_success = False
         try:
             from app.upload.youtube import upload_to_youtube
-            yt_success = upload_to_youtube(video_path, metadata)
+            yt_success = upload_to_youtube(video_path, metadata, thumbnail_path=thumbnail_path)
         except Exception as e:
             logger.warning(f"YouTube upload error: {e}")
             
@@ -57,7 +76,7 @@ def run_quiz_pipeline(language: str = "bn", output_path: str = "data/output/quiz
         fb_success = False
         try:
             from app.upload.facebook import upload_to_facebook
-            fb_success = upload_to_facebook(video_path, metadata, video_type="reel")
+            fb_success = upload_to_facebook(video_path, metadata, video_type="reel", thumbnail_path=thumbnail_path)
         except Exception as e:
             logger.warning(f"Facebook upload error: {e}")
             
