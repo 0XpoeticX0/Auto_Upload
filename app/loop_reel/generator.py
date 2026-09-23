@@ -338,7 +338,7 @@ PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER (SIMPLE BENGALI):
   highlight_words: ["ঘরে ঢোকার সময়", "আল্লাহ", "অশান্তি দূর", "নবীজি (ﷺ)"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
-1. Complete Arabic Dua: The caption MUST contain full Arabic text with Tashkeel, accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
+1. Complete Arabic Text: At least ONE caption point MUST contain full Arabic text with Tashkeel (either a relevant Dua OR the authentic Arabic wording of the Prophet's statement/Hadith), accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
 2. Value-Packed Caption: Point-by-point breakdown with exact references (সহীহ বুখারী / সহীহ মুসলিম / জামে আত-তিরমিযী / সহীহ আন-নাসায়ী / সহীহ ইবনে মাজাহ).
 3. Community Dhikr CTA + Follow Credit: 👉 @dailydos_islam
 
@@ -405,7 +405,7 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
 
     banned_hadiths = set()
     last_fail_reason = ""
-    max_attempts = 7
+    max_attempts = 10
 
     for attempt in range(max_attempts):
         # Dynamic Angle, Tone & Islamic Domain Rotation across attempts to break deadlocks
@@ -436,7 +436,8 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
             f"Guidance: {assigned_domain['guidance']}\n"
             f"Assigned Hook Angle: '{target_angle['name']}' ({target_angle['desc']}). Hook Tone: '{target_tone}'.\n"
             f"Select 1 deeply inspiring, authentic Sahih Hadith strictly within the domain '{assigned_domain['name']}'. "
-            f"Ensure 100% authentic Sahih Hadith with exact book and number (e.g., সহীহ বুখারী: ২০৭৯ or সহীহ মুসলিম: ১৮৯৩), full Arabic Dua or Ayah with Tashkeel, Bengali pronunciation, and meaning. "
+            f"Ensure 100% authentic Sahih Hadith with exact book and number (e.g., সহীহ বুখারী: ২০৭৯ or সহীহ মুসলিম: ১৮৯৩). "
+            f"Include authentic Arabic text with Tashkeel, Bengali pronunciation, and meaning for at least one point (either a relevant Dua or the Arabic wording of the Hadith). "
             f"STRICTLY FORBIDDEN: Do NOT select any topic from the avoided list below or any repetition of sleep, grave/Mulk, debt, or anxiety. Return valid JSON only."
         )
 
@@ -459,8 +460,8 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
         pts_text = " ".join([f"{pt.get('title', '')} {pt.get('hadith', '')} {pt.get('reference', '')}" for pt in content.get("caption_points", [])])
         full_check_text = f"{title_bn} {content.get('arabic', '')} {pts_text}"
 
-        is_dup_title, reason_title = check_topic_duplicate_global_detail(title_bn)
-        is_dup_full, reason_full = check_topic_duplicate_global_detail(full_check_text)
+        is_dup_title, reason_title = check_topic_duplicate_global_detail(title_bn, check_semantic=True)
+        is_dup_full, reason_full = check_topic_duplicate_global_detail(full_check_text, check_semantic=False)
 
         if is_dup_title or is_dup_full:
             dup_reason = reason_title or reason_full
@@ -482,11 +483,21 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
             last_fail_reason = f"Duplicate topic or Hadith detected: {dup_reason}"
             continue
             
-        # Check that complete Arabic Dua is included
-        has_arabic = any(pt.get("arabic") and (pt.get("meaning") or pt.get("pronunciation")) for pt in content.get("caption_points", []))
-        if not has_arabic and not content.get("arabic"):
-            logger.warning(f"Attempt {attempt+1}: Generated content is missing mandatory complete Arabic Dua/Meaning! Retrying...")
-            last_fail_reason = "MANDATORY: Must include full Arabic Dua with Tashkeel, Bengali pronunciation, and meaning in caption_points."
+        # Check that Arabic text or authentic Hadith is included
+        has_arabic = any(
+            (pt.get("arabic") and (pt.get("meaning") or pt.get("pronunciation"))) or
+            bool(re.search(r'[\u0600-\u06FF]{4,}', pt.get("arabic", "") + pt.get("hadith", "")))
+            for pt in content.get("caption_points", [])
+        ) or bool(re.search(r'[\u0600-\u06FF]{4,}', content.get("arabic", "")))
+
+        has_valid_hadiths = bool(content.get("caption_points")) and any(
+            bool(pt.get("hadith")) and bool(pt.get("reference"))
+            for pt in content.get("caption_points", [])
+        )
+
+        if not has_arabic and not has_valid_hadiths:
+            logger.warning(f"Attempt {attempt+1}: Generated content is missing mandatory Arabic text or authentic Hadith references! Retrying...")
+            last_fail_reason = "MANDATORY: Must include authentic Sahih Hadiths with exact references, and Arabic text with pronunciation and meaning where applicable."
             continue
 
         # HOOK DIVERSITY & ANTI-MONOTONY VALIDATION

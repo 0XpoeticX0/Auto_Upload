@@ -75,6 +75,9 @@ def generate_quran_verse_video(
 
     max_selection_retries = 8
     verse_data = None
+    dynamic_used_ayahs = {k: set(v) for k, v in used_ayahs_map.items()}
+    rejected_passages = []
+    last_fail_reason = ""
 
     for attempt in range(1, max_selection_retries + 1):
         if surah and ayah_start:
@@ -87,11 +90,15 @@ def generate_quran_verse_video(
             v_cand["theme_headline"] = f"{v_cand['surah_name_bn']} (আয়াত {v_cand['verse_range_str']})"
             v_cand["reflection_bn"] = ""
         else:
-            # Let Gemini pick the passage and the winning emotional vocal match (Alafasy vs. Dossari)
+            # If AI fails twice, seamlessly activate curated bank rotation to guarantee zero deadlock
+            use_curated = (attempt >= 3)
             v_cand = select_meaningful_passage_ai(
                 reciter_id=forced_reciter_id,
                 recent_history=past_titles,
-                used_ayahs_map=used_ayahs_map
+                used_ayahs_map=dynamic_used_ayahs,
+                rejected_passages=rejected_passages,
+                last_fail_reason=last_fail_reason,
+                use_curated_fallback=use_curated
             )
 
         # STRICT ZERO-DUPLICATION ENFORCEMENT GATE: AYAH-LEVEL REJECTION
@@ -104,13 +111,15 @@ def generate_quran_verse_video(
         if not (surah and ayah_start):
             # Check 1: Ayah-level overlap check (rejection occurs ONLY if specific Ayahs have been used)
             cand_ayahs = set(range(cand_start, cand_end + 1))
-            banned_ayahs = used_ayahs_map.get(cand_surah, set())
+            banned_ayahs = dynamic_used_ayahs.get(cand_surah, set())
             overlap = cand_ayahs & banned_ayahs
             if overlap:
                 logger.warning(
                     f"🚫 [Zero-Duplication Gate] REJECTED (Attempt {attempt}/{max_selection_retries}): "
                     f"Surah {cand_surah} ({cand_surah_name_bn}) Ayahs {cand_range_str} overlaps with already used Ayahs: {sorted(list(overlap))}!"
                 )
+                dynamic_used_ayahs.setdefault(cand_surah, set()).update(cand_ayahs)
+                rejected_passages.append(f"Surah {cand_surah}:{cand_range_str}")
                 continue
 
             # Check 2: Exact duplicate title check against past 30 Quran titles
@@ -124,6 +133,8 @@ def generate_quran_verse_video(
                     is_title_duplicate = True
                     break
             if is_title_duplicate:
+                dynamic_used_ayahs.setdefault(cand_surah, set()).update(cand_ayahs)
+                rejected_passages.append(f"Surah {cand_surah}:{cand_range_str}")
                 continue
 
         cleared, clearance_report = verify_quran_passage_3x(v_cand)
@@ -138,6 +149,11 @@ def generate_quran_verse_video(
                 # If specific manual passage was requested, still proceed with warning
                 verse_data = v_cand
                 break
+            # Record failed candidate so next attempt never repeats it
+            if cand_surah and cand_start and cand_end:
+                dynamic_used_ayahs.setdefault(cand_surah, set()).update(range(cand_start, cand_end + 1))
+                rejected_passages.append(f"Surah {cand_surah}:{cand_range_str}")
+                last_fail_reason = str(clearance_report.get("details", {}).get("reason", ""))
 
     if not verse_data:
         raise RuntimeError("Failed to obtain a 100% verified Quran passage after 3-Stage Gemini Clearance checks.")

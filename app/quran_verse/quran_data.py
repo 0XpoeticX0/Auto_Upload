@@ -268,11 +268,11 @@ CURATED_COMPLETE_PASSAGES = [
     },
     {
         "surah": 55,
-        "ayah_start": 1,
-        "ayah_end": 13,
-        "theme_hint": "পরম দয়াময় আল্লাহ ও তাঁর অপার নিয়ামত (Surah Ar-Rahman 1-13)",
-        "reflection_bn": "রহমান শিখিয়েছেন কুরআন, সৃষ্টি করেছেন মানবজাতি এবং দান করেছেন অফুরন্ত নিয়ামত। অতএব তোমরা তোমাদের রবের কোন কোন নিয়ামতকে অস্বীকার করবে?",
-        "ideal_reciter": "alafasy"
+        "ayah_start": 26,
+        "ayah_end": 30,
+        "theme_hint": "মহিমান্বিত রবের চিরস্থায়িত্ব ও সব সৃষ্টির বিলুপ্তি (Surah Ar-Rahman 26-30)",
+        "reflection_bn": "ভূমণ্ডলের সবকিছুই ধ্বংসশীল, কেবল আপনার মহিমাময় ও মহানুভব রবের সত্তাই চিরকাল অবিনশ্বর থাকবে। আসমান ও জমিনের সবাই তাঁরই মুখাপেক্ষী।",
+        "ideal_reciter": "dossari"
     },
     {
         "surah": 50,
@@ -459,6 +459,10 @@ def clean_bengali_translation(text: str) -> str:
     text = re.sub(r'\([^\)]{12,}\)', '', text)
     # Remove remaining standalone parentheses while retaining the text inside
     text = re.sub(r'[\(\)]', '', text)
+    # Normalize archaic word-final hasantas (e.g. 'কোন্' -> 'কোন')
+    text = re.sub(r'\u09cd(?=[\s\.,;!?।\)]|$)', '', text)
+    # Normalize spaces before punctuation
+    text = re.sub(r'\s+([,;!?।])', r'\1', text)
     # Normalize spaces and trailing punctuation
     text = re.sub(r'\s+', ' ', text).strip()
     return text
@@ -617,7 +621,14 @@ def determine_best_reciter_for_passage(surah: int, ayah_start: int, ayah_end: in
         # Guaranteed safe default
         return "alafasy"
 
-def select_meaningful_passage_ai(reciter_id: str = None, recent_history: list = None, used_ayahs_map: dict = None) -> dict:
+def select_meaningful_passage_ai(
+    reciter_id: str = None,
+    recent_history: list = None,
+    used_ayahs_map: dict = None,
+    rejected_passages: list = None,
+    last_fail_reason: str = "",
+    use_curated_fallback: bool = False
+) -> dict:
     """
     Uses Gemini to intelligently select a complete, self-contained passage from the Quran
     that has 100% complete meaning, zero missing context, and can finish recitation within 85 seconds.
@@ -643,7 +654,8 @@ def select_meaningful_passage_ai(reciter_id: str = None, recent_history: list = 
         used_items.append(f"- Surah {s_num}: {en_name} ({bn_name}) -> ALREADY RECITED: {ayah_desc}")
     used_ayahs_section = "\n".join(used_items) if used_items else "None"
 
-    system_prompt = f"""You are a senior Quran scholar, master audio director, and video producer.
+    if not use_curated_fallback:
+        system_prompt = f"""You are a senior Quran scholar, master audio director, and video producer.
 Your goal is to select a complete, self-contained Quranic passage (under 90 seconds recitation length) that provides a deeply moving, complete message to the viewer, and assign the IDEAL vocal reciter for maximum emotional appeal.
 
 CRITICAL PASSAGE RULES (MANDATORY):
@@ -676,59 +688,68 @@ Output ONLY valid JSON:
     "reciter_rationale": "Surah Ash-Sharh is a gentle message of divine solace; Alafasy's warm, comforting baritone maximizes emotional appeal."
 }}"""
 
-    reciter_hint = f"Pre-selected reciter: {reciter_id}" if reciter_id else "Select the best matching reciter ('alafasy' or 'dossari') based on the theological emotion."
+        reciter_hint = f"Pre-selected reciter: {reciter_id}" if reciter_id else "Select the best matching reciter ('alafasy' or 'dossari') based on the theological emotion."
 
-    user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation that sounds exceptionally melodious and soothing to the ears.
+        rejection_warning = ""
+        if rejected_passages:
+            rejection_warning = (
+                f"\n\n[CRITICAL CORRECTION FROM PREVIOUS ATTEMPT]:\n"
+                f"The following passages were ALREADY REJECTED and MUST NOT be selected: {', '.join(rejected_passages)}.\n"
+                f"Reason: {last_fail_reason}\n"
+                f"You MUST select a COMPLETELY DIFFERENT Surah or passage!"
+            )
+
+        user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation that sounds exceptionally melodious and soothing to the ears.
 {reciter_hint}
 
 ALREADY RECITED AYAHS IN LAST 30 VIDEOS (STRICTLY FORBIDDEN TO REPEAT THESE AYAHS):
 {used_ayahs_section}
 
 RECENT TITLES IN HISTORY:
-- {avoid_list}
+- {avoid_list}{rejection_warning}
 
 Select a fresh, inspiring, and ear-pleasing melodious passage with 100% complete contextual integrity. Ensure ZERO OVERLAP with the already recited Ayahs above. Return valid JSON only."""
 
-    try:
-        data = extract_json(system_prompt, user_prompt, max_tokens=600)
-        if isinstance(data, dict) and data.get("surah") and data.get("ayah_start"):
-            surah = int(data["surah"])
-            start = int(data["ayah_start"])
-            end = int(data.get("ayah_end") or start)
-            
-            # Check for Ayah-level overlap
-            cand_ayahs = set(range(start, end + 1))
-            banned_ayahs = used_ayahs_map.get(surah, set())
-            overlap = cand_ayahs & banned_ayahs
-            if overlap:
-                raise ValueError(
-                    f"AI selected Surah {surah}:{start}-{end} which overlaps with already used Ayahs {sorted(list(overlap))}"
-                )
+        try:
+            data = extract_json(system_prompt, user_prompt, max_tokens=600)
+            if isinstance(data, dict) and data.get("surah") and data.get("ayah_start"):
+                surah = int(data["surah"])
+                start = int(data["ayah_start"])
+                end = int(data.get("ayah_end") or start)
+                
+                # Check for Ayah-level overlap
+                cand_ayahs = set(range(start, end + 1))
+                banned_ayahs = used_ayahs_map.get(surah, set())
+                overlap = cand_ayahs & banned_ayahs
+                if overlap:
+                    raise ValueError(
+                        f"AI selected Surah {surah}:{start}-{end} which overlaps with already used Ayahs {sorted(list(overlap))}"
+                    )
 
-            # Determine winning reciter
-            chosen_reciter_id = reciter_id
-            if not chosen_reciter_id:
-                rec_candidate = str(data.get("recommended_reciter") or data.get("reciter_id") or "").lower().strip()
-                if rec_candidate in RECITERS_CONFIG:
-                    chosen_reciter_id = rec_candidate
-                else:
-                    chosen_reciter_id = determine_best_reciter_for_passage(surah, start, end)
+                # Determine winning reciter
+                chosen_reciter_id = reciter_id
+                if not chosen_reciter_id:
+                    rec_candidate = str(data.get("recommended_reciter") or data.get("reciter_id") or "").lower().strip()
+                    if rec_candidate in RECITERS_CONFIG:
+                        chosen_reciter_id = rec_candidate
+                    else:
+                        chosen_reciter_id = determine_best_reciter_for_passage(surah, start, end)
 
-            reciter = RECITERS_CONFIG.get(chosen_reciter_id, RECITERS_CONFIG["alafasy"])
-            logger.info(f"🎙️ [Voice-Theme Matcher] Assigned {reciter['name_en']} ({chosen_reciter_id}) for Surah {surah}:{start}-{end}. Rationale: {data.get('reciter_rationale', 'Thematic resonance')}")
+                reciter = RECITERS_CONFIG.get(chosen_reciter_id, RECITERS_CONFIG["alafasy"])
+                logger.info(f"🎙️ [Voice-Theme Matcher] Assigned {reciter['name_en']} ({chosen_reciter_id}) for Surah {surah}:{start}-{end}. Rationale: {data.get('reciter_rationale', 'Thematic resonance')}")
 
-            # Fetch data from API
-            verse_data = fetch_verse_data(surah, start, end)
-            verse_data["theme_headline"] = data.get("theme_headline", "কোরআনের আলো ও হেদায়াত")
-            verse_data["reflection_bn"] = data.get("reflection_bn", "")
-            verse_data["reciter_id"] = chosen_reciter_id
-            verse_data["reciter"] = reciter
-            verse_data["reciter_rationale"] = data.get("reciter_rationale", "")
-            return verse_data
-    except Exception as e:
-        logger.warning(f"AI passage selection notice: {e}. Falling back to curated bank.")
+                # Fetch data from API
+                verse_data = fetch_verse_data(surah, start, end)
+                verse_data["theme_headline"] = data.get("theme_headline", "কোরআনের আলো ও হেদায়াত")
+                verse_data["reflection_bn"] = data.get("reflection_bn", "")
+                verse_data["reciter_id"] = chosen_reciter_id
+                verse_data["reciter"] = reciter
+                verse_data["reciter_rationale"] = data.get("reciter_rationale", "")
+                return verse_data
+        except Exception as e:
+            logger.warning(f"AI passage selection notice: {e}. Falling back to curated bank.")
 
-    # Fallback to curated rotation - STRICTLY EXCLUDE PASSAGES OVERLAPPING ALREADY USED AYAHS
+    # Fallback to curated rotation - STRICTLY EXCLUDE PASSAGES OVERLAPPING ALREADY USED OR REJECTED AYAHS
     import random
     available_curated = []
     for p in CURATED_COMPLETE_PASSAGES:
@@ -736,6 +757,9 @@ Select a fresh, inspiring, and ear-pleasing melodious passage with 100% complete
         p_ayahs = set(range(p["ayah_start"], p["ayah_end"] + 1))
         banned_ayahs = used_ayahs_map.get(p_surah, set())
         if not (p_ayahs & banned_ayahs):
+            pass_str = f"Surah {p_surah}:{p['ayah_start']}-{p['ayah_end']}"
+            if rejected_passages and any(pass_str in r or f"Surah {p_surah}:" in r for r in rejected_passages):
+                continue
             available_curated.append(p)
 
     if not available_curated:

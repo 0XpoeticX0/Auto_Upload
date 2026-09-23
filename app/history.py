@@ -337,44 +337,54 @@ def get_all_used_topics_global(limit: int = 150) -> list[str]:
     return unified_list[:limit]
 
 SEMANTIC_TOPIC_GROUPS = [
-    {"name": "surah_mulk_kabor", "keywords": ["মুলক", "কবর", "কবরের আজাব", "কবরের বাতি", "সাজদাহ", "কবরের", "কবরে", "মুনকার", "নাকির", "বারজাখ"]},
-    {"name": "morning_danger_protection", "keywords": ["সকালের আমল", "সকাল-সন্ধ্যা", "বিপদ", "অনিষ্ট", "শয়তান", "শয়তান", "ধারেকাছে", "বিপদ থেকে রক্ষা", "বিসমিল্লাহিল্লাজি"]},
+    {"name": "surah_mulk_kabor", "keywords": ["মুলক", "কবর", "কবরের আজাব", "কবরের বাতি", "সূরা মুলক", "মুনকার", "নাকির", "বারজাখ"]},
+    {"name": "morning_danger_protection", "keywords": ["সকালের আমল", "সকাল-সন্ধ্যা", "সকাল সন্ধ্যা", "সকালের দোয়া", "সকাল ও সন্ধ্যার", "সকাল-সন্ধ্যার", "বিসমিল্লাহিল্লাজি লা ইয়াদুররু"]},
     {"name": "destiny_turnaround_cliche", "keywords": ["ভাগ্যের তালা", "ভাগ্য বদলে", "ভাগ্য পরিবর্তন", "জীবন বদলে"]},
-    {"name": "anxiety_and_depression", "keywords": ["দুশ্চিন্তা", "পেরেশানি", "অস্থিরতা", "মানসিক অশান্তি", "হতাশা", "মন খারাপ", "ভয় ও শঙ্কা", "ভয় ও শঙ্কা", "ক্লান্তি", "অশান্তি", "শান্তি পাওয়ার"]},
+    {"name": "anxiety_and_depression", "keywords": ["দুশ্চিন্তা", "পেরেশানি", "অস্থিরতা", "মানসিক অশান্তি", "হতাশা", "মন খারাপ", "ভয় ও শঙ্কা", "ভয় ও শঙ্কা"]},
     {"name": "hammi_wal_hazan_dua", "keywords": ["হাম্মি", "হাযানি", "আল-হাম্মি", "৬৩৬৯", "আবু উমামাহ"]},
     {"name": "hasbiyallahu_dua", "keywords": ["হাসবিয়াল্লাহু", "নি‘মাল ওয়াকিল", "৪৫৬৩", "আগুনে নিক্ষিপ্ত"]},
     {"name": "isme_azam", "keywords": ["ইসমে আজম", "মহান নাম", "কখনো ফিরিয়ে দেন না"]},
-    {"name": "market_dua", "keywords": ["বাজারে প্রবেশ", "বাজারের দোয়া", "১০ লক্ষ নেকি", "বাজারে", "হাটে"]},
+    {"name": "market_dua", "keywords": ["বাজারে প্রবেশ", "বাজারের দোয়া", "১০ লক্ষ নেকি"]},
     {"name": "tahajjud_prayer", "keywords": ["তাহাজ্জুদ", "শেষ রাতে", "অসম্ভব চাওয়া", "তাহাজ্জুদের", "রাতের নামাজ"]},
     {"name": "sayyidul_istighfar", "keywords": ["সাইয়্যিদুল ইস্তিগফার", "সেরা ইস্তিগফার", "ক্ষমার শ্রেষ্ঠ দোয়া"]},
     {"name": "yunus_dua", "keywords": ["ইউনুস", "মাছের পেট", "লা ইলাহা ইল্লা আনতা"]},
-    {"name": "sleeping_dua", "keywords": ["ঘুমানোর", "ঘুমাতে", "ঘুম", "ঘুমন্ত", "বিসমিকা আল্লাহুম্মা", "মাঝরাতে", "দুঃস্বপ্ন", "বিছানায়", "বিছানা", "শয্যা", "ঘুম ভাঙলে"]},
-    {"name": "evil_eye_badnazar", "keywords": ["বদনজর", "কুদৃষ্টি", "হিংসা", "৩৩৭১", "৩৩৭৪", "নজর লাগা", "জাদু", "আছর", "রুকইয়া"]},
-    {"name": "forgiveness_sins", "keywords": ["পাহাড় পরিমাণ গুনাহ", "পৃথিবী সমান গুনাহ", "সমুদ্রের ফেনা", "তওবা", "ক্ষমা করবেন আল্লাহ", "ক্ষমার শ্রেষ্ঠ", "পাপ মোচন", "ক্ষমা"]},
+    {"name": "sleeping_dua", "keywords": ["ঘুমানোর আমল", "ঘুমাতে যাওয়ার", "বিসমিকা আল্লাহুম্মা", "মাঝরাতে ঘুম ভাঙলে", "দুঃস্বপ্ন", "বিছানায় যাওয়ার দোয়া"]},
+    {"name": "evil_eye_badnazar", "keywords": ["বদনজর", "কুদৃষ্টি", "৩৩৭১", "৩৩৭৪", "নজর লাগা", "জাদু", "আছর", "রুকইয়া"]},
+    {"name": "forgiveness_sins", "keywords": ["পাহাড় পরিমাণ গুনাহ", "পৃথিবী সমান গুনাহ", "সমুদ্রের ফেনা", "পাপ মোচন", "গুনাহ মাফ", "তওবা ও ক্ষমা"]},
     {"name": "salatul_tasbeeh", "keywords": ["সালাতুত তাসবীহ", "সালাতুত তাসবিহ", "আওয়াবীন"]},
-    {"name": "parents_honor", "keywords": ["পিতা-মাতা", "পিতামাতা", "মা-বাবা", "মায়ের দোয়া", "বাবার হক", "মায়ের", "বাবার"]},
-    {"name": "anger_control", "keywords": ["রাগ", "ক্রোধ", "রাগের মাথায়", "রাগ নিয়ন্ত্রণ"]},
-    {"name": "prayer_waswasa", "keywords": ["নামাজে মনোযোগ", "ওয়াসওয়াসা", "খিনজাব"]},
-    {"name": "tongue_backbiting", "keywords": ["জবান", "জিহ্বা", "গীবত", "পরনিন্দা", "মুখের গুনাহ", "কথা বলা"]},
+    {"name": "parents_honor", "keywords": ["পিতা-মাতা", "পিতামাতা", "মা-বাবা", "মায়ের দোয়া", "বাবার হক", "পিতা মাতার"]},
+    {"name": "anger_control", "keywords": ["রাগ নিয়ন্ত্রণ", "ক্রোধ দমন", "রাগের মাথায়", "রাগ কমানোর", "রাগ দমন"]},
+    {"name": "prayer_waswasa", "keywords": ["নামাজে মনোযোগ", "নামাজে ওয়াসওয়াসা", "খিনজাব"]},
+    {"name": "tongue_backbiting", "keywords": ["গীবত", "পরনিন্দা", "চোগলখোরি", "জিহ্বার হেফাজত", "জবানের হেফাজত", "মুখের অপব্যবহার"]},
     {"name": "halal_rizq", "keywords": ["হালাল রিজিক", "হারাম খাবার", "ব্যবসা", "সততা", "উপার্জন"]},
     {"name": "neighbor_rights", "keywords": ["প্রতিবেশী", "প্রতিবেশীর হক", "প্রতিবেশীর"]},
-    {"name": "two_prostrations_dua", "keywords": ["দুই সিজদা", "সিজদার মাঝে", "সিজদায়"]},
-    {"name": "wudu_dua_doors", "keywords": ["অযুর পর", "অজুর পর", "৮টি দরজা", "ওজু", "অজু"]},
-    {"name": "debt_relief", "keywords": ["ঋণ পরিশোধ", "দেনা", "পাহাড়সমান ঋণ", "৩৫৬০", "ঋণমুক্তি", "ঋণ", "ঋণের", "অর্থকষ্ট", "আর্থিক সংকট"]},
-    {"name": "sick_visit", "keywords": ["অসুস্থ", "রোগী দেখতে", "৭০ হাজার ফেরেশতা", "রোগমুক্তি", "শিফা"]},
-    {"name": "spouse_love", "keywords": ["স্বামী-স্ত্রী", "স্ত্রীর মুখে", "দাম্পত্য", "পরিবার", "সংসার", "স্ত্রী", "স্বামী"]},
-    {"name": "jummah_kahf", "keywords": ["জুম্মা", "সূরা কাহাফ", "কাহফ", "জুমার"]},
-    {"name": "istighfar_doors", "keywords": ["ইস্তিগফার", "আস্তাগফিরুল্লাহ", "অভাব দূর"]},
+    {"name": "two_prostrations_dua", "keywords": ["দুই সিজদা", "সিজদার মাঝে দোয়া", "দুই সিজদার মাঝের"]},
+    {"name": "wudu_dua_doors", "keywords": ["অযুর পর", "অজুর পর", "৮টি দরজা", "ওজুর দোয়া", "অজুর দোয়া", "অযুর দোয়া"]},
+    {"name": "debt_relief", "keywords": ["ঋণ পরিশোধ", "দেনা", "পাহাড়সমান ঋণ", "৩৫৬০", "ঋণমুক্তি", "ঋণ থেকে মুক্তি", "অর্থকষ্ট", "আর্থিক সংকট"]},
+    {"name": "sick_visit", "keywords": ["রোগী দেখতে যাওয়া", "৭০ হাজার ফেরেশতা", "রোগীর সেবা", "অসুস্থ ব্যক্তিকে দেখতে"]},
+    {"name": "spouse_love", "keywords": ["স্বামী-স্ত্রী", "স্ত্রীর হক", "স্বামীর হক", "দাম্পত্য", "দাম্পত্য জীবন"]},
+    {"name": "jummah_kahf", "keywords": ["জুম্মা", "সূরা কাহাফ", "কাহফ", "জুমার দিনের"]},
+    {"name": "istighfar_doors", "keywords": ["ইস্তিগফার", "আস্তাগফিরুল্লাহ", "ইস্তিগফারের ক্ষমতা"]},
     {"name": "seven_under_shade", "keywords": ["আরশের ছায়া", "সাত শ্রেণির মানুষ"]},
-    {"name": "azan_dua", "keywords": ["আজান", "আজানের", "মুয়াজ্জিন", "ইকামত", "আজানের পর"]},
-    {"name": "salam_greeting", "keywords": ["সালাম", "সালামের", "আসসালামু আলাইকুম"]},
-    {"name": "patience_sabr", "keywords": ["ধৈর্য", "সবর", "মুসিবত", "বিপদাপদ"]},
-    {"name": "charity_sadaqah", "keywords": ["সদকা", "দান", "খয়রাত", "গরিব", "অসহায়"]},
-    {"name": "truth_honesty", "keywords": ["সত্যবাদিতা", "মিথ্যা", "আমানত", "প্রতারণা"]},
-    {"name": "arrogance_kibr", "keywords": ["অহংকার", "গর্ব", "দাম্ভিকতা", "বিনয়"]},
-    {"name": "cleanliness_taharah", "keywords": ["পবিত্রতা", "পরিচ্ছন্নতা", "ঈমানের অঙ্গ"]},
-    {"name": "guest_hospitality", "keywords": ["মেহমান", "অতিথি", "মেহমানদারি"]}
+    {"name": "azan_dua", "keywords": ["আজানের দোয়া", "মুয়াজ্জিন", "ইকামত", "আজানের পর দোয়া"]},
+    {"name": "salam_greeting", "keywords": ["সালামের প্রসার", "আসসালামু আলাইকুম", "সালাম দেওয়া"]},
+    {"name": "patience_sabr", "keywords": ["ধৈর্য ধারণ", "সবর করা", "মুসিবতে সবর", "বিপদাপদে সবর"]},
+    {"name": "charity_sadaqah", "keywords": ["সদকা", "দান-সদকা", "গোপন দান", "খয়রাত", "গরিবকে দান"]},
+    {"name": "truth_honesty", "keywords": ["সত্যবাদিতা", "মিথ্যা বলা", "আমানত রক্ষা", "প্রতারণা বর্জন"]},
+    {"name": "arrogance_kibr", "keywords": ["অহংকার", "দাম্ভিকতা", "বিনয় প্রকাশ", "অহংকার বর্জন"]},
+    {"name": "cleanliness_taharah", "keywords": ["পরিচ্ছন্নতা", "ঈমানের অঙ্গ", "পবিত্রতা অর্জন", "তাহরাত"]},
+    {"name": "guest_hospitality", "keywords": ["মেহমানদারি", "অতিথি আপ্যায়ন", "মেহমানের হক"]}
 ]
+
+BANNED_OVERSATURATED_GROUPS = {
+    "destiny_turnaround_cliche",
+    "surah_mulk_kabor",
+    "sleeping_dua",
+    "anxiety_and_depression",
+    "debt_relief",
+    "forgiveness_sins",
+    "morning_danger_protection"
+}
 
 def get_topic_semantic_group(text: str) -> str:
     if not text:
@@ -386,10 +396,17 @@ def get_topic_semantic_group(text: str) -> str:
                 return group["name"]
     return ""
 
-def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 0.25) -> tuple[bool, str]:
+def check_topic_duplicate_global_detail(
+    new_topic_text: str,
+    threshold: float = 0.25,
+    check_semantic: bool = True
+) -> tuple[bool, str]:
     """
-    Checks if a candidate topic/quote/hadith has already been covered in the LAST 100 VIDEOS.
-    Uses Semantic Topic Grouping, Exact Hadith Citations, and Jaccard Word Overlap.
+    Checks if a candidate topic/quote/hadith has already been covered in recent videos.
+    - Clickbait clichés: 100% unconditionally banned.
+    - Oversaturated categories: 30-video cooldown (GEMINI.md Rule 6 mandate).
+    - Rotating dynamic categories: 15-video cooldown (to allow healthy rotation across 16 domains).
+    - Exact Hadith citations & Jaccard overlap: checked against the full LAST 100 VIDEOS.
     Returns (is_duplicate: bool, reason_or_match: str).
     """
     if not new_topic_text or len(new_topic_text.strip()) < 5:
@@ -399,21 +416,25 @@ def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 
     cleaned_new = re.sub(r'[^\w\s]', '', new_topic_text).lower()
     new_words = set(cleaned_new.split())
     
-    # 1. Ban clickbait clichés unconditionally
-    new_group = get_topic_semantic_group(new_topic_text)
-    if new_group == "destiny_turnaround_cliche":
-        msg = f"Banned cliché hook detected ('destiny_turnaround_cliche'): '{new_topic_text}'"
-        logger.warning(msg)
-        return True, msg
+    if check_semantic:
+        # 1. Ban clickbait clichés unconditionally
+        new_group = get_topic_semantic_group(new_topic_text)
+        if new_group == "destiny_turnaround_cliche":
+            msg = f"Banned cliché hook detected ('destiny_turnaround_cliche'): '{new_topic_text}'"
+            logger.warning(msg)
+            return True, msg
 
-    # 2. Block semantic category repetition (Strict 100-video cooldown across identical themes)
-    if new_group:
-        for past in all_used[:100]:
-            past_group = get_topic_semantic_group(past)
-            if past_group == new_group:
-                msg = f"Semantic category '{new_group}' was already covered in past 100 videos: '{past}'"
-                logger.warning(msg)
-                return True, msg
+        # 2. Block semantic category repetition with intelligent tiered cooldown
+        if new_group:
+            # Oversaturated themes check 30 videos (GEMINI.md Rule 6)
+            # Standard rotating domains check recent 15 videos
+            cooldown_depth = 30 if new_group in BANNED_OVERSATURATED_GROUPS else 15
+            for past in all_used[:cooldown_depth]:
+                past_group = get_topic_semantic_group(past)
+                if past_group == new_group:
+                    msg = f"Semantic category '{new_group}' was already covered in past {cooldown_depth} videos: '{past}'"
+                    logger.warning(msg)
+                    return True, msg
 
     bn_to_en = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'}
     def _norm_digits(s: str) -> str:
@@ -428,11 +449,11 @@ def check_topic_duplicate_global_detail(new_topic_text: str, threshold: float = 
         if not past_words:
             continue
             
-        # 3. Exact reference / Hadith number match across all major books
+        # 3. Exact reference / Hadith number match across all major Hadith books (checked across ALL 100 videos)
         past_numbers = set(n for n in re.findall(r'\d+', _norm_digits(past)) if len(n) >= 2 or (n.isdigit() and int(n) > 5))
         if new_numbers and past_numbers and len(new_numbers.intersection(past_numbers)) >= 1:
-            major_sources = ["বুখারী", "মুসলিম", "তিরমিযী", "তিরমিজি", "দাউদ", "নাসায়ী", "নাসাঈ", "ইবনে মাজাহ", "আহমদ", "সূরা", "সুরা"]
-            if any(src in new_topic_text and src in past for src in major_sources):
+            major_hadith_sources = ["বুখারী", "মুসলিম", "তিরমিযী", "তিরমিজি", "দাউদ", "নাসায়ী", "নাসাঈ", "ইবনে মাজাহ", "আহমদ"]
+            if any(src in new_topic_text and src in past for src in major_hadith_sources):
                 matching_nums = new_numbers.intersection(past_numbers)
                 msg = f"Duplicate Hadith reference detected (number {matching_nums}) in last 100 videos: '{past}'"
                 logger.warning(f"Duplicate Hadith reference detected: '{new_topic_text}' vs '{past}'")

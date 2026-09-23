@@ -65,9 +65,11 @@ def verify_stage1_completeness(verse_data: dict) -> dict:
     )
 
     sys_prompt = (
-        "You are an accredited Quranic Editorial Scholar. "
-        "Your task is to verify that a selected Quran passage is 100% self-contained, "
-        "meaning it forms a complete thought, theological unit, or narrative with ZERO missing context or cut-offs. "
+        "You are an accredited Quranic Editorial Scholar evaluating Quran passages for short video recitation under 90 seconds. "
+        "Your task is to verify that the selected Quran passage forms a cohesive theological unit, complete thought, Dua, or narrative section with ZERO missing context or cut-offs. "
+        "CRITICAL RECITAL (MAQTA') CRITERIA:\n"
+        "1. Standard Recitation Units: Excerpts that conclude at a natural pause (Waqf) or an established Quranic refrain (such as 'Fabi-ayyi ala-i Rabbikuma tukaththiban' in Surah Ar-Rahman, or a rhyming section closure) are completely valid and acceptable. Do NOT fail a passage simply because a refrain repeats later in the Surah or because following verses describe subsequent topics!\n"
+        "2. Strict Rejection: Only reject if the passage cuts off mid-sentence (leaving a grammatical clause, conditional statement, or relative pronoun unfinished) or begins mid-clause without its subject.\n"
         "Output strictly valid JSON with keys 'pass' (boolean), 'reason' (concise string), and 'score' (1-100)."
     )
 
@@ -138,6 +140,11 @@ def verify_stage3_bangla_perfection(verse_data: dict) -> dict:
     Combines strict programmatic AST regex linter + Gemini linguistic review.
     """
     verses = verse_data.get("verses", [])
+    for v in verses:
+        if v.get("bengali"):
+            v["bengali"] = re.sub(r'\u09cd(?=[\s\.,;!?।\)]|$)', '', v["bengali"])
+            v["bengali"] = re.sub(r'\s+([,;!?।])', r'\1', v["bengali"]).strip()
+
     all_bengali_text = " ".join(v.get("bengali", "") for v in verses)
 
     # 1. Programmatic Linter Check
