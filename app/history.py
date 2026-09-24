@@ -398,7 +398,7 @@ def get_topic_semantic_group(text: str) -> str:
 
 def check_topic_duplicate_global_detail(
     new_topic_text: str,
-    threshold: float = 0.25,
+    threshold: float = 0.40,
     check_semantic: bool = True
 ) -> tuple[bool, str]:
     """
@@ -470,7 +470,7 @@ def check_topic_duplicate_global_detail(
             
     return False, ""
 
-def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.25) -> bool:
+def is_topic_duplicate_global(new_topic_text: str, threshold: float = 0.40) -> bool:
     """
     Checks if a candidate topic/quote/hadith has already been covered in the last 100 videos.
     Uses Semantic Topic Grouping, Exact Hadith Citations, and Jaccard Word Overlap.
