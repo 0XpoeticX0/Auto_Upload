@@ -7,10 +7,11 @@ from app.config import GEMINI_API_KEY, GEMINI_POST_API_KEY, GEMINI_BACKUP_API_KE
 from app.logger import logger
 
 MODELS = [
-    "gemini-3.5-flash-lite",   # Fastest available; 3.1 is consistently 503
-    "gemini-3.7-flash",
-    "gemini-2.5-flash",        # Stable fallback when newer models are overloaded
-    "gemini-2.0-flash",        # Final stable fallback
+    "gemini-3.5-flash-lite",   # Blazing fast, low latency
+    "gemini-3.5-flash",        # Highly reliable & stable
+    "gemini-3.7-flash",        # Advanced reasoning
+    "gemini-flash-lite-latest",# Canonical alias for lite
+    "gemini-flash-latest",     # Canonical alias for flash
 ]
 
 GLOBAL_RULE = "\n\nCRITICAL SYSTEM RULE: You must cross-check all Islamic claims with authentic Quranic verses and Sahih Hadith. Do not output any misinformation, unverified stories, or false claims. All claims must be backed by authentic sources."
@@ -34,9 +35,9 @@ def get_api_keys_pool(for_posts: bool = False) -> list:
 
 # Session memory: Blacklist model+key pairs that fail with persistent errors (not transient 503s)
 # Key: (model_name, key)  Value: timestamp of failure
-# Pairs expire after 90 seconds so transient 503 storms don't permanently kill all models
+# Pairs expire after 45 seconds so transient 503 storms don't permanently kill all models
 _SESSION_FAILED_PAIRS: dict = {}
-_BLACKLIST_EXPIRY_SEC = 90
+_BLACKLIST_EXPIRY_SEC = 45
 
 def _is_blacklisted(model_name: str, key: str) -> bool:
     entry = _SESSION_FAILED_PAIRS.get((model_name, key))
@@ -53,6 +54,13 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
     if not key_pool:
         logger.error("No Gemini API keys available.")
         return ""
+
+    # Auto-recovery: If all candidate pairs are blacklisted, reset the blacklist
+    unblacklisted = sum(1 for m in MODELS for k in key_pool if not _is_blacklisted(m, k))
+    if unblacklisted == 0:
+        logger.warning("All Gemini model+key pairs were blacklisted. Resetting blacklist and pausing 3s...")
+        _SESSION_FAILED_PAIRS.clear()
+        time.sleep(3)
         
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
     
@@ -74,8 +82,18 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
                     return response.text
             except Exception as e:
                 err_str = str(e)
-                logger.warning(f"Model '{model_name}' failed on Key #{idx} ({err_str[:120]}). Blacklisting for {_BLACKLIST_EXPIRY_SEC}s...")
-                _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
+                is_503 = "503" in err_str or "UNAVAILABLE" in err_str
+                is_quota = "429" in err_str or "RESOURCE_EXHAUSTED" in err_str
+                if is_503:
+                    logger.warning(f"Model '{model_name}' temporary 503 spike on Key #{idx}. Pausing 2s...")
+                    time.sleep(2)
+                    _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
+                elif is_quota:
+                    logger.warning(f"Key #{idx} quota exhausted (429). Blacklisting for 180s...")
+                    _SESSION_FAILED_PAIRS[(model_name, key)] = time.time() + 135
+                else:
+                    logger.warning(f"Model '{model_name}' failed on Key #{idx} ({err_str[:120]}). Blacklisting for {_BLACKLIST_EXPIRY_SEC}s...")
+                    _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
             
     logger.error("All Gemini models and API keys failed.")
     return ""
@@ -127,6 +145,13 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
     if not key_pool:
         logger.error("No Gemini API keys available.")
         return {}
+
+    # Auto-recovery: If all candidate pairs are blacklisted, reset the blacklist
+    unblacklisted = sum(1 for m in MODELS for k in key_pool if not _is_blacklisted(m, k))
+    if unblacklisted == 0:
+        logger.warning("All Gemini model+key pairs were blacklisted. Resetting blacklist and pausing 3s...")
+        _SESSION_FAILED_PAIRS.clear()
+        time.sleep(3)
         
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
     
@@ -156,8 +181,18 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
                     return parsed
             except Exception as e:
                 err_str = str(e)
-                logger.warning(f"Model '{model_name}' failed on Key #{idx} ({err_str[:120]}). Blacklisting for {_BLACKLIST_EXPIRY_SEC}s...")
-                _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
+                is_503 = "503" in err_str or "UNAVAILABLE" in err_str
+                is_quota = "429" in err_str or "RESOURCE_EXHAUSTED" in err_str
+                if is_503:
+                    logger.warning(f"Model '{model_name}' temporary 503 spike on Key #{idx}. Pausing 2s...")
+                    time.sleep(2)
+                    _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
+                elif is_quota:
+                    logger.warning(f"Key #{idx} quota exhausted (429). Blacklisting for 180s...")
+                    _SESSION_FAILED_PAIRS[(model_name, key)] = time.time() + 135
+                else:
+                    logger.warning(f"Model '{model_name}' failed on Key #{idx} ({err_str[:120]}). Blacklisting for {_BLACKLIST_EXPIRY_SEC}s...")
+                    _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
             
     logger.error("All Gemini models and API keys failed.")
     return {}

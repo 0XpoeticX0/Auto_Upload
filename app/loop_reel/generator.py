@@ -454,6 +454,7 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
         if not content:
             logger.warning(f"Attempt {attempt+1}: Failed to parse valid Loop Reel JSON from LLM. Retrying...")
             last_fail_reason = "Failed to parse valid JSON from LLM response. Return strictly valid JSON."
+            time.sleep(2)
             continue
             
         title_bn = content.get("title_bn", "").strip()

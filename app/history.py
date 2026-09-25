@@ -443,7 +443,7 @@ def check_topic_duplicate_global_detail(
     # Filter out small single-digit counts (<=5) like '৩টি আমল' to avoid false positives
     new_numbers = set(n for n in re.findall(r'\d+', _norm_digits(new_topic_text)) if len(n) >= 2 or (n.isdigit() and int(n) > 5))
     
-    for past in all_used[:100]:
+    for idx, past in enumerate(all_used[:100]):
         cleaned_past = re.sub(r'[^\w\s]', '', past).lower()
         past_words = set(cleaned_past.split())
         if not past_words:
@@ -459,14 +459,15 @@ def check_topic_duplicate_global_detail(
                 logger.warning(f"Duplicate Hadith reference detected: '{new_topic_text}' vs '{past}'")
                 return True, msg
                 
-        # 4. Word overlap Jaccard similarity across last 100 videos
-        intersection = new_words.intersection(past_words)
-        union = new_words.union(past_words)
-        similarity = len(intersection) / len(union) if union else 0
-        if similarity >= threshold:
-            msg = f"High similarity ({similarity:.2f}) with past 100 videos: '{past}'"
-            logger.warning(f"High similarity ({similarity:.2f}) with past content: '{new_topic_text}' vs '{past}'")
-            return True, msg
+        # 4. Word overlap Jaccard similarity across recent 30 videos (GEMINI.md Rule 6 mandate)
+        if idx < 30:
+            intersection = new_words.intersection(past_words)
+            union = new_words.union(past_words)
+            similarity = len(intersection) / len(union) if union else 0
+            if similarity >= threshold:
+                msg = f"High similarity ({similarity:.2f}) with recent video: '{past}'"
+                logger.warning(f"High similarity ({similarity:.2f}) with past content: '{new_topic_text}' vs '{past}'")
+                return True, msg
             
     return False, ""
 
