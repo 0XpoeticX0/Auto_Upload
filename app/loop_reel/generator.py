@@ -119,28 +119,28 @@ def determine_current_slot() -> str:
 ANGLES = [
     {
         "name": "Micro-Moment (ব্যক্তিগত মুহূর্ত)",
-        "desc": "দৈনন্দিন জীবনের সূক্ষ্ম কিন্তু গভীর অনুভূতির বাস্তব চিত্র (যেমন: ভোরের নির্জনতায় একাকীত্ব, কাজে বের হওয়ার উদ্বেগ, পরিবারে ছোটখাটো মনোমালিন্য, সারাদিনের ক্লান্তি)",
-        "example_hook": "সকালে ঘুম থেকে উঠে যখন ভবিষ্যতের অনিশ্চয়তা আর দুশ্চিন্তায় মনটা ভারী হয়ে আসে..."
+        "desc": "দৈনন্দিন জীবনের বাস্তব মুহূর্ত যা আলোচ্য হাদিসের বিষয়ের সাথে সরাসরি সম্পর্কিত (যেমন: কাজে বের হওয়া, ঘরে ঢোকা, কারো ওপর রাগ হওয়া, পরিবারের সাথে বসা)",
+        "example_hook": "আলোচ্য হাদিসের সাথে সম্পর্কিত বাস্তব মুহূর্ত (যেমন: রাগ উঠলে, কাজে বের হওয়ার সময়, ঘরে ঢোকার মুহূর্তে)"
     },
     {
-        "name": "Story Snippet (ঐতিহাসিক গল্প বা পেছনের প্রেক্ষাপট)",
-        "desc": "হাদিসের পেছনের বাস্তব ঘটনা বা সাহাবীর পরিস্থিতি দিয়ে শুরু",
-        "example_hook": "মসজিদে একা বসে কাঁদছিলেন এক সাহাবী; নবীজি (ﷺ) গিয়ে জিজ্ঞেস করলেন—'এখানে অসময়ে কেন?'"
+        "name": "Prophetic Solution (নবীজির শেখানো সমাধান)",
+        "desc": "বাস্তব জীবনের সমস্যার মুখোমুখি হলে নবীজি (ﷺ) কী করতে বলতেন (যেমন: রাগ উঠলে, মন খারাপ হলে বা পরিবারে অশান্তি হলে নবীজির সুন্নাহ সমাধান)",
+        "example_hook": "বাস্তব সমস্যার সমাধানে নবীজির নির্দেশনা (যেমন: 'রাগ উঠলে নবীজি (ﷺ) যা করতে বলতেন...', 'ঘরে অশান্তি দূর করতে এই সুন্নাত মানুন')"
     },
     {
         "name": "Paradox & Contrasting (ভুল বনাম সত্য)",
-        "desc": "মানুষ যেখানে সমাধান খোঁজে বনাম আসল সমাধান",
-        "example_hook": "আমরা শান্তির খোঁজে ঘণ্টার পর ঘণ্টা ফোন স্ক্রোল করি, অথচ মন শান্ত করার রাস্তাটা ছিল ঠিক বিপরীত..."
+        "desc": "মানুষ যেখানে ভুল সমাধান খোঁজে বনাম সুন্নাহর আসল সমাধান",
+        "example_hook": "আলোচ্য বিষয়ের ভুল বনাম সুন্নাহর সমাধান (যেমন: 'আমরা রেগে গেলে চিৎকার করে শক্তি দেখাতে চাই, অথচ নবীজি বলেছেন আসল শক্তি অন্য জায়গায়...')"
     },
     {
         "name": "Deep Observation (প্রত্যক্ষ উপলব্ধি ও মানব স্বভাব)",
-        "desc": "মানুষের সাধারণ স্বভাব ও অমূলক ভয় তুলে ধরা",
-        "example_hook": "আমরা ভবিষ্যতের এমন অনেক কিছু নিয়ে ভয় পাই, যা হয়তো জীবনে কখনোই ঘটবে না।"
+        "desc": "মানুষের সাধারণ মনস্তাত্ত্বিক স্বভাব ও দুর্বলতা তুলে ধরা যা হাদিসটির সাথে সরাসরি মেলে",
+        "example_hook": "মানুষের বাস্তব স্বভাব তুলে ধরা যা আলোচ্য বিষয়ের সাথে সম্পর্কিত"
     },
     {
-        "name": "Reflective Advice (গভীর ও শান্ত পরামর্শ)",
-        "desc": "ধীরস্থির, মমতাময়ী ও চিন্তাশীল আত্মউপলব্ধি",
-        "example_hook": "সব দায়িত্ব নিজের কাঁধে টেনে না নিয়ে কিছু বিষয় আল্লাহর ওপর ছেড়ে দেওয়া শিখতে হয়।"
+        "name": "Reflective Advice (বাস্তবধর্মী সুন্নাহ পরামর্শ)",
+        "desc": "ধীরস্থির, মমতাময়ী ও চিন্তাশীল আত্মউপলব্ধি যা আলোচ্য হাদিসটির বাস্তব সমাধান দেয়",
+        "example_hook": "আলোচ্য সুন্নাহর গভীর ও মমতাময়ী পরামর্শ দিয়ে শুরু"
     }
 ]
 
@@ -265,13 +265,22 @@ ASSIGNED SPECIFIC ISLAMIC DOMAIN FOR THIS REEL:
 SERIES CONTEXT: "আজকের আমল • পর্ব {ep_bn}"
 
 # ==============================================================================
-# RULE #1 SUPREME MANDATE: ZERO TOLERANCE FOR ISLAMIC INACCURACY & HALLUCINATION
+# RULE #0 SUPREME MANDATE: 100% CONTEXTUAL COHERENCE & TRUTHFUL HOOK
 # ==============================================================================
-RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY & ANTI-HALLUCINATION (MANDATORY FIRST RULE):
-1. NEVER MERGE HADITHS: Never combine multiple separate Hadiths into one quotation or under one reference. Keep distinct narrations separate with their own exact citations!
-2. EXACT BOOK & HADITH NUMBER ONLY: Never write vague references like "সহীহ বুখারী ও মুসলিম" or "সহীহ হাদিস সমগ্র". Every single Hadith quote MUST have the exact specific book and Hadith number (e.g., "সহীহ বুখারী: ৬৩২৪", "জামে আত-তিরমিযী: ২৮৯১", "সহীহ মুসলিম: ৭০৭", "সুনানে আবু দাউদ: ১৪০০").
-3. NO FABRICATED "ফলাফল" OR PROMISES: Never invent unverified summary promises like "যে ব্যক্তি এটি করবে সে আল্লাহর আশ্রয়ে থাকবে এবং জান্নাতের সুসংবাদ পাবে". Only state what the Prophet (ﷺ) explicitly stated in the cited Hadith!
-4. AUTHENTIC DUAS ONLY: Arabic Dua must be 100% authentic with accurate Bengali pronunciation and genuine meaning.
+RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY, CONTEXTUAL COHERENCE & ZERO HALLUCINATED CONTEXT:
+1. 100% CONTEXTUAL MATCH: The hook (Line 1, Line 2, Line 3) and title_bn MUST DIRECTLY AND TRUTHFULLY INTRODUCE the EXACT Hadith and topic in caption_points!
+   - ❌ STRICTLY FORBIDDEN: Writing an unrelated story in the hook (e.g. NEVER write 'মসজিদে একা বসে কাঁদছিলেন এক সাহাবী' if the Hadith is about anger management, parents, or honesty!).
+   - If the Hadiths are about Anger (রাগ নিয়ন্ত্রণ), the hook and title MUST be about anger (e.g. 'খুব বেশি রাগ উঠলে নবীজি (ﷺ) কী করতে বলেছিলেন?').
+   - If using a Story Snippet, the story MUST be the authentic prelude/background (Sabab al-Wurud) of that exact Hadith (e.g., 'নবীজির সামনে দুই ব্যক্তি রেগে লাল হয়ে গিয়েছিল...'), NOT a fabricated or borrowed story from an unrelated Hadith!
+2. NEVER MERGE HADITHS: Never combine multiple separate Hadiths into one quotation or under one reference. Keep distinct narrations separate with their own exact citations!
+3. EXACT BOOK & HADITH NUMBER ONLY: Never write vague references like "সহীহ বুখারী ও মুসলিম" or "সহীহ হাদিস সমগ্র". Every single Hadith quote MUST have the exact specific book and Hadith number (e.g., "সহীহ বুখারী: ৬৩২৪", "জামে আত-তিরমিযী: ২৮৯১", "সহীহ মুসলিম: ৭০৭", "সুনানে আবু দাউদ: ১৪০০").
+4. NO FABRICATED "ফলাফল" OR PROMISES: Never invent unverified summary promises like "যে ব্যক্তি এটি করবে সে আল্লাহর আশ্রয়ে থাকবে এবং জান্নাতের সুসংবাদ পাবে". Only state what the Prophet (ﷺ) explicitly stated in the cited Hadith!
+5. AUTHENTIC DUAS ONLY: Arabic Dua must be 100% authentic with accurate Bengali pronunciation and genuine meaning.
+6. PURE BENGALI ONLY: Strictly ZERO English loan words in Bengali text (❌ BANNED: 'neutralize', 'boost', 'negative', 'mindset', etc. ✅ USE: 'দূর করার উপায়', 'দমন করার উপায়').
+7. ZERO ABANDONED STORIES & COMPLETE NARRATIVE CLOSURE:
+   - ❌ STRICTLY FORBIDDEN: Starting a dramatic narrative story in the hook that is abandoned in the caption! (e.g. NEVER write 'এক সাহাবী বসে কাঁদছিলেন; নবীজি গিয়ে বললেন—' and then fail to explain why he was crying or what happened!).
+   - The hook must be a COMPLETE and DIRECT introduction to the deeds: e.g. 'খুব বেশি রাগ উঠলে নবীজি (ﷺ) এই ৩টি কাজ করতে বলেছেন:'
+   - Every question or premise raised in the hook MUST be 100% answered and fulfilled in the caption points!
 
 # ==============================================================================
 # RULE #2 SUPREME MANDATE: SIMPLE, CONVERSATIONAL BENGALI (সহজ মুখের ভাষা)
@@ -553,18 +562,41 @@ def format_loop_caption(data: dict) -> str:
     dhikr = data.get("dhikr_word", "সুবহানাল্লাহ")
     pts = data.get("caption_points", [])
 
+    def _sanitize_bengali_text(t: str) -> str:
+        if not t:
+            return ""
+        replacements = [
+            (r'\bneutralize\s*করার\b', 'দূর করার'),
+            (r'\bneutralize\b', 'দূর'),
+            (r'\bboost\b', 'বৃদ্ধি'),
+            (r'\bmindset\b', 'মনোভাব'),
+            (r'\bnegative\b', 'নেতিবাচক'),
+            (r'\bpositive\b', 'ইতিবাচক'),
+            (r'\btrigger\b', 'উত্তেজনা'),
+        ]
+        for pat, rep in replacements:
+            t = re.sub(pat, rep, t, flags=re.IGNORECASE)
+        return t
+
     # SERIES BRANDING & HOOK HEADER
     caption = f"✨ {series_title} ✨\n"
-    hook = data.get("line_1", title_bn).strip()
-    if data.get("line_2"):
-        hook = hook + " " + data.get("line_2", "").strip()
+    hook_l1 = data.get("line_1", "").strip()
+    hook_l2 = data.get("line_2", "").strip()
+    if hook_l1 and hook_l2:
+        hook = f"{hook_l1} {hook_l2}".strip()
+    elif hook_l1:
+        hook = hook_l1
+    else:
+        hook = title_bn
+    hook = re.sub(r'[\s—–:-]+$', '', hook)
+    hook = _sanitize_bengali_text(hook)
     caption += hook + " 🤲\n\n"
 
     bn_nums = ["১", "২", "৩", "৪", "৫"]
     for idx, pt in enumerate(pts):
         num_str = pt.get("number") or (bn_nums[idx] if idx < len(bn_nums) else str(idx + 1))
-        title = pt.get("title", "").strip().replace("ফলাফল", "আমলের শিক্ষা ও ফযিলত")
-        hadith = pt.get("hadith", "").strip()
+        title = _sanitize_bengali_text(pt.get("title", "").strip().replace("ফলাফল", "আমলের শিক্ষা ও ফযিলত"))
+        hadith = _sanitize_bengali_text(pt.get("hadith", "").strip())
         arabic = pt.get("arabic", "").strip()
         pron = pt.get("pronunciation", "").strip()
         meaning = pt.get("meaning", "").strip()
