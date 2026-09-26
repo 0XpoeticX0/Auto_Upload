@@ -69,11 +69,12 @@ def format_carousel_caption(post_data: dict) -> str:
     cover_lines = post_data.get("cover", {}).get("title_lines", [])
     hook = " ".join(cover_lines).strip() if cover_lines else post_data.get("title", "বরকতময় সুন্নাহ আমল")
     
-    caption = f"{hook} 🤲\n\n"
+    caption = f"{hook} 🌿\n\n"
     
     slides = post_data.get("slides", [])
     for idx, s in enumerate(slides):
-        title = s.get("title", "")
+        title = s.get("title", "").strip()
+        header = s.get("header", "").strip()
         main_t = s.get("main_text", "").strip("‘ ’'\"")
         arabic = s.get("arabic", "").strip()
         pron = s.get("pronunciation", "").strip()
@@ -83,29 +84,33 @@ def format_carousel_caption(post_data: dict) -> str:
         
         if title:
             caption += f"✨ {title}:\n"
+        if header:
+            caption += f"{header}\n"
         if main_t:
             caption += f'"{main_t}"\n'
         if arabic:
-            caption += f"{arabic}\n"
-        if pron:
-            caption += f'উচ্চারণ: "{pron}"\n\n'
-        if meaning:
-            caption += f'অর্থ: "{meaning}"\n\n'
+            caption += f"{arabic}\n\n"
+            if pron:
+                caption += f'🗣️ উচ্চারণ: "{pron}"\n\n'
+            if meaning:
+                caption += f'🌿 অর্থ: "{meaning}"\n\n'
+        if ref:
+            caption += f"📖 সহীহ তথ্যসূত্র: [{ref}]\n"
         if sol:
             caption += f"{sol}\n"
-        if ref:
-            caption += f"[{ref}]\n"
         caption += "\n"
         
     last_slide = slides[-1] if slides else {}
-    dhikr = last_slide.get("dhikr_word", "আমিন")
-    
+    dhikr = last_slide.get("dhikr_word", "").strip()
+    if dhikr:
+        caption += f"💬 আজকের আমল:\nকমেন্টে একবার \"{dhikr}\" লিখে আপনার উপস্থিতি জানান এবং নেকির অংশীদার হোন! 🤍\n\n"
+        
     caption += (
-        f"📌 আমলটি মনে রাখতে পোস্টটি 🔖 Save করে রাখুন।\n"
-        "🤍 সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন।\n"
-        "রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩]\n\n"
+        "📌 আমলটি মনে রাখতে পোস্টটি 🔖 Save করে রাখুন।\n"
+        "🤍 প্রিয়জনকে Tag বা Share করে জানিয়ে দিন — "
+        "রাসূলুল্লাহ (ﷺ) বলেছেন: 'যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।' [সহীহ মুসলিম: ১৮৯৩] 🌿\n\n"
         "━━━━━━━━━━━━━━━━━━━━\n"
-        "👉 @dailydos_islam\n\n"
+        "👉 প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য ফলো করুন: @dailydos_islam\n\n"
     )
     
     core_tags = [

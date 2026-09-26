@@ -40,6 +40,7 @@ def run_facebook_post_pipeline(lang: str = None, no_upload: bool = False):
         return False
         
     post_title = post_data.get("title", "Islamic Reflection Carousel")
+    category = post_data.get("category", post_data.get("format_type", "general"))
     first_slide = post_data.get("slides", [{}])[0] if post_data.get("slides") else {}
     quote = first_slide.get("main_text", first_slide.get("quote", ""))
     reference = first_slide.get("reference", "")
