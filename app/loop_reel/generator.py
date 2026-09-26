@@ -123,9 +123,9 @@ ANGLES = [
         "example_hook": "আলোচ্য হাদিসের সাথে সম্পর্কিত বাস্তব মুহূর্ত (যেমন: রাগ উঠলে, কাজে বের হওয়ার সময়, ঘরে ঢোকার মুহূর্তে)"
     },
     {
-        "name": "Prophetic Solution (নবীজির শেখানো সমাধান)",
-        "desc": "বাস্তব জীবনের সমস্যার মুখোমুখি হলে নবীজি (ﷺ) কী করতে বলতেন (যেমন: রাগ উঠলে, মন খারাপ হলে বা পরিবারে অশান্তি হলে নবীজির সুন্নাহ সমাধান)",
-        "example_hook": "বাস্তব সমস্যার সমাধানে নবীজির নির্দেশনা (যেমন: 'রাগ উঠলে নবীজি (ﷺ) যা করতে বলতেন...', 'ঘরে অশান্তি দূর করতে এই সুন্নাত মানুন')"
+        "name": "Story Snippet (গল্পের ছোট্ট অংশ)",
+        "desc": "হাদিসের বর্ণনায় থাকা বাস্তব ঘটনা বা কৌতূহলোদ্দীপক মুহূর্ত দিয়ে আকর্ষণীয় সূচনা",
+        "example_hook": "মসজিদে একা বসে কাঁদছিলেন এক সাহাবী; নবীজি (ﷺ) কাছে গিয়ে জিজ্ঞেস করলেন—"
     },
     {
         "name": "Paradox & Contrasting (ভুল বনাম সত্য)",
@@ -277,10 +277,13 @@ RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY, CONTEXTUAL COHERENCE & ZERO HALLUCINATED 
 4. NO FABRICATED "ফলাফল" OR PROMISES: Never invent unverified summary promises like "যে ব্যক্তি এটি করবে সে আল্লাহর আশ্রয়ে থাকবে এবং জান্নাতের সুসংবাদ পাবে". Only state what the Prophet (ﷺ) explicitly stated in the cited Hadith!
 5. AUTHENTIC DUAS ONLY: Arabic Dua must be 100% authentic with accurate Bengali pronunciation and genuine meaning.
 6. PURE BENGALI ONLY: Strictly ZERO English loan words in Bengali text (❌ BANNED: 'neutralize', 'boost', 'negative', 'mindset', etc. ✅ USE: 'দূর করার উপায়', 'দমন করার উপায়').
-7. ZERO ABANDONED STORIES & COMPLETE NARRATIVE CLOSURE:
-   - ❌ STRICTLY FORBIDDEN: Starting a dramatic narrative story in the hook that is abandoned in the caption! (e.g. NEVER write 'এক সাহাবী বসে কাঁদছিলেন; নবীজি গিয়ে বললেন—' and then fail to explain why he was crying or what happened!).
-   - The hook must be a COMPLETE and DIRECT introduction to the deeds: e.g. 'খুব বেশি রাগ উঠলে নবীজি (ﷺ) এই ৩টি কাজ করতে বলেছেন:'
-   - Every question or premise raised in the hook MUST be 100% answered and fulfilled in the caption points!
+7. COMPLETE NARRATIVE CLOSURE IN CAPTION:
+   - Dramatic Story Snippet hooks (e.g. 'মসজিদে একা বসে কাঁদছিলেন এক সাহাবী; নবীজি (ﷺ) কাছে গিয়ে জিজ্ঞেস করলেন—') are EXCELLENT for viewer engagement and retention.
+   - When using a Story Snippet hook:
+     • Point 1 of caption_points MUST immediately resolve the opening scene (explain why the person was crying/in distress, what the Prophet asked, and the companion's reply).
+     • Point 2 provides the Prophet's instruction, Sunnah act, or exact Dua with full Arabic, pronunciation, meaning, and Sahih citation.
+     • Point 3 provides the resolution and result (e.g., how the companion practiced it and their worries/debt were relieved).
+   - The caption MUST provide complete satisfaction and 100% closure. The viewer who opened the caption to see what happened next MUST get the complete, authentic story without any gaps!
 
 # ==============================================================================
 # RULE #2 SUPREME MANDATE: SIMPLE, CONVERSATIONAL BENGALI (সহজ মুখের ভাষা)
@@ -588,7 +591,7 @@ def format_loop_caption(data: dict) -> str:
         hook = hook_l1
     else:
         hook = title_bn
-    hook = re.sub(r'[\s—–:-]+$', '', hook)
+    hook = hook.rstrip(' :')
     hook = _sanitize_bengali_text(hook)
     caption += hook + " 🤲\n\n"
 
