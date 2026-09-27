@@ -1,10 +1,6 @@
 name: 🌙 Daily Evening Hadith Loop Reel Pipeline (Bangla)
 
 on:
-  schedule:
-    # 1 Daily Evening Hadith Loop Reel (Shifted 2h earlier to 05:30 PM BST / 11:30 UTC):
-    # Evening Slot: 05:30 PM BST (11:30 UTC) -> Compensates for GitHub queue delays so video is live before 8 PM
-    - cron: '30 11 * * *'
   workflow_dispatch:
     inputs:
       slot:
