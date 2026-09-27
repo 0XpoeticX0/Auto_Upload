@@ -212,6 +212,106 @@ def check_hook_monotony(content: dict, recent_history: list, last_hook_text: str
 
     return True, "OK"
 
+def normalize_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "") -> tuple[str, str]:
+    """
+    Enforces Strict 2-Line Subtitles (GEMINI.md Mandate):
+    - Completely eliminates clause duplication, repetition, and run-on sentences.
+    - Guarantees exactly 1 or 2 lines maximum (never 3, 4, 5, or 6 lines).
+    - Balances Line 1 and Line 2 lengths (4 to 6 words each, <=12 words total).
+    Returns (clean_line_1, clean_line_2).
+    """
+    def _clean(t: str) -> str:
+        return re.sub(r'[\s\.\—\–\:\,\-]+$', '', t or '').strip(' ,;:-—')
+        
+    l1 = _clean(l1)
+    l2 = _clean(l2)
+    l3 = _clean(l3)
+    
+    if not l1:
+        return "", ""
+        
+    # Detect if l2 is contained in l1 (hallucinated full prompt repetition in line_1)
+    if l2 and l2 in l1:
+        prefix = _clean(l1.split(l2)[0])
+        if prefix:
+            l1 = prefix
+        else:
+            l2 = ""
+        l3 = ""
+    elif l3 and l3 in l1:
+        prefix = _clean(l1.split(l3)[0])
+        if prefix:
+            l1 = prefix
+        l3 = ""
+        
+    if l3 and l2 and l3 in l2:
+        l3 = ""
+        
+    # Merge any remaining distinct fragments into one sentence
+    parts = [p for p in [l1, l2, l3] if p]
+    full_sentence = " ".join(parts)
+    
+    # Remove consecutive duplicate word runs
+    words = full_sentence.split()
+    cleaned_words = []
+    for w in words:
+        if not cleaned_words or w != cleaned_words[-1]:
+            cleaned_words.append(w)
+            
+    # If total words <= 6, single line is best
+    if len(cleaned_words) <= 6:
+        return " ".join(cleaned_words), ""
+        
+    # If l1 and l2 were already clean, balanced (each 3-7 words), and non-overlapping
+    if l1 and l2 and not l3 and 3 <= len(l1.split()) <= 7 and 3 <= len(l2.split()) <= 7 and l1 != l2:
+        return l1, l2
+        
+    # Rebalance into exactly 2 lines around the middle
+    mid = len(cleaned_words) // 2
+    best_split = mid
+    for idx in range(max(1, mid - 2), min(len(cleaned_words) - 1, mid + 3)):
+        prev_w = cleaned_words[idx - 1]
+        curr_w = cleaned_words[idx]
+        if prev_w.endswith(',') or prev_w.endswith(';') or curr_w in ['আর', 'যে', 'কিন্তু', 'এবং', 'তবে', 'অথচ', 'নবীজি', 'নবীজির']:
+            best_split = idx
+            break
+            
+    out_1 = _clean(" ".join(cleaned_words[:best_split]))
+    out_2 = _clean(" ".join(cleaned_words[best_split:]))
+    return out_1, out_2
+
+def check_and_enforce_hook_typography(content: dict) -> tuple[bool, str, dict]:
+    """
+    Quality gate enforcing Video Production & Typography Mandates (GEMINI.md Rule 1):
+    - Strict 2-Line Subtitles (never 3+ lines).
+    - 0 clause repetition or substring containment.
+    - Word count <= 14 words total.
+    """
+    l1 = (content.get("line_1") or "").strip()
+    l2 = (content.get("line_2") or "").strip()
+    l3 = (content.get("line_3") or "").strip()
+
+    if not l1:
+        return False, "Hook line_1 is missing or empty.", content
+
+    # Run auto-balancing & deduplication
+    clean_l1, clean_l2 = normalize_and_balance_hook_lines(l1, l2, l3)
+    
+    total_words = len(clean_l1.split()) + len(clean_l2.split())
+    if total_words > 14:
+        return False, f"Hook text is too long ({total_words} words). Max 12 words across 2 lines allowed to prevent text clutter!", content
+        
+    # Check for excessive duplication
+    if clean_l1 and clean_l2 and clean_l1 == clean_l2:
+        return False, "Line 1 and Line 2 are identical duplicates!", content
+
+    content["line_1"] = clean_l1
+    content["line_2"] = clean_l2
+    if "line_3" in content:
+        content["line_3"] = ""
+
+    return True, "OK", content
+
 def build_loop_reel_system_prompt(
     ep_bn: str,
     target_angle: dict,
@@ -283,7 +383,10 @@ RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY, CONTEXTUAL COHERENCE & ZERO HALLUCINATED 
      • Point 1 of caption_points MUST immediately resolve the opening scene (explain why the person was crying/in distress, what the Prophet asked, and the companion's reply).
      • Point 2 provides the Prophet's instruction, Sunnah act, or exact Dua with full Arabic, pronunciation, meaning, and Sahih citation.
      • Point 3 provides the resolution and result (e.g., how the companion practiced it and their worries/debt were relieved).
-   - The caption MUST provide complete satisfaction and 100% closure. The viewer who opened the caption to see what happened next MUST get the complete, authentic story without any gaps!
+8. STRICT 2-LINE SUBTITLE HOOK MANDATE (ZERO 3RD LINE, ZERO DUPLICATION):
+   - The on-screen hook MUST consist of exactly TWO lines: 'line_1' (4-6 words) and 'line_2' (4-6 words). Total 8 to 11 words maximum.
+   - ❌ ABSOLUTELY FORBIDDEN: Writing the whole sentence in 'line_1' and then repeating words/clauses in 'line_2'!
+   - ❌ ABSOLUTELY FORBIDDEN: Generating 'line_3' or any 3rd, 4th, or 5th lines! Never block the video canvas with a wall of text.
 
 # ==============================================================================
 # RULE #2 SUPREME MANDATE: SIMPLE, CONVERSATIONAL BENGALI (সহজ মুখের ভাষা)
@@ -324,30 +427,26 @@ Priority 4 — NUMBERS & QUANTITIES (specificity): ১০০ গুণ, ১ ম�
 Always include at least ONE Priority 1 or Priority 2 word. Example:
   highlight_words: ["জান্নাতের ৮টি দরজা", "আল্লাহ", "১টি আমল করলে", "প্রতিদিন সুরক্ষা"]
 
-PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER (SIMPLE BENGALI):
+PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER (STRICT 2-LINE SUBTITLES, SIMPLE BENGALI):
 • Model A (Situational Emotional Hook):
   line_1: "মন খারাপ লাগলে এই ১টি কাজ করুন,"
-  line_2: "নবীজি (ﷺ) নিজে এটা করতেন,"
-  line_3: "আল্লাহ মনে শান্তি দিয়ে দেবেন..."
-  highlight_words: ["মন খারাপ লাগলে", "নবীজি (ﷺ)", "১টি কাজ", "শান্তি দিয়ে দেবেন"]
+  line_2: "আল্লাহ আপনার মনে শান্তি দিয়ে দেবেন 🤲"
+  highlight_words: ["মন খারাপ লাগলে", "১টি কাজ", "শান্তি দিয়ে দেবেন"]
 
 • Model B (Curiosity Question Hook):
-  line_1: "নামাজে দাঁড়ালে কি মন অন্য দিকে চলে যায়?"
-  line_2: "নবীজি (ﷺ) এর শেখানো এই ১টি কাজ করুন"
-  line_3: "শয়তান আর বিরক্ত করতে পারবে না..."
-  highlight_words: ["নামাজে দাঁড়ালে কি", "নবীজি (ﷺ)", "১টি কাজ", "শয়তান"]
+  line_1: "নামাজে দাঁড়ালে কি মন অন্য দিকে চলে যায়?"
+  line_2: "নবীজির (ﷺ) শেখানো এই ১টি আমল করুন 🤲"
+  highlight_words: ["নামাজে দাঁড়ালে কি", "নবীজির (ﷺ)", "১টি আমল"]
 
 • Model C (Prophetic Habit Hook):
-  line_1: "টাকার অভাবে কষ্ট পাচ্ছেন?"
-  line_2: "নবীজি (ﷺ) এই ১টি দোয়া পড়তে বলেছেন,"
-  line_3: "আল্লাহ রিজিকের রাস্তা খুলে দেবেন..."
-  highlight_words: ["টাকার অভাবে", "নবীজি (ﷺ)", "১টি দোয়া", "রিজিকের রাস্তা"]
+  line_1: "টাকার অভাবে খুব বেশি কষ্ট পাচ্ছেন?"
+  line_2: "নবীজির (ﷺ) শেখানো এই ১টি দোয়া পড়ুন 🤲"
+  highlight_words: ["টাকার অভাবে", "নবীজির (ﷺ)", "১টি দোয়া"]
 
 • Model D (Family & Home Hook):
-  line_1: "ঘরে ঢোকার সময় এই ১টি সুন্নাত মানুন"
-  line_2: "আল্লাহ ঘর থেকে অশান্তি দূর করে দেবেন,"
-  line_3: "নবীজি (ﷺ) সাহাবীদের শিখিয়েছিলেন..."
-  highlight_words: ["ঘরে ঢোকার সময়", "আল্লাহ", "অশান্তি দূর", "নবীজি (ﷺ)"]
+  line_1: "ঘরে ঢোকার সময় এই ১টি সুন্নাত মানুন,"
+  line_2: "শয়তান আপনার ঘরে ঢুকতে পারবে না 🤲"
+  highlight_words: ["ঘরে ঢোকার সময়", "১টি সুন্নাত", "শয়তান"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Text: At least ONE caption point MUST contain full Arabic text with Tashkeel (either a relevant Dua OR the authentic Arabic wording of the Prophet's statement/Hadith), accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
@@ -363,9 +462,8 @@ Output ONLY valid JSON:
     "title_bn": "ফজরের পর এই ৩টি আমল করুন এবং দেখুন কীভাবে আল্লাহ আপনার পুরো দিনকে বরকতে ভরিয়ে দেন",
     "title_en": "Do these 3 things after Fajr and watch Allah fill your day with barakah #Shorts",
     "line_1": "ফজরের পর এই ৩টি আমল করুন",
-    "line_2": "এবং দেখুন কীভাবে আল্লাহ আপনার",
-    "line_3": "পুরো দিনকে বরকতে ভরিয়ে দেন।",
-    "highlight_words": ["৩টি আমল", "আল্লাহ", "বরকতে ভরিয়ে দেন"],
+    "line_2": "পুরো দিন বরকতে ভরে যাবে 🤲",
+    "highlight_words": ["৩টি আমল", "আল্লাহ", "বরকতে ভরে যাবে"],
     "caption_points": [
         {{
             "number": "১",
@@ -531,7 +629,14 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
                     banned_hadiths.add(ref)
             continue
 
-        content = validated_content
+        # MANDATE RULE 1: STRICT 2-LINE HOOK SUBTITLES & TYPOGRAPHY QUALITY GATE
+        is_valid_typo, typo_reason, typo_content = check_and_enforce_hook_typography(content)
+        if not is_valid_typo:
+            logger.warning(f"Attempt {attempt+1}: Hook typography check failed: {typo_reason}. Retrying...")
+            last_fail_reason = f"Typography Mandate Failed: {typo_reason}. Line 1 (4-6 words) and Line 2 (4-6 words) must be 2 distinct, short lines with ZERO duplication!"
+            continue
+        content = typo_content
+
         content["slot_key"] = slot_key
         content["episode_number"] = ep_int
         content["episode_bn"] = ep_bn
@@ -707,9 +812,8 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     caption_cta_text = _rnd.choice(_CTA_HOOKS)
     
     hw_list = content.get("highlight_words", ["৩টি আয়াত", "আল্লাহ", "রক্ষা করবেন"])
-    full_hook_text = f"{l1}\\N{l2}\\N{l3}" if l2 else l1
-    if l3 and l3 not in full_hook_text:
-        full_hook_text += f"\\N{l3}"
+    clean_l1, clean_l2 = normalize_and_balance_hook_lines(l1, l2, l3)
+    full_hook_text = f"{clean_l1}\\N{clean_l2}" if clean_l2 else clean_l1
     
     # Apply Vibrant Golden/Yellow highlighting (&H002BD5FF&) to keywords
     GOLD_COLOR = "&H002BD5FF&"
@@ -736,14 +840,14 @@ ScaledBorderAndShadow: yes
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: SeriesBadge,Noto Sans Bengali,38,&H002BD5FF&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
-Style: MainHook,Noto Sans Bengali,62,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.5,3.0,5,70,70,0,1
+Style: MainHook,Noto Sans Bengali,56,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.2,2.5,5,70,70,0,1
 Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,420,1
 Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,60,60,350,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c{GOLD_COLOR}}}{series_badge}
-Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs62\\b1\\c{WHITE_COLOR}}}{full_hook_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs56\\b1\\c{WHITE_COLOR}}}{full_hook_text}
 Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}{caption_cta_text}{{\\c{WHITE_COLOR}}}
 Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ☞ @dailydos_islam
 """
