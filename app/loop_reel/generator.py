@@ -212,105 +212,164 @@ def check_hook_monotony(content: dict, recent_history: list, last_hook_text: str
 
     return True, "OK"
 
-def normalize_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "") -> tuple[str, str]:
+def revise_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "", l4: str = "") -> list[str]:
     """
-    Enforces Strict 2-Line Subtitles (GEMINI.md Mandate):
-    - Completely eliminates clause duplication, repetition, and run-on sentences.
-    - Guarantees exactly 1 or 2 lines maximum (never 3, 4, 5, or 6 lines).
-    - Balances Line 1 and Line 2 lengths (4 to 6 words each, <=12 words total).
-    Returns (clean_line_1, clean_line_2).
+    Intelligent Subtitle Typography Auto-Revision Engine:
+    - Eliminates clause duplication and substring containment (e.g. LLM putting full sentence in line_1 and repeating in line_2/3).
+    - Removes identical duplicate lines.
+    - If a single run-on line is provided, auto-splits it into 2 to 3 natural, balanced clauses.
+    - Preserves line_1, line_2, line_3 (and optional line_4, up to 4 lines max) without dropping line 3.
+    - Never throws or blocks; guarantees returning a list of clean, non-repeating lines.
     """
     def _clean(t: str) -> str:
-        return re.sub(r'[\s\.\—\–\:\,\-]+$', '', t or '').strip(' ,;:-—')
-        
+        t = (t or '').strip(' \t\n\r"\'“”‘’')
+        t = re.sub(r'[\s\.\—\–\:\,\-]+$', '', t)
+        return t.strip(' ,;:-—')
+
     l1 = _clean(l1)
     l2 = _clean(l2)
     l3 = _clean(l3)
-    
-    if not l1:
-        return "", ""
-        
-    # Detect if l2 is contained in l1 (hallucinated full prompt repetition in line_1)
+    l4 = _clean(l4)
+
+    if not l1 and not l2 and not l3 and not l4:
+        return []
+
+    # 1. Resolve substring containment / clause repetition (e.g., Episode 47 where l1 contained full l2 and l3)
     if l2 and l2 in l1:
         prefix = _clean(l1.split(l2)[0])
         if prefix:
             l1 = prefix
         else:
-            l2 = ""
-        l3 = ""
-    elif l3 and l3 in l1:
+            remainder = _clean(l1[len(l2):])
+            if remainder:
+                l1 = l2
+                l2 = remainder
+            else:
+                l2 = ""
+
+    if l3 and l3 in l1:
         prefix = _clean(l1.split(l3)[0])
         if prefix:
             l1 = prefix
-        l3 = ""
-        
-    if l3 and l2 and l3 in l2:
-        l3 = ""
-        
-    # Merge any remaining distinct fragments into one sentence
-    parts = [p for p in [l1, l2, l3] if p]
-    full_sentence = " ".join(parts)
-    
-    # Remove consecutive duplicate word runs
-    words = full_sentence.split()
-    cleaned_words = []
-    for w in words:
-        if not cleaned_words or w != cleaned_words[-1]:
-            cleaned_words.append(w)
-            
-    # If total words <= 6, single line is best
-    if len(cleaned_words) <= 6:
-        return " ".join(cleaned_words), ""
-        
-    # If l1 and l2 were already clean, balanced (each 3-7 words), and non-overlapping
-    if l1 and l2 and not l3 and 3 <= len(l1.split()) <= 7 and 3 <= len(l2.split()) <= 7 and l1 != l2:
-        return l1, l2
-        
-    # Rebalance into exactly 2 lines around the middle
-    mid = len(cleaned_words) // 2
-    best_split = mid
-    for idx in range(max(1, mid - 2), min(len(cleaned_words) - 1, mid + 3)):
-        prev_w = cleaned_words[idx - 1]
-        curr_w = cleaned_words[idx]
-        if prev_w.endswith(',') or prev_w.endswith(';') or curr_w in ['আর', 'যে', 'কিন্তু', 'এবং', 'তবে', 'অথচ', 'নবীজি', 'নবীজির']:
-            best_split = idx
-            break
-            
-    out_1 = _clean(" ".join(cleaned_words[:best_split]))
-    out_2 = _clean(" ".join(cleaned_words[best_split:]))
-    return out_1, out_2
 
-def check_and_enforce_hook_typography(content: dict) -> tuple[bool, str, dict]:
+    if l3 and l2 and l3 in l2:
+        prefix = _clean(l2.split(l3)[0])
+        if prefix:
+            l2 = prefix
+        else:
+            remainder = _clean(l2[len(l3):])
+            if remainder:
+                l2 = l3
+                l3 = remainder
+            else:
+                l3 = ""
+
+    if l4 and l3 and l4 in l3:
+        prefix = _clean(l3.split(l4)[0])
+        if prefix:
+            l3 = prefix
+
+    # 2. Gather non-empty lines and deduplicate identical or near-identical lines
+    raw_lines = [l for l in [l1, l2, l3, l4] if l]
+    deduped_lines = []
+    for line in raw_lines:
+        line_clean = _clean(line)
+        if not line_clean:
+            continue
+        is_dup = False
+        for ex in deduped_lines:
+            if line_clean == ex or (len(line_clean) > 8 and line_clean in ex):
+                is_dup = True
+                break
+        if not is_dup:
+            deduped_lines.append(line_clean)
+
+    # 3. If only one single long line exists (> 7 words), auto-split into balanced clauses (2 or 3 lines)
+    if len(deduped_lines) == 1:
+        words = deduped_lines[0].split()
+        if len(words) >= 8:
+            if len(words) <= 12:
+                mid = len(words) // 2
+                best_split = mid
+                for idx in range(max(1, mid - 2), min(len(words) - 1, mid + 3)):
+                    prev_w = words[idx - 1]
+                    curr_w = words[idx]
+                    if prev_w.endswith(',') or prev_w.endswith(';') or curr_w in ['আর', 'যে', 'কিন্তু', 'এবং', 'তবে', 'অথচ', 'নবীজি', 'নবীজির']:
+                        best_split = idx
+                        break
+                p1 = _clean(" ".join(words[:best_split]))
+                p2 = _clean(" ".join(words[best_split:]))
+                deduped_lines = [p for p in [p1, p2] if p]
+            else:
+                chunk = len(words) // 3
+                s1 = max(1, chunk)
+                s2 = max(s1 + 1, chunk * 2)
+                for idx in range(max(1, s1 - 1), min(len(words) - 2, s1 + 2)):
+                    if words[idx - 1].endswith(',') or words[idx] in ['আর', 'যে', 'কিন্তু', 'এবং', 'তবে', 'অথচ', 'নবীজি', 'নবীজির']:
+                        s1 = idx
+                        break
+                for idx in range(max(s1 + 1, s2 - 1), min(len(words) - 1, s2 + 2)):
+                    if words[idx - 1].endswith(',') or words[idx] in ['আর', 'যে', 'কিন্তু', 'এবং', 'তবে', 'অথচ', 'নবীজি', 'নবীজির']:
+                        s2 = idx
+                        break
+                p1 = _clean(" ".join(words[:s1]))
+                p2 = _clean(" ".join(words[s1:s2]))
+                p3 = _clean(" ".join(words[s2:]))
+                deduped_lines = [p for p in [p1, p2, p3] if p]
+
+    # 4. Cap at maximum 4 lines
+    if len(deduped_lines) > 4:
+        deduped_lines = deduped_lines[:3] + [" ".join(deduped_lines[3:])]
+
+    final_lines = [_clean(line) for line in deduped_lines if _clean(line)]
+    return final_lines
+
+def normalize_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "", l4: str = "") -> list[str]:
+    """Compatibility wrapper returning list of clean, non-repeating lines."""
+    return revise_and_balance_hook_lines(l1, l2, l3, l4)
+
+def revise_and_enforce_hook_typography(content: dict) -> tuple[bool, str, dict]:
     """
-    Quality gate enforcing Video Production & Typography Mandates (GEMINI.md Rule 1):
-    - Strict 2-Line Subtitles (never 3+ lines).
-    - 0 clause repetition or substring containment.
-    - Word count <= 14 words total.
+    Typography Quality Gate & Auto-Revision Engine:
+    - Auto-revises hook mistakes (removes duplicate clauses, repairs run-ons, balances lines).
+    - Preserves line_1, line_2, line_3 (and optional line_4, up to 4 lines max) without dropping line 3.
+    - Never blocks the pipeline: automatically revises and repairs in-place.
     """
     l1 = (content.get("line_1") or "").strip()
     l2 = (content.get("line_2") or "").strip()
     l3 = (content.get("line_3") or "").strip()
+    l4 = (content.get("line_4") or "").strip()
 
+    # If line_1 is missing, derive it from title_bn so we never block
     if not l1:
-        return False, "Hook line_1 is missing or empty.", content
+        title = (content.get("title_bn") or "").strip()
+        if title:
+            logger.info("Hook line_1 was empty; auto-revising from title_bn.")
+            parts = [p.strip() for p in re.split(r'[,;।\—\-]', title) if p.strip()]
+            l1 = parts[0] if len(parts) > 0 else title[:40]
+            l2 = parts[1] if len(parts) > 1 else ""
+            l3 = parts[2] if len(parts) > 2 else ""
+        else:
+            l1 = "নবীজির (ﷺ) এই ১টি আমল শিখুন"
+            l2 = "জীবন বরকতে ভরে যাবে 🤲"
 
-    # Run auto-balancing & deduplication
-    clean_l1, clean_l2 = normalize_and_balance_hook_lines(l1, l2, l3)
-    
-    total_words = len(clean_l1.split()) + len(clean_l2.split())
-    if total_words > 14:
-        return False, f"Hook text is too long ({total_words} words). Max 12 words across 2 lines allowed to prevent text clutter!", content
-        
-    # Check for excessive duplication
-    if clean_l1 and clean_l2 and clean_l1 == clean_l2:
-        return False, "Line 1 and Line 2 are identical duplicates!", content
+    clean_lines = revise_and_balance_hook_lines(l1, l2, l3, l4)
+    if not clean_lines:
+        clean_lines = [l1]
 
-    content["line_1"] = clean_l1
-    content["line_2"] = clean_l2
-    if "line_3" in content:
-        content["line_3"] = ""
+    content["line_1"] = clean_lines[0]
+    content["line_2"] = clean_lines[1] if len(clean_lines) > 1 else ""
+    content["line_3"] = clean_lines[2] if len(clean_lines) > 2 else ""
+    if len(clean_lines) > 3:
+        content["line_4"] = clean_lines[3]
+    elif "line_4" in content:
+        del content["line_4"]
 
+    logger.info(f"Hook typography auto-revised successfully ({len(clean_lines)} lines): {clean_lines}")
     return True, "OK", content
+
+# Backwards compatibility alias
+check_and_enforce_hook_typography = revise_and_enforce_hook_typography
 
 def build_loop_reel_system_prompt(
     ep_bn: str,
@@ -383,10 +442,11 @@ RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY, CONTEXTUAL COHERENCE & ZERO HALLUCINATED 
      • Point 1 of caption_points MUST immediately resolve the opening scene (explain why the person was crying/in distress, what the Prophet asked, and the companion's reply).
      • Point 2 provides the Prophet's instruction, Sunnah act, or exact Dua with full Arabic, pronunciation, meaning, and Sahih citation.
      • Point 3 provides the resolution and result (e.g., how the companion practiced it and their worries/debt were relieved).
-8. STRICT 2-LINE SUBTITLE HOOK MANDATE (ZERO 3RD LINE, ZERO DUPLICATION):
-   - The on-screen hook MUST consist of exactly TWO lines: 'line_1' (4-6 words) and 'line_2' (4-6 words). Total 8 to 11 words maximum.
-   - ❌ ABSOLUTELY FORBIDDEN: Writing the whole sentence in 'line_1' and then repeating words/clauses in 'line_2'!
-   - ❌ ABSOLUTELY FORBIDDEN: Generating 'line_3' or any 3rd, 4th, or 5th lines! Never block the video canvas with a wall of text.
+8. SUBTITLE HOOK MANDATE (MAXIMUM 3 TO 4 SHORT LINES, ZERO CLAUSE DUPLICATION):
+   - The on-screen hook should consist of 2, 3, or maximum 4 short, punchy lines: 'line_1', 'line_2', 'line_3' (and optional 'line_4').
+   - Keep each line short and punchy: 3 to 5 words per line. Total words across all lines combined should be between 8 and 18 words.
+   - ❌ ABSOLUTELY FORBIDDEN: Writing the whole sentence in 'line_1' and then repeating the same clauses in 'line_2' or 'line_3'! Each line must be a unique, complementary part of the hook.
+   - ❌ ABSOLUTELY FORBIDDEN: 5 or more lines of text! Never block the video canvas with a wall of text.
 
 # ==============================================================================
 # RULE #2 SUPREME MANDATE: SIMPLE, CONVERSATIONAL BENGALI (সহজ মুখের ভাষা)
@@ -427,26 +487,29 @@ Priority 4 — NUMBERS & QUANTITIES (specificity): ১০০ গুণ, ১ ম�
 Always include at least ONE Priority 1 or Priority 2 word. Example:
   highlight_words: ["জান্নাতের ৮টি দরজা", "আল্লাহ", "১টি আমল করলে", "প্রতিদিন সুরক্ষা"]
 
-PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER (STRICT 2-LINE SUBTITLES, SIMPLE BENGALI):
-• Model A (Situational Emotional Hook):
-  line_1: "মন খারাপ লাগলে এই ১টি কাজ করুন,"
-  line_2: "আল্লাহ আপনার মনে শান্তি দিয়ে দেবেন 🤲"
-  highlight_words: ["মন খারাপ লাগলে", "১টি কাজ", "শান্তি দিয়ে দেবেন"]
+PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER (2 TO 4 SHORT LINES, SIMPLE BENGALI):
+• Model A (3-Line Situational Hook):
+  line_1: "ঘরে ঢোকার সময়"
+  line_2: "ভুলে যান এই ১টি সুন্নাহ,"
+  line_3: "আর শয়তান আপনার সাথেই রাত কাটায় 🤲"
+  highlight_words: ["ঘরে ঢোকার সময়", "১টি সুন্নাহ", "শয়তান"]
 
-• Model B (Curiosity Question Hook):
+• Model B (2-Line Curiosity Hook):
   line_1: "নামাজে দাঁড়ালে কি মন অন্য দিকে চলে যায়?"
   line_2: "নবীজির (ﷺ) শেখানো এই ১টি আমল করুন 🤲"
   highlight_words: ["নামাজে দাঁড়ালে কি", "নবীজির (ﷺ)", "১টি আমল"]
 
-• Model C (Prophetic Habit Hook):
+• Model C (3-Line Prophetic Habit Hook):
   line_1: "টাকার অভাবে খুব বেশি কষ্ট পাচ্ছেন?"
-  line_2: "নবীজির (ﷺ) শেখানো এই ১টি দোয়া পড়ুন 🤲"
+  line_2: "নবীজির (ﷺ) শেখানো এই ১টি দোয়া পড়ুন,"
+  line_3: "আল্লাহ রিজিকের বন্ধ দরজা খুলে দেবেন 🤲"
   highlight_words: ["টাকার অভাবে", "নবীজির (ﷺ)", "১টি দোয়া"]
 
-• Model D (Family & Home Hook):
-  line_1: "ঘরে ঢোকার সময় এই ১টি সুন্নাত মানুন,"
-  line_2: "শয়তান আপনার ঘরে ঢুকতে পারবে না 🤲"
-  highlight_words: ["ঘরে ঢোকার সময়", "১টি সুন্নাত", "শয়তান"]
+• Model D (3-Line Reflective Hook):
+  line_1: "মন খুব বেশি খারাপ লাগলে"
+  line_2: "কাউকে কিছু না বলে"
+  line_3: "নবীজির এই ১টি সুন্নাত মানুন 🤲"
+  highlight_words: ["মন খুব বেশি", "১টি সুন্নাত", "নবীজির"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Text: At least ONE caption point MUST contain full Arabic text with Tashkeel (either a relevant Dua OR the authentic Arabic wording of the Prophet's statement/Hadith), accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
@@ -459,11 +522,12 @@ TOPICS RECENTLY COVERED (DO NOT REPEAT):
 Output ONLY valid JSON:
 {{
     "series_title": "আজকের আমল • পর্ব {ep_bn}",
-    "title_bn": "ফজরের পর এই ৩টি আমল করুন এবং দেখুন কীভাবে আল্লাহ আপনার পুরো দিনকে বরকতে ভরিয়ে দেন",
-    "title_en": "Do these 3 things after Fajr and watch Allah fill your day with barakah #Shorts",
-    "line_1": "ফজরের পর এই ৩টি আমল করুন",
-    "line_2": "পুরো দিন বরকতে ভরে যাবে 🤲",
-    "highlight_words": ["৩টি আমল", "আল্লাহ", "বরকতে ভরে যাবে"],
+    "title_bn": "ঘরে ঢোকার সময় যে ভুলটি প্রতিদিন করি, অথচ নবীজির এই ১টি সুন্নাহ মানলেই শয়তান আর ঘরে ঢুকতে পারে না",
+    "title_en": "One Sunnah when entering home that prevents Shaytan from entering #Shorts",
+    "line_1": "ঘরে ঢোকার সময়",
+    "line_2": "ভুলে যান এই ১টি সুন্নাহ,",
+    "line_3": "আর শয়তান আপনার সাথেই রাত কাটায় 🤲",
+    "highlight_words": ["ঘরে ঢোকার সময়", "১টি সুন্নাহ", "শয়তান"],
     "caption_points": [
         {{
             "number": "১",
@@ -629,12 +693,8 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
                     banned_hadiths.add(ref)
             continue
 
-        # MANDATE RULE 1: STRICT 2-LINE HOOK SUBTITLES & TYPOGRAPHY QUALITY GATE
-        is_valid_typo, typo_reason, typo_content = check_and_enforce_hook_typography(content)
-        if not is_valid_typo:
-            logger.warning(f"Attempt {attempt+1}: Hook typography check failed: {typo_reason}. Retrying...")
-            last_fail_reason = f"Typography Mandate Failed: {typo_reason}. Line 1 (4-6 words) and Line 2 (4-6 words) must be 2 distinct, short lines with ZERO duplication!"
-            continue
+        # AUTO-REVISION TYPOGRAPHY QUALITY ENGINE (NON-BLOCKING AUTO-REPAIR)
+        _, typo_reason, typo_content = revise_and_enforce_hook_typography(content)
         content = typo_content
 
         content["slot_key"] = slot_key
@@ -799,6 +859,7 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     l1 = content.get("line_1", "").strip()
     l2 = content.get("line_2", "").strip()
     l3 = content.get("line_3", "").strip()
+    l4 = content.get("line_4", "").strip()
 
     # Rotating psychology-driven CTA hooks (Curiosity Gap + Loss Aversion)
     import random as _rnd
@@ -812,8 +873,8 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     caption_cta_text = _rnd.choice(_CTA_HOOKS)
     
     hw_list = content.get("highlight_words", ["৩টি আয়াত", "আল্লাহ", "রক্ষা করবেন"])
-    clean_l1, clean_l2 = normalize_and_balance_hook_lines(l1, l2, l3)
-    full_hook_text = f"{clean_l1}\\N{clean_l2}" if clean_l2 else clean_l1
+    clean_lines = revise_and_balance_hook_lines(l1, l2, l3, l4)
+    full_hook_text = "\\N".join([l for l in clean_lines if l])
     
     # Apply Vibrant Golden/Yellow highlighting (&H002BD5FF&) to keywords
     GOLD_COLOR = "&H002BD5FF&"
