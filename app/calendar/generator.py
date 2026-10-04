@@ -283,20 +283,50 @@ def format_sunnah_calendar_caption(data: dict) -> str:
     return (caption + tags).strip()
 
 
+SACRED_SANCTUARY_SCENES = [
+    "app/assets/scenes/quran_rehal_cinematic.jpg",
+    "app/assets/quran_rehal_master.jpg",
+    "app/assets/scenes/quran_rehal_sanctuary.jpg",
+    "app/assets/scenes/quran_rehal_sunbeam.jpg",
+    "app/assets/scenes/golden_dome_night.jpg",
+    "app/assets/scenes/moorish_palace_arches.jpg",
+    "app/assets/scenes/tranquil_courtyard_fountain.jpg",
+]
+
+def get_sacred_calendar_background() -> str:
+    """Returns a majestic Shariah-compliant sacred sanctuary background for the Sunnah Calendar."""
+    import random
+    import shutil
+    available = [p for p in SACRED_SANCTUARY_SCENES if os.path.exists(p)]
+    if available:
+        try:
+            from app.history import get_recent_backgrounds, record_background_usage
+            recent = get_recent_backgrounds(limit=len(available) - 1)
+            candidates = [p for p in available if os.path.basename(p) not in recent]
+            chosen = random.choice(candidates if candidates else available)
+            record_background_usage(os.path.basename(chosen))
+            return chosen
+        except Exception:
+            return random.choice(available)
+    if os.path.exists("app/assets/quran_rehal_master.jpg"):
+        return "app/assets/quran_rehal_master.jpg"
+    from app.history import get_unique_background
+    return get_unique_background()
+
+
 def render_sunnah_calendar_video(content: dict, output_dir: str = "data/output") -> str:
     """
     Renders 60 FPS subpixel lanczos continuous zoom video for the Sunnah Calendar series.
-    STRICT MANDATE: ZERO 'আজকের আমল • পর্ব XX' badge! Pure, clean visual with Line 1 date badge!
+    STRICT MANDATE: ZERO 'আজকের আমল • পর্ব XX' badge! Pure, majestic Kalpurush visual with Line 1 date badge!
     """
     os.makedirs(output_dir, exist_ok=True)
     temp_dir = os.path.join("data", "temp", "sunnah_calendar_run")
     os.makedirs(temp_dir, exist_ok=True)
 
-    # 1. Background Image
-    from app.history import get_unique_background
+    # 1. Background Image (Strictly Sacred Quran on Rehal & Sanctuary)
     import shutil
     bg_path = os.path.join(temp_dir, "background.jpg")
-    chosen_bg = get_unique_background()
+    chosen_bg = get_sacred_calendar_background()
     if chosen_bg and os.path.exists(chosen_bg):
         shutil.copyfile(chosen_bg, bg_path)
     else:
@@ -307,7 +337,7 @@ def render_sunnah_calendar_video(content: dict, output_dir: str = "data/output")
     topic_keywords = f"{content.get('title_bn', '')} {content.get('line_1', '')} {content.get('line_2', '')}"
     audio_path = get_or_download_quran_audio(topic_text=topic_keywords, duration=8.0)
 
-    # 3. Build Subtitles (NO TOP SERIES BADGE)
+    # 3. Build Subtitles with Kalpurush Typography Hierarchy
     l1 = content.get("line_1", "").strip()
     l2 = content.get("line_2", "").strip()
     l3 = content.get("line_3", "").strip()
@@ -315,15 +345,13 @@ def render_sunnah_calendar_video(content: dict, output_dir: str = "data/output")
     raw_cta = raw_cta.replace("☞", "").strip()
     caption_cta_text = sanitize_text_for_ass(raw_cta)
 
-    GOLD_COLOR = "&H002BD5FF&"
-    WHITE_COLOR = "&H00FFFFFF&"
+    GOLD_COLOR = "&H0015CCFA&"  # Radiant Sunnah Amber Gold (#FACC15)
+    WHITE_COLOR = "&H00FFFFFF&" # Crisp Pure White
 
-    # Line 1: Day Reminder & Date Badge (Guaranteed strictly 1 single line: fs36-38 with generous safe margins)
+    # Line 1: Day Reminder & Date Badge (Guaranteed strictly 1 single line at fs40)
     l1_clean = sanitize_text_for_ass(l1)
-    l1_fs = 36 if len(l1_clean) > 38 else 38
-    l1_formatted = f"{{\\fs{l1_fs}\\c{GOLD_COLOR}}}{l1_clean}{{\\c{WHITE_COLOR}}}"
 
-    # Line 2 & Line 3: Prominent hook at fs56 with key highlights
+    # Line 2 & Line 3: Prominent hook at fs58 with key highlights
     l2_clean = sanitize_text_for_ass(l2)
     l3_clean = sanitize_text_for_ass(l3)
 
@@ -338,8 +366,6 @@ def render_sunnah_calendar_video(content: dict, output_dir: str = "data/output")
         if hw_clean in body_text:
             body_text = body_text.replace(hw_clean, f"{{\\c{GOLD_COLOR}}}{hw_clean}{{\\c{WHITE_COLOR}}}", 1)
 
-    full_hook_text = f"{l1_formatted}\\N{{\\fs56}}{body_text}"
-
     ass_path = os.path.join(temp_dir, "overlay.ass")
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
@@ -350,31 +376,35 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: MainHook,Noto Sans Bengali,56,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.2,2.5,5,45,45,0,1
-Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,50,50,420,1
-Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,50,50,350,1
+Style: DayAlert,Kalpurush,40,&H0015CCFA&,&H000000FF,&H00000000,&HA0000000,0,0,0,0,100,100,0,0,1,2.8,1.6,5,35,35,0,1
+Style: HookLine,Kalpurush,58,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,3.2,1.8,5,35,35,0,1
+Style: CaptionCTA,Kalpurush,42,&H0015CCFA&,&H000000FF,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,2.4,1.4,2,40,40,210,1
+Style: FollowTrigger,Kalpurush,30,&H00E0E8F0&,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.0,1.2,2,40,40,150,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\b1}}{full_hook_text}
-Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}{caption_cta_text}{{\\c{WHITE_COLOR}}}
-Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ➔ @dailydos_islam
+Dialogue: 0,0:00:00.00,0:00:08.00,DayAlert,,0,0,0,,{{\\pos(540,460)\\c{GOLD_COLOR}}}{l1_clean}
+Dialogue: 0,0:00:00.00,0:00:08.00,HookLine,,0,0,0,,{{\\pos(540,570)}}{body_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{caption_cta_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ➔ @dailydos_islam
 """
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
 
     rel_ass = os.path.relpath(ass_path).replace("\\", "/")
+    rel_fonts = os.path.relpath("app/assets/fonts").replace("\\", "/")
     output_video = os.path.join(output_dir, f"sunnah_calendar_{int(time.time())}.mp4")
 
-    # Render with FFmpeg
+    # Render with FFmpeg: continuous 60fps subpixel zoompan + Kalpurush font via fontsdir + subtle color grading
     cmd = (
         f'ffmpeg -y -loop 1 -t 8.0 -i "{bg_path}" -i "{audio_path}" '
         f'-filter_complex "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,'
+        f'colorlevels=rimin=0.03:gimin=0.03:bimin=0.03:rimax=0.92:gimax=0.92:bimax=0.92,'
         f'zoompan=z=\'min(zoom+0.0006,1.20)\':d=480:x=\'iw/2-(iw/zoom/2)\':y=\'ih/2-(ih/zoom/2)\':s=1080x1920:fps=60,'
-        f'ass=\'{rel_ass}\'[v]" '
+        f'subtitles=\'{rel_ass}\':fontsdir=\'{rel_fonts}\'[v]" '
         f'-map "[v]" -map 1:a -c:v libx264 -pix_fmt yuv420p -preset veryfast -crf 18 '
         f'-c:a aac -b:a 192k -shortest "{output_video}"'
     )
-    logger.info("Executing Sunnah Calendar video render...")
+    logger.info("Executing enhanced Sunnah Calendar video render...")
     os.system(cmd)
     return output_video
