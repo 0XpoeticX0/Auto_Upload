@@ -440,8 +440,36 @@ def build_loop_reel_system_prompt(
     domain_name = assigned_domain['name'] if assigned_domain else "দৈনন্দিন সুন্নাহ ও চারিত্রিক সৌন্দর্য"
     domain_guidance = assigned_domain['guidance'] if assigned_domain else "Authentic Sahih Hadith from major books."
 
-    return f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
+    hijri_event_section = ""
+    if assigned_domain and assigned_domain.get("is_hijri_event"):
+        day_rem = assigned_domain.get("day_reminder", "")
+        p_ebadah = assigned_domain.get("prophet_ebadah", "")
+        h_ref = assigned_domain.get("hadith_ref", "")
+        hijri_event_section = f"""
+# ==============================================================================
+# SPECIAL SUNNAH CALENDAR MANDATE: DAY REMINDER & PROPHET'S (ﷺ) 'IBADAH
+# ==============================================================================
+THIS REEL IS A TIMELY REMINDER OF A BLESSED OCCASION & THE PROPHET'S (ﷺ) 'IBADAH:
+• Blessed Day / Event: {domain_name}
+• Day Reminder / Timing Urgency: {day_rem}
+• 'Ibadah Taught by Prophet Muhammad (ﷺ): {p_ebadah}
+• Core Hadith Citation: {h_ref}
 
+STRICT CREATION MANDATES FOR THIS OCCASION:
+1. REMIND OF THAT DAY (দিনটির সময়োপযোগী স্মরণ):
+   - Line 1 MUST establish the timely reminder of the upcoming or current blessed day/time (e.g., '{day_rem.split()[0]}...').
+   - Viewers must immediately feel the urgency: this blessed day is happening right now or within 24 hours!
+2. PROPHET'S (ﷺ) 'IBADAH ON THAT DAY (নবীজি সা.-এর শেখানো ইবাদত ও আমল):
+   - Focus specifically on the exact act of worship ('ibadah) taught and practiced by Prophet Muhammad (ﷺ) on this day.
+   - Line 2 & Line 3 must pose an irresistible, curiosity-inducing open-loop question or paradoxical contrast about this Prophetic 'ibadah without spoiling the resolution on screen.
+3. STRUCTURED CAPTION POINTS:
+   - Point 1: দিনটির তাৎপর্য ও স্মরণ (Remind why Prophet Muhammad ﷺ honored this day; specify the exact Gregorian & Hijri timing in Bangladesh).
+   - Point 2: নবীজির (ﷺ) শেখানো নির্দিষ্ট ইবাদত (The exact Sunnah 'Ibadah taught by Prophet Muhammad ﷺ: exact Arabic Dua with pronunciation & meaning, fasting procedure, or Dhikr, backed by {h_ref}).
+   - Point 3: আমল করার সঠিক সময় ও ফায়দা (Practical guidance, step-by-step instructions for Bangladeshi viewers, and immense spiritual rewards).
+"""
+
+    return f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
+{hijri_event_section}
 # ==============================================================================
 # STRICT 100-VIDEO ZERO-SIMILARITY & FRESH TOPIC MANDATE
 # ==============================================================================
@@ -475,7 +503,9 @@ ASSIGNED SPECIFIC ISLAMIC DOMAIN FOR THIS REEL:
    - If the last hook offered a Fast Micro-Action -> Use a Deep, Slow, Reflective Realization.
    - If the last hook mentioned an Action -> Start with a raw, relatable Human Emotion or Situation.
 4. ZERO WORD OVERLAP: The first 5 words of Line 1 must NOT share any vocabulary or grammar pattern with the last hook.
-5. NO HADITH PREFACE IN LINE 1: Line 1 must NEVER start with "রাসূলুল্লাহ (ﷺ) বলেছেন:" or "নবীজির শেখানো". Line 1 belongs purely to the relatable human struggle or situation. The Prophet's authentic Sunnah and Sahih citation belong in Line 2/3 and the structured caption points!
+5. OPENING LINE DIRECTIVE:
+   - For blessed calendar events: Line 1 establishes the day reminder / timing urgency (e.g., '{day_rem.split()[0] if assigned_domain and assigned_domain.get("is_hijri_event") else ""}...').
+   - Otherwise, Line 1 must NOT start with 'রাসূলুল্লাহ (ﷺ) বলেছেন:' or 'নবীজির শেখানো'; it belongs purely to the relatable human struggle or situation. The Prophet's authentic Sunnah and Sahih citation belong in Line 2/3 and the structured caption points!
 
 SERIES CONTEXT: "আজকের আমল • পর্ব {ep_bn}"
 
@@ -664,10 +694,16 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
             assigned_domain = {
                 "name": active_event["name"],
                 "theme": active_event["theme"],
-                "guidance": active_event["guidance"]
+                "guidance": active_event["guidance"],
+                "is_hijri_event": True,
+                "day_reminder": active_event.get("day_reminder", ""),
+                "prophet_ebadah": active_event.get("prophet_ebadah", ""),
+                "hadith_ref": active_event.get("hadith_ref", "")
             }
             if active_event.get("model_hook"):
                 target_angle["example_hook"] = active_event["model_hook"]
+            if active_event.get("suggested_cta"):
+                target_angle["suggested_cta"] = active_event["suggested_cta"]
         else:
             assigned_domain = DYNAMIC_ISLAMIC_DOMAINS[domain_idx]
 
