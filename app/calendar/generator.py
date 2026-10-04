@@ -348,10 +348,11 @@ def render_sunnah_calendar_video(content: dict, output_dir: str = "data/output")
     GOLD_COLOR = "&H0015CCFA&"  # Radiant Sunnah Amber Gold (#FACC15)
     WHITE_COLOR = "&H00FFFFFF&" # Crisp Pure White
 
-    # Line 1: Day Reminder & Date Badge (Guaranteed strictly 1 single line at fs40)
+    # Line 1: Day Reminder & Date Badge (Guaranteed strictly 1 single line at prominent fs46-48)
     l1_clean = sanitize_text_for_ass(l1)
+    l1_fs = 46 if len(l1_clean) > 40 else 48
 
-    # Line 2 & Line 3: Prominent hook at fs58 with key highlights
+    # Line 2 & Line 3: Prominent hook at big, commanding fs76 with key highlights
     l2_clean = sanitize_text_for_ass(l2)
     l3_clean = sanitize_text_for_ass(l3)
 
@@ -376,15 +377,15 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: DayAlert,Kalpurush,40,&H0015CCFA&,&H000000FF,&H00000000,&HA0000000,0,0,0,0,100,100,0,0,1,2.8,1.6,5,35,35,0,1
-Style: HookLine,Kalpurush,58,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,3.2,1.8,5,35,35,0,1
-Style: CaptionCTA,Kalpurush,42,&H0015CCFA&,&H000000FF,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,2.4,1.4,2,40,40,210,1
-Style: FollowTrigger,Kalpurush,30,&H00E0E8F0&,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.0,1.2,2,40,40,150,1
+Style: DayAlert,Kalpurush,{l1_fs},&H0015CCFA&,&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,3.2,1.8,5,20,20,0,1
+Style: HookLine,Kalpurush,76,&H00FFFFFF&,&H000000FF,&H00000000,&HC0000000,0,0,0,0,100,100,0,0,1,4.0,2.6,5,25,25,0,1
+Style: CaptionCTA,Kalpurush,48,&H0015CCFA&,&H000000FF,&H00000000,&HA0000000,0,0,0,0,100,100,0,0,1,2.8,1.6,2,30,30,210,1
+Style: FollowTrigger,Kalpurush,34,&H00E0E8F0&,&H000000FF,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,2.2,1.2,2,30,30,150,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,DayAlert,,0,0,0,,{{\\pos(540,460)\\c{GOLD_COLOR}}}{l1_clean}
-Dialogue: 0,0:00:00.00,0:00:08.00,HookLine,,0,0,0,,{{\\pos(540,570)}}{body_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,DayAlert,,0,0,0,,{{\\pos(540,440)\\c{GOLD_COLOR}}}{l1_clean}
+Dialogue: 0,0:00:00.00,0:00:08.00,HookLine,,0,0,0,,{{\\pos(540,580)}}{body_text}
 Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{caption_cta_text}
 Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ➔ @dailydos_islam
 """
