@@ -118,37 +118,42 @@ def determine_current_slot() -> str:
 
 ANGLES = [
     {
-        "name": "Micro-Moment (ব্যক্তিগত মুহূর্ত)",
-        "desc": "দৈনন্দিন জীবনের বাস্তব মুহূর্ত যা আলোচ্য হাদিসের বিষয়ের সাথে সরাসরি সম্পর্কিত (যেমন: কাজে বের হওয়া, ঘরে ঢোকা, কারো ওপর রাগ হওয়া, পরিবারের সাথে বসা)",
-        "example_hook": "আলোচ্য হাদিসের সাথে সম্পর্কিত বাস্তব মুহূর্ত (যেমন: রাগ উঠলে, কাজে বের হওয়ার সময়, ঘরে ঢোকার মুহূর্তে)"
+        "name": "High-Stakes Paradox (অপ্রত্যাশিত তুলনা ও তীব্র কৌতূহল)",
+        "desc": "সাধারণ ধারণার বিপরীতে সুন্নাহর এক অবিশ্বাস্য তুলনা যা শুনলে দর্শক চমকে ওঠে। হুকে সমাধান বলা নিষিদ্ধ!",
+        "example_hook": "হাজার রাকাত নফল নামাজের চেয়েও নবীজি (ﷺ) কোন ১টি আমলের জান্নাতের দায়িত্ব নিলেন?",
+        "cta_example": "☞ কোন আমলের কথা বলা হয়েছিল? ক্যাপশনে দেখুন ➔"
     },
     {
-        "name": "Story Snippet (গল্পের ছোট্ট অংশ)",
-        "desc": "হাদিসের বর্ণনায় থাকা বাস্তব ঘটনা বা কৌতূহলোদ্দীপক মুহূর্ত দিয়ে আকর্ষণীয় সূচনা",
-        "example_hook": "মসজিদে একা বসে কাঁদছিলেন এক সাহাবী; নবীজি (ﷺ) কাছে গিয়ে জিজ্ঞেস করলেন—"
+        "name": "Real Pain-Point & Moral Dilemma (ব্যক্তিগত সংকট ও নৈতিক দ্বন্দ্ব)",
+        "desc": "মানুষের মনের ভেতরের গভীর ক্ষোভ, সম্পর্কের টানাপোড়েন বা অপমানের অনুভূতিকে স্পর্শ করে অমীমাংসিত প্রশ্ন তোলা। উপদেশ দেওয়া নিষিদ্ধ, সংকট তোলা বাধ্যতামূলক!",
+        "example_hook": "যে আত্মীয় চরম অপমান করে সম্পর্ক ছিন্ন করল, তার সাথে কি আবারও কথা বলা উচিত?",
+        "cta_example": "☞ নবীজি কী উত্তর দিয়েছিলেন? ক্যাপশনে পড়ুন ➔"
     },
     {
-        "name": "Paradox & Contrasting (ভুল বনাম সত্য)",
-        "desc": "মানুষ যেখানে ভুল সমাধান খোঁজে বনাম সুন্নাহর আসল সমাধান",
-        "example_hook": "আলোচ্য বিষয়ের ভুল বনাম সুন্নাহর সমাধান (যেমন: 'আমরা রেগে গেলে চিৎকার করে শক্তি দেখাতে চাই, অথচ নবীজি বলেছেন আসল শক্তি অন্য জায়গায়...')"
+        "name": "Unfinished Prophetic Scene (নাটকীয় অসম্পূর্ণ দৃশ্য — Zeigarnik Effect)",
+        "desc": "হাদিসের সত্য ঘটনার সবচেয়ে নাটকীয় ক্লাইম্যাক্স মুহূর্তে হুক থামিয়ে দেওয়া, যার সমাধান শুধুমাত্র ক্যাপশনে জানা যাবে।",
+        "example_hook": "নবীজির সামনে রেগে লাল হয়ে গেল এক ব্যক্তি; সবাই যখন তাকে থামাতে পারল না, তখন নবীজি বললেন—",
+        "cta_example": "☞ রাগ নিভানোর ৪ শব্দের দোয়াটি ক্যাপশনে দেখুন ➔"
     },
     {
-        "name": "Deep Observation (প্রত্যক্ষ উপলব্ধি ও মানব স্বভাব)",
-        "desc": "মানুষের সাধারণ মনস্তাত্ত্বিক স্বভাব ও দুর্বলতা তুলে ধরা যা হাদিসটির সাথে সরাসরি মেলে",
-        "example_hook": "মানুষের বাস্তব স্বভাব তুলে ধরা যা আলোচ্য বিষয়ের সাথে সম্পর্কিত"
+        "name": "99% Blindspot & Loss Aversion (অজান্তেই বড় ক্ষতি হওয়ার ভয়)",
+        "desc": "দৈনন্দিন সাধারণ ভুল বা অসতর্কতা যা মানুষের অজান্তেই নেক আমল নষ্ট করে। মানুষ পাওয়ার চেয়ে ক্ষতি ঠেকাতে ২.৫ গুণ বেশি দ্রুত ক্লিক করে!",
+        "example_hook": "আমরা অজান্তেই প্রতিদিন যে ৩টি ভুল কথা বলে ফেলি, যা সারাদিনের সব আমল এক নিমেষে ধ্বংস করে দেয়!",
+        "cta_example": "☞ কোন ৩টি মারাত্মক ভুল? ক্যাপশনে জানুন ➔"
     },
     {
-        "name": "Reflective Advice (বাস্তবধর্মী সুন্নাহ পরামর্শ)",
-        "desc": "ধীরস্থির, মমতাময়ী ও চিন্তাশীল আত্মউপলব্ধি যা আলোচ্য হাদিসটির বাস্তব সমাধান দেয়",
-        "example_hook": "আলোচ্য সুন্নাহর গভীর ও মমতাময়ী পরামর্শ দিয়ে শুরু"
+        "name": "Secret Prophetic Remedy (গোপন সুন্নাহ ও অমীমাংসিত প্রশ্ন)",
+        "desc": "কঠিন মানসিক অবস্থা, একাকীত্ব বা সংকটে নবীজির শেখানো এক বিশেষ অপ্রত্যাশিত সমাধান যা বেশিরভাগ মানুষ জানে না।",
+        "example_hook": "মন যখন অতিরিক্ত ভারী লাগে আর কোনো কাজে মন বসে না, নবীজি (ﷺ) গোপনে কোন কাজটি করতে বলেছিলেন?",
+        "cta_example": "☞ গোপনে শেখানো আমলটি ক্যাপশনে পড়ুন ➔"
     }
 ]
 
 TONES = [
-    "Emotional & Empathetic (শান্ত, হৃদয়স্পর্শী ও মমতাময়ী)",
-    "Curious & Story-driven (কৌতূহল ও গল্পের মাধ্যমে শুরু)",
-    "Reflective & Philosophical (গভীর আত্মউপলব্ধিমূলক)",
-    "Direct & Actionable (বাস্তবধর্মী সমাধান)"
+    "Intense Curiosity & Shock (চমকে দেওয়ার মতো কৌতূহল ও বিস্ময়)",
+    "Deep Emotional Dilemma (গভীর আত্মউপলব্ধি ও আবেগী দ্বন্দ্ব)",
+    "Dramatic Narrative Tension (নাটকীয় সাসপেন্স ও অসম্পূর্ণ দৃশ্য)",
+    "High-Stakes Loss Aversion (সতর্কবার্তা ও অজান্তেই ক্ষতি ঠেকানোর আকুলতা)"
 ]
 
 BANNED_HOOK_PREFIXES = [
@@ -163,7 +168,7 @@ BANNED_CLICHE_PHRASES = [
 ]
 
 FORMULAIC_HOOK_WORDS = [
-    '১টি আমল', '১টি গোপন আমল', '১টি কার্যকরী আমল', '১টি আমল করলে', '১টি দোয়া', '১টি বাক্য', '৫ সেকেন্ডের', '২ মিনিটের'
+    '১টি আমল', '১টি গোপন আমল', '১টি কার্যকরী আমল', '১টি আমল করলে', '১টি বাক্য', '৫ সেকেন্ডের', '২ মিনিটের'
 ]
 
 def check_hook_monotony(content: dict, recent_history: list, last_hook_text: str = "") -> tuple[bool, str]:
@@ -210,7 +215,50 @@ def check_hook_monotony(content: dict, recent_history: list, last_hook_text: str
         if sim >= 0.50:
             return False, f"Hook line_1 is syntactically too similar ({sim:.2f}) to recent content: '{prev[:40]}...'"
 
+    # 6. Reject preachy/sermon imperative spoilers that kill curiosity
+    preachy_imperatives = [
+        r'(?:সঠিক\s*)?হেফাজত\s*করুন',
+        r'মিশে\s*চলুন',
+        r'নিয়ম\s*মেনে\s*চলুন',
+        r'ভালো\s*ব্যবহার\s*করুন',
+        r'সবর\s*করুন',
+    ]
+    for pat in preachy_imperatives:
+        if re.search(pat, line_1) or re.search(pat, line_2):
+            return False, f"Hook sounds like a preachy sermon ('{pat}'). Must pose an open loop, shocking dilemma, or question!"
+
     return True, "OK"
+
+SAFE_ASS_CHARS = {'✦', '☞', '➔', '•', '—', '–', '।', '?', '!', ':', '-', ',', '.', '(', ')', '@', '#'}
+
+def sanitize_text_for_ass(text: str) -> str:
+    """
+    Strips emojis, variation selectors, and pictorial symbols to eliminate
+    the broken 'tofu box' (▯) in FFmpeg libass rendering under Noto Sans Bengali.
+    Preserves universal safe symbols: ✦, ☞, ➔, •, punctuation, English, Bengali.
+    """
+    if not text:
+        return ""
+    # Map directional/action emojis to clean typography symbols
+    text = text.replace('👇', ' ➔').replace('👉', '☞ ').replace('👈', '☜ ')
+    text = text.replace('➡', '➔').replace('➡️', '➔').replace('⬇', '➔')
+    text = text.replace('📖', '').replace('🤲', '').replace('🤍', '').replace('🌿', '')
+    text = text.replace('✨', '').replace('🔥', '').replace('📌', '').replace('🔖', '')
+
+    out = []
+    for ch in text:
+        code = ord(ch)
+        # Drop Supplementary Multilingual Plane emojis (U+1F000 to U+1FAFF)
+        if 0x1F000 <= code <= 0x1FAFF:
+            continue
+        # Drop variation selectors & zero-width joiner
+        if code in (0xFE0E, 0xFE0F, 0x200D):
+            continue
+        # In Dingbats/Misc Symbols range, keep only explicitly safe symbols
+        if (0x2600 <= code <= 0x27BF) and ch not in SAFE_ASS_CHARS:
+            continue
+        out.append(ch)
+    return re.sub(r' +', ' ', ''.join(out)).strip()
 
 def revise_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "", l4: str = "") -> list[str]:
     """
@@ -222,7 +270,8 @@ def revise_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "", l4: str =
     - Never throws or blocks; guarantees returning a list of clean, non-repeating lines.
     """
     def _clean(t: str) -> str:
-        t = (t or '').strip(' \t\n\r"\'“”‘’')
+        t = sanitize_text_for_ass(t or '')
+        t = t.strip(' \t\n\r"\'“”‘’')
         t = re.sub(r'[\s\.\—\–\:\,\-]+$', '', t)
         return t.strip(' ,;:-—')
 
@@ -351,7 +400,7 @@ def revise_and_enforce_hook_typography(content: dict) -> tuple[bool, str, dict]:
             l3 = parts[2] if len(parts) > 2 else ""
         else:
             l1 = "নবীজির (ﷺ) এই ১টি আমল শিখুন"
-            l2 = "জীবন বরকতে ভরে যাবে 🤲"
+            l2 = "জীবন বরকতে ভরে যাবে ➔"
 
     clean_lines = revise_and_balance_hook_lines(l1, l2, l3, l4)
     if not clean_lines:
@@ -364,6 +413,13 @@ def revise_and_enforce_hook_typography(content: dict) -> tuple[bool, str, dict]:
         content["line_4"] = clean_lines[3]
     elif "line_4" in content:
         del content["line_4"]
+
+    # Sanitize or populate dynamic caption_cta
+    raw_cta = content.get("caption_cta", "")
+    if raw_cta and len(raw_cta.strip()) >= 5:
+        content["caption_cta"] = sanitize_text_for_ass(raw_cta)
+    else:
+        content["caption_cta"] = "☞ পুরো হাদিস ও আমলটি ক্যাপশনে দেখুন ➔"
 
     logger.info(f"Hook typography auto-revised successfully ({len(clean_lines)} lines): {clean_lines}")
     return True, "OK", content
@@ -442,11 +498,16 @@ RULE 0: ABSOLUTE ISLAMIC AUTHENTICITY, CONTEXTUAL COHERENCE & ZERO HALLUCINATED 
      • Point 1 of caption_points MUST immediately resolve the opening scene (explain why the person was crying/in distress, what the Prophet asked, and the companion's reply).
      • Point 2 provides the Prophet's instruction, Sunnah act, or exact Dua with full Arabic, pronunciation, meaning, and Sahih citation.
      • Point 3 provides the resolution and result (e.g., how the companion practiced it and their worries/debt were relieved).
-8. SUBTITLE HOOK MANDATE (MAXIMUM 3 TO 4 SHORT LINES, ZERO CLAUSE DUPLICATION):
-   - The on-screen hook should consist of 2, 3, or maximum 4 short, punchy lines: 'line_1', 'line_2', 'line_3' (and optional 'line_4').
-   - Keep each line short and punchy: 3 to 5 words per line. Total words across all lines combined should be between 8 and 18 words.
-   - ❌ ABSOLUTELY FORBIDDEN: Writing the whole sentence in 'line_1' and then repeating the same clauses in 'line_2' or 'line_3'! Each line must be a unique, complementary part of the hook.
-   - ❌ ABSOLUTELY FORBIDDEN: 5 or more lines of text! Never block the video canvas with a wall of text.
+8. STRICT OPEN-LOOP & ZERO SOLUTION SPOILAGE MANDATE (হুকে সমাধান ফাঁস করা সম্পূর্ণ নিষিদ্ধ):
+   - A 7-second Loop Reel is a CURIOSITY MAGNET, NOT A SERMON!
+   - ❌ ABSOLUTELY BANNED: Preaching or telling viewers what to do on screen (e.g., 'জিহ্বা আর লজ্জাস্থানের সঠিক হেফাজত করুন', 'মিশে চলুন', 'আমলটি করুন').
+   - ❌ ABSOLUTELY BANNED: Revealing the full Hadith answer/resolution on screen (e.g., 'জিহ্বা হেফাজত করুন, নবীজি জান্নাতের দায়িত্ব নিলেন'). This destroys all curiosity and viewers will NEVER open the caption!
+   - ✅ MANDATORY: The on-screen text ('line_1', 'line_2', 'line_3') must ONLY pose the burning question, the emotional dilemma, the dramatic scene, or the shocking contrast.
+   - The ONLY place where the Prophet's exact Hadith answer, Arabic Dua, and action steps are revealed is IN THE CAPTION!
+   - Line 3 (or the end of Line 2) MUST create a bridge pointing to the caption (e.g., 'নবীজির (ﷺ) এই ১টি উত্তর আপনার চোখ ভিজিয়ে দেবে ➔', 'চমকে যাওয়ার মতো হাদিসটি ক্যাপশনে দেওয়া হলো ➔', 'রাগ নিভানোর ৪ শব্দের দোয়াটি ক্যাপশনে দেখুন ➔').
+   - The hook should consist of 2 to 3 (max 4) short, punchy lines (3-5 words each, total 8-16 words).
+   - In 'caption_cta', write a short, punchy 1-line call-to-action directly connected to the hook's question (e.g., "☞ নবীজি কী উত্তর দিয়েছিলেন? ক্যাপশনে দেখুন ➔").
+   - ZERO EMOJIS in on-screen text lines ('line_1', 'line_2', 'line_3')! Use clean text and the arrow symbol '➔'.
 
 # ==============================================================================
 # RULE #2 SUPREME MANDATE: SIMPLE, CONVERSATIONAL BENGALI (সহজ মুখের ভাষা)
@@ -460,22 +521,46 @@ LANGUAGE SIMPLICITY (MANDATORY — ZERO TOLERANCE FOR LITERARY/COMPLEX BENGALI):
 - Keep sentences SHORT and DIRECT. No unnecessary adjectives or flowery descriptions.
 - Use common words: "সাহায্য" not "সহায়তা", "ঘর" not "গৃহ", "খুশি" not "পরিতৃপ্ত", "ভালো" not "উত্তম", "দরজা" not "দুয়ার"
 
-THE 4 CORE PSYCHOLOGY HOOK RULES (MANDATORY):
-Rule 1: Hook Diversity (STRICT ANTI-MONOTONY RULE):
-  - ❌ STRICTLY BANNED: NEVER start every single hook with "রাসূলুল্লাহ (ﷺ) বলেছেন: মাত্র ৫ সেকেন্ডের...". That makes the channel look like an automated bot!
-  - ✅ ROTATE AMONG THESE 5 DIVERSE HOOK ARCHETYPES:
-    • Archetype 1 (Situational / Emotion First): "মন খারাপ লাগলে এই ১টি কাজ করুন...", "রাগ উঠলে নবীজি (ﷺ) যা করতে বলতেন...", "ঘরে ঢোকার সময় এই ১টি সুন্নাত মানুন..."
-    • Archetype 2 (Curiosity Question): "নামাজে দাঁড়ালে কি মন অন্য দিকে চলে যায়?", "ঘুমানোর আগে কোন কাজটি করলে সারারাত আল্লাহর রহমত পাওয়া যায়?", "বিপদে পড়লে নবীজি (ﷺ) কী করতে বলতেন?"
-    • Archetype 3 (Prophetic Habit / Teaching): "নবীজির (ﷺ) সবচেয়ে পছন্দের ১টি আমল...", "টাকার সমস্যায় নবীজি (ﷺ) কী শিখিয়েছিলেন?", "নবীজি (ﷺ) বলেছেন: এই ১টি সহজ আমল আছে..."
-    • Archetype 4 (Common Habit / Contrast): "আমরা প্রতিদিন না জেনে এই ভুলটি করি...", "খাওয়ার সময় যে ছোট ভুলটি শয়তানকে ডেকে আনে..."
-    • Archetype 5 (Action-First): "মাত্র ১টি ছোট কাজ যা আপনার জীবনে বরকত আনবে..."
+THE 5 CORE PSYCHOLOGY HOOK ARCHETYPES (MANDATORY ROTATION):
+• Archetype 1 (High-Stakes Paradox & Shocking Contrast):
+  Compare something massive/difficult to an astonishing simple Sunnah.
+  Example:
+  line_1: "হাজার রাকাত নফল নামাজের চেয়েও"
+  line_2: "নবীজি কোন ১টি সাধারণ আমলের জান্নাতের দায়িত্ব নিলেন?"
+  line_3: "চমকে যাওয়ার মতো হাদিসটি ক্যাপশনে দেওয়া হলো ➔"
+  caption_cta: "☞ কোন আমলের কথা বলা হয়েছিল? ক্যাপশনে দেখুন ➔"
 
-Rule 2: Promise High Gain with Micro Effort (STRICT LOW-FRICTION RULE):
-  - ❌ STRICTLY BANNED: NEVER mention large numbers like "৩০টি আয়াত", "১০০ বার", "৫০ বার".
-  - ✅ ALWAYS USE EFFORTLESS FRAMING: "মাত্র ১টি আমল", "ছোট ১টি সূরা", "মাত্র ৩০ সেকেন্ডের দোয়া", "১টি ছোট সুন্নাত".
-Rule 3: Target a Pain Point or Deep Desire: Anchor in real daily emotions (মন খারাপ, রাগ, টাকার চাপ, পরিবারে ঝগড়া, নামাজে মন বসে না).
-Rule 4: Leave the Loop Open (End with unfinished promise "...যা নিয়মিত করলে আল্লাহ সাহায্য করবেন").
-- ❌ STRICTLY BANNED HOOK CLICHÉS: NEVER use "ভাগ্যের তালা খুলে দেবে", "ভাগ্য বদলে দেবে", "বিশাল দুয়ার".
+• Archetype 2 (Personal Dilemma & Real Pain-Point):
+  Trigger a raw, universal human conflict (family pain, betrayal, unfair insults, difficult relatives).
+  Example:
+  line_1: "যে আত্মীয় চরম অপমান করে সম্পর্ক ছিন্ন করল,"
+  line_2: "তার সাথে কি আবারও কথা বলা উচিত?"
+  line_3: "নবীজির (ﷺ) এই ১টি উত্তর আপনার চোখ ভিজিয়ে দেবে ➔"
+  caption_cta: "☞ নবীজি কী উত্তর দিয়েছিলেন? ক্যাপশনে পড়ুন ➔"
+
+• Archetype 3 (Unfinished Prophetic Scene — Zeigarnik Effect):
+  Drop the viewer right at the climax of an authentic dramatic Hadith moment.
+  Example:
+  line_1: "নবীজির সামনে রেগে লাল হয়ে গেল এক ব্যক্তি,"
+  line_2: "সবাই যখন তাকে থামাতে পারল না, তখন নবীজি বললেন—"
+  line_3: "রাগ দমন করার ৪ শব্দের সেই দোয়াটি ক্যাপশনে দেখুন ➔"
+  caption_cta: "☞ ৪ শব্দের দোয়াটি ক্যাপশনে দেখুন ➔"
+
+• Archetype 4 (99% Blindspot & Loss Aversion):
+  Highlight a daily unconscious mistake that destroys deeds. Fear of loss is 2.5x more urgent!
+  Example:
+  line_1: "আমরা অজান্তেই প্রতিদিন যে ৩টি ভুল কথা বলে ফেলি,"
+  line_2: "যা সারাদিনের সব আমল এক নিমেষে ধ্বংস করে দেয়!"
+  line_3: "সহীহ হাদিস নম্বরসহ সতর্ক থাকুন ➔ ক্যাপশনে"
+  caption_cta: "☞ কোন ৩টি মারাত্মক ভুল? ক্যাপশনে জানুন ➔"
+
+• Archetype 5 (Secret Prophetic Remedy):
+  When feeling deep mental exhaustion, sadness, or struggle, the special Sunnah act taught privately.
+  Example:
+  line_1: "মন যখন অতিরিক্ত ভারী লাগে আর কোনো কাজে মন বসে না,"
+  line_2: "নবীজি (ﷺ) এক সাহাবীকে গোপনে কোন কাজটি করতে বলেছিলেন?"
+  line_3: "পুরো সুন্নাহ ও দোয়াটি ক্যাপশনে পড়ুন ➔"
+  caption_cta: "☞ গোপনে শেখানো আমলটি ক্যাপশনে পড়ুন ➔"
 
 CRITICAL GOLDEN HIGHLIGHT RULES (MANDATORY — Emotional Salience Priority):
 In "highlight_words", you MUST provide 3 to 4 exact phrases from your lines.
@@ -485,31 +570,7 @@ Priority 2 — IDENTITY words (self-relevance): মুমিন, সাহাব
 Priority 3 — ACTION verbs (engagement): পড়লে, করলে, বললে, মানলে, শিখুন
 Priority 4 — NUMBERS & QUANTITIES (specificity): ১০০ গুণ, ১ মিনিট, ৩টি, প্রতিদিন
 Always include at least ONE Priority 1 or Priority 2 word. Example:
-  highlight_words: ["জান্নাতের ৮টি দরজা", "আল্লাহ", "১টি আমল করলে", "প্রতিদিন সুরক্ষা"]
-
-PROVEN DIVERSE HOOK EXAMPLES TO MODEL AFTER (2 TO 4 SHORT LINES, SIMPLE BENGALI):
-• Model A (3-Line Situational Hook):
-  line_1: "ঘরে ঢোকার সময়"
-  line_2: "ভুলে যান এই ১টি সুন্নাহ,"
-  line_3: "আর শয়তান আপনার সাথেই রাত কাটায় 🤲"
-  highlight_words: ["ঘরে ঢোকার সময়", "১টি সুন্নাহ", "শয়তান"]
-
-• Model B (2-Line Curiosity Hook):
-  line_1: "নামাজে দাঁড়ালে কি মন অন্য দিকে চলে যায়?"
-  line_2: "নবীজির (ﷺ) শেখানো এই ১টি আমল করুন 🤲"
-  highlight_words: ["নামাজে দাঁড়ালে কি", "নবীজির (ﷺ)", "১টি আমল"]
-
-• Model C (3-Line Prophetic Habit Hook):
-  line_1: "টাকার অভাবে খুব বেশি কষ্ট পাচ্ছেন?"
-  line_2: "নবীজির (ﷺ) শেখানো এই ১টি দোয়া পড়ুন,"
-  line_3: "আল্লাহ রিজিকের বন্ধ দরজা খুলে দেবেন 🤲"
-  highlight_words: ["টাকার অভাবে", "নবীজির (ﷺ)", "১টি দোয়া"]
-
-• Model D (3-Line Reflective Hook):
-  line_1: "মন খুব বেশি খারাপ লাগলে"
-  line_2: "কাউকে কিছু না বলে"
-  line_3: "নবীজির এই ১টি সুন্নাত মানুন 🤲"
-  highlight_words: ["মন খুব বেশি", "১টি সুন্নাত", "নবীজির"]
+  highlight_words: ["হাজার রাকাত", "নবীজি (ﷺ)", "জান্নাতের দায়িত্ব"]
 
 CRITICAL DUA & CAPTION RULES (MANDATORY):
 1. Complete Arabic Text: At least ONE caption point MUST contain full Arabic text with Tashkeel (either a relevant Dua OR the authentic Arabic wording of the Prophet's statement/Hadith), accurate phonetic Bengali pronunciation (উচ্চারণ), authentic Bengali meaning (অর্থ), and Sahih Book Reference.
@@ -522,12 +583,13 @@ TOPICS RECENTLY COVERED (DO NOT REPEAT):
 Output ONLY valid JSON:
 {{
     "series_title": "আজকের আমল • পর্ব {ep_bn}",
-    "title_bn": "ঘরে ঢোকার সময় যে ভুলটি প্রতিদিন করি, অথচ নবীজির এই ১টি সুন্নাহ মানলেই শয়তান আর ঘরে ঢুকতে পারে না",
-    "title_en": "One Sunnah when entering home that prevents Shaytan from entering #Shorts",
-    "line_1": "ঘরে ঢোকার সময়",
-    "line_2": "ভুলে যান এই ১টি সুন্নাহ,",
-    "line_3": "আর শয়তান আপনার সাথেই রাত কাটায় 🤲",
-    "highlight_words": ["ঘরে ঢোকার সময়", "১টি সুন্নাহ", "শয়তান"],
+    "title_bn": "যে আত্মীয় চরম অপমান করে সম্পর্ক ছিন্ন করেছে, তার সাথে আবারও কথা বলা কি বোকামি? নবীজির এই এক জবাবে আপনি বাকরুদ্ধ হয়ে যাবেন",
+    "title_en": "What the Prophet said about relatives who cut ties with you #Shorts",
+    "line_1": "যে আত্মীয় চরম অপমান করে সম্পর্ক ছিন্ন করল,",
+    "line_2": "তার সাথে কি আবারও কথা বলা উচিত?",
+    "line_3": "নবীজির (ﷺ) এই ১টি উত্তর আপনার চোখ ভিজিয়ে দেবে ➔",
+    "caption_cta": "☞ নবীজি কী উত্তর দিয়েছিলেন? ক্যাপশনে পড়ুন ➔",
+    "highlight_words": ["চরম অপমান", "নবীজির (ﷺ)", "১টি উত্তর"],
     "caption_points": [
         {{
             "number": "১",
@@ -610,9 +672,10 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
             f"Guidance: {assigned_domain['guidance']}\n"
             f"Assigned Hook Angle: '{target_angle['name']}' ({target_angle['desc']}). Hook Tone: '{target_tone}'.\n"
             f"Select 1 deeply inspiring, authentic Sahih Hadith strictly within the domain '{assigned_domain['name']}'. "
+            f"CRITICAL HOOK MANDATE: Create an irresistible OPEN LOOP hook that stops the scroll. NEVER spoil the answer, rule, or Hadith conclusion on screen! Pose the burning dilemma, dramatic unfinished scene, or shocking question. The answer belongs ONLY in the caption! Provide 'caption_cta' bridging the hook to the caption. "
             f"Ensure 100% authentic Sahih Hadith with exact book and number (e.g., সহীহ বুখারী: ২০৭৯ or সহীহ মুসলিম: ১৮৯৩). "
             f"Include authentic Arabic text with Tashkeel, Bengali pronunciation, and meaning for at least one point (either a relevant Dua or the Arabic wording of the Hadith). "
-            f"STRICTLY FORBIDDEN: Do NOT select any topic from the avoided list below or any repetition of sleep, grave/Mulk, debt, or anxiety. Return valid JSON only."
+            f"STRICTLY FORBIDDEN: Do NOT select any topic from the avoided list below or any repetition of sleep, grave/Mulk, debt, or anxiety. Return valid JSON only with 'caption_cta'."
         )
 
         if banned_hadiths or last_fail_reason:
@@ -748,15 +811,12 @@ def format_loop_caption(data: dict) -> str:
 
     # SERIES BRANDING & HOOK HEADER
     caption = f"✨ {series_title} ✨\n"
-    hook_l1 = data.get("line_1", "").strip()
-    hook_l2 = data.get("line_2", "").strip()
-    if hook_l1 and hook_l2:
-        hook = f"{hook_l1} {hook_l2}".strip()
-    elif hook_l1:
-        hook = hook_l1
+    hook_parts = [data.get(k, "").strip() for k in ["line_1", "line_2", "line_3", "line_4"] if data.get(k)]
+    if hook_parts:
+        hook = " ".join(hook_parts)
     else:
         hook = title_bn
-    hook = hook.rstrip(' :')
+    hook = hook.rstrip(' :➔')
     hook = _sanitize_bengali_text(hook)
     caption += hook + " 🤲\n\n"
 
@@ -855,26 +915,31 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     series_badge = series_badge.replace("দৈনন্দিন সহীহ আমল", "আজকের আমল")
     if not series_badge.startswith("✦"):
         series_badge = f"✦ {series_badge} ✦"
+    series_badge = sanitize_text_for_ass(series_badge)
 
     l1 = content.get("line_1", "").strip()
     l2 = content.get("line_2", "").strip()
     l3 = content.get("line_3", "").strip()
     l4 = content.get("line_4", "").strip()
 
-    # Rotating psychology-driven CTA hooks (Curiosity Gap + Loss Aversion)
+    # Dynamic Curiosity-Bridge CTA (from LLM) or High-Urgency Fallbacks (Zero emojis to prevent tofu boxes)
     import random as _rnd
-    _CTA_HOOKS = [
-        "☞ এই আমলের পুরো ফযিলত ক্যাপশনে 👇",
-        "☞ দলিলসহ বিস্তারিত ক্যাপশনে পড়ুন 👇",
-        "☞ বেশিরভাগ মানুষ এটা জানেন না → ক্যাপশনে 👇",
-        "☞ না জানলে সওয়াব মিস হচ্ছে → ক্যাপশনে 👇",
-        "☞ হাদিস নম্বরসহ ক্যাপশনে পড়ুন 📖",
-    ]
-    caption_cta_text = _rnd.choice(_CTA_HOOKS)
+    raw_cta = content.get("caption_cta")
+    if not raw_cta or len(raw_cta.strip()) < 5:
+        _CTA_HOOKS = [
+            "☞ পুরো হাদিস ও গোপন আমলটি ক্যাপশনে দেখুন ➔",
+            "☞ দলিলসহ সঠিক নিয়ম ক্যাপশনে পড়ুন ➔",
+            "☞ ৯৯% মানুষ এটা জানেন না ➔ ক্যাপশনে দেখুন",
+            "☞ না জানলে বড় সওয়াব মিস করবেন ➔ ক্যাপশনে",
+            "☞ সহীহ হাদিস নম্বরসহ ক্যাপশনে পড়ুন ➔",
+        ]
+        raw_cta = _rnd.choice(_CTA_HOOKS)
+    caption_cta_text = sanitize_text_for_ass(raw_cta)
     
     hw_list = content.get("highlight_words", ["৩টি আয়াত", "আল্লাহ", "রক্ষা করবেন"])
     clean_lines = revise_and_balance_hook_lines(l1, l2, l3, l4)
     full_hook_text = "\\N".join([l for l in clean_lines if l])
+    full_hook_text = sanitize_text_for_ass(full_hook_text)
     
     # Apply Vibrant Golden/Yellow highlighting (&H002BD5FF&) to keywords
     GOLD_COLOR = "&H002BD5FF&"
@@ -884,7 +949,7 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     hw_list = sorted(hw_list, key=len, reverse=True)
     
     for hw in hw_list:
-        hw_clean = hw.strip()
+        hw_clean = sanitize_text_for_ass(hw.strip())
         if not hw_clean:
             continue
         if hw_clean in full_hook_text:
