@@ -648,10 +648,28 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
         angle_idx = (ep_int + attempt) % len(ANGLES)
         tone_idx = (ep_int + attempt) % len(TONES)
         domain_idx = (ep_int - 1 + attempt) % len(DYNAMIC_ISLAMIC_DOMAINS)
-        
-        target_angle = ANGLES[angle_idx]
+
+        target_angle = dict(ANGLES[angle_idx])
         target_tone = TONES[tone_idx]
-        assigned_domain = DYNAMIC_ISLAMIC_DOMAINS[domain_idx]
+
+        # Prioritize active or upcoming blessed Sunnah event if active
+        try:
+            from app.calendar.hijri_events import get_active_or_upcoming_hijri_event
+            active_event = get_active_or_upcoming_hijri_event()
+        except Exception as e:
+            active_event = None
+
+        if active_event and attempt == 0:
+            logger.info(f"🌙 Blessed Sunnah Event Detected: {active_event['name']}")
+            assigned_domain = {
+                "name": active_event["name"],
+                "theme": active_event["theme"],
+                "guidance": active_event["guidance"]
+            }
+            if active_event.get("model_hook"):
+                target_angle["example_hook"] = active_event["model_hook"]
+        else:
+            assigned_domain = DYNAMIC_ISLAMIC_DOMAINS[domain_idx]
 
         logger.info(f"Attempt {attempt+1}/{max_attempts}: Domain '{assigned_domain['name']}' | Angle '{target_angle['name']}' | Tone '{target_tone}' for Episode #{ep_bn}...")
 
