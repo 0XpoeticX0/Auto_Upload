@@ -414,14 +414,6 @@ def revise_and_enforce_hook_typography(content: dict) -> tuple[bool, str, dict]:
     elif "line_4" in content:
         del content["line_4"]
 
-    # For blessed calendar events, ensure Line 1 has the date badge in parentheses if not present
-    date_badge = content.get("date_badge")
-    if date_badge and content.get("is_hijri_event"):
-        l1_curr = content.get("line_1", "")
-        if "(" not in l1_curr and date_badge not in l1_curr:
-            l1_base = l1_curr.rstrip(" :➔")
-            content["line_1"] = f"{l1_base} ({date_badge} ✦):"
-
     # Sanitize or populate dynamic caption_cta
     raw_cta = content.get("caption_cta", "")
     if raw_cta and len(raw_cta.strip()) >= 5:
@@ -448,43 +440,8 @@ def build_loop_reel_system_prompt(
     domain_name = assigned_domain['name'] if assigned_domain else "দৈনন্দিন সুন্নাহ ও চারিত্রিক সৌন্দর্য"
     domain_guidance = assigned_domain['guidance'] if assigned_domain else "Authentic Sahih Hadith from major books."
 
-    hijri_event_section = ""
-    if assigned_domain and assigned_domain.get("is_hijri_event"):
-        day_rem = assigned_domain.get("day_reminder", "")
-        p_ebadah = assigned_domain.get("prophet_ebadah", "")
-        h_ref = assigned_domain.get("hadith_ref", "")
-        date_badge = assigned_domain.get("date_badge", "")
-        hijri_event_section = f"""
-# ==============================================================================
-# SPECIAL SUNNAH CALENDAR MANDATE: DAY REMINDER & PROPHET'S (ﷺ) 'IBADAH
-# ==============================================================================
-THIS REEL IS A TIMELY REMINDER OF A BLESSED OCCASION & THE PROPHET'S (ﷺ) 'IBADAH:
-• Blessed Day / Event: {domain_name}
-• Day Reminder: {day_rem}
-• Date Info: ({date_badge} ✦)
-• 'Ibadah Taught by Prophet Muhammad (ﷺ): {p_ebadah}
-• Core Hadith Citation: {h_ref}
-
-STRICT CREATION MANDATES FOR THIS OCCASION:
-1. LINE 1 MUST INCLUDE BOTH DAY AND DATE IN PARENTHESES:
-   - Line 1 MUST state the day reminder followed by the exact date in parentheses!
-   - EXACT STRUCTURE: '{day_rem.split()[0]} ({date_badge} ✦):'
-   - EXACT EXAMPLE FOR THIS REEL:
-     line_1: 'আগামীকাল সোমবার ({date_badge} ✦):'
-     line_2: 'পেটে পাথর বেঁধেও নবীজি (ﷺ)'
-     line_3: 'কেন রোজা ছাড়তেন না? ➔'
-   - NOTE: Do NOT put dates in the top series badge ('series_title' stays clean as '✦ আজকের আমল • পর্ব {ep_bn} ✦'). The date belongs strictly in Line 1!
-2. LINE 2 & LINE 3 (নবীজির শেখানো ইবাদত ও কৌতূহলী হুক):
-   - Focus specifically on the exact act of worship ('ibadah) taught and practiced by Prophet Muhammad (ﷺ) on this day.
-   - Pose an irresistible, curiosity-inducing open-loop question or paradoxical contrast about this Prophetic 'ibadah without spoiling the resolution on screen.
-3. STRUCTURED CAPTION POINTS:
-   - Point 1: দিনটির তাৎপর্য ও স্মরণ (Remind why Prophet Muhammad ﷺ honored this day; specify the exact Gregorian & Hijri timing in Bangladesh).
-   - Point 2: নবীজির (ﷺ) শেখানো নির্দিষ্ট ইবাদত (The exact Sunnah 'Ibadah taught by Prophet Muhammad ﷺ: exact Arabic Dua with pronunciation & meaning, fasting procedure, or Dhikr, backed by {h_ref}).
-   - Point 3: আমল করার সঠিক সময় ও ফায়দা (Practical guidance, step-by-step instructions for Bangladeshi viewers, and immense spiritual rewards).
-"""
-
     return f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
-{hijri_event_section}
+
 # ==============================================================================
 # STRICT 100-VIDEO ZERO-SIMILARITY & FRESH TOPIC MANDATE
 # ==============================================================================
@@ -697,31 +654,7 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
         target_angle = dict(ANGLES[angle_idx])
         target_tone = TONES[tone_idx]
 
-        # Prioritize active or upcoming blessed Sunnah event if active
-        try:
-            from app.calendar.hijri_events import get_active_or_upcoming_hijri_event
-            active_event = get_active_or_upcoming_hijri_event()
-        except Exception as e:
-            active_event = None
-
-        if active_event and attempt == 0:
-            logger.info(f"🌙 Blessed Sunnah Event Detected: {active_event['name']}")
-            assigned_domain = {
-                "name": active_event["name"],
-                "theme": active_event["theme"],
-                "guidance": active_event["guidance"],
-                "is_hijri_event": True,
-                "day_reminder": active_event.get("day_reminder", ""),
-                "prophet_ebadah": active_event.get("prophet_ebadah", ""),
-                "hadith_ref": active_event.get("hadith_ref", ""),
-                "date_badge": active_event.get("date_badge", "")
-            }
-            if active_event.get("model_hook"):
-                target_angle["example_hook"] = active_event["model_hook"]
-            if active_event.get("suggested_cta"):
-                target_angle["suggested_cta"] = active_event["suggested_cta"]
-        else:
-            assigned_domain = DYNAMIC_ISLAMIC_DOMAINS[domain_idx]
+        assigned_domain = DYNAMIC_ISLAMIC_DOMAINS[domain_idx]
 
         logger.info(f"Attempt {attempt+1}/{max_attempts}: Domain '{assigned_domain['name']}' | Angle '{target_angle['name']}' | Tone '{target_tone}' for Episode #{ep_bn}...")
 
@@ -894,14 +827,6 @@ def format_loop_caption(data: dict) -> str:
     hook = hook.rstrip(' :➔')
     hook = _sanitize_bengali_text(hook)
     caption += hook + " 🤲\n\n"
-
-    # BANGLADESH GREGORIAN & ISLAMIC HIJRI DATE
-    try:
-        from app.calendar.hijri_events import format_bangladesh_and_hijri_date
-        date_info = format_bangladesh_and_hijri_date()
-        caption += f"{date_info['caption_header']}\n\n"
-    except Exception as e:
-        logger.warning(f"Could not append date header to caption: {e}")
 
     bn_nums = ["১", "২", "৩", "৪", "৫"]
     for idx, pt in enumerate(pts):
