@@ -13,6 +13,8 @@ from typing import Optional, Dict, Any, List
 # Format: (Year, Month, Day) representing 1st of that Hijri month in Bangladesh.
 BANGLADESH_HIJRI_STARTS = [
     # 1448 AH
+    ("1448-03", datetime.date(2026, 8, 15)), # 1 Rabi' al-Awwal 1448
+    ("1448-04", datetime.date(2026, 9, 14)), # 1 Rabi' al-Thani 1448
     ("1448-05", datetime.date(2026, 10, 13)), # 1 Jumada al-Ula 1448
     ("1448-06", datetime.date(2026, 11, 12)), # 1 Jumada al-Thani 1448
     ("1448-07", datetime.date(2026, 12, 12)), # 1 Rajab 1448 (Sacred Month)
@@ -32,6 +34,81 @@ BANGLADESH_HIJRI_STARTS = [
     ("1449-08", datetime.date(2027, 12, 31)), # 1 Sha'ban 1449
     ("1449-09", datetime.date(2028, 1, 29)),  # 1 Ramadan 1449
 ]
+
+BENGALI_HIJRI_MONTHS = {
+    1: "মুহররম",
+    2: "সফর",
+    3: "রবিউল আউয়াল",
+    4: "রবিউস সানি",
+    5: "জমাদিউল আউয়াল",
+    6: "জমাদিউস সানি",
+    7: "রজব",
+    8: "শাবান",
+    9: "রমজান",
+    10: "শাওয়াল",
+    11: "জিলকদ",
+    12: "জিলহজ",
+}
+
+BENGALI_GREGORIAN_MONTHS = {
+    1: "জানুয়ারি",
+    2: "ফেব্রুয়ারি",
+    3: "মার্চ",
+    4: "এপ্রিল",
+    5: "মে",
+    6: "জুন",
+    7: "জুলাই",
+    8: "আগস্ট",
+    9: "সেপ্টেম্বর",
+    10: "অক্টোবর",
+    11: "নভেম্বর",
+    12: "ডিসেম্বর",
+}
+
+BENGALI_WEEKDAYS = {
+    0: "সোমবার",
+    1: "মঙ্গলবার",
+    2: "বুধবার",
+    3: "বৃহস্পতিবার",
+    4: "শুক্রবার",
+    5: "শনিবার",
+    6: "রবিবার",
+}
+
+def to_bengali_num(n: Any) -> str:
+    """Converts English numerals to Bengali digits."""
+    bn_digits = {"0": "০", "1": "১", "2": "২", "3": "৩", "4": "৪", "5": "৫", "6": "৬", "7": "৭", "8": "৮", "9": "৯"}
+    return "".join(bn_digits.get(ch, ch) for ch in str(n))
+
+def format_bangladesh_and_hijri_date(target_date: Optional[datetime.date] = None) -> dict[str, str]:
+    """
+    Formats complete Gregorian date for Bangladesh and Islamic Hijri date in Bengali.
+    """
+    if target_date is None:
+        target_date = get_current_bangladesh_date()
+
+    hijri_day, hijri_month, hijri_key = get_approx_hijri_day_for_date(target_date)
+    hijri_year_str = hijri_key.split("-")[0]
+    hijri_year_bn = to_bengali_num(hijri_year_str)
+    hijri_day_bn = to_bengali_num(hijri_day)
+    hijri_month_bn = BENGALI_HIJRI_MONTHS.get(hijri_month, "হিজরি")
+
+    greg_day_bn = to_bengali_num(target_date.day)
+    greg_month_bn = BENGALI_GREGORIAN_MONTHS.get(target_date.month, "")
+    greg_year_bn = to_bengali_num(target_date.year)
+    weekday_bn = BENGALI_WEEKDAYS.get(target_date.weekday(), "")
+
+    gregorian_display = f"{greg_day_bn} {greg_month_bn} {greg_year_bn} ({weekday_bn})"
+    hijri_display = f"{hijri_day_bn} {hijri_month_bn} {hijri_year_bn} হিজরি"
+    badge_display = f"{greg_day_bn} {greg_month_bn} • {hijri_day_bn} {hijri_month_bn}"
+
+    return {
+        "gregorian_bn": gregorian_display,
+        "hijri_bn": hijri_display,
+        "badge_bn": badge_display,
+        "full_display": f"বাংলাদেশ: {gregorian_display} | হিজরি: {hijri_display}",
+        "caption_header": f"📅 বাংলাদেশ তারিখ: {gregorian_display}\n🌙 হিজরি তারিখ: {hijri_display}"
+    }
 
 # Major Chronological Milestones (Gregorian range in Bangladesh)
 MAJOR_ANNUAL_SEASONS = [

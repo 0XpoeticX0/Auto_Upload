@@ -874,6 +874,14 @@ def format_loop_caption(data: dict) -> str:
     hook = _sanitize_bengali_text(hook)
     caption += hook + " 🤲\n\n"
 
+    # BANGLADESH GREGORIAN & ISLAMIC HIJRI DATE
+    try:
+        from app.calendar.hijri_events import format_bangladesh_and_hijri_date
+        date_info = format_bangladesh_and_hijri_date()
+        caption += f"{date_info['caption_header']}\n\n"
+    except Exception as e:
+        logger.warning(f"Could not append date header to caption: {e}")
+
     bn_nums = ["১", "২", "৩", "৪", "৫"]
     for idx, pt in enumerate(pts):
         num_str = pt.get("number") or (bn_nums[idx] if idx < len(bn_nums) else str(idx + 1))
@@ -967,6 +975,17 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     series_badge = content.get("series_title", f"আজকের আমল • পর্ব {content.get('episode_bn', '১')}")
     # Inject temporal urgency: "আজকের" triggers FOMO (Zeigarnik Effect)
     series_badge = series_badge.replace("দৈনন্দিন সহীহ আমল", "আজকের আমল")
+
+    # Add Islamic Hijri and Bangladesh date badge to top series header
+    try:
+        from app.calendar.hijri_events import format_bangladesh_and_hijri_date
+        date_info = format_bangladesh_and_hijri_date()
+        date_badge = date_info.get("badge_bn", "")
+        if date_badge:
+            series_badge = f"{series_badge} • {date_badge}"
+    except Exception as e:
+        logger.warning(f"Could not append date badge: {e}")
+
     if not series_badge.startswith("✦"):
         series_badge = f"✦ {series_badge} ✦"
     series_badge = sanitize_text_for_ass(series_badge)
@@ -1019,14 +1038,14 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: SeriesBadge,Noto Sans Bengali,38,&H002BD5FF&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
+Style: SeriesBadge,Noto Sans Bengali,34,&H002BD5FF&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
 Style: MainHook,Noto Sans Bengali,56,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.2,2.5,5,70,70,0,1
 Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,420,1
 Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,60,60,350,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c{GOLD_COLOR}}}{series_badge}
+Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs34\\b1\\c{GOLD_COLOR}}}{series_badge}
 Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs56\\b1\\c{WHITE_COLOR}}}{full_hook_text}
 Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}{caption_cta_text}{{\\c{WHITE_COLOR}}}
 Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ☞ @dailydos_islam
