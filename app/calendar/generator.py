@@ -77,13 +77,13 @@ def build_sunnah_calendar_system_prompt(event_data: dict, date_info: dict) -> st
    - EXACT FORMAT: '{day_prefix} ({date_badge} ✦):'
    - EXAMPLE: 'আগামীকাল সোমবার ({date_badge} ✦):'
 
-2. LINE 2 & LINE 3 (নবীজির শেখানো ইবাদত ও কৌতূহলী হুক):
-   - Pose an irresistible, high-stakes curiosity question or dramatic contrast about the specific 'Ibadah taught by Prophet Muhammad (ﷺ).
-   - STRICT ZERO SPOILER RULE: Never reveal the full Hadith answer or sermon on screen!
-   - Line 3 ends with the bridge arrow '➔'.
+2. LINE 2 & LINE 3 (দিনটির গুরুত্ব/ফজিলত ও নবীজির আমলের কৌতূহলী হুক):
+   - Line 2 MUST explicitly communicate WHY this day is important/sacred (e.g. 'আমলনামা পেশের দিনে', 'সপ্তাহের শ্রেষ্ঠ দিনে', '২ বছরের গুনাহ মাফের দিনে', 'পূর্ণিমার ৩ দিনে') combined with Prophet Muhammad (ﷺ).
+   - Line 3 poses the high-curiosity question about the Prophet's taught 'ibadah ending with '➔'.
+   - This ensures viewers immediately know WHAT DAY it is, WHY IT IS IMPORTANT, and ARE HOOKED to learn the 'ibadah!
    - EXACT 3-LINE EXAMPLE:
      line_1: 'আগামীকাল সোমবার ({date_badge} ✦):'
-     line_2: 'পেটে পাথর বেঁধেও নবীজি (ﷺ)'
+     line_2: 'আমলনামা পেশের দিনে নবীজি (ﷺ)'
      line_3: 'কেন রোজা ছাড়তেন না? ➔'
 
 3. CAPTION CTA:
@@ -99,13 +99,13 @@ def build_sunnah_calendar_system_prompt(event_data: dict, date_info: dict) -> st
 
 Output ONLY valid JSON:
 {{
-    "title_bn": "আগামীকাল সোমবার: পেটে পাথর বেঁধেও নবীজি (ﷺ) কেন রোজা ছাড়তেন না?",
+    "title_bn": "আগামীকাল সোমবার: আমলনামা পেশের দিনে নবীজি (ﷺ) কেন রোজা ছাড়তেন না?",
     "title_en": "Why Prophet Muhammad fasted on Mondays #Sunnah #IslamicReminder",
     "line_1": "{day_prefix} ({date_badge} ✦):",
-    "line_2": "পেটে পাথর বেঁধেও নবীজি (ﷺ)",
+    "line_2": "আমলনামা পেশের দিনে নবীজি (ﷺ)",
     "line_3": "কেন রোজা ছাড়তেন না? ➔",
     "caption_cta": "{cta}",
-    "highlight_words": ["{day_prefix}", "নবীজি (ﷺ)", "রোজা"],
+    "highlight_words": ["আমলনামা পেশের দিনে", "নবীজি (ﷺ)", "রোজা"],
     "caption_points": [
         {{
             "number": "১",
@@ -184,10 +184,10 @@ def generate_sunnah_calendar_content(target_date: Optional[datetime.date] = None
             "title_bn": f"{event_data['name']}: নবীজির শেখানো আমল",
             "title_en": f"{event_data.get('theme', 'Sunnah Reminder')} #Sunnah",
             "line_1": f"{day_prefix} ({date_badge} ✦):",
-            "line_2": "পেটে পাথর বেঁধেও নবীজি (ﷺ)",
+            "line_2": "আমলনামা পেশের দিনে নবীজি (ﷺ)",
             "line_3": "কেন রোজা ছাড়তেন না? ➔",
             "caption_cta": event_data.get("suggested_cta", "☞ নবীজির শেখানো আমলটি ক্যাপশনে দেখুন ➔"),
-            "highlight_words": [day_prefix, "নবীজি (ﷺ)", "রোজা"],
+            "highlight_words": ["আমলনামা পেশের দিনে", "নবীজি (ﷺ)", "রোজা"],
             "caption_points": [
                 {
                     "number": "১",

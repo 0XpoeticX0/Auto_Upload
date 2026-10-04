@@ -466,7 +466,7 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
             "gregorian_bn": date_info["gregorian_bn"],
             "hijri_bn": date_info["hijri_bn"],
             "guidance": "Focus on voluntary fasting on Monday. The Prophet (ﷺ) said: 'Deeds are presented on Monday and Thursday, and I love that my deeds be presented while I am fasting' (Tirmidhi 747). He was also born and received revelation on Monday (Muslim 1162).",
-            "model_hook": f"আগামীকাল সোমবার ({date_badge} ✦): পেটে পাথর বেঁধেও নবীজি (ﷺ) কেন রোজা ছাড়তেন না?",
+            "model_hook": f"আগামীকাল সোমবার ({date_badge} ✦): আমলনামা পেশের দিনে নবীজি (ﷺ) কেন রোজা ছাড়তেন না?",
             "suggested_cta": "☞ সোমবার রোজা রাখার রহস্যটি ক্যাপশনে পড়ুন ➔",
             "priority": "weekly_fast"
         }
@@ -483,7 +483,7 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
             "gregorian_bn": date_info["gregorian_bn"],
             "hijri_bn": date_info["hijri_bn"],
             "guidance": "Focus on fasting Thursday as the weekly closure of deeds being presented to Allah (Jami' at-Tirmidhi 747). Sins are forgiven except for those with mutual hatred.",
-            "model_hook": f"আগামীকাল বৃহস্পতিবার ({date_badge} ✦): সূর্যাস্তের ঠিক আগে আমাদের আমলনামা কোথায় নিয়ে যাওয়া হয়?",
+            "model_hook": f"আগামীকাল বৃহস্পতিবার ({date_badge} ✦): সাপ্তাহিক ক্ষমা লাভের দিনে নবীজি (ﷺ) কেন রোজা ছাড়তেন না?",
             "suggested_cta": "☞ সহীহ হাদিসের সেই বর্ণনাটি ক্যাপশনে পড়ুন ➔",
             "priority": "weekly_fast"
         }
