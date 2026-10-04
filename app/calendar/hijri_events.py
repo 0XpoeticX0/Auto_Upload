@@ -344,6 +344,8 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
     if target_date is None:
         target_date = get_current_bangladesh_date()
 
+    date_info = format_bangladesh_and_hijri_date(target_date)
+    date_badge = date_info["badge_bn"]
     hijri_day, hijri_month, hijri_key = get_approx_hijri_day_for_date(target_date)
     weekday = target_date.weekday() # 0 = Monday, 3 = Thursday, 4 = Friday, 6 = Sunday
 
@@ -362,6 +364,9 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
                 "day_reminder": top_season.get("day_reminder", top_season["name"]),
                 "prophet_ebadah": top_season.get("prophet_ebadah", ""),
                 "hadith_ref": top_season.get("hadith_ref", ""),
+                "date_badge": date_badge,
+                "gregorian_bn": date_info["gregorian_bn"],
+                "hijri_bn": date_info["hijri_bn"],
                 "guidance": top_season["guidance"],
                 "model_hook": top_season["model_hook"],
                 "suggested_cta": top_season["suggested_cta"],
@@ -382,10 +387,13 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
             "name": f"আইয়ামে বিজের ৩ দিনের নফল রোজা ({alert_prefix})",
             "theme": "প্রতি চান্দ্র মাসের ১৩, ১৪ ও ১৫ তারিখে রোজা রাখলে সারাজীবন রোজা রাখার সওয়াব",
             "day_reminder": f"আসন্ন আইয়ামে বিজ — {alert_prefix} (১৩, ১৪, ১৫ হিজরি)",
-            "prophet_ebadah": "চান্দ্র মাসের পূর্ণিমার ৩ দিন নফল সিয়াম পালন করা, যা সারাজীবন রোজা রাখার সমতুল্য সওয়াব এনে দেয়",
+            "prophet_ebadah": "চান্দ্র মাসের পূর্ণিমার ৩ দিন নফল সিয়াম পালন করা, যা সারাজীবন রোজা রাখার সমতুলয় সওয়াব এনে দেয়",
             "hadith_ref": "সহীহ বুখারী: ১৯৮১, সহীহ মুসলিম: ১১৫৯",
+            "date_badge": date_badge,
+            "gregorian_bn": date_info["gregorian_bn"],
+            "hijri_bn": date_info["hijri_bn"],
             "guidance": "Focus on Ayyam al-Beed (13th, 14th, 15th of Hijri month). The Prophet (ﷺ) never abandoned them and said: 'Fasting three days of every month is like fasting for an entire lifetime' (Sahih al-Bukhari 1981, Sahih Muslim 1159). Remind people of the exact date in Bangladesh and urge them to fast.",
-            "model_hook": "মাসে মাত্র ৩ দিন রোজা রেখে পুরো জীবন রোজা রাখার সওয়াব কীভাবে পাওয়া যায়?",
+            "model_hook": f"আসন্ন আইয়ামে বিজ ({date_badge} ✦): মাসে মাত্র ৩ দিন রোজা রেখে পুরো জীবন রোজা রাখার সওয়াব কীভাবে পাওয়া যায়?",
             "suggested_cta": "☞ কোন ৩ দিন রোজা রাখবেন? ক্যাপশনে দেখুন ➔",
             "priority": "high"
         }
@@ -400,6 +408,9 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
                 "day_reminder": season.get("day_reminder", season["name"]),
                 "prophet_ebadah": season.get("prophet_ebadah", ""),
                 "hadith_ref": season.get("hadith_ref", ""),
+                "date_badge": date_badge,
+                "gregorian_bn": date_info["gregorian_bn"],
+                "hijri_bn": date_info["hijri_bn"],
                 "guidance": season["guidance"],
                 "model_hook": season["model_hook"],
                 "suggested_cta": season["suggested_cta"],
@@ -416,8 +427,11 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
             "day_reminder": "আজ পবিত্র জুমাবার (সপ্তাহের সর্বশ্রেষ্ঠ দিন)",
             "prophet_ebadah": "১. সূরা কাহাফ তিলাওয়াত, ২. নবীজির ওপর অধিক দরূদ পাঠ, ৩. আসর থেকে মাগরিবের শেষ ৬০ মিনিটে দোয়া (সা‘আতুল ইস্তিজাবাহ), ৪. গোসল ও সুগন্ধি মেখে মসজিদে আগেভাগে যাওয়া",
             "hadith_ref": "সহীহ মুসলিম: ৮৫৪, সুনানে আবু দাউদ: ১০৪৮, সুনানে আবু দাউদ: ১০৪৭, হাকেম: ৩৩৯২",
+            "date_badge": date_badge,
+            "gregorian_bn": date_info["gregorian_bn"],
+            "hijri_bn": date_info["hijri_bn"],
             "guidance": "Focus on Friday being the best day of the week (Sahih Muslim 854). Specifically highlight Sa'at al-Istijabah (the hour of accepted prayers) in the final hour after Asr before Maghrib (Sunan Abi Dawud 1048), Surah Al-Kahf illumination (Mustadrak 3392), and abundant Salawat.",
-            "model_hook": "জুমার দিনে আসর থেকে মাগরিবের মাঝে ঠিক কোন মুহূর্তে সব দোয়া কবুল হয়?",
+            "model_hook": f"আজ পবিত্র জুমাবার ({date_badge} ✦): আসর থেকে মাগরিবের মাঝে ঠিক কোন মুহূর্তে সব দোয়া কবুল হয়?",
             "suggested_cta": "☞ কবুল হওয়ার সেই গোপন মুহূর্তটি ক্যাপশনে দেখুন ➔",
             "priority": "weekly_jumuah"
         }
@@ -429,8 +443,11 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
             "day_reminder": "জুমার রাত (বৃহস্পতিবার সূর্যাস্তের পর থেকে)",
             "prophet_ebadah": "বৃহস্পতিবার সূর্যাস্তের পর থেকেই নবীজি (ﷺ)-এর ওপর অধিক দরূদ শরীফ পাঠ এবং জুমার দিনের প্রস্তুতি গ্রহণ",
             "hadith_ref": "সুনানে বায়হাকী: ৫৯৯৪",
+            "date_badge": date_badge,
+            "gregorian_bn": date_info["gregorian_bn"],
+            "hijri_bn": date_info["hijri_bn"],
             "guidance": "Focus on preparing for Friday: ritual bath, wearing clean clothes, reciting Salawat abundantly starting from Thursday sunset through Friday.",
-            "model_hook": "বৃহস্পতিবার সূর্যাস্তের পর থেকে নবীজি (ﷺ) কোন আমলটি শতগুণ বাড়িয়ে দিতেন?",
+            "model_hook": f"জুমার মোবারক রাত ({date_badge} ✦): সূর্যাস্তের পর থেকে নবীজি (ﷺ) কোন আমলটি শতগুণ বাড়িয়ে দিতেন?",
             "suggested_cta": "☞ জুমার খাস আমলগুলো ক্যাপশনে জেনে নিন ➔",
             "priority": "weekly_jumuah"
         }
@@ -445,8 +462,11 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
             "day_reminder": "আগামীকাল সোমবার (সাপ্তাহিক আমলনামা পেশের দিন)",
             "prophet_ebadah": "সোমবারের নফল সিয়াম পালন করা (যেদিন আল্লাহর দরবারে আমলনামা পেশ করা হয় এবং যেদিন নবীজি জন্মগ্রহণ করেছিলেন ও ওহী পেয়েছিলেন)",
             "hadith_ref": "জামে তিরমিযী: ৭৪৭, সহীহ মুসলিম: ১১৬২",
+            "date_badge": date_badge,
+            "gregorian_bn": date_info["gregorian_bn"],
+            "hijri_bn": date_info["hijri_bn"],
             "guidance": "Focus on voluntary fasting on Monday. The Prophet (ﷺ) said: 'Deeds are presented on Monday and Thursday, and I love that my deeds be presented while I am fasting' (Tirmidhi 747). He was also born and received revelation on Monday (Muslim 1162).",
-            "model_hook": "নবীজি (ﷺ) প্রতি সোমবার নিজের পেটে পাথর বেঁধেও কেন রোজা ছাড়তেন না?",
+            "model_hook": f"আগামীকাল সোমবার ({date_badge} ✦): পেটে পাথর বেঁধেও নবীজি (ﷺ) কেন রোজা ছাড়তেন না?",
             "suggested_cta": "☞ সোমবার রোজা রাখার রহস্যটি ক্যাপশনে পড়ুন ➔",
             "priority": "weekly_fast"
         }
@@ -459,8 +479,11 @@ def get_active_or_upcoming_hijri_event(target_date: Optional[datetime.date] = No
             "day_reminder": "আগামীকাল বৃহস্পতিবার (সাপ্তাহিক আমলনামা পেশের দিন)",
             "prophet_ebadah": "বৃহস্পতিবারের নফল সিয়াম পালন করা (সাপ্তাহিক আমলনামা পেশ ও ক্ষমা লাভের সুন্নাত সিয়াম)",
             "hadith_ref": "জামে তিরমিযী: ৭৪৭",
+            "date_badge": date_badge,
+            "gregorian_bn": date_info["gregorian_bn"],
+            "hijri_bn": date_info["hijri_bn"],
             "guidance": "Focus on fasting Thursday as the weekly closure of deeds being presented to Allah (Jami' at-Tirmidhi 747). Sins are forgiven except for those with mutual hatred.",
-            "model_hook": "প্রতি বৃহস্পতিবার সূর্যাস্তের ঠিক আগে আমাদের আমলনামা কোথায় নিয়ে যাওয়া হয়?",
+            "model_hook": f"আগামীকাল বৃহস্পতিবার ({date_badge} ✦): সূর্যাস্তের ঠিক আগে আমাদের আমলনামা কোথায় নিয়ে যাওয়া হয়?",
             "suggested_cta": "☞ সহীহ হাদিসের সেই বর্ণনাটি ক্যাপশনে পড়ুন ➔",
             "priority": "weekly_fast"
         }

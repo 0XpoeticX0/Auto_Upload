@@ -272,8 +272,8 @@ def revise_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "", l4: str =
     def _clean(t: str) -> str:
         t = sanitize_text_for_ass(t or '')
         t = t.strip(' \t\n\r"\'“”‘’')
-        t = re.sub(r'[\s\.\—\–\:\,\-]+$', '', t)
-        return t.strip(' ,;:-—')
+        t = re.sub(r'[\s\.\—\–\,\-]+$', '', t)
+        return t.strip(' ,;-—')
 
     l1 = _clean(l1)
     l2 = _clean(l2)
@@ -414,6 +414,14 @@ def revise_and_enforce_hook_typography(content: dict) -> tuple[bool, str, dict]:
     elif "line_4" in content:
         del content["line_4"]
 
+    # For blessed calendar events, ensure Line 1 has the date badge in parentheses if not present
+    date_badge = content.get("date_badge")
+    if date_badge and content.get("is_hijri_event"):
+        l1_curr = content.get("line_1", "")
+        if "(" not in l1_curr and date_badge not in l1_curr:
+            l1_base = l1_curr.rstrip(" :➔")
+            content["line_1"] = f"{l1_base} ({date_badge} ✦):"
+
     # Sanitize or populate dynamic caption_cta
     raw_cta = content.get("caption_cta", "")
     if raw_cta and len(raw_cta.strip()) >= 5:
@@ -445,23 +453,30 @@ def build_loop_reel_system_prompt(
         day_rem = assigned_domain.get("day_reminder", "")
         p_ebadah = assigned_domain.get("prophet_ebadah", "")
         h_ref = assigned_domain.get("hadith_ref", "")
+        date_badge = assigned_domain.get("date_badge", "")
         hijri_event_section = f"""
 # ==============================================================================
 # SPECIAL SUNNAH CALENDAR MANDATE: DAY REMINDER & PROPHET'S (ﷺ) 'IBADAH
 # ==============================================================================
 THIS REEL IS A TIMELY REMINDER OF A BLESSED OCCASION & THE PROPHET'S (ﷺ) 'IBADAH:
 • Blessed Day / Event: {domain_name}
-• Day Reminder / Timing Urgency: {day_rem}
+• Day Reminder: {day_rem}
+• Date Info: ({date_badge} ✦)
 • 'Ibadah Taught by Prophet Muhammad (ﷺ): {p_ebadah}
 • Core Hadith Citation: {h_ref}
 
 STRICT CREATION MANDATES FOR THIS OCCASION:
-1. REMIND OF THAT DAY (দিনটির সময়োপযোগী স্মরণ):
-   - Line 1 MUST establish the timely reminder of the upcoming or current blessed day/time (e.g., '{day_rem.split()[0]}...').
-   - Viewers must immediately feel the urgency: this blessed day is happening right now or within 24 hours!
-2. PROPHET'S (ﷺ) 'IBADAH ON THAT DAY (নবীজি সা.-এর শেখানো ইবাদত ও আমল):
+1. LINE 1 MUST INCLUDE BOTH DAY AND DATE IN PARENTHESES:
+   - Line 1 MUST state the day reminder followed by the exact date in parentheses!
+   - EXACT STRUCTURE: '{day_rem.split()[0]} ({date_badge} ✦):'
+   - EXACT EXAMPLE FOR THIS REEL:
+     line_1: 'আগামীকাল সোমবার ({date_badge} ✦):'
+     line_2: 'পেটে পাথর বেঁধেও নবীজি (ﷺ)'
+     line_3: 'কেন রোজা ছাড়তেন না? ➔'
+   - NOTE: Do NOT put dates in the top series badge ('series_title' stays clean as '✦ আজকের আমল • পর্ব {ep_bn} ✦'). The date belongs strictly in Line 1!
+2. LINE 2 & LINE 3 (নবীজির শেখানো ইবাদত ও কৌতূহলী হুক):
    - Focus specifically on the exact act of worship ('ibadah) taught and practiced by Prophet Muhammad (ﷺ) on this day.
-   - Line 2 & Line 3 must pose an irresistible, curiosity-inducing open-loop question or paradoxical contrast about this Prophetic 'ibadah without spoiling the resolution on screen.
+   - Pose an irresistible, curiosity-inducing open-loop question or paradoxical contrast about this Prophetic 'ibadah without spoiling the resolution on screen.
 3. STRUCTURED CAPTION POINTS:
    - Point 1: দিনটির তাৎপর্য ও স্মরণ (Remind why Prophet Muhammad ﷺ honored this day; specify the exact Gregorian & Hijri timing in Bangladesh).
    - Point 2: নবীজির (ﷺ) শেখানো নির্দিষ্ট ইবাদত (The exact Sunnah 'Ibadah taught by Prophet Muhammad ﷺ: exact Arabic Dua with pronunciation & meaning, fasting procedure, or Dhikr, backed by {h_ref}).
@@ -698,7 +713,8 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
                 "is_hijri_event": True,
                 "day_reminder": active_event.get("day_reminder", ""),
                 "prophet_ebadah": active_event.get("prophet_ebadah", ""),
-                "hadith_ref": active_event.get("hadith_ref", "")
+                "hadith_ref": active_event.get("hadith_ref", ""),
+                "date_badge": active_event.get("date_badge", "")
             }
             if active_event.get("model_hook"):
                 target_angle["example_hook"] = active_event["model_hook"]
@@ -809,6 +825,11 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
                 if ref:
                     banned_hadiths.add(ref)
             continue
+
+        # Propagate Hijri event flags before typography check
+        if assigned_domain.get("is_hijri_event"):
+            content["is_hijri_event"] = True
+            content["date_badge"] = assigned_domain.get("date_badge", "")
 
         # AUTO-REVISION TYPOGRAPHY QUALITY ENGINE (NON-BLOCKING AUTO-REPAIR)
         _, typo_reason, typo_content = revise_and_enforce_hook_typography(content)
@@ -975,17 +996,6 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
     series_badge = content.get("series_title", f"আজকের আমল • পর্ব {content.get('episode_bn', '১')}")
     # Inject temporal urgency: "আজকের" triggers FOMO (Zeigarnik Effect)
     series_badge = series_badge.replace("দৈনন্দিন সহীহ আমল", "আজকের আমল")
-
-    # Add Islamic Hijri and Bangladesh date badge to top series header
-    try:
-        from app.calendar.hijri_events import format_bangladesh_and_hijri_date
-        date_info = format_bangladesh_and_hijri_date()
-        date_badge = date_info.get("badge_bn", "")
-        if date_badge:
-            series_badge = f"{series_badge} • {date_badge}"
-    except Exception as e:
-        logger.warning(f"Could not append date badge: {e}")
-
     if not series_badge.startswith("✦"):
         series_badge = f"✦ {series_badge} ✦"
     series_badge = sanitize_text_for_ass(series_badge)
@@ -1038,14 +1048,14 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: SeriesBadge,Noto Sans Bengali,34,&H002BD5FF&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
+Style: SeriesBadge,Noto Sans Bengali,38,&H002BD5FF&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
 Style: MainHook,Noto Sans Bengali,56,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.2,2.5,5,70,70,0,1
 Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,420,1
 Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,60,60,350,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs34\\b1\\c{GOLD_COLOR}}}{series_badge}
+Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c{GOLD_COLOR}}}{series_badge}
 Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs56\\b1\\c{WHITE_COLOR}}}{full_hook_text}
 Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}{caption_cta_text}{{\\c{WHITE_COLOR}}}
 Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ☞ @dailydos_islam
