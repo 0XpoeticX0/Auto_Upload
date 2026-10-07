@@ -46,4 +46,10 @@
 - **Strict 30-Video Memory**: Programmatically block and reject any Quranic Surah, Ayah range, passage, or theme that has been published within the **last 30 videos** (tracked across Supabase cloud memory and local video history).
 - **Zero Duplicate Visuals**: Visual tracks must cycle through independent video buckets (`data/video_registry.json`) ensuring 0 identical clip sequences across consecutive productions.
 
+## 7. Bengali Grammar, Pure Curiosity Hook & Anti-Broken-Bangla Mandate
+- **Zero Broken Bengali (বিশুদ্ধ ও প্রাঞ্জল বাংলা)**: Sentences must be 100% grammatically correct, natural everyday spoken Bengali. Strictly 0 repeated words/clauses (`রাসূল ... রাসূল`, `জান্নাতের জিম্মাদার ... জান্নাতের জিম্মাদার`), zero ungrammatical run-ons.
+- **Pure Curiosity Hooks (Open Loop)**: The on-screen text must NEVER lecture or preach (`সামলে চলুন`, `হেফাজত করুন`, `আমলটি করুন`). Must pose an irresistible open-loop inquiry or dramatic contrast ending with the bridge arrow `➔` (e.g., `মাত্র ২টি অঙ্গ হেফাজত করলে নবীজি (ﷺ) / জান্নাতের জিম্মাদার হওয়ার ঘোষণা দিয়েছিলেন ➔`).
+- **Zero Tofu Boxes & Missing Glyphs**: Exclusively burn subtitles using `Kalpurush` font with `fontsdir='app/assets/fonts'`, guaranteeing 0 broken rectangle/tofu boxes (`🗹`).
+- **Automated Gemini Verification & Auto-Edit Pass**: Every video hook must be verified by Gemini via `app/quality/bengali_hook_guardian.py`. If any broken Bengali, repetition, or preachy language is detected, Gemini automatically edits and rewrites the lines in-place before video rendering.
+
 

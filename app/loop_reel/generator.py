@@ -273,7 +273,24 @@ def revise_and_balance_hook_lines(l1: str, l2: str = "", l3: str = "", l4: str =
         t = sanitize_text_for_ass(t or '')
         t = t.strip(' \t\n\r"\'“”‘’')
         t = re.sub(r'[\s\.\—\–\,\-]+$', '', t)
-        return t.strip(' ,;-—')
+        t = t.strip(' ,;-—')
+        # Deduplicate repeated adjacent words or 2-word phrases within line (e.g. "জান্নাতের জিম্মাদার ... জান্নাতের জিম্মাদার")
+        words = t.split()
+        if len(words) > 2:
+            cleaned_words = []
+            i = 0
+            while i < len(words):
+                if i + 3 < len(words) and words[i] == words[i+2] and words[i+1] == words[i+3]:
+                    cleaned_words.extend([words[i], words[i+1]])
+                    i += 4
+                elif i + 1 < len(words) and words[i] == words[i+1]:
+                    cleaned_words.append(words[i])
+                    i += 2
+                else:
+                    cleaned_words.append(words[i])
+                    i += 1
+            t = " ".join(cleaned_words)
+        return t
 
     l1 = _clean(l1)
     l2 = _clean(l2)
@@ -768,6 +785,10 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
         _, typo_reason, typo_content = revise_and_enforce_hook_typography(content)
         content = typo_content
 
+        # GEMINI BENGALI GRAMMAR, CURIOSITY & ANTI-BROKEN-BANGLA PASS
+        from app.quality.bengali_hook_guardian import verify_and_auto_edit_hook_with_gemini
+        content = verify_and_auto_edit_hook_with_gemini(content)
+
         content["slot_key"] = slot_key
         content["episode_number"] = ep_int
         content["episode_bn"] = ep_bn
@@ -964,6 +985,9 @@ def render_loop_reel_video(content: dict, output_dir: str = "data/output") -> st
             full_hook_text = full_hook_text.replace(hw_clean, f"{{\\c{GOLD_COLOR}}}{hw_clean}{{\\c{WHITE_COLOR}}}", 1)
 
     ass_path = os.path.join(temp_dir, "overlay.ass")
+    fonts_dir = os.path.abspath("app/assets/fonts").replace("\\", "/")
+    fonts_dir_escaped = fonts_dir.replace(":", "\\:")
+
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
@@ -973,22 +997,24 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: SeriesBadge,Noto Sans Bengali,38,&H002BD5FF&,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,3.2,2.2,8,60,60,220,1
-Style: MainHook,Noto Sans Bengali,56,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,4.2,2.5,5,70,70,0,1
-Style: CaptionCTA,Noto Sans Bengali,44,&H002BD5FF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,3.5,2.5,2,60,60,420,1
-Style: FollowTrigger,Noto Sans Bengali,32,&H00FFFFFF&,&H000000FF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,1,2.8,2.0,2,60,60,350,1
+Style: SeriesBadge,Kalpurush,42,&H0015CCFA&,&H000000FF,&H00000000,&HB0000000,0,0,0,0,100,100,0,0,1,3.4,2.0,8,60,60,200,1
+Style: MainHook,Kalpurush,56,&H00FFFFFF&,&H000000FF,&H00000000,&HC0000000,0,0,0,0,100,100,0,0,1,4.2,2.6,5,50,50,0,1
+Style: CaptionCTA,Kalpurush,44,&H0015CCFA&,&H000000FF,&H00000000,&HA0000000,0,0,0,0,100,100,0,0,1,3.0,1.8,2,50,50,420,1
+Style: FollowTrigger,Kalpurush,32,&H00E0E8F0&,&H000000FF,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,2.4,1.4,2,50,50,350,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnNoto Sans Bengali\\fs38\\b1\\c{GOLD_COLOR}}}{series_badge}
-Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnNoto Sans Bengali\\fs56\\b1\\c{WHITE_COLOR}}}{full_hook_text}
-Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnNoto Sans Bengali\\fs44\\b1\\c{GOLD_COLOR}}}{caption_cta_text}{{\\c{WHITE_COLOR}}}
-Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\\fs32\\b1\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ☞ @dailydos_islam
+Dialogue: 0,0:00:00.00,0:00:08.00,SeriesBadge,,0,0,0,,{{\\fnKalpurush\\fs42\\c{GOLD_COLOR}}}{series_badge}
+Dialogue: 0,0:00:00.00,0:00:08.00,MainHook,,0,0,0,,{{\\fnKalpurush\\fs56\\c{WHITE_COLOR}}}{full_hook_text}
+Dialogue: 0,0:00:00.00,0:00:08.00,CaptionCTA,,0,0,0,,{{\\fnKalpurush\\fs44\\c{GOLD_COLOR}}}{caption_cta_text}{{\\c{WHITE_COLOR}}}
+Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnKalpurush\\fs32\\c{WHITE_COLOR}}}প্রতিদিনের সহীহ হাদিস ও দোয়ার জন্য Follow করুন ➔ @dailydos_islam
 """
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
 
     rel_ass = os.path.relpath(ass_path).replace("\\", "/")
+    ass_escaped = rel_ass.replace(":", "\\:")
+    sub_filter = f"subtitles='{ass_escaped}':fontsdir='{fonts_dir_escaped}'"
 
     # 4. Render 60 FPS Sub-pixel Lanczos continuous zoom video (Clean typography directly over Islamic visual)
     output_video = os.path.join(output_dir, f"loop_reel_{content.get('slot_key', 'slot')}_{int(time.time())}.mp4")
@@ -1011,7 +1037,7 @@ Dialogue: 0,0:00:00.00,0:00:08.00,FollowTrigger,,0,0,0,,{{\\fnNoto Sans Bengali\
         "-r", str(fps),
         "-i", "-",
         "-i", audio_path,
-        "-vf", f"subtitles='{rel_ass}'",
+        "-vf", sub_filter,
         "-c:v", "libx264",
         "-crf", "16",
         "-preset", "fast",
