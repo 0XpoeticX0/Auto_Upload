@@ -11,7 +11,15 @@ from PIL import Image
 
 from app.logger import logger
 from app.llm.provider import extract_json
-from app.history import _supabase_insert, get_recent_video_titles, get_next_episode_number
+from app.history import (
+    _supabase_insert,
+    get_recent_video_titles,
+    get_next_episode_number,
+    check_hadith_number_duplicate,
+    extract_hadith_identifiers,
+    get_used_hadith_registry,
+    record_used_hadith
+)
 from app.loop_reel.audio_library import get_or_download_quran_audio
 from app.upload.youtube import upload_to_youtube
 from app.upload.facebook import upload_to_facebook
@@ -457,6 +465,9 @@ def build_loop_reel_system_prompt(
     domain_name = assigned_domain['name'] if assigned_domain else "দৈনন্দিন সুন্নাহ ও চারিত্রিক সৌন্দর্য"
     domain_guidance = assigned_domain['guidance'] if assigned_domain else "Authentic Sahih Hadith from major books."
 
+    used_hadith_list = get_used_hadith_registry(limit=50)
+    used_hadiths_str = "\n".join([f"- {h.get('reference', '')} ({h.get('title', '')[:50]})" for h in used_hadith_list[:30] if h.get("reference")])
+
     return f"""You are a master viral Islamic content creator specializing in high-retention 7-second aesthetic Reels with high-value captions.
 
 # ==============================================================================
@@ -470,6 +481,12 @@ STRICTLY FORBIDDEN TO REPEAT RECENT OR OVERSATURATED THEMES:
 - ❌ NO Anxiety / Depression / Mental agitation / Heaviness (দুশ্চিন্তা, পেরেশানি, মানসিক অশান্তি, মন খারাপ)
 - ❌ NO Debt / Money crises / Poverty (ঋণ পরিশোধ, দেনা, পাহাড়সমান ঋণ)
 - ❌ NO Sins erasing like sea foam (সমুদ্রের ফেনা, পাহাড় পরিমাণ গুনাহ মাফ)
+
+# STRICT NO SAME HADITH RULE (LAST 50 VIDEOS):
+The following Hadith citations & numbers have ALREADY BEEN USED and are STRICTLY BANNED:
+{used_hadiths_str}
+
+CRITICAL: You MUST NOT select any of the Hadiths or Hadith numbers listed above! Select a COMPLETELY FRESH, authentic Sahih Hadith with a DIFFERENT Hadith number from Sahih Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami at-Tirmidhi, Sunan an-Nasa'i, or Sunan Ibn Majah.
 
 ASSIGNED SPECIFIC ISLAMIC DOMAIN FOR THIS REEL:
 • Domain: {domain_name}
@@ -718,11 +735,12 @@ def generate_loop_reel_content(slot_key: str = None) -> dict:
         pts_text = " ".join([f"{pt.get('title', '')} {pt.get('hadith', '')} {pt.get('reference', '')}" for pt in content.get("caption_points", [])])
         full_check_text = f"{title_bn} {content.get('arabic', '')} {pts_text}"
 
+        is_dup_hadith, reason_hadith = check_hadith_number_duplicate(content, limit=50)
         is_dup_title, reason_title = check_topic_duplicate_global_detail(title_bn, check_semantic=True)
         is_dup_full, reason_full = check_topic_duplicate_global_detail(full_check_text, check_semantic=False)
 
-        if is_dup_title or is_dup_full:
-            dup_reason = reason_title or reason_full
+        if is_dup_hadith or is_dup_title or is_dup_full:
+            dup_reason = reason_hadith or reason_title or reason_full
             logger.warning(f"Attempt {attempt+1}: Loop Reel topic flagged as duplicate: {dup_reason}")
             if title_bn:
                 banned_hadiths.add(title_bn)
@@ -1144,7 +1162,10 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
 
     # 7. Save to Supabase for series tracking and zero-topic repetition
     hook_str = content.get("line_1", "").strip()
-    full_title_for_history = f"[পর্ব {content.get('episode_bn', '')}] {content.get('title_bn', '')} | Hook: {hook_str}"
+    hadith_refs = [pt.get("reference", "").strip() for pt in content.get("caption_points", []) if pt.get("reference")]
+    hadith_str = ", ".join(hadith_refs) if hadith_refs else ""
+    hadith_suffix = f" | Hadith: {hadith_str}" if hadith_str else ""
+    full_title_for_history = f"[পর্ব {content.get('episode_bn', '')}] {content.get('title_bn', '')}{hadith_suffix} | Hook: {hook_str}"
     record_payload = {
         "id": f"loop_{content.get('slot_key', 'slot')}_{int(time.time())}",
         "title": full_title_for_history,
@@ -1153,6 +1174,7 @@ def run_loop_reel_pipeline(slot_key: str = None) -> bool:
     _supabase_insert(record_payload)
     from app.history import record_video_history
     record_video_history(full_title_for_history, "loop_reel", content.get("line_1", ""))
+    record_used_hadith(content.get('episode_bn', ''), hadith_refs, content.get('title_bn', ''), "loop_reel_series")
     logger.info(f"Saved Loop Reel Episode {content.get('episode_bn', '')} to history: '{content.get('title_bn')}'")
 
     logger.info("=== LOOP REEL PIPELINE COMPLETED SUCCESSFULLY ===")

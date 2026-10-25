@@ -42,8 +42,10 @@
 - **Ear-Pleasing Auditory & Melodic Selection**: Selected passages MUST sound exceptionally sweet, soothing, and captivating to human ears. Prioritize Ayahs with rhythmic, flowing end-rhymes (Fawāṣil al-Āyāt: -ūn, -īn, -ā, -hā) and passages globally celebrated for auditory bliss (Jannah descriptions, divine affection, Prophet Duas, and dawn/night serenity). Strictly avoid dry administrative, legalistic, or transactional verses.
 
 
-## 6. Zero-Duplication & Anti-Repetition Mandate (Last 30 Videos)
-- **Strict 30-Video Memory**: Programmatically block and reject any Quranic Surah, Ayah range, passage, or theme that has been published within the **last 30 videos** (tracked across Supabase cloud memory and local video history).
+## 6. Zero-Duplication, Hadith Number Tracking & Series Count Mandate (Last 50 Videos)
+- **Continuous Episode Progression from 51 (No Count Cap)**: Series episode counter for 'দৈনন্দিন সহীহ আমল' starts strictly from Episode 51 (`পর্ব ৫১`) and continuously increments (51 -> 52 -> 53 -> ...) without any upper bound/cap.
+- **Strict 50-Video Topic Cooldown**: Programmatically block and reject any topic, semantic theme, Quranic Surah, Ayah range, or passage that has been published within the **last 50 videos** (tracked across Supabase cloud memory, local registries, and history).
+- **Strict Hadith Number Deduplication (NO SAME HADITH)**: Deduplication checks the **exact Hadith number** (e.g. Bukhari 6474, Muslim 1893, Tirmidhi 3563, Abu Dawood 5095, etc.) and book citation, NOT just keywords. If a candidate Hadith number matches any Hadith used in the last 50 videos, it is strictly forbidden and rejected immediately.
 - **Zero Duplicate Visuals**: Visual tracks must cycle through independent video buckets (`data/video_registry.json`) ensuring 0 identical clip sequences across consecutive productions.
 
 ## 7. Bengali Grammar, Pure Curiosity Hook & Anti-Broken-Bangla Mandate

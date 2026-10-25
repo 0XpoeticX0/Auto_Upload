@@ -391,6 +391,224 @@ BANNED_OVERSATURATED_GROUPS = {
     "morning_danger_protection"
 }
 
+HADITH_REGISTRY_FILE = os.path.abspath("data/used_hadiths_registry.json")
+
+BOOK_CANONICAL_MAP = {
+    'বুখারী': 'bukhari', 'বুখারি': 'bukhari', 'bukhari': 'bukhari',
+    'মুসলিম': 'muslim', 'muslim': 'muslim',
+    'তিরমিযী': 'tirmidhi', 'তিরমিজি': 'tirmidhi', 'tirmidhi': 'tirmidhi',
+    'দাউদ': 'abu_dawood', 'dawud': 'abu_dawood', 'dawood': 'abu_dawood',
+    'নাসায়ী': 'nasai', 'নাসাঈ': 'nasai', 'nasai': 'nasai',
+    'মাজাহ': 'ibn_majah', 'majah': 'ibn_majah',
+    'আহমদ': 'ahmad', 'ahmad': 'ahmad',
+    'মালিক': 'malik', 'মুয়াত্তা': 'malik', 'malik': 'malik'
+}
+
+HADITH_CITATION_REGEX = re.compile(
+    r'(সহীহ\s*বুখারী|সহীহ\s*বুখারি|সহীহ\s*মুসলিম|জামে\s*আত-তিরমিযী|তিরমিযী|তিরমিজি|সুনানে\s*আবু\s*দাউদ|আবু\s*দাউদ|সুনান\s*আন-নাসায়ী|নাসায়ী|নাসাঈ|সুনান\s*ইবনে\s*মাজাহ|ইবনে\s*মাজাহ|মাজাহ|মুসনাদে\s*আহমদ|আহমদ|মুয়াত্তা\s*মালিক|মুয়াত্তা|bukhari|muslim|tirmidhi|abu\s*dawud|abu\s*dawood|nasai|ibn\s*majah)[\s:：#\.\-–—]*(?:হাদিস|হাদীস|নং|হাদিস\s*নং|hadith|no)?[\s:：#\.\-–—]*(\d+)',
+    re.IGNORECASE
+)
+
+def extract_hadith_identifiers(source) -> list[dict]:
+    """
+    Extracts structured Hadith identifiers (canonical book, integer number, raw citation)
+    from a string or a content dict (caption_points, title, references, etc.).
+    """
+    bn_digits = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'}
+    def _norm(s: str) -> str:
+        return "".join(bn_digits.get(ch, ch) for ch in str(s))
+
+    text_blocks = []
+    if isinstance(source, dict):
+        text_blocks.append(source.get("title_bn", ""))
+        text_blocks.append(source.get("title", ""))
+        for pt in source.get("caption_points", []):
+            text_blocks.append(pt.get("reference", ""))
+            text_blocks.append(pt.get("hadith", ""))
+            text_blocks.append(pt.get("title", ""))
+    elif isinstance(source, (list, tuple, set)):
+        for item in source:
+            if isinstance(item, dict):
+                text_blocks.append(item.get("reference", ""))
+                text_blocks.append(item.get("hadith", ""))
+            else:
+                text_blocks.append(str(item))
+    elif isinstance(source, str):
+        text_blocks.append(source)
+
+    combined = " ".join(text_blocks)
+    combined_en = _norm(combined)
+
+    extracted = []
+    seen = set()
+    for m in HADITH_CITATION_REGEX.finditer(combined_en):
+        raw_book = m.group(1).lower()
+        num_int = int(m.group(2))
+        canon = "unknown"
+        for k, v in BOOK_CANONICAL_MAP.items():
+            if k in raw_book:
+                canon = v
+                break
+        pair = (canon, num_int)
+        if pair not in seen and num_int > 0:
+            seen.add(pair)
+            extracted.append({
+                "book": canon,
+                "number": num_int,
+                "raw_match": m.group(0).strip()
+            })
+
+    # Also detect explicit Hadith number tags like "হাদিস নং ৬৪৭৪" or "Hadith #6474"
+    for ref_num in re.findall(r'(?:হাদিস|নং|hadith|ref|reference)[\s:：#\.\-–—]*(\d{2,5})', combined_en, re.IGNORECASE):
+        n = int(ref_num)
+        if n >= 10 and not any(e["number"] == n for e in extracted):
+            pair = ("any", n)
+            if pair not in seen:
+                seen.add(pair)
+                extracted.append({
+                    "book": "any",
+                    "number": n,
+                    "raw_match": f"Hadith #{n}"
+                })
+
+    return extracted
+
+def get_used_hadith_registry(limit: int = 100) -> list[dict]:
+    """
+    Retrieves used Hadiths from the persistent registry and recent Supabase history.
+    Guarantees strict coverage across at least the last `limit` (default 100) videos.
+    """
+    records = []
+    seen = set()
+
+    # 1. From persistent registry file
+    if os.path.exists(HADITH_REGISTRY_FILE):
+        try:
+            with open(HADITH_REGISTRY_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    for item in data:
+                        book = item.get("book", "unknown")
+                        num = item.get("number")
+                        if num and (book, num) not in seen:
+                            seen.add((book, num))
+                            records.append(item)
+        except Exception as e:
+            logger.warning(f"Failed to read {HADITH_REGISTRY_FILE}: {e}")
+
+    # 2. From recent Supabase history
+    cloud_items = _supabase_fetch_all_recent(limit=limit)
+    for it in cloud_items:
+        t = it.get("title", "")
+        extracted = extract_hadith_identifiers(t)
+        for ex in extracted:
+            key = (ex["book"], ex["number"])
+            if key not in seen and ex["number"]:
+                seen.add(key)
+                records.append({
+                    "book": ex["book"],
+                    "number": ex["number"],
+                    "reference": ex["raw_match"],
+                    "title": t[:80],
+                    "source": it.get("source", "")
+                })
+
+    return records
+
+def check_hadith_number_duplicate(content_or_text, limit: int = 50) -> tuple[bool, str]:
+    """
+    STRICT NO SAME HADITH CHECK:
+    Extracts all Hadith numbers from candidate content and compares against the past `limit` (default 50) videos.
+    Matches exact Hadith numbers (e.g. 6474, 1893, 2692, 5095) regardless of phrasing or keywords.
+    Returns (is_duplicate: bool, reason: str).
+    """
+    candidate_hadiths = extract_hadith_identifiers(content_or_text)
+    if not candidate_hadiths:
+        return False, ""
+
+    used_registry = get_used_hadith_registry(limit=limit)
+
+    for cand in candidate_hadiths:
+        c_num = cand["number"]
+        c_book = cand["book"]
+
+        for past in used_registry:
+            p_num = past.get("number")
+            p_book = past.get("book", "unknown")
+
+            if c_num == p_num:
+                same_book = (c_book == p_book) or (c_book in ("unknown", "any")) or (p_book in ("unknown", "any"))
+                if same_book or c_num >= 50:
+                    past_ref = past.get("reference") or f"{p_book} #{p_num}"
+                    past_title = past.get("title", "")
+                    reason = (
+                        f"STRICT NO SAME HADITH MANDATE: Hadith #{c_num} ({c_book}) matches previously used Hadith "
+                        f"'{past_ref}' in recent videos ('{past_title}')! Duplicate Hadiths are strictly forbidden for 50 videos."
+                    )
+                    logger.warning(reason)
+                    return True, reason
+
+    return False, ""
+
+def record_used_hadith(episode_bn: str, references: list[str], title_bn: str, source: str = "loop_reel_series"):
+    """
+    Permanently records newly used Hadith numbers to prevent duplicate selection for the next 50+ videos.
+    """
+    new_entries = []
+    for ref in (references or []):
+        extracted = extract_hadith_identifiers(ref)
+        for ex in extracted:
+            new_entries.append({
+                "book": ex["book"],
+                "number": ex["number"],
+                "reference": ref,
+                "episode": episode_bn,
+                "title": title_bn[:80],
+                "source": source,
+                "timestamp": int(time.time())
+            })
+
+    if not new_entries:
+        for ex in extract_hadith_identifiers(title_bn):
+            new_entries.append({
+                "book": ex["book"],
+                "number": ex["number"],
+                "reference": ex["raw_match"],
+                "episode": episode_bn,
+                "title": title_bn[:80],
+                "source": source,
+                "timestamp": int(time.time())
+            })
+
+    if not new_entries:
+        return
+
+    os.makedirs(os.path.dirname(HADITH_REGISTRY_FILE), exist_ok=True)
+    existing = []
+    if os.path.exists(HADITH_REGISTRY_FILE):
+        try:
+            with open(HADITH_REGISTRY_FILE, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+        except Exception:
+            existing = []
+
+    seen = {(e.get("book"), e.get("number")) for e in existing}
+    added = False
+    for ne in new_entries:
+        key = (ne["book"], ne["number"])
+        if key not in seen:
+            seen.add(key)
+            existing.insert(0, ne)
+            added = True
+
+    if added:
+        try:
+            with open(HADITH_REGISTRY_FILE, "w", encoding="utf-8") as f:
+                json.dump(existing[:200], f, ensure_ascii=False, indent=2)
+            logger.info(f"Recorded {len(new_entries)} Hadith numbers to registry for Episode {episode_bn}")
+        except Exception as e:
+            logger.error(f"Failed to write {HADITH_REGISTRY_FILE}: {e}")
+
 def get_topic_semantic_group(text: str) -> str:
     if not text:
         return ""
@@ -408,16 +626,21 @@ def check_topic_duplicate_global_detail(
 ) -> tuple[bool, str]:
     """
     Checks if a candidate topic/quote/hadith has already been covered in recent videos.
+    - Exact Hadith Number & Book: Checked against past 50+ videos (STRICT NO SAME HADITH RULE).
     - Clickbait clichés: 100% unconditionally banned.
-    - Oversaturated categories: 30-video cooldown (GEMINI.md Rule 6 mandate).
-    - Rotating dynamic categories: 15-video cooldown (to allow healthy rotation across 16 domains).
-    - Exact Hadith citations & Jaccard overlap: checked against the full LAST 100 VIDEOS.
+    - Semantic topic categories: 50-video cooldown across all categories (STRICT NO TOPIC REPEAT FOR 50 VIDEOS).
+    - Exact Hadith citations & Jaccard overlap: checked against the full LAST 100 VIDEOS (Jaccard depth: 50).
     Returns (is_duplicate: bool, reason_or_match: str).
     """
     if not new_topic_text or len(new_topic_text.strip()) < 5:
         return False, ""
+
+    # 0. STRICT HADITH NUMBER DEDUPLICATION (Checks exact Hadith number - NO SAME HADITH FOR 50 VIDEOS)
+    is_hadith_dup, hadith_dup_reason = check_hadith_number_duplicate(new_topic_text, limit=50)
+    if is_hadith_dup:
+        return True, hadith_dup_reason
         
-    all_used = get_all_used_topics_global(limit=100)
+    all_used = get_all_used_topics_global(limit=150)
     cleaned_new = re.sub(r'[^\w\s]', '', new_topic_text).lower()
     new_words = set(cleaned_new.split())
     
@@ -429,11 +652,9 @@ def check_topic_duplicate_global_detail(
             logger.warning(msg)
             return True, msg
 
-        # 2. Block semantic category repetition with intelligent tiered cooldown
+        # 2. Block semantic category repetition for at least 50 videos
         if new_group:
-            # Oversaturated themes check 30 videos (GEMINI.md Rule 6)
-            # Standard rotating domains check recent 15 videos
-            cooldown_depth = 30 if new_group in BANNED_OVERSATURATED_GROUPS else 15
+            cooldown_depth = 50
             for past in all_used[:cooldown_depth]:
                 past_group = get_topic_semantic_group(past)
                 if past_group == new_group:
@@ -464,12 +685,15 @@ def check_topic_duplicate_global_detail(
                 logger.warning(f"Duplicate Hadith reference detected: '{new_topic_text}' vs '{past}'")
                 return True, msg
                 
-        # 4. Word overlap Jaccard similarity across recent 30 videos (GEMINI.md Rule 6 mandate)
-        if idx < 30:
+        # 4. Word overlap Jaccard similarity across recent 50 videos
+        if idx < 50:
             intersection = new_words.intersection(past_words)
             union = new_words.union(past_words)
             similarity = len(intersection) / len(union) if union else 0
             if similarity >= threshold:
+                msg = f"High similarity ({similarity:.2f}) with recent video: '{past}'"
+                logger.warning(f"High similarity ({similarity:.2f}) with past content: '{new_topic_text}' vs '{past}'")
+                return True, msg
                 msg = f"High similarity ({similarity:.2f}) with recent video: '{past}'"
                 logger.warning(f"High similarity ({similarity:.2f}) with past content: '{new_topic_text}' vs '{past}'")
                 return True, msg
@@ -579,11 +803,11 @@ def to_bangla_digits(number: int) -> str:
 def get_next_episode_number() -> tuple[int, str]:
     """
     Calculates continuous series episode number for 'দৈনন্দিন সহীহ আমল'.
-    Tracks actual loop reel series episodes from Supabase, accurately starting from Episode 2 -> 3 -> 4.
+    Starts strictly from Episode 51 onwards without any count cap (51 -> 52 -> 53...).
     """
     cloud_items = _supabase_fetch_all_recent(limit=300)
     
-    max_ep = 2  # Baseline start (after episode 1 and 2)
+    max_ep = 50  # Baseline: start strictly from 51 (after episode 50)
     bn_map = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'}
     
     for item in cloud_items:
