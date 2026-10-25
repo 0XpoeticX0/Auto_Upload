@@ -1,23 +1,73 @@
+# Runtime Data & Registries
 data/*
 !data/history_log.json
 !data/video_registry.json
 !data/stock_video_catalog.json
+!data/used_hadiths_registry.json
+
+# Secrets & Authentication Tokens
 .env
+.env.*
 token.json
+token*.json
 client_secrets.json
+client_secret*.json
 tiktok_cookies.txt
+tiktok_cookies.json
+cookies*.txt
+cookies*.json
+service_account*.json
+*.pem
+*.key
+
+# Media & Temporary Render Outputs
 *.mp4
 !app/assets/broll/*.mp4
 !app/assets/video_scenes/*.mp4
-*.zip
-*.sqlite
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.ass
+*.srt
+incoming_audio/
+test_bengali_video/
+output/
+temp/
+tmp/
 scratch/
+test_output/
+
+# Logs & Diagnostic Files
+logs/
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Database & Archives
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+*.tar
+*.gz
+
+# Python & Testing Artifacts
 __pycache__/
 **/__pycache__/
 *.pyc
 *.pyo
-logs/
-incoming_audio/
-*.wav
-*.mp3
-test_bengali_video/
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editor & OS Artifacts
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
