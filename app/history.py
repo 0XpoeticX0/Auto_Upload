@@ -355,7 +355,12 @@ SEMANTIC_TOPIC_GROUPS = [
     {"name": "parents_honor", "keywords": ["পিতা-মাতা", "পিতামাতা", "মা-বাবা", "মায়ের দোয়া", "বাবার হক", "পিতা মাতার"]},
     {"name": "anger_control", "keywords": ["রাগ নিয়ন্ত্রণ", "ক্রোধ দমন", "রাগের মাথায়", "রাগ কমানোর", "রাগ দমন"]},
     {"name": "prayer_waswasa", "keywords": ["নামাজে মনোযোগ", "নামাজে ওয়াসওয়াসা", "খিনজাব"]},
-    {"name": "tongue_backbiting", "keywords": ["গীবত", "পরনিন্দা", "চোগলখোরি", "জিহ্বার হেফাজত", "জবানের হেফাজত", "মুখের অপব্যবহার"]},
+    {"name": "tongue_backbiting", "keywords": [
+        "গীবত", "পরনিন্দা", "চোগলখোরি", "জিহ্বার হেফাজত", "জবানের হেফাজত", "মুখের অপব্যবহার",
+        "লজ্জাস্থান", "দুই চোয়াল", "চোয়াল", "চোয়ালের", "জিম্মাদার", "জিহ্বা", "জবান", "দুই অঙ্গ", "২টি অঙ্গ",
+        "মুখ ও জিহ্বা", "জিহ্বা ও লজ্জাস্থান", "মুখ আর লজ্জাস্থান", "মুখ ও লজ্জাস্থান", "চোয়ালের মাঝখানের",
+        "মুখের এক কথায়", "দুই জিনিস ঠিক রাখলে", "৬৪৭৪"
+    ]},
     {"name": "halal_rizq", "keywords": ["হালাল রিজিক", "হারাম খাবার", "ব্যবসা", "সততা", "উপার্জন"]},
     {"name": "neighbor_rights", "keywords": ["প্রতিবেশী", "প্রতিবেশীর হক", "প্রতিবেশীর"]},
     {"name": "two_prostrations_dua", "keywords": ["দুই সিজদা", "সিজদার মাঝে দোয়া", "দুই সিজদার মাঝের"]},
@@ -585,14 +590,14 @@ def get_next_episode_number() -> tuple[int, str]:
         src = item.get("source", "")
         title = item.get("title", "")
         
-        if src.startswith("loop") or "loop" in item.get("id", ""):
+        if "loop" in src or "loop" in item.get("id", "") or "পর্ব" in title:
             match = re.search(r"পর্ব\s*([০-৯\d]+)", title)
             if match:
                 bn_digits = match.group(1)
                 en_str = "".join(bn_map.get(ch, ch) for ch in bn_digits)
                 try:
                     ep_val = int(en_str)
-                    if 2 <= ep_val < 50:
+                    if ep_val >= 1:
                         if ep_val > max_ep:
                             max_ep = ep_val
                 except Exception:
