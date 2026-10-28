@@ -58,10 +58,10 @@ jobs:
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          IG_USER_ID: ${{ secrets.IG_USER_ID || '17841436824022360' }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
           TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://tvezntceubxaqvcicyyc.supabase.co' }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2ZXpudGNldWJ4YXF2Y2ljeXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NTg0NjgsImV4cCI6MjA5OTMzNDQ2OH0.sx5A6WT54mQUqqMDvrDZqo-mCURidOpVri-j7JFekq0' }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           if [ -n "$ENV_FILE" ]; then
@@ -102,10 +102,10 @@ jobs:
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          IG_USER_ID: ${{ secrets.IG_USER_ID || '17841436824022360' }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
           TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://tvezntceubxaqvcicyyc.supabase.co' }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2ZXpudGNldWJ4YXF2Y2ljeXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NTg0NjgsImV4cCI6MjA5OTMzNDQ2OH0.sx5A6WT54mQUqqMDvrDZqo-mCURidOpVri-j7JFekq0' }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           python -m app.quran_verse.scheduler --upload
