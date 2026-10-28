@@ -5,6 +5,11 @@ import time
 import urllib.request
 import urllib.error
 import re
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 from app.logger import logger
 
 HISTORY_FILE = os.path.abspath("data/history_log.json")
@@ -405,7 +410,7 @@ BOOK_CANONICAL_MAP = {
 }
 
 HADITH_CITATION_REGEX = re.compile(
-    r'(সহীহ\s*বুখারী|সহীহ\s*বুখারি|সহীহ\s*মুসলিম|জামে\s*আত-তিরমিযী|তিরমিযী|তিরমিজি|সুনানে\s*আবু\s*দাউদ|আবু\s*দাউদ|সুনান\s*আন-নাসায়ী|নাসায়ী|নাসাঈ|সুনান\s*ইবনে\s*মাজাহ|ইবনে\s*মাজাহ|মাজাহ|মুসনাদে\s*আহমদ|আহমদ|মুয়াত্তা\s*মালিক|মুয়াত্তা|bukhari|muslim|tirmidhi|abu\s*dawud|abu\s*dawood|nasai|ibn\s*majah)[\s:：#\.\-–—]*(?:হাদিস|হাদীস|নং|হাদিস\s*নং|hadith|no)?[\s:：#\.\-–—]*(\d+)',
+    r'(সহীহ\s*বুখারী|সহীহ\s*বুখারি|বুখারী|বুখারি|সহীহ\s*মুসলিম|মুসলিম|জামে\s*আত-তিরমিযী|তিরমিযী|তিরমিজি|সুনানে\s*আবু\s*দাউদ|আবু\s*দাউদ|সুনান\s*আন-নাসায়ী|নাসায়ী|নাসাঈ|সুনান\s*ইবনে\s*মাজাহ|ইবনে\s*মাজাহ|মাজাহ|মুসনাদে\s*আহমদ|আহমদ|মুয়াত্তা\s*মালিক|মুয়াত্তা|bukhari|muslim|tirmidhi|abu\s*dawud|abu\s*dawood|nasai|ibn\s*majah)[\s:：#\.\-–—]*(?:হাদিস|হাদীস|নং|হাদিস\s*নং|hadith|no)?[\s:：#\.\-–—]*(\d+)',
     re.IGNORECASE
 )
 
