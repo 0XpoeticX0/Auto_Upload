@@ -54,4 +54,23 @@
 - **Zero Tofu Boxes & Missing Glyphs**: Exclusively burn subtitles using `Kalpurush` font with `fontsdir='app/assets/fonts'`, guaranteeing 0 broken rectangle/tofu boxes (`🗹`).
 - **Automated Gemini Verification & Auto-Edit Pass**: Every video hook must be verified by Gemini via `app/quality/bengali_hook_guardian.py`. If any broken Bengali, repetition, or preachy language is detected, Gemini automatically edits and rewrites the lines in-place before video rendering.
 
+## 8. 300 Halal Video Catalog & Zero-Category-Overlap Mandate
+- **Strict 15s–20s Duration**: Never use clips under 15 seconds (`duration >= 15.0s`). Clips longer than 20 seconds are automatically cut to 20.0s during scene production.
+- **50 Distinct Categories (6 Clips Each)**: The central 300-clip catalog (`data/stock_video_catalog.json`) is partitioned into 50 canonical Halal categories (0 humans, 0 animals, 0 statues).
+- **Strict Zero-Category-Overlap Within Every Video**: In every video triplet, all 3 clips MUST be selected from **3 completely different categories**:
+  $$\text{Category}(\text{Clip 1}) \neq \text{Category}(\text{Clip 2}) \neq \text{Category}(\text{Clip 3})$$
+  Zero videos ever use more than 1 clip from the same category.
+- **Full Round-Robin Rotation**: The visual track cycles round-robin across the 3 clips in series (`1 ➔ 2 ➔ 3 ➔ 1 ➔ 2 ➔ 3`) instead of looping a single clip on itself.
+- **100-Video Cycle Management & Permutations**: Partitioned into 100 videos per cycle with randomized internal permutations (`1 3 2`, `2 3 1`, `2 1 3`, `3 2 1`). Automatically shifts offsets and shuffles on rollover from Cycle 1 to Cycle 2.
+
+## 9. 3-Pass Gemini API Re-Verification Mandate
+Every production video must pass all 3 verification gates before release (`app/quality/triple_gemini_verifier.py`):
+- **Pass 1: Religious & Contextual Truth**: Validates Uthmani Arabic scripture, Dr. Abu Bakr Zakaria Bengali translation (modernized heart/chest, zero "স্তন"), self-contained context, and zero unverified engagement bait.
+- **Pass 2: Shariah Visual Compliance**: AI Vision frame audit (3–5 keyframes) via Gemini Multimodal Vision API enforcing strictly 0 living beings, 0 silhouettes, and 0 statues.
+- **Pass 3: Typography, Pacing & Audio Mastering**: Validates Kalpurush Bengali typography, card duration $\ge 2.5\text{s}$, max 1–2 lines center-aligned, and -18.0 LUFS audio broadcast normalization.
+
+## 10. Islamic Quiz Direct-Start & Human Pacing Mandate
+- **Direct Inquiry Start (Zero Announcements)**: Quiz videos MUST start immediately at 0.0s with the spoken inquiry itself. STRICTLY NEVER speak or render "প্রশ্ন ১", "প্রশ্ন ২", "Question 1", or "Question 2".
+- **Natural Human Speech Rate**: Spoken TTS narration rate is strictly set to natural conversational speed (`rate="+0%"` / 1.00x) with a dedicated `+0.25s` human breathing pause before the 3-second countdown clock begins.
+
 
