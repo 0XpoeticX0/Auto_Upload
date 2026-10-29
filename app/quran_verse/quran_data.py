@@ -446,7 +446,7 @@ CURATED_COMPLETE_PASSAGES = [
 ]
 
 def clean_bengali_translation(text: str) -> str:
-    """Strips footnote and HTML markers and cleans excessive parenthetical commentary from translations."""
+    """Strips footnote and HTML markers while preserving concise contextual commentary in parentheses."""
     if not text:
         return ""
     # Strip HTML tags
@@ -454,11 +454,9 @@ def clean_bengali_translation(text: str) -> str:
     # Strip footnote explanations starting with asterisk (e.g. *অর্থ কুরবানী কর)
     text = re.sub(r'\*[^\*।]*।?', '', text)
     # Strip footnote numbers like [১], [২], [1], [2]
-    text = re.sub(r'\[[০-৯0-9]+\]', '', text)
-    # Strip excessively long commentary in parentheses (tafsir explanations inserted by translators)
-    text = re.sub(r'\([^\)]{12,}\)', '', text)
-    # Remove remaining standalone parentheses while retaining the text inside
-    text = re.sub(r'[\(\)]', '', text)
+    text = re.sub(r'\[[০-৯0-9\s]+\]', '', text)
+    # Strip excessively long commentary in parentheses (> 40 chars)
+    text = re.sub(r'\([^\)]{40,}\)', '', text)
     # Normalize archaic word-final hasantas (e.g. 'কোন্' -> 'কোন')
     text = re.sub(r'\u09cd(?=[\s\.,;!?।\)]|$)', '', text)
     # Normalize spaces before punctuation
@@ -472,19 +470,22 @@ def clean_html_tags(text: str) -> str:
     return clean_bengali_translation(text)
 
 def clean_english_translation(text: str) -> str:
-    """Strips HTML tags, footnote indices, and normalizes spaces for English translations."""
+    """Strips HTML tags, footnote indices, and modernizes archaic Victorian vocabulary (e.g. breast -> chest)."""
     if not text:
         return ""
     text = re.sub(r'<[^>]+>', '', text)
     text = re.sub(r'\[[0-9]+\]', '', text)
     # Strip footnote numbers attached to trailing punctuation or words (e.g. 'off.1' -> 'off.')
     text = re.sub(r'(?<=[a-zA-Z\.?!,;])\d+', '', text)
+    # Modernize awkward archaic anatomical translations
+    text = re.sub(r'\bbreast\b', 'chest', text, flags=re.IGNORECASE)
+    text = re.sub(r'\bbreasts\b', 'chests', text, flags=re.IGNORECASE)
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
 def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
     """
-    Fetches Arabic text with Tashkeel, authentic Bengali translation, and English translation (Saheeh International)
+    Fetches Arabic text with Tashkeel, authentic Bengali translation, and English translation
     for the verse range directly from api.quran.com/api/v4/.
     """
     if ayah_end is None or ayah_end < ayah_start:
@@ -500,12 +501,12 @@ def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
     full_english = []
 
     for ayah in range(ayah_start, ayah_end + 1):
-        # Prioritize 162 (Rawai Al-bayan) for pure verse translation, fallback to 163 and 161
+        # Prioritize 213 (Dr. Abu Bakr Zakaria) for clear contextual bracket info, fallback to 161, 162, 163
         bn_text = ""
         ar_text = ""
         en_text = ""
 
-        for trans_id in [162, 163, 161]:
+        for trans_id in [213, 161, 162, 163]:
             url = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?language=bn&translations={trans_id}&fields=text_uthmani"
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -523,8 +524,8 @@ def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
                 logger.warning(f"Translation {trans_id} fetch notice for {surah}:{ayah}: {e}")
                 continue
 
-        # Fetch English translation (Resource 20: Saheeh International, fallback 85: Abdel Haleem)
-        for en_trans_id in [20, 85]:
+        # Fetch English translation (Resource 85: M.A.S. Abdel Haleem Oxford / Resource 20: Saheeh International)
+        for en_trans_id in [85, 20]:
             url_en = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?translations={en_trans_id}"
             try:
                 req_en = urllib.request.Request(url_en, headers={"User-Agent": "Mozilla/5.0"})

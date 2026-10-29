@@ -105,7 +105,7 @@ To maximize comments, replays, and algorithmic reach, EVERY video must strictly 
      * ১ বার পাঠ করলে ১/৩ কোরআন খতমের সওয়াব পাওয়া যায় কোন সূরায়? (সূরা আল-ইখলাস)
 
 CRITICAL FORMATTING RULES:
-1. Question Text: Keep under 8-10 words. Punchy, clear, everyday Bangla.
+1. Question Text: Direct start inquiry only! Keep under 8-10 words. Punchy, clear, everyday Bangla. STRICTLY NEVER include 'প্রশ্ন ১', 'প্রশ্ন ২', 'Question 1', 'Q1:' or any numbering in the question text.
 2. Options: Exactly 3 clean options (1-3 words each).
 3. Honorifics: Always use "হযরত ... (আ.)", "হযরত ... (রা.)", "রাসূলুল্লাহ (ﷺ)".
 4. Pinned Comment: Always generate a friction-free pinned comment prompt that encourages 1-word answers (e.g. 'মাশাআল্লাহ' or '৩/৩').

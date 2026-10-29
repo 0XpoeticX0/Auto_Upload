@@ -250,7 +250,11 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah
         if i == n - 1:
             curr_end = start_sec + total_ayah_dur
         else:
-            prop = p_words / max(1, total_ar_words)
+            if total_ar_words > 0:
+                prop = p_words / float(total_ar_words)
+            else:
+                total_bn_words = sum(len(c.split()) for c in bn_chunks)
+                prop = len(bn_chunks[i].split()) / max(1, float(total_bn_words))
             c_dur = max(3.0, total_ayah_dur * prop)
             curr_end = min(start_sec + total_ayah_dur - 2.5, round(curr_start + c_dur, 2))
 
@@ -266,24 +270,25 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah
     return clauses
 
 def highlight_sacred_words(text: str) -> str:
-    """Highlights sacred theological words in Royal Gold (&H0041AFEB&) with strict Bengali Unicode boundaries to prevent broken glyphs."""
+    """Highlights sacred theological words and parenthetical context in Royal Gold (&H0015CCFA&)."""
     if not text:
         return ""
     # Clean zero-width directional marks that cause dotted circle font errors
     text = text.replace('\u200e', '').replace('\u200f', '').replace('\u200b', '')
-    sacred = ['আল্লাহর?', 'আল্লাহকে', 'আল্লাহই', 'রব', 'রবের', 'তাওয়াক্কুল', 'রিযিক্ব?', 'রিযক', 'রহমত', 'রহমতের', 'জান্নাত', 'ঈমান', 'পরকাল']
+    sacred = ['আল্লাহর?', 'আল্লাহকে', 'আল্লাহই', 'রব', 'রবের', 'তাওয়াক্কুল', 'রিযিক্ব?', 'রিযক', 'রহমত', 'রহমতের', 'জান্নাত', 'ঈমান', 'পরকাল', 'স্বস্তি', 'সুখ', 'কল্যাণে প্রশস্ত']
     pattern = re.compile(r'(?<![ঀ-৾])(' + '|'.join(sacred) + r')(?![ঀ-৾])')
-    return pattern.sub(r'{\\c&H0041AFEB&}\1{\\c&H00FFFFFF&}', text)
+    text = pattern.sub(lambda m: f'{{\\c&H0015CCFA&}}{m.group(1)}{{\\c&H00FFFFFF&}}', text)
+    # Highlight parenthetical explanatory context in Royal Gold
+    text = re.sub(r'(\([^\)]+\))', lambda m: f'{{\\c&H0015CCFA&}}{m.group(1)}{{\\c&H00FFFFFF&}}', text)
+    return text
 
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
-    Builds ASS subtitles strictly matching the Top 20% Video + Bottom 80% Black Lyrics Card aesthetic:
-    - Elegant Gold Islamic Divider at Y=410
-    - Permanent Header badge at Y=490 (Kalpurush 48 Gold)
-    - Permanent SubHeader badge at Y=555 (Segoe UI 34 Silver)
-    - Synchronized Arabic verse at Y=780 (Amiri 82 White)
-    - Synchronized Bengali translation at Y=1030 (Kalpurush 68 White with Royal Gold sacred highlights)
-    - Synchronized English translation at Y=1260 (Segoe UI 40 Silver)
+    Builds ASS subtitles with centered Bengali translation (middle), English at bottom, and Top Badges:
+    - Permanent Top Header badge at Y=240 (Kalpurush 48 Gold)
+    - Permanent Top SubHeader badge at Y=305 (Segoe UI 32 Silver)
+    - Synchronized Bengali translation in Center at Y=960 (Kalpurush 70 White with Royal Gold highlights)
+    - Synchronized English translation at Bottom at Y=1530 (Segoe UI 48 White)
     """
     surah_name_bn = verse_data["surah_name_bn"]
     surah_name_en = verse_data.get("surah_name_en") or SURAH_NAMES_EN.get(verse_data["surah"], f"Surah {verse_data['surah']}")
@@ -292,9 +297,11 @@ def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str)
     range_str_bn = to_bangla_digits(verse_range_str)
     total_dur = audio_data["total_duration"]
     ayah_timings = audio_data["ayah_timings"]
+    reciter_info = verse_data.get("reciter", {})
+    reciter_title = reciter_info.get("name_en", "Mishary Rashid Alafasy")
 
     top_badge_bn = f"[ {surah_name_bn}  •  আয়াত {range_str_bn} ]"
-    top_badge_en = f"Surah {surah_name_en}  •  {surah}:{verse_range_str}"
+    top_badge_en = f"Surah {surah_name_en}  •  {reciter_title}"
 
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
@@ -304,54 +311,46 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Divider,Segoe UI,18,&H0015CCFA,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1.0,0.5,5,20,20,20,1
-Style: Header,Kalpurush,48,&H0015CCFA,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.8,1.5,5,60,60,40,1
-Style: SubHeader,Segoe UI,34,&H00A0A0A0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1.8,1.0,5,60,60,40,1
-Style: Arabic,Amiri,82,&H00FFFFFF,&H000000FF,&H00101010,&H80000000,1,0,0,0,100,100,0,0,1,3.2,2.2,5,50,50,50,1
-Style: Bengali,Kalpurush,68,&H00FFFFFF,&H000000FF,&H00101010,&H80000000,0,0,0,0,100,100,0,0,1,3.5,2.2,5,60,60,50,1
-Style: English,Segoe UI,40,&H00D0D0D0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.0,1.2,5,60,60,50,1
+Style: TopBadge,Kalpurush,48,&H0015CCFA&,&H00000000,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,3.4,2.0,5,50,50,20,1
+Style: SubBadge,Segoe UI,32,&H00E2E8F0&,&H00000000,&H00000000,&H90000000,0,1,0,0,100,100,1,0,1,2.0,1.2,5,50,50,20,1
+Style: BengaliCenter,Kalpurush,70,&H00FFFFFF&,&H00000000,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,4.0,2.5,5,50,50,20,1
+Style: EnglishBottom,Segoe UI,48,&H00FFFFFF&,&H00000000,&H00000000,&H90000000,0,1,0,0,100,100,0,0,1,2.8,1.6,5,60,60,20,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-; Permanent Luxury Divider Line
-Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},Divider,,0,0,0,,{{\\pos(540,410)\\fad(400,400)}}{{\\c&H0015CCFA&}}───────────  ✦  ───────────
-; Permanent Header Badge
-Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},Header,,0,0,0,,{{\\pos(540,490)\\fad(400,400)}}{top_badge_bn}
-Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubHeader,,0,0,0,,{{\\pos(540,555)\\fad(400,400)}}{top_badge_en}
+; Permanent Top Badges
+Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},TopBadge,,0,0,0,,{{\\pos(540,240)}}{top_badge_bn}
+Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubBadge,,0,0,0,,{{\\pos(540,305)}}{top_badge_en}
 """
 
     for timing in ayah_timings:
         start_sec = timing["start"]
         end_sec = timing["end"]
         dur = max(0.5, end_sec - start_sec)
-        ar_raw = timing.get("arabic", "").strip()
         bn_raw = timing.get("bengali", "").strip()
         en_raw = timing.get("english", "").strip()
 
-        if dur <= 8.5 and len(bn_raw.split()) <= 8 and len(ar_raw.split()) <= 7:
+        # Keep ayahs under 8.5s or under 14 words as 1 full, peaceful 2-line card
+        if dur <= 8.5 or len(bn_raw.split()) <= 13:
             start_str = format_ass_time(start_sec)
             end_str = format_ass_time(end_sec)
-            ar_clean = wrap_and_format_arabic(ar_raw, words_per_line=5)
             bn_clean = highlight_sacred_words(format_bengali_subtitles_for_ass(bn_raw, words_per_line=5))
             en_clean = format_english_subtitles_for_ass(en_raw, max_words_per_line=7)
 
-            ass_content += f"Dialogue: 1,{start_str},{end_str},Arabic,,0,0,0,,{{\\pos(540,780)\\fad(350,300)}}{ar_clean}\n"
-            ass_content += f"Dialogue: 2,{start_str},{end_str},Bengali,,0,0,0,,{{\\pos(540,1030)\\fad(350,300)}}{bn_clean}\n"
+            ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,960)}}{bn_clean}\n"
             if en_clean:
-                ass_content += f"Dialogue: 3,{start_str},{end_str},English,,0,0,0,,{{\\pos(540,1260)\\fad(350,300)}}{en_clean}\n"
+                ass_content += f"Dialogue: 3,{start_str},{end_str},EnglishBottom,,0,0,0,,{{\\pos(540,1530)}}{en_clean}\n"
         else:
-            clauses = split_long_ayah_clauses(ar_raw, bn_raw, en_raw, dur, start_sec)
+            clauses = split_long_ayah_clauses("", bn_raw, en_raw, dur, start_sec)
             for c in clauses:
                 c_start_str = format_ass_time(c["start"])
                 c_end_str = format_ass_time(c["end"])
-                ar_clean = wrap_and_format_arabic(c["arabic"], words_per_line=5)
                 bn_clean = highlight_sacred_words(format_bengali_subtitles_for_ass(c["bengali"], words_per_line=5))
                 en_clean = format_english_subtitles_for_ass(c["english"], max_words_per_line=7)
 
-                ass_content += f"Dialogue: 1,{c_start_str},{c_end_str},Arabic,,0,0,0,,{{\\pos(540,780)\\fad(350,300)}}{ar_clean}\n"
-                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},Bengali,,0,0,0,,{{\\pos(540,1030)\\fad(350,300)}}{bn_clean}\n"
+                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,960)}}{bn_clean}\n"
                 if en_clean:
-                    ass_content += f"Dialogue: 3,{c_start_str},{c_end_str},English,,0,0,0,,{{\\pos(540,1260)\\fad(350,300)}}{en_clean}\n"
+                    ass_content += f"Dialogue: 3,{c_start_str},{c_end_str},EnglishBottom,,0,0,0,,{{\\pos(540,1530)}}{en_clean}\n"
 
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)
@@ -429,15 +428,16 @@ def render_subpixel_smooth_scene_clip(image_path: str, duration: float, motion_t
         pass
     proc.wait()
 
-def plan_calm_quran_scenes(total_dur: float, ayah_timings: list = None, min_dur: float = 7.5, max_dur: float = 13.0) -> list:
+def plan_calm_quran_scenes(total_dur: float, ayah_timings: list = None, min_dur: float = 14.0, max_dur: float = 20.0) -> list:
     """
-    Plans serene, dignified scene pacing:
-    - Target scene duration: 8.5s to 12.0s (average ~10-11s).
+    Plans serene, dignified scene pacing according to permanent user mandates:
+    - Minimum clip duration: strictly >= 14.0s (ignoring all short clips < 15s).
+    - Maximum clip duration: strictly cut at 20.0s max.
+    - Full serial rotation: 1 -> 2 -> 3 -> 1 -> 2 -> 3 without looping single clips.
     - Transitions occur on natural Ayah boundaries.
-    - Never shorter than 7.0s, never longer than 13.5s.
     """
     if not ayah_timings:
-        target = 9.5
+        target = 17.5
         n = max(1, int(round(total_dur / target)))
         dur = total_dur / n
         return [{"start": round(i*dur, 2), "end": round((i+1)*dur, 2), "duration": round(dur, 2)} for i in range(n)]
@@ -456,21 +456,21 @@ def plan_calm_quran_scenes(total_dur: float, ayah_timings: list = None, min_dur:
         valid_ends = [e for e in ayah_ends if curr + min_dur <= e <= curr + max_dur]
 
         if valid_ends:
-            target_pt = curr + 10.0
+            target_pt = curr + 17.5
             best_end = min(valid_ends, key=lambda x: abs(x - target_pt))
         else:
-            near_ends = [e for e in ayah_ends if curr + min_dur <= e <= curr + max_dur + 1.5]
+            near_ends = [e for e in ayah_ends if curr + min_dur <= e <= curr + max_dur + 2.0]
             if near_ends:
                 best_end = near_ends[0]
             else:
-                best_end = round(curr + 9.5, 2)
+                best_end = round(min(curr + 20.0, curr + 17.5), 2)
 
         # Guarantee remaining time isn't too short (< min_dur)
         if total_dur - best_end < min_dur:
             combined = total_dur - curr
-            if combined > 14.0:
+            if combined > 24.0:
                 mid = round(curr + combined / 2.0, 2)
-                mid_ends = [e for e in ayah_ends if curr + 6.0 <= e <= total_dur - 6.0]
+                mid_ends = [e for e in ayah_ends if curr + min_dur*0.8 <= e <= total_dur - min_dur*0.8]
                 if mid_ends:
                     mid = min(mid_ends, key=lambda x: abs(x - (curr + combined/2.0)))
                 scenes.append({"start": round(curr, 2), "end": round(mid, 2), "duration": round(mid - curr, 2)})
@@ -647,36 +647,57 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     # Normalize paths for FFmpeg filter on Windows
     safe_ass_path = ass_path.replace("\\", "/").replace(":", "\\:")
 
-    # 4. Burn ASS Subtitles & Merge Audio in Exact "Top 20% Video + Bottom 80% Black Lyrics" Layout
-    # Canvas: 1080x1920 (9:16)
-    # Top 20%: height = 384, width = 1080
-    # Video filter: hflip, scaled and cropped to 1080x384
-    # Bottom 80%: height = 1536 black background with burned ASS subtitles
-    filter_complex = (
-        "[0:v]hflip,scale=1080:384:force_original_aspect_ratio=increase,crop=1080:384[vid];"
-        "[1:v][vid]overlay=0:0:shortest=1[base];"
-        f"[base]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
-    )
+    # 4. Burn ASS Subtitles & Merge Audio over Full-Screen 1080x1920 Live Motion Visual Track
+    grad_path = os.path.abspath("app/assets/grad_center_bottom.png")
+    safe_grad_path = grad_path.replace("\\", "/").replace(":", "\\:")
 
-    cmd = [
-        "ffmpeg", "-y",
-        "-i", master_visual_path,
-        "-f", "lavfi", "-i", "color=c=black:s=1080x1920",
-        "-i", audio_file,
-        "-filter_complex", filter_complex,
-        "-map", "[outv]",
-        "-map", "2:a",
-        "-c:v", "libx264",
-        "-preset", "fast",
-        "-crf", "18",
-        "-c:a", "aac",
-        "-b:a", "192k",
-        "-t", str(total_dur),
-        "-pix_fmt", "yuv420p",
-        final_output_path
-    ]
+    if os.path.exists(grad_path):
+        filter_complex = (
+            f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=60[bg];"
+            f"[1:v]scale=1080:1920[grad];"
+            f"[bg][grad]overlay=0:0[graded];"
+            f"[graded]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
+        )
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", master_visual_path,
+            "-i", grad_path,
+            "-i", audio_file,
+            "-filter_complex", filter_complex,
+            "-map", "[outv]",
+            "-map", "2:a",
+            "-c:v", "libx264",
+            "-preset", "fast",
+            "-crf", "18",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-t", str(total_dur),
+            "-pix_fmt", "yuv420p",
+            final_output_path
+        ]
+    else:
+        filter_complex = (
+            f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=60[bg];"
+            f"[bg]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
+        )
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", master_visual_path,
+            "-i", audio_file,
+            "-filter_complex", filter_complex,
+            "-map", "[outv]",
+            "-map", "1:a",
+            "-c:v", "libx264",
+            "-preset", "fast",
+            "-crf", "18",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-t", str(total_dur),
+            "-pix_fmt", "yuv420p",
+            final_output_path
+        ]
 
-    logger.info(f"Rendering Top20/Bottom80 Quran video: {final_output_path} ({total_dur:.1f}s)...")
+    logger.info(f"Rendering Full-Screen Quran video: {final_output_path} ({total_dur:.1f}s)...")
     res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
     if res.returncode != 0:
         logger.error(f"FFmpeg error: {res.stderr[-500:]}")

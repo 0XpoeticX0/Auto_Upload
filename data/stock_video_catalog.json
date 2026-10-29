@@ -1,359 +1,2564 @@
 {
-  "total_unique": 156,
-  "catalog": {
-    "ocean": [
-      "https://assets.mixkit.co/videos/15209/15209-720.mp4",
-      "https://assets.mixkit.co/videos/48525/48525-720.mp4",
-      "https://assets.mixkit.co/videos/15169/15169-720.mp4",
-      "https://assets.mixkit.co/videos/44392/44392-1080.mp4",
-      "https://assets.mixkit.co/videos/44974/44974-720.mp4",
-      "https://assets.mixkit.co/videos/44474/44474-1080.mp4",
-      "https://assets.mixkit.co/videos/44490/44490-1080.mp4",
-      "https://assets.mixkit.co/videos/11268/11268-720.mp4",
-      "https://assets.mixkit.co/videos/44389/44389-1080.mp4"
-    ],
-    "sea": [
-      "https://assets.mixkit.co/videos/1164/1164-1080.mp4",
-      "https://assets.mixkit.co/videos/1197/1197-1080.mp4",
-      "https://assets.mixkit.co/videos/2168/2168-1080.mp4",
-      "https://assets.mixkit.co/videos/5016/5016-1080.mp4",
-      "https://assets.mixkit.co/videos/1191/1191-1080.mp4",
-      "https://assets.mixkit.co/videos/44495/44495-1080.mp4",
-      "https://assets.mixkit.co/videos/4692/4692-1080.mp4",
-      "https://assets.mixkit.co/videos/44378/44378-1080.mp4",
-      "https://assets.mixkit.co/videos/42498/42498-1080.mp4",
-      "https://assets.mixkit.co/videos/1214/1214-1080.mp4"
-    ],
-    "waves": [
-      "https://assets.mixkit.co/videos/25163/25163-720.mp4",
-      "https://assets.mixkit.co/videos/7194/7194-720.mp4",
-      "https://assets.mixkit.co/videos/9294/9294-720.mp4",
-      "https://assets.mixkit.co/videos/1078/1078-1080.mp4",
-      "https://assets.mixkit.co/videos/1170/1170-1080.mp4",
-      "https://assets.mixkit.co/videos/1116/1116-1080.mp4",
-      "https://assets.mixkit.co/videos/51506/51506-1080.mp4",
-      "https://assets.mixkit.co/videos/1086/1086-1080.mp4",
-      "https://assets.mixkit.co/videos/1082/1082-1080.mp4"
-    ],
-    "waterfall": [
-      "https://assets.mixkit.co/videos/45315/45315-720.mp4",
-      "https://assets.mixkit.co/videos/46384/46384-720.mp4",
-      "https://assets.mixkit.co/videos/11060/11060-720.mp4",
-      "https://assets.mixkit.co/videos/8014/8014-720.mp4",
-      "https://assets.mixkit.co/videos/2186/2186-1080.mp4",
-      "https://assets.mixkit.co/videos/540/540-1080.mp4",
-      "https://assets.mixkit.co/videos/571/571-1080.mp4",
-      "https://assets.mixkit.co/videos/539/539-1080.mp4"
-    ],
-    "river": [
-      "https://assets.mixkit.co/videos/18162/18162-720.mp4",
-      "https://assets.mixkit.co/videos/51600/51600-1080.mp4",
-      "https://assets.mixkit.co/videos/15919/15919-720.mp4",
-      "https://assets.mixkit.co/videos/43605/43605-1080.mp4",
-      "https://assets.mixkit.co/videos/10993/10993-720.mp4",
-      "https://assets.mixkit.co/videos/43607/43607-1080.mp4",
-      "https://assets.mixkit.co/videos/4457/4457-1080.mp4",
-      "https://assets.mixkit.co/videos/514/514-1080.mp4",
-      "https://assets.mixkit.co/videos/3422/3422-1080.mp4",
-      "https://assets.mixkit.co/videos/4150/4150-1080.mp4"
+  "total_unique": 300,
+  "halal_certified": true,
+  "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
+  "min_duration_seconds": 15.0,
+  "max_scene_cut_seconds": 20.0,
+  "rotation_rule": "Full round-robin rotation (1 -> 2 -> 3 -> 1 -> 2 -> 3) across 3 serial clips",
+  "clip_metadata": {
+    "https://assets.mixkit.co/videos/45399/45399-720.mp4": {
+      "category": "architecture",
+      "title": "Towering Temple Ruins Of Egypt Against A Blue Sky",
+      "duration": 28.8,
+      "id": "45399",
+      "url": "https://assets.mixkit.co/videos/45399/45399-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/45400/45400-720.mp4": {
+      "category": "architecture",
+      "title": "Great Hieroglyphics On A Temple In Egypt",
+      "duration": 27.1,
+      "id": "45400",
+      "url": "https://assets.mixkit.co/videos/45400/45400-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/45402/45402-720.mp4": {
+      "category": "architecture",
+      "title": "Large Carvings Of Egyptian Gods On Temple Ruins",
+      "duration": 17.3,
+      "id": "45402",
+      "url": "https://assets.mixkit.co/videos/45402/45402-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/14138/14138-720.mp4": {
+      "category": "architecture",
+      "title": "3D Animation Of The Interior Of A Temple Of Islam",
+      "duration": 15.0,
+      "id": "14138",
+      "url": "https://assets.mixkit.co/videos/14138/14138-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/45397/45397-720.mp4": {
+      "category": "architecture",
+      "title": "Travelling Between The Great Pillars Of An Egyptian Temple",
+      "duration": 15.2,
+      "id": "45397",
+      "url": "https://assets.mixkit.co/videos/45397/45397-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/45021/45021-720.mp4": {
+      "category": "architecture",
+      "title": "Ancient Ruins Of An Excavated Temple In Egypt",
+      "duration": 29.6,
+      "id": "45021",
+      "url": "https://assets.mixkit.co/videos/45021/45021-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4441/4441-720.mp4": {
+      "category": "clouds",
+      "title": "The Entrance Of The Sagrat Cor Temple In Barcelona",
+      "duration": 25.9,
+      "id": "4441",
+      "url": "https://assets.mixkit.co/videos/4441/4441-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/45022/45022-720.mp4": {
+      "category": "clouds",
+      "title": "Extravagant Ancient Temple Of Egypt Featuring Egyptian Gods",
+      "duration": 16.6,
+      "id": "45022",
+      "url": "https://assets.mixkit.co/videos/45022/45022-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/47527/47527-720.mp4": {
+      "category": "palace_hall",
+      "title": "Time Lapse Of A La City Hall Fountain At Night",
+      "duration": 15.2,
+      "id": "47527",
+      "url": "https://assets.mixkit.co/videos/47527/47527-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/45395/45395-720.mp4": {
+      "category": "clouds",
+      "title": "Hieroglyphics On The Temple Of Medinet Habu In Egypt",
+      "duration": 17.6,
+      "id": "45395",
+      "url": "https://assets.mixkit.co/videos/45395/45395-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/26782/26782-720.mp4": {
+      "category": "palace_hall",
+      "title": "Video Loop Of An Awards Hall With Gold Walls",
+      "duration": 15.0,
+      "id": "26782",
+      "url": "https://assets.mixkit.co/videos/26782/26782-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1986/1986-720.mp4": {
+      "category": "palace_hall",
+      "title": "Ghost In The Hall",
+      "duration": 18.4,
+      "id": "1986",
+      "url": "https://assets.mixkit.co/videos/1986/1986-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4087/4087-720.mp4": {
+      "category": "clouds",
+      "title": "New York City View At Night",
+      "duration": 15.7,
+      "id": "4087",
+      "url": "https://assets.mixkit.co/videos/4087/4087-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4339/4339-720.mp4": {
+      "category": "clouds",
+      "title": "City Full Of Buildings",
+      "duration": 16.0,
+      "id": "4339",
+      "url": "https://assets.mixkit.co/videos/4339/4339-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4646/4646-720.mp4": {
+      "category": "clouds",
+      "title": "Venice Central Canal At Night",
+      "duration": 16.4,
+      "id": "4646",
+      "url": "https://assets.mixkit.co/videos/4646/4646-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4196/4196-720.mp4": {
+      "category": "sky",
+      "title": "Luxury Hotel Room Panning Shot",
+      "duration": 19.2,
+      "id": "4196",
+      "url": "https://assets.mixkit.co/videos/4196/4196-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/44879/44879-720.mp4": {
+      "category": "palace_hall",
+      "title": "Aerial View Of An Old Town Hall In A Large",
+      "duration": 16.2,
+      "id": "44879",
+      "url": "https://assets.mixkit.co/videos/44879/44879-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/40654/40654-720.mp4": {
+      "category": "sky",
+      "title": "Night Panorama Of The Skyscrapers Of A Big City",
+      "duration": 15.0,
+      "id": "40654",
+      "url": "https://assets.mixkit.co/videos/40654/40654-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4025/4025-720.mp4": {
+      "category": "sky",
+      "title": "Time Lapse Of The Arc De Triomphe In Paris From",
+      "duration": 27.8,
+      "id": "4025",
+      "url": "https://assets.mixkit.co/videos/4025/4025-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/17990/17990-720.mp4": {
+      "category": "palace_hall",
+      "title": "Event Hall With Golden Curtains",
+      "duration": 15.0,
+      "id": "17990",
+      "url": "https://assets.mixkit.co/videos/17990/17990-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4069/4069-720.mp4": {
+      "category": "sky",
+      "title": "Excavation Crane Lifts A Rock Into A Truck",
+      "duration": 96.4,
+      "id": "4069",
+      "url": "https://assets.mixkit.co/videos/4069/4069-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4168/4168-720.mp4": {
+      "category": "sky",
+      "title": "Central Business District",
+      "duration": 19.0,
+      "id": "4168",
+      "url": "https://assets.mixkit.co/videos/4168/4168-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5015/5015-720.mp4": {
+      "category": "sky",
+      "title": "European City From The Air With Buildings To The Horizon",
+      "duration": 15.4,
+      "id": "5015",
+      "url": "https://assets.mixkit.co/videos/5015/5015-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4265/4265-720.mp4": {
+      "category": "sunset",
+      "title": "Buildings In The City Of London",
+      "duration": 15.2,
+      "id": "4265",
+      "url": "https://assets.mixkit.co/videos/4265/4265-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4024/4024-720.mp4": {
+      "category": "sunset",
+      "title": "Arc De Triomphe Roundabout By Day",
+      "duration": 16.9,
+      "id": "4024",
+      "url": "https://assets.mixkit.co/videos/4024/4024-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/254/254-720.mp4": {
+      "category": "sunset",
+      "title": "Clouds Behind An Apartment Building",
+      "duration": 20.8,
+      "id": "254",
+      "url": "https://assets.mixkit.co/videos/254/254-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4642/4642-720.mp4": {
+      "category": "corridor",
+      "title": "Rolling Corridor At An Airport",
+      "duration": 18.4,
+      "id": "4642",
+      "url": "https://assets.mixkit.co/videos/4642/4642-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/31498/31498-720.mp4": {
+      "category": "arch",
+      "title": "3D Gold Plaques Shaped Like Tumid Arches",
+      "duration": 15.0,
+      "id": "31498",
+      "url": "https://assets.mixkit.co/videos/31498/31498-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/32960/32960-720.mp4": {
+      "category": "corridor",
+      "title": "Infinity Corridor With Futuristic Style",
+      "duration": 20.0,
+      "id": "32960",
+      "url": "https://assets.mixkit.co/videos/32960/32960-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/23377/23377-720.mp4": {
+      "category": "corridor",
+      "title": "Industrial Corridor With Machines",
+      "duration": 17.1,
+      "id": "23377",
+      "url": "https://assets.mixkit.co/videos/23377/23377-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/33833/33833-720.mp4": {
+      "category": "corridor",
+      "title": "Going Through A Corridor Of Palm Trees At Dusk",
+      "duration": 15.1,
+      "id": "33833",
+      "url": "https://assets.mixkit.co/videos/33833/33833-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4313/4313-720.mp4": {
+      "category": "dome",
+      "title": "Symmetrical Mosque",
+      "duration": 14.9,
+      "id": "4313",
+      "url": "https://assets.mixkit.co/videos/4313/4313-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2678/2678-720.mp4": {
+      "category": "arch",
+      "title": "Roundabout In The Form Of A Fountain In The City",
+      "duration": 15.1,
+      "id": "2678",
+      "url": "https://assets.mixkit.co/videos/2678/2678-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/9514/9514-720.mp4": {
+      "category": "dome",
+      "title": "Dome Of A Church Near The Sea From Afar",
+      "duration": 21.8,
+      "id": "9514",
+      "url": "https://assets.mixkit.co/videos/9514/9514-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/11922/11922-720.mp4": {
+      "category": "mosque",
+      "title": "Drone Flying Above A Mosque",
+      "duration": 30.6,
+      "id": "11922",
+      "url": "https://assets.mixkit.co/videos/11922/11922-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/39179/39179-720.mp4": {
+      "category": "mosque",
+      "title": "Elegant Living Room Inside A Mosque",
+      "duration": 30.5,
+      "id": "39179",
+      "url": "https://assets.mixkit.co/videos/39179/39179-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/9595/9595-720.mp4": {
+      "category": "mosque",
+      "title": "Mosque In The Top Of A Cloudy Hill",
+      "duration": 60.0,
+      "id": "9595",
+      "url": "https://assets.mixkit.co/videos/9595/9595-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/39195/39195-720.mp4": {
+      "category": "mosque",
+      "title": "Bosphorus Mosque In An Aerial Shot",
+      "duration": 47.3,
+      "id": "39195",
+      "url": "https://assets.mixkit.co/videos/39195/39195-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/34295/34295-720.mp4": {
+      "category": "mosque",
+      "title": "Big Mosque In The Middle Of A City From The",
+      "duration": 32.9,
+      "id": "34295",
+      "url": "https://assets.mixkit.co/videos/34295/34295-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/22118/22118-720.mp4": {
+      "category": "mosque",
+      "title": "Mosque In Moscow",
+      "duration": 27.3,
+      "id": "22118",
+      "url": "https://assets.mixkit.co/videos/22118/22118-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/9998/9998-720.mp4": {
+      "category": "sunset",
+      "title": "Mosque In The Mountain At Dawn",
+      "duration": 36.0,
+      "id": "9998",
+      "url": "https://assets.mixkit.co/videos/9998/9998-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/34251/34251-720.mp4": {
+      "category": "sunset",
+      "title": "Huge Living Room With A Carpet Inside A Mosque",
+      "duration": 20.2,
+      "id": "34251",
+      "url": "https://assets.mixkit.co/videos/34251/34251-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/17255/17255-720.mp4": {
+      "category": "sunset",
+      "title": "Lights Over A Mosque At Night",
+      "duration": 40.3,
+      "id": "17255",
+      "url": "https://assets.mixkit.co/videos/17255/17255-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/9739/9739-720.mp4": {
+      "category": "sunrise",
+      "title": "Islamic Building In The Top Of A Mountain",
+      "duration": 28.7,
+      "id": "9739",
+      "url": "https://assets.mixkit.co/videos/9739/9739-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/34296/34296-720.mp4": {
+      "category": "sunrise",
+      "title": "Flying Over A Big City With A Mosque",
+      "duration": 22.0,
+      "id": "34296",
+      "url": "https://assets.mixkit.co/videos/34296/34296-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/35472/35472-720.mp4": {
+      "category": "sunrise",
+      "title": "Islamic Mosque In The Middle Of A Town",
+      "duration": 17.1,
+      "id": "35472",
+      "url": "https://assets.mixkit.co/videos/35472/35472-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/31753/31753-720.mp4": {
+      "category": "columns",
+      "title": "Rows Of Golden 3D Greek Columns With Creepers",
+      "duration": 15.0,
+      "id": "31753",
+      "url": "https://assets.mixkit.co/videos/31753/31753-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/32491/32491-720.mp4": {
+      "category": "columns",
+      "title": "Columns Of Smoke In A Forest Aerial Shot",
+      "duration": 22.8,
+      "id": "32491",
+      "url": "https://assets.mixkit.co/videos/32491/32491-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/21812/21812-720.mp4": {
+      "category": "sacred_door",
+      "title": "Opening A Door With A Hanging Key",
+      "duration": 16.0,
+      "id": "21812",
+      "url": "https://assets.mixkit.co/videos/21812/21812-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/21817/21817-720.mp4": {
+      "category": "sacred_door",
+      "title": "Opening A Hotel Room Door",
+      "duration": 20.5,
+      "id": "21817",
+      "url": "https://assets.mixkit.co/videos/21817/21817-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/21821/21821-720.mp4": {
+      "category": "sacred_door",
+      "title": "Opening A Hotel Door With A Keypad",
+      "duration": 19.4,
+      "id": "21821",
+      "url": "https://assets.mixkit.co/videos/21821/21821-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2490/2490-720.mp4": {
+      "category": "sacred_door",
+      "title": "Ruined Site Near A Path In A Forest",
+      "duration": 15.8,
+      "id": "2490",
+      "url": "https://assets.mixkit.co/videos/2490/2490-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3494/3494-720.mp4": {
+      "category": "sacred_door",
+      "title": "Clothing Shop With Art On Its Doorstep",
+      "duration": 16.0,
+      "id": "3494",
+      "url": "https://assets.mixkit.co/videos/3494/3494-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/29455/29455-720.mp4": {
+      "category": "sacred_door",
+      "title": "Automatic Doors At Madrid Airport",
+      "duration": 38.6,
+      "id": "29455",
+      "url": "https://assets.mixkit.co/videos/29455/29455-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/31786/31786-720.mp4": {
+      "category": "columns",
+      "title": "Red Carpet Between Rows Of Black Columns",
+      "duration": 15.0,
+      "id": "31786",
+      "url": "https://assets.mixkit.co/videos/31786/31786-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/27282/27282-720.mp4": {
+      "category": "columns",
+      "title": "Berlin From The Victory Column At The Top",
+      "duration": 29.5,
+      "id": "27282",
+      "url": "https://assets.mixkit.co/videos/27282/27282-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3492/3492-720.mp4": {
+      "category": "sunrise",
+      "title": "Art In The Door",
+      "duration": 18.3,
+      "id": "3492",
+      "url": "https://assets.mixkit.co/videos/3492/3492-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3490/3490-720.mp4": {
+      "category": "sunrise",
+      "title": "Mural Art On The Facade Of A House",
+      "duration": 35.2,
+      "id": "3490",
+      "url": "https://assets.mixkit.co/videos/3490/3490-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/29454/29454-720.mp4": {
+      "category": "columns",
+      "title": "Gaudi Stone Columns",
+      "duration": 19.1,
+      "id": "29454",
+      "url": "https://assets.mixkit.co/videos/29454/29454-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/30867/30867-720.mp4": {
+      "category": "sunrise",
+      "title": "Abstract Concept Of Doors With Islamic Design",
+      "duration": 15.0,
+      "id": "30867",
+      "url": "https://assets.mixkit.co/videos/30867/30867-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3499/3499-720.mp4": {
+      "category": "stars",
+      "title": "Mural Art At The Doors",
+      "duration": 14.9,
+      "id": "3499",
+      "url": "https://assets.mixkit.co/videos/3499/3499-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/14893/14893-720.mp4": {
+      "category": "columns",
+      "title": "Columns Of Golden Coins",
+      "duration": 29.8,
+      "id": "14893",
+      "url": "https://assets.mixkit.co/videos/14893/14893-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3491/3491-720.mp4": {
+      "category": "stars",
+      "title": "Urban Art On The Doors Of The Houses",
+      "duration": 22.6,
+      "id": "3491",
+      "url": "https://assets.mixkit.co/videos/3491/3491-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/14542/14542-720.mp4": {
+      "category": "stars",
+      "title": "Stacked Book Columns 3D Animation",
+      "duration": 15.0,
+      "id": "14542",
+      "url": "https://assets.mixkit.co/videos/14542/14542-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/23153/23153-720.mp4": {
+      "category": "stars",
+      "title": "Thief Unlocking A Car Door",
+      "duration": 25.3,
+      "id": "23153",
+      "url": "https://assets.mixkit.co/videos/23153/23153-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/15395/15395-720.mp4": {
+      "category": "stars",
+      "title": "Iron Column At A Port",
+      "duration": 15.4,
+      "id": "15395",
+      "url": "https://assets.mixkit.co/videos/15395/15395-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2034/2034-720.mp4": {
+      "category": "stars",
+      "title": "Aerial Shot Of A Busy Avenue In The City",
+      "duration": 44.0,
+      "id": "2034",
+      "url": "https://assets.mixkit.co/videos/2034/2034-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/49845/49845-720.mp4": {
+      "category": "night_sky",
+      "title": "Aerial View Of The Glass Corporate Buildings Of A Big",
+      "duration": 20.9,
+      "id": "49845",
+      "url": "https://assets.mixkit.co/videos/49845/49845-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/49849/49849-720.mp4": {
+      "category": "night_sky",
+      "title": "Aerial View Of A Highway In A Big City",
+      "duration": 16.6,
+      "id": "49849",
+      "url": "https://assets.mixkit.co/videos/49849/49849-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/49846/49846-720.mp4": {
+      "category": "night_sky",
+      "title": "Side By Side Aerial View Of A City At Night",
+      "duration": 43.8,
+      "id": "49846",
+      "url": "https://assets.mixkit.co/videos/49846/49846-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/41541/41541-720.mp4": {
+      "category": "night_sky",
+      "title": "Aerial Panorama Over The Buildings Of A Big City",
+      "duration": 23.8,
+      "id": "41541",
+      "url": "https://assets.mixkit.co/videos/41541/41541-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4330/4330-720.mp4": {
+      "category": "night_sky",
+      "title": "New York Buildings At Night Pan Shot",
+      "duration": 34.3,
+      "id": "4330",
+      "url": "https://assets.mixkit.co/videos/4330/4330-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4332/4332-720.mp4": {
+      "category": "night_sky",
+      "title": "Times Square During A Rainy Night",
+      "duration": 19.9,
+      "id": "4332",
+      "url": "https://assets.mixkit.co/videos/4332/4332-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/42343/42343-720.mp4": {
+      "category": "galaxy",
+      "title": "Movement In A City At Night In An Aerial Shot",
+      "duration": 27.0,
+      "id": "42343",
+      "url": "https://assets.mixkit.co/videos/42343/42343-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/26532/26532-720.mp4": {
+      "category": "galaxy",
+      "title": "Halal Scenic Clip 26532",
+      "duration": 16.6,
+      "id": "26532",
+      "url": "https://assets.mixkit.co/videos/26532/26532-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4633/4633-720.mp4": {
+      "category": "galaxy",
+      "title": "Halal Scenic Clip 4633",
+      "duration": 22.1,
+      "id": "4633",
+      "url": "https://assets.mixkit.co/videos/4633/4633-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1082/1082-720.mp4": {
+      "category": "galaxy",
+      "title": "Halal Scenic Clip 1082",
+      "duration": 19.9,
+      "id": "1082",
+      "url": "https://assets.mixkit.co/videos/1082/1082-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4881/4881-720.mp4": {
+      "category": "galaxy",
+      "title": "Halal Scenic Clip 4881",
+      "duration": 23.1,
+      "id": "4881",
+      "url": "https://assets.mixkit.co/videos/4881/4881-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1710/1710-720.mp4": {
+      "category": "galaxy",
+      "title": "Halal Scenic Clip 1710",
+      "duration": 30.2,
+      "id": "1710",
+      "url": "https://assets.mixkit.co/videos/1710/1710-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5002/5002-720.mp4": {
+      "category": "space",
+      "title": "Halal Scenic Clip 5002",
+      "duration": 15.0,
+      "id": "5002",
+      "url": "https://assets.mixkit.co/videos/5002/5002-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1773/1773-720.mp4": {
+      "category": "space",
+      "title": "Halal Scenic Clip 1773",
+      "duration": 32.9,
+      "id": "1773",
+      "url": "https://assets.mixkit.co/videos/1773/1773-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4028/4028-720.mp4": {
+      "category": "space",
+      "title": "Halal Scenic Clip 4028",
+      "duration": 16.6,
+      "id": "4028",
+      "url": "https://assets.mixkit.co/videos/4028/4028-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/522/522-720.mp4": {
+      "category": "space",
+      "title": "Halal Scenic Clip 522",
+      "duration": 35.6,
+      "id": "522",
+      "url": "https://assets.mixkit.co/videos/522/522-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4078/4078-720.mp4": {
+      "category": "space",
+      "title": "Halal Scenic Clip 4078",
+      "duration": 41.6,
+      "id": "4078",
+      "url": "https://assets.mixkit.co/videos/4078/4078-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1953/1953-720.mp4": {
+      "category": "space",
+      "title": "Halal Scenic Clip 1953",
+      "duration": 50.9,
+      "id": "1953",
+      "url": "https://assets.mixkit.co/videos/1953/1953-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4070/4070-720.mp4": {
+      "category": "moon",
+      "title": "Halal Scenic Clip 4070",
+      "duration": 21.6,
+      "id": "4070",
+      "url": "https://assets.mixkit.co/videos/4070/4070-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/50566/50566-720.mp4": {
+      "category": "moon",
+      "title": "Halal Scenic Clip 50566",
+      "duration": 15.3,
+      "id": "50566",
+      "url": "https://assets.mixkit.co/videos/50566/50566-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/51585/51585-720.mp4": {
+      "category": "moon",
+      "title": "Halal Scenic Clip 51585",
+      "duration": 22.4,
+      "id": "51585",
+      "url": "https://assets.mixkit.co/videos/51585/51585-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/14540/14540-720.mp4": {
+      "category": "moon",
+      "title": "Halal Scenic Clip 14540",
+      "duration": 15.0,
+      "id": "14540",
+      "url": "https://assets.mixkit.co/videos/14540/14540-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/20425/20425-720.mp4": {
+      "category": "moon",
+      "title": "Halal Scenic Clip 20425",
+      "duration": 102.3,
+      "id": "20425",
+      "url": "https://assets.mixkit.co/videos/20425/20425-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/41378/41378-720.mp4": {
+      "category": "moon",
+      "title": "Halal Scenic Clip 41378",
+      "duration": 25.4,
+      "id": "41378",
+      "url": "https://assets.mixkit.co/videos/41378/41378-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/43130/43130-720.mp4": {
+      "category": "nebula",
+      "title": "Halal Scenic Clip 43130",
+      "duration": 33.9,
+      "id": "43130",
+      "url": "https://assets.mixkit.co/videos/43130/43130-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/8014/8014-720.mp4": {
+      "category": "nebula",
+      "title": "Halal Scenic Clip 8014",
+      "duration": 41.9,
+      "id": "8014",
+      "url": "https://assets.mixkit.co/videos/8014/8014-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/11185/11185-720.mp4": {
+      "category": "nebula",
+      "title": "Halal Scenic Clip 11185",
+      "duration": 23.8,
+      "id": "11185",
+      "url": "https://assets.mixkit.co/videos/11185/11185-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2212/2212-720.mp4": {
+      "category": "nebula",
+      "title": "Halal Scenic Clip 2212",
+      "duration": 15.1,
+      "id": "2212",
+      "url": "https://assets.mixkit.co/videos/2212/2212-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2408/2408-720.mp4": {
+      "category": "nebula",
+      "title": "Halal Scenic Clip 2408",
+      "duration": 18.1,
+      "id": "2408",
+      "url": "https://assets.mixkit.co/videos/2408/2408-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1594/1594-720.mp4": {
+      "category": "nebula",
+      "title": "Halal Scenic Clip 1594",
+      "duration": 26.6,
+      "id": "1594",
+      "url": "https://assets.mixkit.co/videos/1594/1594-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1090/1090-720.mp4": {
+      "category": "ocean",
+      "title": "Halal Scenic Clip 1090",
+      "duration": 25.9,
+      "id": "1090",
+      "url": "https://assets.mixkit.co/videos/1090/1090-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/570/570-720.mp4": {
+      "category": "ocean",
+      "title": "Halal Scenic Clip 570",
+      "duration": 16.1,
+      "id": "570",
+      "url": "https://assets.mixkit.co/videos/570/570-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4081/4081-720.mp4": {
+      "category": "ocean",
+      "title": "Halal Scenic Clip 4081",
+      "duration": 46.2,
+      "id": "4081",
+      "url": "https://assets.mixkit.co/videos/4081/4081-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/28342/28342-720.mp4": {
+      "category": "ocean",
+      "title": "Halal Scenic Clip 28342",
+      "duration": 15.4,
+      "id": "28342",
+      "url": "https://assets.mixkit.co/videos/28342/28342-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4374/4374-720.mp4": {
+      "category": "ocean",
+      "title": "Halal Scenic Clip 4374",
+      "duration": 21.0,
+      "id": "4374",
+      "url": "https://assets.mixkit.co/videos/4374/4374-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5369/5369-720.mp4": {
+      "category": "ocean",
+      "title": "Halal Scenic Clip 5369",
+      "duration": 15.2,
+      "id": "5369",
+      "url": "https://assets.mixkit.co/videos/5369/5369-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/50199/50199-720.mp4": {
+      "category": "sea",
+      "title": "Halal Scenic Clip 50199",
+      "duration": 22.9,
+      "id": "50199",
+      "url": "https://assets.mixkit.co/videos/50199/50199-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/27028/27028-720.mp4": {
+      "category": "sea",
+      "title": "Halal Scenic Clip 27028",
+      "duration": 30.0,
+      "id": "27028",
+      "url": "https://assets.mixkit.co/videos/27028/27028-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4331/4331-720.mp4": {
+      "category": "sea",
+      "title": "Halal Scenic Clip 4331",
+      "duration": 14.9,
+      "id": "4331",
+      "url": "https://assets.mixkit.co/videos/4331/4331-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4412/4412-720.mp4": {
+      "category": "sea",
+      "title": "Halal Scenic Clip 4412",
+      "duration": 29.8,
+      "id": "4412",
+      "url": "https://assets.mixkit.co/videos/4412/4412-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1617/1617-720.mp4": {
+      "category": "sea",
+      "title": "Halal Scenic Clip 1617",
+      "duration": 21.7,
+      "id": "1617",
+      "url": "https://assets.mixkit.co/videos/1617/1617-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/10993/10993-720.mp4": {
+      "category": "sea",
+      "title": "Halal Scenic Clip 10993",
+      "duration": 27.4,
+      "id": "10993",
+      "url": "https://assets.mixkit.co/videos/10993/10993-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1170/1170-720.mp4": {
+      "category": "waves",
+      "title": "Halal Scenic Clip 1170",
+      "duration": 34.3,
+      "id": "1170",
+      "url": "https://assets.mixkit.co/videos/1170/1170-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1564/1564-720.mp4": {
+      "category": "waves",
+      "title": "Halal Scenic Clip 1564",
+      "duration": 20.7,
+      "id": "1564",
+      "url": "https://assets.mixkit.co/videos/1564/1564-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4305/4305-720.mp4": {
+      "category": "waves",
+      "title": "Halal Scenic Clip 4305",
+      "duration": 63.6,
+      "id": "4305",
+      "url": "https://assets.mixkit.co/videos/4305/4305-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/18309/18309-720.mp4": {
+      "category": "waves",
+      "title": "Halal Scenic Clip 18309",
+      "duration": 15.0,
+      "id": "18309",
+      "url": "https://assets.mixkit.co/videos/18309/18309-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/19501/19501-720.mp4": {
+      "category": "waves",
+      "title": "Halal Scenic Clip 19501",
+      "duration": 24.9,
+      "id": "19501",
+      "url": "https://assets.mixkit.co/videos/19501/19501-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4011/4011-720.mp4": {
+      "category": "waves",
+      "title": "Halal Scenic Clip 4011",
+      "duration": 37.0,
+      "id": "4011",
+      "url": "https://assets.mixkit.co/videos/4011/4011-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/52009/52009-720.mp4": {
+      "category": "waterfall",
+      "title": "Halal Scenic Clip 52009",
+      "duration": 21.6,
+      "id": "52009",
+      "url": "https://assets.mixkit.co/videos/52009/52009-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/6850/6850-720.mp4": {
+      "category": "waterfall",
+      "title": "Halal Scenic Clip 6850",
+      "duration": 20.7,
+      "id": "6850",
+      "url": "https://assets.mixkit.co/videos/6850/6850-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/827/827-720.mp4": {
+      "category": "waterfall",
+      "title": "Halal Scenic Clip 827",
+      "duration": 15.8,
+      "id": "827",
+      "url": "https://assets.mixkit.co/videos/827/827-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/51689/51689-720.mp4": {
+      "category": "waterfall",
+      "title": "Halal Scenic Clip 51689",
+      "duration": 22.8,
+      "id": "51689",
+      "url": "https://assets.mixkit.co/videos/51689/51689-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/30316/30316-720.mp4": {
+      "category": "waterfall",
+      "title": "Halal Scenic Clip 30316",
+      "duration": 15.0,
+      "id": "30316",
+      "url": "https://assets.mixkit.co/videos/30316/30316-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/25375/25375-720.mp4": {
+      "category": "waterfall",
+      "title": "Halal Scenic Clip 25375",
+      "duration": 48.0,
+      "id": "25375",
+      "url": "https://assets.mixkit.co/videos/25375/25375-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/11060/11060-720.mp4": {
+      "category": "river",
+      "title": "Halal Scenic Clip 11060",
+      "duration": 15.0,
+      "id": "11060",
+      "url": "https://assets.mixkit.co/videos/11060/11060-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1780/1780-720.mp4": {
+      "category": "river",
+      "title": "Halal Scenic Clip 1780",
+      "duration": 30.1,
+      "id": "1780",
+      "url": "https://assets.mixkit.co/videos/1780/1780-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1168/1168-720.mp4": {
+      "category": "river",
+      "title": "Halal Scenic Clip 1168",
+      "duration": 20.8,
+      "id": "1168",
+      "url": "https://assets.mixkit.co/videos/1168/1168-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/45315/45315-720.mp4": {
+      "category": "river",
+      "title": "Halal Scenic Clip 45315",
+      "duration": 16.1,
+      "id": "45315",
+      "url": "https://assets.mixkit.co/videos/45315/45315-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5011/5011-720.mp4": {
+      "category": "river",
+      "title": "Halal Scenic Clip 5011",
+      "duration": 25.5,
+      "id": "5011",
+      "url": "https://assets.mixkit.co/videos/5011/5011-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/50561/50561-720.mp4": {
+      "category": "river",
+      "title": "Halal Scenic Clip 50561",
+      "duration": 17.8,
+      "id": "50561",
+      "url": "https://assets.mixkit.co/videos/50561/50561-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/28339/28339-720.mp4": {
+      "category": "lake",
+      "title": "Halal Scenic Clip 28339",
+      "duration": 30.1,
+      "id": "28339",
+      "url": "https://assets.mixkit.co/videos/28339/28339-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5008/5008-720.mp4": {
+      "category": "lake",
+      "title": "Halal Scenic Clip 5008",
+      "duration": 15.1,
+      "id": "5008",
+      "url": "https://assets.mixkit.co/videos/5008/5008-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1954/1954-720.mp4": {
+      "category": "lake",
+      "title": "Halal Scenic Clip 1954",
+      "duration": 15.3,
+      "id": "1954",
+      "url": "https://assets.mixkit.co/videos/1954/1954-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/18162/18162-720.mp4": {
+      "category": "lake",
+      "title": "Halal Scenic Clip 18162",
+      "duration": 28.0,
+      "id": "18162",
+      "url": "https://assets.mixkit.co/videos/18162/18162-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/572/572-720.mp4": {
+      "category": "lake",
+      "title": "Halal Scenic Clip 572",
+      "duration": 35.0,
+      "id": "572",
+      "url": "https://assets.mixkit.co/videos/572/572-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/48004/48004-720.mp4": {
+      "category": "lake",
+      "title": "Halal Scenic Clip 48004",
+      "duration": 28.9,
+      "id": "48004",
+      "url": "https://assets.mixkit.co/videos/48004/48004-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/6806/6806-720.mp4": {
+      "category": "water_stream",
+      "title": "Halal Scenic Clip 6806",
+      "duration": 21.8,
+      "id": "6806",
+      "url": "https://assets.mixkit.co/videos/6806/6806-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1218/1218-720.mp4": {
+      "category": "water_stream",
+      "title": "Halal Scenic Clip 1218",
+      "duration": 20.0,
+      "id": "1218",
+      "url": "https://assets.mixkit.co/videos/1218/1218-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3371/3371-720.mp4": {
+      "category": "water_stream",
+      "title": "Halal Scenic Clip 3371",
+      "duration": 20.7,
+      "id": "3371",
+      "url": "https://assets.mixkit.co/videos/3371/3371-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/41366/41366-720.mp4": {
+      "category": "water_stream",
+      "title": "Halal Scenic Clip 41366",
+      "duration": 18.1,
+      "id": "41366",
+      "url": "https://assets.mixkit.co/videos/41366/41366-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1931/1931-720.mp4": {
+      "category": "water_stream",
+      "title": "Halal Scenic Clip 1931",
+      "duration": 20.0,
+      "id": "1931",
+      "url": "https://assets.mixkit.co/videos/1931/1931-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1081/1081-720.mp4": {
+      "category": "water_stream",
+      "title": "Halal Scenic Clip 1081",
+      "duration": 25.7,
+      "id": "1081",
+      "url": "https://assets.mixkit.co/videos/1081/1081-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4204/4204-720.mp4": {
+      "category": "rain",
+      "title": "Halal Scenic Clip 4204",
+      "duration": 28.8,
+      "id": "4204",
+      "url": "https://assets.mixkit.co/videos/4204/4204-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/51104/51104-720.mp4": {
+      "category": "rain",
+      "title": "Halal Scenic Clip 51104",
+      "duration": 17.4,
+      "id": "51104",
+      "url": "https://assets.mixkit.co/videos/51104/51104-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/523/523-720.mp4": {
+      "category": "rain",
+      "title": "Halal Scenic Clip 523",
+      "duration": 30.1,
+      "id": "523",
+      "url": "https://assets.mixkit.co/videos/523/523-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5372/5372-720.mp4": {
+      "category": "rain",
+      "title": "Halal Scenic Clip 5372",
+      "duration": 15.6,
+      "id": "5372",
+      "url": "https://assets.mixkit.co/videos/5372/5372-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4059/4059-720.mp4": {
+      "category": "rain",
+      "title": "Halal Scenic Clip 4059",
+      "duration": 19.1,
+      "id": "4059",
+      "url": "https://assets.mixkit.co/videos/4059/4059-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/41545/41545-720.mp4": {
+      "category": "rain",
+      "title": "Halal Scenic Clip 41545",
+      "duration": 23.6,
+      "id": "41545",
+      "url": "https://assets.mixkit.co/videos/41545/41545-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/529/529-720.mp4": {
+      "category": "water_droplets",
+      "title": "Halal Scenic Clip 529",
+      "duration": 36.3,
+      "id": "529",
+      "url": "https://assets.mixkit.co/videos/529/529-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4166/4166-720.mp4": {
+      "category": "water_droplets",
+      "title": "Halal Scenic Clip 4166",
+      "duration": 21.4,
+      "id": "4166",
+      "url": "https://assets.mixkit.co/videos/4166/4166-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4396/4396-720.mp4": {
+      "category": "water_droplets",
+      "title": "Halal Scenic Clip 4396",
+      "duration": 16.0,
+      "id": "4396",
+      "url": "https://assets.mixkit.co/videos/4396/4396-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4477/4477-720.mp4": {
+      "category": "water_droplets",
+      "title": "Halal Scenic Clip 4477",
+      "duration": 17.6,
+      "id": "4477",
+      "url": "https://assets.mixkit.co/videos/4477/4477-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2846/2846-720.mp4": {
+      "category": "water_droplets",
+      "title": "Halal Scenic Clip 2846",
+      "duration": 22.1,
+      "id": "2846",
+      "url": "https://assets.mixkit.co/videos/2846/2846-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1181/1181-720.mp4": {
+      "category": "water_droplets",
+      "title": "Halal Scenic Clip 1181",
+      "duration": 17.9,
+      "id": "1181",
+      "url": "https://assets.mixkit.co/videos/1181/1181-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4422/4422-720.mp4": {
+      "category": "ripples",
+      "title": "Halal Scenic Clip 4422",
+      "duration": 17.5,
+      "id": "4422",
+      "url": "https://assets.mixkit.co/videos/4422/4422-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/19243/19243-720.mp4": {
+      "category": "ripples",
+      "title": "Halal Scenic Clip 19243",
+      "duration": 21.0,
+      "id": "19243",
+      "url": "https://assets.mixkit.co/videos/19243/19243-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/30605/30605-720.mp4": {
+      "category": "ripples",
+      "title": "Halal Scenic Clip 30605",
+      "duration": 15.0,
+      "id": "30605",
+      "url": "https://assets.mixkit.co/videos/30605/30605-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2209/2209-720.mp4": {
+      "category": "ripples",
+      "title": "Halal Scenic Clip 2209",
+      "duration": 20.4,
+      "id": "2209",
+      "url": "https://assets.mixkit.co/videos/2209/2209-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4310/4310-720.mp4": {
+      "category": "ripples",
+      "title": "Halal Scenic Clip 4310",
+      "duration": 17.6,
+      "id": "4310",
+      "url": "https://assets.mixkit.co/videos/4310/4310-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/6734/6734-720.mp4": {
+      "category": "ripples",
+      "title": "Halal Scenic Clip 6734",
+      "duration": 21.3,
+      "id": "6734",
+      "url": "https://assets.mixkit.co/videos/6734/6734-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1078/1078-720.mp4": {
+      "category": "desert",
+      "title": "Halal Scenic Clip 1078",
+      "duration": 45.7,
+      "id": "1078",
+      "url": "https://assets.mixkit.co/videos/1078/1078-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/31549/31549-720.mp4": {
+      "category": "desert",
+      "title": "Halal Scenic Clip 31549",
+      "duration": 15.0,
+      "id": "31549",
+      "url": "https://assets.mixkit.co/videos/31549/31549-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/14468/14468-720.mp4": {
+      "category": "desert",
+      "title": "Halal Scenic Clip 14468",
+      "duration": 21.8,
+      "id": "14468",
+      "url": "https://assets.mixkit.co/videos/14468/14468-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3370/3370-720.mp4": {
+      "category": "desert",
+      "title": "Halal Scenic Clip 3370",
+      "duration": 20.3,
+      "id": "3370",
+      "url": "https://assets.mixkit.co/videos/3370/3370-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/18312/18312-720.mp4": {
+      "category": "desert",
+      "title": "Halal Scenic Clip 18312",
+      "duration": 15.0,
+      "id": "18312",
+      "url": "https://assets.mixkit.co/videos/18312/18312-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/19636/19636-720.mp4": {
+      "category": "desert",
+      "title": "Halal Scenic Clip 19636",
+      "duration": 15.0,
+      "id": "19636",
+      "url": "https://assets.mixkit.co/videos/19636/19636-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/50134/50134-720.mp4": {
+      "category": "sand_dunes",
+      "title": "Halal Scenic Clip 50134",
+      "duration": 16.2,
+      "id": "50134",
+      "url": "https://assets.mixkit.co/videos/50134/50134-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5360/5360-720.mp4": {
+      "category": "sand_dunes",
+      "title": "Halal Scenic Clip 5360",
+      "duration": 15.1,
+      "id": "5360",
+      "url": "https://assets.mixkit.co/videos/5360/5360-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2179/2179-720.mp4": {
+      "category": "sand_dunes",
+      "title": "Halal Scenic Clip 2179",
+      "duration": 14.8,
+      "id": "2179",
+      "url": "https://assets.mixkit.co/videos/2179/2179-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1088/1088-720.mp4": {
+      "category": "sand_dunes",
+      "title": "Halal Scenic Clip 1088",
+      "duration": 21.6,
+      "id": "1088",
+      "url": "https://assets.mixkit.co/videos/1088/1088-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1955/1955-720.mp4": {
+      "category": "sand_dunes",
+      "title": "Halal Scenic Clip 1955",
+      "duration": 28.7,
+      "id": "1955",
+      "url": "https://assets.mixkit.co/videos/1955/1955-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/38948/38948-720.mp4": {
+      "category": "sand_dunes",
+      "title": "Halal Scenic Clip 38948",
+      "duration": 22.3,
+      "id": "38948",
+      "url": "https://assets.mixkit.co/videos/38948/38948-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/30468/30468-720.mp4": {
+      "category": "mountains",
+      "title": "Halal Scenic Clip 30468",
+      "duration": 25.1,
+      "id": "30468",
+      "url": "https://assets.mixkit.co/videos/30468/30468-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1191/1191-720.mp4": {
+      "category": "mountains",
+      "title": "Halal Scenic Clip 1191",
+      "duration": 22.7,
+      "id": "1191",
+      "url": "https://assets.mixkit.co/videos/1191/1191-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/5027/5027-720.mp4": {
+      "category": "mountains",
+      "title": "Halal Scenic Clip 5027",
+      "duration": 25.6,
+      "id": "5027",
+      "url": "https://assets.mixkit.co/videos/5027/5027-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/41401/41401-720.mp4": {
+      "category": "mountains",
+      "title": "Halal Scenic Clip 41401",
+      "duration": 27.7,
+      "id": "41401",
+      "url": "https://assets.mixkit.co/videos/41401/41401-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/50267/50267-720.mp4": {
+      "category": "mountains",
+      "title": "Halal Scenic Clip 50267",
+      "duration": 18.9,
+      "id": "50267",
+      "url": "https://assets.mixkit.co/videos/50267/50267-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1944/1944-720.mp4": {
+      "category": "mountains",
+      "title": "Halal Scenic Clip 1944",
+      "duration": 54.8,
+      "id": "1944",
+      "url": "https://assets.mixkit.co/videos/1944/1944-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/14185/14185-720.mp4": {
+      "category": "rock_formations",
+      "title": "Halal Scenic Clip 14185",
+      "duration": 15.0,
+      "id": "14185",
+      "url": "https://assets.mixkit.co/videos/14185/14185-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1762/1762-720.mp4": {
+      "category": "rock_formations",
+      "title": "Halal Scenic Clip 1762",
+      "duration": 20.1,
+      "id": "1762",
+      "url": "https://assets.mixkit.co/videos/1762/1762-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/51792/51792-720.mp4": {
+      "category": "rock_formations",
+      "title": "Halal Scenic Clip 51792",
+      "duration": 22.0,
+      "id": "51792",
+      "url": "https://assets.mixkit.co/videos/51792/51792-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4151/4151-720.mp4": {
+      "category": "rock_formations",
+      "title": "Halal Scenic Clip 4151",
+      "duration": 18.0,
+      "id": "4151",
+      "url": "https://assets.mixkit.co/videos/4151/4151-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1149/1149-720.mp4": {
+      "category": "rock_formations",
+      "title": "Halal Scenic Clip 1149",
+      "duration": 19.2,
+      "id": "1149",
+      "url": "https://assets.mixkit.co/videos/1149/1149-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/49334/49334-720.mp4": {
+      "category": "rock_formations",
+      "title": "Halal Scenic Clip 49334",
+      "duration": 16.0,
+      "id": "49334",
+      "url": "https://assets.mixkit.co/videos/49334/49334-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3394/3394-720.mp4": {
+      "category": "canyon",
+      "title": "Halal Scenic Clip 3394",
+      "duration": 15.2,
+      "id": "3394",
+      "url": "https://assets.mixkit.co/videos/3394/3394-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/28335/28335-720.mp4": {
+      "category": "canyon",
+      "title": "Halal Scenic Clip 28335",
+      "duration": 15.0,
+      "id": "28335",
+      "url": "https://assets.mixkit.co/videos/28335/28335-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/51600/51600-720.mp4": {
+      "category": "canyon",
+      "title": "Halal Scenic Clip 51600",
+      "duration": 20.2,
+      "id": "51600",
+      "url": "https://assets.mixkit.co/videos/51600/51600-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4132/4132-720.mp4": {
+      "category": "canyon",
+      "title": "Halal Scenic Clip 4132",
+      "duration": 15.8,
+      "id": "4132",
+      "url": "https://assets.mixkit.co/videos/4132/4132-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4383/4383-720.mp4": {
+      "category": "canyon",
+      "title": "Halal Scenic Clip 4383",
+      "duration": 23.9,
+      "id": "4383",
+      "url": "https://assets.mixkit.co/videos/4383/4383-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/14428/14428-720.mp4": {
+      "category": "canyon",
+      "title": "Halal Scenic Clip 14428",
+      "duration": 21.1,
+      "id": "14428",
+      "url": "https://assets.mixkit.co/videos/14428/14428-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/51797/51797-720.mp4": {
+      "category": "valley",
+      "title": "Halal Scenic Clip 51797",
+      "duration": 19.6,
+      "id": "51797",
+      "url": "https://assets.mixkit.co/videos/51797/51797-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4148/4148-720.mp4": {
+      "category": "valley",
+      "title": "Halal Scenic Clip 4148",
+      "duration": 16.2,
+      "id": "4148",
+      "url": "https://assets.mixkit.co/videos/4148/4148-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/31629/31629-720.mp4": {
+      "category": "valley",
+      "title": "Halal Scenic Clip 31629",
+      "duration": 16.0,
+      "id": "31629",
+      "url": "https://assets.mixkit.co/videos/31629/31629-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/118/118-720.mp4": {
+      "category": "valley",
+      "title": "Halal Scenic Clip 118",
+      "duration": 16.3,
+      "id": "118",
+      "url": "https://assets.mixkit.co/videos/118/118-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/18308/18308-720.mp4": {
+      "category": "valley",
+      "title": "Halal Scenic Clip 18308",
+      "duration": 20.0,
+      "id": "18308",
+      "url": "https://assets.mixkit.co/videos/18308/18308-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4998/4998-720.mp4": {
+      "category": "valley",
+      "title": "Halal Scenic Clip 4998",
+      "duration": 20.0,
+      "id": "4998",
+      "url": "https://assets.mixkit.co/videos/4998/4998-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4433/4433-720.mp4": {
+      "category": "cliff",
+      "title": "Halal Scenic Clip 4433",
+      "duration": 43.8,
+      "id": "4433",
+      "url": "https://assets.mixkit.co/videos/4433/4433-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/540/540-720.mp4": {
+      "category": "cliff",
+      "title": "Halal Scenic Clip 540",
+      "duration": 20.1,
+      "id": "540",
+      "url": "https://assets.mixkit.co/videos/540/540-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/34980/34980-720.mp4": {
+      "category": "cliff",
+      "title": "Halal Scenic Clip 34980",
+      "duration": 24.4,
+      "id": "34980",
+      "url": "https://assets.mixkit.co/videos/34980/34980-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2187/2187-720.mp4": {
+      "category": "cliff",
+      "title": "Halal Scenic Clip 2187",
+      "duration": 18.2,
+      "id": "2187",
+      "url": "https://assets.mixkit.co/videos/2187/2187-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/31746/31746-720.mp4": {
+      "category": "cliff",
+      "title": "Halal Scenic Clip 31746",
+      "duration": 30.0,
+      "id": "31746",
+      "url": "https://assets.mixkit.co/videos/31746/31746-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/42495/42495-720.mp4": {
+      "category": "cliff",
+      "title": "Halal Scenic Clip 42495",
+      "duration": 25.0,
+      "id": "42495",
+      "url": "https://assets.mixkit.co/videos/42495/42495-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/18791/18791-720.mp4": {
+      "category": "hills",
+      "title": "Halal Scenic Clip 18791",
+      "duration": 15.0,
+      "id": "18791",
+      "url": "https://assets.mixkit.co/videos/18791/18791-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1958/1958-720.mp4": {
+      "category": "hills",
+      "title": "Halal Scenic Clip 1958",
+      "duration": 40.0,
+      "id": "1958",
+      "url": "https://assets.mixkit.co/videos/1958/1958-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/6890/6890-720.mp4": {
+      "category": "hills",
+      "title": "Halal Scenic Clip 6890",
+      "duration": 22.1,
+      "id": "6890",
+      "url": "https://assets.mixkit.co/videos/6890/6890-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/30889/30889-720.mp4": {
+      "category": "hills",
+      "title": "Halal Scenic Clip 30889",
+      "duration": 15.0,
+      "id": "30889",
+      "url": "https://assets.mixkit.co/videos/30889/30889-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/33934/33934-720.mp4": {
+      "category": "hills",
+      "title": "Halal Scenic Clip 33934",
+      "duration": 15.0,
+      "id": "33934",
+      "url": "https://assets.mixkit.co/videos/33934/33934-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/28844/28844-720.mp4": {
+      "category": "hills",
+      "title": "Halal Scenic Clip 28844",
+      "duration": 33.0,
+      "id": "28844",
+      "url": "https://assets.mixkit.co/videos/28844/28844-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/48014/48014-720.mp4": {
+      "category": "earth",
+      "title": "Halal Scenic Clip 48014",
+      "duration": 23.3,
+      "id": "48014",
+      "url": "https://assets.mixkit.co/videos/48014/48014-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3031/3031-720.mp4": {
+      "category": "earth",
+      "title": "Halal Scenic Clip 3031",
+      "duration": 21.6,
+      "id": "3031",
+      "url": "https://assets.mixkit.co/videos/3031/3031-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1187/1187-720.mp4": {
+      "category": "earth",
+      "title": "Halal Scenic Clip 1187",
+      "duration": 23.2,
+      "id": "1187",
+      "url": "https://assets.mixkit.co/videos/1187/1187-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1599/1599-720.mp4": {
+      "category": "earth",
+      "title": "Halal Scenic Clip 1599",
+      "duration": 16.0,
+      "id": "1599",
+      "url": "https://assets.mixkit.co/videos/1599/1599-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/51795/51795-720.mp4": {
+      "category": "earth",
+      "title": "Halal Scenic Clip 51795",
+      "duration": 16.9,
+      "id": "51795",
+      "url": "https://assets.mixkit.co/videos/51795/51795-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/6782/6782-720.mp4": {
+      "category": "earth",
+      "title": "Halal Scenic Clip 6782",
+      "duration": 20.3,
+      "id": "6782",
+      "url": "https://assets.mixkit.co/videos/6782/6782-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4048/4048-720.mp4": {
+      "category": "horizon",
+      "title": "Halal Scenic Clip 4048",
+      "duration": 16.4,
+      "id": "4048",
+      "url": "https://assets.mixkit.co/videos/4048/4048-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/26070/26070-720.mp4": {
+      "category": "horizon",
+      "title": "Halal Scenic Clip 26070",
+      "duration": 20.0,
+      "id": "26070",
+      "url": "https://assets.mixkit.co/videos/26070/26070-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1573/1573-720.mp4": {
+      "category": "horizon",
+      "title": "Halal Scenic Clip 1573",
+      "duration": 22.9,
+      "id": "1573",
+      "url": "https://assets.mixkit.co/videos/1573/1573-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/21168/21168-720.mp4": {
+      "category": "horizon",
+      "title": "Halal Scenic Clip 21168",
+      "duration": 15.9,
+      "id": "21168",
+      "url": "https://assets.mixkit.co/videos/21168/21168-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/42496/42496-720.mp4": {
+      "category": "horizon",
+      "title": "Halal Scenic Clip 42496",
+      "duration": 27.0,
+      "id": "42496",
+      "url": "https://assets.mixkit.co/videos/42496/42496-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4695/4695-720.mp4": {
+      "category": "horizon",
+      "title": "Halal Scenic Clip 4695",
+      "duration": 22.0,
+      "id": "4695",
+      "url": "https://assets.mixkit.co/videos/4695/4695-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3422/3422-720.mp4": {
+      "category": "forest",
+      "title": "Halal Scenic Clip 3422",
+      "duration": 15.2,
+      "id": "3422",
+      "url": "https://assets.mixkit.co/videos/3422/3422-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1925/1925-720.mp4": {
+      "category": "forest",
+      "title": "Halal Scenic Clip 1925",
+      "duration": 30.0,
+      "id": "1925",
+      "url": "https://assets.mixkit.co/videos/1925/1925-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/3396/3396-720.mp4": {
+      "category": "forest",
+      "title": "Halal Scenic Clip 3396",
+      "duration": 15.2,
+      "id": "3396",
+      "url": "https://assets.mixkit.co/videos/3396/3396-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1085/1085-720.mp4": {
+      "category": "forest",
+      "title": "Halal Scenic Clip 1085",
+      "duration": 18.3,
+      "id": "1085",
+      "url": "https://assets.mixkit.co/videos/1085/1085-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/44621/44621-720.mp4": {
+      "category": "forest",
+      "title": "Halal Scenic Clip 44621",
+      "duration": 19.4,
+      "id": "44621",
+      "url": "https://assets.mixkit.co/videos/44621/44621-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/9736/9736-720.mp4": {
+      "category": "forest",
+      "title": "Halal Scenic Clip 9736",
+      "duration": 19.0,
+      "id": "9736",
+      "url": "https://assets.mixkit.co/videos/9736/9736-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1186/1186-720.mp4": {
+      "category": "trees",
+      "title": "Halal Scenic Clip 1186",
+      "duration": 20.5,
+      "id": "1186",
+      "url": "https://assets.mixkit.co/videos/1186/1186-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1173/1173-720.mp4": {
+      "category": "trees",
+      "title": "Halal Scenic Clip 1173",
+      "duration": 27.6,
+      "id": "1173",
+      "url": "https://assets.mixkit.co/videos/1173/1173-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/46189/46189-720.mp4": {
+      "category": "trees",
+      "title": "Halal Scenic Clip 46189",
+      "duration": 16.2,
+      "id": "46189",
+      "url": "https://assets.mixkit.co/videos/46189/46189-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4152/4152-720.mp4": {
+      "category": "trees",
+      "title": "Halal Scenic Clip 4152",
+      "duration": 32.9,
+      "id": "4152",
+      "url": "https://assets.mixkit.co/videos/4152/4152-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/571/571-720.mp4": {
+      "category": "trees",
+      "title": "Halal Scenic Clip 571",
+      "duration": 25.0,
+      "id": "571",
+      "url": "https://assets.mixkit.co/videos/571/571-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2206/2206-720.mp4": {
+      "category": "trees",
+      "title": "Halal Scenic Clip 2206",
+      "duration": 15.3,
+      "id": "2206",
+      "url": "https://assets.mixkit.co/videos/2206/2206-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4064/4064-720.mp4": {
+      "category": "autumn_leaves",
+      "title": "Halal Scenic Clip 4064",
+      "duration": 24.1,
+      "id": "4064",
+      "url": "https://assets.mixkit.co/videos/4064/4064-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1188/1188-720.mp4": {
+      "category": "autumn_leaves",
+      "title": "Halal Scenic Clip 1188",
+      "duration": 15.1,
+      "id": "1188",
+      "url": "https://assets.mixkit.co/videos/1188/1188-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4075/4075-720.mp4": {
+      "category": "autumn_leaves",
+      "title": "Halal Scenic Clip 4075",
+      "duration": 23.1,
+      "id": "4075",
+      "url": "https://assets.mixkit.co/videos/4075/4075-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/2208/2208-720.mp4": {
+      "category": "autumn_leaves",
+      "title": "Halal Scenic Clip 2208",
+      "duration": 20.1,
+      "id": "2208",
+      "url": "https://assets.mixkit.co/videos/2208/2208-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1610/1610-720.mp4": {
+      "category": "autumn_leaves",
+      "title": "Halal Scenic Clip 1610",
+      "duration": 30.0,
+      "id": "1610",
+      "url": "https://assets.mixkit.co/videos/1610/1610-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/4205/4205-720.mp4": {
+      "category": "autumn_leaves",
+      "title": "Halal Scenic Clip 4205",
+      "duration": 22.8,
+      "id": "4205",
+      "url": "https://assets.mixkit.co/videos/4205/4205-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1086/1086-720.mp4": {
+      "category": "bamboo",
+      "title": "Halal Scenic Clip 1086",
+      "duration": 16.3,
+      "id": "1086",
+      "url": "https://assets.mixkit.co/videos/1086/1086-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1172/1172-720.mp4": {
+      "category": "bamboo",
+      "title": "Halal Scenic Clip 1172",
+      "duration": 40.0,
+      "id": "1172",
+      "url": "https://assets.mixkit.co/videos/1172/1172-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1176/1176-720.mp4": {
+      "category": "bamboo",
+      "title": "Halal Scenic Clip 1176",
+      "duration": 20.6,
+      "id": "1176",
+      "url": "https://assets.mixkit.co/videos/1176/1176-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1152/1152-720.mp4": {
+      "category": "bamboo",
+      "title": "Halal Scenic Clip 1152",
+      "duration": 15.1,
+      "id": "1152",
+      "url": "https://assets.mixkit.co/videos/1152/1152-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1166/1166-720.mp4": {
+      "category": "bamboo",
+      "title": "Halal Scenic Clip 1166",
+      "duration": 24.8,
+      "id": "1166",
+      "url": "https://assets.mixkit.co/videos/1166/1166-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1160/1160-720.mp4": {
+      "category": "bamboo",
+      "title": "Halal Scenic Clip 1160",
+      "duration": 17.5,
+      "id": "1160",
+      "url": "https://assets.mixkit.co/videos/1160/1160-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1155/1155-720.mp4": {
+      "category": "meadow",
+      "title": "Halal Scenic Clip 1155",
+      "duration": 16.7,
+      "id": "1155",
+      "url": "https://assets.mixkit.co/videos/1155/1155-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1150/1150-720.mp4": {
+      "category": "meadow",
+      "title": "Halal Scenic Clip 1150",
+      "duration": 16.0,
+      "id": "1150",
+      "url": "https://assets.mixkit.co/videos/1150/1150-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1171/1171-720.mp4": {
+      "category": "meadow",
+      "title": "Halal Scenic Clip 1171",
+      "duration": 30.4,
+      "id": "1171",
+      "url": "https://assets.mixkit.co/videos/1171/1171-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1161/1161-720.mp4": {
+      "category": "meadow",
+      "title": "Halal Scenic Clip 1161",
+      "duration": 16.0,
+      "id": "1161",
+      "url": "https://assets.mixkit.co/videos/1161/1161-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1164/1164-720.mp4": {
+      "category": "meadow",
+      "title": "Halal Scenic Clip 1164",
+      "duration": 20.6,
+      "id": "1164",
+      "url": "https://assets.mixkit.co/videos/1164/1164-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1165/1165-720.mp4": {
+      "category": "meadow",
+      "title": "Halal Scenic Clip 1165",
+      "duration": 18.6,
+      "id": "1165",
+      "url": "https://assets.mixkit.co/videos/1165/1165-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1180/1180-720.mp4": {
+      "category": "grass",
+      "title": "Halal Scenic Clip 1180",
+      "duration": 19.1,
+      "id": "1180",
+      "url": "https://assets.mixkit.co/videos/1180/1180-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1185/1185-720.mp4": {
+      "category": "grass",
+      "title": "Halal Scenic Clip 1185",
+      "duration": 21.6,
+      "id": "1185",
+      "url": "https://assets.mixkit.co/videos/1185/1185-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1184/1184-720.mp4": {
+      "category": "grass",
+      "title": "Halal Scenic Clip 1184",
+      "duration": 20.6,
+      "id": "1184",
+      "url": "https://assets.mixkit.co/videos/1184/1184-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1190/1190-720.mp4": {
+      "category": "grass",
+      "title": "Halal Scenic Clip 1190",
+      "duration": 15.0,
+      "id": "1190",
+      "url": "https://assets.mixkit.co/videos/1190/1190-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1194/1194-720.mp4": {
+      "category": "grass",
+      "title": "Halal Scenic Clip 1194",
+      "duration": 21.3,
+      "id": "1194",
+      "url": "https://assets.mixkit.co/videos/1194/1194-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1195/1195-720.mp4": {
+      "category": "grass",
+      "title": "Halal Scenic Clip 1195",
+      "duration": 15.0,
+      "id": "1195",
+      "url": "https://assets.mixkit.co/videos/1195/1195-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1197/1197-720.mp4": {
+      "category": "foliage",
+      "title": "Halal Scenic Clip 1197",
+      "duration": 21.8,
+      "id": "1197",
+      "url": "https://assets.mixkit.co/videos/1197/1197-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1212/1212-720.mp4": {
+      "category": "foliage",
+      "title": "Halal Scenic Clip 1212",
+      "duration": 24.9,
+      "id": "1212",
+      "url": "https://assets.mixkit.co/videos/1212/1212-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1220/1220-720.mp4": {
+      "category": "foliage",
+      "title": "Halal Scenic Clip 1220",
+      "duration": 18.3,
+      "id": "1220",
+      "url": "https://assets.mixkit.co/videos/1220/1220-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1222/1222-720.mp4": {
+      "category": "foliage",
+      "title": "Halal Scenic Clip 1222",
+      "duration": 17.6,
+      "id": "1222",
+      "url": "https://assets.mixkit.co/videos/1222/1222-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1224/1224-720.mp4": {
+      "category": "foliage",
+      "title": "Halal Scenic Clip 1224",
+      "duration": 19.1,
+      "id": "1224",
+      "url": "https://assets.mixkit.co/videos/1224/1224-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1210/1210-720.mp4": {
+      "category": "foliage",
+      "title": "Halal Scenic Clip 1210",
+      "duration": 34.2,
+      "id": "1210",
+      "url": "https://assets.mixkit.co/videos/1210/1210-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1234/1234-720.mp4": {
+      "category": "mist",
+      "title": "Halal Scenic Clip 1234",
+      "duration": 16.3,
+      "id": "1234",
+      "url": "https://assets.mixkit.co/videos/1234/1234-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1236/1236-720.mp4": {
+      "category": "mist",
+      "title": "Halal Scenic Clip 1236",
+      "duration": 19.0,
+      "id": "1236",
+      "url": "https://assets.mixkit.co/videos/1236/1236-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1235/1235-720.mp4": {
+      "category": "mist",
+      "title": "Halal Scenic Clip 1235",
+      "duration": 15.1,
+      "id": "1235",
+      "url": "https://assets.mixkit.co/videos/1235/1235-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1175/1175-720.mp4": {
+      "category": "mist",
+      "title": "Halal Scenic Clip 1175",
+      "duration": 27.2,
+      "id": "1175",
+      "url": "https://assets.mixkit.co/videos/1175/1175-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1238/1238-720.mp4": {
+      "category": "mist",
+      "title": "Halal Scenic Clip 1238",
+      "duration": 22.1,
+      "id": "1238",
+      "url": "https://assets.mixkit.co/videos/1238/1238-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1151/1151-720.mp4": {
+      "category": "mist",
+      "title": "Halal Scenic Clip 1151",
+      "duration": 27.1,
+      "id": "1151",
+      "url": "https://assets.mixkit.co/videos/1151/1151-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1239/1239-720.mp4": {
+      "category": "fog",
+      "title": "Halal Scenic Clip 1239",
+      "duration": 17.3,
+      "id": "1239",
+      "url": "https://assets.mixkit.co/videos/1239/1239-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1162/1162-720.mp4": {
+      "category": "fog",
+      "title": "Halal Scenic Clip 1162",
+      "duration": 32.2,
+      "id": "1162",
+      "url": "https://assets.mixkit.co/videos/1162/1162-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1241/1241-720.mp4": {
+      "category": "fog",
+      "title": "Halal Scenic Clip 1241",
+      "duration": 17.6,
+      "id": "1241",
+      "url": "https://assets.mixkit.co/videos/1241/1241-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1163/1163-720.mp4": {
+      "category": "fog",
+      "title": "Halal Scenic Clip 1163",
+      "duration": 26.3,
+      "id": "1163",
+      "url": "https://assets.mixkit.co/videos/1163/1163-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1245/1245-720.mp4": {
+      "category": "fog",
+      "title": "Halal Scenic Clip 1245",
+      "duration": 16.2,
+      "id": "1245",
+      "url": "https://assets.mixkit.co/videos/1245/1245-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1248/1248-720.mp4": {
+      "category": "fog",
+      "title": "Halal Scenic Clip 1248",
+      "duration": 55.7,
+      "id": "1248",
+      "url": "https://assets.mixkit.co/videos/1248/1248-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1249/1249-720.mp4": {
+      "category": "sunlight_beams",
+      "title": "Halal Scenic Clip 1249",
+      "duration": 40.2,
+      "id": "1249",
+      "url": "https://assets.mixkit.co/videos/1249/1249-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1252/1252-720.mp4": {
+      "category": "sunlight_beams",
+      "title": "Halal Scenic Clip 1252",
+      "duration": 17.6,
+      "id": "1252",
+      "url": "https://assets.mixkit.co/videos/1252/1252-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1254/1254-720.mp4": {
+      "category": "sunlight_beams",
+      "title": "Halal Scenic Clip 1254",
+      "duration": 18.1,
+      "id": "1254",
+      "url": "https://assets.mixkit.co/videos/1254/1254-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1169/1169-720.mp4": {
+      "category": "sunlight_beams",
+      "title": "Halal Scenic Clip 1169",
+      "duration": 21.6,
+      "id": "1169",
+      "url": "https://assets.mixkit.co/videos/1169/1169-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1199/1199-720.mp4": {
+      "category": "sunlight_beams",
+      "title": "Halal Scenic Clip 1199",
+      "duration": 21.0,
+      "id": "1199",
+      "url": "https://assets.mixkit.co/videos/1199/1199-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1258/1258-720.mp4": {
+      "category": "sunlight_beams",
+      "title": "Halal Scenic Clip 1258",
+      "duration": 29.8,
+      "id": "1258",
+      "url": "https://assets.mixkit.co/videos/1258/1258-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1193/1193-720.mp4": {
+      "category": "dome",
+      "title": "Halal Scenic Clip 1193",
+      "duration": 15.0,
+      "id": "1193",
+      "url": "https://assets.mixkit.co/videos/1193/1193-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1259/1259-720.mp4": {
+      "category": "dome",
+      "title": "Halal Scenic Clip 1259",
+      "duration": 14.9,
+      "id": "1259",
+      "url": "https://assets.mixkit.co/videos/1259/1259-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1550/1550-720.mp4": {
+      "category": "dome",
+      "title": "Halal Scenic Clip 1550",
+      "duration": 18.5,
+      "id": "1550",
+      "url": "https://assets.mixkit.co/videos/1550/1550-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1159/1159-720.mp4": {
+      "category": "dome",
+      "title": "Halal Scenic Clip 1159",
+      "duration": 37.9,
+      "id": "1159",
+      "url": "https://assets.mixkit.co/videos/1159/1159-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1552/1552-720.mp4": {
+      "category": "arch",
+      "title": "Halal Scenic Clip 1552",
+      "duration": 20.6,
+      "id": "1552",
+      "url": "https://assets.mixkit.co/videos/1552/1552-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1555/1555-720.mp4": {
+      "category": "arch",
+      "title": "Halal Scenic Clip 1555",
+      "duration": 16.2,
+      "id": "1555",
+      "url": "https://assets.mixkit.co/videos/1555/1555-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1177/1177-720.mp4": {
+      "category": "arch",
+      "title": "Halal Scenic Clip 1177",
+      "duration": 77.0,
+      "id": "1177",
+      "url": "https://assets.mixkit.co/videos/1177/1177-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1182/1182-720.mp4": {
+      "category": "arch",
+      "title": "Halal Scenic Clip 1182",
+      "duration": 17.6,
+      "id": "1182",
+      "url": "https://assets.mixkit.co/videos/1182/1182-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1566/1566-720.mp4": {
+      "category": "corridor",
+      "title": "Halal Scenic Clip 1566",
+      "duration": 23.6,
+      "id": "1566",
+      "url": "https://assets.mixkit.co/videos/1566/1566-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1567/1567-720.mp4": {
+      "category": "corridor",
+      "title": "Halal Scenic Clip 1567",
+      "duration": 31.5,
+      "id": "1567",
+      "url": "https://assets.mixkit.co/videos/1567/1567-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1211/1211-720.mp4": {
+      "category": "palace_hall",
+      "title": "Halal Scenic Clip 1211",
+      "duration": 89.4,
+      "id": "1211",
+      "url": "https://assets.mixkit.co/videos/1211/1211-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1572/1572-720.mp4": {
+      "category": "candle_light",
+      "title": "Halal Scenic Clip 1572",
+      "duration": 21.9,
+      "id": "1572",
+      "url": "https://assets.mixkit.co/videos/1572/1572-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1240/1240-720.mp4": {
+      "category": "candle_light",
+      "title": "Halal Scenic Clip 1240",
+      "duration": 27.9,
+      "id": "1240",
+      "url": "https://assets.mixkit.co/videos/1240/1240-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1577/1577-720.mp4": {
+      "category": "candle_light",
+      "title": "Halal Scenic Clip 1577",
+      "duration": 24.9,
+      "id": "1577",
+      "url": "https://assets.mixkit.co/videos/1577/1577-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1237/1237-720.mp4": {
+      "category": "candle_light",
+      "title": "Halal Scenic Clip 1237",
+      "duration": 23.7,
+      "id": "1237",
+      "url": "https://assets.mixkit.co/videos/1237/1237-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1580/1580-720.mp4": {
+      "category": "candle_light",
+      "title": "Halal Scenic Clip 1580",
+      "duration": 17.6,
+      "id": "1580",
+      "url": "https://assets.mixkit.co/videos/1580/1580-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1582/1582-720.mp4": {
+      "category": "candle_light",
+      "title": "Halal Scenic Clip 1582",
+      "duration": 22.3,
+      "id": "1582",
+      "url": "https://assets.mixkit.co/videos/1582/1582-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1585/1585-720.mp4": {
+      "category": "lantern",
+      "title": "Halal Scenic Clip 1585",
+      "duration": 19.0,
+      "id": "1585",
+      "url": "https://assets.mixkit.co/videos/1585/1585-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1246/1246-720.mp4": {
+      "category": "lantern",
+      "title": "Halal Scenic Clip 1246",
+      "duration": 18.3,
+      "id": "1246",
+      "url": "https://assets.mixkit.co/videos/1246/1246-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1247/1247-720.mp4": {
+      "category": "lantern",
+      "title": "Halal Scenic Clip 1247",
+      "duration": 29.0,
+      "id": "1247",
+      "url": "https://assets.mixkit.co/videos/1247/1247-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1590/1590-720.mp4": {
+      "category": "lantern",
+      "title": "Halal Scenic Clip 1590",
+      "duration": 21.3,
+      "id": "1590",
+      "url": "https://assets.mixkit.co/videos/1590/1590-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1255/1255-720.mp4": {
+      "category": "lantern",
+      "title": "Halal Scenic Clip 1255",
+      "duration": 19.7,
+      "id": "1255",
+      "url": "https://assets.mixkit.co/videos/1255/1255-720.mp4"
+    },
+    "https://assets.mixkit.co/videos/1553/1553-720.mp4": {
+      "category": "lantern",
+      "title": "Halal Scenic Clip 1553",
+      "duration": 19.2,
+      "id": "1553",
+      "url": "https://assets.mixkit.co/videos/1553/1553-720.mp4"
+    }
+  },
+  "categories_50": [
+    "clouds",
+    "sky",
+    "sunset",
+    "sunrise",
+    "stars",
+    "night_sky",
+    "galaxy",
+    "space",
+    "moon",
+    "nebula",
+    "ocean",
+    "sea",
+    "waves",
+    "waterfall",
+    "river",
+    "lake",
+    "water_stream",
+    "rain",
+    "water_droplets",
+    "ripples",
+    "desert",
+    "sand_dunes",
+    "mountains",
+    "rock_formations",
+    "canyon",
+    "valley",
+    "cliff",
+    "hills",
+    "earth",
+    "horizon",
+    "forest",
+    "trees",
+    "autumn_leaves",
+    "bamboo",
+    "meadow",
+    "grass",
+    "foliage",
+    "mist",
+    "fog",
+    "sunlight_beams",
+    "mosque",
+    "dome",
+    "columns",
+    "arch",
+    "corridor",
+    "sacred_door",
+    "architecture",
+    "palace_hall",
+    "candle_light",
+    "lantern"
+  ],
+  "catalog_by_50_categories": {
+    "clouds": [
+      "https://assets.mixkit.co/videos/4441/4441-720.mp4",
+      "https://assets.mixkit.co/videos/45022/45022-720.mp4",
+      "https://assets.mixkit.co/videos/45395/45395-720.mp4",
+      "https://assets.mixkit.co/videos/4087/4087-720.mp4",
+      "https://assets.mixkit.co/videos/4339/4339-720.mp4",
+      "https://assets.mixkit.co/videos/4646/4646-720.mp4"
     ],
     "sky": [
-      "https://assets.mixkit.co/videos/1187/1187-1080.mp4",
-      "https://assets.mixkit.co/videos/4119/4119-1080.mp4",
-      "https://assets.mixkit.co/videos/1926/1926-1080.mp4",
-      "https://assets.mixkit.co/videos/1186/1186-1080.mp4",
-      "https://assets.mixkit.co/videos/26108/26108-1080.mp4",
-      "https://assets.mixkit.co/videos/1168/1168-1080.mp4",
-      "https://assets.mixkit.co/videos/4157/4157-1080.mp4"
-    ],
-    "clouds": [
-      "https://assets.mixkit.co/videos/4695/4695-1080.mp4",
-      "https://assets.mixkit.co/videos/4070/4070-1080.mp4",
-      "https://assets.mixkit.co/videos/51105/51105-1080.mp4",
-      "https://assets.mixkit.co/videos/4132/4132-1080.mp4",
-      "https://assets.mixkit.co/videos/4368/4368-1080.mp4",
-      "https://assets.mixkit.co/videos/4170/4170-1080.mp4",
-      "https://assets.mixkit.co/videos/1178/1178-1080.mp4"
-    ],
-    "stars": [
-      "https://assets.mixkit.co/videos/48014/48014-720.mp4",
-      "https://assets.mixkit.co/videos/1610/1610-1080.mp4",
-      "https://assets.mixkit.co/videos/46119/46119-720.mp4",
-      "https://assets.mixkit.co/videos/14428/14428-720.mp4",
-      "https://assets.mixkit.co/videos/14185/14185-720.mp4",
-      "https://assets.mixkit.co/videos/14540/14540-720.mp4",
-      "https://assets.mixkit.co/videos/39768/39768-1080.mp4",
-      "https://assets.mixkit.co/videos/4034/4034-1080.mp4"
-    ],
-    "night": [
-      "https://assets.mixkit.co/videos/40640/40640-1080.mp4",
-      "https://assets.mixkit.co/videos/41375/41375-1080.mp4",
-      "https://assets.mixkit.co/videos/30605/30605-720.mp4",
-      "https://assets.mixkit.co/videos/4433/4433-1080.mp4",
-      "https://assets.mixkit.co/videos/44545/44545-1080.mp4",
-      "https://assets.mixkit.co/videos/46893/46893-1080.mp4",
-      "https://assets.mixkit.co/videos/830/830-1080.mp4",
-      "https://assets.mixkit.co/videos/4451/4451-1080.mp4",
-      "https://assets.mixkit.co/videos/11/11-1080.mp4"
+      "https://assets.mixkit.co/videos/4196/4196-720.mp4",
+      "https://assets.mixkit.co/videos/40654/40654-720.mp4",
+      "https://assets.mixkit.co/videos/4025/4025-720.mp4",
+      "https://assets.mixkit.co/videos/4069/4069-720.mp4",
+      "https://assets.mixkit.co/videos/4168/4168-720.mp4",
+      "https://assets.mixkit.co/videos/5015/5015-720.mp4"
     ],
     "sunset": [
-      "https://assets.mixkit.co/videos/1780/1780-1080.mp4",
-      "https://assets.mixkit.co/videos/40657/40657-1080.mp4",
-      "https://assets.mixkit.co/videos/3128/3128-1080.mp4",
-      "https://assets.mixkit.co/videos/4800/4800-1080.mp4",
-      "https://assets.mixkit.co/videos/1013/1013-1080.mp4"
+      "https://assets.mixkit.co/videos/4265/4265-720.mp4",
+      "https://assets.mixkit.co/videos/4024/4024-720.mp4",
+      "https://assets.mixkit.co/videos/254/254-720.mp4",
+      "https://assets.mixkit.co/videos/9998/9998-720.mp4",
+      "https://assets.mixkit.co/videos/34251/34251-720.mp4",
+      "https://assets.mixkit.co/videos/17255/17255-720.mp4"
     ],
     "sunrise": [
-      "https://assets.mixkit.co/videos/6850/6850-720.mp4",
-      "https://assets.mixkit.co/videos/6734/6734-720.mp4",
+      "https://assets.mixkit.co/videos/9739/9739-720.mp4",
+      "https://assets.mixkit.co/videos/34296/34296-720.mp4",
+      "https://assets.mixkit.co/videos/35472/35472-720.mp4",
+      "https://assets.mixkit.co/videos/3492/3492-720.mp4",
+      "https://assets.mixkit.co/videos/3490/3490-720.mp4",
+      "https://assets.mixkit.co/videos/30867/30867-720.mp4"
+    ],
+    "stars": [
+      "https://assets.mixkit.co/videos/3499/3499-720.mp4",
+      "https://assets.mixkit.co/videos/3491/3491-720.mp4",
+      "https://assets.mixkit.co/videos/14542/14542-720.mp4",
+      "https://assets.mixkit.co/videos/23153/23153-720.mp4",
+      "https://assets.mixkit.co/videos/15395/15395-720.mp4",
+      "https://assets.mixkit.co/videos/2034/2034-720.mp4"
+    ],
+    "night_sky": [
+      "https://assets.mixkit.co/videos/49845/49845-720.mp4",
+      "https://assets.mixkit.co/videos/49849/49849-720.mp4",
+      "https://assets.mixkit.co/videos/49846/49846-720.mp4",
+      "https://assets.mixkit.co/videos/41541/41541-720.mp4",
+      "https://assets.mixkit.co/videos/4330/4330-720.mp4",
+      "https://assets.mixkit.co/videos/4332/4332-720.mp4"
+    ],
+    "galaxy": [
+      "https://assets.mixkit.co/videos/42343/42343-720.mp4",
       "https://assets.mixkit.co/videos/26532/26532-720.mp4",
-      "https://assets.mixkit.co/videos/4831/4831-1080.mp4",
-      "https://assets.mixkit.co/videos/31629/31629-720.mp4",
-      "https://assets.mixkit.co/videos/4397/4397-1080.mp4",
-      "https://assets.mixkit.co/videos/50266/50266-1080.mp4",
-      "https://assets.mixkit.co/videos/4878/4878-1080.mp4",
-      "https://assets.mixkit.co/videos/5027/5027-1080.mp4",
-      "https://assets.mixkit.co/videos/5372/5372-1080.mp4"
+      "https://assets.mixkit.co/videos/4633/4633-720.mp4",
+      "https://assets.mixkit.co/videos/1082/1082-720.mp4",
+      "https://assets.mixkit.co/videos/4881/4881-720.mp4",
+      "https://assets.mixkit.co/videos/1710/1710-720.mp4"
     ],
-    "desert": [
-      "https://assets.mixkit.co/videos/52012/52012-1080.mp4",
-      "https://assets.mixkit.co/videos/46061/46061-720.mp4",
-      "https://assets.mixkit.co/videos/4149/4149-1080.mp4",
-      "https://assets.mixkit.co/videos/4048/4048-1080.mp4",
-      "https://assets.mixkit.co/videos/4285/4285-1080.mp4",
-      "https://assets.mixkit.co/videos/4028/4028-1080.mp4",
-      "https://assets.mixkit.co/videos/47724/47724-720.mp4",
-      "https://assets.mixkit.co/videos/12759/12759-720.mp4",
-      "https://assets.mixkit.co/videos/51793/51793-1080.mp4"
+    "space": [
+      "https://assets.mixkit.co/videos/5002/5002-720.mp4",
+      "https://assets.mixkit.co/videos/1773/1773-720.mp4",
+      "https://assets.mixkit.co/videos/4028/4028-720.mp4",
+      "https://assets.mixkit.co/videos/522/522-720.mp4",
+      "https://assets.mixkit.co/videos/4078/4078-720.mp4",
+      "https://assets.mixkit.co/videos/1953/1953-720.mp4"
     ],
-    "sand": [
-      "https://assets.mixkit.co/videos/1222/1222-1080.mp4",
-      "https://assets.mixkit.co/videos/33490/33490-720.mp4",
-      "https://assets.mixkit.co/videos/1043/1043-1080.mp4",
-      "https://assets.mixkit.co/videos/1931/1931-1080.mp4",
-      "https://assets.mixkit.co/videos/4555/4555-1080.mp4",
-      "https://assets.mixkit.co/videos/1925/1925-1080.mp4",
-      "https://assets.mixkit.co/videos/1088/1088-1080.mp4",
-      "https://assets.mixkit.co/videos/1111/1111-1080.mp4",
-      "https://assets.mixkit.co/videos/2890/2890-1080.mp4"
+    "moon": [
+      "https://assets.mixkit.co/videos/4070/4070-720.mp4",
+      "https://assets.mixkit.co/videos/50566/50566-720.mp4",
+      "https://assets.mixkit.co/videos/51585/51585-720.mp4",
+      "https://assets.mixkit.co/videos/14540/14540-720.mp4",
+      "https://assets.mixkit.co/videos/20425/20425-720.mp4",
+      "https://assets.mixkit.co/videos/41378/41378-720.mp4"
     ],
-    "dunes": [],
-    "mountains": [
-      "https://assets.mixkit.co/videos/2385/2385-1080.mp4",
-      "https://assets.mixkit.co/videos/51689/51689-1080.mp4",
-      "https://assets.mixkit.co/videos/4396/4396-1080.mp4",
-      "https://assets.mixkit.co/videos/4148/4148-1080.mp4",
-      "https://assets.mixkit.co/videos/1944/1944-1080.mp4",
-      "https://assets.mixkit.co/videos/4036/4036-1080.mp4"
+    "nebula": [
+      "https://assets.mixkit.co/videos/43130/43130-720.mp4",
+      "https://assets.mixkit.co/videos/8014/8014-720.mp4",
+      "https://assets.mixkit.co/videos/11185/11185-720.mp4",
+      "https://assets.mixkit.co/videos/2212/2212-720.mp4",
+      "https://assets.mixkit.co/videos/2408/2408-720.mp4",
+      "https://assets.mixkit.co/videos/1594/1594-720.mp4"
     ],
-    "forest": [
-      "https://assets.mixkit.co/videos/41401/41401-1080.mp4",
-      "https://assets.mixkit.co/videos/5039/5039-1080.mp4",
-      "https://assets.mixkit.co/videos/1218/1218-1080.mp4",
-      "https://assets.mixkit.co/videos/50847/50847-1080.mp4",
-      "https://assets.mixkit.co/videos/41575/41575-1080.mp4",
-      "https://assets.mixkit.co/videos/3351/3351-1080.mp4",
-      "https://assets.mixkit.co/videos/2716/2716-1080.mp4",
-      "https://assets.mixkit.co/videos/41573/41573-1080.mp4"
+    "ocean": [
+      "https://assets.mixkit.co/videos/1090/1090-720.mp4",
+      "https://assets.mixkit.co/videos/570/570-720.mp4",
+      "https://assets.mixkit.co/videos/4081/4081-720.mp4",
+      "https://assets.mixkit.co/videos/28342/28342-720.mp4",
+      "https://assets.mixkit.co/videos/4374/4374-720.mp4",
+      "https://assets.mixkit.co/videos/5369/5369-720.mp4"
+    ],
+    "sea": [
+      "https://assets.mixkit.co/videos/50199/50199-720.mp4",
+      "https://assets.mixkit.co/videos/27028/27028-720.mp4",
+      "https://assets.mixkit.co/videos/4331/4331-720.mp4",
+      "https://assets.mixkit.co/videos/4412/4412-720.mp4",
+      "https://assets.mixkit.co/videos/1617/1617-720.mp4",
+      "https://assets.mixkit.co/videos/10993/10993-720.mp4"
+    ],
+    "waves": [
+      "https://assets.mixkit.co/videos/1170/1170-720.mp4",
+      "https://assets.mixkit.co/videos/1564/1564-720.mp4",
+      "https://assets.mixkit.co/videos/4305/4305-720.mp4",
+      "https://assets.mixkit.co/videos/18309/18309-720.mp4",
+      "https://assets.mixkit.co/videos/19501/19501-720.mp4",
+      "https://assets.mixkit.co/videos/4011/4011-720.mp4"
+    ],
+    "waterfall": [
+      "https://assets.mixkit.co/videos/52009/52009-720.mp4",
+      "https://assets.mixkit.co/videos/6850/6850-720.mp4",
+      "https://assets.mixkit.co/videos/827/827-720.mp4",
+      "https://assets.mixkit.co/videos/51689/51689-720.mp4",
+      "https://assets.mixkit.co/videos/30316/30316-720.mp4",
+      "https://assets.mixkit.co/videos/25375/25375-720.mp4"
+    ],
+    "river": [
+      "https://assets.mixkit.co/videos/11060/11060-720.mp4",
+      "https://assets.mixkit.co/videos/1780/1780-720.mp4",
+      "https://assets.mixkit.co/videos/1168/1168-720.mp4",
+      "https://assets.mixkit.co/videos/45315/45315-720.mp4",
+      "https://assets.mixkit.co/videos/5011/5011-720.mp4",
+      "https://assets.mixkit.co/videos/50561/50561-720.mp4"
+    ],
+    "lake": [
+      "https://assets.mixkit.co/videos/28339/28339-720.mp4",
+      "https://assets.mixkit.co/videos/5008/5008-720.mp4",
+      "https://assets.mixkit.co/videos/1954/1954-720.mp4",
+      "https://assets.mixkit.co/videos/18162/18162-720.mp4",
+      "https://assets.mixkit.co/videos/572/572-720.mp4",
+      "https://assets.mixkit.co/videos/48004/48004-720.mp4"
+    ],
+    "water_stream": [
+      "https://assets.mixkit.co/videos/6806/6806-720.mp4",
+      "https://assets.mixkit.co/videos/1218/1218-720.mp4",
+      "https://assets.mixkit.co/videos/3371/3371-720.mp4",
+      "https://assets.mixkit.co/videos/41366/41366-720.mp4",
+      "https://assets.mixkit.co/videos/1931/1931-720.mp4",
+      "https://assets.mixkit.co/videos/1081/1081-720.mp4"
     ],
     "rain": [
+      "https://assets.mixkit.co/videos/4204/4204-720.mp4",
+      "https://assets.mixkit.co/videos/51104/51104-720.mp4",
+      "https://assets.mixkit.co/videos/523/523-720.mp4",
+      "https://assets.mixkit.co/videos/5372/5372-720.mp4",
+      "https://assets.mixkit.co/videos/4059/4059-720.mp4",
+      "https://assets.mixkit.co/videos/41545/41545-720.mp4"
+    ],
+    "water_droplets": [
+      "https://assets.mixkit.co/videos/529/529-720.mp4",
+      "https://assets.mixkit.co/videos/4166/4166-720.mp4",
+      "https://assets.mixkit.co/videos/4396/4396-720.mp4",
+      "https://assets.mixkit.co/videos/4477/4477-720.mp4",
+      "https://assets.mixkit.co/videos/2846/2846-720.mp4",
+      "https://assets.mixkit.co/videos/1181/1181-720.mp4"
+    ],
+    "ripples": [
+      "https://assets.mixkit.co/videos/4422/4422-720.mp4",
+      "https://assets.mixkit.co/videos/19243/19243-720.mp4",
+      "https://assets.mixkit.co/videos/30605/30605-720.mp4",
+      "https://assets.mixkit.co/videos/2209/2209-720.mp4",
+      "https://assets.mixkit.co/videos/4310/4310-720.mp4",
+      "https://assets.mixkit.co/videos/6734/6734-720.mp4"
+    ],
+    "desert": [
+      "https://assets.mixkit.co/videos/1078/1078-720.mp4",
+      "https://assets.mixkit.co/videos/31549/31549-720.mp4",
+      "https://assets.mixkit.co/videos/14468/14468-720.mp4",
+      "https://assets.mixkit.co/videos/3370/3370-720.mp4",
+      "https://assets.mixkit.co/videos/18312/18312-720.mp4",
+      "https://assets.mixkit.co/videos/19636/19636-720.mp4"
+    ],
+    "sand_dunes": [
+      "https://assets.mixkit.co/videos/50134/50134-720.mp4",
+      "https://assets.mixkit.co/videos/5360/5360-720.mp4",
+      "https://assets.mixkit.co/videos/2179/2179-720.mp4",
+      "https://assets.mixkit.co/videos/1088/1088-720.mp4",
+      "https://assets.mixkit.co/videos/1955/1955-720.mp4",
+      "https://assets.mixkit.co/videos/38948/38948-720.mp4"
+    ],
+    "mountains": [
+      "https://assets.mixkit.co/videos/30468/30468-720.mp4",
+      "https://assets.mixkit.co/videos/1191/1191-720.mp4",
+      "https://assets.mixkit.co/videos/5027/5027-720.mp4",
+      "https://assets.mixkit.co/videos/41401/41401-720.mp4",
+      "https://assets.mixkit.co/videos/50267/50267-720.mp4",
+      "https://assets.mixkit.co/videos/1944/1944-720.mp4"
+    ],
+    "rock_formations": [
+      "https://assets.mixkit.co/videos/14185/14185-720.mp4",
+      "https://assets.mixkit.co/videos/1762/1762-720.mp4",
+      "https://assets.mixkit.co/videos/51792/51792-720.mp4",
+      "https://assets.mixkit.co/videos/4151/4151-720.mp4",
+      "https://assets.mixkit.co/videos/1149/1149-720.mp4",
+      "https://assets.mixkit.co/videos/49334/49334-720.mp4"
+    ],
+    "canyon": [
+      "https://assets.mixkit.co/videos/3394/3394-720.mp4",
+      "https://assets.mixkit.co/videos/28335/28335-720.mp4",
+      "https://assets.mixkit.co/videos/51600/51600-720.mp4",
+      "https://assets.mixkit.co/videos/4132/4132-720.mp4",
+      "https://assets.mixkit.co/videos/4383/4383-720.mp4",
+      "https://assets.mixkit.co/videos/14428/14428-720.mp4"
+    ],
+    "valley": [
+      "https://assets.mixkit.co/videos/51797/51797-720.mp4",
+      "https://assets.mixkit.co/videos/4148/4148-720.mp4",
+      "https://assets.mixkit.co/videos/31629/31629-720.mp4",
+      "https://assets.mixkit.co/videos/118/118-720.mp4",
+      "https://assets.mixkit.co/videos/18308/18308-720.mp4",
+      "https://assets.mixkit.co/videos/4998/4998-720.mp4"
+    ],
+    "cliff": [
+      "https://assets.mixkit.co/videos/4433/4433-720.mp4",
+      "https://assets.mixkit.co/videos/540/540-720.mp4",
+      "https://assets.mixkit.co/videos/34980/34980-720.mp4",
+      "https://assets.mixkit.co/videos/2187/2187-720.mp4",
+      "https://assets.mixkit.co/videos/31746/31746-720.mp4",
+      "https://assets.mixkit.co/videos/42495/42495-720.mp4"
+    ],
+    "hills": [
+      "https://assets.mixkit.co/videos/18791/18791-720.mp4",
+      "https://assets.mixkit.co/videos/1958/1958-720.mp4",
       "https://assets.mixkit.co/videos/6890/6890-720.mp4",
-      "https://assets.mixkit.co/videos/2846/2846-1080.mp4",
-      "https://assets.mixkit.co/videos/25375/25375-720.mp4",
-      "https://assets.mixkit.co/videos/18312/18312-1080.mp4",
-      "https://assets.mixkit.co/videos/1894/1894-1080.mp4",
-      "https://assets.mixkit.co/videos/2187/2187-1080.mp4",
-      "https://assets.mixkit.co/videos/2738/2738-1080.mp4",
-      "https://assets.mixkit.co/videos/118/118-1080.mp4"
+      "https://assets.mixkit.co/videos/30889/30889-720.mp4",
+      "https://assets.mixkit.co/videos/33934/33934-720.mp4",
+      "https://assets.mixkit.co/videos/28844/28844-720.mp4"
+    ],
+    "earth": [
+      "https://assets.mixkit.co/videos/48014/48014-720.mp4",
+      "https://assets.mixkit.co/videos/3031/3031-720.mp4",
+      "https://assets.mixkit.co/videos/1187/1187-720.mp4",
+      "https://assets.mixkit.co/videos/1599/1599-720.mp4",
+      "https://assets.mixkit.co/videos/51795/51795-720.mp4",
+      "https://assets.mixkit.co/videos/6782/6782-720.mp4"
+    ],
+    "horizon": [
+      "https://assets.mixkit.co/videos/4048/4048-720.mp4",
+      "https://assets.mixkit.co/videos/26070/26070-720.mp4",
+      "https://assets.mixkit.co/videos/1573/1573-720.mp4",
+      "https://assets.mixkit.co/videos/21168/21168-720.mp4",
+      "https://assets.mixkit.co/videos/42496/42496-720.mp4",
+      "https://assets.mixkit.co/videos/4695/4695-720.mp4"
+    ],
+    "forest": [
+      "https://assets.mixkit.co/videos/3422/3422-720.mp4",
+      "https://assets.mixkit.co/videos/1925/1925-720.mp4",
+      "https://assets.mixkit.co/videos/3396/3396-720.mp4",
+      "https://assets.mixkit.co/videos/1085/1085-720.mp4",
+      "https://assets.mixkit.co/videos/44621/44621-720.mp4",
+      "https://assets.mixkit.co/videos/9736/9736-720.mp4"
+    ],
+    "trees": [
+      "https://assets.mixkit.co/videos/1186/1186-720.mp4",
+      "https://assets.mixkit.co/videos/1173/1173-720.mp4",
+      "https://assets.mixkit.co/videos/46189/46189-720.mp4",
+      "https://assets.mixkit.co/videos/4152/4152-720.mp4",
+      "https://assets.mixkit.co/videos/571/571-720.mp4",
+      "https://assets.mixkit.co/videos/2206/2206-720.mp4"
+    ],
+    "autumn_leaves": [
+      "https://assets.mixkit.co/videos/4064/4064-720.mp4",
+      "https://assets.mixkit.co/videos/1188/1188-720.mp4",
+      "https://assets.mixkit.co/videos/4075/4075-720.mp4",
+      "https://assets.mixkit.co/videos/2208/2208-720.mp4",
+      "https://assets.mixkit.co/videos/1610/1610-720.mp4",
+      "https://assets.mixkit.co/videos/4205/4205-720.mp4"
+    ],
+    "bamboo": [
+      "https://assets.mixkit.co/videos/1086/1086-720.mp4",
+      "https://assets.mixkit.co/videos/1172/1172-720.mp4",
+      "https://assets.mixkit.co/videos/1176/1176-720.mp4",
+      "https://assets.mixkit.co/videos/1152/1152-720.mp4",
+      "https://assets.mixkit.co/videos/1166/1166-720.mp4",
+      "https://assets.mixkit.co/videos/1160/1160-720.mp4"
+    ],
+    "meadow": [
+      "https://assets.mixkit.co/videos/1155/1155-720.mp4",
+      "https://assets.mixkit.co/videos/1150/1150-720.mp4",
+      "https://assets.mixkit.co/videos/1171/1171-720.mp4",
+      "https://assets.mixkit.co/videos/1161/1161-720.mp4",
+      "https://assets.mixkit.co/videos/1164/1164-720.mp4",
+      "https://assets.mixkit.co/videos/1165/1165-720.mp4"
+    ],
+    "grass": [
+      "https://assets.mixkit.co/videos/1180/1180-720.mp4",
+      "https://assets.mixkit.co/videos/1185/1185-720.mp4",
+      "https://assets.mixkit.co/videos/1184/1184-720.mp4",
+      "https://assets.mixkit.co/videos/1190/1190-720.mp4",
+      "https://assets.mixkit.co/videos/1194/1194-720.mp4",
+      "https://assets.mixkit.co/videos/1195/1195-720.mp4"
+    ],
+    "foliage": [
+      "https://assets.mixkit.co/videos/1197/1197-720.mp4",
+      "https://assets.mixkit.co/videos/1212/1212-720.mp4",
+      "https://assets.mixkit.co/videos/1220/1220-720.mp4",
+      "https://assets.mixkit.co/videos/1222/1222-720.mp4",
+      "https://assets.mixkit.co/videos/1224/1224-720.mp4",
+      "https://assets.mixkit.co/videos/1210/1210-720.mp4"
+    ],
+    "mist": [
+      "https://assets.mixkit.co/videos/1234/1234-720.mp4",
+      "https://assets.mixkit.co/videos/1236/1236-720.mp4",
+      "https://assets.mixkit.co/videos/1235/1235-720.mp4",
+      "https://assets.mixkit.co/videos/1175/1175-720.mp4",
+      "https://assets.mixkit.co/videos/1238/1238-720.mp4",
+      "https://assets.mixkit.co/videos/1151/1151-720.mp4"
+    ],
+    "fog": [
+      "https://assets.mixkit.co/videos/1239/1239-720.mp4",
+      "https://assets.mixkit.co/videos/1162/1162-720.mp4",
+      "https://assets.mixkit.co/videos/1241/1241-720.mp4",
+      "https://assets.mixkit.co/videos/1163/1163-720.mp4",
+      "https://assets.mixkit.co/videos/1245/1245-720.mp4",
+      "https://assets.mixkit.co/videos/1248/1248-720.mp4"
+    ],
+    "sunlight_beams": [
+      "https://assets.mixkit.co/videos/1249/1249-720.mp4",
+      "https://assets.mixkit.co/videos/1252/1252-720.mp4",
+      "https://assets.mixkit.co/videos/1254/1254-720.mp4",
+      "https://assets.mixkit.co/videos/1169/1169-720.mp4",
+      "https://assets.mixkit.co/videos/1199/1199-720.mp4",
+      "https://assets.mixkit.co/videos/1258/1258-720.mp4"
+    ],
+    "mosque": [
+      "https://assets.mixkit.co/videos/11922/11922-720.mp4",
+      "https://assets.mixkit.co/videos/39179/39179-720.mp4",
+      "https://assets.mixkit.co/videos/9595/9595-720.mp4",
+      "https://assets.mixkit.co/videos/39195/39195-720.mp4",
+      "https://assets.mixkit.co/videos/34295/34295-720.mp4",
+      "https://assets.mixkit.co/videos/22118/22118-720.mp4"
+    ],
+    "dome": [
+      "https://assets.mixkit.co/videos/4313/4313-720.mp4",
+      "https://assets.mixkit.co/videos/9514/9514-720.mp4",
+      "https://assets.mixkit.co/videos/1193/1193-720.mp4",
+      "https://assets.mixkit.co/videos/1259/1259-720.mp4",
+      "https://assets.mixkit.co/videos/1550/1550-720.mp4",
+      "https://assets.mixkit.co/videos/1159/1159-720.mp4"
+    ],
+    "columns": [
+      "https://assets.mixkit.co/videos/31753/31753-720.mp4",
+      "https://assets.mixkit.co/videos/32491/32491-720.mp4",
+      "https://assets.mixkit.co/videos/31786/31786-720.mp4",
+      "https://assets.mixkit.co/videos/27282/27282-720.mp4",
+      "https://assets.mixkit.co/videos/29454/29454-720.mp4",
+      "https://assets.mixkit.co/videos/14893/14893-720.mp4"
+    ],
+    "arch": [
+      "https://assets.mixkit.co/videos/31498/31498-720.mp4",
+      "https://assets.mixkit.co/videos/2678/2678-720.mp4",
+      "https://assets.mixkit.co/videos/1552/1552-720.mp4",
+      "https://assets.mixkit.co/videos/1555/1555-720.mp4",
+      "https://assets.mixkit.co/videos/1177/1177-720.mp4",
+      "https://assets.mixkit.co/videos/1182/1182-720.mp4"
+    ],
+    "corridor": [
+      "https://assets.mixkit.co/videos/4642/4642-720.mp4",
+      "https://assets.mixkit.co/videos/32960/32960-720.mp4",
+      "https://assets.mixkit.co/videos/23377/23377-720.mp4",
+      "https://assets.mixkit.co/videos/33833/33833-720.mp4",
+      "https://assets.mixkit.co/videos/1566/1566-720.mp4",
+      "https://assets.mixkit.co/videos/1567/1567-720.mp4"
+    ],
+    "sacred_door": [
+      "https://assets.mixkit.co/videos/21812/21812-720.mp4",
+      "https://assets.mixkit.co/videos/21817/21817-720.mp4",
+      "https://assets.mixkit.co/videos/21821/21821-720.mp4",
+      "https://assets.mixkit.co/videos/2490/2490-720.mp4",
+      "https://assets.mixkit.co/videos/3494/3494-720.mp4",
+      "https://assets.mixkit.co/videos/29455/29455-720.mp4"
     ],
     "architecture": [
-      "https://assets.mixkit.co/videos/27543/27543-720.mp4",
-      "https://assets.mixkit.co/videos/21226/21226-720.mp4",
-      "https://assets.mixkit.co/videos/4339/4339-1080.mp4",
-      "https://assets.mixkit.co/videos/4024/4024-1080.mp4",
-      "https://assets.mixkit.co/videos/4086/4086-1080.mp4",
-      "https://assets.mixkit.co/videos/4066/4066-1080.mp4",
-      "https://assets.mixkit.co/videos/4352/4352-1080.mp4"
+      "https://assets.mixkit.co/videos/45399/45399-720.mp4",
+      "https://assets.mixkit.co/videos/45400/45400-720.mp4",
+      "https://assets.mixkit.co/videos/45402/45402-720.mp4",
+      "https://assets.mixkit.co/videos/14138/14138-720.mp4",
+      "https://assets.mixkit.co/videos/45397/45397-720.mp4",
+      "https://assets.mixkit.co/videos/45021/45021-720.mp4"
     ],
-    "arch": [],
-    "candle": [
-      "https://assets.mixkit.co/videos/17426/17426-720.mp4",
-      "https://assets.mixkit.co/videos/41740/41740-1080.mp4",
-      "https://assets.mixkit.co/videos/3458/3458-1080.mp4",
-      "https://assets.mixkit.co/videos/3461/3461-1080.mp4",
-      "https://assets.mixkit.co/videos/48919/48919-720.mp4",
-      "https://assets.mixkit.co/videos/33890/33890-1080.mp4",
-      "https://assets.mixkit.co/videos/51075/51075-1080.mp4",
-      "https://assets.mixkit.co/videos/5111/5111-1080.mp4",
-      "https://assets.mixkit.co/videos/34467/34467-1080.mp4",
-      "https://assets.mixkit.co/videos/51085/51085-1080.mp4"
+    "palace_hall": [
+      "https://assets.mixkit.co/videos/47527/47527-720.mp4",
+      "https://assets.mixkit.co/videos/26782/26782-720.mp4",
+      "https://assets.mixkit.co/videos/1986/1986-720.mp4",
+      "https://assets.mixkit.co/videos/44879/44879-720.mp4",
+      "https://assets.mixkit.co/videos/17990/17990-720.mp4",
+      "https://assets.mixkit.co/videos/1211/1211-720.mp4"
     ],
-    "light": [
-      "https://assets.mixkit.co/videos/18140/18140-720.mp4",
-      "https://assets.mixkit.co/videos/34317/34317-720.mp4",
-      "https://assets.mixkit.co/videos/49878/49878-1080.mp4",
-      "https://assets.mixkit.co/videos/49845/49845-1080.mp4",
-      "https://assets.mixkit.co/videos/4240/4240-1080.mp4",
-      "https://assets.mixkit.co/videos/49/49-1080.mp4",
-      "https://assets.mixkit.co/videos/42343/42343-1080.mp4"
+    "candle_light": [
+      "https://assets.mixkit.co/videos/1572/1572-720.mp4",
+      "https://assets.mixkit.co/videos/1240/1240-720.mp4",
+      "https://assets.mixkit.co/videos/1577/1577-720.mp4",
+      "https://assets.mixkit.co/videos/1237/1237-720.mp4",
+      "https://assets.mixkit.co/videos/1580/1580-720.mp4",
+      "https://assets.mixkit.co/videos/1582/1582-720.mp4"
+    ],
+    "lantern": [
+      "https://assets.mixkit.co/videos/1585/1585-720.mp4",
+      "https://assets.mixkit.co/videos/1246/1246-720.mp4",
+      "https://assets.mixkit.co/videos/1247/1247-720.mp4",
+      "https://assets.mixkit.co/videos/1590/1590-720.mp4",
+      "https://assets.mixkit.co/videos/1255/1255-720.mp4",
+      "https://assets.mixkit.co/videos/1553/1553-720.mp4"
     ]
-  },
-  "all_urls": [
-    "https://assets.mixkit.co/videos/49/49-1080.mp4",
-    "https://assets.mixkit.co/videos/9294/9294-720.mp4",
-    "https://assets.mixkit.co/videos/14428/14428-720.mp4",
-    "https://assets.mixkit.co/videos/1925/1925-1080.mp4",
-    "https://assets.mixkit.co/videos/571/571-1080.mp4",
-    "https://assets.mixkit.co/videos/46384/46384-720.mp4",
-    "https://assets.mixkit.co/videos/2168/2168-1080.mp4",
-    "https://assets.mixkit.co/videos/1186/1186-1080.mp4",
-    "https://assets.mixkit.co/videos/3461/3461-1080.mp4",
-    "https://assets.mixkit.co/videos/27543/27543-720.mp4",
-    "https://assets.mixkit.co/videos/1214/1214-1080.mp4",
-    "https://assets.mixkit.co/videos/17426/17426-720.mp4",
-    "https://assets.mixkit.co/videos/1610/1610-1080.mp4",
-    "https://assets.mixkit.co/videos/52012/52012-1080.mp4",
-    "https://assets.mixkit.co/videos/48014/48014-720.mp4",
-    "https://assets.mixkit.co/videos/2716/2716-1080.mp4",
-    "https://assets.mixkit.co/videos/1168/1168-1080.mp4",
-    "https://assets.mixkit.co/videos/48525/48525-720.mp4",
-    "https://assets.mixkit.co/videos/4831/4831-1080.mp4",
-    "https://assets.mixkit.co/videos/6850/6850-720.mp4",
-    "https://assets.mixkit.co/videos/43607/43607-1080.mp4",
-    "https://assets.mixkit.co/videos/44495/44495-1080.mp4",
-    "https://assets.mixkit.co/videos/46061/46061-720.mp4",
-    "https://assets.mixkit.co/videos/4119/4119-1080.mp4",
-    "https://assets.mixkit.co/videos/46893/46893-1080.mp4",
-    "https://assets.mixkit.co/videos/40640/40640-1080.mp4",
-    "https://assets.mixkit.co/videos/5372/5372-1080.mp4",
-    "https://assets.mixkit.co/videos/539/539-1080.mp4",
-    "https://assets.mixkit.co/videos/25163/25163-720.mp4",
-    "https://assets.mixkit.co/videos/540/540-1080.mp4",
-    "https://assets.mixkit.co/videos/14185/14185-720.mp4",
-    "https://assets.mixkit.co/videos/1222/1222-1080.mp4",
-    "https://assets.mixkit.co/videos/50266/50266-1080.mp4",
-    "https://assets.mixkit.co/videos/4285/4285-1080.mp4",
-    "https://assets.mixkit.co/videos/514/514-1080.mp4",
-    "https://assets.mixkit.co/videos/26108/26108-1080.mp4",
-    "https://assets.mixkit.co/videos/48919/48919-720.mp4",
-    "https://assets.mixkit.co/videos/12759/12759-720.mp4",
-    "https://assets.mixkit.co/videos/4397/4397-1080.mp4",
-    "https://assets.mixkit.co/videos/1164/1164-1080.mp4",
-    "https://assets.mixkit.co/videos/33890/33890-1080.mp4",
-    "https://assets.mixkit.co/videos/4800/4800-1080.mp4",
-    "https://assets.mixkit.co/videos/1086/1086-1080.mp4",
-    "https://assets.mixkit.co/videos/4132/4132-1080.mp4",
-    "https://assets.mixkit.co/videos/18312/18312-1080.mp4",
-    "https://assets.mixkit.co/videos/4024/4024-1080.mp4",
-    "https://assets.mixkit.co/videos/3458/3458-1080.mp4",
-    "https://assets.mixkit.co/videos/30605/30605-720.mp4",
-    "https://assets.mixkit.co/videos/4086/4086-1080.mp4",
-    "https://assets.mixkit.co/videos/1178/1178-1080.mp4",
-    "https://assets.mixkit.co/videos/39768/39768-1080.mp4",
-    "https://assets.mixkit.co/videos/11060/11060-720.mp4",
-    "https://assets.mixkit.co/videos/44392/44392-1080.mp4",
-    "https://assets.mixkit.co/videos/4555/4555-1080.mp4",
-    "https://assets.mixkit.co/videos/1187/1187-1080.mp4",
-    "https://assets.mixkit.co/videos/4368/4368-1080.mp4",
-    "https://assets.mixkit.co/videos/25375/25375-720.mp4",
-    "https://assets.mixkit.co/videos/44545/44545-1080.mp4",
-    "https://assets.mixkit.co/videos/8014/8014-720.mp4",
-    "https://assets.mixkit.co/videos/11268/11268-720.mp4",
-    "https://assets.mixkit.co/videos/18162/18162-720.mp4",
-    "https://assets.mixkit.co/videos/51075/51075-1080.mp4",
-    "https://assets.mixkit.co/videos/4695/4695-1080.mp4",
-    "https://assets.mixkit.co/videos/5027/5027-1080.mp4",
-    "https://assets.mixkit.co/videos/2846/2846-1080.mp4",
-    "https://assets.mixkit.co/videos/44490/44490-1080.mp4",
-    "https://assets.mixkit.co/videos/41375/41375-1080.mp4",
-    "https://assets.mixkit.co/videos/2738/2738-1080.mp4",
-    "https://assets.mixkit.co/videos/44974/44974-720.mp4",
-    "https://assets.mixkit.co/videos/15919/15919-720.mp4",
-    "https://assets.mixkit.co/videos/15209/15209-720.mp4",
-    "https://assets.mixkit.co/videos/44378/44378-1080.mp4",
-    "https://assets.mixkit.co/videos/49845/49845-1080.mp4",
-    "https://assets.mixkit.co/videos/1111/1111-1080.mp4",
-    "https://assets.mixkit.co/videos/2186/2186-1080.mp4",
-    "https://assets.mixkit.co/videos/4433/4433-1080.mp4",
-    "https://assets.mixkit.co/videos/1197/1197-1080.mp4",
-    "https://assets.mixkit.co/videos/4149/4149-1080.mp4",
-    "https://assets.mixkit.co/videos/2187/2187-1080.mp4",
-    "https://assets.mixkit.co/videos/34467/34467-1080.mp4",
-    "https://assets.mixkit.co/videos/42498/42498-1080.mp4",
-    "https://assets.mixkit.co/videos/1043/1043-1080.mp4",
-    "https://assets.mixkit.co/videos/4339/4339-1080.mp4",
-    "https://assets.mixkit.co/videos/5111/5111-1080.mp4",
-    "https://assets.mixkit.co/videos/4878/4878-1080.mp4",
-    "https://assets.mixkit.co/videos/26532/26532-720.mp4",
-    "https://assets.mixkit.co/videos/1116/1116-1080.mp4",
-    "https://assets.mixkit.co/videos/1088/1088-1080.mp4",
-    "https://assets.mixkit.co/videos/33490/33490-720.mp4",
-    "https://assets.mixkit.co/videos/1082/1082-1080.mp4",
-    "https://assets.mixkit.co/videos/2890/2890-1080.mp4",
-    "https://assets.mixkit.co/videos/4157/4157-1080.mp4",
-    "https://assets.mixkit.co/videos/7194/7194-720.mp4",
-    "https://assets.mixkit.co/videos/18140/18140-720.mp4",
-    "https://assets.mixkit.co/videos/1894/1894-1080.mp4",
-    "https://assets.mixkit.co/videos/14540/14540-720.mp4",
-    "https://assets.mixkit.co/videos/6734/6734-720.mp4",
-    "https://assets.mixkit.co/videos/3422/3422-1080.mp4",
-    "https://assets.mixkit.co/videos/1926/1926-1080.mp4",
-    "https://assets.mixkit.co/videos/4240/4240-1080.mp4",
-    "https://assets.mixkit.co/videos/1191/1191-1080.mp4",
-    "https://assets.mixkit.co/videos/41575/41575-1080.mp4",
-    "https://assets.mixkit.co/videos/1170/1170-1080.mp4",
-    "https://assets.mixkit.co/videos/118/118-1080.mp4",
-    "https://assets.mixkit.co/videos/4396/4396-1080.mp4",
-    "https://assets.mixkit.co/videos/44474/44474-1080.mp4",
-    "https://assets.mixkit.co/videos/51600/51600-1080.mp4",
-    "https://assets.mixkit.co/videos/51689/51689-1080.mp4",
-    "https://assets.mixkit.co/videos/1780/1780-1080.mp4",
-    "https://assets.mixkit.co/videos/43605/43605-1080.mp4",
-    "https://assets.mixkit.co/videos/41573/41573-1080.mp4",
-    "https://assets.mixkit.co/videos/830/830-1080.mp4",
-    "https://assets.mixkit.co/videos/4028/4028-1080.mp4",
-    "https://assets.mixkit.co/videos/10993/10993-720.mp4",
-    "https://assets.mixkit.co/videos/41401/41401-1080.mp4",
-    "https://assets.mixkit.co/videos/45315/45315-720.mp4",
-    "https://assets.mixkit.co/videos/34317/34317-720.mp4",
-    "https://assets.mixkit.co/videos/4048/4048-1080.mp4",
-    "https://assets.mixkit.co/videos/5039/5039-1080.mp4",
-    "https://assets.mixkit.co/videos/44389/44389-1080.mp4",
-    "https://assets.mixkit.co/videos/5016/5016-1080.mp4",
-    "https://assets.mixkit.co/videos/4457/4457-1080.mp4",
-    "https://assets.mixkit.co/videos/1944/1944-1080.mp4",
-    "https://assets.mixkit.co/videos/4036/4036-1080.mp4",
-    "https://assets.mixkit.co/videos/15169/15169-720.mp4",
-    "https://assets.mixkit.co/videos/47724/47724-720.mp4",
-    "https://assets.mixkit.co/videos/46119/46119-720.mp4",
-    "https://assets.mixkit.co/videos/1218/1218-1080.mp4",
-    "https://assets.mixkit.co/videos/51105/51105-1080.mp4",
-    "https://assets.mixkit.co/videos/40657/40657-1080.mp4",
-    "https://assets.mixkit.co/videos/21226/21226-720.mp4",
-    "https://assets.mixkit.co/videos/51085/51085-1080.mp4",
-    "https://assets.mixkit.co/videos/4034/4034-1080.mp4",
-    "https://assets.mixkit.co/videos/31629/31629-720.mp4",
-    "https://assets.mixkit.co/videos/51793/51793-1080.mp4",
-    "https://assets.mixkit.co/videos/6890/6890-720.mp4",
-    "https://assets.mixkit.co/videos/3351/3351-1080.mp4",
-    "https://assets.mixkit.co/videos/4692/4692-1080.mp4",
-    "https://assets.mixkit.co/videos/4070/4070-1080.mp4",
-    "https://assets.mixkit.co/videos/2385/2385-1080.mp4",
-    "https://assets.mixkit.co/videos/51506/51506-1080.mp4",
-    "https://assets.mixkit.co/videos/4150/4150-1080.mp4",
-    "https://assets.mixkit.co/videos/4066/4066-1080.mp4",
-    "https://assets.mixkit.co/videos/4451/4451-1080.mp4",
-    "https://assets.mixkit.co/videos/11/11-1080.mp4",
-    "https://assets.mixkit.co/videos/4352/4352-1080.mp4",
-    "https://assets.mixkit.co/videos/50847/50847-1080.mp4",
-    "https://assets.mixkit.co/videos/3128/3128-1080.mp4",
-    "https://assets.mixkit.co/videos/1013/1013-1080.mp4",
-    "https://assets.mixkit.co/videos/41740/41740-1080.mp4",
-    "https://assets.mixkit.co/videos/1078/1078-1080.mp4",
-    "https://assets.mixkit.co/videos/49878/49878-1080.mp4",
-    "https://assets.mixkit.co/videos/4148/4148-1080.mp4",
-    "https://assets.mixkit.co/videos/4170/4170-1080.mp4",
-    "https://assets.mixkit.co/videos/42343/42343-1080.mp4",
-    "https://assets.mixkit.co/videos/1931/1931-1080.mp4"
-  ]
+  }
 }

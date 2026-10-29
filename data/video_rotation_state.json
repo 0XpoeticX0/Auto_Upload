@@ -1,0 +1,2009 @@
+{
+  "current_cycle": 1,
+  "current_video_in_cycle": 1,
+  "total_videos_completed": 0,
+  "total_clips_in_pool": 300,
+  "plan": [
+    {
+      "video_in_cycle": 1,
+      "global_video_index": 1,
+      "categories": [
+        "moon",
+        "space",
+        "forest"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/20425/20425-720.mp4",
+        "https://assets.mixkit.co/videos/1953/1953-720.mp4",
+        "https://assets.mixkit.co/videos/44621/44621-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 2,
+      "global_video_index": 2,
+      "categories": [
+        "nebula",
+        "trees",
+        "moon"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1594/1594-720.mp4",
+        "https://assets.mixkit.co/videos/4152/4152-720.mp4",
+        "https://assets.mixkit.co/videos/51585/51585-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 3,
+      "global_video_index": 3,
+      "categories": [
+        "ocean",
+        "nebula",
+        "autumn_leaves"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/5369/5369-720.mp4",
+        "https://assets.mixkit.co/videos/2212/2212-720.mp4",
+        "https://assets.mixkit.co/videos/1188/1188-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 4,
+      "global_video_index": 4,
+      "categories": [
+        "bamboo",
+        "sea",
+        "ocean"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1166/1166-720.mp4",
+        "https://assets.mixkit.co/videos/4412/4412-720.mp4",
+        "https://assets.mixkit.co/videos/1090/1090-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 5,
+      "global_video_index": 5,
+      "categories": [
+        "waves",
+        "meadow",
+        "sea"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4011/4011-720.mp4",
+        "https://assets.mixkit.co/videos/1150/1150-720.mp4",
+        "https://assets.mixkit.co/videos/50199/50199-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 6,
+      "global_video_index": 6,
+      "categories": [
+        "waves",
+        "waterfall",
+        "grass"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1170/1170-720.mp4",
+        "https://assets.mixkit.co/videos/51689/51689-720.mp4",
+        "https://assets.mixkit.co/videos/1195/1195-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 7,
+      "global_video_index": 7,
+      "categories": [
+        "foliage",
+        "river",
+        "waterfall"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1197/1197-720.mp4",
+        "https://assets.mixkit.co/videos/1780/1780-720.mp4",
+        "https://assets.mixkit.co/videos/30316/30316-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 8,
+      "global_video_index": 8,
+      "categories": [
+        "lake",
+        "river",
+        "mist"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/18162/18162-720.mp4",
+        "https://assets.mixkit.co/videos/5011/5011-720.mp4",
+        "https://assets.mixkit.co/videos/1236/1236-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 9,
+      "global_video_index": 9,
+      "categories": [
+        "fog",
+        "water_stream",
+        "lake"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1248/1248-720.mp4",
+        "https://assets.mixkit.co/videos/3371/3371-720.mp4",
+        "https://assets.mixkit.co/videos/28339/28339-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 10,
+      "global_video_index": 10,
+      "categories": [
+        "water_stream",
+        "sunlight_beams",
+        "rain"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1931/1931-720.mp4",
+        "https://assets.mixkit.co/videos/1249/1249-720.mp4",
+        "https://assets.mixkit.co/videos/5372/5372-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 11,
+      "global_video_index": 11,
+      "categories": [
+        "mosque",
+        "rain",
+        "water_droplets"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/34295/34295-720.mp4",
+        "https://assets.mixkit.co/videos/523/523-720.mp4",
+        "https://assets.mixkit.co/videos/4166/4166-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 12,
+      "global_video_index": 12,
+      "categories": [
+        "ripples",
+        "water_droplets",
+        "dome"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/19243/19243-720.mp4",
+        "https://assets.mixkit.co/videos/4477/4477-720.mp4",
+        "https://assets.mixkit.co/videos/4313/4313-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 13,
+      "global_video_index": 13,
+      "categories": [
+        "ripples",
+        "desert",
+        "columns"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4422/4422-720.mp4",
+        "https://assets.mixkit.co/videos/3370/3370-720.mp4",
+        "https://assets.mixkit.co/videos/29454/29454-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 14,
+      "global_video_index": 14,
+      "categories": [
+        "sand_dunes",
+        "arch",
+        "desert"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1955/1955-720.mp4",
+        "https://assets.mixkit.co/videos/1555/1555-720.mp4",
+        "https://assets.mixkit.co/videos/18312/18312-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 15,
+      "global_video_index": 15,
+      "categories": [
+        "mountains",
+        "corridor",
+        "sand_dunes"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1191/1191-720.mp4",
+        "https://assets.mixkit.co/videos/33833/33833-720.mp4",
+        "https://assets.mixkit.co/videos/1088/1088-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 16,
+      "global_video_index": 16,
+      "categories": [
+        "rock_formations",
+        "mountains",
+        "sacred_door"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1149/1149-720.mp4",
+        "https://assets.mixkit.co/videos/41401/41401-720.mp4",
+        "https://assets.mixkit.co/videos/21817/21817-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 17,
+      "global_video_index": 17,
+      "categories": [
+        "rock_formations",
+        "architecture",
+        "canyon"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4151/4151-720.mp4",
+        "https://assets.mixkit.co/videos/45400/45400-720.mp4",
+        "https://assets.mixkit.co/videos/4132/4132-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 18,
+      "global_video_index": 18,
+      "categories": [
+        "valley",
+        "palace_hall",
+        "canyon"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/18308/18308-720.mp4",
+        "https://assets.mixkit.co/videos/1986/1986-720.mp4",
+        "https://assets.mixkit.co/videos/4383/4383-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 19,
+      "global_video_index": 19,
+      "categories": [
+        "cliff",
+        "candle_light",
+        "valley"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/42495/42495-720.mp4",
+        "https://assets.mixkit.co/videos/1240/1240-720.mp4",
+        "https://assets.mixkit.co/videos/4998/4998-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 20,
+      "global_video_index": 20,
+      "categories": [
+        "lantern",
+        "hills",
+        "cliff"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1255/1255-720.mp4",
+        "https://assets.mixkit.co/videos/30889/30889-720.mp4",
+        "https://assets.mixkit.co/videos/2187/2187-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 21,
+      "global_video_index": 21,
+      "categories": [
+        "hills",
+        "clouds",
+        "earth"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/28844/28844-720.mp4",
+        "https://assets.mixkit.co/videos/45395/45395-720.mp4",
+        "https://assets.mixkit.co/videos/51795/51795-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 22,
+      "global_video_index": 22,
+      "categories": [
+        "earth",
+        "sky",
+        "horizon"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/6782/6782-720.mp4",
+        "https://assets.mixkit.co/videos/4025/4025-720.mp4",
+        "https://assets.mixkit.co/videos/21168/21168-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 23,
+      "global_video_index": 23,
+      "categories": [
+        "forest",
+        "horizon",
+        "sunset"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1925/1925-720.mp4",
+        "https://assets.mixkit.co/videos/1573/1573-720.mp4",
+        "https://assets.mixkit.co/videos/17255/17255-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 24,
+      "global_video_index": 24,
+      "categories": [
+        "sunrise",
+        "trees",
+        "forest"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/35472/35472-720.mp4",
+        "https://assets.mixkit.co/videos/46189/46189-720.mp4",
+        "https://assets.mixkit.co/videos/3422/3422-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 25,
+      "global_video_index": 25,
+      "categories": [
+        "stars",
+        "trees",
+        "autumn_leaves"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/3499/3499-720.mp4",
+        "https://assets.mixkit.co/videos/1186/1186-720.mp4",
+        "https://assets.mixkit.co/videos/4205/4205-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 26,
+      "global_video_index": 26,
+      "categories": [
+        "bamboo",
+        "night_sky",
+        "autumn_leaves"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1160/1160-720.mp4",
+        "https://assets.mixkit.co/videos/49849/49849-720.mp4",
+        "https://assets.mixkit.co/videos/4064/4064-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 27,
+      "global_video_index": 27,
+      "categories": [
+        "galaxy",
+        "bamboo",
+        "meadow"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/42343/42343-720.mp4",
+        "https://assets.mixkit.co/videos/1176/1176-720.mp4",
+        "https://assets.mixkit.co/videos/1161/1161-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 28,
+      "global_video_index": 28,
+      "categories": [
+        "space",
+        "meadow",
+        "grass"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/5002/5002-720.mp4",
+        "https://assets.mixkit.co/videos/1171/1171-720.mp4",
+        "https://assets.mixkit.co/videos/1185/1185-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 29,
+      "global_video_index": 29,
+      "categories": [
+        "moon",
+        "foliage",
+        "grass"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/50566/50566-720.mp4",
+        "https://assets.mixkit.co/videos/1222/1222-720.mp4",
+        "https://assets.mixkit.co/videos/1190/1190-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 30,
+      "global_video_index": 30,
+      "categories": [
+        "foliage",
+        "nebula",
+        "mist"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1224/1224-720.mp4",
+        "https://assets.mixkit.co/videos/43130/43130-720.mp4",
+        "https://assets.mixkit.co/videos/1234/1234-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 31,
+      "global_video_index": 31,
+      "categories": [
+        "ocean",
+        "fog",
+        "mist"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/570/570-720.mp4",
+        "https://assets.mixkit.co/videos/1162/1162-720.mp4",
+        "https://assets.mixkit.co/videos/1235/1235-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 32,
+      "global_video_index": 32,
+      "categories": [
+        "fog",
+        "sunlight_beams",
+        "sea"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1239/1239-720.mp4",
+        "https://assets.mixkit.co/videos/1252/1252-720.mp4",
+        "https://assets.mixkit.co/videos/4331/4331-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 33,
+      "global_video_index": 33,
+      "categories": [
+        "mosque",
+        "waves",
+        "sunlight_beams"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/9595/9595-720.mp4",
+        "https://assets.mixkit.co/videos/4305/4305-720.mp4",
+        "https://assets.mixkit.co/videos/1199/1199-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 34,
+      "global_video_index": 34,
+      "categories": [
+        "mosque",
+        "dome",
+        "waterfall"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/11922/11922-720.mp4",
+        "https://assets.mixkit.co/videos/1193/1193-720.mp4",
+        "https://assets.mixkit.co/videos/6850/6850-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 35,
+      "global_video_index": 35,
+      "categories": [
+        "columns",
+        "river",
+        "dome"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/32491/32491-720.mp4",
+        "https://assets.mixkit.co/videos/45315/45315-720.mp4",
+        "https://assets.mixkit.co/videos/1550/1550-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 36,
+      "global_video_index": 36,
+      "categories": [
+        "columns",
+        "lake",
+        "arch"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/27282/27282-720.mp4",
+        "https://assets.mixkit.co/videos/5008/5008-720.mp4",
+        "https://assets.mixkit.co/videos/2678/2678-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 37,
+      "global_video_index": 37,
+      "categories": [
+        "arch",
+        "corridor",
+        "water_stream"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/31498/31498-720.mp4",
+        "https://assets.mixkit.co/videos/23377/23377-720.mp4",
+        "https://assets.mixkit.co/videos/41366/41366-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 38,
+      "global_video_index": 38,
+      "categories": [
+        "sacred_door",
+        "corridor",
+        "rain"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/29455/29455-720.mp4",
+        "https://assets.mixkit.co/videos/1567/1567-720.mp4",
+        "https://assets.mixkit.co/videos/41545/41545-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 39,
+      "global_video_index": 39,
+      "categories": [
+        "architecture",
+        "water_droplets",
+        "sacred_door"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/14138/14138-720.mp4",
+        "https://assets.mixkit.co/videos/1181/1181-720.mp4",
+        "https://assets.mixkit.co/videos/21812/21812-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 40,
+      "global_video_index": 40,
+      "categories": [
+        "palace_hall",
+        "ripples",
+        "architecture"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/47527/47527-720.mp4",
+        "https://assets.mixkit.co/videos/30605/30605-720.mp4",
+        "https://assets.mixkit.co/videos/45402/45402-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 41,
+      "global_video_index": 41,
+      "categories": [
+        "desert",
+        "candle_light",
+        "palace_hall"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1078/1078-720.mp4",
+        "https://assets.mixkit.co/videos/1237/1237-720.mp4",
+        "https://assets.mixkit.co/videos/26782/26782-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 42,
+      "global_video_index": 42,
+      "categories": [
+        "sand_dunes",
+        "lantern",
+        "candle_light"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/38948/38948-720.mp4",
+        "https://assets.mixkit.co/videos/1246/1246-720.mp4",
+        "https://assets.mixkit.co/videos/1577/1577-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 43,
+      "global_video_index": 43,
+      "categories": [
+        "lantern",
+        "mountains",
+        "clouds"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1553/1553-720.mp4",
+        "https://assets.mixkit.co/videos/50267/50267-720.mp4",
+        "https://assets.mixkit.co/videos/4087/4087-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 44,
+      "global_video_index": 44,
+      "categories": [
+        "sky",
+        "rock_formations",
+        "clouds"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/40654/40654-720.mp4",
+        "https://assets.mixkit.co/videos/51792/51792-720.mp4",
+        "https://assets.mixkit.co/videos/45022/45022-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 45,
+      "global_video_index": 45,
+      "categories": [
+        "sky",
+        "canyon",
+        "sunset"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4069/4069-720.mp4",
+        "https://assets.mixkit.co/videos/3394/3394-720.mp4",
+        "https://assets.mixkit.co/videos/34251/34251-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 46,
+      "global_video_index": 46,
+      "categories": [
+        "valley",
+        "sunrise",
+        "sunset"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/51797/51797-720.mp4",
+        "https://assets.mixkit.co/videos/3490/3490-720.mp4",
+        "https://assets.mixkit.co/videos/4024/4024-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 47,
+      "global_video_index": 47,
+      "categories": [
+        "sunrise",
+        "cliff",
+        "stars"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/30867/30867-720.mp4",
+        "https://assets.mixkit.co/videos/31746/31746-720.mp4",
+        "https://assets.mixkit.co/videos/14542/14542-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 48,
+      "global_video_index": 48,
+      "categories": [
+        "hills",
+        "stars",
+        "night_sky"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/18791/18791-720.mp4",
+        "https://assets.mixkit.co/videos/2034/2034-720.mp4",
+        "https://assets.mixkit.co/videos/41541/41541-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 49,
+      "global_video_index": 49,
+      "categories": [
+        "night_sky",
+        "galaxy",
+        "earth"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/49845/49845-720.mp4",
+        "https://assets.mixkit.co/videos/1082/1082-720.mp4",
+        "https://assets.mixkit.co/videos/48014/48014-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 50,
+      "global_video_index": 50,
+      "categories": [
+        "space",
+        "galaxy",
+        "horizon"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4028/4028-720.mp4",
+        "https://assets.mixkit.co/videos/4881/4881-720.mp4",
+        "https://assets.mixkit.co/videos/4048/4048-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 51,
+      "global_video_index": 51,
+      "categories": [
+        "moon",
+        "space",
+        "forest"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/14540/14540-720.mp4",
+        "https://assets.mixkit.co/videos/522/522-720.mp4",
+        "https://assets.mixkit.co/videos/9736/9736-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 52,
+      "global_video_index": 52,
+      "categories": [
+        "nebula",
+        "trees",
+        "moon"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/11185/11185-720.mp4",
+        "https://assets.mixkit.co/videos/2206/2206-720.mp4",
+        "https://assets.mixkit.co/videos/4070/4070-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 53,
+      "global_video_index": 53,
+      "categories": [
+        "ocean",
+        "autumn_leaves",
+        "nebula"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4374/4374-720.mp4",
+        "https://assets.mixkit.co/videos/4075/4075-720.mp4",
+        "https://assets.mixkit.co/videos/2408/2408-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 54,
+      "global_video_index": 54,
+      "categories": [
+        "ocean",
+        "sea",
+        "bamboo"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/28342/28342-720.mp4",
+        "https://assets.mixkit.co/videos/1617/1617-720.mp4",
+        "https://assets.mixkit.co/videos/1172/1172-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 55,
+      "global_video_index": 55,
+      "categories": [
+        "waves",
+        "meadow",
+        "sea"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1564/1564-720.mp4",
+        "https://assets.mixkit.co/videos/1164/1164-720.mp4",
+        "https://assets.mixkit.co/videos/27028/27028-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 56,
+      "global_video_index": 56,
+      "categories": [
+        "waves",
+        "grass",
+        "waterfall"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/18309/18309-720.mp4",
+        "https://assets.mixkit.co/videos/1194/1194-720.mp4",
+        "https://assets.mixkit.co/videos/52009/52009-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 57,
+      "global_video_index": 57,
+      "categories": [
+        "river",
+        "waterfall",
+        "foliage"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/50561/50561-720.mp4",
+        "https://assets.mixkit.co/videos/827/827-720.mp4",
+        "https://assets.mixkit.co/videos/1212/1212-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 58,
+      "global_video_index": 58,
+      "categories": [
+        "river",
+        "lake",
+        "mist"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/11060/11060-720.mp4",
+        "https://assets.mixkit.co/videos/572/572-720.mp4",
+        "https://assets.mixkit.co/videos/1175/1175-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 59,
+      "global_video_index": 59,
+      "categories": [
+        "lake",
+        "water_stream",
+        "fog"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/48004/48004-720.mp4",
+        "https://assets.mixkit.co/videos/1218/1218-720.mp4",
+        "https://assets.mixkit.co/videos/1241/1241-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 60,
+      "global_video_index": 60,
+      "categories": [
+        "rain",
+        "water_stream",
+        "sunlight_beams"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/51104/51104-720.mp4",
+        "https://assets.mixkit.co/videos/6806/6806-720.mp4",
+        "https://assets.mixkit.co/videos/1254/1254-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 61,
+      "global_video_index": 61,
+      "categories": [
+        "rain",
+        "mosque",
+        "water_droplets"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4059/4059-720.mp4",
+        "https://assets.mixkit.co/videos/22118/22118-720.mp4",
+        "https://assets.mixkit.co/videos/2846/2846-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 62,
+      "global_video_index": 62,
+      "categories": [
+        "water_droplets",
+        "dome",
+        "ripples"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/529/529-720.mp4",
+        "https://assets.mixkit.co/videos/1159/1159-720.mp4",
+        "https://assets.mixkit.co/videos/4310/4310-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 63,
+      "global_video_index": 63,
+      "categories": [
+        "ripples",
+        "desert",
+        "columns"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/2209/2209-720.mp4",
+        "https://assets.mixkit.co/videos/31549/31549-720.mp4",
+        "https://assets.mixkit.co/videos/31786/31786-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 64,
+      "global_video_index": 64,
+      "categories": [
+        "desert",
+        "sand_dunes",
+        "arch"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/14468/14468-720.mp4",
+        "https://assets.mixkit.co/videos/5360/5360-720.mp4",
+        "https://assets.mixkit.co/videos/1182/1182-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 65,
+      "global_video_index": 65,
+      "categories": [
+        "corridor",
+        "sand_dunes",
+        "mountains"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4642/4642-720.mp4",
+        "https://assets.mixkit.co/videos/2179/2179-720.mp4",
+        "https://assets.mixkit.co/videos/1944/1944-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 66,
+      "global_video_index": 66,
+      "categories": [
+        "rock_formations",
+        "mountains",
+        "sacred_door"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/49334/49334-720.mp4",
+        "https://assets.mixkit.co/videos/30468/30468-720.mp4",
+        "https://assets.mixkit.co/videos/21821/21821-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 67,
+      "global_video_index": 67,
+      "categories": [
+        "canyon",
+        "rock_formations",
+        "architecture"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/14428/14428-720.mp4",
+        "https://assets.mixkit.co/videos/1762/1762-720.mp4",
+        "https://assets.mixkit.co/videos/45021/45021-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 68,
+      "global_video_index": 68,
+      "categories": [
+        "valley",
+        "canyon",
+        "palace_hall"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4148/4148-720.mp4",
+        "https://assets.mixkit.co/videos/51600/51600-720.mp4",
+        "https://assets.mixkit.co/videos/1211/1211-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 69,
+      "global_video_index": 69,
+      "categories": [
+        "candle_light",
+        "valley",
+        "cliff"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1580/1580-720.mp4",
+        "https://assets.mixkit.co/videos/118/118-720.mp4",
+        "https://assets.mixkit.co/videos/34980/34980-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 70,
+      "global_video_index": 70,
+      "categories": [
+        "hills",
+        "lantern",
+        "cliff"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/33934/33934-720.mp4",
+        "https://assets.mixkit.co/videos/1590/1590-720.mp4",
+        "https://assets.mixkit.co/videos/540/540-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 71,
+      "global_video_index": 71,
+      "categories": [
+        "earth",
+        "hills",
+        "clouds"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1599/1599-720.mp4",
+        "https://assets.mixkit.co/videos/1958/1958-720.mp4",
+        "https://assets.mixkit.co/videos/4646/4646-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 72,
+      "global_video_index": 72,
+      "categories": [
+        "earth",
+        "sky",
+        "horizon"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1187/1187-720.mp4",
+        "https://assets.mixkit.co/videos/4168/4168-720.mp4",
+        "https://assets.mixkit.co/videos/4695/4695-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 73,
+      "global_video_index": 73,
+      "categories": [
+        "forest",
+        "horizon",
+        "sunset"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/3396/3396-720.mp4",
+        "https://assets.mixkit.co/videos/26070/26070-720.mp4",
+        "https://assets.mixkit.co/videos/254/254-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 74,
+      "global_video_index": 74,
+      "categories": [
+        "sunrise",
+        "forest",
+        "trees"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/3492/3492-720.mp4",
+        "https://assets.mixkit.co/videos/1085/1085-720.mp4",
+        "https://assets.mixkit.co/videos/1173/1173-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 75,
+      "global_video_index": 75,
+      "categories": [
+        "trees",
+        "stars",
+        "autumn_leaves"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/571/571-720.mp4",
+        "https://assets.mixkit.co/videos/3491/3491-720.mp4",
+        "https://assets.mixkit.co/videos/2208/2208-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 76,
+      "global_video_index": 76,
+      "categories": [
+        "bamboo",
+        "night_sky",
+        "autumn_leaves"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1086/1086-720.mp4",
+        "https://assets.mixkit.co/videos/4332/4332-720.mp4",
+        "https://assets.mixkit.co/videos/1610/1610-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 77,
+      "global_video_index": 77,
+      "categories": [
+        "bamboo",
+        "meadow",
+        "galaxy"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1152/1152-720.mp4",
+        "https://assets.mixkit.co/videos/1155/1155-720.mp4",
+        "https://assets.mixkit.co/videos/4633/4633-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 78,
+      "global_video_index": 78,
+      "categories": [
+        "grass",
+        "space",
+        "meadow"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1184/1184-720.mp4",
+        "https://assets.mixkit.co/videos/1773/1773-720.mp4",
+        "https://assets.mixkit.co/videos/1165/1165-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 79,
+      "global_video_index": 79,
+      "categories": [
+        "grass",
+        "moon",
+        "foliage"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1180/1180-720.mp4",
+        "https://assets.mixkit.co/videos/41378/41378-720.mp4",
+        "https://assets.mixkit.co/videos/1220/1220-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 80,
+      "global_video_index": 80,
+      "categories": [
+        "mist",
+        "foliage",
+        "nebula"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1151/1151-720.mp4",
+        "https://assets.mixkit.co/videos/1210/1210-720.mp4",
+        "https://assets.mixkit.co/videos/8014/8014-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 81,
+      "global_video_index": 81,
+      "categories": [
+        "ocean",
+        "fog",
+        "mist"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4081/4081-720.mp4",
+        "https://assets.mixkit.co/videos/1163/1163-720.mp4",
+        "https://assets.mixkit.co/videos/1238/1238-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 82,
+      "global_video_index": 82,
+      "categories": [
+        "sea",
+        "fog",
+        "sunlight_beams"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/10993/10993-720.mp4",
+        "https://assets.mixkit.co/videos/1245/1245-720.mp4",
+        "https://assets.mixkit.co/videos/1258/1258-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 83,
+      "global_video_index": 83,
+      "categories": [
+        "waves",
+        "sunlight_beams",
+        "mosque"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/19501/19501-720.mp4",
+        "https://assets.mixkit.co/videos/1169/1169-720.mp4",
+        "https://assets.mixkit.co/videos/39179/39179-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 84,
+      "global_video_index": 84,
+      "categories": [
+        "mosque",
+        "dome",
+        "waterfall"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/39195/39195-720.mp4",
+        "https://assets.mixkit.co/videos/9514/9514-720.mp4",
+        "https://assets.mixkit.co/videos/25375/25375-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 85,
+      "global_video_index": 85,
+      "categories": [
+        "columns",
+        "river",
+        "dome"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/14893/14893-720.mp4",
+        "https://assets.mixkit.co/videos/1168/1168-720.mp4",
+        "https://assets.mixkit.co/videos/1259/1259-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 86,
+      "global_video_index": 86,
+      "categories": [
+        "columns",
+        "arch",
+        "lake"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/31753/31753-720.mp4",
+        "https://assets.mixkit.co/videos/1552/1552-720.mp4",
+        "https://assets.mixkit.co/videos/1954/1954-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 87,
+      "global_video_index": 87,
+      "categories": [
+        "corridor",
+        "arch",
+        "water_stream"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/32960/32960-720.mp4",
+        "https://assets.mixkit.co/videos/1177/1177-720.mp4",
+        "https://assets.mixkit.co/videos/1081/1081-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 88,
+      "global_video_index": 88,
+      "categories": [
+        "corridor",
+        "rain",
+        "sacred_door"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1566/1566-720.mp4",
+        "https://assets.mixkit.co/videos/4204/4204-720.mp4",
+        "https://assets.mixkit.co/videos/3494/3494-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 89,
+      "global_video_index": 89,
+      "categories": [
+        "water_droplets",
+        "sacred_door",
+        "architecture"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4396/4396-720.mp4",
+        "https://assets.mixkit.co/videos/2490/2490-720.mp4",
+        "https://assets.mixkit.co/videos/45399/45399-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 90,
+      "global_video_index": 90,
+      "categories": [
+        "ripples",
+        "palace_hall",
+        "architecture"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/6734/6734-720.mp4",
+        "https://assets.mixkit.co/videos/44879/44879-720.mp4",
+        "https://assets.mixkit.co/videos/45397/45397-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 91,
+      "global_video_index": 91,
+      "categories": [
+        "palace_hall",
+        "candle_light",
+        "desert"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/17990/17990-720.mp4",
+        "https://assets.mixkit.co/videos/1582/1582-720.mp4",
+        "https://assets.mixkit.co/videos/19636/19636-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 92,
+      "global_video_index": 92,
+      "categories": [
+        "candle_light",
+        "lantern",
+        "sand_dunes"
+      ],
+      "permutation_order": [
+        1,
+        3,
+        2
+      ],
+      "permutation_str": "1 3 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/1572/1572-720.mp4",
+        "https://assets.mixkit.co/videos/1585/1585-720.mp4",
+        "https://assets.mixkit.co/videos/50134/50134-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 93,
+      "global_video_index": 93,
+      "categories": [
+        "clouds",
+        "mountains",
+        "lantern"
+      ],
+      "permutation_order": [
+        3,
+        2,
+        1
+      ],
+      "permutation_str": "3 2 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/4339/4339-720.mp4",
+        "https://assets.mixkit.co/videos/5027/5027-720.mp4",
+        "https://assets.mixkit.co/videos/1247/1247-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 94,
+      "global_video_index": 94,
+      "categories": [
+        "sky",
+        "clouds",
+        "rock_formations"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/5015/5015-720.mp4",
+        "https://assets.mixkit.co/videos/4441/4441-720.mp4",
+        "https://assets.mixkit.co/videos/14185/14185-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 95,
+      "global_video_index": 95,
+      "categories": [
+        "canyon",
+        "sky",
+        "sunset"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/28335/28335-720.mp4",
+        "https://assets.mixkit.co/videos/4196/4196-720.mp4",
+        "https://assets.mixkit.co/videos/4265/4265-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 96,
+      "global_video_index": 96,
+      "categories": [
+        "sunset",
+        "valley",
+        "sunrise"
+      ],
+      "permutation_order": [
+        1,
+        2,
+        3
+      ],
+      "permutation_str": "1 2 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/9998/9998-720.mp4",
+        "https://assets.mixkit.co/videos/31629/31629-720.mp4",
+        "https://assets.mixkit.co/videos/34296/34296-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 97,
+      "global_video_index": 97,
+      "categories": [
+        "stars",
+        "sunrise",
+        "cliff"
+      ],
+      "permutation_order": [
+        3,
+        1,
+        2
+      ],
+      "permutation_str": "3 1 2",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/15395/15395-720.mp4",
+        "https://assets.mixkit.co/videos/9739/9739-720.mp4",
+        "https://assets.mixkit.co/videos/4433/4433-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 98,
+      "global_video_index": 98,
+      "categories": [
+        "hills",
+        "night_sky",
+        "stars"
+      ],
+      "permutation_order": [
+        2,
+        3,
+        1
+      ],
+      "permutation_str": "2 3 1",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/6890/6890-720.mp4",
+        "https://assets.mixkit.co/videos/49846/49846-720.mp4",
+        "https://assets.mixkit.co/videos/23153/23153-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 99,
+      "global_video_index": 99,
+      "categories": [
+        "earth",
+        "night_sky",
+        "galaxy"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/3031/3031-720.mp4",
+        "https://assets.mixkit.co/videos/4330/4330-720.mp4",
+        "https://assets.mixkit.co/videos/1710/1710-720.mp4"
+      ]
+    },
+    {
+      "video_in_cycle": 100,
+      "global_video_index": 100,
+      "categories": [
+        "horizon",
+        "galaxy",
+        "space"
+      ],
+      "permutation_order": [
+        2,
+        1,
+        3
+      ],
+      "permutation_str": "2 1 3",
+      "ordered_clips": [
+        "https://assets.mixkit.co/videos/42496/42496-720.mp4",
+        "https://assets.mixkit.co/videos/26532/26532-720.mp4",
+        "https://assets.mixkit.co/videos/4078/4078-720.mp4"
+      ]
+    }
+  ],
+  "history": []
+}

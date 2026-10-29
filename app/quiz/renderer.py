@@ -37,8 +37,8 @@ def enhance_islamic_pronunciation(text: str) -> str:
         res = re.sub(pattern, replacement, res)
     return res
 
-def synthesize_voice(text: str, out_mp3: str, voice: str = BANGLA_VOICE, rate: str = "+5%") -> bool:
-    """Synthesizes natural, calm voiceover narration using Edge TTS at +5% (1.05x) speed."""
+def synthesize_voice(text: str, out_mp3: str, voice: str = BANGLA_VOICE, rate: str = "+0%") -> bool:
+    """Synthesizes natural, human-paced voiceover narration using Edge TTS at +0% (1.00x) natural speed."""
     clean_t = enhance_islamic_pronunciation(clean_text_ass(text))
     cmd = [
         "edge-tts",
@@ -91,17 +91,15 @@ def expand_honorifics_spoken(text: str) -> str:
 def format_spoken_question(q_num: int, q_text: str, options: list[str] = None, language: str = "bn") -> str:
     """
     Formats spoken question:
+    - Direct start: Never say 'প্রশ্ন ১', 'প্রশ্ন ২', 'Question 1', 'Question 2'. Speaks directly the question inquiry.
     - Fast, punchy, energetic question delivery.
     - DOES NOT read out the options (options are read on-screen by the viewer during the 3-second timer).
     - Saves 5-7 seconds of boring audio per question, boosting watch-time and visual engagement!
     """
-    q_clean = enhance_islamic_pronunciation(expand_honorifics_spoken(clean_text_ass(q_text))).rstrip("।? ")
-    bn_nums = {1: "১", 2: "২", 3: "৩", 4: "৪", 5: "৫"}
-    num_str = bn_nums.get(q_num, str(q_num))
-    if language == "bn":
-        return f"প্রশ্ন {num_str}। {q_clean}?"
-    else:
-        return f"Question {q_num}. {q_clean}?"
+    # Strip any prefix like 'প্রশ্ন ১:', 'প্রশ্ন ১।', 'Question 1:', etc.
+    q_clean = re.sub(r'^(?:প্রশ্ন\s*[০-৯\d]+[:।\-]?\s*|Question\s*\d+[:.\-]?\s*|Q\d+[:.\-]?\s*)', '', q_text, flags=re.IGNORECASE)
+    q_clean = enhance_islamic_pronunciation(expand_honorifics_spoken(clean_text_ass(q_clean))).rstrip("।? ")
+    return f"{q_clean}?"
 
 def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_sample_video.mp4", language: str = "bn") -> str | None:
     """
@@ -125,13 +123,13 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         q_text = q.get("question", "")
         options = q.get("options", [])
         
-        # 1. Voice for question ONLY (punchy, energetic delivery at +8% speed)
+        # 1. Voice for question ONLY (natural, human conversational delivery at +0% speed)
         q_voice_text = format_spoken_question(q_num, q_text, language=language)
         q_voice_mp3 = os.path.join(temp_dir, f"q_{q_num}_voice.mp3")
-        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+8%")
+        synthesize_voice(q_voice_text, q_voice_mp3, voice=voice, rate="+0%")
         
         voice_dur = get_audio_duration(q_voice_mp3)
-        base_dur = voice_dur + 0.10  # Snappy transition to countdown
+        base_dur = voice_dur + 0.25  # Natural human breathing room before countdown
         countdown_dur = 3.0          # 3.0s thinking timer (3... 2... 1...)
         reveal_dur = 2.0             # 2.0s clear reveal with explanation
         total_q_dur = base_dur + countdown_dur + reveal_dur
@@ -232,9 +230,9 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         outro_voice_text = f"{outro.get('score_prompt', 'What was your score out of 3? Drop it below!')} {outro.get('follow_cta', 'Follow for weekly evaluation quizzes!')}"
         
     outro_voice_mp3 = os.path.join(temp_dir, "outro_voice.mp3")
-    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="+5%")
+    synthesize_voice(outro_voice_text, outro_voice_mp3, voice=voice, rate="+0%")
     
-    outro_dur = max(2.0, get_audio_duration(outro_voice_mp3) + 0.15)
+    outro_dur = max(2.2, get_audio_duration(outro_voice_mp3) + 0.30)
     
     outro_audio = os.path.join(temp_dir, "outro_audio.mp3")
     cmd_mix_outro = [

@@ -163,7 +163,8 @@ def render_question_card(
     
     q_num = q_data.get("number", 1)
     category = q_data.get("category", "ইসলামিক জ্ঞান")
-    question = q_data.get("question", "")
+    raw_question = q_data.get("question", "")
+    question = re.sub(r'^(?:প্রশ্ন\s*[০-৯\d]+[:।\-]?\s*|Question\s*\d+[:.\-]?\s*|Q\d+[:.\-]?\s*)', '', raw_question, flags=re.IGNORECASE).strip()
     options = q_data.get("options", ["ক) ...", "খ) ...", "গ) ..."])
     correct_opt = q_data.get("correct_option", "ক").strip()
     explanation = q_data.get("explanation", "")
