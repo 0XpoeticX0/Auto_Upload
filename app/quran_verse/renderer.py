@@ -12,6 +12,7 @@ import math
 import shutil
 import random
 import subprocess
+import urllib.request
 from PIL import Image
 from app.logger import logger
 from app.quality.vision_guardian import generate_verified_human_free_background, get_certified_safe_fallback
@@ -358,75 +359,35 @@ Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubBadge,,0,0,0,,{{\\pos(540
     logger.info(f"Generated Quran ASS subtitles at: {ass_path}")
 
 
-def render_subpixel_smooth_scene_clip(image_path: str, duration: float, motion_type: str, out_path: str, fps: int = 60):
+def ensure_local_clip(clip_source: str, download_dir: str) -> str:
     """
-    Renders 100% butter-smooth, tremor-free 60 FPS camera motion using sub-pixel PIL Lanczos interpolation.
-    Completely eliminates the notorious FFmpeg zoompan integer coordinate snapping and micro-jitter.
+    Ensures a clip is locally available. If it is a remote CDN URL, downloads and caches it.
+    Strictly forbids static images (.jpg, .png, .webp).
     """
-    img = Image.open(image_path).convert("RGB")
-    W, H = 1080, 1920
-    base_w, base_h = int(W * 1.25), int(H * 1.25)
-    img = img.resize((base_w, base_h), Image.Resampling.LANCZOS)
-    
-    total_frames = max(1, int(round(duration * fps)))
-    max_zoom = 1.15
-    
-    cmd = [
-        "ffmpeg", "-y",
-        "-f", "rawvideo",
-        "-vcodec", "rawvideo",
-        "-s", f"{W}x{H}",
-        "-pix_fmt", "rgb24",
-        "-r", str(fps),
-        "-i", "-",
-        "-c:v", "libx264",
-        "-preset", "veryfast",
-        "-crf", "18",
-        "-pix_fmt", "yuv420p",
-        out_path
-    ]
-    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    
-    for f in range(total_frames):
-        t = f / max(1, total_frames - 1)
-        # Cosine ease-in ease-out for ultra smooth motion
-        progress = 0.5 * (1.0 - math.cos(math.pi * t))
-        
-        if motion_type == "zoom_in":
-            scale = 1.0 + (max_zoom - 1.0) * progress
-            cw = int(base_w / scale)
-            ch = int(base_h / scale)
-            x0 = (base_w - cw) // 2
-            y0 = (base_h - ch) // 2
-        elif motion_type == "zoom_out":
-            scale = max_zoom - (max_zoom - 1.0) * progress
-            cw = int(base_w / scale)
-            ch = int(base_h / scale)
-            x0 = (base_w - cw) // 2
-            y0 = (base_h - ch) // 2
-        elif motion_type == "pan_up":
-            cw, ch = W, H
-            x0 = (base_w - cw) // 2
-            max_y = base_h - ch
-            y0 = int(max_y * (1.0 - progress))
-        else:
-            cw, ch = W, H
-            x0 = (base_w - cw) // 2
-            max_y = base_h - ch
-            y0 = int(max_y * progress)
-            
-        cropped = img.crop((x0, y0, x0 + cw, y0 + ch))
-        frame = cropped.resize((W, H), Image.Resampling.BILINEAR)
-        try:
-            proc.stdin.write(frame.tobytes())
-        except (BrokenPipeError, OSError):
-            break
-            
-    try:
-        proc.stdin.close()
-    except Exception:
-        pass
-    proc.wait()
+    os.makedirs(download_dir, exist_ok=True)
+    if os.path.exists(clip_source) and os.path.isfile(clip_source):
+        ext = os.path.splitext(clip_source)[1].lower()
+        if ext in ['.jpg', '.jpeg', '.png', '.webp']:
+            raise ValueError(f"STRICT BAN: Still image '{clip_source}' is strictly forbidden in Quran videos!")
+        return os.path.abspath(clip_source)
+
+    if clip_source.startswith("http://") or clip_source.startswith("https://"):
+        vid_id = clip_source.split("/")[-2] if "/videos/" in clip_source else "clip"
+        local_filename = f"clip_{vid_id}.mp4"
+        local_path = os.path.join(download_dir, local_filename)
+        if os.path.exists(local_path) and os.path.getsize(local_path) > 100000:
+            return local_path
+
+        logger.info(f"Downloading authentic video clip from CDN: {clip_source}...")
+        req = urllib.request.Request(clip_source, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp, open(local_path, "wb") as out_f:
+            out_f.write(resp.read())
+
+        if os.path.exists(local_path) and os.path.getsize(local_path) > 100000:
+            return local_path
+        raise RuntimeError(f"Failed to download valid video clip from {clip_source}")
+
+    raise FileNotFoundError(f"Clip source not accessible: {clip_source}")
 
 def plan_calm_quran_scenes(total_dur: float, ayah_timings: list = None, min_dur: float = 14.0, max_dur: float = 20.0) -> list:
     """
@@ -486,105 +447,69 @@ def plan_calm_quran_scenes(total_dur: float, ayah_timings: list = None, min_dur:
 
 def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot: int = None, ayah_timings: list = None) -> str:
     """
-    Builds a serene, dignified visual track composed of 100% authentic video clips.
-    - Zero matching clips across 10 videos (powered by data/video_registry.json).
-    - Calm, tranquil scene durations (7.5s to 12.0s per scene, average ~10s).
+    Builds a serene, dignified visual track composed of 100% authentic live motion video clips.
+    - STRICT SHARIAH BAN: 0 still images, 0 camera motion on photos, 0 static graphics.
+    - Powered directly by the 300 Halal Video Catalog & 50-category zero-overlap triplet rotator.
+    - 3 completely different categories per video (e.g. clouds, mountains, ocean).
+    - Full round-robin serial rotation: 1 -> 2 -> 3 -> 1 -> 2 -> 3 across 15s to 20s scenes.
     - Transitions synchronized directly with Quranic Ayah boundaries.
-    - 0 humans, 0 faces, 0 animals, 0 static images.
     - 60 FPS butter-smooth playback with zero jitter.
     """
     os.makedirs(temp_dir, exist_ok=True)
     master_visual_path = os.path.join(temp_dir, "master_visual_track.mp4")
 
-    # Calm Attention-Retention Pacing (7.5s to 12.0s per scene, locked to Ayahs):
-    planned_scenes = plan_calm_quran_scenes(total_dur, ayah_timings)
+    # 1. Planned Scenes (14.0s to 20.0s per scene, locked to Ayahs):
+    planned_scenes = plan_calm_quran_scenes(total_dur, ayah_timings, min_dur=14.0, max_dur=20.0)
     num_scenes = len(planned_scenes)
-    logger.info(f"Calm Quran Visual Track: Planned {num_scenes} tranquil scenes (~8-12s each, locked to Ayah boundaries) across {total_dur:.1f}s.")
+    logger.info(f"Calm Quran Visual Track: Planned {num_scenes} tranquil scenes (15-20s each, locked to Ayah boundaries) across {total_dur:.1f}s.")
 
-    registry_file = os.path.abspath("data/video_registry.json")
-    chosen_clips = []
-    slot_num = 1
+    # 2. Retrieve the next 3 distinct video clips from the 50-category Triplet Rotator
+    from app.quran_verse.triplet_rotator import get_next_video_scenes
+    triplet_info = get_next_video_scenes(advance=True)
+    raw_clips = triplet_info.get("clips", [])
+    categories = triplet_info.get("categories", [])
+    logger.info(f"🎬 [Triplet Rotator] Using 3 distinct categories: {categories} (Order: {triplet_info.get('permutation_str')})")
 
-    if os.path.exists(registry_file):
+    # 3. Ensure all 3 clips are downloaded and verified locally
+    clips_dir = os.path.join(temp_dir, "source_clips")
+    local_clips = []
+    for c in raw_clips:
         try:
-            with open(registry_file, "r", encoding="utf-8") as f:
-                reg_data = json.load(f)
-
-            if video_slot is None:
-                slot_num = reg_data.get("current_slot", 1)
-                video_key = f"video_{slot_num:02d}"
-                next_slot = (slot_num % 10) + 1
-                reg_data["current_slot"] = next_slot
-                with open(registry_file, "w", encoding="utf-8") as f:
-                    json.dump(reg_data, f, indent=2)
-                logger.info(f"🎬 [Zero-Overlap Registry] Auto-assigned Bucket: {video_key} (Next video will use video_{next_slot:02d})")
-            else:
-                slot_num = video_slot
-                video_key = f"video_{slot_num:02d}"
-                logger.info(f"🎬 [Zero-Overlap Registry] Explicitly selected Bucket: {video_key}")
-
-            if video_key in reg_data:
-                slot_info = reg_data[video_key]
-                chosen_clips = [os.path.abspath(c) for c in slot_info.get("clips", []) if os.path.exists(c)]
-                logger.info(f"🎬 [Zero-Overlap Registry] Loaded {len(chosen_clips)} exclusive real video clips for {video_key} (Categories: {slot_info.get('categories', [])[:4]})")
+            local_path = ensure_local_clip(c, clips_dir)
+            local_clips.append(local_path)
         except Exception as e:
-            logger.warning(f"Failed to read registry: {e}")
+            logger.warning(f"Could not load clip '{c}': {e}")
 
-    # Fallback to authentic nature B-rolls if registry not populated
-    if not chosen_clips:
-        broll_fallback = [
+    # Fallback only to authentic nature B-roll MP4s if network fails
+    if len(local_clips) < 3:
+        fallback_brolls = [
             os.path.abspath("app/assets/broll/ocean_720.mp4"),
             os.path.abspath("app/assets/broll/clouds_720.mp4"),
             os.path.abspath("app/assets/broll/desert_720.mp4"),
         ]
-        chosen_clips = [b for b in broll_fallback if os.path.exists(b)]
+        for fb in fallback_brolls:
+            if os.path.exists(fb) and fb not in local_clips:
+                local_clips.append(fb)
 
-    # 10 Distinct Sacred Quran Anchor Visuals (1 per slot)
-    quran_anchors = [
-        os.path.abspath("app/assets/video_scenes/quran_rehal_master.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_dawn_tahajjud.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_night_lantern.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_golden_hour.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_macro_verses.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_cinematic.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_sunbeam.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_closeup.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_sanctuary.mp4"),
-        os.path.abspath("app/assets/video_scenes/quran_rehal_regal_amber.mp4"),
-    ]
-    quran_anchors = [q for q in quran_anchors if os.path.exists(q)]
-    anchor_visual = quran_anchors[(slot_num - 1) % len(quran_anchors)] if quran_anchors else None
+    # STRICT ASSERTION: Zero still images allowed under any circumstances
+    for clip in local_clips:
+        if not clip.lower().endswith(".mp4"):
+            raise ValueError(f"STRICT BAN: Non-video file '{clip}' found in Quran visual sequence!")
 
-    # Shuffle this video's unique clips to create an engaging visual sequence
-    shuffled_clips = list(chosen_clips)
-    random.shuffle(shuffled_clips)
+    logger.info(f"🎬 [Visual Track] Assembling {num_scenes} scenes using {len(local_clips)} verified live motion video clips in round-robin series.")
 
-    sequence_pool = []
-    # Scene 1: Sacred Quran Anchor opening hook
-    if anchor_visual:
-        sequence_pool.append(anchor_visual)
-
-    # Subsequent scenes: 100% unique real motion video clips (waves, clouds, stars, mountains, desert...)
-    for clip in shuffled_clips:
-        sequence_pool.append(clip)
-
-    if not sequence_pool:
-        sequence_pool = [os.path.abspath("app/assets/broll/ocean_720.mp4")]
-
-
+    # 4. Cycle round-robin across the 3 clips in series: 1 -> 2 -> 3 -> 1 -> 2 -> 3
     scene_clips = []
-
     for i, sc in enumerate(planned_scenes):
-        asset_file = sequence_pool[i % len(sequence_pool)]
+        chosen_clip = local_clips[i % len(local_clips)]
         scene_dur = sc["duration"]
-
         clip_out = os.path.join(temp_dir, f"scene_clip_{i:02d}.mp4")
 
         # Slice 60 FPS video clip with exact duration
         cmd = [
             "ffmpeg", "-y",
             "-stream_loop", "-1",
-            "-i", asset_file,
+            "-i", chosen_clip,
             "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=60",
             "-c:v", "libx264",
             "-preset", "veryfast",
@@ -612,7 +537,7 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot
         master_visual_path
     ]
     subprocess.run(concat_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=True)
-    logger.info(f"Dynamic Quran Master Visual Track built successfully: {master_visual_path}")
+    logger.info(f"✅ Dynamic Quran Master Visual Track built successfully: {master_visual_path}")
     return master_visual_path
 
 def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str = "data/output", video_slot: int = None) -> str:

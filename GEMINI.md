@@ -27,13 +27,12 @@
   - Append a dedicated **3.0-second digital silence** (`apad=whole_dur=...`) at the end of each part.
   - The TBC badge (`বাকি অংশ দেখুন পর্ব ২-তে ➔` / `To Be Continued`) appears ONLY during this 3.0s silence. Audio and TBC text must NEVER overlap.
 
-## 4. Quran Recitation Video Mandates (Permanent Standard)
-- **Dedicated Sacred Visual (Open Quran on Rehal)**: For ALL Quran recitation videos, the visual MUST ALWAYS feature the **Holy Quran open on an antique carved wooden Rehal (রেহাল)** placed on a traditional emerald prayer carpet inside a grand, serene mosque/sanctuary, illuminated by soft golden morning sunbeams/god rays and floating glowing dust particles (`app/assets/quran_rehal_master.jpg`).
-- **Strictly No Empty Corridors**: NEVER use plain empty hallways, generic corridors, or abstract loops without the Holy Quran on the Rehal.
-- **Zero Living Beings**: Strictly 0 humans, 0 faces, 0 silhouettes. The focal sacred object is the Holy Quran on the Rehal.
-- **Dual Visual Styles (Selected at Random)**:
-  - **Style A (100% Pure Quran on Rehal)**: Fast-paced 4 to 7-second scene cuts cycling purely between 5 distinct 8K angles and camera motions (`zoom_in`, `zoom_out`, `pan_up`) of the Holy Quran on the wooden Rehal.
-  - **Style B (Balanced Hybrid)**: Holy Quran on the Rehal anchored every few seconds, interwoven with authentic nature video B-rolls (`ocean_720.mp4`, `clouds_720.mp4`, `desert_720.mp4`) and sacred calligraphy.
+## 4. Quran Recitation Video Visual Mandates (100% Real Live-Motion Video Only)
+- **STRICT PERMANENT BAN ON STILL IMAGES**: STRICTLY NEVER use static/still photos, still AI-generated images, or camera zoom/pan motion over JPG/PNG images (e.g. quran_rehal_master.jpg) in Quran videos. Still images with camera motion look cheap, static, and artificial.
+- **100% Authentic Live-Motion Video Footage**: For ALL Quran recitation videos, the visual MUST ALWAYS be composed of real, high-definition (1080p/720p 60 FPS) cinematic motion video footage (moving ocean waves, flowing mountain waterfalls, real moving clouds/skies, starry celestial time-lapses, authentic mosque architecture).
+- **Strict Shariah Visual Compliance**: Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals. Pure atmospheric nature, celestial majesty, and classical sacred Islamic architecture.
+- **50-Category Zero-Overlap Triplet Sequencing**: Each video must select 3 clips from 3 completely different categories out of the 50 Halal categories (Category(Clip 1) != Category(Clip 2) != Category(Clip 3)).
+- **Serene Scene Pacing**: Fast-paced yet tranquil 15s to 20s scene cuts cycling round-robin in series (1 -> 2 -> 3 -> 1 -> 2 -> 3) locked to Ayah boundaries—never holding a single scene or looping 1 clip on itself.
 
 ## 5. Reciter & Audio Enhancement Mandate (Permanent Standard)
 - **Strictly 2 Approved Reciters**: ONLY use **Sheikh Yasser Ad-Dossari** (`dossari`) and **Sheikh Mishary Rashid Alafasy** (`alafasy`). Strictly NO other reciters.
