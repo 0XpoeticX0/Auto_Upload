@@ -5,12 +5,39 @@ Fetches authentic Uthmani Arabic text and verified Bengali translations from Qur
 and provides Gemini-powered complete self-contained passage selection.
 """
 
+import os
 import urllib.request
 import urllib.parse
 import json
 import re
+import unicodedata
 from app.logger import logger
 from app.llm.provider import extract_json
+
+_ISLAMIC_FOUNDATION_DB = None
+
+def get_islamic_foundation_db() -> dict:
+    """Loads Islamic Foundation Bangladesh Bengali Quran dataset into memory."""
+    global _ISLAMIC_FOUNDATION_DB
+    if _ISLAMIC_FOUNDATION_DB is not None:
+        return _ISLAMIC_FOUNDATION_DB
+
+    paths = [
+        os.path.join("app", "assets", "quran", "islamic_foundation_quran.json"),
+        os.path.join("data", "quran_islamic_foundation.json")
+    ]
+    for p in paths:
+        if os.path.exists(p):
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    _ISLAMIC_FOUNDATION_DB = json.load(f)
+                    logger.info(f"Loaded Islamic Foundation Bangladesh Quran translation ({len(_ISLAMIC_FOUNDATION_DB)} verses).")
+                    return _ISLAMIC_FOUNDATION_DB
+            except Exception as e:
+                logger.warning(f"Failed to load {p}: {e}")
+
+    _ISLAMIC_FOUNDATION_DB = {}
+    return _ISLAMIC_FOUNDATION_DB
 
 # Supported pure studio / authentic renowned reciters chosen by user
 RECITERS_CONFIG = {
@@ -446,9 +473,11 @@ CURATED_COMPLETE_PASSAGES = [
 ]
 
 def clean_bengali_translation(text: str) -> str:
-    """Strips footnote and HTML markers while preserving concise contextual commentary in parentheses."""
+    """Strips footnote and HTML markers, normalizes Unicode NFC, while preserving concise commentary."""
     if not text:
         return ""
+    # Normalize unicode to NFC (fixes split vowels e.g. U+09C7 + U+09BE -> U+09CB 'ো')
+    text = unicodedata.normalize('NFC', text)
     # Strip HTML tags
     text = re.sub(r'<[^>]+>', '', text)
     # Strip footnote explanations starting with asterisk (e.g. *অর্থ কুরবানী কর)
@@ -485,41 +514,65 @@ def clean_english_translation(text: str) -> str:
 
 def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
     """
-    Fetches Arabic text with Tashkeel, authentic Bengali translation, and English translation
-    for the verse range directly from api.quran.com/api/v4/.
+    Fetches Arabic text with Tashkeel, authentic Islamic Foundation Bengali translation,
+    and English translation for the verse range.
     """
     if ayah_end is None or ayah_end < ayah_start:
         ayah_end = ayah_start
 
     surah_name_bn = SURAH_NAMES_BN.get(surah, f"সূরা নম্বর {surah}")
     surah_name_en = SURAH_NAMES_EN.get(surah, f"Surah {surah}")
-    logger.info(f"Fetching {surah_name_bn} / {surah_name_en} (Ayah {ayah_start}-{ayah_end}) from Quran.com API...")
+    logger.info(f"Fetching {surah_name_bn} / {surah_name_en} (Ayah {ayah_start}-{ayah_end}) using Islamic Foundation Bangladesh translation...")
 
     verses_list = []
     full_arabic = []
     full_bengali = []
     full_english = []
 
+    if_db = get_islamic_foundation_db()
+
     for ayah in range(ayah_start, ayah_end + 1):
-        # Prioritize 213 (Dr. Abu Bakr Zakaria) for clear contextual bracket info, fallback to 161, 162, 163
+        key = f"{surah}:{ayah}"
         bn_text = ""
         ar_text = ""
         en_text = ""
 
-        for trans_id in [213, 161, 162, 163]:
+        # 1. Primary: Islamic Foundation Bangladesh (Local Vetted Dataset)
+        if key in if_db and if_db[key]:
+            bn_text = clean_bengali_translation(if_db[key])
+
+        # 2. Secondary: If not in local dataset, fetch Islamic Foundation / Tanzil from AlQuran Cloud
+        if not bn_text:
+            url_if = f"https://api.alquran.cloud/v1/ayah/{surah}:{ayah}/bn.bengali"
+            try:
+                req_if = urllib.request.Request(url_if, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req_if, timeout=6) as resp:
+                    data_if = json.loads(resp.read().decode("utf-8"))
+                    cand_if = data_if.get("data", {}).get("text", "")
+                    if cand_if:
+                        bn_text = clean_bengali_translation(cand_if)
+            except Exception as e:
+                logger.debug(f"AlQuran Cloud fetch notice for {key}: {e}")
+
+        # 3. Always fetch Arabic Uthmani text from Quran.com (and fallback Bengali if still empty)
+        # Fallback order for Quran.com: 161 (Taisirul), 163 (Mujibur Rahman), 162 (Rawai), 213 (Zakaria)
+        for trans_id in [161, 163, 162, 213]:
             url = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?language=bn&translations={trans_id}&fields=text_uthmani"
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
                 with urllib.request.urlopen(req, timeout=8) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
                     v = data.get("verse", {})
-                    ar_text = v.get("text_uthmani", "").strip()
-                    trans = v.get("translations", [])
-                    if trans and trans[0].get("text"):
-                        candidate_bn = clean_bengali_translation(trans[0].get("text", ""))
-                        if candidate_bn:
-                            bn_text = candidate_bn
-                            break
+                    if not ar_text:
+                        ar_text = v.get("text_uthmani", "").strip()
+                    if not bn_text:
+                        trans = v.get("translations", [])
+                        if trans and trans[0].get("text"):
+                            candidate_bn = clean_bengali_translation(trans[0].get("text", ""))
+                            if candidate_bn:
+                                bn_text = candidate_bn
+                    if ar_text and bn_text:
+                        break
             except Exception as e:
                 logger.warning(f"Translation {trans_id} fetch notice for {surah}:{ayah}: {e}")
                 continue

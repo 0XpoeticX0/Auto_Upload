@@ -44,6 +44,6 @@
 
 ## 6. 3-Pass Verification Gate
 Every production video must clear all 3 automated gates before upload (`triple_gemini_verifier.py`):
-- **Pass 1 (Religious Truth)**: Validates Uthmani Arabic text and Dr. Abu Bakr Zakaria Bengali translation.
+- **Pass 1 (Religious Truth)**: Validates Uthmani Arabic text and Islamic Foundation Bangladesh Bengali translation.
 - **Pass 2 (Shariah Visual Audit)**: Frame audit enforcing strictly 0 living beings, faces, or silhouettes.
 - **Pass 3 (Audio & Typography)**: Validates Kalpurush Bengali typography, card duration >= 2.5s, max 1–2 lines, and -18.0 LUFS audio normalization.
