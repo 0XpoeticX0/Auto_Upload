@@ -1,7 +1,7 @@
 {
   "current_cycle": 1,
-  "current_video_in_cycle": 1,
-  "total_videos_completed": 0,
+  "current_video_in_cycle": 2,
+  "total_videos_completed": 1,
   "total_clips_in_pool": 300,
   "plan": [
     {
@@ -2005,5 +2005,16 @@
       ]
     }
   ],
-  "history": []
+  "history": [
+    {
+      "cycle": 1,
+      "video_in_cycle": 1,
+      "permutation": "3 1 2",
+      "clips": [
+        "https://assets.mixkit.co/videos/20425/20425-720.mp4",
+        "https://assets.mixkit.co/videos/1953/1953-720.mp4",
+        "https://assets.mixkit.co/videos/44621/44621-720.mp4"
+      ]
+    }
+  ]
 }
