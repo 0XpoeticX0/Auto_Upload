@@ -1,7 +1,7 @@
 {
   "current_cycle": 1,
-  "current_video_in_cycle": 2,
-  "total_videos_completed": 1,
+  "current_video_in_cycle": 69,
+  "total_videos_completed": 68,
   "total_clips_in_pool": 300,
   "plan": [
     {
@@ -2014,6 +2014,16 @@
         "https://assets.mixkit.co/videos/20425/20425-720.mp4",
         "https://assets.mixkit.co/videos/1953/1953-720.mp4",
         "https://assets.mixkit.co/videos/44621/44621-720.mp4"
+      ]
+    },
+    {
+      "cycle": 1,
+      "video_in_cycle": 68,
+      "permutation": "3 1 2",
+      "clips": [
+        "https://assets.mixkit.co/videos/4148/4148-720.mp4",
+        "https://assets.mixkit.co/videos/51600/51600-720.mp4",
+        "https://assets.mixkit.co/videos/1211/1211-720.mp4"
       ]
     }
   ]

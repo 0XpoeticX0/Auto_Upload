@@ -204,5 +204,17 @@
     "ancient_port_twilight.jpg",
     "ancient_islamic_library.jpg",
     "ocean_waves_sunset.jpg"
+  ],
+  "quran_videos": [
+    {
+      "id": "quran_55_46_78_1793505452",
+      "surah": 55,
+      "ayah_start": 46,
+      "ayah_end": 78,
+      "title": "test",
+      "reciter_id": "alafasy",
+      "timestamp": 1793505452,
+      "created_at": "2026-11-01T03:57:32Z"
+    }
   ]
 }

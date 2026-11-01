@@ -269,7 +269,7 @@ def get_next_video_scenes(advance: bool = True) -> dict:
         from app.history import fetch_recent_quran_pipeline_history
         q_hist = fetch_recent_quran_pipeline_history(limit=500)
         published_count = len(q_hist)
-        if published_count > 0 and published_count >= state.get("total_videos_completed", 0):
+        if published_count > state.get("total_videos_completed", 0):
             current_cycle = (published_count // 100) + 1
             current_vid = (published_count % 100) + 1
             state["current_cycle"] = current_cycle

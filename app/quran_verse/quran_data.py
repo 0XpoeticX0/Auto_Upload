@@ -719,7 +719,9 @@ CRITICAL PASSAGE RULES (MANDATORY):
    - STRICTLY DO NOT select any passage containing or overlapping with any of the already-recited Ayahs listed above!
    - You MAY select from any Surah of the Holy Quran (including other unrecited verses of these same Surahs, or any other Surah), but there must be ZERO OVERLAP with the already-used Ayahs.
 2. COMPLETE MEANING & ZERO CUT-OFFS: The passage MUST form a complete, self-contained unit of thought. Never cut off in the middle of a sentence, list, or argument!
-3. DURATION LIMIT: Total recitation length of the verse(s) MUST be between 25 and 85 seconds (typically 1 to 8 ayahs depending on verse length).
+3. DURATION & AYAH COUNT LIMIT (STRICT MAXIMUM 2 TO 6 AYAHS):
+   - Total recitation length MUST be between 30 and 80 seconds (STRICTLY UNDER 85 SECONDS).
+   - NEVER select more than 6 Ayahs! If a Surah has short verses (such as Surah Ar-Rahman, An-Najm, Al-Waqi'ah, Al-Mursalat), select AT MOST 4 to 6 ayahs, NEVER 10, 15, 20, or 30+ ayahs! Long selections break the YouTube Shorts format and will be rejected immediately!
 4. THEMATIC VOICE MATCHING (CHOOSE BETWEEN ALAFASY OR DOSSARI):
    - 'alafasy' (Sheikh Mishary Rashid Alafasy): Choose for comfort, relief from grief, hope, mercy, divine forgiveness, sincere supplication (Dua), family love, gentle reflection, and peace of Paradise. (His warm, melodic, soothing baritone provides deep emotional healing).
    - 'dossari' (Sheikh Yasser Ad-Dossari): Choose for divine power, supreme sovereignty, majesty, Day of Judgment (Qiyamah), warnings against arrogance, absolute Tawakkul in trials, and cosmic oaths. (His thunderous, high-dynamic, commanding delivery creates awe and reverence).

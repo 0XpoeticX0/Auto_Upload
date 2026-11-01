@@ -142,6 +142,32 @@ def fetch_recent_quran_pipeline_history(limit: int = 50) -> list[dict]:
     except Exception:
         pass
 
+    # Ground-truth: Check actual recent YouTube uploads so duplicate videos/Surahs are NEVER repeated
+    try:
+        from app.upload.youtube import get_authenticated_service
+        yt = get_authenticated_service()
+        if yt:
+            channels = yt.channels().list(mine=True, part='contentDetails').execute()
+            uploads_playlist_id = channels['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+            playlist_items = yt.playlistItems().list(
+                playlistId=uploads_playlist_id,
+                part='snippet',
+                maxResults=25
+            ).execute()
+            seen_titles = {str(r.get("title", "")) for r in records}
+            for item in playlist_items.get('items', []):
+                t_yt = item['snippet']['title']
+                if ('সূরা' in t_yt or 'Surah' in t_yt) and t_yt not in seen_titles:
+                    records.append({
+                        "id": f"yt_{item['snippet'].get('resourceId', {}).get('videoId', '')}",
+                        "title": t_yt,
+                        "source": "youtube_live",
+                        "created_at": item['snippet'].get('publishedAt')
+                    })
+                    seen_titles.add(t_yt)
+    except Exception as e:
+        logger.debug(f"YouTube live history fetch notice: {e}")
+
     parsed_records = []
     for r in records:
         row_id = str(r.get("id", ""))

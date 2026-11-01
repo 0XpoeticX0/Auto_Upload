@@ -137,33 +137,62 @@ def generate_quran_verse_video(
                 rejected_passages.append(f"Surah {cand_surah}:{cand_range_str}")
                 continue
 
+        # Ayah Count Guard: Shorts must never attempt large verse blocks
+        cand_count = cand_end - cand_start + 1
+        if not (surah and ayah_start) and cand_count > 6:
+            logger.warning(
+                f"🚫 [Ayah Count Gate] REJECTED (Attempt {attempt}/{max_selection_retries}): "
+                f"Surah {cand_surah}:{cand_range_str} has {cand_count} ayahs (maximum 6 allowed for Shorts under 85s)!"
+            )
+            dynamic_used_ayahs.setdefault(cand_surah, set()).update(cand_ayahs)
+            rejected_passages.append(f"Surah {cand_surah}:{cand_range_str} ({cand_count} ayahs - too long)")
+            continue
+
         cleared, clearance_report = verify_quran_passage_3x(v_cand)
-        if cleared:
-            verse_data = v_cand
-            verse_data["clearance_report"] = clearance_report
-            logger.info(f"Passage cleared all 3 stages on attempt {attempt}: {verse_data['surah_name_bn']} ({verse_data['verse_range_str']})")
-            break
-        else:
+        if not cleared:
             logger.warning(f"Passage failed 3-Stage Clearance Gate on attempt {attempt}: {clearance_report}")
             if surah and ayah_start:
-                # If specific manual passage was requested, still proceed with warning
                 verse_data = v_cand
                 break
-            # Record failed candidate so next attempt never repeats it
             if cand_surah and cand_start and cand_end:
                 dynamic_used_ayahs.setdefault(cand_surah, set()).update(range(cand_start, cand_end + 1))
                 rejected_passages.append(f"Surah {cand_surah}:{cand_range_str}")
                 last_fail_reason = str(clearance_report.get("details", {}).get("reason", ""))
+            continue
+
+        # HARD DURATION ENFORCEMENT GATE: Recitation MUST be between 20s and 85s (Strictly under 90s)
+        try:
+            cand_audio = prepare_recitation_audio(v_cand)
+            cand_dur = cand_audio.get("total_duration", 0.0)
+            if not (surah and ayah_start) and (cand_dur > 85.0 or cand_dur < 20.0):
+                logger.warning(
+                    f"🚫 [Duration Gate] REJECTED (Attempt {attempt}/{max_selection_retries}): "
+                    f"Surah {cand_surah}:{cand_range_str} duration is {cand_dur:.1f}s (must be 20s–85s)!"
+                )
+                dynamic_used_ayahs.setdefault(cand_surah, set()).update(range(cand_start, cand_end + 1))
+                rejected_passages.append(f"Surah {cand_surah}:{cand_range_str} ({cand_dur:.0f}s - out of bounds)")
+                last_fail_reason = f"Duration {cand_dur:.1f}s is out of bounds (must be 20s-85s). Select fewer verses (2-5 verses max)."
+                continue
+
+            verse_data = v_cand
+            verse_data["clearance_report"] = clearance_report
+            audio_data = cand_audio
+            logger.info(f"✅ Passage cleared all gates on attempt {attempt}: {verse_data['surah_name_bn']} ({verse_data['verse_range_str']}) [{cand_dur:.1f}s]")
+            break
+        except Exception as e:
+            logger.warning(f"Audio duration verification error on attempt {attempt}: {e}")
+            continue
 
     if not verse_data:
         raise RuntimeError("Failed to obtain a 100% verified Quran passage after 3-Stage Gemini Clearance checks.")
 
     # 3. Download & Master Audio (< 90s)
-    audio_data = prepare_recitation_audio(verse_data)
+    if "audio_data" not in locals() or audio_data is None:
+        audio_data = prepare_recitation_audio(verse_data)
     total_dur = audio_data["total_duration"]
 
     if total_dur > 90.0:
-        logger.warning(f"Audio duration {total_dur:.1f}s is over 90s. Trimming or proceeding with warning.")
+        raise ValueError(f"STRICT GATE VIOLATION: Quran audio duration {total_dur:.1f}s exceeds strict 90s limit!")
 
     # 4. Generate Metadata
     metadata = generate_quran_metadata(verse_data, audio_data)
@@ -226,12 +255,32 @@ def run_quran_verse_pipeline(
         }
 
         # YouTube Shorts
+        yt_ok = None
         try:
             from app.upload.youtube import upload_to_youtube
             yt_ok = upload_to_youtube(video_path, upload_meta, thumbnail_path=thumbnail_path)
             logger.info(f"YouTube Shorts Upload: {yt_ok}")
         except Exception as e:
             logger.warning(f"YouTube upload notice: {e}")
+
+        # Record to Supabase & Local History Cache IMMEDIATELY (Ground-Truth Persistence)
+        surah_num = result['verse_data']['surah']
+        a_start = result['verse_data']['ayah_start']
+        a_end = result['verse_data']['ayah_end']
+        history_title = f"[কুরআন তিলাওয়াত] {metadata['title']}"
+        reciter_id = result['verse_data'].get('reciter_id', '')
+
+        try:
+            record_quran_history(
+                surah=surah_num,
+                ayah_start=a_start,
+                ayah_end=a_end,
+                title=history_title,
+                reciter_id=reciter_id
+            )
+            logger.info(f"✅ Recorded to Quran History: Surah {surah_num}:{a_start}-{a_end} ('{history_title}')")
+        except Exception as e:
+            logger.error(f"Failed to record Quran history: {e}")
 
         # Facebook & Instagram Reels
         try:
@@ -248,22 +297,6 @@ def run_quran_verse_pipeline(
             logger.info(f"TikTok Upload: {tt_res.get('status')}")
         except Exception as e:
             logger.warning(f"TikTok upload notice: {e}")
-
-        # Record to Supabase & Local History Cache
-        surah_num = result['verse_data']['surah']
-        a_start = result['verse_data']['ayah_start']
-        a_end = result['verse_data']['ayah_end']
-        history_title = f"[কুরআন তিলাওয়াত] {metadata['title']}"
-        reciter_id = result['verse_data'].get('reciter_id', '')
-
-        record_quran_history(
-            surah=surah_num,
-            ayah_start=a_start,
-            ayah_end=a_end,
-            title=history_title,
-            reciter_id=reciter_id
-        )
-        logger.info(f"Recorded to Quran History: Surah {surah_num}:{a_start}-{a_end} ('{history_title}')")
 
     logger.info("=== QURAN PIPELINE EXECUTION FINISHED SUCCESSFULLY ===")
     return result
