@@ -1,6 +1,6 @@
 {
   "cycle": 1,
-  "current_index": 1,
+  "current_index": 2,
   "plan": [
     111,
     97,
@@ -21,6 +21,10 @@
     {
       "surah": 111,
       "timestamp": "41863142952"
+    },
+    {
+      "surah": 97,
+      "timestamp": "41897177283"
     }
   ]
 }
