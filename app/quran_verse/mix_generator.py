@@ -88,8 +88,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: ArabicStable,Amiri,62,&H002BD5FF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3.5,2.0,5,60,60,0,1
-Style: BanglaStable,Kalpurush,56,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3.2,1.8,5,70,70,0,1
+Style: ArabicStable,Amiri,64,&H002BD5FF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3.6,2.0,5,60,60,0,1
+Style: BanglaStable,Kalpurush,58,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3.4,2.0,5,70,70,0,1
 Style: TopBadge,Kalpurush,42,&H0015CCFA,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3.0,1.5,5,50,50,0,1
 Style: SubBadge,Kalpurush,30,&H00E0E0E0,&H000000FF,&H00000000,&H80000000,0,1,0,0,100,100,0,0,1,2.0,1.0,5,50,50,0,1
 Style: EnglishSmall,Arial,28,&H00C0C0C0,&H000000FF,&H00000000,&H80000000,0,1,0,0,100,100,0,0,1,2.0,1.0,5,60,60,0,1
