@@ -5,6 +5,7 @@ data/*
 !data/stock_video_catalog.json
 !data/used_hadiths_registry.json
 !data/video_rotation_state.json
+!data/quran_mix_state.json
 
 # Secrets & Authentication Tokens
 .env
