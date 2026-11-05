@@ -88,34 +88,17 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: ArabicStable,Amiri,64,&H002BD5FF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3.6,2.0,5,60,60,0,1
-Style: BanglaStable,Kalpurush,58,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3.4,2.0,5,70,70,0,1
-Style: TopBadge,Kalpurush,42,&H0015CCFA,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3.0,1.5,5,50,50,0,1
-Style: SubBadge,Kalpurush,30,&H00E0E0E0,&H000000FF,&H00000000,&H80000000,0,1,0,0,100,100,0,0,1,2.0,1.0,5,50,50,0,1
-Style: EnglishSmall,Arial,28,&H00C0C0C0,&H000000FF,&H00000000,&H80000000,0,1,0,0,100,100,0,0,1,2.0,1.0,5,60,60,0,1
+Style: TopBadge,Kalpurush,58,&H0015CCFA,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3.8,2.2,5,50,50,0,1
+Style: SubBadge,Kalpurush,38,&H00F0F0F0,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2.8,1.6,5,50,50,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     with open(ass_out_path, "w", encoding="utf-8") as f:
         f.write(header)
-        # Static Badges
-        f.write(f"Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},TopBadge,,0,0,0,,{{\\pos(540,240)}}[ {title_bn} • তিলাওয়াত ও অনুবাদ ]\\N\n")
-        f.write(f"Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubBadge,,0,0,0,,{{\\pos(540,295)}}ক্বারী: মিশারি রশিদ • বাচনিক: জায়েদ ইকবাল (ইফাবা)\\N\n")
-
-        for item in timings:
-            st = item["full_start"]
-            en = item["full_end"]
-            ar_text = item.get("ar", "")
-            bn_fmt = highlight_sacred_words(item.get("bn", ""))
-            en_text = item.get("en", "")
-
-            # Unified Stable Card: Arabic at \pos(540,880), Bangla at \pos(540,1020)
-            # ZERO displacement or resizing when voice changes
-            f.write(f"Dialogue: 0,{format_ass_time(st)},{format_ass_time(en)},ArabicStable,,0,0,0,,{{\\pos(540,880)}}{ar_text}\\N\n")
-            f.write(f"Dialogue: 0,{format_ass_time(st)},{format_ass_time(en)},BanglaStable,,0,0,0,,{{\\pos(540,1020)}}{bn_fmt}\\N\n")
-            if en_text:
-                f.write(f"Dialogue: 0,{format_ass_time(st)},{format_ass_time(en)},EnglishSmall,,0,0,0,,{{\\pos(540,1650)}}\"{en_text}\"\\N\n")
+        # Prominent Top Information Only (All central/bottom subtitles removed for clean cinematic visual)
+        f.write(f"Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},TopBadge,,0,0,0,,{{\\pos(540,250)}}[ {title_bn} • তিলাওয়াত ও অনুবাদ ]\\N\n")
+        f.write(f"Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubBadge,,0,0,0,,{{\\pos(540,330)}}ক্বারী: মিশারি রশিদ • বাচনিক: জায়েদ ইকবাল (ইফাবা)\\N\n")
 
 def assemble_live_motion_track(total_dur: float, temp_dir: str) -> str:
     """Assembles a 60 FPS live-motion background video cycling 3 Halal clips."""
