@@ -207,41 +207,119 @@ def generate_cycle_plan(clips_pool: list[str], cycle_num: int) -> list[dict]:
 
     return plan
 
+def _fetch_cloud_rotation_state() -> dict:
+    """Fetches real-time rotation state from Supabase to prevent git rollback conflicts."""
+    try:
+        from app.history import _get_supabase_config
+        url, key = _get_supabase_config()
+        if url and key:
+            import urllib.request
+            headers = {
+                "apikey": key,
+                "Authorization": f"Bearer {key}"
+            }
+            req = urllib.request.Request(f"{url}/used_islamic_video?id=eq.triplet_rotation_state_v1", headers=headers)
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                if resp.status == 200:
+                    rows = json.loads(resp.read().decode("utf-8"))
+                    if rows and "title" in rows[0]:
+                        return json.loads(rows[0]["title"])
+    except Exception as e:
+        logger.debug(f"Cloud rotation state fetch notice: {e}")
+    return {}
+
+def _sync_cloud_rotation_state(state: dict):
+    """Upserts rotation state to Supabase so all runners (CI and local) stay strictly monotonic."""
+    try:
+        from app.history import _get_supabase_config
+        url, key = _get_supabase_config()
+        if url and key:
+            import urllib.request
+            headers = {
+                "apikey": key,
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates"
+            }
+            payload = {
+                "id": "triplet_rotation_state_v1",
+                "title": json.dumps({
+                    "current_cycle": state.get("current_cycle", 1),
+                    "current_video_in_cycle": state.get("current_video_in_cycle", 1),
+                    "total_videos_completed": state.get("total_videos_completed", 0),
+                    "recent_clips": state.get("recent_clips", [])[-30:]
+                }),
+                "source": "triplet_rotation_state"
+            }
+            req = urllib.request.Request(f"{url}/used_islamic_video", data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                pass
+    except Exception as e:
+        logger.debug(f"Cloud rotation sync notice: {e}")
+
 def load_or_init_rotation_state() -> dict:
-    """Loads existing rotation state or initializes Cycle 1."""
+    """Loads existing rotation state or initializes Cycle 1, synchronizing with cloud truth."""
+    state = None
     if os.path.exists(ROTATION_STATE_FILE):
         try:
             with open(ROTATION_STATE_FILE, "r", encoding="utf-8") as f:
                 state = json.load(f)
-            if "current_cycle" in state and "current_video_in_cycle" in state and "plan" in state:
-                return state
         except Exception as e:
             logger.warning(f"Could not read {ROTATION_STATE_FILE}: {e}")
 
-    # Initialize new state
-    clips = load_catalog_clips()
-    cycle_num = 1
-    plan = generate_cycle_plan(clips, cycle_num)
+    if not state or "current_cycle" not in state or "plan" not in state:
+        clips = load_catalog_clips()
+        cycle_num = 1
+        plan = generate_cycle_plan(clips, cycle_num)
+        state = {
+            "current_cycle": cycle_num,
+            "current_video_in_cycle": 1,
+            "total_videos_completed": 0,
+            "total_clips_in_pool": len(clips),
+            "plan": plan,
+            "history": [],
+            "recent_clips": []
+        }
 
-    state = {
-        "current_cycle": cycle_num,
-        "current_video_in_cycle": 1,
-        "total_videos_completed": 0,
-        "total_clips_in_pool": len(clips),
-        "plan": plan,
-        "history": []
-    }
-    save_rotation_state(state)
-    logger.info(f"✨ [Triplet Rotator] Initialized Cycle 1 with 100 planned videos (300 clips).")
+    # Cloud-truth synchronization: Cloud ALWAYS supersedes any stale local state
+    cloud_state = _fetch_cloud_rotation_state()
+    if cloud_state:
+        cloud_completed = cloud_state.get("total_videos_completed", 0)
+        local_completed = state.get("total_videos_completed", 0)
+        if cloud_completed > local_completed:
+            state["current_cycle"] = max(cloud_state.get("current_cycle", 1), state.get("current_cycle", 1))
+            state["current_video_in_cycle"] = cloud_state.get("current_video_in_cycle", state.get("current_video_in_cycle", 1))
+            state["total_videos_completed"] = cloud_completed
+            logger.info(f"☁️ [Triplet Rotator] Synced monotonic progress from cloud: Video #{state['current_video_in_cycle']}/100 (Total completed: {cloud_completed})")
+        if "recent_clips" in cloud_state and cloud_state["recent_clips"]:
+            state["recent_clips"] = cloud_state["recent_clips"]
+
+    # Validate plan against current catalog: refresh if obsolete clips exist
+    all_catalog_clips = set(load_catalog_clips())
+    needs_refresh = False
+    for p in state.get("plan", []):
+        for c in p.get("ordered_clips", []):
+            if c not in all_catalog_clips:
+                needs_refresh = True
+                break
+        if needs_refresh:
+            break
+
+    if needs_refresh:
+        logger.info("🔄 [Triplet Rotator] Re-generating cycle plan to purge obsolete clips.")
+        state["plan"] = generate_cycle_plan(load_catalog_clips(), state.get("current_cycle", 1))
+        save_rotation_state(state)
+
     return state
 
 def save_rotation_state(state: dict):
-    """Saves rotation state to disk atomically."""
+    """Saves rotation state to disk atomically and synchronizes to cloud."""
     os.makedirs(os.path.dirname(ROTATION_STATE_FILE), exist_ok=True)
     temp_file = ROTATION_STATE_FILE + ".tmp"
     with open(temp_file, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=2)
     os.replace(temp_file, ROTATION_STATE_FILE)
+    _sync_cloud_rotation_state(state)
 
 def get_next_video_scenes(advance: bool = True) -> dict:
     """
@@ -293,24 +371,57 @@ def get_next_video_scenes(advance: bool = True) -> dict:
 
     item = plan[current_vid - 1]
 
+    raw_clips = list(item.get("ordered_clips", []))
+    raw_cats = list(item.get("categories", []))
+
+    # Anti-Repeat Cooldown Enforcement:
+    # Strictly forbid any clip that was used in recent videos (last 15 clips / 5 videos)
+    recent_clips = list(state.get("recent_clips", []))
+    if not recent_clips and state.get("history"):
+        for h in state.get("history")[-5:]:
+            recent_clips.extend(h.get("clips", []))
+
+    recent_set = set(recent_clips[-15:])
+    final_clips = []
+    cats_50, by_cat = load_50_categories_catalog()
+    all_pool = load_catalog_clips()
+
+    for idx, c in enumerate(raw_clips):
+        if c in recent_set:
+            cat = raw_cats[idx] if idx < len(raw_cats) else None
+            alt_clips = by_cat.get(cat, []) if cat else []
+            candidates = [a for a in alt_clips if a not in recent_set and a not in final_clips and a not in raw_clips]
+            if not candidates:
+                candidates = [a for a in all_pool if a not in recent_set and a not in final_clips and a not in raw_clips]
+            if candidates:
+                replacement = candidates[0]
+                logger.warning(f"⚠️ [Triplet Anti-Repeat] Clip '{c}' was used in recent videos! Swapped with fresh clip '{replacement}'.")
+                final_clips.append(replacement)
+            else:
+                final_clips.append(c)
+        else:
+            final_clips.append(c)
+
     result = {
         "cycle": current_cycle,
         "video_in_cycle": current_vid,
         "global_video_index": item.get("global_video_index", current_vid),
+        "categories": raw_cats,
         "permutation": item.get("permutation_order", [1, 2, 3]),
         "permutation_str": item.get("permutation_str", "1 2 3"),
-        "clips": item.get("ordered_clips", []),
+        "clips": final_clips,
         "is_cycle_rollover": (current_vid == 1 and current_cycle > 1)
     }
 
     if advance:
         next_vid = current_vid + 1
         state["total_videos_completed"] = state.get("total_videos_completed", 0) + 1
+        state["recent_clips"] = (state.get("recent_clips", []) + final_clips)[-30:]
         state["history"].append({
             "cycle": current_cycle,
             "video_in_cycle": current_vid,
             "permutation": item.get("permutation_str"),
-            "clips": item.get("ordered_clips")
+            "clips": final_clips
         })
         # Keep history capped at 100
         if len(state["history"]) > 100:
