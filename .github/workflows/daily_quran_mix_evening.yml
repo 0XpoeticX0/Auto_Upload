@@ -2,8 +2,8 @@ name: Daily Quran Mix (Arabic + Spoken Bangla) Recitation
 
 on:
   schedule:
-    # Runs at 10:00 UTC every day (04:00 PM Bangladesh Standard Time - BST, Afternoon Prime Slot)
-    - cron: '5 10 * * *'
+    # Runs at 09:00 UTC every day (03:00 PM Bangladesh Standard Time - BST, Afternoon Prime Slot)
+    - cron: '0 9 * * *'
   workflow_dispatch: # Allows manual one-click trigger from GitHub Actions UI
 
 jobs:

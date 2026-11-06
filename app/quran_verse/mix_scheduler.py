@@ -19,13 +19,13 @@ from app.quran_verse.mix_generator import generate_quran_mix_video
 from app.history import record_quran_history
 
 BST = timezone(timedelta(hours=6))
-DAILY_MIX_TIME = "04:00 PM BST (10:00 UTC)"
+DAILY_MIX_TIME = "03:00 PM BST (09:00 UTC)"
 
 def execute_daily_mix_run(upload: bool = True, surah: int = None) -> dict:
     now_bst = datetime.now(BST)
     date_str = now_bst.strftime("%Y-%m-%d")
 
-    logger.info(f"=== LAUNCHING DAILY 4:00 PM QURAN MIX (ARABIC + BANGLA) PIPELINE ===")
+    logger.info(f"=== LAUNCHING DAILY 3:00 PM QURAN MIX (ARABIC + BANGLA) PIPELINE ===")
     logger.info(f"Date: {date_str} | Target Time: {DAILY_MIX_TIME}")
 
     result = generate_quran_mix_video(surah=surah)
