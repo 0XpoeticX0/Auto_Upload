@@ -69,32 +69,39 @@ async function handleMessengerReply({ env, senderId, userText }) {
 }
 
 async function askGemini(apiKey, text) {
-  try {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-    const payload = {
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: `${SYSTEM_PROMPT}\n\nUser Message: "${text}"\n\nReply in Bangla:` }]
+  const models = ["gemini-3.5-flash-lite", "gemini-3.6-flash", "gemini-3.1-flash-lite"];
+  for (const model of models) {
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const payload = {
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `${SYSTEM_PROMPT}\n\nUser Message: "${text}"\n\nReply in Bangla:` }]
+          }
+        ],
+        generationConfig: {
+          maxOutputTokens: 250,
+          temperature: 0.7
         }
-      ],
-      generationConfig: {
-        maxOutputTokens: 300,
-        temperature: 0.7
+      };
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (reply && reply.trim()) return reply.trim();
       }
-    };
-
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || "আসসালামু আলাইকুম। Daily Dos of Islam-এ আপনাকে স্বাগতম। আমরা শীঘ্রই আপনার মেসেজের উত্তর দিব, ইনশাআল্লাহ।";
-  } catch (e) {
-    return "আসসালামু আলাইকুম। Daily Dos of Islam-এ আপনাকে স্বাগতম। জাযাকাল্লাহু খাইরান!";
+    } catch (e) {
+      // try next model
+    }
   }
+  return "আসসালামু আলাইকুম। Daily Dos of Islam-এ আপনাকে স্বাগতম। আমরা শীঘ্রই আপনার মেসেজের উত্তর দিব, ইনশাআল্লাহ। জাযাকাল্লাহু খাইরান!";
 }
 
 async function sendFbMessage(accessToken, recipientId, text) {

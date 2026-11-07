@@ -7,7 +7,8 @@ from app.config import GEMINI_API_KEY, GEMINI_POST_API_KEY, GEMINI_BACKUP_API_KE
 from app.logger import logger
 
 MODELS = [
-    "gemini-3.5-flash-lite",   # Blazing fast, low latency
+    "gemini-3.5-flash-lite",
+    "gemini-3.6-flash",   # Blazing fast, low latency
     "gemini-3.5-flash",        # Highly reliable & stable
     "gemini-3.7-flash",        # Advanced reasoning
     "gemini-flash-lite-latest",# Canonical alias for lite

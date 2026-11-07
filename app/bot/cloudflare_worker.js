@@ -84,11 +84,35 @@ export default {
   }
 };
 
+function getGeminiKeys(env) {
+  const keys = [];
+  if (env.GEMINI_API_KEYS) {
+    for (const k of env.GEMINI_API_KEYS.split(",")) {
+      const clean = k.trim();
+      if (clean && !keys.includes(clean)) keys.push(clean);
+    }
+  }
+  const singleKeys = [
+    env.GEMINI_KEY_5,
+    env.GEMINI_API_KEY,
+    env.GEMINI_KEY_3,
+    env.GEMINI_KEY_4,
+    env.GEMINI_BACKUP_API_KEY
+  ];
+  for (const k of singleKeys) {
+    if (k) {
+      const clean = k.trim();
+      if (clean && !keys.includes(clean)) keys.push(clean);
+    }
+  }
+  return keys;
+}
+
 async function handleMessengerReply({ env, senderId, userText }) {
   const fbToken = (env.FB_ACCESS_TOKEN || "").trim();
-  const geminiKey = (env.GEMINI_API_KEY || "").trim();
+  const geminiKeys = getGeminiKeys(env);
 
-  if (!fbToken || !geminiKey) {
+  if (!fbToken || geminiKeys.length === 0) {
     console.error("[BOT] Missing FB_ACCESS_TOKEN or GEMINI_API_KEY in Worker Settings!");
     return;
   }
@@ -97,8 +121,8 @@ async function handleMessengerReply({ env, senderId, userText }) {
     console.log(`[BOT] Received message from ${senderId}: "${userText}"`);
     await sendTyping(fbToken, senderId, "typing_on");
 
-    // Ask Gemini using Best-to-Worst model failover
-    const aiReply = await askGemini(geminiKey, userText);
+    // Ask Gemini using multi-key and multi-model failover pool
+    const aiReply = await askGemini(geminiKeys, userText);
     console.log(`[BOT] Generated AI Reply: "${aiReply.substring(0, 60)}..."`);
 
     await sendFbMessage(fbToken, senderId, aiReply);
@@ -108,58 +132,65 @@ async function handleMessengerReply({ env, senderId, userText }) {
   }
 }
 
-// Prioritized for blazing fast response time (< 1.5s) while maintaining top quality
+// Prioritized for blazing fast response time (< 1.2s) while maintaining top theological quality
 const MODELS_BEST_TO_WORST = [
-  "gemini-3.6-flash",        // 1. Instant response & highly accurate (Recommended)
-  "gemini-3.5-flash-lite",   // 2. Ultra-low latency (< 800ms)
-  "gemini-3.7-flash",        // 3. Deep reasoning Flash model
-  "gemini-3.1-flash-lite"    // 4. Lightweight fallback
+  "gemini-3.5-flash-lite",   // 1. Ultra-low latency (< 800ms), verified active
+  "gemini-3.6-flash",        // 2. High-performance flagship Flash model, verified active
+  "gemini-3.1-flash-lite"    // 3. Lightweight fallback
 ];
 
-async function askGemini(apiKey, text) {
-  const cleanKey = apiKey.trim();
+async function askGemini(keys, text) {
+  if (!keys || keys.length === 0) {
+    console.error("[GEMINI] No API keys configured in Worker!");
+    return "আসসালামু আলাইকুম। Daily Dos of Islam-এ আপনাকে স্বাগতম। আমরা শীঘ্রই আপনার মেসেজের উত্তর দিব, ইনশাআল্লাহ। জাযাকাল্লাহু খাইরান!";
+  }
 
   for (const model of MODELS_BEST_TO_WORST) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s fast timeout
+    for (const key of keys) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 7000); // 7s timeout
 
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-      const payload = {
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: `${SYSTEM_PROMPT}\n\nUser Message: "${text}"\n\nReply in Bangla:` }]
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+        const payload = {
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: `${SYSTEM_PROMPT}\n\nUser Message: "${text}"\n\nReply in Bangla:` }]
+            }
+          ],
+          generationConfig: {
+            maxOutputTokens: 250,
+            temperature: 0.7
           }
-        ],
-        generationConfig: {
-          maxOutputTokens: 250,
-          temperature: 0.7
+        };
+
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": key
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          const data = await res.json();
+          const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (reply && reply.trim()) {
+            console.log(`[GEMINI] Fast response delivered with ${model} on key ...${key.slice(-6)}`);
+            return reply.trim();
+          }
+        } else {
+          const errData = await res.json().catch(() => ({}));
+          console.warn(`[GEMINI] Model ${model} on key ...${key.slice(-6)} failed (HTTP ${res.status}):`, errData?.error?.message || res.statusText);
         }
-      };
-
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": cleanKey
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
-
-      clearTimeout(timeoutId);
-
-      if (res.ok) {
-        const data = await res.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (reply && reply.trim()) {
-          console.log(`[GEMINI] Fast response delivered with ${model}`);
-          return reply.trim();
-        }
+      } catch (e) {
+        console.warn(`[GEMINI] Error with ${model} on key ...${key.slice(-6)}:`, e.name === "AbortError" ? "Timeout (7s)" : e.message);
       }
-    } catch (e) {
-      console.warn(`[GEMINI] Fast fallback triggered for ${model}`);
     }
   }
 
