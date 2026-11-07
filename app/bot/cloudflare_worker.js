@@ -108,8 +108,37 @@ function getGeminiKeys(env) {
   return keys;
 }
 
+let cachedPageToken = null;
+
+async function getPageAccessToken(baseToken, targetPageId = "103994582489858") {
+  if (cachedPageToken) return cachedPageToken;
+  const clean = (baseToken || "").trim();
+  if (!clean) return "";
+
+  try {
+    const res = await fetch(`https://graph.facebook.com/v20.0/me/accounts?access_token=${clean}`);
+    if (res.ok) {
+      const data = await res.json();
+      for (const p of data.data || []) {
+        if (p.id === targetPageId && p.access_token) {
+          cachedPageToken = p.access_token;
+          return p.access_token;
+        }
+      }
+      if (data.data && data.data[0]?.access_token) {
+        cachedPageToken = data.data[0].access_token;
+        return data.data[0].access_token;
+      }
+    }
+  } catch (e) {
+    console.warn("[BOT] Token exchange notice:", e.message);
+  }
+  return clean;
+}
+
 async function handleMessengerReply({ env, senderId, userText }) {
-  const fbToken = (env.FB_ACCESS_TOKEN || "").trim();
+  const rawToken = env.FB_ACCESS_TOKEN || "";
+  const fbToken = await getPageAccessToken(rawToken, env.FB_PAGE_ID || "103994582489858");
   const geminiKeys = getGeminiKeys(env);
 
   if (!fbToken || geminiKeys.length === 0) {
