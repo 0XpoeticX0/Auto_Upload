@@ -64,11 +64,11 @@ def generate_quran_verse_video(
 
     # 2. Select & Clear Quran Verse Passage via 3-Stage Gemini Clearance Gate
     # Dedicated chronological history of published Quran videos from Supabase + local cache
-    quran_history = fetch_recent_quran_pipeline_history(limit=50)
-    used_ayahs_map = get_used_ayahs_map(quran_history, limit=30)
-    past_titles = [r.get("title", "") for r in quran_history[:30] if r.get("title")]
+    quran_history = fetch_recent_quran_pipeline_history(limit=60)
+    used_ayahs_map = get_used_ayahs_map(quran_history, limit=60)
+    past_titles = [r.get("title", "") for r in quran_history[:60] if r.get("title")]
 
-    logger.info(f"🚫 [Zero-Duplication Gate] Tracking already used Ayahs across {len(used_ayahs_map)} Surahs in last 30 videos:")
+    logger.info(f"🚫 [Zero-Duplication Gate] Tracking already used Ayahs across {len(used_ayahs_map)} Surahs in last 60 videos:")
     for s_num, ayahs in sorted(used_ayahs_map.items()):
         bn_s = SURAH_NAMES_BN.get(s_num, "")
         logger.info(f"   - Surah {s_num} ({bn_s}): used Ayahs {sorted(list(ayahs))}")
@@ -124,7 +124,7 @@ def generate_quran_verse_video(
 
             # Check 2: Exact duplicate title check against past 30 Quran titles
             is_title_duplicate = False
-            for past_entry in past_titles[:30]:
+            for past_entry in past_titles[:60]:
                 if cand_surah_name_bn in past_entry and f"আয়াত {cand_range_str}" in past_entry:
                     logger.warning(
                         f"🚫 [Zero-Duplication Gate] REJECTED (Attempt {attempt}/{max_selection_retries}): "

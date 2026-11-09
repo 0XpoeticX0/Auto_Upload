@@ -205,6 +205,119 @@ SURAH_NAMES_EN = {
 
 # Curated bank of guaranteed complete self-contained passages under 90s (Fallback & Rotation)
 CURATED_COMPLETE_PASSAGES = [
+    # ── VIRAL MASTERPIECES (HIGH LISTENER RETENTION & EMOTIONAL IMPACT) ──
+    {
+        "surah": 23,
+        "ayah_start": 36,
+        "ayah_end": 39,
+        "theme_hint": "হায়হাতা হায়হাতা—রবের সামনে দাঁড়ানোর মহাসত্য (Surah Al-Mu'minun 36-39)",
+        "reflection_bn": "হায়হাতা হায়হাতা! যে পুনরুত্থানের প্রতিশ্রুতি দেওয়া হচ্ছে তা সুনিশ্চিত সত্য। মানুষ ভুলে যায় যে আল্লাহর কাছেই সবাইকে ফিরে যেতে হবে।",
+        "ideal_reciter": "dossari"  # Iconic thunderous viral delivery (Haihata haihata)
+    },
+    {
+        "surah": 23,
+        "ayah_start": 84,
+        "ayah_end": 89,
+        "theme_hint": "বলো, এই নিখিল পৃথিবী ও সব সৃষ্টি কার? (Surah Al-Mu'minun 84-89)",
+        "reflection_bn": "জিজ্ঞেস করুন, পৃথিবী এবং এতে যা কিছু আছে তা কার কর্তৃত্বাধীন? তারা বলবে: আল্লাহরই। তবে কেন তোমরা উপদেশ গ্রহণ করো না?",
+        "ideal_reciter": "dossari"  # Famous resonant dialogue cadence (Qul limanil-ard)
+    },
+    {
+        "surah": 20,
+        "ayah_start": 45,
+        "ayah_end": 48,
+        "theme_hint": "ভয় পেয়ো না, আমি তো তোমাদের সাথেই আছি—শুনছি ও দেখছি (Surah Taha 45-48)",
+        "reflection_bn": "ভয় পেয়ো না! আমি স্বয়ং তোমাদের সঙ্গে আছি, আমি সবকিছু শুনছি ও প্রত্যক্ষ করছি। নিশ্চয় শান্তি তার জন্য যে সত্য অনুসরণ করে।",
+        "ideal_reciter": "alafasy"  # The ultimate anti-stress divine reassurance
+    },
+    {
+        "surah": 9,
+        "ayah_start": 40,
+        "ayah_end": 40,
+        "theme_hint": "চিন্তা কোরো না, নিশ্চয়ই আল্লাহ আমাদের সাথে আছেন (Surah At-Tawbah 40)",
+        "reflection_bn": "দুশ্চিন্তা বা ভয় পেয়ো না, নিশ্চয় আল্লাহ আমাদের সাথে আছেন। আল্লাহ তাঁর পক্ষ থেকে অন্তরে অবতীর্ণ করেছিলেন পরম প্রশান্তি।",
+        "ideal_reciter": "alafasy"  # Healing words for anxiety and fear
+    },
+    {
+        "surah": 21,
+        "ayah_start": 87,
+        "ayah_end": 88,
+        "theme_hint": "তিমির অন্ধকার ও গভীর কষ্টে ইউনুস (আ.)-এর সেই দোয়া (Surah Al-Anbiya 87-88)",
+        "reflection_bn": "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুন্তু মিনাজ জোয়ালিমিন। আল্লাহ তাঁর ডাক শুনলেন এবং তাঁকে কঠিন বিপদ থেকে উদ্ধার করলেন।",
+        "ideal_reciter": "alafasy"  # Heartfelt tearful supplication in darkness
+    },
+    {
+        "surah": 25,
+        "ayah_start": 63,
+        "ayah_end": 66,
+        "theme_hint": "দয়াময় আল্লাহর প্রিয় বান্দা—যাঁরা বিনয়ের সাথে চলে (Surah Al-Furqan 63-66)",
+        "reflection_bn": "পরম করুণাময়ের প্রকৃত বান্দা তারাই যারা পৃথিবীতে বিনয়ের সাথে চলে এবং মূর্খরা তর্ক করতে এলে বলে: 'সালাম'।",
+        "ideal_reciter": "alafasy"  # Melodic peaceful lifestyle reminder
+    },
+    {
+        "surah": 14,
+        "ayah_start": 42,
+        "ayah_end": 46,
+        "theme_hint": "আল্লাহকে কখনো অবিচারকারীদের কর্ম সম্পর্কে গাফেল ভেবো না (Surah Ibrahim 42-46)",
+        "reflection_bn": "কখনো ভেবো না যে জালিমরা যা করছে আল্লাহ তা দেখেন না। তিনি কেবল তাদের অবকাশ দিচ্ছেন সেই দিনের জন্য যেদিন চোখগুলো বিস্ফারিত হয়ে যাবে।",
+        "ideal_reciter": "dossari"  # Deeply resonant warning on divine justice
+    },
+    {
+        "surah": 50,
+        "ayah_start": 16,
+        "ayah_end": 19,
+        "theme_hint": "আমি মানুষের কণ্ঠনালীর চেয়েও বেশি নিকটে (Surah Qaf 16-19)",
+        "reflection_bn": "আমি মানুষ সৃষ্টি করেছি এবং তার অন্তরে কী কল্পনা জাগে তা-ও আমি জানি; আমি তার ঘাড়ের ধমনি অপেক্ষা অধিক নিকটবর্তী।",
+        "ideal_reciter": "dossari"  # Soul-shaking acoustic closeness of Allah
+    },
+    {
+        "surah": 89,
+        "ayah_start": 27,
+        "ayah_end": 30,
+        "theme_hint": "হে প্রশান্ত আত্মা! ফিরে এসো তোমার রবের দিকে (Surah Al-Fajr 27-30)",
+        "reflection_bn": "হে প্রশান্ত আত্মা! সন্তুষ্ট ও সন্তোষভাজন হয়ে ফিরে এসো তোমার রবের সান্নিধ্যে। প্রবেশ করো আমার নেককার বান্দাদের মাঝে এবং জান্নাতে।",
+        "ideal_reciter": "alafasy"  # Ineffable soothing peace at life's end
+    },
+    {
+        "surah": 2,
+        "ayah_start": 285,
+        "ayah_end": 286,
+        "theme_hint": "আল্লাহ কোনো আত্মাকে তার সামর্থ্যের বাইরে বোঝা চাপান না (Surah Al-Baqarah 285-286)",
+        "reflection_bn": "আল্লাহ কাউকে তার সাধ্যের বাইরে কোনো দায়িত্ব দেন না। হে আমাদের রব! আমাদের ওপর এমন বোঝা চাপাবেন না যা বহনের শক্তি আমাদের নেই।",
+        "ideal_reciter": "alafasy"  # Iconic nighttime protection & relief
+    },
+    {
+        "surah": 12,
+        "ayah_start": 86,
+        "ayah_end": 86,
+        "theme_hint": "আমি কেবল আমার দুঃখ ও বেদনার অভিযোগ আল্লাহর কাছেই জানাই (Surah Yusuf 86)",
+        "reflection_bn": "তিনি বললেন: আমি আমার অসহ্য বেদনা ও শোকের অভিযোগ কেবল আল্লাহর কাছেই নিবেদন করছি, আর আমি আল্লাহর পক্ষ থেকে এমন বিষয় জানি যা তোমরা জানো না।",
+        "ideal_reciter": "alafasy"  # The tears of Yaqub (AS) in deep sadness
+    },
+    {
+        "surah": 19,
+        "ayah_start": 96,
+        "ayah_end": 96,
+        "theme_hint": "যাঁরা ঈমান আনে ও সৎকাজ করে, দয়াময় তাদের জন্য ভালোবাসা সৃষ্টি করবেন (Surah Maryam 96)",
+        "reflection_bn": "নিশ্চয় যারা ঈমান এনেছে এবং সৎকর্ম করেছে, পরম দয়ালু আল্লাহ অচিরেই মানুষের অন্তরে তাদের জন্য আন্তরিক ভালোবাসা তৈরি করে দেবেন।",
+        "ideal_reciter": "alafasy"  # Divine love and societal affection
+    },
+    {
+        "surah": 59,
+        "ayah_start": 21,
+        "ayah_end": 24,
+        "theme_hint": "এই কুরআন যদি পাহাড়ে নাজিল করতাম তবে তা আল্লাহর ভয়ে বিদীর্ণ হতো (Surah Al-Hashr 21-24)",
+        "reflection_bn": "আমি যদি কোনো পাহাড়ের ওপর এই কুরআন অবতীর্ণ করতাম, তবে তুমি তাকে আল্লাহর ভয়ে বিনীত ও বিদীর্ণ দেখতে পেতে। তিনি আল্লাহ, যিনি পরাক্রমশালী ও প্রজ্ঞাময়।",
+        "ideal_reciter": "dossari"  # Supreme majesty of divine names
+    },
+    {
+        "surah": 65,
+        "ayah_start": 2,
+        "ayah_end": 3,
+        "theme_hint": "যে আল্লাহকে ভয় করে, আল্লাহ তার জন্য পথ খুলে দেন এবং কল্পনাতীত রিজিক দেন (Surah At-Talaq 2-3)",
+        "reflection_bn": "যে ব্যক্তি আল্লাহকে ভয় করবে, আল্লাহ তার জন্য বের হওয়ার পথ তৈরি করে দেবেন এবং এমন উৎস থেকে রিজিক দেবেন যা সে কল্পনাও করতে পারেনি।",
+        "ideal_reciter": "dossari"  # Absolute Tawakkul in dark times
+    },
     {
         "surah": 94,
         "ayah_start": 1,
@@ -687,11 +800,11 @@ def select_meaningful_passage_ai(
     Uses Gemini to intelligently select a complete, self-contained passage from the Quran
     that has 100% complete meaning, zero missing context, and can finish recitation within 85 seconds.
     Intelligently assigns the most appealing reciter (Alafasy vs. Dossari) based on the passage's emotion.
-    Enforces strict zero-duplication: already-used Ayahs within the last 30 videos are strictly forbidden.
+    Enforces strict zero-duplication: already-used Ayahs within the last 60 videos are strictly forbidden.
     (Note: Different Ayahs of the same Surah ARE allowed, but duplicate Ayahs are forbidden).
     """
     used_ayahs_map = used_ayahs_map or {}
-    avoid_list = "\n- ".join(recent_history[:30]) if recent_history else "None"
+    avoid_list = "\n- ".join(recent_history[:60]) if recent_history else "None"
 
     # Build clear already-used Ayahs text per Surah
     used_items = []
@@ -709,12 +822,67 @@ def select_meaningful_passage_ai(
     used_ayahs_section = "\n".join(used_items) if used_items else "None"
 
     if not use_curated_fallback:
-        system_prompt = f"""You are a senior Quran scholar, master audio director, and video producer.
+        system_prompt = f"""You are a senior Quran scholar, master audio director, and viral video producer.
+Your goal is to select an exceptionally captivating, deeply moving Quranic passage (under 90 seconds recitation length) that hooks listeners within the first 3 seconds and touches their hearts profoundly.
+
+══════════════════════════════════════════════════════════════════════════════
+THE 7 HIGH-IMPACT EMOTIONAL PILLARS (CHOOSE FROM THESE VIRAL THEMES):
+══════════════════════════════════════════════════════════════════════════════
+1. SOUL SOLACE & ANTI-ANXIETY (হতাশা, একাকীত্ব ও মানসিক কষ্ট দূরীকরণ):
+   - For anxious, grieving, or heartbroken souls who need immediate divine comfort.
+   - Archetypes: Surah Taha 20:46 ("Lā takhāfā innanī ma'akumā asma'u wa arā"), Surah At-Tawbah 9:40 ("Lā tahzan inna Allāha ma'anā"), Surah Ad-Duha 93:1-8, Surah Ash-Sharh 94:1-8, Surah Al-Baqarah 2:285-286.
+   - Ideal Voice: ALAFASY (Warm, soothing, therapeutic baritone).
+
+2. DIVINE SOVEREIGNTY & THUNDEROUS AWE (আল্লাহর পরাক্রম ও মহাজাগতিক ক্ষমতা):
+   - For shaking pride, commanding attention, and proving absolute divine authority.
+   - Archetypes: Surah Al-Mu'minun 23:36 ("Haihāta haihāta limā tū'adūn"), Surah Al-Mu'minun 23:84-89 ("Qul limanil-ardhu wa man fīhā... Sayagūlūna lillāh"), Ayatul Kursi 2:255, Surah Al-Hashr 59:21-24.
+   - Ideal Voice: DOSSARI (Thunderous, commanding, high dynamic range).
+
+3. UNLOCKING CLOSED DOORS & UNIMAGINABLE RIZQ (রিজিক, অভাব ও বন্ধ দুয়ার উন্মোচন):
+   - For viewers trapped in debt, financial crisis, career blockage, or despair.
+   - Archetypes: Surah At-Talaq 65:2-3 ("Wa man yattaqillāha yaj'al lahū makhrajā..."), Surah Al-Imran 3:26-27, Surah Fatir 35:2, Surah Al-Qasas 28:24.
+   - Ideal Voice: DOSSARI or ALAFASY.
+
+4. TEARS OF REPENTANCE & UNCONDITIONAL MERCY (পাপের অনুশোচনা ও অসীম ক্ষমা):
+   - For sinners who feel lost or too broken to return to God.
+   - Archetypes: Surah Az-Zumar 39:53 ("Lā taqnatu min rahmatillāh..."), Surah Al-Furqan 25:68-71, Surah Maryam 19:96 ("Sayaj'alu lahumur-rahmānu wuddā").
+   - Ideal Voice: ALAFASY (Tearful, affectionate, heart-melting).
+
+5. HEARTFELT PROPHETIC SUPPLICATIONS (নবীগণের ক্রন্দনময় ও অলৌকিক দোয়া):
+   - For deeply personal, intimate prayer in impossible situations.
+   - Archetypes: Yunus in the whale (21:87-88), Zakariya in old age (19:1-7), Yaqub in sorrow (12:86 "Innamā ashkū bath-thī wa huznī"), Musa in exile (28:24), Ayyub in sickness (21:83-84).
+   - Ideal Voice: ALAFASY (Intimate Maqam Saba / Bayati).
+
+6. THE UNIMAGINABLE PEACE OF JANNAH (জান্নাতের অনাবিল সুখ ও চিরশান্তি):
+   - For lifting souls above mundane worldly exhaustion.
+   - Archetypes: Surah Al-Insan 76:12-22, Surah Al-Waqi'ah 56:27-38, Surah Ar-Rahman 55:46-60, Surah Al-Ghashiyah 8-16.
+   - Ideal Voice: ALAFASY or DOSSARI.
+
+7. SOUL AWAKENING & THE JUGULAR VEIN (জীবনের আসল সত্য ও গভীর নৈকট্য):
+   - For midnight reflection, soul introspection, and existential awakening.
+   - Archetypes: Surah Qaf 50:16-19 ("Wa nahnu aqrabu ilayhi min hablil-warīd"), Surah Al-Fajr 89:27-30 ("Yā ayyatuhan-nafsul-mutma'innah"), Surah Al-Hadid 57:16, Surah Ibrahim 14:42-46.
+   - Ideal Voice: DOSSARI or ALAFASY.
+
+══════════════════════════════════════════════════════════════════════════════
+CRITICAL AUDIT & SELECTION MANDATES:
+══════════════════════════════════════════════════════════════════════════════
+1. AIRTIGHT ZERO-DUPLICATION (LAST 60 VIDEOS EXCLUSION):
+   - The following specific Ayahs were ALREADY RECITED in the last 60 videos:
+{used_ayahs_section}
+   - STRICTLY DO NOT select any passage containing or overlapping with any of the already-recited Ayahs listed above!
+2. COMPLETE MEANING & ZERO CUT-OFFS:
+   - The passage MUST form a complete, self-contained thought. Never cut off mid-sentence or mid-argument!
+3. DURATION & AYAH COUNT (STRICT MAXIMUM 2 TO 6 AYAHS):
+   - Recitation length MUST be between 30 and 80 seconds (STRICTLY UNDER 85 SECONDS).
+   - NEVER select more than 6 Ayahs!
+4. PHONETIC SWEETNESS & END-RHYME CADENCE (Fawāṣil al-Āyāt):
+   - Prioritize verses ending in flowing open rhymes (-ūn, -īn, -ā, -hā, -iyyā, -īr).
+   - STRICTLY AVOID dry legalistic, commercial, inheritance shares, or administrative verses.
 Your goal is to select a complete, self-contained Quranic passage (under 90 seconds recitation length) that provides a deeply moving, complete message to the viewer, and assign the IDEAL vocal reciter for maximum emotional appeal.
 
 CRITICAL PASSAGE RULES (MANDATORY):
 1. ZERO DUPLICATION OF ALREADY RECITED AYAHS:
-   - The following specific Ayahs were ALREADY RECITED in the last 30 videos:
+   - The following specific Ayahs were ALREADY RECITED in the last 60 videos:
 {used_ayahs_section}
    - STRICTLY DO NOT select any passage containing or overlapping with any of the already-recited Ayahs listed above!
    - You MAY select from any Surah of the Holy Quran (including other unrecited verses of these same Surahs, or any other Surah), but there must be ZERO OVERLAP with the already-used Ayahs.
@@ -758,7 +926,7 @@ Output ONLY valid JSON:
         user_prompt = f"""Select a complete self-contained Quran passage under 90s recitation that sounds exceptionally melodious and soothing to the ears.
 {reciter_hint}
 
-ALREADY RECITED AYAHS IN LAST 30 VIDEOS (STRICTLY FORBIDDEN TO REPEAT THESE AYAHS):
+ALREADY RECITED AYAHS IN LAST 60 VIDEOS (STRICTLY FORBIDDEN TO REPEAT THESE AYAHS):
 {used_ayahs_section}
 
 RECENT TITLES IN HISTORY:

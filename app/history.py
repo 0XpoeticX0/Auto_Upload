@@ -98,7 +98,7 @@ def _supabase_fetch_all_recent(limit: int = 150) -> list[dict]:
         logger.warning(f"Supabase fetch notice: {e}")
     return []
 
-def fetch_recent_quran_pipeline_history(limit: int = 50) -> list[dict]:
+def fetch_recent_quran_pipeline_history(limit: int = 60) -> list[dict]:
     """
     Fetches the dedicated chronological history of published Quran recitation videos
     strictly sorted by real timestamp (created_at.desc) from Supabase and local cache.
@@ -226,7 +226,7 @@ def fetch_recent_quran_pipeline_history(limit: int = 50) -> list[dict]:
 
     return parsed_records
 
-def get_used_ayahs_map(quran_history: list[dict], limit: int = 30) -> dict[int, set[int]]:
+def get_used_ayahs_map(quran_history: list[dict], limit: int = 60) -> dict[int, set[int]]:
     """
     Builds a mapping of {surah_number: set_of_used_ayah_numbers}
     from the last `limit` published Quran videos.
