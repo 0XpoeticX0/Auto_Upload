@@ -1,5 +1,5 @@
 {
-  "total_unique": 1038,
+  "total_unique": 1008,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -1490,13 +1490,6 @@
       "id": "2789",
       "url": "https://assets.mixkit.co/videos/2789/2789-720.mp4"
     },
-    "https://assets.mixkit.co/videos/1002/1002-720.mp4": {
-      "category": "ocean",
-      "title": "Verified Halal ocean clip 1002",
-      "duration": 15.0,
-      "id": "1002",
-      "url": "https://assets.mixkit.co/videos/1002/1002-720.mp4"
-    },
     "https://assets.mixkit.co/videos/1071/1071-720.mp4": {
       "category": "ocean",
       "title": "Verified Halal ocean clip 1071",
@@ -1538,13 +1531,6 @@
       "duration": 15.0,
       "id": "1089",
       "url": "https://assets.mixkit.co/videos/1089/1089-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/1101/1101-720.mp4": {
-      "category": "ocean",
-      "title": "Verified Halal ocean clip 1101",
-      "duration": 15.0,
-      "id": "1101",
-      "url": "https://assets.mixkit.co/videos/1101/1101-720.mp4"
     },
     "https://assets.mixkit.co/videos/4013/4013-720.mp4": {
       "category": "architecture",
@@ -2364,13 +2350,6 @@
       "duration": 15.0,
       "id": "8101",
       "url": "https://assets.mixkit.co/videos/8101/8101-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/35462/35462-720.mp4": {
-      "category": "desert",
-      "title": "Verified Halal desert clip 35462",
-      "duration": 15.0,
-      "id": "35462",
-      "url": "https://assets.mixkit.co/videos/35462/35462-720.mp4"
     },
     "https://assets.mixkit.co/videos/1934/1934-720.mp4": {
       "category": "mountains",
@@ -5837,13 +5816,6 @@
       "id": "44490",
       "url": "https://assets.mixkit.co/videos/44490/44490-720.mp4"
     },
-    "https://assets.mixkit.co/videos/40078/40078-720.mp4": {
-      "category": "coastal",
-      "title": "Verified Halal coastal clip 40078",
-      "duration": 15.0,
-      "id": "40078",
-      "url": "https://assets.mixkit.co/videos/40078/40078-720.mp4"
-    },
     "https://assets.mixkit.co/videos/44378/44378-720.mp4": {
       "category": "coastal",
       "title": "Verified Halal coastal clip 44378",
@@ -6026,13 +5998,6 @@
       "id": "45070",
       "url": "https://assets.mixkit.co/videos/45070/45070-720.mp4"
     },
-    "https://assets.mixkit.co/videos/45075/45075-720.mp4": {
-      "category": "nature",
-      "title": "Verified Halal nature clip 45075",
-      "duration": 15.0,
-      "id": "45075",
-      "url": "https://assets.mixkit.co/videos/45075/45075-720.mp4"
-    },
     "https://assets.mixkit.co/videos/45076/45076-720.mp4": {
       "category": "nature",
       "title": "Verified Halal nature clip 45076",
@@ -6194,33 +6159,12 @@
       "id": "45146",
       "url": "https://assets.mixkit.co/videos/45146/45146-720.mp4"
     },
-    "https://assets.mixkit.co/videos/45164/45164-720.mp4": {
-      "category": "nature",
-      "title": "Verified Halal nature clip 45164",
-      "duration": 15.0,
-      "id": "45164",
-      "url": "https://assets.mixkit.co/videos/45164/45164-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/45165/45165-720.mp4": {
-      "category": "nature",
-      "title": "Verified Halal nature clip 45165",
-      "duration": 15.0,
-      "id": "45165",
-      "url": "https://assets.mixkit.co/videos/45165/45165-720.mp4"
-    },
     "https://assets.mixkit.co/videos/45166/45166-720.mp4": {
       "category": "nature",
       "title": "Verified Halal nature clip 45166",
       "duration": 15.0,
       "id": "45166",
       "url": "https://assets.mixkit.co/videos/45166/45166-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/45171/45171-720.mp4": {
-      "category": "nature",
-      "title": "Verified Halal nature clip 45171",
-      "duration": 15.0,
-      "id": "45171",
-      "url": "https://assets.mixkit.co/videos/45171/45171-720.mp4"
     },
     "https://assets.mixkit.co/videos/45172/45172-720.mp4": {
       "category": "nature",
@@ -6425,13 +6369,6 @@
       "id": "46335",
       "url": "https://assets.mixkit.co/videos/46335/46335-720.mp4"
     },
-    "https://assets.mixkit.co/videos/46336/46336-720.mp4": {
-      "category": "tech",
-      "title": "Verified Halal tech clip 46336",
-      "duration": 15.0,
-      "id": "46336",
-      "url": "https://assets.mixkit.co/videos/46336/46336-720.mp4"
-    },
     "https://assets.mixkit.co/videos/46344/46344-720.mp4": {
       "category": "tech",
       "title": "Verified Halal tech clip 46344",
@@ -6452,13 +6389,6 @@
       "duration": 15.0,
       "id": "46354",
       "url": "https://assets.mixkit.co/videos/46354/46354-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/46355/46355-720.mp4": {
-      "category": "tech",
-      "title": "Verified Halal tech clip 46355",
-      "duration": 15.0,
-      "id": "46355",
-      "url": "https://assets.mixkit.co/videos/46355/46355-720.mp4"
     },
     "https://assets.mixkit.co/videos/46364/46364-720.mp4": {
       "category": "tech",
@@ -6641,13 +6571,6 @@
       "duration": 15.0,
       "id": "46429",
       "url": "https://assets.mixkit.co/videos/46429/46429-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/46436/46436-720.mp4": {
-      "category": "nature",
-      "title": "Verified Halal nature clip 46436",
-      "duration": 15.0,
-      "id": "46436",
-      "url": "https://assets.mixkit.co/videos/46436/46436-720.mp4"
     },
     "https://assets.mixkit.co/videos/46460/46460-720.mp4": {
       "category": "tech",
@@ -6978,13 +6901,6 @@
       "id": "14200",
       "url": "https://assets.mixkit.co/videos/14200/14200-720.mp4"
     },
-    "https://assets.mixkit.co/videos/14201/14201-720.mp4": {
-      "category": "celestial",
-      "title": "Verified Halal celestial clip 14201",
-      "duration": 15.0,
-      "id": "14201",
-      "url": "https://assets.mixkit.co/videos/14201/14201-720.mp4"
-    },
     "https://assets.mixkit.co/videos/14204/14204-720.mp4": {
       "category": "celestial",
       "title": "Verified Halal celestial clip 14204",
@@ -7082,13 +6998,6 @@
       "duration": 15.0,
       "id": "19612",
       "url": "https://assets.mixkit.co/videos/19612/19612-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/19613/19613-720.mp4": {
-      "category": "celestial",
-      "title": "Verified Halal celestial clip 19613",
-      "duration": 15.0,
-      "id": "19613",
-      "url": "https://assets.mixkit.co/videos/19613/19613-720.mp4"
     },
     "https://assets.mixkit.co/videos/19614/19614-720.mp4": {
       "category": "celestial",
@@ -7477,14 +7386,12 @@
       "https://assets.mixkit.co/videos/28342/28342-720.mp4",
       "https://assets.mixkit.co/videos/4374/4374-720.mp4",
       "https://assets.mixkit.co/videos/5369/5369-720.mp4",
-      "https://assets.mixkit.co/videos/1002/1002-720.mp4",
       "https://assets.mixkit.co/videos/1071/1071-720.mp4",
       "https://assets.mixkit.co/videos/1080/1080-720.mp4",
       "https://assets.mixkit.co/videos/1083/1083-720.mp4",
       "https://assets.mixkit.co/videos/1084/1084-720.mp4",
       "https://assets.mixkit.co/videos/1087/1087-720.mp4",
       "https://assets.mixkit.co/videos/1089/1089-720.mp4",
-      "https://assets.mixkit.co/videos/1101/1101-720.mp4",
       "https://assets.mixkit.co/videos/2167/2167-720.mp4",
       "https://assets.mixkit.co/videos/34363/34363-720.mp4",
       "https://assets.mixkit.co/videos/1940/1940-720.mp4",
@@ -7674,8 +7581,7 @@
       "https://assets.mixkit.co/videos/35099/35099-720.mp4",
       "https://assets.mixkit.co/videos/11022/11022-720.mp4",
       "https://assets.mixkit.co/videos/30502/30502-720.mp4",
-      "https://assets.mixkit.co/videos/8101/8101-720.mp4",
-      "https://assets.mixkit.co/videos/35462/35462-720.mp4"
+      "https://assets.mixkit.co/videos/8101/8101-720.mp4"
     ],
     "sand_dunes": [
       "https://assets.mixkit.co/videos/50134/50134-720.mp4",
@@ -8151,7 +8057,6 @@
       "https://assets.mixkit.co/videos/45068/45068-720.mp4",
       "https://assets.mixkit.co/videos/45069/45069-720.mp4",
       "https://assets.mixkit.co/videos/45070/45070-720.mp4",
-      "https://assets.mixkit.co/videos/45075/45075-720.mp4",
       "https://assets.mixkit.co/videos/45076/45076-720.mp4",
       "https://assets.mixkit.co/videos/45077/45077-720.mp4",
       "https://assets.mixkit.co/videos/45079/45079-720.mp4",
@@ -8175,10 +8080,7 @@
       "https://assets.mixkit.co/videos/45143/45143-720.mp4",
       "https://assets.mixkit.co/videos/45145/45145-720.mp4",
       "https://assets.mixkit.co/videos/45146/45146-720.mp4",
-      "https://assets.mixkit.co/videos/45164/45164-720.mp4",
-      "https://assets.mixkit.co/videos/45165/45165-720.mp4",
       "https://assets.mixkit.co/videos/45166/45166-720.mp4",
-      "https://assets.mixkit.co/videos/45171/45171-720.mp4",
       "https://assets.mixkit.co/videos/45172/45172-720.mp4",
       "https://assets.mixkit.co/videos/45173/45173-720.mp4",
       "https://assets.mixkit.co/videos/45184/45184-720.mp4",
@@ -8214,8 +8116,7 @@
       "https://assets.mixkit.co/videos/46420/46420-720.mp4",
       "https://assets.mixkit.co/videos/46422/46422-720.mp4",
       "https://assets.mixkit.co/videos/46423/46423-720.mp4",
-      "https://assets.mixkit.co/videos/46429/46429-720.mp4",
-      "https://assets.mixkit.co/videos/46436/46436-720.mp4"
+      "https://assets.mixkit.co/videos/46429/46429-720.mp4"
     ],
     "water": [
       "https://assets.mixkit.co/videos/1894/1894-720.mp4",
@@ -8256,7 +8157,6 @@
       "https://assets.mixkit.co/videos/52419/52419-720.mp4",
       "https://assets.mixkit.co/videos/44385/44385-720.mp4",
       "https://assets.mixkit.co/videos/44490/44490-720.mp4",
-      "https://assets.mixkit.co/videos/40078/40078-720.mp4",
       "https://assets.mixkit.co/videos/44378/44378-720.mp4",
       "https://assets.mixkit.co/videos/44387/44387-720.mp4",
       "https://assets.mixkit.co/videos/44366/44366-720.mp4",
@@ -8271,11 +8171,9 @@
       "https://assets.mixkit.co/videos/44392/44392-720.mp4"
     ],
     "tech": [
-      "https://assets.mixkit.co/videos/46336/46336-720.mp4",
       "https://assets.mixkit.co/videos/46344/46344-720.mp4",
       "https://assets.mixkit.co/videos/46351/46351-720.mp4",
       "https://assets.mixkit.co/videos/46354/46354-720.mp4",
-      "https://assets.mixkit.co/videos/46355/46355-720.mp4",
       "https://assets.mixkit.co/videos/46364/46364-720.mp4",
       "https://assets.mixkit.co/videos/46365/46365-720.mp4",
       "https://assets.mixkit.co/videos/46366/46366-720.mp4",
@@ -8332,7 +8230,6 @@
       "https://assets.mixkit.co/videos/14198/14198-720.mp4",
       "https://assets.mixkit.co/videos/14199/14199-720.mp4",
       "https://assets.mixkit.co/videos/14200/14200-720.mp4",
-      "https://assets.mixkit.co/videos/14201/14201-720.mp4",
       "https://assets.mixkit.co/videos/14204/14204-720.mp4",
       "https://assets.mixkit.co/videos/14206/14206-720.mp4",
       "https://assets.mixkit.co/videos/14218/14218-720.mp4",
@@ -8347,7 +8244,6 @@
       "https://assets.mixkit.co/videos/19610/19610-720.mp4",
       "https://assets.mixkit.co/videos/19611/19611-720.mp4",
       "https://assets.mixkit.co/videos/19612/19612-720.mp4",
-      "https://assets.mixkit.co/videos/19613/19613-720.mp4",
       "https://assets.mixkit.co/videos/19614/19614-720.mp4",
       "https://assets.mixkit.co/videos/19615/19615-720.mp4",
       "https://assets.mixkit.co/videos/19618/19618-720.mp4",

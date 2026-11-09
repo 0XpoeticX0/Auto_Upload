@@ -2866,5 +2866,57 @@
   "https://assets.mixkit.co/videos/19627/19627-720.mp4": {
     "id": "19627",
     "reason": "Manually rejected during visual inspection"
+  },
+  "https://assets.mixkit.co/videos/1002/1002-720.mp4": {
+    "id": "1002",
+    "reason": "Full-length timeline audit caught: Shirtless surfer walking into beach frame at t2 and t3"
+  },
+  "https://assets.mixkit.co/videos/1101/1101-720.mp4": {
+    "id": "1101",
+    "reason": "Full-length timeline audit caught: Shirtless surfer on sea rocks at t2 and t3"
+  },
+  "https://assets.mixkit.co/videos/35462/35462-720.mp4": {
+    "id": "35462",
+    "reason": "Full-length timeline audit caught: Hiker in blue standing in canyon riverbed at t3"
+  },
+  "https://assets.mixkit.co/videos/40078/40078-720.mp4": {
+    "id": "40078",
+    "reason": "Full-length timeline audit caught: Speedboats with people cruising in bay"
+  },
+  "https://assets.mixkit.co/videos/45075/45075-720.mp4": {
+    "id": "45075",
+    "reason": "Full-length timeline audit caught: Human hand and arm entering frame at campfire at t2 and t3"
+  },
+  "https://assets.mixkit.co/videos/45164/45164-720.mp4": {
+    "id": "45164",
+    "reason": "Full-length timeline audit caught: Human legs in shorts standing by RC track at t1 and t2"
+  },
+  "https://assets.mixkit.co/videos/45165/45165-720.mp4": {
+    "id": "45165",
+    "reason": "Full-length timeline audit caught: People standing in background of RC track"
+  },
+  "https://assets.mixkit.co/videos/45171/45171-720.mp4": {
+    "id": "45171",
+    "reason": "Full-length timeline audit caught: Human hands stirring wok with food"
+  },
+  "https://assets.mixkit.co/videos/46336/46336-720.mp4": {
+    "id": "46336",
+    "reason": "Full-length timeline audit caught: Human hands entering frame to untie gift ribbon"
+  },
+  "https://assets.mixkit.co/videos/46355/46355-720.mp4": {
+    "id": "46355",
+    "reason": "Full-length timeline audit caught: Factory worker in jacket entering frame at conveyor belt"
+  },
+  "https://assets.mixkit.co/videos/46436/46436-720.mp4": {
+    "id": "46436",
+    "reason": "Full-length timeline audit caught: Woman in short dress stepping in front of camera and dancing at t2 and t3"
+  },
+  "https://assets.mixkit.co/videos/14201/14201-720.mp4": {
+    "id": "14201",
+    "reason": "Full-length timeline audit caught: Cemetery crosses, tombstones and jack-o'-lanterns at t2"
+  },
+  "https://assets.mixkit.co/videos/19613/19613-720.mp4": {
+    "id": "19613",
+    "reason": "Full-length timeline audit caught: Casino gambling playing card suits (spades, clubs, diamonds) falling"
   }
 }
