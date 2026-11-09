@@ -507,17 +507,18 @@ def _record_rejection_in_catalog(clip_id: str, clip_url: str, reason: str):
 
 def get_next_video_scenes(advance: bool = True) -> dict:
     """
-    Selects 3 RANDOM Halal clips sequentially (one-by-one check):
-    1. Picks Clip 1 from a random category -> audits frame-by-frame across timeline.
-       If it fails, purges and retries until Clip 1 is verified & locked in.
-    2. Picks Clip 2 from a DIFFERENT category -> audits frame-by-frame until verified & locked in.
-    3. Picks Clip 3 from a THIRD distinct category -> audits frame-by-frame until verified & locked in.
-    Guarantees Category 1 != Category 2 != Category 3, and preserves verified clips without re-auditing.
+    User mandate: No category restrictions.
+    Selects 3 RANDOM Halal videos each time from the full 1,000-clip catalog pool.
+    Sequentially checks and approves each video:
+      1. Randomly samples candidate videos from the 1,000-clip catalog pool.
+      2. Audits and approves each candidate video individually across its entire timeline (1s FasterRCNN + Shariah verification).
+      3. If approved -> locked in for that slot.
+      4. If rejected -> recorded in catalog_rejected_clips.json, purged from catalog, and tries next candidate.
+    Once 3 unique approved videos are secured, returns them to make the video.
     """
-    cats_50, by_cat = load_50_categories_catalog()
-    all_categories = [c for c, urls in by_cat.items() if urls]
-
-    if len(all_categories) < 3:
+    all_clips = load_catalog_clips()
+    if not all_clips:
+        logger.warning("No clips found in catalog. Using guaranteed 100% Halal local b-roll fallback triplet.")
         return {
             "clips": [
                 os.path.abspath("app/assets/broll/ocean_720.mp4"),
@@ -529,57 +530,92 @@ def get_next_video_scenes(advance: bool = True) -> dict:
             "permutation_str": "local_fallback"
         }
 
+    # Load metadata for title and category reference
+    meta = {}
+    if os.path.exists(CATALOG_FILE):
+        try:
+            with open(CATALOG_FILE, "r", encoding="utf-8") as f:
+                meta = json.load(f).get("clip_metadata", {})
+        except Exception:
+            pass
+
+    # Filter out any currently blacklisted clips
+    candidate_pool = [u for u in all_clips if not any(b in u for b in BANNED_CLIP_BLACKLIST)]
+
+    # Load rotation state to prefer clips not used in immediate recent videos
+    recent_clips = set()
+    try:
+        state = load_or_init_rotation_state()
+        recent_clips = set(state.get("recent_clips", []))
+    except Exception:
+        pass
+
+    # Prioritize candidates not used recently, but keep all available
+    fresh_pool = [u for u in candidate_pool if u not in recent_clips]
+    if len(fresh_pool) < 3:
+        fresh_pool = list(candidate_pool)
+
+    random.shuffle(fresh_pool)
+
     verified_clips = []
     chosen_categories = []
-
-    # Available categories to pick from (ensures Category 1 != Category 2 != Category 3)
-    remaining_categories = [c for c in all_categories]
-    random.shuffle(remaining_categories)
+    cand_idx = 0
 
     for slot_idx in range(1, 4):
         slot_verified = False
-        max_slot_attempts = 15
+        attempts = 0
+        max_attempts = 25
 
-        while not slot_verified and max_slot_attempts > 0 and remaining_categories:
-            max_slot_attempts -= 1
-            cat = remaining_categories.pop(0)
+        while not slot_verified and attempts < max_attempts and cand_idx < len(fresh_pool):
+            candidate_clip = fresh_pool[cand_idx]
+            cand_idx += 1
+            attempts += 1
 
-            cat_clips = [u for u in by_cat.get(cat, []) if not any(b in u for b in BANNED_CLIP_BLACKLIST)]
-            if not cat_clips:
+            if candidate_clip in verified_clips:
                 continue
 
-            random.shuffle(cat_clips)
-            for candidate_clip in cat_clips:
-                logger.info(f"🔍 [Slot {slot_idx}/3] Auditing candidate clip from category '{cat}'...")
-                is_halal, reason = is_clip_halal_gemini(candidate_clip)
-                if is_halal:
-                    verified_clips.append(candidate_clip)
-                    chosen_categories.append(cat)
-                    slot_verified = True
-                    logger.info(f"✅ [Slot {slot_idx}/3 APPROVED] Clip from '{cat}' verified 100% Halal!")
-                    break
-                else:
-                    logger.warning(f"❌ [Slot {slot_idx}/3 REJECTED] Clip failed: {reason}. Trying next candidate...")
+            cid = candidate_clip.split("/")[4] if "videos/" in candidate_clip else str(abs(hash(candidate_clip)))[:8]
+            cat_name = meta.get(candidate_clip, {}).get("category", "nature")
+            title = meta.get(candidate_clip, {}).get("title", f"Clip {cid}")
+
+            logger.info(f"🔍 [Random Slot {slot_idx}/3] Auditing random candidate clip {cid} ('{title}')...")
+            is_halal, reason = is_clip_halal_gemini(candidate_clip)
+            if is_halal:
+                verified_clips.append(candidate_clip)
+                chosen_categories.append(cat_name)
+                slot_verified = True
+                logger.info(f"✅ [Random Slot {slot_idx}/3 APPROVED] Clip {cid} verified 100% Halal!")
+                break
+            else:
+                logger.warning(f"❌ [Random Slot {slot_idx}/3 REJECTED] Clip {cid} failed: {reason}. Finding next random clip...")
 
         if not slot_verified:
-            logger.warning(f"Could not secure verified clip for slot {slot_idx}.")
+            logger.warning(f"Could not secure verified random clip for slot {slot_idx}.")
             break
 
     if len(verified_clips) == 3:
-        # Randomize the playback sequence of the 3 verified clips
-        combined = list(zip(verified_clips, chosen_categories))
-        random.shuffle(combined)
-        final_clips, final_cats = zip(*combined)
+        if advance:
+            try:
+                state = load_or_init_rotation_state()
+                state["total_videos_completed"] = state.get("total_videos_completed", 0) + 1
+                recents = state.get("recent_clips", [])
+                for c in verified_clips:
+                    if c not in recents:
+                        recents.append(c)
+                state["recent_clips"] = recents[-60:]
+                save_rotation_state(state)
+            except Exception as e:
+                logger.debug(f"State save notice: {e}")
 
-        logger.info(f"🎬 [Triplet Ready] Secured 3 individually verified clips from distinct categories: {list(final_cats)}")
+        logger.info(f"🎬 [Triplet Ready] Secured 3 individually verified random clips: {verified_clips}")
         return {
-            "clips": list(final_clips),
-            "categories": list(final_cats),
+            "clips": verified_clips,
+            "categories": chosen_categories,
             "permutation": [1, 2, 3],
-            "permutation_str": "sequential_verified"
+            "permutation_str": "random_approved_triplet"
         }
 
-    # Guaranteed Halal fallback if network/remote access fails
+    # Guaranteed Halal fallback if needed
     logger.warning("Using guaranteed 100% Halal local b-roll fallback triplet.")
     return {
         "clips": [
