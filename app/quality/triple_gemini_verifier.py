@@ -177,7 +177,38 @@ def pass_2_halal_vision_and_visual_defects(video_path: str, temp_dir: str = None
     if not frame_paths:
         return {"pass": False, "score": 0, "reason": "Failed to extract audit frames from video."}
 
-    # 3. Audit each frame via Gemini Multimodal Vision API
+    # 2.5. Layer 1: Fast Local FasterRCNN Object Detector (0 living beings audit)
+    try:
+        import torch
+        import torchvision.models.detection as detection_models
+        from torchvision.io import read_image
+        weights = detection_models.FasterRCNN_MobileNet_V3_Large_320_FPN_Weights.DEFAULT
+        local_model = detection_models.fasterrcnn_mobilenet_v3_large_320_fpn(weights=weights)
+        local_model.eval()
+        preprocess = weights.transforms()
+        cats = weights.meta["categories"]
+        living_classes = {"person", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"}
+
+        for frame_idx, fpath in enumerate(frame_paths):
+            img_tensor = read_image(fpath)
+            batch = [preprocess(img_tensor)]
+            with torch.no_grad():
+                pred = local_model(batch)[0]
+            for label, score in zip(pred["labels"], pred["scores"]):
+                cat_name = cats[label]
+                if cat_name in living_classes and float(score) >= 0.50:
+                    reason = f"Living being detected in frame {frame_idx+1}: {cat_name} ({round(float(score), 2)})"
+                    logger.critical(f"❌ [Pass 2 REJECTED] {reason}")
+                    return {
+                        "pass": False,
+                        "score": 0,
+                        "reason": f"Pass 2 Visual Audit Failed: {reason}",
+                        "failed_frame": fpath
+                    }
+    except Exception as e:
+        logger.debug(f"[Pass 2] Local detector notice: {e}")
+
+    # 3. Layer 2: Deep Gemini Multimodal Vision API Audit
     keys = get_api_keys_pool()
     if not keys:
         logger.warning("[Pass 2] No Gemini API keys available for vision pass.")

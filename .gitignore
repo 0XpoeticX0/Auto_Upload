@@ -59,6 +59,8 @@ logs/
 *.gz
 
 # Python & Testing Artifacts
+test/
+scripts/
 test_visual_demos/
 __pycache__/
 **/__pycache__/

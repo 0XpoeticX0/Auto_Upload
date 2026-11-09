@@ -2918,5 +2918,13 @@
   "https://assets.mixkit.co/videos/19613/19613-720.mp4": {
     "id": "19613",
     "reason": "Full-length timeline audit caught: Casino gambling playing card suits (spades, clubs, diamonds) falling"
+  },
+  "https://assets.mixkit.co/videos/4048/4048-720.mp4": {
+    "id": "4048",
+    "reason": "Living being detected in frame 3: zebra (0.68)"
+  },
+  "https://assets.mixkit.co/videos/46407/46407-720.mp4": {
+    "id": "46407",
+    "reason": "Detected a Christmas tree and holiday decorations which are incompatible with the criteria."
   }
 }
