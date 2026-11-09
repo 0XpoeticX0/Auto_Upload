@@ -256,17 +256,25 @@ def generate_quran_verse_video(
     except Exception as e:
         logger.warning(f"Thumbnail extraction notice: {e}")
 
-    # Mandatory Pass 2: Shariah Visual Compliance Gate (0 Living Beings Audit)
-    from app.quality.triple_gemini_verifier import pass_2_halal_vision_and_visual_defects
-    logger.info(f"Running Mandatory Pass 2: Shariah Visual Compliance Gate on {video_path}...")
-    audit = pass_2_halal_vision_and_visual_defects(video_path)
-    if not audit.get("pass", False):
-        reason = audit.get("reason", "Contains living beings, human body parts, or Shariah violation")
-        logger.critical(f"❌ [SHARIAH COMPLIANCE VIOLATION] Video rejected: {reason}")
+    # Mandatory Final Video Gemini Verification Gate (Passes 1 to 4)
+    from app.quality.triple_gemini_verifier import verify_full_video_3x
+    ass_path = os.path.abspath("data/temp/quran_render_run/quran_subtitles.ass")
+    logger.info(f"🛡️ Running Full Video Gemini Verification Gate on {video_path}...")
+    verified, audit_report = verify_full_video_3x(
+        video_path=video_path,
+        ass_subtitle_path=ass_path,
+        verse_data=verse_data,
+        audio_data=audio_data
+    )
+    if not verified:
+        failed_pass = audit_report.get("failed_pass", "Unknown")
+        fail_details = audit_report.get("details", {}).get("reason", "Verification rejected by Gemini")
+        logger.critical(f"❌ [FINAL VIDEO VERIFICATION FAILED (Pass {failed_pass})]: {fail_details}")
         if os.path.exists(video_path):
             os.remove(video_path)
-        raise ValueError(f"Shariah Visual Compliance Gate Failed: {reason}")
-    logger.info("✅ [Pass 2 PASSED] 100% Halal Live-Motion Footage Confirmed (Strictly 0 living beings, 0 faces, 0 silhouettes).")
+        raise ValueError(f"Final Video Gemini Verification Gate Failed (Pass {failed_pass}): {fail_details}")
+
+    logger.info("🏆 [VERIFICATION COMPLETE] Full video 100% certified by Gemini (authentic translation, zero mistakes, zero living beings).")
 
     return {
         "video_path": video_path,
@@ -274,7 +282,8 @@ def generate_quran_verse_video(
         "metadata": metadata,
         "verse_data": verse_data,
         "audio_data": audio_data,
-        "shariah_passed": True
+        "shariah_passed": True,
+        "gemini_verification_report": audit_report
     }
 
 def run_quran_verse_pipeline(

@@ -395,12 +395,12 @@ def is_clip_halal_gemini(clip_url: str, temp_dir: str = "data/temp/clip_audits")
 
     # 4. Layer 2: Deep Gemini Multimodal Vision API Verification
     try:
-        from app.llm.provider import get_api_keys_pool
+        from app.llm.provider import get_ordered_key_candidates, save_locked_key_index, get_locked_key_index
         from google import genai
         from PIL import Image
 
-        keys = get_api_keys_pool()
-        if keys:
+        key_candidates = get_ordered_key_candidates()
+        if key_candidates:
             # Audit any frame flagged by FasterRCNN
             for sec_idx, cname, score, fpath in flagged_frames:
                 # High-confidence person is an instant rejection
@@ -417,7 +417,7 @@ def is_clip_halal_gemini(clip_url: str, temp_dir: str = "data/temp/clip_audits")
 Is there ANY living person, human, face, silhouette, animal, bird, insect, or living creature in this image?
 Answer with valid JSON:
 {"pass": true/false, "has_living_being": true/false, "reason": "Detailed description of what you see"}"""
-                for key in keys[:3]:
+                for key_idx, key in key_candidates:
                     try:
                         client = genai.Client(api_key=key)
                         resp = client.models.generate_content(
@@ -436,8 +436,14 @@ Answer with valid JSON:
                                 _record_rejection_in_catalog(clip_id, clip_url, reason)
                                 _cleanup()
                                 return False, reason
+                        if key_idx != get_locked_key_index():
+                            save_locked_key_index(key_idx)
                         break
-                    except Exception:
+                    except Exception as e:
+                        err_str = str(e)
+                        if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                            next_idx = (key_idx + 1) % len(key_candidates)
+                            save_locked_key_index(next_idx)
                         continue
 
             # Also audit 3 key milestone frames (start, middle, end) for statues/crosses/idols
@@ -447,7 +453,7 @@ Answer with valid JSON:
 Are there ANY humans, silhouettes, statues, idols, crosses, or churches in this image?
 Respond in JSON: {"pass": true/false, "reason": "Description"}"""
             for fpath in sample_frames:
-                for key in keys[:3]:
+                for key_idx, key in key_candidates:
                     try:
                         client = genai.Client(api_key=key)
                         resp = client.models.generate_content(
@@ -466,8 +472,14 @@ Respond in JSON: {"pass": true/false, "reason": "Description"}"""
                                 _record_rejection_in_catalog(clip_id, clip_url, reason)
                                 _cleanup()
                                 return False, reason
+                        if key_idx != get_locked_key_index():
+                            save_locked_key_index(key_idx)
                         break
-                    except Exception:
+                    except Exception as e:
+                        err_str = str(e)
+                        if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                            next_idx = (key_idx + 1) % len(key_candidates)
+                            save_locked_key_index(next_idx)
                         continue
     except Exception as e:
         logger.warning(f"[Shariah Gate] Vision check notice: {e}")

@@ -8,6 +8,7 @@ data/*
 !data/quran_mix_state.json
 !data/catalog_rejected_clips.json
 !data/quran_selection_state.json
+!data/gemini_key_lock_state.json
 
 # Secrets & Authentication Tokens
 .env
