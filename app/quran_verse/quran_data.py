@@ -205,6 +205,7 @@ SURAH_NAMES_EN = {
 
 # Curated bank of guaranteed complete self-contained passages under 90s (Fallback & Rotation)
 CURATED_COMPLETE_PASSAGES = [
+    # User Reference Link 3 (Part A): https://youtube.com/shorts/2LDnH6xgoW4
     {
         "surah": 20,
         "ayah_start": 45,
@@ -213,6 +214,7 @@ CURATED_COMPLETE_PASSAGES = [
         "reflection_bn": "ভয় পেয়ো না! আমি স্বয়ং তোমাদের সঙ্গে আছি, আমি সবকিছু শুনছি ও প্রত্যক্ষ করছি। নিশ্চয় শান্তি তার জন্য যে সত্য অনুসরণ করে।",
         "ideal_reciter": "alafasy"
     },
+    # User Reference Link 3 (Part B): https://youtube.com/shorts/2LDnH6xgoW4
     {
         "surah": 9,
         "ayah_start": 40,
@@ -269,6 +271,7 @@ CURATED_COMPLETE_PASSAGES = [
         "reflection_bn": "তোমাকে কষ্ট দেওয়ার জন্য আমি এ কুরআন নাজিল করিনি; বরং এটি তাঁরই স্মারক যিনি আকাশমণ্ডলী ও পৃথিবী সৃষ্টি করেছেন।",
         "ideal_reciter": "alafasy"
     },
+    # User Reference Link 1: https://youtube.com/shorts/bZrhUj5BD_M
     {
         "surah": 23,
         "ayah_start": 36,
@@ -277,6 +280,7 @@ CURATED_COMPLETE_PASSAGES = [
         "reflection_bn": "হায়হাতা, কত দূর তোমাদের প্রতিশ্রুত সেই পুনরুত্থান দিবস! জীবন তো কেবল এ দুনিয়াতেই, আর আমরা কখনোই পুনরুত্থিত হব না—তাদের এমন দাবিকে আল্লাহ মিথ্যা প্রমাণ করবেন।",
         "ideal_reciter": "dossari"
     },
+    # User Reference Link 2: https://youtube.com/shorts/BTn-gDGMEEg
     {
         "surah": 23,
         "ayah_start": 84,
