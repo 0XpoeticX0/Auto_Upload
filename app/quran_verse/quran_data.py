@@ -205,30 +205,13 @@ SURAH_NAMES_EN = {
 
 # Curated bank of guaranteed complete self-contained passages under 90s (Fallback & Rotation)
 CURATED_COMPLETE_PASSAGES = [
-    # ── VIRAL MASTERPIECES (HIGH LISTENER RETENTION & EMOTIONAL IMPACT) ──
-    {
-        "surah": 23,
-        "ayah_start": 36,
-        "ayah_end": 39,
-        "theme_hint": "হায়হাতা হায়হাতা—রবের সামনে দাঁড়ানোর মহাসত্য (Surah Al-Mu'minun 36-39)",
-        "reflection_bn": "হায়হাতা হায়হাতা! যে পুনরুত্থানের প্রতিশ্রুতি দেওয়া হচ্ছে তা সুনিশ্চিত সত্য। মানুষ ভুলে যায় যে আল্লাহর কাছেই সবাইকে ফিরে যেতে হবে।",
-        "ideal_reciter": "dossari"  # Iconic thunderous viral delivery (Haihata haihata)
-    },
-    {
-        "surah": 23,
-        "ayah_start": 84,
-        "ayah_end": 89,
-        "theme_hint": "বলো, এই নিখিল পৃথিবী ও সব সৃষ্টি কার? (Surah Al-Mu'minun 84-89)",
-        "reflection_bn": "জিজ্ঞেস করুন, পৃথিবী এবং এতে যা কিছু আছে তা কার কর্তৃত্বাধীন? তারা বলবে: আল্লাহরই। তবে কেন তোমরা উপদেশ গ্রহণ করো না?",
-        "ideal_reciter": "dossari"  # Famous resonant dialogue cadence (Qul limanil-ard)
-    },
     {
         "surah": 20,
         "ayah_start": 45,
         "ayah_end": 48,
         "theme_hint": "ভয় পেয়ো না, আমি তো তোমাদের সাথেই আছি—শুনছি ও দেখছি (Surah Taha 45-48)",
         "reflection_bn": "ভয় পেয়ো না! আমি স্বয়ং তোমাদের সঙ্গে আছি, আমি সবকিছু শুনছি ও প্রত্যক্ষ করছি। নিশ্চয় শান্তি তার জন্য যে সত্য অনুসরণ করে।",
-        "ideal_reciter": "alafasy"  # The ultimate anti-stress divine reassurance
+        "ideal_reciter": "alafasy"
     },
     {
         "surah": 9,
@@ -236,230 +219,38 @@ CURATED_COMPLETE_PASSAGES = [
         "ayah_end": 40,
         "theme_hint": "চিন্তা কোরো না, নিশ্চয়ই আল্লাহ আমাদের সাথে আছেন (Surah At-Tawbah 40)",
         "reflection_bn": "দুশ্চিন্তা বা ভয় পেয়ো না, নিশ্চয় আল্লাহ আমাদের সাথে আছেন। আল্লাহ তাঁর পক্ষ থেকে অন্তরে অবতীর্ণ করেছিলেন পরম প্রশান্তি।",
-        "ideal_reciter": "alafasy"  # Healing words for anxiety and fear
-    },
-    {
-        "surah": 21,
-        "ayah_start": 87,
-        "ayah_end": 88,
-        "theme_hint": "তিমির অন্ধকার ও গভীর কষ্টে ইউনুস (আ.)-এর সেই দোয়া (Surah Al-Anbiya 87-88)",
-        "reflection_bn": "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুন্তু মিনাজ জোয়ালিমিন। আল্লাহ তাঁর ডাক শুনলেন এবং তাঁকে কঠিন বিপদ থেকে উদ্ধার করলেন।",
-        "ideal_reciter": "alafasy"  # Heartfelt tearful supplication in darkness
-    },
-    {
-        "surah": 25,
-        "ayah_start": 63,
-        "ayah_end": 66,
-        "theme_hint": "দয়াময় আল্লাহর প্রিয় বান্দা—যাঁরা বিনয়ের সাথে চলে (Surah Al-Furqan 63-66)",
-        "reflection_bn": "পরম করুণাময়ের প্রকৃত বান্দা তারাই যারা পৃথিবীতে বিনয়ের সাথে চলে এবং মূর্খরা তর্ক করতে এলে বলে: 'সালাম'।",
-        "ideal_reciter": "alafasy"  # Melodic peaceful lifestyle reminder
-    },
-    {
-        "surah": 14,
-        "ayah_start": 42,
-        "ayah_end": 46,
-        "theme_hint": "আল্লাহকে কখনো অবিচারকারীদের কর্ম সম্পর্কে গাফেল ভেবো না (Surah Ibrahim 42-46)",
-        "reflection_bn": "কখনো ভেবো না যে জালিমরা যা করছে আল্লাহ তা দেখেন না। তিনি কেবল তাদের অবকাশ দিচ্ছেন সেই দিনের জন্য যেদিন চোখগুলো বিস্ফারিত হয়ে যাবে।",
-        "ideal_reciter": "dossari"  # Deeply resonant warning on divine justice
-    },
-    {
-        "surah": 50,
-        "ayah_start": 16,
-        "ayah_end": 19,
-        "theme_hint": "আমি মানুষের কণ্ঠনালীর চেয়েও বেশি নিকটে (Surah Qaf 16-19)",
-        "reflection_bn": "আমি মানুষ সৃষ্টি করেছি এবং তার অন্তরে কী কল্পনা জাগে তা-ও আমি জানি; আমি তার ঘাড়ের ধমনি অপেক্ষা অধিক নিকটবর্তী।",
-        "ideal_reciter": "dossari"  # Soul-shaking acoustic closeness of Allah
-    },
-    {
-        "surah": 89,
-        "ayah_start": 27,
-        "ayah_end": 30,
-        "theme_hint": "হে প্রশান্ত আত্মা! ফিরে এসো তোমার রবের দিকে (Surah Al-Fajr 27-30)",
-        "reflection_bn": "হে প্রশান্ত আত্মা! সন্তুষ্ট ও সন্তোষভাজন হয়ে ফিরে এসো তোমার রবের সান্নিধ্যে। প্রবেশ করো আমার নেককার বান্দাদের মাঝে এবং জান্নাতে।",
-        "ideal_reciter": "alafasy"  # Ineffable soothing peace at life's end
-    },
-    {
-        "surah": 2,
-        "ayah_start": 285,
-        "ayah_end": 286,
-        "theme_hint": "আল্লাহ কোনো আত্মাকে তার সামর্থ্যের বাইরে বোঝা চাপান না (Surah Al-Baqarah 285-286)",
-        "reflection_bn": "আল্লাহ কাউকে তার সাধ্যের বাইরে কোনো দায়িত্ব দেন না। হে আমাদের রব! আমাদের ওপর এমন বোঝা চাপাবেন না যা বহনের শক্তি আমাদের নেই।",
-        "ideal_reciter": "alafasy"  # Iconic nighttime protection & relief
-    },
-    {
-        "surah": 12,
-        "ayah_start": 86,
-        "ayah_end": 86,
-        "theme_hint": "আমি কেবল আমার দুঃখ ও বেদনার অভিযোগ আল্লাহর কাছেই জানাই (Surah Yusuf 86)",
-        "reflection_bn": "তিনি বললেন: আমি আমার অসহ্য বেদনা ও শোকের অভিযোগ কেবল আল্লাহর কাছেই নিবেদন করছি, আর আমি আল্লাহর পক্ষ থেকে এমন বিষয় জানি যা তোমরা জানো না।",
-        "ideal_reciter": "alafasy"  # The tears of Yaqub (AS) in deep sadness
-    },
-    {
-        "surah": 19,
-        "ayah_start": 96,
-        "ayah_end": 96,
-        "theme_hint": "যাঁরা ঈমান আনে ও সৎকাজ করে, দয়াময় তাদের জন্য ভালোবাসা সৃষ্টি করবেন (Surah Maryam 96)",
-        "reflection_bn": "নিশ্চয় যারা ঈমান এনেছে এবং সৎকর্ম করেছে, পরম দয়ালু আল্লাহ অচিরেই মানুষের অন্তরে তাদের জন্য আন্তরিক ভালোবাসা তৈরি করে দেবেন।",
-        "ideal_reciter": "alafasy"  # Divine love and societal affection
-    },
-    {
-        "surah": 59,
-        "ayah_start": 21,
-        "ayah_end": 24,
-        "theme_hint": "এই কুরআন যদি পাহাড়ে নাজিল করতাম তবে তা আল্লাহর ভয়ে বিদীর্ণ হতো (Surah Al-Hashr 21-24)",
-        "reflection_bn": "আমি যদি কোনো পাহাড়ের ওপর এই কুরআন অবতীর্ণ করতাম, তবে তুমি তাকে আল্লাহর ভয়ে বিনীত ও বিদীর্ণ দেখতে পেতে। তিনি আল্লাহ, যিনি পরাক্রমশালী ও প্রজ্ঞাময়।",
-        "ideal_reciter": "dossari"  # Supreme majesty of divine names
-    },
-    {
-        "surah": 65,
-        "ayah_start": 2,
-        "ayah_end": 3,
-        "theme_hint": "যে আল্লাহকে ভয় করে, আল্লাহ তার জন্য পথ খুলে দেন এবং কল্পনাতীত রিজিক দেন (Surah At-Talaq 2-3)",
-        "reflection_bn": "যে ব্যক্তি আল্লাহকে ভয় করবে, আল্লাহ তার জন্য বের হওয়ার পথ তৈরি করে দেবেন এবং এমন উৎস থেকে রিজিক দেবেন যা সে কল্পনাও করতে পারেনি।",
-        "ideal_reciter": "dossari"  # Absolute Tawakkul in dark times
+        "ideal_reciter": "alafasy"
     },
     {
         "surah": 94,
         "ayah_start": 1,
         "ayah_end": 8,
         "theme_hint": "কষ্টের পরেই স্বস্তির মহাপ্রতিশ্রুতি (Surah Ash-Sharh Complete)",
-        "reflection_bn": "আল্লাহ তায়ালা মুমিনকে সান্ত্বনা দিয়ে নিশ্চিত করেছেন যে, প্রতিটি সংকটের সাথেই আল্লাহ মুক্তির পথ ও প্রশান্তি নির্ধারণ করে রেখেছেন।",
-        "ideal_reciter": "alafasy"  # Comfort, gentle solace & heart healing
+        "reflection_bn": "নিশ্চয় কষ্টের সাথেই স্বস্তি আছে। যখনই কোনো কাজ শেষ করো, রবের ইবাদতে মগ্ন হও এবং তাঁরই প্রতি আকৃষ্ট হও।",
+        "ideal_reciter": "alafasy"
     },
     {
         "surah": 93,
         "ayah_start": 1,
         "ayah_end": 11,
         "theme_hint": "হতাশা দূরীকরণ ও আল্লাহর গভীর অনুগ্রহ (Surah Ad-Duha Complete)",
-        "reflection_bn": "আল্লাহ কখনো তাঁর বান্দাকে ত্যাগ করেন না। অন্ধকার রাতের পর যেমন সোনালী সকাল আসে, তেমনি জীবনের কঠিন সময়ও কেটে যায়।",
-        "ideal_reciter": "alafasy"  # Warm reassurance & divine affection
-    },
-    {
-        "surah": 65,
-        "ayah_start": 2,
-        "ayah_end": 3,
-        "theme_hint": "তাকওয়া, অভাবনীয় রিজিক ও তাওয়াক্কুল (Surah At-Talaq 2-3)",
-        "reflection_bn": "যে ব্যক্তি আল্লাহর ওপর তাওয়াক্কুল করে, আল্লাহ তাঁর জন্য এমন উৎস থেকে রিজিক দেন যা মানুষ কল্পনাও করতে পারে না এবং তার জন্য আল্লাহই যথেষ্ট।",
-        "ideal_reciter": "dossari"  # Absolute Tawakkul, firm decree & high authority
-    },
-    {
-        "surah": 3,
-        "ayah_start": 173,
-        "ayah_end": 174,
-        "theme_hint": "হাসবুনাল্লাহু ওয়া নি'মাল ওয়াকিল ও নিরাপত্তা (Surah Al-Imran 173-174)",
-        "reflection_bn": "বিপদে আল্লাহর ওপর পূর্ণ আস্থা রাখলে মহান আল্লাহ বান্দাকে অপূরণীয় বরকত ও নিরাপত্তা দান করেন।",
-        "ideal_reciter": "dossari"  # Courage, steadfastness & battlefield resolve
-    },
-    {
-        "surah": 21,
-        "ayah_start": 87,
-        "ayah_end": 88,
-        "theme_hint": "ইউনুস (আ.)-এর দোয়া ও সর্বসংকট মুক্তি (Surah Al-Anbiya 87-88)",
-        "reflection_bn": "মাছের পেটের মতো ঘোর অন্ধকারেও যখন নবী ইউনুস (আ.) খাঁটি তওবা করে ডাক দিয়েছিলেন, আল্লাহ সেই অসম্ভব সংকট থেকেও তাঁকে উদ্ধার করেছিলেন।",
-        "ideal_reciter": "alafasy"  # Heartfelt repentance, sorrowful Dua & relief
-    },
-    {
-        "surah": 2,
-        "ayah_start": 255,
-        "ayah_end": 255,
-        "theme_hint": "আয়াতুল কুরসী—আল্লাহর সার্বভৌমত্ব ও পরাক্রম (Surah Al-Baqarah 255)",
-        "reflection_bn": "পবিত্র কুরআনের সর্বশ্রেষ্ঠ এই আয়াতে আল্লাহর মহত্ত্ব, জীবন্ত সত্তা এবং নিখিল বিশ্বের ওপর তাঁর পূর্ণ কর্তৃত্বের প্রকাশ ঘটেছে।",
-        "ideal_reciter": "dossari"  # Supreme majesty, divine sovereignty & awe
-    },
-    {
-        "surah": 59,
-        "ayah_start": 22,
-        "ayah_end": 24,
-        "theme_hint": "আল্লাহর গুণবাচক শ্রেষ্ঠ নামসমূহ—ইসমে আজম (Surah Al-Hashr 22-24)",
-        "reflection_bn": "আল্লাহর পবিত্র গুণবাচক নামগুলোর জিকির হৃদয়ে গভীর ভয় ও শ্রদ্ধা জাগিয়ে তোলে।",
-        "ideal_reciter": "dossari"  # Grandeur of divine attributes & cosmic reverence
+        "reflection_bn": "তোমার রব কখনো তোমাকে পরিত্যাগ করেননি এবং অসন্তুষ্টও হননি। তোমার জন্য পার্থিব জীবনের চেয়ে পরকাল বহুগুণ শ্রেয়।",
+        "ideal_reciter": "alafasy"
     },
     {
         "surah": 2,
         "ayah_start": 285,
         "ayah_end": 286,
-        "theme_hint": "আমানার রাসূলু—ক্ষমা, রহমত ও শক্তি চাওয়ার সেরা দোয়া (Surah Al-Baqarah 285-286)",
-        "reflection_bn": "আল্লাহ কোনো আত্মাকে তার সাধ্যের অতিরিক্ত দায়িত্ব চাপান না। এই আয়াতদ্বয় রাতের বেলা পাঠ করলে সব অনিষ্ট থেকে সুরক্ষার জন্য যথেষ্ট।",
-        "ideal_reciter": "alafasy"  # Supplication for mercy, forgiveness & soul peace
-    },
-    {
-        "surah": 28,
-        "ayah_start": 24,
-        "ayah_end": 24,
-        "theme_hint": "মুসা (আ.)-এর অভাব দূর ও সাহায্যের দোয়া (Surah Al-Qasas 24)",
-        "reflection_bn": "মুসা (আ.) যখন একাকী, ক্ষুধার্ত ও সহায়হীন অবস্থায় গাছের ছায়ায় বসে কাতর কণ্ঠে এই দোয়া করেছিলেন, আল্লাহ তাৎক্ষণিক তাঁর খাদ্য, নিরাপত্তা ও পরিবারের ব্যবস্থা করে দিয়েছিলেন।",
-        "ideal_reciter": "alafasy"  # Humble helplessness & intimate prayer
-    },
-    {
-        "surah": 25,
-        "ayah_start": 74,
-        "ayah_end": 74,
-        "theme_hint": "নেককার সন্তান ও সুখী দাম্পত্যের সেরা দোয়া (Surah Al-Furqan 74)",
-        "reflection_bn": "পারিবারিক শান্তি ও চোখ জুড়ানো নেককার সন্তানের জন্য রহমানুর রাহীমের কাছে প্রার্থনার এক অনন্য শিক্ষা।",
-        "ideal_reciter": "alafasy"  # Gentle family love & righteous lineage
-    },
-    {
-        "surah": 89,
-        "ayah_start": 27,
-        "ayah_end": 30,
-        "theme_hint": "প্রশান্ত আত্মার জন্য জান্নাতের ডাক (Surah Al-Fajr 27-30)",
-        "reflection_bn": "যে আত্মা আল্লাহর ওপর সন্তুষ্ট থাকে, মৃত্যুর সময় আল্লাহ নিজে তাকে পরম সমাদরে জান্নাতে ডেকে নেন।",
-        "ideal_reciter": "alafasy"  # Tranquility, peace & welcome into Jannah
-    },
-    {
-        "surah": 55,
-        "ayah_start": 26,
-        "ayah_end": 30,
-        "theme_hint": "মহিমান্বিত রবের চিরস্থায়িত্ব ও সব সৃষ্টির বিলুপ্তি (Surah Ar-Rahman 26-30)",
-        "reflection_bn": "ভূমণ্ডলের সবকিছুই ধ্বংসশীল, কেবল আপনার মহিমাময় ও মহানুভব রবের সত্তাই চিরকাল অবিনশ্বর থাকবে। আসমান ও জমিনের সবাই তাঁরই মুখাপেক্ষী।",
-        "ideal_reciter": "dossari"
-    },
-    {
-        "surah": 50,
-        "ayah_start": 16,
-        "ayah_end": 19,
-        "theme_hint": "আল্লাহ মানুষের গলার রগের চেয়েও নিকটে (Surah Qaf 16-19)",
-        "reflection_bn": "মানুষের মনের প্রতিটি দ্বিধাদ্বন্দ্ব আল্লাহ জানেন। তিনি মানুষের শাহরগের চেয়েও অতি নিকটে বিরাজমান।",
-        "ideal_reciter": "dossari"
-    },
-    {
-        "surah": 14,
-        "ayah_start": 39,
-        "ayah_end": 41,
-        "theme_hint": "ইব্রাহিম (আ.)-এর দোআ—নামাজ ও পিতা-মাতার জন্য ক্ষমা (Surah Ibrahim 39-41)",
-        "reflection_bn": "ইব্রাহিম (আ.) আল্লাহর কাছে প্রার্থনা করেছিলেন যেন তিনি ও তাঁর বংশধরেরা আজীবন নামাজের ওপর প্রতিষ্ঠিত থাকতে পারেন।",
+        "theme_hint": "আল্লাহ কোনো আত্মাকে তার সামর্থ্যের বাইরে বোঝা চাপান না (Surah Al-Baqarah 285-286)",
+        "reflection_bn": "আল্লাহ কোনো ব্যক্তির ওপর তার সাধ্যাতীত বোঝা চাপান না। হে আমাদের রব! আমাদের ভুলের জন্য পাকড়াও করবেন না।",
         "ideal_reciter": "alafasy"
-    },
-    {
-        "surah": 18,
-        "ayah_start": 107,
-        "ayah_end": 110,
-        "theme_hint": "জান্নাতুল ফিরদাউস ও রবের মহিমান্বিত বাক্য (Surah Al-Kahf 107-110)",
-        "reflection_bn": "যাঁরা বিশ্বাস স্থাপন করেছে ও সৎকর্ম করেছে, তাঁদের আপ্যায়নের জন্য রয়েছে জান্নাতুল ফিরদাউস। রবের প্রশংসা সাগরের কালিতেও শেষ হবে না।",
-        "ideal_reciter": "dossari"
     },
     {
         "surah": 13,
         "ayah_start": 28,
         "ayah_end": 28,
         "theme_hint": "আল্লাহর জিকিরেই কেবল অন্তর প্রশান্ত হয় (Surah Ar-Rad 28)",
-        "reflection_bn": "যারা ঈমান এনেছে তাদের অন্তর আল্লাহর স্মরণেই নিশ্চিত প্রশান্তি লাভ করে। জেনে রেখো, আল্লাহর জিকিরেই কেবল মানব হৃদয় শান্ত হয়।",
-        "ideal_reciter": "alafasy"
-    },
-    {
-        "surah": 36,
-        "ayah_start": 55,
-        "ayah_end": 58,
-        "theme_hint": "জান্নাতবাসীদের অনাবিল আনন্দ ও রবের সালাম (Surah Ya-Sin 55-58)",
-        "reflection_bn": "জান্নাতবাসীরা সেদিন চিরসুখে আনন্দমগ্ন থাকবে এবং পরম দয়ালু রবের পক্ষ থেকে তাদের প্রতি উচ্চারিত হবে শান্তির সম্ভাষণ: সালাম।",
-        "ideal_reciter": "alafasy"
-    },
-    {
-        "surah": 30,
-        "ayah_start": 21,
-        "ayah_end": 21,
-        "theme_hint": "দাম্পত্য জীবনের ভালোবাসা ও প্রশান্তি (Surah Ar-Rum 21)",
-        "reflection_bn": "আল্লাহর অন্যতম সেরা নিদর্শন যে তিনি আমাদের মধ্য থেকে জীবনসঙ্গী সৃষ্টি করেছেন এবং পরস্পরের মাঝে গভীর ভালোবাসা ও মায়া স্থাপন করেছেন।",
+        "reflection_bn": "জেনে রাখো! কেবল আল্লাহর স্মরণ ও জিকিরেই মানব হৃদয় চিরস্থায়ী পরম শান্তি ও স্বস্তি লাভ করে।",
         "ideal_reciter": "alafasy"
     },
     {
@@ -467,121 +258,352 @@ CURATED_COMPLETE_PASSAGES = [
         "ayah_start": 186,
         "ayah_end": 186,
         "theme_hint": "আমি তো অতি নিকটে, প্রার্থনাকারীর ডাকে সাড়া দিই (Surah Al-Baqarah 186)",
-        "reflection_bn": "বান্দা যখনই আল্লাহকে ডাকে, আল্লাহ তার অতি নিকটে থাকেন এবং আহ্বানকারীর আহ্বানে তাৎক্ষণিক সাড়া দেন।",
+        "reflection_bn": "আমার বান্দারা যখন আমার সম্পর্কে জিজ্ঞাসা করে, আমি তো তাদের অতি নিকটেই আছি; আহ্বানকারী ডাকলে আমি সাড়া দিই।",
         "ideal_reciter": "alafasy"
-    },
-    {
-        "surah": 67,
-        "ayah_start": 1,
-        "ayah_end": 4,
-        "theme_hint": "মহিমান্বিত সার্বভৌমত্ব ও সৃষ্টির নিখুঁত ভারসাম্য (Surah Al-Mulk 1-4)",
-        "reflection_bn": "বরকতময় সেই মহান সত্তা যাঁর হাতে নিখিল জাহানের রাজত্ব। পরম করুণাময়ের সৃষ্টিতে তুমি কোনো ত্রুটি দেখতে পাবে না।",
-        "ideal_reciter": "dossari"
-    },
-    {
-        "surah": 39,
-        "ayah_start": 53,
-        "ayah_end": 53,
-        "theme_hint": "হতাশা ও পাপের অন্ধকারে আল্লাহর অপার রহমত (Surah Az-Zumar 53)",
-        "reflection_bn": "হে আমার বান্দাগণ যারা নিজেদের ওপর অবিচার করেছ, তোমরা আল্লাহর রহমত থেকে কখনো নিরাশ হইও না। নিশ্চয় আল্লাহ সব পাপ ক্ষমা করে দেন।",
-        "ideal_reciter": "alafasy"
-    },
-    # ── ICONIC MELODIOUS PASSAGES (EXCEPTIONALLY SWEET & EAR-PLEASING) ──
-    {
-        "surah": 19,
-        "ayah_start": 1,
-        "ayah_end": 7,
-        "theme_hint": "জাকারিয়া (আ.)-এর গোপন কান্না ও অসম্ভবকে সম্ভব করার দোয়া (Surah Maryam 1-7)",
-        "reflection_bn": "জাকারিয়া (আ.) বার্ধক্যে নিভৃতে কেঁদে রবকে ডেকেছিলেন। আল্লাহ অসম্ভবকেও নিমিষে সম্ভব করে দেন।",
-        "ideal_reciter": "alafasy"  # Famous for heartfelt tearful Maqam Saba / Bayati
     },
     {
         "surah": 20,
         "ayah_start": 1,
         "ayah_end": 8,
         "theme_hint": "কুরআন কষ্ট দেওয়ার জন্য নয়, পরম দয়াময়ের স্মরণ (Surah Taha 1-8)",
-        "reflection_bn": "কুরআন মানুষকে কষ্ট দেওয়ার জন্য নাজিল হয়নি, বরং অন্তরে শান্তি ও খোদাভীতির জন্য। পরম দয়ালু আল্লাহ আরশে সমুন্নত।",
-        "ideal_reciter": "alafasy"  # Flowing, rhythmic, soothing cadence
-    },
-    {
-        "surah": 76,
-        "ayah_start": 12,
-        "ayah_end": 22,
-        "theme_hint": "সবরের মহাপুরস্কার জান্নাতের নয়নাভিরাম সৌন্দর্য (Surah Al-Insan 12-22)",
-        "reflection_bn": "ধৈর্যের বিনিময়ে আল্লাহ মুমিনদের জন্য সাজিয়ে রেখেছেন জান্নাতের রেশমি পোশাক, কর্পূরের ঝরনা ও চিরশান্তির নিবাস।",
-        "ideal_reciter": "alafasy"  # Incredibly melodious descriptions of Jannah
-    },
-    {
-        "surah": 56,
-        "ayah_start": 27,
-        "ayah_end": 38,
-        "theme_hint": "ডানদিকের সৌভাগ্যবানদের জন্য অফুরন্ত জান্নাতী নেয়ামত (Surah Al-Waqi'ah 27-38)",
-        "reflection_bn": "কাঁটাহীন কুলগাছ, কাঁদিভরা কলাগাছ, প্রলম্বিত ছায়া ও প্রবাহমান ঝরনাধারা—সৌভাগ্যবানদের জন্য তৈরি স্বর্গীয় উদ্যান।",
-        "ideal_reciter": "dossari"  # Rhythmic, cascading poetic meter
+        "reflection_bn": "তোমাকে কষ্ট দেওয়ার জন্য আমি এ কুরআন নাজিল করিনি; বরং এটি তাঁরই স্মারক যিনি আকাশমণ্ডলী ও পৃথিবী সৃষ্টি করেছেন।",
+        "ideal_reciter": "alafasy"
     },
     {
         "surah": 23,
-        "ayah_start": 1,
-        "ayah_end": 11,
-        "theme_hint": "সফল মুমিনদের ৭টি গুণ ও জান্নাতুল ফিরদাউসের উত্তরাধিকার (Surah Al-Mu'minun 1-11)",
-        "reflection_bn": "যাঁরা নামাজে বিনয়ী, অর্থহীন কথা থেকে দূরে থাকে এবং আমানত রক্ষা করে—তাঁরাই জান্নাতুল ফিরদাউসের চিরস্থায়ী ওয়ারিশ।",
-        "ideal_reciter": "dossari"  # Majestic triumph & eternal reward
+        "ayah_start": 36,
+        "ayah_end": 39,
+        "theme_hint": "হায়হাতা হায়হাতা—রবের সামনে দাঁড়ানোর মহাসত্য (Surah Al-Mu'minun 36-39)",
+        "reflection_bn": "হায়হাতা, কত দূর তোমাদের প্রতিশ্রুত সেই পুনরুত্থান দিবস! জীবন তো কেবল এ দুনিয়াতেই, আর আমরা কখনোই পুনরুত্থিত হব না—তাদের এমন দাবিকে আল্লাহ মিথ্যা প্রমাণ করবেন।",
+        "ideal_reciter": "dossari"
     },
     {
-        "surah": 53,
-        "ayah_start": 1,
-        "ayah_end": 18,
-        "theme_hint": "নক্ষত্রের শপথ, মিরাজ ও সিদরাতুল মুনতাহা (Surah An-Najm 1-18)",
-        "reflection_bn": "নক্ষত্র যখন অস্ত যায়, রাসুল (সা.) আপন খেয়ালে কথা বলেন না। তিনি সিদরাতুল মুনতাহার পাশে রবের শ্রেষ্ঠ নিদর্শন প্রত্যক্ষ করেছিলেন।",
-        "ideal_reciter": "dossari"  # Cosmic mystery, short rhyming cadence
+        "surah": 23,
+        "ayah_start": 84,
+        "ayah_end": 89,
+        "theme_hint": "বলো, এই নিখিল পৃথিবী ও সব সৃষ্টি কার? (Surah Al-Mu'minun 84-89)",
+        "reflection_bn": "বলো, এই পৃথিবী এবং এতে যারা আছে তারা কার? সপ্ত আকাশ ও মহা আরশের অধিপতি কে? তারা বলবে: সব আল্লাহর। তবে কেন তোমরা উপদেশ গ্রহণ করো না?",
+        "ideal_reciter": "dossari"
     },
     {
-        "surah": 87,
-        "ayah_start": 1,
-        "ayah_end": 15,
-        "theme_hint": "সর্বোচ্চ রবের মহিমা ঘোষণা ও আত্মার পবিত্রতা (Surah Al-A'la 1-15)",
-        "reflection_bn": "পবিত্রতা ঘোষণা করুন আপনার রবের, যিনি সৃষ্টি করেছেন এবং সুষম করেছেন। সফল সেই ব্যক্তি, যে নিজেকে পাপমুক্ত রাখে।",
-        "ideal_reciter": "alafasy"  # Harmonious, gentle, ear-soothing melody
+        "surah": 2,
+        "ayah_start": 255,
+        "ayah_end": 255,
+        "theme_hint": "আয়াতুল কুরসী—আল্লাহর চিরঞ্জীব সার্বভৌমত্ব ও পরাক্রম (Surah Al-Baqarah 255)",
+        "reflection_bn": "আল্লাহ ছাড়া কোনো উপাস্য নেই, তিনি চিরঞ্জীব ও সবকিছুর ধারক। তন্দ্রা বা নিদ্রা তাঁকে স্পর্শ করে না।",
+        "ideal_reciter": "dossari"
     },
     {
-        "surah": 91,
+        "surah": 59,
+        "ayah_start": 21,
+        "ayah_end": 24,
+        "theme_hint": "এই কুরআন যদি পাহাড়ে নাজিল করতাম তবে তা আল্লাহর ভয়ে বিদীর্ণ হতো (Surah Al-Hashr 21-24)",
+        "reflection_bn": "যদি এই কুরআন কোনো পর্বতের ওপর অবতীর্ণ করতাম, তবে তুমি তাকে আল্লাহর ভয়ে বিনীত ও বিদীর্ণ হতে দেখতে। তিনিই আল্লাহ, একমাত্র স্রষ্টা।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 67,
         "ayah_start": 1,
-        "ayah_end": 10,
-        "theme_hint": "মহাজাগতিক ৭টি শপথ ও অন্তরের পরিশুদ্ধি (Surah Ash-Shams 1-10)",
-        "reflection_bn": "সূর্য, চাঁদ, দিন ও রাতের শপথ—যে ব্যক্তি নিজের আত্মাকে পরিশুদ্ধ করেছে সে-ই সফলকাম হয়েছে।",
-        "ideal_reciter": "alafasy"  # Poetic rolling -aha end-rhymes
+        "ayah_end": 4,
+        "theme_hint": "মহিমান্বিত সার্বভৌমত্ব ও সৃষ্টির নিখুঁত ভারসাম্য (Surah Al-Mulk 1-4)",
+        "reflection_bn": "বরকতময় তিনি যাঁর হাতে সমগ্র রাজত্ব, এবং তিনি সর্ববিষয়ে সর্বশক্তিমান। দয়াময়ের সৃষ্টিতে কোনো ত্রুটি দেখতে পাবে না।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 3,
+        "ayah_start": 26,
+        "ayah_end": 27,
+        "theme_hint": "হে আল্লাহ! রাজত্বের মালিক তুমি, যাকে চাও রাজত্ব দান করো (Surah Al-Imran 26-27)",
+        "reflection_bn": "বলো, হে আল্লাহ! তুমি রাজত্বের মালিক, যাকে চাও রাজত্ব দাও এবং যার থেকে চাও রাজত্ব কেড়ে নাও। তুমি রাতকে দিনে এবং দিনকে রাতে প্রবেশ করাও।",
+        "ideal_reciter": "dossari"
     },
     {
         "surah": 82,
         "ayah_start": 6,
         "ayah_end": 12,
         "theme_hint": "হে মানুষ! কোন জিনিস তোমাকে তোমার দয়ালু রব থেকে দূরে রাখল? (Surah Al-Infitar 6-12)",
-        "reflection_bn": "হে মানবজাতি! কোন্ প্রবঞ্চনা তোমাকে তোমার মহানুভব প্রতিপালক সম্পর্কে বিভ্রান্ত করল, যিনি তোমাকে সুঠাম করে সৃষ্টি করেছেন?",
-        "ideal_reciter": "dossari"  # Heart-shattering acoustic resonance
-    },
-    {
-        "surah": 57,
-        "ayah_start": 16,
-        "ayah_end": 16,
-        "theme_hint": "মুমিনের হৃদয় কি আল্লাহর স্মরণে বিগলিত হওয়ার সময় আসেনি? (Surah Al-Hadid 16)",
-        "reflection_bn": "ঈমানদারদের জন্য কি এখনো সেই সময় আসেনি যে তাদের অন্তর আল্লাহর স্মরণে ও নাজিলকৃত সত্যের সামনে শ্রদ্ধায় বিগলিত হয়ে যাবে?",
-        "ideal_reciter": "alafasy"  # Heart-melting emotional awakening
+        "reflection_bn": "হে মানুষ! কোন ভ্রান্তি তোমাকে তোমার মহিমান্বিত রব থেকে বিচ্যুত করল? যিনি তোমাকে সুঠাম ও পরিমিত অবয়বে গড়ে তুলেছেন।",
+        "ideal_reciter": "dossari"
     },
     {
         "surah": 48,
         "ayah_start": 28,
         "ayah_end": 29,
         "theme_hint": "মুহাম্মদ (ﷺ) আল্লাহর রাসুল—তাঁদের চেহারায় সিজদার নূর (Surah Al-Fath 28-29)",
-        "reflection_bn": "মুহাম্মদ (ﷺ) আল্লাহর রাসুল। সত্যের সাক্ষ্য হিসেবে আল্লাহই যথেষ্ট। সিজদার প্রভাবে তাঁদের মুখমণ্ডলে রয়েছে বিশেষ জ্যোতি।",
-        "ideal_reciter": "dossari"  # Deeply authoritative, uplifting delivery
+        "reflection_bn": "মুহাম্মদ (ﷺ) আল্লাহর রাসুল, আর তাঁর সঙ্গীরা সত্যের ওপর অবিচল এবং নিজেদের মাঝে পরম দয়ালু। সিজদার প্রভাবে তাঁদের মুখমণ্ডলে রয়েছে চিহ্ণ।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 65,
+        "ayah_start": 2,
+        "ayah_end": 3,
+        "theme_hint": "যে আল্লাহকে ভয় করে, আল্লাহ তার জন্য পথ খুলে দেন এবং কল্পনাতীত রিজিক দেন (Surah At-Talaq 2-3)",
+        "reflection_bn": "যে ব্যক্তি আল্লাহকে ভয় করে, আল্লাহ তার সংকট থেকে উত্তরণের পথ বের করে দেন এবং তাকে এমন স্থান থেকে রিজিক দেন যা সে ধারণাও করতে পারে না।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 3,
+        "ayah_start": 173,
+        "ayah_end": 174,
+        "theme_hint": "হাসবুনাল্লাহু ওয়া নি'মাল ওয়াকিল—আল্লাহই আমাদের জন্য যথেষ্ট (Surah Al-Imran 173-174)",
+        "reflection_bn": "তারা বলল: আল্লাহই আমাদের জন্য যথেষ্ট এবং তিনি কতই না উত্তম কর্মবিধায়ক! ফলে তারা ফিরে এলো আল্লাহর অপার অনুগ্রহ ও কল্যাণ নিয়ে।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 35,
+        "ayah_start": 2,
+        "ayah_end": 2,
+        "theme_hint": "আল্লাহ মানুষের জন্য রহমতের যে দুয়ার খুলে দেন, তা রুদ্ধ করার কেউ নেই (Surah Fatir 2)",
+        "reflection_bn": "আল্লাহ মানুষের প্রতি রহমতের যা উন্মুক্ত করেন, তা রোধ করার কেউ নেই; আর যা রুদ্ধ করেন, তা উন্মুক্ত করারও কেউ নেই। তিনিই পরাক্রমশালী, প্রজ্ঞাময়।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 28,
+        "ayah_start": 24,
+        "ayah_end": 24,
+        "theme_hint": "মুসা (আ.)-এর সেই নিঃস্ব প্রার্থনা: হে রব! যে কোনো কল্যাণের আমি মুখাপেক্ষী (Surah Al-Qasas 24)",
+        "reflection_bn": "তিনি বললেন: হে আমার পালনকর্তা! তুমি আমার প্রতি যে অনুগ্রহই অবতীর্ণ করবে, আমি তারই ভীষণ মুখাপেক্ষী। আর তৎক্ষণাৎ আল্লাহ তার রিজিক ও আশ্রয়ের ব্যবস্থা করলেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 29,
+        "ayah_start": 69,
+        "ayah_end": 69,
+        "theme_hint": "যারা রবের পথে অবিচল প্রচেষ্টা চালায়, তাদের জন্য পথ উন্মুক্ত হবেই (Surah Al-Ankabut 69)",
+        "reflection_bn": "যারা আমার পথে আন্তরিক সাধনা ও সংগ্রাম করে, আমি অবশ্যই তাদের আমার মুক্তির পথসমূহে পরিচালিত করব। নিশ্চয় আল্লাহ সৎকর্মশীলদের সঙ্গেই আছেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 39,
+        "ayah_start": 53,
+        "ayah_end": 53,
+        "theme_hint": "হতাশা ও পাপের অন্ধকারে আল্লাহর অপার রহমতের ডাক (Surah Az-Zumar 53)",
+        "reflection_bn": "বলো: হে আমার বান্দারা যারা নিজেদের ওপর অবিচার করেছ! আল্লাহর রহমত থেকে কখনো নিরাশ হয়ো না। নিশ্চয় আল্লাহ সব পাপ ক্ষমা করে দেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 25,
+        "ayah_start": 63,
+        "ayah_end": 66,
+        "theme_hint": "দয়াময় আল্লাহর প্রিয় বান্দা—যাঁরা বিনয়ের সাথে চলে (Surah Al-Furqan 63-66)",
+        "reflection_bn": "পরম করুণাময়ের প্রকৃত বান্দা তারাই যারা পৃথিবীতে বিনয়ের সাথে চলে এবং মূর্খরা তর্ক করতে এলে বলে: 'সালাম'।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 25,
+        "ayah_start": 68,
+        "ayah_end": 71,
+        "theme_hint": "তওবাকারীর পাপকে আল্লাহ পুণ্যে রূপান্তর করে দেন (Surah Al-Furqan 68-71)",
+        "reflection_bn": "তবে যারা তওবা করে, ঈমান আনে ও সৎকাজ করে—আল্লাহ তাদের পূর্ববর্তী সব পাপকে নেকিতে রূপান্তর করে দেন। আল্লাহ পরম ক্ষমাশীল, পরম দয়ালু।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 19,
+        "ayah_start": 96,
+        "ayah_end": 96,
+        "theme_hint": "যাঁরা ঈমান আনে ও সৎকাজ করে, দয়াময় তাদের জন্য ভালোবাসা সৃষ্টি করবেন (Surah Maryam 96)",
+        "reflection_bn": "নিশ্চয় যারা ঈমান এনেছে এবং সৎকর্ম করেছে, পরম দয়াময় আল্লাহ সমগ্র সৃষ্টির অন্তরে তাদের জন্য আন্তরিক ভালোবাসা সৃষ্টি করে দেবেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 15,
+        "ayah_start": 49,
+        "ayah_end": 50,
+        "theme_hint": "আমার বান্দাদের জানিয়ে দাও—আমি পরম ক্ষমাশীল, পরম দয়ালু (Surah Al-Hijr 49-50)",
+        "reflection_bn": "আমার বান্দাদের সংবাদ দাও যে, আমি অবশ্যই পরম ক্ষমাশীল ও অতিশয় দয়াময়; কিন্তু আমার শাস্তিও এক অতি যন্ত্রণাদায়ক শাস্তি।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 21,
+        "ayah_start": 87,
+        "ayah_end": 88,
+        "theme_hint": "তিমির অন্ধকার ও গভীর কষ্টে ইউনুস (আ.)-এর সেই দোয়া (Surah Al-Anbiya 87-88)",
+        "reflection_bn": "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুন্তু মিনাজ জোয়ালিমিন। আল্লাহ তাঁর ডাক শুনলেন এবং তাঁকে কঠিন বিপদ থেকে উদ্ধার করলেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 21,
+        "ayah_start": 83,
+        "ayah_end": 84,
+        "theme_hint": "কঠিন রোগে আইয়ুব (আ.)-এর মর্মস্পর্শী আর্তনাদ ও মুক্তি (Surah Al-Anbiya 83-84)",
+        "reflection_bn": "আইয়ুব (আ.) ডাকলেন: হে রব! ব্যাধি আমাকে স্পর্শ করেছে, আর তুমিই তো শ্রেষ্ঠ দয়ালু! আল্লাহ তাঁর ডাকে সাড়া দিয়ে সব দুঃখ-কষ্ট দূর করে দিলেন।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 12,
+        "ayah_start": 86,
+        "ayah_end": 86,
+        "theme_hint": "আমি কেবল আমার দুঃখ ও বেদনার অভিযোগ আল্লাহর কাছেই জানাই (Surah Yusuf 86)",
+        "reflection_bn": "ইয়াকুব (আ.) বললেন: আমি তো আমার অসহ্য বেদনা ও শোকের আকুল অভিযোগ কেবল আল্লাহর কাছেই সমর্পণ করি, আর আল্লাহর পক্ষ থেকে এমন কিছু জানি যা তোমরা জানো না।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 19,
+        "ayah_start": 1,
+        "ayah_end": 7,
+        "theme_hint": "জাকারিয়া (আ.)-এর গোপন কান্না ও অসম্ভবকে সম্ভব করার দোয়া (Surah Maryam 1-7)",
+        "reflection_bn": "যখন তিনি তাঁর রবকে নিঃশব্দে একান্তে ডাকলেন: হে রব! আমার অস্থি দুর্বল হয়েছে, মস্তকে বার্ধক্যের শুভ্রতা ছড়িয়েছে, তবু আপনাকে ডেকে আমি কখনো ব্যর্থ হইনি।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 14,
+        "ayah_start": 39,
+        "ayah_end": 41,
+        "theme_hint": "ইব্রাহিম (আ.)-এর দোআ—নামাজ ও পিতা-মাতার জন্য ক্ষমা (Surah Ibrahim 39-41)",
+        "reflection_bn": "হে আমার রব! আমাকে ও আমার বংশধরদের নামাজ কায়েমকারী করো। হে আমাদের প্রতিপালক! হিসাবের দিনে আমাকে, আমার পিতা-মাতাকে ও সব মুমিনকে ক্ষমা করো।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 76,
+        "ayah_start": 12,
+        "ayah_end": 22,
+        "theme_hint": "সবরের মহাপুরস্কার জান্নাতের নয়নাভিরাম সৌন্দর্য (Surah Al-Insan 12-22)",
+        "reflection_bn": "ধৈর্যের বিনিময়ে আল্লাহ তাদের জান্নাত ও রেশমি পোশাক দান করবেন। সেখানে তারা দেখবে না প্রখর সূর্য আর না অসহ্য শীত। এটিই তাদের চূড়ান্ত সাফল্য।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 56,
+        "ayah_start": 27,
+        "ayah_end": 38,
+        "theme_hint": "ডানদিকের সৌভাগ্যবানদের জন্য অফুরন্ত জান্নাতী নেয়ামত (Surah Al-Waqi'ah 27-38)",
+        "reflection_bn": "আর ডানদিকের সৌভাগ্যবান দল! তারা থাকবে কাঁটাহীন কুলগাছে, কাঁদি কাঁদি কলায়, বিস্তৃত ছায়ায় এবং সদা প্রবহমান শীতল ঝর্ণাধারায়।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 36,
+        "ayah_start": 55,
+        "ayah_end": 58,
+        "theme_hint": "জান্নাতবাসীদের অনাবিল আনন্দ ও রবের পক্ষ থেকে 'সালাম' (Surah Ya-Sin 55-58)",
+        "reflection_bn": "নিশ্চয় সেদিন জান্নাতবাসীরা আনন্দে মগ্ন থাকবে। পরম দয়ালু রবের পক্ষ থেকে তাদের অভিবাদন জানানো হবে: 'সালাম'।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 18,
+        "ayah_start": 107,
+        "ayah_end": 110,
+        "theme_hint": "জান্নাতুল ফিরদাউসের অনন্ত আতিথেয়তা ও রবের বাক্য (Surah Al-Kahf 107-110)",
+        "reflection_bn": "যারা ঈমান এনেছে ও সৎকাজ করেছে, তাদের আতিথেয়তার জন্য রয়েছে জান্নাতুল ফিরদাউস। সেখানে তারা চিরকাল বাস করবে, কখনো স্থানান্তর কামনা করবে না।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 89,
+        "ayah_start": 27,
+        "ayah_end": 30,
+        "theme_hint": "হে প্রশান্ত আত্মা! ফিরে এসো তোমার রবের দিকে সন্তুষ্টচিত্তে (Surah Al-Fajr 27-30)",
+        "reflection_bn": "হে প্রশান্ত আত্মা! ফিরে এসো তোমার রবের দিকে সন্তুষ্ট ও সন্তোষভাজন হয়ে। অতঃপর আমার নেক বান্দাদের শামিল হও এবং প্রবেশ করো আমার জান্নাতে।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 50,
+        "ayah_start": 31,
+        "ayah_end": 35,
+        "theme_hint": "জান্নাতকে মুত্তাকিদের নিকটবর্তী করা হবে—এখানে যা চাইবে তাই পাবে (Surah Qaf 31-35)",
+        "reflection_bn": "জান্নাতকে মুত্তাকিদের খুব কাছে আনা হবে। বলা হবে: এতে শান্তিতে প্রবেশ করো, এটিই অনন্ত জীবনের দিন। সেখানে তারা যা চাইবে তাই পাবে, আর আমার কাছে রয়েছে আরও অতিরিক্ত অনুগ্রহ!",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 55,
+        "ayah_start": 46,
+        "ayah_end": 55,
+        "theme_hint": "যে রবের সামনে দাঁড়ানোকে ভয় করে, তার জন্য রয়েছে দুটি সুরম্য জান্নাত (Surah Ar-Rahman 46-55)",
+        "reflection_bn": "যে ব্যক্তি তার রবের সম্মুখে উপস্থিত হওয়ার ভয় রাখে, তার জন্য রয়েছে দুটি উদ্যান। অতএব তোমরা তোমাদের রবের কোন কোন অনুগ্রহকে অস্বীকার করবে?",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 23,
+        "ayah_start": 1,
+        "ayah_end": 11,
+        "theme_hint": "সফল মুমিনদের ৭টি গুণ ও জান্নাতুল ফিরদাউসের উত্তরাধিকার (Surah Al-Mu'minun 1-11)",
+        "reflection_bn": "অবশ্যই মুমিনগণ সফলকাম হয়েছে—যারা নিজেদের নামাজে বিনম্র। তারাই ফিরদাউসের উত্তরাধিকার লাভ করবে এবং তাতে চিরকাল থাকবে।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 50,
+        "ayah_start": 16,
+        "ayah_end": 19,
+        "theme_hint": "আমি মানুষের কণ্ঠনালীর চেয়েও বেশি নিকটে (Surah Qaf 16-19)",
+        "reflection_bn": "আমি মানুষকে সৃষ্টি করেছি এবং তার মন যে কুমন্ত্রণা দেয় তাও জানি; আর আমি তার গ্রীবাস্থিত ধমনী বা কণ্ঠনালীর চেয়েও বেশি নিকটবর্তী।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 14,
+        "ayah_start": 42,
+        "ayah_end": 46,
+        "theme_hint": "আল্লাহকে কখনো অবিচারকারীদের কর্ম সম্পর্কে গাফেল ভেবো না (Surah Ibrahim 42-46)",
+        "reflection_bn": "আল্লাহকে কখনো জালিমদের কৃতকর্ম সম্পর্কে উদাসীন মনে কোরো না; তিনি কেবল সেদিনের জন্য তাদের অবকাশ দিচ্ছেন যেদিন চক্ষুসমূহ বিস্ফারিত হয়ে যাবে।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 53,
+        "ayah_start": 1,
+        "ayah_end": 18,
+        "theme_hint": "নক্ষত্রের শপথ, মিরাজ ও সিদরাতুল মুনতাহা (Surah An-Najm 1-18)",
+        "reflection_bn": "শপথ অস্তগামী নক্ষত্রের! তোমাদের সঙ্গী বিভ্রান্ত হননি এবং বিপথগামীও হননি। তিনি নিজের খেয়ালখুশি মতো কথা বলেন না, এ তো ওহি যা অবতীর্ণ হয়।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 87,
+        "ayah_start": 1,
+        "ayah_end": 15,
+        "theme_hint": "সর্বোচ্চ রবের পবিত্রতা ঘোষণা ও অন্তরের পরিশুদ্ধি (Surah Al-A'la 1-15)",
+        "reflection_bn": "পবিত্রতা বর্ণনা করো তোমার মহান রবের নামের, যিনি সৃষ্টি করেছেন ও সুষম করেছেন। নিশ্চয় সে-ই সাফল্য লাভ করেছে যে নিজেকে পরিশুদ্ধ করেছে।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 91,
+        "ayah_start": 1,
+        "ayah_end": 10,
+        "theme_hint": "মহাজাগতিক ৭টি শপথ ও অন্তরের পরিশুদ্ধি (Surah Ash-Shams 1-10)",
+        "reflection_bn": "শপথ সূর্যের ও তার উজ্জ্বল আলোর, শপথ চাঁদের যখন তা সূর্যের অনুগমন করে! শপথ আত্মার এবং যিনি তাকে সুষম করেছেন! সে-ই সফলকাম হলো যে আত্মাকে পরিশুদ্ধ করল।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 57,
+        "ayah_start": 16,
+        "ayah_end": 16,
+        "theme_hint": "মুমিনের হৃদয় কি আল্লাহর স্মরণে বিগলিত হওয়ার সময় আসেনি? (Surah Al-Hadid 16)",
+        "reflection_bn": "যারা ঈমান এনেছে তাদের জন্য কি এখনো সময় আসেনি যে তাদের অন্তর আল্লাহর স্মরণে এবং অবতীর্ণ সত্যের সামনে ভক্তিতে বিগলিত হবে?",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 30,
+        "ayah_start": 21,
+        "ayah_end": 21,
+        "theme_hint": "দাম্পত্য জীবনের ভালোবাসা ও প্রশান্তির নিদর্শন (Surah Ar-Rum 21)",
+        "reflection_bn": "আর তাঁর এক নিদর্শন এই যে, তিনি তোমাদের মধ্য হতেই সৃষ্টি করেছেন তোমাদের জীবনসঙ্গী যাতে তোমরা তাদের কাছে শান্তি পাও, এবং সৃষ্টি করেছেন পারস্পরিক ভালোবাসা ও দয়া।",
+        "ideal_reciter": "alafasy"
     },
     {
         "surah": 55,
         "ayah_start": 26,
         "ayah_end": 30,
         "theme_hint": "সবকিছু নশ্বর, কেবল অবশিষ্ট থাকবে মহিমান্বিত রবের সত্ত্বা (Surah Ar-Rahman 26-30)",
-        "reflection_bn": "পৃথিবীর সবকিছুই ধ্বংসশীল, কেবল চিরস্থায়ী থাকবে মহিমান্বিত ও পরম দয়ালু রবের চিরভাস্বর সত্ত্বা।",
-        "ideal_reciter": "alafasy"  # Iconic soothing cadence
+        "reflection_bn": "ভূপৃষ্ঠের সবকিছুই ধ্বংসশীল; কেবল অবশিষ্ট থাকবে আপনার মহিমান্বিত ও পরম সম্মানিত রবের সত্ত্বা। অতএব তোমরা রবের কোন অনুগ্রহকে অস্বীকার করবে?",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 88,
+        "ayah_start": 1,
+        "ayah_end": 16,
+        "theme_hint": "কেয়ামতের মহাবিপ্লব ও জান্নাতের উন্নত বাগান (Surah Al-Ghashiyah 1-16)",
+        "reflection_bn": "তোমার কাছে কি পৌঁছেছে সেই আচ্ছন্নকারী মহাসংকটের সংবাদ? সেদিন বহু চেহারা হবে লাঞ্ছিত, আর বহু চেহারা হবে আনন্দিত ও তৃপ্ত—তারা থাকবে সুউচ্চ জান্নাতে।",
+        "ideal_reciter": "dossari"
+    },
+    {
+        "surah": 31,
+        "ayah_start": 17,
+        "ayah_end": 19,
+        "theme_hint": "লোকমান (আ.)-এর সেই অমর উপদেশ—নামাজ, ধৈর্য ও বিনয় (Surah Luqman 17-19)",
+        "reflection_bn": "হে আমার প্রিয় বৎস! নামাজ কায়েম করো, সৎকাজের নির্দেশ দাও এবং বিপদে ধৈর্য ধারণ করো। মানুষের দিক থেকে অহংকারে মুখ ফিরিয়ে নিয়ো না।",
+        "ideal_reciter": "alafasy"
+    },
+    {
+        "surah": 6,
+        "ayah_start": 59,
+        "ayah_end": 59,
+        "theme_hint": "অদৃশ্যের চাবিকাঠি—একটি পাতাও তাঁর অজ্ঞাতসারে ঝরে না (Surah Al-An'am 59)",
+        "reflection_bn": "তাঁর কাছেই রয়েছে অদৃশ্যের সমস্ত চাবি, তিনি ছাড়া কেউ তা জানে না। স্থল ও সাগরে যা কিছু আছে তিনি সব জানেন; একটি পাতাও ঝরে না যা তিনি জানেন না।",
+        "ideal_reciter": "dossari"
     }
 ]
 
