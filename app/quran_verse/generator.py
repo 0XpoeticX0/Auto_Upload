@@ -221,12 +221,25 @@ def generate_quran_verse_video(
     except Exception as e:
         logger.warning(f"Thumbnail extraction notice: {e}")
 
+    # Mandatory Pass 2: Shariah Visual Compliance Gate (0 Living Beings Audit)
+    from app.quality.triple_gemini_verifier import pass_2_halal_vision_and_visual_defects
+    logger.info(f"Running Mandatory Pass 2: Shariah Visual Compliance Gate on {video_path}...")
+    audit = pass_2_halal_vision_and_visual_defects(video_path)
+    if not audit.get("pass", False):
+        reason = audit.get("reason", "Contains living beings, human body parts, or Shariah violation")
+        logger.critical(f"❌ [SHARIAH COMPLIANCE VIOLATION] Video rejected: {reason}")
+        if os.path.exists(video_path):
+            os.remove(video_path)
+        raise ValueError(f"Shariah Visual Compliance Gate Failed: {reason}")
+    logger.info("✅ [Pass 2 PASSED] 100% Halal Live-Motion Footage Confirmed (Strictly 0 living beings, 0 faces, 0 silhouettes).")
+
     return {
         "video_path": video_path,
         "thumbnail_path": thumbnail_path,
         "metadata": metadata,
         "verse_data": verse_data,
-        "audio_data": audio_data
+        "audio_data": audio_data,
+        "shariah_passed": True
     }
 
 def run_quran_verse_pipeline(
@@ -246,6 +259,10 @@ def run_quran_verse_pipeline(
     metadata = result["metadata"]
 
     if upload:
+        if not result.get("shariah_passed", False):
+            logger.critical("🛑 ABORTING UPLOAD: Shariah Visual Compliance Gate was not verified!")
+            raise RuntimeError("CRITICAL: Cannot upload video because it did not pass the Shariah Visual Compliance Gate!")
+
         logger.info("Uploading Quran video to platforms...")
         upload_meta = {
             "youtube_title": metadata["title"],
