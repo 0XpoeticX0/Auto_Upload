@@ -8,10 +8,10 @@ from app.history import _get_supabase_config
 
 LOCAL_QUIZ_HISTORY_FILE = "data/used_quiz_questions.json"
 
-def fetch_used_quiz_questions(limit: int = 100) -> list[str]:
+def fetch_used_quiz_questions(limit: int = 300) -> list[str]:
     """
-    Fetches recent quiz questions from Supabase `used_quiz_questions` table
-    (with local JSON cache fallback) to ensure zero question repetition across runs.
+    Fetches up to `limit` (default 300) recent quiz questions from Supabase `used_quiz_questions` table
+    (with local JSON cache fallback) to ensure strict zero question repetition across runs.
     """
     questions = []
     
@@ -33,9 +33,9 @@ def fetch_used_quiz_questions(limit: int = 100) -> list[str]:
                     rows = json.loads(resp.read().decode("utf-8"))
                     for r in rows:
                         qt = r.get("question_text")
-                        if qt and qt not in questions:
+                        if qt and qt.strip() and qt.strip() not in questions:
                             questions.append(qt.strip())
-                    logger.info(f"Loaded {len(questions)} previous quiz questions from Supabase.")
+                    logger.info(f"Loaded {len(questions)} previous quiz questions from Supabase (target limit: {limit}).")
     except Exception as e:
         logger.warning(f"Supabase fetch quiz questions notice: {e}")
         
@@ -45,9 +45,9 @@ def fetch_used_quiz_questions(limit: int = 100) -> list[str]:
             with open(LOCAL_QUIZ_HISTORY_FILE, "r", encoding="utf-8") as f:
                 local_list = json.load(f)
                 for q in local_list:
-                    if isinstance(q, str) and q not in questions:
+                    if isinstance(q, str) and q.strip() and q.strip() not in questions:
                         questions.append(q.strip())
-                    elif isinstance(q, dict) and q.get("question") and q["question"] not in questions:
+                    elif isinstance(q, dict) and q.get("question") and q["question"].strip() not in questions:
                         questions.append(q["question"].strip())
         except Exception:
             pass
@@ -56,8 +56,8 @@ def fetch_used_quiz_questions(limit: int = 100) -> list[str]:
 
 def record_used_quiz_questions(quiz_script: dict, video_id: int | None = None) -> bool:
     """
-    Records all 5 questions from the quiz script to Supabase `used_quiz_questions`
-    and updates the local cache file.
+    Records all questions from the quiz script to Supabase `used_quiz_questions`
+    and updates the local cache file (retaining last 300).
     """
     questions = quiz_script.get("questions", [])
     if not questions:
@@ -108,8 +108,8 @@ def record_used_quiz_questions(quiz_script: dict, video_id: int | None = None) -
             
     try:
         with open(LOCAL_QUIZ_HISTORY_FILE, "w", encoding="utf-8") as f:
-            json.dump(local_data[-100:], f, indent=2, ensure_ascii=False)
-        logger.info(f"Recorded 5 quiz questions to database history log.")
+            json.dump(local_data[-300:], f, indent=2, ensure_ascii=False)
+        logger.info(f"Recorded {len(questions)} quiz questions to database history log (retaining 300).")
         return True
     except Exception as e:
         logger.warning(f"Failed to write local quiz history: {e}")

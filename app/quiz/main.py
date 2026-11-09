@@ -11,9 +11,9 @@ from app.quiz.history import fetch_used_quiz_questions, record_used_quiz_questio
 def run_quiz_pipeline(language: str = "bn", output_path: str = "data/output/quiz_sample_video.mp4", upload: bool = False) -> str | None:
     logger.info(f"=== Starting 5-Question Interactive Islamic Quiz Pipeline (language={language}, upload={upload}) ===")
     
-    # 1. Fetch recent questions from Supabase for zero repetition
-    recent_questions = fetch_used_quiz_questions(limit=50)
-    logger.info(f"Loaded {len(recent_questions)} previous questions to avoid overlap.")
+    # 1. Fetch recent questions from Supabase for zero repetition (last 300 questions)
+    recent_questions = fetch_used_quiz_questions(limit=300)
+    logger.info(f"Loaded {len(recent_questions)} previous questions to avoid overlap (300-question window).")
     
     # 2. Generate Script
     quiz_script = generate_quiz_script(recent_questions=recent_questions, language=language)
