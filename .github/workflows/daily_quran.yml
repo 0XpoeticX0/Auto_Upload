@@ -127,7 +127,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin main || true
-          git add data/video_rotation_state.json data/history_log.json data/stock_video_catalog.json data/catalog_rejected_clips.json || true
+          git add data/video_rotation_state.json data/quran_selection_state.json data/history_log.json data/stock_video_catalog.json data/catalog_rejected_clips.json || true
           git commit -m "chore(automation): persist rotation state and history log [skip ci]" || true
           git push origin main || true
 

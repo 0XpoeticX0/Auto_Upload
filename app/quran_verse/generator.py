@@ -13,6 +13,7 @@ import sys
 import time
 import random
 import argparse
+import json
 from dotenv import load_dotenv
 
 # Ensure environment variables are loaded immediately
@@ -38,6 +39,27 @@ from app.quran_verse.verifier import verify_quran_passage_3x
 from app.quran_verse.audio_manager import prepare_recitation_audio
 from app.quran_verse.renderer import render_quran_verse_video
 from app.quran_verse.metadata import generate_quran_metadata
+
+SELECTION_STATE_FILE = os.path.abspath("data/quran_selection_state.json")
+
+def get_next_quran_selection_mode() -> str:
+    """Alternates between 'saved' (curated viral masterpieces) and 'random' (AI discovery)."""
+    last_mode = "random"
+    if os.path.exists(SELECTION_STATE_FILE):
+        try:
+            with open(SELECTION_STATE_FILE, "r", encoding="utf-8") as f:
+                last_mode = json.load(f).get("last_mode", "random")
+        except Exception:
+            pass
+    return "saved" if last_mode == "random" else "random"
+
+def save_quran_selection_mode(mode: str):
+    try:
+        os.makedirs(os.path.dirname(SELECTION_STATE_FILE), exist_ok=True)
+        with open(SELECTION_STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump({"last_mode": mode, "timestamp": int(time.time())}, f, indent=2)
+    except Exception as e:
+        logger.debug(f"Failed to save selection mode: {e}")
 
 def generate_quran_verse_video(
     surah: int = None,
@@ -73,6 +95,9 @@ def generate_quran_verse_video(
         bn_s = SURAH_NAMES_BN.get(s_num, "")
         logger.info(f"   - Surah {s_num} ({bn_s}): used Ayahs {sorted(list(ayahs))}")
 
+    target_mode = get_next_quran_selection_mode() if not (surah and ayah_start) else "manual"
+    logger.info(f"🔄 [Quran Rotation] Active Selection Mode: '{target_mode.upper()}' (Alternating Saved vs. Random AI)")
+
     max_selection_retries = 8
     verse_data = None
     dynamic_used_ayahs = {k: set(v) for k, v in used_ayahs_map.items()}
@@ -90,8 +115,16 @@ def generate_quran_verse_video(
             v_cand["theme_headline"] = f"{v_cand['surah_name_bn']} (আয়াত {v_cand['verse_range_str']})"
             v_cand["reflection_bn"] = ""
         else:
-            # If AI fails twice, seamlessly activate curated bank rotation to guarantee zero deadlock
-            use_curated = (attempt >= 3)
+            # Alternating rotation: 'saved' selects from curated bank; 'random' discovers via AI
+            # If attempt 1 hits an Ayah overlap, toggle mode on attempt 2 to guarantee zero deadlock
+            if attempt == 1:
+                use_curated = (target_mode == "saved")
+            elif attempt == 2:
+                use_curated = not (target_mode == "saved")
+            else:
+                use_curated = (attempt % 2 == 1)
+
+            logger.info(f"🔍 [Passage Selection Attempt {attempt}/{max_selection_retries}] Engine: {'SAVED CURATED BANK' if use_curated else 'DYNAMIC AI RANDOM DISCOVERY'}")
             v_cand = select_meaningful_passage_ai(
                 reciter_id=forced_reciter_id,
                 recent_history=past_titles,
@@ -178,6 +211,8 @@ def generate_quran_verse_video(
             verse_data["clearance_report"] = clearance_report
             audio_data = cand_audio
             logger.info(f"✅ Passage cleared all gates on attempt {attempt}: {verse_data['surah_name_bn']} ({verse_data['verse_range_str']}) [{cand_dur:.1f}s]")
+            if target_mode in ("saved", "random"):
+                save_quran_selection_mode(target_mode)
             break
         except Exception as e:
             logger.warning(f"Audio duration verification error on attempt {attempt}: {e}")
