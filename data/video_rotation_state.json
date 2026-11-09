@@ -1,7 +1,7 @@
 {
   "current_cycle": 1,
-  "current_video_in_cycle": 82,
-  "total_videos_completed": 81,
+  "current_video_in_cycle": 83,
+  "total_videos_completed": 82,
   "total_clips_in_pool": 300,
   "plan": [
     {
@@ -2105,6 +2105,16 @@
         "https://assets.mixkit.co/videos/1163/1163-720.mp4",
         "https://assets.mixkit.co/videos/1238/1238-720.mp4"
       ]
+    },
+    {
+      "cycle": 1,
+      "video_in_cycle": 82,
+      "permutation": "2 1 3",
+      "clips": [
+        "https://assets.mixkit.co/videos/10993/10993-720.mp4",
+        "https://assets.mixkit.co/videos/1245/1245-720.mp4",
+        "https://assets.mixkit.co/videos/1258/1258-720.mp4"
+      ]
     }
   ],
   "recent_clips": [
@@ -2119,6 +2129,9 @@
     "https://assets.mixkit.co/videos/8014/8014-720.mp4",
     "https://assets.mixkit.co/videos/4081/4081-720.mp4",
     "https://assets.mixkit.co/videos/1163/1163-720.mp4",
-    "https://assets.mixkit.co/videos/1238/1238-720.mp4"
+    "https://assets.mixkit.co/videos/1238/1238-720.mp4",
+    "https://assets.mixkit.co/videos/10993/10993-720.mp4",
+    "https://assets.mixkit.co/videos/1245/1245-720.mp4",
+    "https://assets.mixkit.co/videos/1258/1258-720.mp4"
   ]
 }
