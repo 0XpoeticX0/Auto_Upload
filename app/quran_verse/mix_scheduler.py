@@ -35,6 +35,10 @@ def execute_daily_mix_run(upload: bool = True, surah: int = None) -> dict:
     chosen_surah = result["surah"]
 
     if upload:
+        if not result.get("shariah_passed", False):
+            logger.critical("🛑 ABORTING UPLOAD: Shariah Visual Compliance Gate was not verified!")
+            raise RuntimeError("CRITICAL: Cannot upload video because it did not pass the Shariah Visual Compliance Gate!")
+
         logger.info("Uploading Quran Mix video to platforms...")
         upload_meta = {
             "youtube_title": metadata["title"],

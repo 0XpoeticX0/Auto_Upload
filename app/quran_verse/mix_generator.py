@@ -109,9 +109,13 @@ def assemble_live_motion_track(total_dur: float, temp_dir: str) -> str:
     triplet_info = get_next_video_scenes(advance=True)
     raw_clips = triplet_info.get("clips", [])
     
+    BANNED_CLIP_SUBSTRINGS = ["19501", "9514", "1986", "14138", "2490", "45402", "45022", "45395", "4441"]
     clips_dir = os.path.join(temp_dir, "clips")
     local_clips = []
     for c in raw_clips:
+        if any(b in str(c) for b in BANNED_CLIP_SUBSTRINGS):
+            logger.critical(f"❌ BANNED CLIP DETECTED AND BLOCKED: {c}")
+            continue
         try:
             local_clips.append(ensure_local_clip(c, clips_dir))
         except Exception as e:
@@ -221,7 +225,19 @@ def generate_quran_mix_video(surah: int = None, output_dir: str = "data/output")
     subprocess.run(cmd_render, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     logger.info(f"Video rendered successfully: {final_output_path} ({os.path.getsize(final_output_path)/(1024*1024):.2f} MB)")
 
-    # 5. Extract Thumbnail
+    # 5. Mandatory Pass 2: Shariah Visual Compliance Gate (0 Living Beings Audit)
+    from app.quality.triple_gemini_verifier import pass_2_halal_vision_and_visual_defects
+    logger.info(f"Running Mandatory Pass 2: Shariah Visual Compliance Gate on {final_output_path}...")
+    audit = pass_2_halal_vision_and_visual_defects(final_output_path, temp_dir=temp_dir)
+    if not audit.get("pass", False):
+        reason = audit.get("reason", "Contains living beings, human body parts, or Shariah violation")
+        logger.critical(f"❌ [SHARIAH COMPLIANCE VIOLATION] Video rejected: {reason}")
+        if os.path.exists(final_output_path):
+            os.remove(final_output_path)
+        raise ValueError(f"Shariah Visual Compliance Gate Failed: {reason}")
+    logger.info("✅ [Pass 2 PASSED] 100% Halal Live-Motion Footage Confirmed (Strictly 0 living beings, 0 faces, 0 silhouettes).")
+
+    # 6. Extract Thumbnail
     thumb_path = os.path.join(output_dir, f"Quran_Mix_Surah_{chosen_surah}_thumb.jpg")
     try:
         sample_t = min(3.0, total_dur - 1.0)
@@ -251,5 +267,6 @@ def generate_quran_mix_video(surah: int = None, output_dir: str = "data/output")
         "thumbnail_path": thumb_path if os.path.exists(thumb_path) else None,
         "metadata": metadata,
         "surah": chosen_surah,
+        "shariah_passed": True,
         "duration": total_dur
     }

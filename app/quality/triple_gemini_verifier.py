@@ -157,8 +157,8 @@ def pass_2_halal_vision_and_visual_defects(video_path: str, temp_dir: str = None
     except Exception as e:
         logger.warning(f"[Pass 2] Could not determine duration: {e}")
 
-    # 2. Extract 3 sample frames: at 20%, 50%, and 80% of video
-    sample_timestamps = [duration * 0.20, duration * 0.50, duration * 0.80]
+    # 2. Extract 5 sample frames across all scene windows (0 living beings audit)
+    sample_timestamps = [duration * (i + 0.5) / 5 for i in range(5)]
     frame_paths = []
 
     for idx, ts in enumerate(sample_timestamps):

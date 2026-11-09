@@ -6,26 +6,12 @@
   "max_scene_cut_seconds": 20.0,
   "rotation_rule": "Full round-robin rotation (1 -> 2 -> 3 -> 1 -> 2 -> 3) across 3 serial clips",
   "clip_metadata": {
-    "https://assets.mixkit.co/videos/14138/14138-720.mp4": {
-      "category": "architecture",
-      "title": "3D Animation Of The Interior Of A Temple Of Islam",
-      "duration": 15.0,
-      "id": "14138",
-      "url": "https://assets.mixkit.co/videos/14138/14138-720.mp4"
-    },
     "https://assets.mixkit.co/videos/26782/26782-720.mp4": {
       "category": "palace_hall",
       "title": "Video Loop Of An Awards Hall With Gold Walls",
       "duration": 15.0,
       "id": "26782",
       "url": "https://assets.mixkit.co/videos/26782/26782-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/1986/1986-720.mp4": {
-      "category": "palace_hall",
-      "title": "Ghost In The Hall",
-      "duration": 18.4,
-      "id": "1986",
-      "url": "https://assets.mixkit.co/videos/1986/1986-720.mp4"
     },
     "https://assets.mixkit.co/videos/4646/4646-720.mp4": {
       "category": "clouds",
@@ -117,13 +103,6 @@
       "duration": 14.9,
       "id": "4313",
       "url": "https://assets.mixkit.co/videos/4313/4313-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/9514/9514-720.mp4": {
-      "category": "dome",
-      "title": "Dome Of A Church Near The Sea From Afar",
-      "duration": 21.8,
-      "id": "9514",
-      "url": "https://assets.mixkit.co/videos/9514/9514-720.mp4"
     },
     "https://assets.mixkit.co/videos/11922/11922-720.mp4": {
       "category": "mosque",
@@ -243,13 +222,6 @@
       "duration": 19.4,
       "id": "21821",
       "url": "https://assets.mixkit.co/videos/21821/21821-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/2490/2490-720.mp4": {
-      "category": "sacred_door",
-      "title": "Ruined Site Near A Path In A Forest",
-      "duration": 15.8,
-      "id": "2490",
-      "url": "https://assets.mixkit.co/videos/2490/2490-720.mp4"
     },
     "https://assets.mixkit.co/videos/3494/3494-720.mp4": {
       "category": "sacred_door",
@@ -614,13 +586,6 @@
       "duration": 15.0,
       "id": "18309",
       "url": "https://assets.mixkit.co/videos/18309/18309-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/19501/19501-720.mp4": {
-      "category": "waves",
-      "title": "Halal Scenic Clip 19501",
-      "duration": 24.9,
-      "id": "19501",
-      "url": "https://assets.mixkit.co/videos/19501/19501-720.mp4"
     },
     "https://assets.mixkit.co/videos/4011/4011-720.mp4": {
       "category": "waves",
@@ -2177,7 +2142,7 @@
       "https://assets.mixkit.co/videos/1564/1564-720.mp4",
       "https://assets.mixkit.co/videos/4305/4305-720.mp4",
       "https://assets.mixkit.co/videos/18309/18309-720.mp4",
-      "https://assets.mixkit.co/videos/19501/19501-720.mp4",
+      "https://assets.mixkit.co/videos/4081/4081-720.mp4",
       "https://assets.mixkit.co/videos/4011/4011-720.mp4"
     ],
     "waterfall": [
@@ -2406,7 +2371,7 @@
     ],
     "dome": [
       "https://assets.mixkit.co/videos/4313/4313-720.mp4",
-      "https://assets.mixkit.co/videos/9514/9514-720.mp4",
+      "https://assets.mixkit.co/videos/1090/1090-720.mp4",
       "https://assets.mixkit.co/videos/1193/1193-720.mp4",
       "https://assets.mixkit.co/videos/1259/1259-720.mp4",
       "https://assets.mixkit.co/videos/1550/1550-720.mp4",
@@ -2440,7 +2405,7 @@
       "https://assets.mixkit.co/videos/21812/21812-720.mp4",
       "https://assets.mixkit.co/videos/21817/21817-720.mp4",
       "https://assets.mixkit.co/videos/21821/21821-720.mp4",
-      "https://assets.mixkit.co/videos/2490/2490-720.mp4",
+      "https://assets.mixkit.co/videos/20425/20425-720.mp4",
       "https://assets.mixkit.co/videos/3494/3494-720.mp4",
       "https://assets.mixkit.co/videos/29455/29455-720.mp4"
     ],
@@ -2448,14 +2413,14 @@
       "https://assets.mixkit.co/videos/4086/4086-720.mp4",
       "https://assets.mixkit.co/videos/27543/27543-720.mp4",
       "https://assets.mixkit.co/videos/1197/1197-720.mp4",
-      "https://assets.mixkit.co/videos/14138/14138-720.mp4",
+      "https://assets.mixkit.co/videos/1953/1953-720.mp4",
       "https://assets.mixkit.co/videos/51600/51600-720.mp4",
       "https://assets.mixkit.co/videos/43605/43605-720.mp4"
     ],
     "palace_hall": [
       "https://assets.mixkit.co/videos/31786/31786-720.mp4",
       "https://assets.mixkit.co/videos/26782/26782-720.mp4",
-      "https://assets.mixkit.co/videos/1986/1986-720.mp4",
+      "https://assets.mixkit.co/videos/4374/4374-720.mp4",
       "https://assets.mixkit.co/videos/44879/44879-720.mp4",
       "https://assets.mixkit.co/videos/17990/17990-720.mp4",
       "https://assets.mixkit.co/videos/1211/1211-720.mp4"
