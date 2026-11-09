@@ -1,5 +1,5 @@
 {
-  "total_unique": 1006,
+  "total_unique": 1005,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -1230,13 +1230,6 @@
       "duration": 21.6,
       "id": "1169",
       "url": "https://assets.mixkit.co/videos/1169/1169-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/1199/1199-720.mp4": {
-      "category": "sunlight_beams",
-      "title": "Halal Scenic Clip 1199",
-      "duration": 21.0,
-      "id": "1199",
-      "url": "https://assets.mixkit.co/videos/1199/1199-720.mp4"
     },
     "https://assets.mixkit.co/videos/1193/1193-720.mp4": {
       "category": "dome",
@@ -7906,8 +7899,7 @@
       "https://assets.mixkit.co/videos/1248/1248-720.mp4"
     ],
     "sunlight_beams": [
-      "https://assets.mixkit.co/videos/1169/1169-720.mp4",
-      "https://assets.mixkit.co/videos/1199/1199-720.mp4"
+      "https://assets.mixkit.co/videos/1169/1169-720.mp4"
     ],
     "mosque": [
       "https://assets.mixkit.co/videos/11922/11922-720.mp4",

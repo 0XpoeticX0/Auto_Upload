@@ -2926,5 +2926,9 @@
   "https://assets.mixkit.co/videos/46407/46407-720.mp4": {
     "id": "46407",
     "reason": "Detected a Christmas tree and holiday decorations which are incompatible with the criteria."
+  },
+  "https://assets.mixkit.co/videos/1199/1199-720.mp4": {
+    "id": "1199",
+    "reason": "Living being detected in frame 2: bird (0.98)"
   }
 }

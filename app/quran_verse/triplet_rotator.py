@@ -488,9 +488,12 @@ def _record_rejection_in_catalog(clip_id: str, clip_url: str, reason: str):
 
 def get_next_video_scenes(advance: bool = True) -> dict:
     """
-    Selects 3 RANDOM Halal clips from 3 completely distinct categories (Zero Tracking Required).
-    Audits every selected clip with Gemini Vision API.
-    If ANY clip fails, deletes/discards the triplet and loops to pick 3 NEW clips until 100% Halal.
+    Selects 3 RANDOM Halal clips sequentially (one-by-one check):
+    1. Picks Clip 1 from a random category -> audits frame-by-frame across timeline.
+       If it fails, purges and retries until Clip 1 is verified & locked in.
+    2. Picks Clip 2 from a DIFFERENT category -> audits frame-by-frame until verified & locked in.
+    3. Picks Clip 3 from a THIRD distinct category -> audits frame-by-frame until verified & locked in.
+    Guarantees Category 1 != Category 2 != Category 3, and preserves verified clips without re-auditing.
     """
     cats_50, by_cat = load_50_categories_catalog()
     all_categories = [c for c, urls in by_cat.items() if urls]
@@ -507,42 +510,57 @@ def get_next_video_scenes(advance: bool = True) -> dict:
             "permutation_str": "local_fallback"
         }
 
-    max_attempts = 15
-    for attempt in range(max_attempts):
-        # 1. Randomly sample 3 completely different categories
-        chosen_cats = random.sample(all_categories, 3)
-        candidate_clips = []
-        for cat in chosen_cats:
-            available = [u for u in by_cat[cat] if not any(b in u for b in BANNED_CLIP_BLACKLIST)]
-            if available:
-                candidate_clips.append(random.choice(available))
-            else:
-                candidate_clips.append(random.choice(by_cat[cat]))
+    verified_clips = []
+    chosen_categories = []
 
-        # Randomize playback order
-        random.shuffle(candidate_clips)
+    # Available categories to pick from (ensures Category 1 != Category 2 != Category 3)
+    remaining_categories = [c for c in all_categories]
+    random.shuffle(remaining_categories)
 
-        # 2. Pre-audit each of the 3 clips with Gemini Vision
-        all_passed = True
-        failed_reason = ""
-        for clip in candidate_clips:
-            is_halal, reason = is_clip_halal_gemini(clip)
-            if not is_halal:
-                all_passed = False
-                failed_reason = f"Clip {clip} failed: {reason}"
-                logger.warning(f"⚠️ [Shariah Gate] {failed_reason}. Discarding triplet and picking 3 NEW random clips (Attempt {attempt+1}/{max_attempts})...")
-                break
+    for slot_idx in range(1, 4):
+        slot_verified = False
+        max_slot_attempts = 15
 
-        if all_passed:
-            logger.info(f"✅ [Triplet Selected] Picked 3 RANDOM clips from categories {chosen_cats} - All 3 verified Halal by Gemini!")
-            return {
-                "clips": candidate_clips,
-                "categories": chosen_cats,
-                "permutation": [1, 2, 3],
-                "permutation_str": "random_verified"
-            }
+        while not slot_verified and max_slot_attempts > 0 and remaining_categories:
+            max_slot_attempts -= 1
+            cat = remaining_categories.pop(0)
 
-    # Ultimate guaranteed Halal fallback
+            cat_clips = [u for u in by_cat.get(cat, []) if not any(b in u for b in BANNED_CLIP_BLACKLIST)]
+            if not cat_clips:
+                continue
+
+            random.shuffle(cat_clips)
+            for candidate_clip in cat_clips:
+                logger.info(f"🔍 [Slot {slot_idx}/3] Auditing candidate clip from category '{cat}'...")
+                is_halal, reason = is_clip_halal_gemini(candidate_clip)
+                if is_halal:
+                    verified_clips.append(candidate_clip)
+                    chosen_categories.append(cat)
+                    slot_verified = True
+                    logger.info(f"✅ [Slot {slot_idx}/3 APPROVED] Clip from '{cat}' verified 100% Halal!")
+                    break
+                else:
+                    logger.warning(f"❌ [Slot {slot_idx}/3 REJECTED] Clip failed: {reason}. Trying next candidate...")
+
+        if not slot_verified:
+            logger.warning(f"Could not secure verified clip for slot {slot_idx}.")
+            break
+
+    if len(verified_clips) == 3:
+        # Randomize the playback sequence of the 3 verified clips
+        combined = list(zip(verified_clips, chosen_categories))
+        random.shuffle(combined)
+        final_clips, final_cats = zip(*combined)
+
+        logger.info(f"🎬 [Triplet Ready] Secured 3 individually verified clips from distinct categories: {list(final_cats)}")
+        return {
+            "clips": list(final_clips),
+            "categories": list(final_cats),
+            "permutation": [1, 2, 3],
+            "permutation_str": "sequential_verified"
+        }
+
+    # Guaranteed Halal fallback if network/remote access fails
     logger.warning("Using guaranteed 100% Halal local b-roll fallback triplet.")
     return {
         "clips": [
