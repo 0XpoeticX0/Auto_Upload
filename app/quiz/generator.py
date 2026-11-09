@@ -112,12 +112,19 @@ def generate_quiz_script(recent_questions: list[str] = None, language: str = "bn
     logger.info(f"Generating 3-Question Islamic Quiz Reel script (language={language}, max_retries={max_retries})...")
     
     avoid_list = list(recent_questions or [])
-    avoid_section = ""
+    avoid_block = ""
     if avoid_list:
-        avoid_section = f"\n\n🚫 ABSOLUTE ZERO REPETITION DIRECTIVE (MANDATORY - PAST {len(avoid_list)} QUESTIONS):\nBelow is the complete list of questions/topics ALREADY used in previous videos:\n"
-        for q in avoid_list[:300]:
-            avoid_section += f"- {q}\n"
-        avoid_section += "\nCRITICAL: You MUST NOT generate ANY question, topic, answer, or theme that matches, resembles, or mirrors anything in the list above. Every single question must be 100% FRESH, UNIQUE, and UNUSED.\n"
+        avoid_block = f"\n\n🚫 PREVIOUS QUESTIONS ALREADY PUBLISHED ON CHANNEL (TOTAL: {len(avoid_list[:300])}):\n"
+        avoid_block += "The following questions and topics have ALREADY been used in our videos. You MUST NOT repeat, rephrase, or ask about any of these subjects or answers:\n"
+        for idx, q in enumerate(avoid_list[:300], 1):
+            avoid_block += f"{idx}. {q}\n"
+        avoid_block += (
+            "\nCRITICAL MANDATE: Your #1 job is ZERO DUPLICATION. Check your generated questions against the list above. "
+            "If ANY question touches an already used topic or shares a similar answer, IT IS A FATAL REJECTION. "
+            "Generate 3 COMPLETELY BRAND NEW questions on UNTOUCHED areas of Islamic knowledge (e.g., lesser-known Prophets "
+            "like Hud, Salih, Shu'aib, Ayyub, Zakariyya, Yahya; lesser-known Sahaba; specific Islamic calendar dates/events; "
+            "historical battles like Uhud, Khandaq, Hunayn, Mu'tah; afterlife details; or distinct daily etiquettes).\n"
+        )
 
     if language == "bn":
         lang_instruction = """Generate ALL content strictly in authentic, natural BANGLA (বাংলা).
@@ -201,12 +208,15 @@ CRITICAL FORMATTING RULES:
 2. Options: Exactly 3 clean options (1-3 words each).
 3. Honorifics: Always use "হযরত ... (আ.)", "হযরত ... (রা.)", "রাসূলুল্লাহ (ﷺ)".
 4. Pinned Comment: Always generate a friction-free pinned comment prompt that encourages 1-word answers (e.g. 'মাশাআল্লাহ' or '৩/৩').
-{avoid_section}
 
 Respond with ONLY valid JSON:"""
 
     rejected_in_session: list[str] = []
-    base_user_prompt = f"Generate a fresh, viral 3-Question Islamic Quiz Reel script in {language.upper()} following the exact 3-tier formula (Q1 Confidence -> Q2 Debate/Misconception -> Q3 Mindblowing Secret). Ensure Q2 is a controversial/common misconception that drives comments. Return ONLY JSON."
+    base_user_prompt = f"""Generate a fresh, viral 3-Question Islamic Quiz Reel script in {language.upper()} following the exact 3-tier formula (Q1 Confidence -> Q2 Debate/Misconception -> Q3 Mindblowing Secret). Ensure Q2 is a controversial/common misconception that drives comments.
+
+{avoid_block}
+
+CRITICAL: Return ONLY valid JSON adhering strictly to the schema provided."""
 
     for attempt in range(1, max_retries + 1):
         logger.info(f"Generating quiz script attempt {attempt}/{max_retries}...")
