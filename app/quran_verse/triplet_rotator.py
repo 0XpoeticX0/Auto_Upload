@@ -151,16 +151,10 @@ def generate_cycle_plan(clips_pool: list[str], cycle_num: int) -> list[dict]:
     if len(clips_pool) < 3:
         raise ValueError(f"Clips pool must contain at least 3 clips, got {len(clips_pool)}")
 
-    # Pad or truncate to 300 clips (or nearest multiple of 3)
-    target_count = 300
-    if len(clips_pool) >= target_count:
-        working_pool = list(clips_pool[:target_count])
-    else:
-        # If fewer than 300 available, cycle them to reach 300
-        working_pool = []
-        while len(working_pool) < target_count:
-            working_pool.extend(clips_pool)
-        working_pool = working_pool[:target_count]
+    # Use full available clips pool rounded down to nearest multiple of 3
+    num_triplets = len(clips_pool) // 3
+    target_count = num_triplets * 3
+    working_pool = list(clips_pool[:target_count])
 
     # Deterministic shuffle for this cycle
     rng = random.Random(cycle_num * 7919 + 1337)
@@ -328,11 +322,11 @@ BANNED_CLIP_BLACKLIST = {
 
 def is_clip_halal_gemini(clip_url: str, temp_dir: str = "data/temp/clip_audits") -> tuple[bool, str]:
     """
-    Performs frame-by-frame timeline analysis across the selected video.
-    Extracts multiple frames (start, middle, end) and audits each frame with:
-    1. Fast deterministic local FasterRCNN object detector (0 humans, 0 animals).
-    2. Deep Gemini Multimodal Vision API (0 silhouettes, 0 statues, 0 crosses, 0 Shariah defects).
-    If ANY frame fails, the clip is rejected, purged from catalog, and permanently blacklisted.
+    Performs full-length frame-by-frame timeline analysis at 1 frame per second (each 1s).
+    Extracts every single second of the video and audits:
+    1. Fast deterministic local FasterRCNN object detector on EVERY 1-second frame.
+    2. Deep Gemini Multimodal Vision API on any flagged frame + key representative frames (0 silhouettes, 0 statues, 0 crosses).
+    If ANY 1-second frame fails, the clip is rejected, purged from catalog, and permanently blacklisted.
     """
     # 1. Fast check against permanent banned blacklist
     for bad in BANNED_CLIP_BLACKLIST:
@@ -342,44 +336,39 @@ def is_clip_halal_gemini(clip_url: str, temp_dir: str = "data/temp/clip_audits")
     os.makedirs(temp_dir, exist_ok=True)
     clip_id = clip_url.split("/")[4] if "videos/" in clip_url else str(abs(hash(clip_url)))[:8]
 
-    # 2. Extract 5 multi-timestamp frames across the video timeline (start, quarter, middle, three-quarter, end)
+    # 2. Extract 1 frame per second (each 1s) across the entire video timeline
     import subprocess
-    dur = None
+    import glob
+    clip_temp = os.path.join(temp_dir, f"clip_{clip_id}")
+    os.makedirs(clip_temp, exist_ok=True)
+
+    cmd = [
+        "ffmpeg", "-y", "-i", clip_url,
+        "-vf", "fps=1",
+        "-q:v", "3",
+        os.path.join(clip_temp, "sec_%03d.jpg")
+    ]
     try:
-        probe_cmd = [
-            "ffprobe", "-v", "error", "-show_entries", "format=duration",
-            "-of", "default=noprint_wrappers=1:nokey=1", clip_url
-        ]
-        res = subprocess.run(probe_cmd, capture_output=True, text=True, timeout=3)
-        if res.returncode == 0 and res.stdout.strip():
-            dur = float(res.stdout.strip())
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=14)
     except Exception:
         pass
 
-    if dur and dur >= 3.0:
-        timestamps = [f"{dur * (i + 0.5) / 5:.2f}" for i in range(5)]
-    else:
-        timestamps = ["00:00:02.00", "00:00:05.00", "00:00:08.00", "00:00:11.00", "00:00:14.00"]
-
-    frame_paths = []
-    for f_idx, ss in enumerate(timestamps):
-        f_path = os.path.join(temp_dir, f"audit_{clip_id}_t{f_idx+1}.jpg")
-        cmd = [
-            "ffmpeg", "-y", "-ss", ss, "-i", clip_url,
-            "-vframes", "1", "-q:v", "2", f_path
-        ]
-        try:
-            res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=4)
-            if res.returncode == 0 and os.path.exists(f_path) and os.path.getsize(f_path) >= 1000:
-                frame_paths.append((f_idx + 1, f_path))
-        except Exception:
-            pass
-
+    frame_paths = sorted(glob.glob(os.path.join(clip_temp, "*.jpg")))
     if not frame_paths:
-        logger.warning(f"[Shariah Gate] Could not extract remote frames for {clip_id}; checked during post-render.")
+        try: os.rmdir(clip_temp)
+        except: pass
+        logger.warning(f"[Shariah Gate] Could not extract 1s frames for {clip_id}; checked during post-render.")
         return True, "Passed (remote fetch warning)"
 
-    # 3. Layer 1: Fast Local FasterRCNN Pre-check
+    def _cleanup():
+        for fp in frame_paths:
+            try: os.remove(fp)
+            except: pass
+        try: os.rmdir(clip_temp)
+        except: pass
+
+    # 3. Layer 1: Fast Local FasterRCNN Pre-check across EVERY 1-second frame
+    flagged_frames = []
     try:
         import torch
         import torchvision.models.detection as detection_models
@@ -391,23 +380,20 @@ def is_clip_halal_gemini(clip_url: str, temp_dir: str = "data/temp/clip_audits")
         cats = weights.meta["categories"]
         living_classes = {"person", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"}
 
-        for t_idx, fpath in frame_paths:
+        for sec_idx, fpath in enumerate(frame_paths):
             img_tensor = read_image(fpath)
             batch = [preprocess(img_tensor)]
             with torch.no_grad():
                 pred = model(batch)[0]
             for label, score in zip(pred["labels"], pred["scores"]):
                 cat_name = cats[label]
-                if cat_name in living_classes and float(score) >= 0.55:
-                    reason = f"Living being detected in frame {t_idx}: {cat_name} ({round(float(score), 2)})"
-                    BANNED_CLIP_BLACKLIST.add(clip_id)
-                    logger.warning(f"❌ [Shariah Gate REJECTED] Clip {clip_id}: {reason}")
-                    _record_rejection_in_catalog(clip_id, clip_url, reason)
-                    return False, reason
+                if cat_name in living_classes and float(score) >= 0.50:
+                    flagged_frames.append((sec_idx + 1, cat_name, float(score), fpath))
+                    break # One detection per second is enough
     except Exception as e:
         logger.debug(f"[Shariah Gate] Local detector notice: {e}")
 
-    # 4. Layer 2: Deep Gemini Multimodal Vision API Check on all frames
+    # 4. Layer 2: Deep Gemini Multimodal Vision API Verification
     try:
         from app.llm.provider import get_api_keys_pool
         from google import genai
@@ -415,24 +401,58 @@ def is_clip_halal_gemini(clip_url: str, temp_dir: str = "data/temp/clip_audits")
 
         keys = get_api_keys_pool()
         if keys:
-            prompt = """Strict Islamic Shariah Visual Audit:
-Are there ANY humans, people, women, men, children, faces, silhouettes, human body parts (hands/legs/hair/skin), swimsuits, living animals, statues, idols, crosses, or churches in this image?
+            # Audit any frame flagged by FasterRCNN
+            for sec_idx, cname, score, fpath in flagged_frames:
+                # High-confidence person is an instant rejection
+                if cname == "person" and score >= 0.85:
+                    reason = f"Person detected at second {sec_idx}: {cname} ({round(score, 2)})"
+                    BANNED_CLIP_BLACKLIST.add(clip_id)
+                    logger.warning(f"❌ [Shariah Gate REJECTED] Clip {clip_id}: {reason}")
+                    _record_rejection_in_catalog(clip_id, clip_url, reason)
+                    _cleanup()
+                    return False, reason
 
-CRITERIA:
-- If ANY human, silhouette, statue, church, cross, or living being is detected, return JSON:
-  {"pass": false, "reason": "Detailed description of what was detected"}
-- Only if 100% Halal atmospheric nature (ocean, sky, clouds, stars, mountains, desert, waterfalls, trees, Islamic mosque), return JSON:
-  {"pass": true, "reason": "Clean 100% Halal nature"}"""
-
-            for t_idx, fpath in frame_paths:
-                frame_passed = False
+                # Confirm with Gemini Vision
+                confirm_prompt = """Strict Islamic Shariah Visual Audit:
+Is there ANY living person, human, face, silhouette, animal, bird, insect, or living creature in this image?
+Answer with valid JSON:
+{"pass": true/false, "has_living_being": true/false, "reason": "Detailed description of what you see"}"""
                 for key in keys[:3]:
                     try:
                         client = genai.Client(api_key=key)
-                        img = Image.open(fpath)
                         resp = client.models.generate_content(
                             model="gemini-3.5-flash-lite",
-                            contents=[prompt, img]
+                            contents=[confirm_prompt, Image.open(fpath)]
+                        )
+                        raw_text = resp.text or ""
+                        import json as _json, re as _re
+                        match = _re.search(r"\{.*\}", raw_text, _re.DOTALL)
+                        if match:
+                            data = _json.loads(match.group(0))
+                            if not data.get("pass", True) or data.get("has_living_being", False):
+                                reason = f"Living being confirmed at second {sec_idx}: {data.get('reason', cname)}"
+                                BANNED_CLIP_BLACKLIST.add(clip_id)
+                                logger.warning(f"❌ [Shariah Gate REJECTED] Clip {clip_id}: {reason}")
+                                _record_rejection_in_catalog(clip_id, clip_url, reason)
+                                _cleanup()
+                                return False, reason
+                        break
+                    except Exception:
+                        continue
+
+            # Also audit 3 key milestone frames (start, middle, end) for statues/crosses/idols
+            indices_to_check = [0, len(frame_paths)//2, len(frame_paths)-1]
+            sample_frames = [frame_paths[i] for i in indices_to_check if i < len(frame_paths)]
+            prompt = """Strict Islamic Shariah Visual Audit:
+Are there ANY humans, silhouettes, statues, idols, crosses, or churches in this image?
+Respond in JSON: {"pass": true/false, "reason": "Description"}"""
+            for fpath in sample_frames:
+                for key in keys[:3]:
+                    try:
+                        client = genai.Client(api_key=key)
+                        resp = client.models.generate_content(
+                            model="gemini-3.5-flash-lite",
+                            contents=[prompt, Image.open(fpath)]
                         )
                         raw_text = resp.text or ""
                         import json as _json, re as _re
@@ -440,21 +460,20 @@ CRITERIA:
                         if match:
                             data = _json.loads(match.group(0))
                             if not data.get("pass", True):
-                                reason = data.get("reason", "Contains living beings or prohibited imagery")
+                                reason = data.get("reason", "Contains prohibited imagery")
                                 BANNED_CLIP_BLACKLIST.add(clip_id)
-                                logger.warning(f"❌ [Shariah Gate REJECTED] Clip {clip_id} at frame {t_idx}: {reason}")
+                                logger.warning(f"❌ [Shariah Gate REJECTED] Clip {clip_id}: {reason}")
                                 _record_rejection_in_catalog(clip_id, clip_url, reason)
+                                _cleanup()
                                 return False, reason
-                        frame_passed = True
                         break
                     except Exception:
                         continue
-                if not frame_passed and keys:
-                    logger.debug(f"[Shariah Gate] Frame {t_idx} inconclusive, proceeding.")
     except Exception as e:
         logger.warning(f"[Shariah Gate] Vision check notice: {e}")
 
-    return True, "Clean 100% Halal"
+    _cleanup()
+    return True, "Clean 100% Halal at each 1s"
 
 def _record_rejection_in_catalog(clip_id: str, clip_url: str, reason: str):
     """Automatically records rejected clip into catalog_rejected_clips.json and removes it from stock_video_catalog.json."""

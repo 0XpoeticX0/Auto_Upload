@@ -2930,5 +2930,2881 @@
   "https://assets.mixkit.co/videos/1199/1199-720.mp4": {
     "id": "1199",
     "reason": "Living being detected in frame 2: bird (0.98)"
+  },
+  "https://assets.mixkit.co/videos/1085/1085-720.mp4": {
+    "id": "1085",
+    "reason": "Person detected at second 1: person (0.97)"
+  },
+  "https://assets.mixkit.co/videos/26782/26782-720.mp4": {
+    "id": "26782",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 1s (conf: 0.96), elephant at 2s (conf: 0.99), elephant at 3s (conf: 0.99))"
+  },
+  "https://assets.mixkit.co/videos/34295/34295-720.mp4": {
+    "id": "34295",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.75), person at 2s (conf: 0.55), cow at 24s (conf: 0.6))"
+  },
+  "https://assets.mixkit.co/videos/22118/22118-720.mp4": {
+    "id": "22118",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 2s (conf: 0.61), person at 3s (conf: 0.65), bird at 27s (conf: 0.79))"
+  },
+  "https://assets.mixkit.co/videos/34296/34296-720.mp4": {
+    "id": "34296",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 21s (conf: 0.61), person at 22s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/39195/39195-720.mp4": {
+    "id": "39195",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 33s (conf: 0.78), person at 35s (conf: 0.65), person at 44s (conf: 0.76))"
+  },
+  "https://assets.mixkit.co/videos/21812/21812-720.mp4": {
+    "id": "21812",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 4s (conf: 0.85), person at 6s (conf: 0.98))"
+  },
+  "https://assets.mixkit.co/videos/15395/15395-720.mp4": {
+    "id": "15395",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (dog at 15s (conf: 0.63))"
+  },
+  "https://assets.mixkit.co/videos/29454/29454-720.mp4": {
+    "id": "29454",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 1s (conf: 0.92), elephant at 2s (conf: 0.93), elephant at 3s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/1082/1082-720.mp4": {
+    "id": "1082",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 13s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/4633/4633-720.mp4": {
+    "id": "4633",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (giraffe at 1s (conf: 0.95), giraffe at 2s (conf: 0.81), giraffe at 4s (conf: 0.73))"
+  },
+  "https://assets.mixkit.co/videos/1710/1710-720.mp4": {
+    "id": "1710",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.91), bird at 2s (conf: 0.94), bird at 3s (conf: 0.84))"
+  },
+  "https://assets.mixkit.co/videos/14540/14540-720.mp4": {
+    "id": "14540",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.51), bird at 2s (conf: 0.63), bird at 9s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/522/522-720.mp4": {
+    "id": "522",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.52), bird at 9s (conf: 0.82), giraffe at 16s (conf: 0.86))"
+  },
+  "https://assets.mixkit.co/videos/1594/1594-720.mp4": {
+    "id": "1594",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 10s (conf: 0.53), person at 11s (conf: 0.53), person at 14s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/1090/1090-720.mp4": {
+    "id": "1090",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 22s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/1170/1170-720.mp4": {
+    "id": "1170",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 33s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/1954/1954-720.mp4": {
+    "id": "1954",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 6s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/25375/25375-720.mp4": {
+    "id": "25375",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.65), bird at 4s (conf: 0.64), bird at 5s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/18162/18162-720.mp4": {
+    "id": "18162",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.6), bear at 2s (conf: 0.62), bear at 4s (conf: 0.69))"
+  },
+  "https://assets.mixkit.co/videos/6806/6806-720.mp4": {
+    "id": "6806",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.62), bird at 2s (conf: 0.66), bird at 15s (conf: 0.62))"
+  },
+  "https://assets.mixkit.co/videos/48004/48004-720.mp4": {
+    "id": "48004",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 29s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/3371/3371-720.mp4": {
+    "id": "3371",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 8s (conf: 0.72))"
+  },
+  "https://assets.mixkit.co/videos/1081/1081-720.mp4": {
+    "id": "1081",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 4s (conf: 0.98), person at 5s (conf: 0.53), bear at 6s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/523/523-720.mp4": {
+    "id": "523",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (giraffe at 4s (conf: 0.59), giraffe at 5s (conf: 0.57), giraffe at 9s (conf: 0.83))"
+  },
+  "https://assets.mixkit.co/videos/2846/2846-720.mp4": {
+    "id": "2846",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 8s (conf: 0.58), person at 10s (conf: 0.89), person at 15s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/4422/4422-720.mp4": {
+    "id": "4422",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.68), person at 2s (conf: 0.9), person at 3s (conf: 0.92))"
+  },
+  "https://assets.mixkit.co/videos/529/529-720.mp4": {
+    "id": "529",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 4s (conf: 0.54), bear at 6s (conf: 0.61), bear at 18s (conf: 0.7))"
+  },
+  "https://assets.mixkit.co/videos/18312/18312-720.mp4": {
+    "id": "18312",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.62), bird at 12s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/2179/2179-720.mp4": {
+    "id": "2179",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 4s (conf: 0.7), bear at 9s (conf: 0.56), bear at 10s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/1955/1955-720.mp4": {
+    "id": "1955",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cow at 3s (conf: 0.58), bird at 25s (conf: 0.8), bird at 26s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/1088/1088-720.mp4": {
+    "id": "1088",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 3s (conf: 0.52), dog at 21s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/14185/14185-720.mp4": {
+    "id": "14185",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.57), person at 6s (conf: 0.63), person at 9s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/5027/5027-720.mp4": {
+    "id": "5027",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 6s (conf: 0.65), sheep at 20s (conf: 0.7))"
+  },
+  "https://assets.mixkit.co/videos/4151/4151-720.mp4": {
+    "id": "4151",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.71), bird at 3s (conf: 0.72), bird at 8s (conf: 0.98))"
+  },
+  "https://assets.mixkit.co/videos/51792/51792-720.mp4": {
+    "id": "51792",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 7s (conf: 0.52), person at 11s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/21168/21168-720.mp4": {
+    "id": "21168",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.52), bird at 3s (conf: 0.71), bird at 7s (conf: 0.66))"
+  },
+  "https://assets.mixkit.co/videos/1173/1173-720.mp4": {
+    "id": "1173",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 3s (conf: 0.6), bird at 4s (conf: 0.65), bird at 14s (conf: 0.63))"
+  },
+  "https://assets.mixkit.co/videos/4064/4064-720.mp4": {
+    "id": "4064",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 20s (conf: 0.6))"
+  },
+  "https://assets.mixkit.co/videos/1086/1086-720.mp4": {
+    "id": "1086",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cow at 1s (conf: 0.62), cow at 3s (conf: 0.5), cow at 4s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/2208/2208-720.mp4": {
+    "id": "2208",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 6s (conf: 0.53), bird at 20s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/1152/1152-720.mp4": {
+    "id": "1152",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 6s (conf: 0.68))"
+  },
+  "https://assets.mixkit.co/videos/1185/1185-720.mp4": {
+    "id": "1185",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 5s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/1172/1172-720.mp4": {
+    "id": "1172",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 9s (conf: 0.56), person at 13s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/1184/1184-720.mp4": {
+    "id": "1184",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.97), bird at 2s (conf: 0.89), bird at 3s (conf: 0.9))"
+  },
+  "https://assets.mixkit.co/videos/1572/1572-720.mp4": {
+    "id": "1572",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 4s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/1248/1248-720.mp4": {
+    "id": "1248",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 43s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/4033/4033-720.mp4": {
+    "id": "4033",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.85), person at 2s (conf: 0.9), person at 3s (conf: 0.93))"
+  },
+  "https://assets.mixkit.co/videos/1177/1177-720.mp4": {
+    "id": "1177",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 19s (conf: 0.53), person at 25s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/2789/2789-720.mp4": {
+    "id": "2789",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 1s (conf: 0.93), elephant at 2s (conf: 0.94), elephant at 3s (conf: 0.94))"
+  },
+  "https://assets.mixkit.co/videos/1071/1071-720.mp4": {
+    "id": "1071",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 7s (conf: 0.5), person at 15s (conf: 0.54), person at 16s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/4027/4027-720.mp4": {
+    "id": "4027",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.52), bird at 2s (conf: 0.86), bird at 3s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/1087/1087-720.mp4": {
+    "id": "1087",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.6), person at 8s (conf: 0.61), person at 9s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/1084/1084-720.mp4": {
+    "id": "1084",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 5s (conf: 0.59), bear at 7s (conf: 0.6), bird at 10s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/49337/49337-720.mp4": {
+    "id": "49337",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 3s (conf: 0.52), person at 4s (conf: 0.91), person at 5s (conf: 0.69))"
+  },
+  "https://assets.mixkit.co/videos/50564/50564-720.mp4": {
+    "id": "50564",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (dog at 12s (conf: 0.6), dog at 14s (conf: 0.93))"
+  },
+  "https://assets.mixkit.co/videos/526/526-720.mp4": {
+    "id": "526",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 10s (conf: 0.51), cat at 11s (conf: 0.64), cat at 12s (conf: 0.77))"
+  },
+  "https://assets.mixkit.co/videos/527/527-720.mp4": {
+    "id": "527",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 31s (conf: 0.7))"
+  },
+  "https://assets.mixkit.co/videos/2186/2186-720.mp4": {
+    "id": "2186",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.67), bear at 3s (conf: 0.5), bear at 5s (conf: 0.75))"
+  },
+  "https://assets.mixkit.co/videos/539/539-720.mp4": {
+    "id": "539",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 4s (conf: 0.6), bear at 24s (conf: 0.87), bear at 28s (conf: 0.71))"
+  },
+  "https://assets.mixkit.co/videos/46101/46101-720.mp4": {
+    "id": "46101",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.58), bear at 2s (conf: 0.53), bear at 3s (conf: 0.64))"
+  },
+  "https://assets.mixkit.co/videos/25547/25547-720.mp4": {
+    "id": "25547",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.64), bear at 4s (conf: 0.54), bear at 6s (conf: 0.5))"
+  },
+  "https://assets.mixkit.co/videos/4428/4428-720.mp4": {
+    "id": "4428",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cat at 6s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/14151/14151-720.mp4": {
+    "id": "14151",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.77), bear at 5s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/49333/49333-720.mp4": {
+    "id": "49333",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 6s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/4124/4124-720.mp4": {
+    "id": "4124",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 9s (conf: 0.52), bear at 10s (conf: 0.57), bear at 11s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/4423/4423-720.mp4": {
+    "id": "4423",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 10s (conf: 0.65), person at 11s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/30063/30063-720.mp4": {
+    "id": "30063",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.58), bear at 2s (conf: 0.53), bear at 3s (conf: 0.66))"
+  },
+  "https://assets.mixkit.co/videos/26796/26796-720.mp4": {
+    "id": "26796",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 5s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/30059/30059-720.mp4": {
+    "id": "30059",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.59), bear at 2s (conf: 0.54), person at 4s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/31562/31562-720.mp4": {
+    "id": "31562",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 15s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/14410/14410-720.mp4": {
+    "id": "14410",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 14s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/10418/10418-720.mp4": {
+    "id": "10418",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.52), person at 3s (conf: 0.62), bird at 8s (conf: 0.87))"
+  },
+  "https://assets.mixkit.co/videos/50137/50137-720.mp4": {
+    "id": "50137",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.64), dog at 9s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/29351/29351-720.mp4": {
+    "id": "29351",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (dog at 1s (conf: 0.55), dog at 4s (conf: 0.5), dog at 7s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/43608/43608-720.mp4": {
+    "id": "43608",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 7s (conf: 0.72), person at 8s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/51665/51665-720.mp4": {
+    "id": "51665",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/44637/44637-720.mp4": {
+    "id": "44637",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 9s (conf: 0.81), bear at 12s (conf: 0.81))"
+  },
+  "https://assets.mixkit.co/videos/43612/43612-720.mp4": {
+    "id": "43612",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 3s (conf: 0.55), bird at 9s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/5030/5030-720.mp4": {
+    "id": "5030",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 4s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/44499/44499-720.mp4": {
+    "id": "44499",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.96), bird at 2s (conf: 0.98), bird at 3s (conf: 0.96))"
+  },
+  "https://assets.mixkit.co/videos/4831/4831-720.mp4": {
+    "id": "4831",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 5s (conf: 0.58), giraffe at 6s (conf: 0.57), person at 7s (conf: 1.0))"
+  },
+  "https://assets.mixkit.co/videos/25078/25078-720.mp4": {
+    "id": "25078",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 12s (conf: 0.62), person at 13s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/47724/47724-720.mp4": {
+    "id": "47724",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 7s (conf: 0.76), sheep at 8s (conf: 0.56), sheep at 11s (conf: 0.76))"
+  },
+  "https://assets.mixkit.co/videos/3354/3354-720.mp4": {
+    "id": "3354",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 10s (conf: 0.68))"
+  },
+  "https://assets.mixkit.co/videos/30502/30502-720.mp4": {
+    "id": "30502",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 16s (conf: 0.71), bear at 17s (conf: 0.84), bear at 18s (conf: 0.94))"
+  },
+  "https://assets.mixkit.co/videos/10107/10107-720.mp4": {
+    "id": "10107",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 18s (conf: 0.75), person at 21s (conf: 0.62), person at 22s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/8101/8101-720.mp4": {
+    "id": "8101",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 12s (conf: 0.88), bear at 13s (conf: 0.67), bear at 14s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/10241/10241-720.mp4": {
+    "id": "10241",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.91), bear at 2s (conf: 0.9), bear at 3s (conf: 0.86))"
+  },
+  "https://assets.mixkit.co/videos/10117/10117-720.mp4": {
+    "id": "10117",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 13s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/9948/9948-720.mp4": {
+    "id": "9948",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 4s (conf: 0.5), sheep at 5s (conf: 0.56), sheep at 11s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/10292/10292-720.mp4": {
+    "id": "10292",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 13s (conf: 0.8), sheep at 25s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/3969/3969-720.mp4": {
+    "id": "3969",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 19s (conf: 0.79))"
+  },
+  "https://assets.mixkit.co/videos/10098/10098-720.mp4": {
+    "id": "10098",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 2s (conf: 0.64))"
+  },
+  "https://assets.mixkit.co/videos/50575/50575-720.mp4": {
+    "id": "50575",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 11s (conf: 0.63), bear at 13s (conf: 0.79), bear at 14s (conf: 0.91))"
+  },
+  "https://assets.mixkit.co/videos/2717/2717-720.mp4": {
+    "id": "2717",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 7s (conf: 0.66))"
+  },
+  "https://assets.mixkit.co/videos/2788/2788-720.mp4": {
+    "id": "2788",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 3s (conf: 0.53), person at 4s (conf: 0.64))"
+  },
+  "https://assets.mixkit.co/videos/5040/5040-720.mp4": {
+    "id": "5040",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 19s (conf: 0.76), bear at 24s (conf: 0.75), bear at 25s (conf: 0.77))"
+  },
+  "https://assets.mixkit.co/videos/5005/5005-720.mp4": {
+    "id": "5005",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cow at 11s (conf: 0.5), cow at 12s (conf: 0.61), cow at 14s (conf: 0.5))"
+  },
+  "https://assets.mixkit.co/videos/50944/50944-720.mp4": {
+    "id": "50944",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 2s (conf: 0.55), person at 8s (conf: 0.64))"
+  },
+  "https://assets.mixkit.co/videos/28345/28345-720.mp4": {
+    "id": "28345",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.77), bear at 2s (conf: 0.89), bear at 3s (conf: 0.68))"
+  },
+  "https://assets.mixkit.co/videos/3385/3385-720.mp4": {
+    "id": "3385",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 10s (conf: 0.67), sheep at 13s (conf: 0.82))"
+  },
+  "https://assets.mixkit.co/videos/50950/50950-720.mp4": {
+    "id": "50950",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 6s (conf: 0.51), cat at 10s (conf: 0.91), person at 11s (conf: 0.95))"
+  },
+  "https://assets.mixkit.co/videos/3399/3399-720.mp4": {
+    "id": "3399",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 12s (conf: 0.84), person at 15s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/50957/50957-720.mp4": {
+    "id": "50957",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.99), person at 3s (conf: 0.73))"
+  },
+  "https://assets.mixkit.co/videos/50943/50943-720.mp4": {
+    "id": "50943",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 12s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/44757/44757-720.mp4": {
+    "id": "44757",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 5s (conf: 0.96), person at 8s (conf: 0.92))"
+  },
+  "https://assets.mixkit.co/videos/20311/20311-720.mp4": {
+    "id": "20311",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.75), bird at 9s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/18173/18173-720.mp4": {
+    "id": "18173",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 6s (conf: 0.54), bird at 7s (conf: 0.6), bird at 16s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/18310/18310-720.mp4": {
+    "id": "18310",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.87), bird at 2s (conf: 0.82), bird at 3s (conf: 0.96))"
+  },
+  "https://assets.mixkit.co/videos/106/106-720.mp4": {
+    "id": "106",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.7), bird at 6s (conf: 0.9))"
+  },
+  "https://assets.mixkit.co/videos/28096/28096-720.mp4": {
+    "id": "28096",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 5s (conf: 0.53), person at 8s (conf: 0.59), bird at 19s (conf: 0.61))"
+  },
+  "https://assets.mixkit.co/videos/41562/41562-720.mp4": {
+    "id": "41562",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.62), bird at 3s (conf: 0.56), bird at 10s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/2167/2167-720.mp4": {
+    "id": "2167",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 18s (conf: 0.74), bird at 20s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/12436/12436-720.mp4": {
+    "id": "12436",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.92), bird at 2s (conf: 0.82), bird at 3s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/2178/2178-720.mp4": {
+    "id": "2178",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/44400/44400-720.mp4": {
+    "id": "44400",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 6s (conf: 0.96))"
+  },
+  "https://assets.mixkit.co/videos/1940/1940-720.mp4": {
+    "id": "1940",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 27s (conf: 0.61))"
+  },
+  "https://assets.mixkit.co/videos/9294/9294-720.mp4": {
+    "id": "9294",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 11s (conf: 0.81))"
+  },
+  "https://assets.mixkit.co/videos/50956/50956-720.mp4": {
+    "id": "50956",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.95), person at 2s (conf: 0.83), person at 3s (conf: 0.99))"
+  },
+  "https://assets.mixkit.co/videos/5012/5012-720.mp4": {
+    "id": "5012",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 7s (conf: 0.76), person at 8s (conf: 0.75), person at 9s (conf: 0.81))"
+  },
+  "https://assets.mixkit.co/videos/48525/48525-720.mp4": {
+    "id": "48525",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.68), bear at 2s (conf: 0.62), bear at 3s (conf: 0.61))"
+  },
+  "https://assets.mixkit.co/videos/44397/44397-720.mp4": {
+    "id": "44397",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.52), bear at 2s (conf: 0.88), bear at 4s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/1952/1952-720.mp4": {
+    "id": "1952",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 58s (conf: 0.88))"
+  },
+  "https://assets.mixkit.co/videos/2164/2164-720.mp4": {
+    "id": "2164",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 3s (conf: 0.53), bird at 4s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/15169/15169-720.mp4": {
+    "id": "15169",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.58), person at 4s (conf: 0.6), person at 15s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/39158/39158-720.mp4": {
+    "id": "39158",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 8s (conf: 0.68), elephant at 9s (conf: 0.77), elephant at 10s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/8097/8097-720.mp4": {
+    "id": "8097",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.9), bear at 2s (conf: 0.82), bear at 3s (conf: 0.94))"
+  },
+  "https://assets.mixkit.co/videos/15586/15586-720.mp4": {
+    "id": "15586",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 13s (conf: 0.55), bear at 15s (conf: 0.68), bear at 16s (conf: 0.77))"
+  },
+  "https://assets.mixkit.co/videos/8047/8047-720.mp4": {
+    "id": "8047",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 4s (conf: 0.51), person at 6s (conf: 0.86), bear at 9s (conf: 0.63))"
+  },
+  "https://assets.mixkit.co/videos/8077/8077-720.mp4": {
+    "id": "8077",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 7s (conf: 0.55), sheep at 12s (conf: 0.61))"
+  },
+  "https://assets.mixkit.co/videos/8114/8114-720.mp4": {
+    "id": "8114",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cow at 2s (conf: 0.54), cow at 4s (conf: 0.63), elephant at 10s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/8108/8108-720.mp4": {
+    "id": "8108",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 6s (conf: 0.73), elephant at 7s (conf: 0.61), elephant at 8s (conf: 0.71))"
+  },
+  "https://assets.mixkit.co/videos/8154/8154-720.mp4": {
+    "id": "8154",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 12s (conf: 0.89), bear at 13s (conf: 0.87), bear at 14s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/31659/31659-720.mp4": {
+    "id": "31659",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 2s (conf: 0.75))"
+  },
+  "https://assets.mixkit.co/videos/8129/8129-720.mp4": {
+    "id": "8129",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.73), bear at 2s (conf: 0.94), bear at 3s (conf: 0.98))"
+  },
+  "https://assets.mixkit.co/videos/8105/8105-720.mp4": {
+    "id": "8105",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cow at 1s (conf: 0.51), cow at 4s (conf: 0.67), bear at 14s (conf: 0.68))"
+  },
+  "https://assets.mixkit.co/videos/8138/8138-720.mp4": {
+    "id": "8138",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.9), bear at 4s (conf: 0.78), bear at 8s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/8121/8121-720.mp4": {
+    "id": "8121",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 6s (conf: 0.55), elephant at 7s (conf: 0.5), elephant at 8s (conf: 0.6))"
+  },
+  "https://assets.mixkit.co/videos/8062/8062-720.mp4": {
+    "id": "8062",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.72), bear at 2s (conf: 0.94), bear at 3s (conf: 0.99))"
+  },
+  "https://assets.mixkit.co/videos/8093/8093-720.mp4": {
+    "id": "8093",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 22s (conf: 0.78), bear at 23s (conf: 0.9), bear at 24s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/8113/8113-720.mp4": {
+    "id": "8113",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 6s (conf: 0.83), person at 7s (conf: 0.65), bear at 12s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/8140/8140-720.mp4": {
+    "id": "8140",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 8s (conf: 0.59), elephant at 13s (conf: 0.62), elephant at 14s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/8106/8106-720.mp4": {
+    "id": "8106",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 15s (conf: 0.63))"
+  },
+  "https://assets.mixkit.co/videos/11418/11418-720.mp4": {
+    "id": "11418",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 5s (conf: 0.67), bird at 10s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/8155/8155-720.mp4": {
+    "id": "8155",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.92), bear at 2s (conf: 0.55), bear at 4s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/8076/8076-720.mp4": {
+    "id": "8076",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.58), bear at 2s (conf: 0.78), bear at 4s (conf: 0.92))"
+  },
+  "https://assets.mixkit.co/videos/8139/8139-720.mp4": {
+    "id": "8139",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 22s (conf: 0.68), bear at 23s (conf: 0.95), bear at 25s (conf: 0.76))"
+  },
+  "https://assets.mixkit.co/videos/8090/8090-720.mp4": {
+    "id": "8090",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 5s (conf: 0.71), bear at 13s (conf: 0.69), bear at 14s (conf: 0.78))"
+  },
+  "https://assets.mixkit.co/videos/18821/18821-720.mp4": {
+    "id": "18821",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 13s (conf: 0.51), person at 14s (conf: 0.54), person at 15s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/48484/48484-720.mp4": {
+    "id": "48484",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 21s (conf: 0.52), person at 23s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/28990/28990-720.mp4": {
+    "id": "28990",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cow at 1s (conf: 0.97), cow at 2s (conf: 0.96), cow at 3s (conf: 0.93))"
+  },
+  "https://assets.mixkit.co/videos/34833/34833-720.mp4": {
+    "id": "34833",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (giraffe at 30s (conf: 0.8), giraffe at 31s (conf: 0.93), giraffe at 33s (conf: 0.75))"
+  },
+  "https://assets.mixkit.co/videos/10248/10248-720.mp4": {
+    "id": "10248",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 1s (conf: 0.57), elephant at 2s (conf: 0.69), person at 9s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/26578/26578-720.mp4": {
+    "id": "26578",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cat at 3s (conf: 0.85), cat at 4s (conf: 0.8), cat at 5s (conf: 0.85))"
+  },
+  "https://assets.mixkit.co/videos/4645/4645-720.mp4": {
+    "id": "4645",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 4s (conf: 0.61), bird at 11s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/35017/35017-720.mp4": {
+    "id": "35017",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 16s (conf: 0.59), person at 17s (conf: 0.65), sheep at 22s (conf: 0.75))"
+  },
+  "https://assets.mixkit.co/videos/5009/5009-720.mp4": {
+    "id": "5009",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 6s (conf: 0.59), person at 10s (conf: 0.6))"
+  },
+  "https://assets.mixkit.co/videos/3520/3520-720.mp4": {
+    "id": "3520",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 7s (conf: 0.63), elephant at 8s (conf: 0.51), elephant at 11s (conf: 0.68))"
+  },
+  "https://assets.mixkit.co/videos/1709/1709-720.mp4": {
+    "id": "1709",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.67), bird at 3s (conf: 0.69), bird at 13s (conf: 0.65))"
+  },
+  "https://assets.mixkit.co/videos/10134/10134-720.mp4": {
+    "id": "10134",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 11s (conf: 0.83))"
+  },
+  "https://assets.mixkit.co/videos/45271/45271-720.mp4": {
+    "id": "45271",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 10s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/17807/17807-720.mp4": {
+    "id": "17807",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 14s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/9980/9980-720.mp4": {
+    "id": "9980",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 13s (conf: 0.52), bird at 14s (conf: 0.62), bird at 16s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/9930/9930-720.mp4": {
+    "id": "9930",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 6s (conf: 0.57), bear at 10s (conf: 0.85), bear at 21s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/16131/16131-720.mp4": {
+    "id": "16131",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.66), bear at 4s (conf: 0.88), bear at 5s (conf: 0.93))"
+  },
+  "https://assets.mixkit.co/videos/26538/26538-720.mp4": {
+    "id": "26538",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 4s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/51454/51454-720.mp4": {
+    "id": "51454",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 12s (conf: 0.7), bear at 14s (conf: 0.6), person at 15s (conf: 0.5))"
+  },
+  "https://assets.mixkit.co/videos/47553/47553-720.mp4": {
+    "id": "47553",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 12s (conf: 0.68), bird at 15s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/6973/6973-720.mp4": {
+    "id": "6973",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 11s (conf: 0.57), person at 22s (conf: 0.58), person at 23s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/51455/51455-720.mp4": {
+    "id": "51455",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 16s (conf: 0.6), person at 25s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/51453/51453-720.mp4": {
+    "id": "51453",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 2s (conf: 0.56), person at 4s (conf: 0.55), person at 13s (conf: 0.72))"
+  },
+  "https://assets.mixkit.co/videos/530/530-720.mp4": {
+    "id": "530",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 4s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/51463/51463-720.mp4": {
+    "id": "51463",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (dog at 2s (conf: 0.86), dog at 3s (conf: 0.97), bear at 4s (conf: 0.75))"
+  },
+  "https://assets.mixkit.co/videos/45636/45636-720.mp4": {
+    "id": "45636",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 12s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/25127/25127-720.mp4": {
+    "id": "25127",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 7s (conf: 0.78))"
+  },
+  "https://assets.mixkit.co/videos/27163/27163-720.mp4": {
+    "id": "27163",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 5s (conf: 0.78))"
+  },
+  "https://assets.mixkit.co/videos/1692/1692-720.mp4": {
+    "id": "1692",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.75), person at 7s (conf: 0.82), person at 8s (conf: 0.63))"
+  },
+  "https://assets.mixkit.co/videos/20348/20348-720.mp4": {
+    "id": "20348",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.54), bird at 3s (conf: 0.7), bird at 5s (conf: 0.61))"
+  },
+  "https://assets.mixkit.co/videos/3393/3393-720.mp4": {
+    "id": "3393",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 1s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/50865/50865-720.mp4": {
+    "id": "50865",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 2s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/50945/50945-720.mp4": {
+    "id": "50945",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 15s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/50947/50947-720.mp4": {
+    "id": "50947",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 5s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/50935/50935-720.mp4": {
+    "id": "50935",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 2s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/3372/3372-720.mp4": {
+    "id": "3372",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 8s (conf: 0.8), person at 10s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/32952/32952-720.mp4": {
+    "id": "32952",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 12s (conf: 0.61))"
+  },
+  "https://assets.mixkit.co/videos/30893/30893-720.mp4": {
+    "id": "30893",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 6s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/26790/26790-720.mp4": {
+    "id": "26790",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 14s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/14179/14179-720.mp4": {
+    "id": "14179",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 5s (conf: 0.72), person at 6s (conf: 0.78), person at 7s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/31780/31780-720.mp4": {
+    "id": "31780",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 3s (conf: 0.51), bear at 6s (conf: 0.69))"
+  },
+  "https://assets.mixkit.co/videos/31597/31597-720.mp4": {
+    "id": "31597",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.66), bear at 15s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/19233/19233-720.mp4": {
+    "id": "19233",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.6), bear at 3s (conf: 0.85))"
+  },
+  "https://assets.mixkit.co/videos/19223/19223-720.mp4": {
+    "id": "19223",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cat at 8s (conf: 0.64))"
+  },
+  "https://assets.mixkit.co/videos/3920/3920-720.mp4": {
+    "id": "3920",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 1.0), person at 2s (conf: 0.67), person at 4s (conf: 0.7))"
+  },
+  "https://assets.mixkit.co/videos/19220/19220-720.mp4": {
+    "id": "19220",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.63), bear at 3s (conf: 0.88))"
+  },
+  "https://assets.mixkit.co/videos/30630/30630-720.mp4": {
+    "id": "30630",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 3s (conf: 0.5))"
+  },
+  "https://assets.mixkit.co/videos/31557/31557-720.mp4": {
+    "id": "31557",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 8s (conf: 0.5))"
+  },
+  "https://assets.mixkit.co/videos/31782/31782-720.mp4": {
+    "id": "31782",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.5), bear at 9s (conf: 0.65))"
+  },
+  "https://assets.mixkit.co/videos/31784/31784-720.mp4": {
+    "id": "31784",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 11s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/50871/50871-720.mp4": {
+    "id": "50871",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.63), bird at 3s (conf: 0.6), bird at 4s (conf: 0.68))"
+  },
+  "https://assets.mixkit.co/videos/30046/30046-720.mp4": {
+    "id": "30046",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/31594/31594-720.mp4": {
+    "id": "31594",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 4s (conf: 0.81))"
+  },
+  "https://assets.mixkit.co/videos/31547/31547-720.mp4": {
+    "id": "31547",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 10s (conf: 0.63), bear at 12s (conf: 0.64))"
+  },
+  "https://assets.mixkit.co/videos/32906/32906-720.mp4": {
+    "id": "32906",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.61), bear at 4s (conf: 0.74))"
+  },
+  "https://assets.mixkit.co/videos/19575/19575-720.mp4": {
+    "id": "19575",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.68), bear at 2s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/30019/30019-720.mp4": {
+    "id": "30019",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 6s (conf: 0.71))"
+  },
+  "https://assets.mixkit.co/videos/3153/3153-720.mp4": {
+    "id": "3153",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.65))"
+  },
+  "https://assets.mixkit.co/videos/51960/51960-720.mp4": {
+    "id": "51960",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 3s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/14440/14440-720.mp4": {
+    "id": "14440",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 10s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/286/286-720.mp4": {
+    "id": "286",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.65), person at 2s (conf: 0.97), person at 3s (conf: 0.9))"
+  },
+  "https://assets.mixkit.co/videos/3903/3903-720.mp4": {
+    "id": "3903",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.94), bird at 2s (conf: 0.67), bird at 3s (conf: 0.71))"
+  },
+  "https://assets.mixkit.co/videos/20637/20637-720.mp4": {
+    "id": "20637",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 3s (conf: 0.52), bird at 9s (conf: 0.7))"
+  },
+  "https://assets.mixkit.co/videos/44399/44399-720.mp4": {
+    "id": "44399",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 4s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/4466/4466-720.mp4": {
+    "id": "4466",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.63), bird at 3s (conf: 0.62), bird at 4s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/45587/45587-720.mp4": {
+    "id": "45587",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cat at 14s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/48403/48403-720.mp4": {
+    "id": "48403",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.8), bear at 2s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/8025/8025-720.mp4": {
+    "id": "8025",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 10s (conf: 0.63))"
+  },
+  "https://assets.mixkit.co/videos/8063/8063-720.mp4": {
+    "id": "8063",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.78), bear at 16s (conf: 0.85), bear at 17s (conf: 0.89))"
+  },
+  "https://assets.mixkit.co/videos/8020/8020-720.mp4": {
+    "id": "8020",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 4s (conf: 0.99), bird at 5s (conf: 0.88), bird at 6s (conf: 0.66))"
+  },
+  "https://assets.mixkit.co/videos/8103/8103-720.mp4": {
+    "id": "8103",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 17s (conf: 0.62))"
+  },
+  "https://assets.mixkit.co/videos/8010/8010-720.mp4": {
+    "id": "8010",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 34s (conf: 0.55), bird at 35s (conf: 0.82))"
+  },
+  "https://assets.mixkit.co/videos/8092/8092-720.mp4": {
+    "id": "8092",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 18s (conf: 0.52), person at 27s (conf: 0.66))"
+  },
+  "https://assets.mixkit.co/videos/8048/8048-720.mp4": {
+    "id": "8048",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 3s (conf: 0.74), bear at 10s (conf: 0.77), bird at 24s (conf: 0.91))"
+  },
+  "https://assets.mixkit.co/videos/8051/8051-720.mp4": {
+    "id": "8051",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (sheep at 1s (conf: 0.68), sheep at 2s (conf: 0.72), sheep at 4s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/8050/8050-720.mp4": {
+    "id": "8050",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 16s (conf: 0.56), bird at 17s (conf: 0.61))"
+  },
+  "https://assets.mixkit.co/videos/7800/7800-720.mp4": {
+    "id": "7800",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.6), bird at 14s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/19625/19625-720.mp4": {
+    "id": "19625",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.55), bear at 7s (conf: 0.52), bear at 14s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/47360/47360-720.mp4": {
+    "id": "47360",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.76), bear at 2s (conf: 0.77), bear at 3s (conf: 0.75))"
+  },
+  "https://assets.mixkit.co/videos/46102/46102-720.mp4": {
+    "id": "46102",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 11s (conf: 0.84))"
+  },
+  "https://assets.mixkit.co/videos/14409/14409-720.mp4": {
+    "id": "14409",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.76), bear at 2s (conf: 0.57), bear at 3s (conf: 0.71))"
+  },
+  "https://assets.mixkit.co/videos/18796/18796-720.mp4": {
+    "id": "18796",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (dog at 4s (conf: 0.52), bear at 5s (conf: 0.59), bear at 6s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/46103/46103-720.mp4": {
+    "id": "46103",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.84), bear at 3s (conf: 0.96), bear at 4s (conf: 0.91))"
+  },
+  "https://assets.mixkit.co/videos/19617/19617-720.mp4": {
+    "id": "19617",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 3s (conf: 0.61), person at 13s (conf: 0.53))"
+  },
+  "https://assets.mixkit.co/videos/22154/22154-720.mp4": {
+    "id": "22154",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 5s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/50163/50163-720.mp4": {
+    "id": "50163",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/35624/35624-720.mp4": {
+    "id": "35624",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 8s (conf: 0.54), person at 11s (conf: 0.66), person at 12s (conf: 0.55))"
+  },
+  "https://assets.mixkit.co/videos/25244/25244-720.mp4": {
+    "id": "25244",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.89), bear at 32s (conf: 0.83), bear at 33s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/8110/8110-720.mp4": {
+    "id": "8110",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 7s (conf: 0.68), bear at 8s (conf: 0.74), bear at 9s (conf: 0.85))"
+  },
+  "https://assets.mixkit.co/videos/44490/44490-720.mp4": {
+    "id": "44490",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 4s (conf: 0.5))"
+  },
+  "https://assets.mixkit.co/videos/44383/44383-720.mp4": {
+    "id": "44383",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 6s (conf: 0.63))"
+  },
+  "https://assets.mixkit.co/videos/9885/9885-720.mp4": {
+    "id": "9885",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 31s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/8112/8112-720.mp4": {
+    "id": "8112",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 37s (conf: 0.71), bear at 38s (conf: 0.66), bear at 41s (conf: 0.72))"
+  },
+  "https://assets.mixkit.co/videos/44392/44392-720.mp4": {
+    "id": "44392",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 20s (conf: 0.55), elephant at 25s (conf: 0.63), elephant at 26s (conf: 0.87))"
+  },
+  "https://assets.mixkit.co/videos/45062/45062-720.mp4": {
+    "id": "45062",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.51), bird at 4s (conf: 0.63), bird at 5s (conf: 0.58))"
+  },
+  "https://assets.mixkit.co/videos/44391/44391-720.mp4": {
+    "id": "44391",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 9s (conf: 0.84), bear at 10s (conf: 0.54))"
+  },
+  "https://assets.mixkit.co/videos/45066/45066-720.mp4": {
+    "id": "45066",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 2s (conf: 0.51), bird at 3s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/45076/45076-720.mp4": {
+    "id": "45076",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.66), bird at 2s (conf: 0.71), bird at 8s (conf: 0.83))"
+  },
+  "https://assets.mixkit.co/videos/45138/45138-720.mp4": {
+    "id": "45138",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (horse at 1s (conf: 0.62), horse at 3s (conf: 0.6))"
+  },
+  "https://assets.mixkit.co/videos/45185/45185-720.mp4": {
+    "id": "45185",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (elephant at 1s (conf: 0.94), elephant at 2s (conf: 0.92), person at 3s (conf: 0.72))"
+  },
+  "https://assets.mixkit.co/videos/45146/45146-720.mp4": {
+    "id": "45146",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 5s (conf: 0.93), person at 6s (conf: 0.96), person at 7s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/45139/45139-720.mp4": {
+    "id": "45139",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 25s (conf: 0.69), person at 26s (conf: 0.92), person at 27s (conf: 0.98))"
+  },
+  "https://assets.mixkit.co/videos/45186/45186-720.mp4": {
+    "id": "45186",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 10s (conf: 0.72), bird at 11s (conf: 0.61), bird at 12s (conf: 0.71))"
+  },
+  "https://assets.mixkit.co/videos/45208/45208-720.mp4": {
+    "id": "45208",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.74), bear at 2s (conf: 0.7), bear at 3s (conf: 0.86))"
+  },
+  "https://assets.mixkit.co/videos/45210/45210-720.mp4": {
+    "id": "45210",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 6s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/46331/46331-720.mp4": {
+    "id": "46331",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 3s (conf: 0.6))"
+  },
+  "https://assets.mixkit.co/videos/46354/46354-720.mp4": {
+    "id": "46354",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (cat at 9s (conf: 0.53), bird at 13s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/46366/46366-720.mp4": {
+    "id": "46366",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 3s (conf: 0.61), bird at 5s (conf: 0.66), bird at 13s (conf: 0.56))"
+  },
+  "https://assets.mixkit.co/videos/46422/46422-720.mp4": {
+    "id": "46422",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 2s (conf: 0.52))"
+  },
+  "https://assets.mixkit.co/videos/46460/46460-720.mp4": {
+    "id": "46460",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 3s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/10437/10437-720.mp4": {
+    "id": "10437",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 3s (conf: 0.59))"
+  },
+  "https://assets.mixkit.co/videos/14171/14171-720.mp4": {
+    "id": "14171",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 6s (conf: 0.69), person at 7s (conf: 0.5), dog at 9s (conf: 0.57))"
+  },
+  "https://assets.mixkit.co/videos/14173/14173-720.mp4": {
+    "id": "14173",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 7s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/14182/14182-720.mp4": {
+    "id": "14182",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bear at 1s (conf: 0.87), bear at 2s (conf: 0.83), bear at 4s (conf: 0.51))"
+  },
+  "https://assets.mixkit.co/videos/19602/19602-720.mp4": {
+    "id": "19602",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 1s (conf: 0.58), person at 3s (conf: 0.5))"
+  },
+  "https://assets.mixkit.co/videos/19604/19604-720.mp4": {
+    "id": "19604",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (horse at 7s (conf: 0.57), horse at 9s (conf: 0.53), horse at 10s (conf: 0.67))"
+  },
+  "https://assets.mixkit.co/videos/14219/14219-720.mp4": {
+    "id": "14219",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (person at 4s (conf: 0.66), person at 28s (conf: 0.93))"
+  },
+  "https://assets.mixkit.co/videos/19611/19611-720.mp4": {
+    "id": "19611",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (bird at 1s (conf: 0.62))"
+  },
+  "https://assets.mixkit.co/videos/19621/19621-720.mp4": {
+    "id": "19621",
+    "reason": "Automated 1s FasterRCNN audit rejected: living being detected (giraffe at 11s (conf: 0.68), giraffe at 15s (conf: 0.8))"
+  },
+  "https://assets.mixkit.co/videos/45601/45601-720.mp4": {
+    "id": "45601",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.69), bear at 2s (conf: 0.5)"
+  },
+  "https://assets.mixkit.co/videos/5033/5033-720.mp4": {
+    "id": "5033",
+    "reason": "1s FasterRCNN rejected: bird at 2s (conf: 0.58), bird at 3s (conf: 0.89)"
+  },
+  "https://assets.mixkit.co/videos/30900/30900-720.mp4": {
+    "id": "30900",
+    "reason": "1s FasterRCNN rejected: sheep at 11s (conf: 0.59)"
+  },
+  "https://assets.mixkit.co/videos/19638/19638-720.mp4": {
+    "id": "19638",
+    "reason": "1s FasterRCNN rejected: bird at 10s (conf: 0.59)"
+  },
+  "https://assets.mixkit.co/videos/12274/12274-720.mp4": {
+    "id": "12274",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.63), person at 4s (conf: 0.61)"
+  },
+  "https://assets.mixkit.co/videos/34984/34984-720.mp4": {
+    "id": "34984",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.7)"
+  },
+  "https://assets.mixkit.co/videos/19456/19456-720.mp4": {
+    "id": "19456",
+    "reason": "1s FasterRCNN rejected: person at 17s (conf: 0.71)"
+  },
+  "https://assets.mixkit.co/videos/16462/16462-720.mp4": {
+    "id": "16462",
+    "reason": "1s FasterRCNN rejected: person at 21s (conf: 0.53), person at 46s (conf: 0.51)"
+  },
+  "https://assets.mixkit.co/videos/3438/3438-720.mp4": {
+    "id": "3438",
+    "reason": "1s FasterRCNN rejected: person at 8s (conf: 0.51), person at 9s (conf: 0.6)"
+  },
+  "https://assets.mixkit.co/videos/48498/48498-720.mp4": {
+    "id": "48498",
+    "reason": "1s FasterRCNN rejected: person at 12s (conf: 0.64)"
+  },
+  "https://assets.mixkit.co/videos/21612/21612-720.mp4": {
+    "id": "21612",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.85)"
+  },
+  "https://assets.mixkit.co/videos/34435/34435-720.mp4": {
+    "id": "34435",
+    "reason": "1s FasterRCNN rejected: person at 9s (conf: 0.62), person at 10s (conf: 0.51)"
+  },
+  "https://assets.mixkit.co/videos/5109/5109-720.mp4": {
+    "id": "5109",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.67), person at 2s (conf: 0.68)"
+  },
+  "https://assets.mixkit.co/videos/4781/4781-720.mp4": {
+    "id": "4781",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/12486/12486-720.mp4": {
+    "id": "12486",
+    "reason": "1s FasterRCNN rejected: dog at 6s (conf: 0.86), cat at 7s (conf: 0.51)"
+  },
+  "https://assets.mixkit.co/videos/41832/41832-720.mp4": {
+    "id": "41832",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.94), person at 2s (conf: 0.93)"
+  },
+  "https://assets.mixkit.co/videos/44251/44251-720.mp4": {
+    "id": "44251",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/5112/5112-720.mp4": {
+    "id": "5112",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.99), person at 3s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/5114/5114-720.mp4": {
+    "id": "5114",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.88), person at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/44258/44258-720.mp4": {
+    "id": "44258",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/33883/33883-720.mp4": {
+    "id": "33883",
+    "reason": "1s FasterRCNN rejected: person at 5s (conf: 0.89), person at 6s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/40348/40348-720.mp4": {
+    "id": "40348",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/44918/44918-720.mp4": {
+    "id": "44918",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/41839/41839-720.mp4": {
+    "id": "41839",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.53), person at 3s (conf: 0.58)"
+  },
+  "https://assets.mixkit.co/videos/4108/4108-720.mp4": {
+    "id": "4108",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.92), person at 2s (conf: 0.84)"
+  },
+  "https://assets.mixkit.co/videos/48840/48840-720.mp4": {
+    "id": "48840",
+    "reason": "1s FasterRCNN rejected: bird at 2s (conf: 0.93), bird at 3s (conf: 0.76)"
+  },
+  "https://assets.mixkit.co/videos/49475/49475-720.mp4": {
+    "id": "49475",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.87), person at 3s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/46273/46273-720.mp4": {
+    "id": "46273",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/34203/34203-720.mp4": {
+    "id": "34203",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.59), person at 4s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/49474/49474-720.mp4": {
+    "id": "49474",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/22166/22166-720.mp4": {
+    "id": "22166",
+    "reason": "1s FasterRCNN rejected: cat at 5s (conf: 0.82), person at 6s (conf: 0.69)"
+  },
+  "https://assets.mixkit.co/videos/32167/32167-720.mp4": {
+    "id": "32167",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.94), person at 2s (conf: 0.91)"
+  },
+  "https://assets.mixkit.co/videos/2231/2231-720.mp4": {
+    "id": "2231",
+    "reason": "1s FasterRCNN rejected: person at 4s (conf: 0.59)"
+  },
+  "https://assets.mixkit.co/videos/49338/49338-720.mp4": {
+    "id": "49338",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.96), person at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/46229/46229-720.mp4": {
+    "id": "46229",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.87), person at 3s (conf: 0.7)"
+  },
+  "https://assets.mixkit.co/videos/5117/5117-720.mp4": {
+    "id": "5117",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.83), person at 4s (conf: 0.83)"
+  },
+  "https://assets.mixkit.co/videos/41837/41837-720.mp4": {
+    "id": "41837",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/2806/2806-720.mp4": {
+    "id": "2806",
+    "reason": "1s FasterRCNN rejected: person at 6s (conf: 0.99), person at 7s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/33880/33880-720.mp4": {
+    "id": "33880",
+    "reason": "1s FasterRCNN rejected: person at 4s (conf: 0.65), person at 5s (conf: 0.79)"
+  },
+  "https://assets.mixkit.co/videos/32108/32108-720.mp4": {
+    "id": "32108",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.87), person at 2s (conf: 0.7)"
+  },
+  "https://assets.mixkit.co/videos/49473/49473-720.mp4": {
+    "id": "49473",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/27367/27367-720.mp4": {
+    "id": "27367",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/2805/2805-720.mp4": {
+    "id": "2805",
+    "reason": "1s FasterRCNN rejected: person at 5s (conf: 0.52), person at 11s (conf: 0.63)"
+  },
+  "https://assets.mixkit.co/videos/41843/41843-720.mp4": {
+    "id": "41843",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/48832/48832-720.mp4": {
+    "id": "48832",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.97), person at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/41825/41825-720.mp4": {
+    "id": "41825",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.58), person at 4s (conf: 0.85)"
+  },
+  "https://assets.mixkit.co/videos/23547/23547-720.mp4": {
+    "id": "23547",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/22472/22472-720.mp4": {
+    "id": "22472",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.94), person at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/12723/12723-720.mp4": {
+    "id": "12723",
+    "reason": "1s FasterRCNN rejected: person at 6s (conf: 0.52)"
+  },
+  "https://assets.mixkit.co/videos/5224/5224-720.mp4": {
+    "id": "5224",
+    "reason": "Shariah title violation: matched \\bwedding\\b"
+  },
+  "https://assets.mixkit.co/videos/29425/29425-720.mp4": {
+    "id": "29425",
+    "reason": "Shariah title violation: matched \\bchurch\\b"
+  },
+  "https://assets.mixkit.co/videos/33890/33890-720.mp4": {
+    "id": "33890",
+    "reason": "Shariah title violation: matched \\bhalloween\\b"
+  },
+  "https://assets.mixkit.co/videos/33887/33887-720.mp4": {
+    "id": "33887",
+    "reason": "Shariah title violation: matched \\bhalloween\\b"
+  },
+  "https://assets.mixkit.co/videos/33879/33879-720.mp4": {
+    "id": "33879",
+    "reason": "Shariah title violation: matched \\bhalloween\\b"
+  },
+  "https://assets.mixkit.co/videos/5111/5111-720.mp4": {
+    "id": "5111",
+    "reason": "Shariah title violation: matched \\bbirthday\\b"
+  },
+  "https://assets.mixkit.co/videos/51655/51655-720.mp4": {
+    "id": "51655",
+    "reason": "Shariah title violation: matched \\bromantic\\b"
+  },
+  "https://assets.mixkit.co/videos/5101/5101-720.mp4": {
+    "id": "5101",
+    "reason": "Shariah title violation: matched \\bparty\\b"
+  },
+  "https://assets.mixkit.co/videos/33878/33878-720.mp4": {
+    "id": "33878",
+    "reason": "Shariah title violation: matched \\bhalloween\\b"
+  },
+  "https://assets.mixkit.co/videos/48540/48540-720.mp4": {
+    "id": "48540",
+    "reason": "Shariah title violation: matched \\bchurch\\b"
+  },
+  "https://assets.mixkit.co/videos/5104/5104-720.mp4": {
+    "id": "5104",
+    "reason": "Shariah title violation: matched \\bcake\\b"
+  },
+  "https://assets.mixkit.co/videos/5102/5102-720.mp4": {
+    "id": "5102",
+    "reason": "Shariah title violation: matched \\bbirthday\\b"
+  },
+  "https://assets.mixkit.co/videos/9503/9503-720.mp4": {
+    "id": "9503",
+    "reason": "Shariah title violation: matched \\bromance\\b"
+  },
+  "https://assets.mixkit.co/videos/22192/22192-720.mp4": {
+    "id": "22192",
+    "reason": "Shariah title violation: matched \\bbible\\b"
+  },
+  "https://assets.mixkit.co/videos/12584/12584-720.mp4": {
+    "id": "12584",
+    "reason": "Shariah title violation: matched \\btarot\\b"
+  },
+  "https://assets.mixkit.co/videos/5108/5108-720.mp4": {
+    "id": "5108",
+    "reason": "Shariah title violation: matched \\bbirthday\\b"
+  },
+  "https://assets.mixkit.co/videos/33877/33877-720.mp4": {
+    "id": "33877",
+    "reason": "Shariah title violation: matched \\bhalloween\\b"
+  },
+  "https://assets.mixkit.co/videos/51087/51087-720.mp4": {
+    "id": "51087",
+    "reason": "Shariah title violation: matched \\britual\\b"
+  },
+  "https://assets.mixkit.co/videos/15934/15934-720.mp4": {
+    "id": "15934",
+    "reason": "Shariah title violation: matched \\bchristmas\\b"
+  },
+  "https://assets.mixkit.co/videos/12546/12546-720.mp4": {
+    "id": "12546",
+    "reason": "Shariah title violation: matched \\bbirthday\\b"
+  },
+  "https://assets.mixkit.co/videos/48539/48539-720.mp4": {
+    "id": "48539",
+    "reason": "Shariah title violation: matched \\bcathedral\\b"
+  },
+  "https://assets.mixkit.co/videos/32094/32094-720.mp4": {
+    "id": "32094",
+    "reason": "Shariah title violation: matched \\bfortune teller\\b"
+  },
+  "https://assets.mixkit.co/videos/48643/48643-720.mp4": {
+    "id": "48643",
+    "reason": "Shariah title violation: matched \\bbirthday\\b"
+  },
+  "https://assets.mixkit.co/videos/30241/30241-720.mp4": {
+    "id": "30241",
+    "reason": "Shariah title violation: matched \\bromantic\\b"
+  },
+  "https://assets.mixkit.co/videos/9426/9426-720.mp4": {
+    "id": "9426",
+    "reason": "Shariah title violation: matched \\bwedding\\b"
+  },
+  "https://assets.mixkit.co/videos/12483/12483-720.mp4": {
+    "id": "12483",
+    "reason": "Shariah title violation: matched \\bouija\\b"
+  },
+  "https://assets.mixkit.co/videos/48605/48605-720.mp4": {
+    "id": "48605",
+    "reason": "Shariah title violation: matched \\bchurch\\b"
+  },
+  "https://assets.mixkit.co/videos/14350/14350-720.mp4": {
+    "id": "14350",
+    "reason": "Shariah title violation: matched \\bromantic\\b"
+  },
+  "https://assets.mixkit.co/videos/30231/30231-720.mp4": {
+    "id": "30231",
+    "reason": "Shariah title violation: matched \\bromantic\\b"
+  },
+  "https://assets.mixkit.co/videos/12376/12376-720.mp4": {
+    "id": "12376",
+    "reason": "Shariah title violation: matched \\bouija\\b"
+  },
+  "https://assets.mixkit.co/videos/44401/44401-720.mp4": {
+    "id": "44401",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.84), person at 6s (conf: 0.56)"
+  },
+  "https://assets.mixkit.co/videos/1214/1214-720.mp4": {
+    "id": "1214",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.58), person at 3s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/44474/44474-720.mp4": {
+    "id": "44474",
+    "reason": "1s FasterRCNN rejected: person at 4s (conf: 0.9), person at 5s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/19179/19179-720.mp4": {
+    "id": "19179",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.91), bird at 2s (conf: 0.95)"
+  },
+  "https://assets.mixkit.co/videos/19501/19501-720.mp4": {
+    "id": "19501",
+    "reason": "1s FasterRCNN rejected: bird at 3s (conf: 0.55)"
+  },
+  "https://assets.mixkit.co/videos/34164/34164-720.mp4": {
+    "id": "34164",
+    "reason": "1s FasterRCNN rejected: bear at 4s (conf: 0.8)"
+  },
+  "https://assets.mixkit.co/videos/34168/34168-720.mp4": {
+    "id": "34168",
+    "reason": "1s FasterRCNN rejected: person at 7s (conf: 0.53), person at 8s (conf: 0.5)"
+  },
+  "https://assets.mixkit.co/videos/50573/50573-720.mp4": {
+    "id": "50573",
+    "reason": "1s FasterRCNN rejected: bear at 11s (conf: 0.52)"
+  },
+  "https://assets.mixkit.co/videos/45324/45324-720.mp4": {
+    "id": "45324",
+    "reason": "1s FasterRCNN rejected: cat at 3s (conf: 0.52), cat at 4s (conf: 0.8)"
+  },
+  "https://assets.mixkit.co/videos/45286/45286-720.mp4": {
+    "id": "45286",
+    "reason": "1s FasterRCNN rejected: bear at 9s (conf: 0.78)"
+  },
+  "https://assets.mixkit.co/videos/35461/35461-720.mp4": {
+    "id": "35461",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.82), person at 4s (conf: 0.94)"
+  },
+  "https://assets.mixkit.co/videos/34167/34167-720.mp4": {
+    "id": "34167",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.58)"
+  },
+  "https://assets.mixkit.co/videos/34160/34160-720.mp4": {
+    "id": "34160",
+    "reason": "1s FasterRCNN rejected: person at 6s (conf: 0.61), person at 7s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/44867/44867-720.mp4": {
+    "id": "44867",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.82), bird at 2s (conf: 0.95)"
+  },
+  "https://assets.mixkit.co/videos/34161/34161-720.mp4": {
+    "id": "34161",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.67), person at 4s (conf: 0.63)"
+  },
+  "https://assets.mixkit.co/videos/34649/34649-720.mp4": {
+    "id": "34649",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.98), person at 4s (conf: 0.58)"
+  },
+  "https://assets.mixkit.co/videos/35065/35065-720.mp4": {
+    "id": "35065",
+    "reason": "1s FasterRCNN rejected: bird at 24s (conf: 0.53), bird at 25s (conf: 0.76)"
+  },
+  "https://assets.mixkit.co/videos/45368/45368-720.mp4": {
+    "id": "45368",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.68), person at 4s (conf: 0.53)"
+  },
+  "https://assets.mixkit.co/videos/4043/4043-720.mp4": {
+    "id": "4043",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/4042/4042-720.mp4": {
+    "id": "4042",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4063/4063-720.mp4": {
+    "id": "4063",
+    "reason": "1s FasterRCNN rejected: bird at 8s (conf: 0.57), bird at 9s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/4062/4062-720.mp4": {
+    "id": "4062",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.84)"
+  },
+  "https://assets.mixkit.co/videos/4053/4053-720.mp4": {
+    "id": "4053",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.62), person at 2s (conf: 0.62)"
+  },
+  "https://assets.mixkit.co/videos/4058/4058-720.mp4": {
+    "id": "4058",
+    "reason": "1s FasterRCNN rejected: bird at 3s (conf: 0.67), bird at 6s (conf: 0.62)"
+  },
+  "https://assets.mixkit.co/videos/4072/4072-720.mp4": {
+    "id": "4072",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4065/4065-720.mp4": {
+    "id": "4065",
+    "reason": "1s FasterRCNN rejected: person at 25s (conf: 0.51), person at 26s (conf: 0.82)"
+  },
+  "https://assets.mixkit.co/videos/4083/4083-720.mp4": {
+    "id": "4083",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.6), person at 4s (conf: 0.69)"
+  },
+  "https://assets.mixkit.co/videos/4071/4071-720.mp4": {
+    "id": "4071",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4077/4077-720.mp4": {
+    "id": "4077",
+    "reason": "1s FasterRCNN rejected: bird at 10s (conf: 0.58), person at 14s (conf: 0.53)"
+  },
+  "https://assets.mixkit.co/videos/4091/4091-720.mp4": {
+    "id": "4091",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.9), person at 2s (conf: 0.94)"
+  },
+  "https://assets.mixkit.co/videos/4092/4092-720.mp4": {
+    "id": "4092",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.86), person at 3s (conf: 0.58)"
+  },
+  "https://assets.mixkit.co/videos/4068/4068-720.mp4": {
+    "id": "4068",
+    "reason": "1s FasterRCNN rejected: dog at 1s (conf: 0.66), dog at 2s (conf: 0.8)"
+  },
+  "https://assets.mixkit.co/videos/4099/4099-720.mp4": {
+    "id": "4099",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.87), person at 2s (conf: 0.91)"
+  },
+  "https://assets.mixkit.co/videos/4102/4102-720.mp4": {
+    "id": "4102",
+    "reason": "1s FasterRCNN rejected: cat at 1s (conf: 1.0), cat at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4106/4106-720.mp4": {
+    "id": "4106",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.84), person at 3s (conf: 0.58)"
+  },
+  "https://assets.mixkit.co/videos/4103/4103-720.mp4": {
+    "id": "4103",
+    "reason": "1s FasterRCNN rejected: cat at 1s (conf: 0.97), cat at 2s (conf: 0.95)"
+  },
+  "https://assets.mixkit.co/videos/4112/4112-720.mp4": {
+    "id": "4112",
+    "reason": "1s FasterRCNN rejected: giraffe at 1s (conf: 1.0), giraffe at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4094/4094-720.mp4": {
+    "id": "4094",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.97), person at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/4121/4121-720.mp4": {
+    "id": "4121",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.96), person at 2s (conf: 0.93)"
+  },
+  "https://assets.mixkit.co/videos/4109/4109-720.mp4": {
+    "id": "4109",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.84), person at 13s (conf: 0.88)"
+  },
+  "https://assets.mixkit.co/videos/4125/4125-720.mp4": {
+    "id": "4125",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.95)"
+  },
+  "https://assets.mixkit.co/videos/4133/4133-720.mp4": {
+    "id": "4133",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.96), bird at 5s (conf: 0.74)"
+  },
+  "https://assets.mixkit.co/videos/4126/4126-720.mp4": {
+    "id": "4126",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.82), person at 2s (conf: 0.9)"
+  },
+  "https://assets.mixkit.co/videos/4130/4130-720.mp4": {
+    "id": "4130",
+    "reason": "1s FasterRCNN rejected: cat at 1s (conf: 0.86), cat at 2s (conf: 0.87)"
+  },
+  "https://assets.mixkit.co/videos/4134/4134-720.mp4": {
+    "id": "4134",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4135/4135-720.mp4": {
+    "id": "4135",
+    "reason": "1s FasterRCNN rejected: zebra at 9s (conf: 0.77)"
+  },
+  "https://assets.mixkit.co/videos/4143/4143-720.mp4": {
+    "id": "4143",
+    "reason": "1s FasterRCNN rejected: person at 11s (conf: 0.52)"
+  },
+  "https://assets.mixkit.co/videos/4118/4118-720.mp4": {
+    "id": "4118",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.92), person at 2s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/4144/4144-720.mp4": {
+    "id": "4144",
+    "reason": "1s FasterRCNN rejected: person at 13s (conf: 0.54), person at 14s (conf: 0.51)"
+  },
+  "https://assets.mixkit.co/videos/4159/4159-720.mp4": {
+    "id": "4159",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.69), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4147/4147-720.mp4": {
+    "id": "4147",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.96), person at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/4164/4164-720.mp4": {
+    "id": "4164",
+    "reason": "1s FasterRCNN rejected: bird at 15s (conf: 0.65)"
+  },
+  "https://assets.mixkit.co/videos/4169/4169-720.mp4": {
+    "id": "4169",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4175/4175-720.mp4": {
+    "id": "4175",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4153/4153-720.mp4": {
+    "id": "4153",
+    "reason": "1s FasterRCNN rejected: person at 20s (conf: 0.56), person at 21s (conf: 0.55)"
+  },
+  "https://assets.mixkit.co/videos/4174/4174-720.mp4": {
+    "id": "4174",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4181/4181-720.mp4": {
+    "id": "4181",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.68), person at 2s (conf: 0.8)"
+  },
+  "https://assets.mixkit.co/videos/4176/4176-720.mp4": {
+    "id": "4176",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.72), person at 19s (conf: 0.63)"
+  },
+  "https://assets.mixkit.co/videos/4184/4184-720.mp4": {
+    "id": "4184",
+    "reason": "1s FasterRCNN rejected: cat at 18s (conf: 0.67)"
+  },
+  "https://assets.mixkit.co/videos/4189/4189-720.mp4": {
+    "id": "4189",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.97), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/4188/4188-720.mp4": {
+    "id": "4188",
+    "reason": "1s FasterRCNN rejected: person at 8s (conf: 0.66), person at 18s (conf: 0.51)"
+  },
+  "https://assets.mixkit.co/videos/4173/4173-720.mp4": {
+    "id": "4173",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.83)"
+  },
+  "https://assets.mixkit.co/videos/4172/4172-720.mp4": {
+    "id": "4172",
+    "reason": "1s FasterRCNN rejected: person at 6s (conf: 0.89), person at 7s (conf: 0.85)"
+  },
+  "https://assets.mixkit.co/videos/4211/4211-720.mp4": {
+    "id": "4211",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4216/4216-720.mp4": {
+    "id": "4216",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4210/4210-720.mp4": {
+    "id": "4210",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4219/4219-720.mp4": {
+    "id": "4219",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4226/4226-720.mp4": {
+    "id": "4226",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/4221/4221-720.mp4": {
+    "id": "4221",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.97), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/4223/4223-720.mp4": {
+    "id": "4223",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4227/4227-720.mp4": {
+    "id": "4227",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.96), person at 2s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/4220/4220-720.mp4": {
+    "id": "4220",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4228/4228-720.mp4": {
+    "id": "4228",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4231/4231-720.mp4": {
+    "id": "4231",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4243/4243-720.mp4": {
+    "id": "4243",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.52), person at 5s (conf: 0.79)"
+  },
+  "https://assets.mixkit.co/videos/4256/4256-720.mp4": {
+    "id": "4256",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4255/4255-720.mp4": {
+    "id": "4255",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.98), person at 2s (conf: 0.82)"
+  },
+  "https://assets.mixkit.co/videos/4263/4263-720.mp4": {
+    "id": "4263",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.65), person at 5s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/4267/4267-720.mp4": {
+    "id": "4267",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.69), person at 2s (conf: 0.72)"
+  },
+  "https://assets.mixkit.co/videos/4259/4259-720.mp4": {
+    "id": "4259",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4272/4272-720.mp4": {
+    "id": "4272",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.68), person at 2s (conf: 0.76)"
+  },
+  "https://assets.mixkit.co/videos/4271/4271-720.mp4": {
+    "id": "4271",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4275/4275-720.mp4": {
+    "id": "4275",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.86), bird at 2s (conf: 0.79)"
+  },
+  "https://assets.mixkit.co/videos/4274/4274-720.mp4": {
+    "id": "4274",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4278/4278-720.mp4": {
+    "id": "4278",
+    "reason": "1s FasterRCNN rejected: bird at 5s (conf: 0.61), bird at 6s (conf: 0.64)"
+  },
+  "https://assets.mixkit.co/videos/4277/4277-720.mp4": {
+    "id": "4277",
+    "reason": "1s FasterRCNN rejected: person at 6s (conf: 0.92), person at 18s (conf: 0.65)"
+  },
+  "https://assets.mixkit.co/videos/4284/4284-720.mp4": {
+    "id": "4284",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4293/4293-720.mp4": {
+    "id": "4293",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/4295/4295-720.mp4": {
+    "id": "4295",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.85), person at 2s (conf: 0.89)"
+  },
+  "https://assets.mixkit.co/videos/4294/4294-720.mp4": {
+    "id": "4294",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.98), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/4315/4315-720.mp4": {
+    "id": "4315",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.75), person at 3s (conf: 0.61)"
+  },
+  "https://assets.mixkit.co/videos/4325/4325-720.mp4": {
+    "id": "4325",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.78), person at 3s (conf: 0.81)"
+  },
+  "https://assets.mixkit.co/videos/4329/4329-720.mp4": {
+    "id": "4329",
+    "reason": "1s FasterRCNN rejected: person at 20s (conf: 0.58)"
+  },
+  "https://assets.mixkit.co/videos/4350/4350-720.mp4": {
+    "id": "4350",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/4349/4349-720.mp4": {
+    "id": "4349",
+    "reason": "1s FasterRCNN rejected: bird at 2s (conf: 0.82), dog at 3s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/4367/4367-720.mp4": {
+    "id": "4367",
+    "reason": "1s FasterRCNN rejected: person at 5s (conf: 0.66)"
+  },
+  "https://assets.mixkit.co/videos/4369/4369-720.mp4": {
+    "id": "4369",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.87), person at 3s (conf: 0.71)"
+  },
+  "https://assets.mixkit.co/videos/4373/4373-720.mp4": {
+    "id": "4373",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.64)"
+  },
+  "https://assets.mixkit.co/videos/4377/4377-720.mp4": {
+    "id": "4377",
+    "reason": "1s FasterRCNN rejected: person at 15s (conf: 0.54), person at 16s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/4387/4387-720.mp4": {
+    "id": "4387",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.91), person at 4s (conf: 0.55)"
+  },
+  "https://assets.mixkit.co/videos/4385/4385-720.mp4": {
+    "id": "4385",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.86), person at 2s (conf: 0.81)"
+  },
+  "https://assets.mixkit.co/videos/4388/4388-720.mp4": {
+    "id": "4388",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.88), person at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/1043/1043-720.mp4": {
+    "id": "1043",
+    "reason": "1s FasterRCNN rejected: bird at 6s (conf: 0.62), elephant at 7s (conf: 0.91)"
+  },
+  "https://assets.mixkit.co/videos/1040/1040-720.mp4": {
+    "id": "1040",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/1048/1048-720.mp4": {
+    "id": "1048",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1046/1046-720.mp4": {
+    "id": "1046",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1038/1038-720.mp4": {
+    "id": "1038",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1044/1044-720.mp4": {
+    "id": "1044",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1039/1039-720.mp4": {
+    "id": "1039",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.78), person at 4s (conf: 0.81)"
+  },
+  "https://assets.mixkit.co/videos/1045/1045-720.mp4": {
+    "id": "1045",
+    "reason": "1s FasterRCNN rejected: person at 4s (conf: 0.93), person at 5s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1054/1054-720.mp4": {
+    "id": "1054",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.93), person at 3s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1049/1049-720.mp4": {
+    "id": "1049",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1056/1056-720.mp4": {
+    "id": "1056",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.92), person at 2s (conf: 0.95)"
+  },
+  "https://assets.mixkit.co/videos/1053/1053-720.mp4": {
+    "id": "1053",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1051/1051-720.mp4": {
+    "id": "1051",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/1064/1064-720.mp4": {
+    "id": "1064",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.9), person at 3s (conf: 0.94)"
+  },
+  "https://assets.mixkit.co/videos/1065/1065-720.mp4": {
+    "id": "1065",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.98), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/1066/1066-720.mp4": {
+    "id": "1066",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.75), person at 2s (conf: 0.8)"
+  },
+  "https://assets.mixkit.co/videos/1109/1109-720.mp4": {
+    "id": "1109",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/1062/1062-720.mp4": {
+    "id": "1062",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.98), person at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/1110/1110-720.mp4": {
+    "id": "1110",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1108/1108-720.mp4": {
+    "id": "1108",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1112/1112-720.mp4": {
+    "id": "1112",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1113/1113-720.mp4": {
+    "id": "1113",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1117/1117-720.mp4": {
+    "id": "1117",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1111/1111-720.mp4": {
+    "id": "1111",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1069/1069-720.mp4": {
+    "id": "1069",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1115/1115-720.mp4": {
+    "id": "1115",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/1118/1118-720.mp4": {
+    "id": "1118",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1059/1059-720.mp4": {
+    "id": "1059",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.97), person at 4s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1120/1120-720.mp4": {
+    "id": "1120",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.98), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/1121/1121-720.mp4": {
+    "id": "1121",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.95), person at 3s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1124/1124-720.mp4": {
+    "id": "1124",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1123/1123-720.mp4": {
+    "id": "1123",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 1.0), person at 4s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1125/1125-720.mp4": {
+    "id": "1125",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1134/1134-720.mp4": {
+    "id": "1134",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1132/1132-720.mp4": {
+    "id": "1132",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 1.0), horse at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1133/1133-720.mp4": {
+    "id": "1133",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1135/1135-720.mp4": {
+    "id": "1135",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.96), horse at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/1139/1139-720.mp4": {
+    "id": "1139",
+    "reason": "1s FasterRCNN rejected: person at 15s (conf: 0.83)"
+  },
+  "https://assets.mixkit.co/videos/1143/1143-720.mp4": {
+    "id": "1143",
+    "reason": "1s FasterRCNN rejected: horse at 2s (conf: 1.0), horse at 3s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1146/1146-720.mp4": {
+    "id": "1146",
+    "reason": "1s FasterRCNN rejected: person at 11s (conf: 0.72)"
+  },
+  "https://assets.mixkit.co/videos/1136/1136-720.mp4": {
+    "id": "1136",
+    "reason": "1s FasterRCNN rejected: person at 14s (conf: 0.7), person at 19s (conf: 0.78)"
+  },
+  "https://assets.mixkit.co/videos/1154/1154-720.mp4": {
+    "id": "1154",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1156/1156-720.mp4": {
+    "id": "1156",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), horse at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/1157/1157-720.mp4": {
+    "id": "1157",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 1.0), horse at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1158/1158-720.mp4": {
+    "id": "1158",
+    "reason": "1s FasterRCNN rejected: dog at 2s (conf: 0.86), horse at 3s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1148/1148-720.mp4": {
+    "id": "1148",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.51), person at 2s (conf: 0.55)"
+  },
+  "https://assets.mixkit.co/videos/1145/1145-720.mp4": {
+    "id": "1145",
+    "reason": "1s FasterRCNN rejected: person at 14s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/1208/1208-720.mp4": {
+    "id": "1208",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1209/1209-720.mp4": {
+    "id": "1209",
+    "reason": "1s FasterRCNN rejected: dog at 1s (conf: 1.0), dog at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1221/1221-720.mp4": {
+    "id": "1221",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1223/1223-720.mp4": {
+    "id": "1223",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1204/1204-720.mp4": {
+    "id": "1204",
+    "reason": "1s FasterRCNN rejected: person at 7s (conf: 0.84), dog at 8s (conf: 0.68)"
+  },
+  "https://assets.mixkit.co/videos/1228/1228-720.mp4": {
+    "id": "1228",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1227/1227-720.mp4": {
+    "id": "1227",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1232/1232-720.mp4": {
+    "id": "1232",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.92), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/1251/1251-720.mp4": {
+    "id": "1251",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1262/1262-720.mp4": {
+    "id": "1262",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1263/1263-720.mp4": {
+    "id": "1263",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1264/1264-720.mp4": {
+    "id": "1264",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1256/1256-720.mp4": {
+    "id": "1256",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1266/1266-720.mp4": {
+    "id": "1266",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1253/1253-720.mp4": {
+    "id": "1253",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1267/1267-720.mp4": {
+    "id": "1267",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1268/1268-720.mp4": {
+    "id": "1268",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.98), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1271/1271-720.mp4": {
+    "id": "1271",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1261/1261-720.mp4": {
+    "id": "1261",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1269/1269-720.mp4": {
+    "id": "1269",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1270/1270-720.mp4": {
+    "id": "1270",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/1272/1272-720.mp4": {
+    "id": "1272",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1274/1274-720.mp4": {
+    "id": "1274",
+    "reason": "1s FasterRCNN rejected: person at 6s (conf: 0.95), person at 7s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/1276/1276-720.mp4": {
+    "id": "1276",
+    "reason": "1s FasterRCNN rejected: dog at 5s (conf: 0.84), bear at 6s (conf: 0.5)"
+  },
+  "https://assets.mixkit.co/videos/1277/1277-720.mp4": {
+    "id": "1277",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1278/1278-720.mp4": {
+    "id": "1278",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.98), person at 3s (conf: 0.77)"
+  },
+  "https://assets.mixkit.co/videos/1281/1281-720.mp4": {
+    "id": "1281",
+    "reason": "1s FasterRCNN rejected: bear at 11s (conf: 0.53)"
+  },
+  "https://assets.mixkit.co/videos/1285/1285-720.mp4": {
+    "id": "1285",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1288/1288-720.mp4": {
+    "id": "1288",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.92), person at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/1286/1286-720.mp4": {
+    "id": "1286",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1282/1282-720.mp4": {
+    "id": "1282",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1275/1275-720.mp4": {
+    "id": "1275",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.65), person at 4s (conf: 0.53)"
+  },
+  "https://assets.mixkit.co/videos/1290/1290-720.mp4": {
+    "id": "1290",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.95), person at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/1287/1287-720.mp4": {
+    "id": "1287",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1295/1295-720.mp4": {
+    "id": "1295",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.97), person at 2s (conf: 0.95)"
+  },
+  "https://assets.mixkit.co/videos/1293/1293-720.mp4": {
+    "id": "1293",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/1291/1291-720.mp4": {
+    "id": "1291",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.9), person at 2s (conf: 0.93)"
+  },
+  "https://assets.mixkit.co/videos/1298/1298-720.mp4": {
+    "id": "1298",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.81), person at 2s (conf: 0.58)"
+  },
+  "https://assets.mixkit.co/videos/1296/1296-720.mp4": {
+    "id": "1296",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.94), person at 2s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/1297/1297-720.mp4": {
+    "id": "1297",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11004/11004-720.mp4": {
+    "id": "11004",
+    "reason": "1s FasterRCNN rejected: bird at 10s (conf: 0.61)"
+  },
+  "https://assets.mixkit.co/videos/11006/11006-720.mp4": {
+    "id": "11006",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 0.65), elephant at 2s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/11000/11000-720.mp4": {
+    "id": "11000",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.82), bird at 2s (conf: 0.88)"
+  },
+  "https://assets.mixkit.co/videos/11008/11008-720.mp4": {
+    "id": "11008",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.96), horse at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11005/11005-720.mp4": {
+    "id": "11005",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.99), bird at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11012/11012-720.mp4": {
+    "id": "11012",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.65)"
+  },
+  "https://assets.mixkit.co/videos/11014/11014-720.mp4": {
+    "id": "11014",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.96), horse at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/11013/11013-720.mp4": {
+    "id": "11013",
+    "reason": "1s FasterRCNN rejected: bird at 11s (conf: 0.53), person at 16s (conf: 0.52)"
+  },
+  "https://assets.mixkit.co/videos/11016/11016-720.mp4": {
+    "id": "11016",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11007/11007-720.mp4": {
+    "id": "11007",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11019/11019-720.mp4": {
+    "id": "11019",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.92), bird at 2s (conf: 0.78)"
+  },
+  "https://assets.mixkit.co/videos/11018/11018-720.mp4": {
+    "id": "11018",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11020/11020-720.mp4": {
+    "id": "11020",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.85), bear at 2s (conf: 0.83)"
+  },
+  "https://assets.mixkit.co/videos/11021/11021-720.mp4": {
+    "id": "11021",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.54), dog at 3s (conf: 0.62)"
+  },
+  "https://assets.mixkit.co/videos/11026/11026-720.mp4": {
+    "id": "11026",
+    "reason": "1s FasterRCNN rejected: bird at 17s (conf: 0.84)"
+  },
+  "https://assets.mixkit.co/videos/11030/11030-720.mp4": {
+    "id": "11030",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11032/11032-720.mp4": {
+    "id": "11032",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.88), bird at 2s (conf: 0.57)"
+  },
+  "https://assets.mixkit.co/videos/11034/11034-720.mp4": {
+    "id": "11034",
+    "reason": "1s FasterRCNN rejected: bird at 2s (conf: 1.0), dog at 3s (conf: 0.9)"
+  },
+  "https://assets.mixkit.co/videos/11033/11033-720.mp4": {
+    "id": "11033",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.95), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11035/11035-720.mp4": {
+    "id": "11035",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.68), cow at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11031/11031-720.mp4": {
+    "id": "11031",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.99), bird at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/11041/11041-720.mp4": {
+    "id": "11041",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.91), person at 2s (conf: 0.8)"
+  },
+  "https://assets.mixkit.co/videos/11029/11029-720.mp4": {
+    "id": "11029",
+    "reason": "1s FasterRCNN rejected: bear at 5s (conf: 0.55), bear at 14s (conf: 0.53)"
+  },
+  "https://assets.mixkit.co/videos/11043/11043-720.mp4": {
+    "id": "11043",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.63)"
+  },
+  "https://assets.mixkit.co/videos/11036/11036-720.mp4": {
+    "id": "11036",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 0.99), cow at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11049/11049-720.mp4": {
+    "id": "11049",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.88), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11047/11047-720.mp4": {
+    "id": "11047",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.99), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11054/11054-720.mp4": {
+    "id": "11054",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.81), dog at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11048/11048-720.mp4": {
+    "id": "11048",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.97), bird at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/11050/11050-720.mp4": {
+    "id": "11050",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11053/11053-720.mp4": {
+    "id": "11053",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 0.8), sheep at 2s (conf: 0.82)"
+  },
+  "https://assets.mixkit.co/videos/11051/11051-720.mp4": {
+    "id": "11051",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.69), horse at 2s (conf: 0.85)"
+  },
+  "https://assets.mixkit.co/videos/11055/11055-720.mp4": {
+    "id": "11055",
+    "reason": "1s FasterRCNN rejected: giraffe at 1s (conf: 0.99), giraffe at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11059/11059-720.mp4": {
+    "id": "11059",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11057/11057-720.mp4": {
+    "id": "11057",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), cow at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11061/11061-720.mp4": {
+    "id": "11061",
+    "reason": "1s FasterRCNN rejected: giraffe at 1s (conf: 0.99), giraffe at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11052/11052-720.mp4": {
+    "id": "11052",
+    "reason": "1s FasterRCNN rejected: bird at 4s (conf: 0.78), bird at 5s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/11062/11062-720.mp4": {
+    "id": "11062",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11063/11063-720.mp4": {
+    "id": "11063",
+    "reason": "1s FasterRCNN rejected: giraffe at 1s (conf: 1.0), giraffe at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11067/11067-720.mp4": {
+    "id": "11067",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11056/11056-720.mp4": {
+    "id": "11056",
+    "reason": "1s FasterRCNN rejected: dog at 2s (conf: 0.65), dog at 3s (conf: 0.75)"
+  },
+  "https://assets.mixkit.co/videos/11064/11064-720.mp4": {
+    "id": "11064",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.71), horse at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/11076/11076-720.mp4": {
+    "id": "11076",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.53), person at 4s (conf: 0.65)"
+  },
+  "https://assets.mixkit.co/videos/11070/11070-720.mp4": {
+    "id": "11070",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.87), cow at 2s (conf: 0.83)"
+  },
+  "https://assets.mixkit.co/videos/11066/11066-720.mp4": {
+    "id": "11066",
+    "reason": "1s FasterRCNN rejected: bear at 8s (conf: 0.86), bear at 9s (conf: 0.83)"
+  },
+  "https://assets.mixkit.co/videos/11069/11069-720.mp4": {
+    "id": "11069",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.91), bird at 2s (conf: 0.68)"
+  },
+  "https://assets.mixkit.co/videos/11077/11077-720.mp4": {
+    "id": "11077",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11085/11085-720.mp4": {
+    "id": "11085",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.99), bear at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11087/11087-720.mp4": {
+    "id": "11087",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 1.0), cow at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11089/11089-720.mp4": {
+    "id": "11089",
+    "reason": "1s FasterRCNN rejected: giraffe at 1s (conf: 1.0), giraffe at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11091/11091-720.mp4": {
+    "id": "11091",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11088/11088-720.mp4": {
+    "id": "11088",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11095/11095-720.mp4": {
+    "id": "11095",
+    "reason": "1s FasterRCNN rejected: dog at 1s (conf: 1.0), dog at 2s (conf: 0.91)"
+  },
+  "https://assets.mixkit.co/videos/11093/11093-720.mp4": {
+    "id": "11093",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.72), dog at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11092/11092-720.mp4": {
+    "id": "11092",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11098/11098-720.mp4": {
+    "id": "11098",
+    "reason": "1s FasterRCNN rejected: horse at 12s (conf: 0.52)"
+  },
+  "https://assets.mixkit.co/videos/11100/11100-720.mp4": {
+    "id": "11100",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.99), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11094/11094-720.mp4": {
+    "id": "11094",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 0.83), elephant at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/11101/11101-720.mp4": {
+    "id": "11101",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.99), cow at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11097/11097-720.mp4": {
+    "id": "11097",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11099/11099-720.mp4": {
+    "id": "11099",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11104/11104-720.mp4": {
+    "id": "11104",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.82), cow at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11102/11102-720.mp4": {
+    "id": "11102",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.91), bird at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/11109/11109-720.mp4": {
+    "id": "11109",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.98), bird at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11107/11107-720.mp4": {
+    "id": "11107",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11110/11110-720.mp4": {
+    "id": "11110",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11111/11111-720.mp4": {
+    "id": "11111",
+    "reason": "1s FasterRCNN rejected: cat at 1s (conf: 0.8), dog at 2s (conf: 0.92)"
+  },
+  "https://assets.mixkit.co/videos/11103/11103-720.mp4": {
+    "id": "11103",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11112/11112-720.mp4": {
+    "id": "11112",
+    "reason": "1s FasterRCNN rejected: dog at 1s (conf: 0.75), dog at 2s (conf: 0.77)"
+  },
+  "https://assets.mixkit.co/videos/11115/11115-720.mp4": {
+    "id": "11115",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11114/11114-720.mp4": {
+    "id": "11114",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.99), bear at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11116/11116-720.mp4": {
+    "id": "11116",
+    "reason": "1s FasterRCNN rejected: person at 6s (conf: 0.96), person at 7s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11119/11119-720.mp4": {
+    "id": "11119",
+    "reason": "1s FasterRCNN rejected: bird at 18s (conf: 0.58), person at 24s (conf: 0.52)"
+  },
+  "https://assets.mixkit.co/videos/11131/11131-720.mp4": {
+    "id": "11131",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 0.62)"
+  },
+  "https://assets.mixkit.co/videos/11136/11136-720.mp4": {
+    "id": "11136",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.56), person at 2s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/11137/11137-720.mp4": {
+    "id": "11137",
+    "reason": "1s FasterRCNN rejected: person at 12s (conf: 0.65)"
+  },
+  "https://assets.mixkit.co/videos/11138/11138-720.mp4": {
+    "id": "11138",
+    "reason": "1s FasterRCNN rejected: bird at 10s (conf: 0.79), bird at 13s (conf: 0.82)"
+  },
+  "https://assets.mixkit.co/videos/11141/11141-720.mp4": {
+    "id": "11141",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.97), bird at 2s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/11140/11140-720.mp4": {
+    "id": "11140",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.99), horse at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11144/11144-720.mp4": {
+    "id": "11144",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.98), bird at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11143/11143-720.mp4": {
+    "id": "11143",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11147/11147-720.mp4": {
+    "id": "11147",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.66), elephant at 2s (conf: 0.83)"
+  },
+  "https://assets.mixkit.co/videos/11150/11150-720.mp4": {
+    "id": "11150",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 1.0), cow at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11148/11148-720.mp4": {
+    "id": "11148",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11154/11154-720.mp4": {
+    "id": "11154",
+    "reason": "1s FasterRCNN rejected: sheep at 1s (conf: 0.9), sheep at 2s (conf: 0.88)"
+  },
+  "https://assets.mixkit.co/videos/11151/11151-720.mp4": {
+    "id": "11151",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.97), bear at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11146/11146-720.mp4": {
+    "id": "11146",
+    "reason": "1s FasterRCNN rejected: giraffe at 1s (conf: 1.0), giraffe at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11157/11157-720.mp4": {
+    "id": "11157",
+    "reason": "1s FasterRCNN rejected: zebra at 1s (conf: 0.98), zebra at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11152/11152-720.mp4": {
+    "id": "11152",
+    "reason": "1s FasterRCNN rejected: elephant at 1s (conf: 1.0), elephant at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11155/11155-720.mp4": {
+    "id": "11155",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.72), bird at 3s (conf: 0.94)"
+  },
+  "https://assets.mixkit.co/videos/11156/11156-720.mp4": {
+    "id": "11156",
+    "reason": "1s FasterRCNN rejected: dog at 1s (conf: 0.87), bear at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11160/11160-720.mp4": {
+    "id": "11160",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.96), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11161/11161-720.mp4": {
+    "id": "11161",
+    "reason": "1s FasterRCNN rejected: cow at 1s (conf: 0.93), cow at 2s (conf: 0.88)"
+  },
+  "https://assets.mixkit.co/videos/11159/11159-720.mp4": {
+    "id": "11159",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11162/11162-720.mp4": {
+    "id": "11162",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.97), bird at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11158/11158-720.mp4": {
+    "id": "11158",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.8), bird at 2s (conf: 0.79)"
+  },
+  "https://assets.mixkit.co/videos/11163/11163-720.mp4": {
+    "id": "11163",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11169/11169-720.mp4": {
+    "id": "11169",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11164/11164-720.mp4": {
+    "id": "11164",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0), person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11173/11173-720.mp4": {
+    "id": "11173",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.99), bird at 2s (conf: 0.98)"
+  },
+  "https://assets.mixkit.co/videos/11165/11165-720.mp4": {
+    "id": "11165",
+    "reason": "1s FasterRCNN rejected: zebra at 1s (conf: 1.0), zebra at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11171/11171-720.mp4": {
+    "id": "11171",
+    "reason": "1s FasterRCNN rejected: dog at 1s (conf: 0.94), dog at 2s (conf: 0.96)"
+  },
+  "https://assets.mixkit.co/videos/11174/11174-720.mp4": {
+    "id": "11174",
+    "reason": "1s FasterRCNN rejected: horse at 7s (conf: 0.96), horse at 8s (conf: 0.86)"
+  },
+  "https://assets.mixkit.co/videos/11177/11177-720.mp4": {
+    "id": "11177",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11166/11166-720.mp4": {
+    "id": "11166",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 1.0), bear at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/11178/11178-720.mp4": {
+    "id": "11178",
+    "reason": "1s FasterRCNN rejected: horse at 1s (conf: 0.99), horse at 2s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/11172/11172-720.mp4": {
+    "id": "11172",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 1.0), bird at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/31498/31498-720.mp4": {
+    "id": "31498",
+    "reason": "Purged CGI / Animation '3D Gold Plaques Shaped Like Tumid Arches': Strict mandate requires 100% real live-motion cinematic footage."
+  },
+  "https://assets.mixkit.co/videos/31753/31753-720.mp4": {
+    "id": "31753",
+    "reason": "Purged CGI / Animation 'Rows Of Golden 3D Greek Columns With Creepers': Strict mandate requires 100% real live-motion cinematic footage."
+  },
+  "https://assets.mixkit.co/videos/1246/1246-720.mp4": {
+    "id": "1246",
+    "reason": "Purged category 'lantern': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/46344/46344-720.mp4": {
+    "id": "46344",
+    "reason": "Purged category 'tech': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/46351/46351-720.mp4": {
+    "id": "46351",
+    "reason": "Purged category 'tech': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/46364/46364-720.mp4": {
+    "id": "46364",
+    "reason": "Purged category 'tech': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/46365/46365-720.mp4": {
+    "id": "46365",
+    "reason": "Purged category 'tech': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/46367/46367-720.mp4": {
+    "id": "46367",
+    "reason": "Purged category 'tech': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/46368/46368-720.mp4": {
+    "id": "46368",
+    "reason": "Purged category 'tech': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10411/10411-720.mp4": {
+    "id": "10411",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10412/10412-720.mp4": {
+    "id": "10412",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10415/10415-720.mp4": {
+    "id": "10415",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10419/10419-720.mp4": {
+    "id": "10419",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10420/10420-720.mp4": {
+    "id": "10420",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10421/10421-720.mp4": {
+    "id": "10421",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10423/10423-720.mp4": {
+    "id": "10423",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10424/10424-720.mp4": {
+    "id": "10424",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10425/10425-720.mp4": {
+    "id": "10425",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10428/10428-720.mp4": {
+    "id": "10428",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10429/10429-720.mp4": {
+    "id": "10429",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10431/10431-720.mp4": {
+    "id": "10431",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10433/10433-720.mp4": {
+    "id": "10433",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10436/10436-720.mp4": {
+    "id": "10436",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10438/10438-720.mp4": {
+    "id": "10438",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/10439/10439-720.mp4": {
+    "id": "10439",
+    "reason": "Purged category 'food': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/3458/3458-720.mp4": {
+    "id": "3458",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/41741/41741-720.mp4": {
+    "id": "41741",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/3461/3461-720.mp4": {
+    "id": "3461",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/17426/17426-720.mp4": {
+    "id": "17426",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/48919/48919-720.mp4": {
+    "id": "48919",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/3453/3453-720.mp4": {
+    "id": "3453",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/6925/6925-720.mp4": {
+    "id": "6925",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/48841/48841-720.mp4": {
+    "id": "48841",
+    "reason": "Purged category 'lantern': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/21114/21114-720.mp4": {
+    "id": "21114",
+    "reason": "Purged category 'lantern': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/14675/14675-720.mp4": {
+    "id": "14675",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/19550/19550-720.mp4": {
+    "id": "19550",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/12567/12567-720.mp4": {
+    "id": "12567",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/2804/2804-720.mp4": {
+    "id": "2804",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/38507/38507-720.mp4": {
+    "id": "38507",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/17305/17305-720.mp4": {
+    "id": "17305",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/22167/22167-720.mp4": {
+    "id": "22167",
+    "reason": "Purged category 'lantern': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/19193/19193-720.mp4": {
+    "id": "19193",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/38508/38508-720.mp4": {
+    "id": "38508",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/19278/19278-720.mp4": {
+    "id": "19278",
+    "reason": "Purged category 'lantern': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/13902/13902-720.mp4": {
+    "id": "13902",
+    "reason": "Purged category 'candle_light': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/19357/19357-720.mp4": {
+    "id": "19357",
+    "reason": "Purged category 'lantern': Quran live-motion visuals mandate pure atmospheric nature, celestial majesty, and sacred Islamic architecture only."
+  },
+  "https://assets.mixkit.co/videos/34163/34163-720.mp4": {
+    "id": "34163",
+    "reason": "1s FasterRCNN rejected: bear at 1s (conf: 0.57)"
+  },
+  "https://assets.mixkit.co/videos/50571/50571-720.mp4": {
+    "id": "50571",
+    "reason": "1s FasterRCNN rejected: bird at 3s (conf: 0.52)"
+  },
+  "https://assets.mixkit.co/videos/32409/32409-720.mp4": {
+    "id": "32409",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.51)"
+  },
+  "https://assets.mixkit.co/videos/28017/28017-720.mp4": {
+    "id": "28017",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28030/28030-720.mp4": {
+    "id": "28030",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/28032/28032-720.mp4": {
+    "id": "28032",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.84)"
+  },
+  "https://assets.mixkit.co/videos/28035/28035-720.mp4": {
+    "id": "28035",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.99)"
+  },
+  "https://assets.mixkit.co/videos/28033/28033-720.mp4": {
+    "id": "28033",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28029/28029-720.mp4": {
+    "id": "28029",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28037/28037-720.mp4": {
+    "id": "28037",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28028/28028-720.mp4": {
+    "id": "28028",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.97)"
+  },
+  "https://assets.mixkit.co/videos/28034/28034-720.mp4": {
+    "id": "28034",
+    "reason": "1s FasterRCNN rejected: person at 2s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28040/28040-720.mp4": {
+    "id": "28040",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28039/28039-720.mp4": {
+    "id": "28039",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.93)"
+  },
+  "https://assets.mixkit.co/videos/28044/28044-720.mp4": {
+    "id": "28044",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28043/28043-720.mp4": {
+    "id": "28043",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28042/28042-720.mp4": {
+    "id": "28042",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28026/28026-720.mp4": {
+    "id": "28026",
+    "reason": "1s FasterRCNN rejected: elephant at 12s (conf: 0.56)"
+  },
+  "https://assets.mixkit.co/videos/28027/28027-720.mp4": {
+    "id": "28027",
+    "reason": "1s FasterRCNN rejected: bird at 4s (conf: 0.71)"
+  },
+  "https://assets.mixkit.co/videos/28045/28045-720.mp4": {
+    "id": "28045",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 1.0)"
+  },
+  "https://assets.mixkit.co/videos/28056/28056-720.mp4": {
+    "id": "28056",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.66)"
+  },
+  "https://assets.mixkit.co/videos/28060/28060-720.mp4": {
+    "id": "28060",
+    "reason": "1s FasterRCNN rejected: bird at 1s (conf: 0.69)"
+  },
+  "https://assets.mixkit.co/videos/28059/28059-720.mp4": {
+    "id": "28059",
+    "reason": "1s FasterRCNN rejected: person at 24s (conf: 0.54)"
+  },
+  "https://assets.mixkit.co/videos/28052/28052-720.mp4": {
+    "id": "28052",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.65)"
+  },
+  "https://assets.mixkit.co/videos/28051/28051-720.mp4": {
+    "id": "28051",
+    "reason": "1s FasterRCNN rejected: bear at 51s (conf: 0.55)"
+  },
+  "https://assets.mixkit.co/videos/28064/28064-720.mp4": {
+    "id": "28064",
+    "reason": "1s FasterRCNN rejected: person at 8s (conf: 0.66)"
+  },
+  "https://assets.mixkit.co/videos/28072/28072-720.mp4": {
+    "id": "28072",
+    "reason": "1s FasterRCNN rejected: person at 28s (conf: 0.59)"
+  },
+  "https://assets.mixkit.co/videos/28076/28076-720.mp4": {
+    "id": "28076",
+    "reason": "1s FasterRCNN rejected: person at 3s (conf: 0.68)"
+  },
+  "https://assets.mixkit.co/videos/28090/28090-720.mp4": {
+    "id": "28090",
+    "reason": "1s FasterRCNN rejected: person at 1s (conf: 0.68)"
+  },
+  "https://assets.mixkit.co/videos/28077/28077-720.mp4": {
+    "id": "28077",
+    "reason": "1s FasterRCNN rejected: person at 31s (conf: 0.84)"
   }
 }
