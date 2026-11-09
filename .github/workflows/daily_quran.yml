@@ -61,6 +61,8 @@ jobs:
           GEMINI_BACKUP_API_KEY: ${{ secrets.GEMINI_BACKUP_API_KEY }}
           GEMINI_KEY_3: ${{ secrets.GEMINI_KEY_3 }}
           GEMINI_KEY_4: ${{ secrets.GEMINI_KEY_4 }}
+          GEMINI_KEY_5: ${{ secrets.GEMINI_KEY_5 }}
+          GEMINI_POST_API_KEY: ${{ secrets.GEMINI_POST_API_KEY }}
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
@@ -95,6 +97,8 @@ jobs:
           [ -n "$GEMINI_BACKUP_API_KEY" ] && ! grep -q "GEMINI_BACKUP_API_KEY=" .env 2>/dev/null && echo "GEMINI_BACKUP_API_KEY=$GEMINI_BACKUP_API_KEY" >> .env
           [ -n "$GEMINI_KEY_3" ] && ! grep -q "GEMINI_KEY_3=" .env 2>/dev/null && echo "GEMINI_KEY_3=$GEMINI_KEY_3" >> .env
           [ -n "$GEMINI_KEY_4" ] && ! grep -q "GEMINI_KEY_4=" .env 2>/dev/null && echo "GEMINI_KEY_4=$GEMINI_KEY_4" >> .env
+          [ -n "$GEMINI_KEY_5" ] && ! grep -q "GEMINI_KEY_5=" .env 2>/dev/null && echo "GEMINI_KEY_5=$GEMINI_KEY_5" >> .env
+          [ -n "$GEMINI_POST_API_KEY" ] && ! grep -q "GEMINI_POST_API_KEY=" .env 2>/dev/null && echo "GEMINI_POST_API_KEY=$GEMINI_POST_API_KEY" >> .env
           [ -n "$FB_ACCESS_TOKEN" ] && ! grep -q "FB_ACCESS_TOKEN=" .env 2>/dev/null && echo "FB_ACCESS_TOKEN=$FB_ACCESS_TOKEN" >> .env
           [ -n "$FB_PAGE_ID" ] && ! grep -q "FB_PAGE_ID=" .env 2>/dev/null && echo "FB_PAGE_ID=$FB_PAGE_ID" >> .env
           [ -n "$IG_USER_ID" ] && ! grep -q "IG_USER_ID=" .env 2>/dev/null && echo "IG_USER_ID=$IG_USER_ID" >> .env
@@ -111,6 +115,8 @@ jobs:
           GEMINI_BACKUP_API_KEY: ${{ secrets.GEMINI_BACKUP_API_KEY }}
           GEMINI_KEY_3: ${{ secrets.GEMINI_KEY_3 }}
           GEMINI_KEY_4: ${{ secrets.GEMINI_KEY_4 }}
+          GEMINI_KEY_5: ${{ secrets.GEMINI_KEY_5 }}
+          GEMINI_POST_API_KEY: ${{ secrets.GEMINI_POST_API_KEY }}
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
