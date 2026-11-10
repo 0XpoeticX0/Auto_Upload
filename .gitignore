@@ -78,3 +78,6 @@ htmlcov/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Test Quiz Lab (Local experimental redesign)
+test_quiz_lab/
