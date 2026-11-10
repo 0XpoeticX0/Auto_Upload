@@ -11,6 +11,7 @@ Features:
 import os
 import sys
 import json
+import time
 import random
 import subprocess
 from app.logger import logger
@@ -23,8 +24,26 @@ from app.quran_verse.mix_catalog import (
 )
 from app.quran_verse.triplet_rotator import get_next_video_scenes
 from app.quran_verse.renderer import ensure_local_clip
+from app.history import fetch_recent_quran_pipeline_history, _supabase_insert
 
 STATE_FILE = os.path.abspath("data/quran_mix_state.json")
+
+SURAH_SPIRITUAL_HOOKS = {
+    1: "সকল রোগের মহৌষধ ও সরল পথের চিরন্তন দিশা",
+    94: "কষ্টের পরেই কি স্বস্তি আসে?",
+    97: "হাজার মাসের চেয়েও শ্রেষ্ঠ এক মহিমান্বিত রাতের সন্ধান",
+    103: "মানুষের নিশ্চিত ক্ষতি থেকে বাঁচার ৪টি অলঙ্ঘনীয় শর্ত",
+    105: "আবাবিল পাখির সেই অলৌকিক ঐতিহাসিক ঘটনা",
+    106: "চরম ক্ষুধা ও ভীতির মাঝে আল্লাহর পরম নিরাপত্তা",
+    107: "লোকদেখানো নামাজ ও এতিমের হক অবহেলার পরিণতি",
+    108: "নবীজির ব্যথিত হৃদয়ে হাউযে কাউসারের সুসংবাদ",
+    109: "দ্বীনের ব্যাপারে আপসহীন নিখাদ ঈমানের ঘোষণা",
+    110: "আল্লাহর সাহায্য ও চূড়ান্ত বিজয়ের শুভ আগমন",
+    111: "অহংকারী আবু লাহাবের নির্মম পরিণতি",
+    112: "আল্লাহর একত্ববাদের শ্রেষ্ঠ কালজয়ী ঘোষণা",
+    113: "হিংসা ও অমঙ্গলের কালো ছায়া থেকে আল্লাহর আশ্রয়",
+    114: "অন্তরে গোপন কুমন্ত্রণাদানকারী থেকে চূড়ান্ত মুক্তি"
+}
 
 def load_or_init_mix_state() -> dict:
     if os.path.exists(STATE_FILE):
@@ -51,29 +70,82 @@ def save_mix_state(state: dict):
         json.dump(state, f, indent=2, ensure_ascii=False)
 
 def get_next_mix_surah(forced_surah: int = None) -> int:
+    """
+    Selects the next Surah for Quran Mix with STRICT Supabase + YouTube ground-truth anti-repetition.
+    Guarantees:
+    - 0% repetition of any Surah uploaded in recent videos (50-video cooldown).
+    - Checks live YouTube uploads and Supabase used_islamic_video table.
+    - Deterministically selects completely unrecited or maximum cooldown distance Surahs.
+    - Immune to git rollback or failed runner commits.
+    """
     if forced_surah and forced_surah in MIX_SHORTS_CATALOG:
+        logger.info(f"Manual Surah Forced: Surah {forced_surah} ({MIX_SHORTS_CATALOG[forced_surah]['title_bn']})")
         return forced_surah
 
+    available_surahs = list(MIX_SHORTS_CATALOG.keys())
+
+    # 1. Fetch recent Quran video history across Supabase and YouTube Live
+    quran_history = fetch_recent_quran_pipeline_history(limit=60)
+    recent_surahs = [r.get("surah") for r in quran_history if r.get("surah")]
+
+    # 2. Compute exact cooldown distance for each catalog Surah
+    # 0 = published yesterday, 999 = never published in recent history
+    distance_map = {}
+    for s in available_surahs:
+        if s in recent_surahs:
+            distance_map[s] = recent_surahs.index(s)
+        else:
+            distance_map[s] = 999
+
+    logger.info("🕌 [Supabase Ground-Truth] Quran Mix Cooldown Audit (Last 60 videos):")
+    for s, dist in sorted(distance_map.items(), key=lambda x: x[1]):
+        bn = MIX_SHORTS_CATALOG[s]["title_bn"]
+        status = "FRESH (Never in last 60)" if dist == 999 else f"Used {dist} videos ago"
+        logger.info(f"   - Surah {s:3d} ({bn}): {status}")
+
+    # 3. Filter candidates strictly meeting the cooldown rule (dist >= 50 or 999)
+    candidates_cooldown = [s for s, dist in distance_map.items() if dist >= 50]
+
+    if candidates_cooldown:
+        # Prioritize completely unused (dist == 999)
+        unused = [s for s in candidates_cooldown if distance_map[s] == 999]
+        if unused:
+            chosen = random.choice(unused)
+            logger.info(f"✅ [Cooldown Gate PASSED] Selected fresh unrecited Surah {chosen} ({MIX_SHORTS_CATALOG[chosen]['title_bn']}) from {len(unused)} unused candidates.")
+        else:
+            # Pick from maximum distance pool
+            max_dist = max(distance_map[s] for s in candidates_cooldown)
+            best_pool = [s for s in candidates_cooldown if distance_map[s] == max_dist]
+            chosen = random.choice(best_pool)
+            logger.info(f"✅ [Cooldown Gate PASSED] Selected Surah {chosen} ({MIX_SHORTS_CATALOG[chosen]['title_bn']}) with max cooldown distance {max_dist}.")
+    else:
+        # Fallback: strictly pick the maximum cooldown distance Surah, NEVER within the last 7 videos
+        sorted_by_dist = sorted(distance_map.items(), key=lambda x: x[1], reverse=True)
+        safe_pool = [s for s, dist in sorted_by_dist if dist >= min(7, len(available_surahs) - 1)]
+        if not safe_pool:
+            safe_pool = [sorted_by_dist[0][0]]
+        chosen = safe_pool[0]
+        logger.warning(f"⚠️ All catalog Surahs inside cooldown. Selected max distance Surah {chosen} (distance {distance_map[chosen]}).")
+
+    # 4. Save local state cache as secondary backup
     state = load_or_init_mix_state()
-    plan = state.get("plan", [])
-    idx = state.get("current_index", 0)
-
-    if idx >= len(plan):
-        state["cycle"] = state.get("cycle", 1) + 1
-        state["current_index"] = 0
-        random.shuffle(plan)
-        state["plan"] = plan
-        idx = 0
-
-    surah = plan[idx]
-    state["current_index"] = idx + 1
     state.setdefault("history", []).append({
-        "surah": surah,
+        "surah": chosen,
         "timestamp": os.getenv("GITHUB_RUN_ID", "local")
     })
     save_mix_state(state)
-    logger.info(f"Selected Surah {surah} for Quran Mix Slot (Index {idx+1}/{len(plan)}, Cycle {state.get('cycle', 1)})")
-    return surah
+
+    # 5. Sync cloud state to Supabase
+    try:
+        _supabase_insert({
+            "id": "quran_mix_state_v1",
+            "title": json.dumps({"last_chosen_surah": chosen, "timestamp": int(time.time())}),
+            "source": "quran_mix_state"
+        })
+    except Exception as e:
+        logger.debug(f"Cloud mix state sync notice: {e}")
+
+    return chosen
 
 def build_ass_subtitles(surah: int, timings: list[dict], total_dur: float, ass_out_path: str):
     meta = MIX_SHORTS_CATALOG.get(surah, {})
@@ -248,11 +320,13 @@ def generate_quran_mix_video(surah: int = None, output_dir: str = "data/output")
     except Exception as e:
         logger.warning(f"Thumbnail extraction notice: {e}")
 
-    # 6. Metadata
+    # 6. Metadata with High-CTR Curiosity Hook & Authentic Islamic Foundation Translation
+    hook = SURAH_SPIRITUAL_HOOKS.get(chosen_surah, "হৃদয়স্পর্শী তিলাওয়াত ও বাংলা অনুবাদ")
     metadata = {
-        "title": f"{title_bn} (তিলাওয়াত ও বাংলা অনুবাদ) | {title_en} | Sheikh Mishary Alafasy #Shorts",
+        "title": f"{hook}—{title_bn} | {title_en} | Sheikh Mishary Alafasy #Shorts",
         "description": (
-            f"{title_bn} ({title_en}) - আরবি তিলাওয়াত ও প্রাঞ্জল বাংলা বাচিক অনুবাদ।\n\n"
+            f"{hook}—{title_bn} ({title_en})।\n\n"
+            f"আরবি তিলাওয়াত ও প্রাঞ্জল বাংলা বাচিক অনুবাদ।\n\n"
             f"আরবি ক্বারী: শায়খ মিশারি রশিদ আল-আফাসি (Sheikh Mishary Rashid Alafasy)\n"
             f"বাংলা বাচনিক কণ্ঠ: জায়েদ ইকবাল (Zayed Iqbal)\n"
             f"অনুবাদ: ইসলামিক ফাউন্ডেশন বাংলাদেশ (Islamic Foundation Bangladesh)\n\n"

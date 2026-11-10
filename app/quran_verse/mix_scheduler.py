@@ -48,6 +48,17 @@ def execute_daily_mix_run(upload: bool = True, surah: int = None) -> dict:
             logger.critical("🛑 ABORTING UPLOAD: Shariah Visual Compliance Gate was not verified!")
             raise RuntimeError("CRITICAL: Cannot upload video because it did not pass the Shariah Visual Compliance Gate!")
 
+        # Zero-Duplicate Pre-Upload Safety Gate (Checks YouTube and Supabase recent uploads)
+        from app.history import fetch_recent_quran_pipeline_history
+        recent_quran = fetch_recent_quran_pipeline_history(limit=5)
+        recent_surahs = [r.get("surah") for r in recent_quran if r.get("surah")]
+        if chosen_surah in recent_surahs[:3]:
+            logger.critical(
+                f"🛑 ABORTING UPLOAD: Surah {chosen_surah} was already published in the last 3 videos ({recent_surahs[:3]})! "
+                f"Refusing to upload duplicate."
+            )
+            raise RuntimeError(f"Duplicate upload blocked: Surah {chosen_surah} was already published recently.")
+
         logger.info("Uploading Quran Mix video to platforms...")
         upload_meta = {
             "youtube_title": metadata["title"],

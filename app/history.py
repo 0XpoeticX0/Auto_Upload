@@ -30,7 +30,7 @@ def _get_supabase_config():
 DEFAULT_SUPABASE_TABLE = "used_islamic_video"
 
 def _supabase_insert(row_data: dict) -> bool:
-    """Inserts a topic record to Supabase used_islamic_video (or used_videos fallback)."""
+    """Inserts or upserts a topic record to Supabase used_islamic_video (or used_videos fallback)."""
     try:
         url, key = _get_supabase_config()
         if not key or not url:
@@ -39,7 +39,7 @@ def _supabase_insert(row_data: dict) -> bool:
             "apikey": key,
             "Authorization": f"Bearer {key}",
             "Content-Type": "application/json",
-            "Prefer": "return=representation"
+            "Prefer": "resolution=merge-duplicates"
         }
         
         payload = json.dumps({
@@ -48,15 +48,21 @@ def _supabase_insert(row_data: dict) -> bool:
             "source": row_data.get("source", "content")
         }).encode("utf-8")
 
-        # Try inserting to primary tables
+        # Try inserting/upserting to primary tables with on_conflict=title to handle unique index safely
         for tbl in ["used_islamic_video", "used_islamic_videos", "used_videos"]:
             try:
-                req = urllib.request.Request(f"{url}/{tbl}", data=payload, headers=headers, method="POST")
+                req = urllib.request.Request(f"{url}/{tbl}?on_conflict=title", data=payload, headers=headers, method="POST")
                 with urllib.request.urlopen(req, timeout=5) as resp:
                     if resp.status in (200, 201):
                         return True
             except Exception:
-                pass
+                try:
+                    req_fallback = urllib.request.Request(f"{url}/{tbl}", data=payload, headers=headers, method="POST")
+                    with urllib.request.urlopen(req_fallback, timeout=5) as resp:
+                        if resp.status in (200, 201):
+                            return True
+                except Exception:
+                    pass
     except Exception as e:
         logger.warning(f"Supabase insert notice: {e}")
     return False
