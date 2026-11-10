@@ -1,7 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+app/quiz/generator.py
+=====================
+3-Question Rapid-Fire Islamic Quiz Generator.
+Engineered upon:
+1. 3-Tier Interaction Formula (Q1 Confidence -> Q2 Debate Magnet -> Q3 Mindblowing Secret).
+2. Supabase 300-question anti-repetition filter.
+3. Certified Sahih Vault (app/quiz/vault.py) + Gemini LLM fallback.
+4. Religious truth and citation verification gate (app/quiz/verifier.py).
+"""
+
+import os
 import re
 import json
-from app.llm.provider import extract_json
+import random
 from app.logger import logger
+from app.quiz.vault import CERTIFIED_QUESTIONS
+from app.quiz.verifier import verify_question_authenticity, verify_quiz_script
 
 STOP_WORDS = {
     'কি', 'কী', 'কোন', 'কোনটি', 'কোনটা', 'কত', 'কয়', 'কয়', 'কোথায়', 'কেন', 'কাকে', 'কার',
@@ -13,7 +28,7 @@ STOP_WORDS = {
 }
 
 COMMON_ISLAMIC_TERMS = {
-    'পবিত্র', 'কোরআন', 'কোরআনে', 'কোরআনের', 'সূরা', 'সূরায়', 'সূরার',
+    'পবিত্র', 'কোরআন', 'কোরআনে', 'কোরআনের', 'কুরআন', 'কুরআনে', 'কুরআনের', 'সূরা', 'সূরায়', 'সূরার',
     'হযরত', 'নবী', 'নবীর', 'সালাত', 'সালাতে', 'সালাতের', 'নামাজ', 'নামাজে',
     'ইসলাম', 'ইসলামে', 'ইসলামের', 'রাসূলুল্লাহ', 'রাসুলুল্লাহ'
 }
@@ -25,7 +40,6 @@ BENGALI_SUFFIXES = [
 ]
 
 def stem_bengali_word(w: str) -> str:
-    """Stems common Bengali noun/verb grammatical suffixes to base lemma."""
     if len(w) <= 3:
         return w
     for sfx in BENGALI_SUFFIXES:
@@ -34,7 +48,6 @@ def stem_bengali_word(w: str) -> str:
     return w
 
 def normalize_bengali(text: str):
-    """Normalizes Bengali question text and extracts stemmed content and specific tokens."""
     if not text:
         return "", set(), set()
     cleaned = re.sub(r'^(?:প্রশ্ন\s*[০-৯\d]+[:।\-]?\s*|Q\d+[:.\-]?\s*)', '', text, flags=re.IGNORECASE)
@@ -53,11 +66,6 @@ def normalize_bengali(text: str):
     return ' '.join(tokens), content_tokens, specific_tokens
 
 def check_question_duplicate(candidate: str, past_questions: list[str], threshold: float = 0.40) -> tuple[bool, str | None, str]:
-    """
-    Checks if `candidate` question duplicates, resembles, or shares key intent with ANY question in `past_questions`.
-    Uses exact match, substring match, Jaccard token overlap, and stemmed specific concept overlap.
-    Returns: (is_duplicate: bool, matched_question: str | None, reason: str)
-    """
     if not candidate or not past_questions:
         return False, None, "none"
         
@@ -74,194 +82,180 @@ def check_question_duplicate(candidate: str, past_questions: list[str], threshol
         if cand_clean == past_clean:
             return True, past, "exact_match"
             
-        # 2. Substring match (at least 12 characters to prevent short substring false alarms)
+        # 2. Substring match
         if len(cand_clean) >= 12 and (cand_clean in past_clean or past_clean in cand_clean):
             return True, past, "substring_match"
             
-        # 3. Overall Jaccard similarity on all content tokens
+        # 3. Jaccard similarity
         inter_all = cand_content & past_content
         union_all = cand_content | past_content
         sim_all = len(inter_all) / len(union_all) if union_all else 0.0
         if sim_all >= threshold:
-            return True, past, f"jaccard_similarity_{sim_all:.2f}"
+            return True, past, f"jaccard_{sim_all:.2f}"
             
-        # 4. Stemmed specific content tokens overlap (distinctive domain concepts)
+        # 4. Stemmed specific tokens overlap
         inter_spec = cand_specific & past_specific
         if len(inter_spec) >= 2:
             spec_ratio = len(inter_spec) / max(len(cand_specific), 1)
             if spec_ratio >= 0.35:
-                return True, past, f"stemmed_concept_overlap_{inter_spec}"
+                return True, past, f"concept_overlap_{inter_spec}"
                 
     return False, None, "none"
 
-def check_intra_script_duplicates(questions: list[dict]) -> tuple[bool, str | None]:
-    """Ensures none of the 3 questions in the newly generated script overlap with each other."""
-    texts = [q.get("question", "").strip() for q in questions if q.get("question")]
-    for i in range(len(texts)):
-        for j in range(i + 1, len(texts)):
-            is_dup, _, reason = check_question_duplicate(texts[i], [texts[j]])
-            if is_dup:
-                return True, f"Q{i+1} duplicates Q{j+1} ({reason})"
-    return False, None
-
 def generate_quiz_script(recent_questions: list[str] = None, language: str = "bn", max_retries: int = 5) -> dict | None:
     """
-    Generates a 3-Question interactive Islamic Quiz script adhering to the viral 3-Slot Formula.
-    Enforces a strict 300-question Supabase history anti-repetition filter with automatic retry loop.
-    """
-    logger.info(f"Generating 3-Question Islamic Quiz Reel script (language={language}, max_retries={max_retries})...")
+    Selects or generates a 3-Question interactive Islamic Quiz script:
+    - Slot 1: Confidence Hook (90%+ hit rate)
+    - Slot 2: Debate Misconception Magnet (Massive comments)
+    - Slot 3: Mindblowing Secret / Sunnah (Awe & shares)
     
+    Guarantees zero repetition against Supabase recent questions and strict Sahih verification.
+    """
+    logger.info(f"Generating 3-Question Islamic Quiz Reel script (language={language})...")
     avoid_list = list(recent_questions or [])
+    
+    # ── 1. Check Certified Vault First ────────────────────────────────────────
+    t1_pool = [q for q in CERTIFIED_QUESTIONS if q.get("tier") == "confidence_builder"]
+    t2_pool = [q for q in CERTIFIED_QUESTIONS if q.get("tier") == "debate_misconception"]
+    t3_pool = [q for q in CERTIFIED_QUESTIONS if q.get("tier") == "mindblowing_secret"]
+
+    def filter_available(pool):
+        available = []
+        for item in pool:
+            q_text = item.get("question", "")
+            is_dup, _, _ = check_question_duplicate(q_text, avoid_list)
+            if not is_dup:
+                available.append(item)
+        return available
+
+    avail_t1 = filter_available(t1_pool)
+    avail_t2 = filter_available(t2_pool)
+    avail_t3 = filter_available(t3_pool)
+
+    logger.info(f"Certified Vault Status: Tier 1={len(avail_t1)}/{len(t1_pool)}, Tier 2={len(avail_t2)}/{len(t2_pool)}, Tier 3={len(avail_t3)}/{len(t3_pool)} available.")
+
+    if avail_t1 and avail_t2 and avail_t3:
+        q1 = dict(random.choice(avail_t1))
+        q2 = dict(random.choice(avail_t2))
+        q3 = dict(random.choice(avail_t3))
+
+        q1["number"] = 1
+        q1["total_questions"] = 3
+        q2["number"] = 2
+        q2["total_questions"] = 3
+        q3["number"] = 3
+        q3["total_questions"] = 3
+
+        script = {
+            "title": "৯৯% মানুষ ৩ নম্বর প্রশ্নে আটকে যায়! 🧠 (৩-এ আপনার স্কোর কত?)",
+            "hook": {
+                "headline": "৯৯% মানুষ ২ ও ৩ নম্বর প্রশ্নে আটকে যায়! 🧠",
+                "sub_text": "সততার সাথে ৩-এ আপনার স্কোর কমেন্টে জানান! 👇"
+            },
+            "questions": [q1, q2, q3],
+            "outro": {
+                "score_prompt": "সততার সাথে ৩-এ আপনার স্কোর কত হলো কমেন্টে লিখুন! 👇",
+                "follow_cta": "প্রতিদিনের বিশুদ্ধ ইসলামিক কুইজের জন্য Follow করে সাথে থাকুন! 🌿",
+                "pinned_comment": "৩/৩ কার কার হয়েছে? কমেন্টে 'মাশাআল্লাহ' লিখুন! আর ২ নম্বর প্রশ্নের উত্তর কি আগে জানতেন?"
+            }
+        }
+
+        # Verify religious accuracy
+        is_valid, report = verify_quiz_script(script)
+        if is_valid:
+            logger.info("✅ Selected 3 certified questions from Sahih Vault with 100% religious verification:")
+            for q in script["questions"]:
+                logger.info(f"   - Q{q['number']} ({q['category']}): {q['question']} -> {q['correct_option']} [{q.get('source', '')}]")
+            return script
+        else:
+            logger.warning(f"Vault questions failed verification check: {report}")
+
+    # ── 2. LLM Fallback (If vault exhausted or specific generation needed) ────
+    try:
+        from app.llm.provider import extract_json
+    except ImportError:
+        logger.error("LLM provider not available and vault has insufficient unused questions.")
+        return None
+
     avoid_block = ""
     if avoid_list:
-        avoid_block = f"\n\n🚫 PREVIOUS QUESTIONS ALREADY PUBLISHED ON CHANNEL (TOTAL: {len(avoid_list[:300])}):\n"
-        avoid_block += "The following questions and topics have ALREADY been used in our videos. You MUST NOT repeat, rephrase, or ask about any of these subjects or answers:\n"
-        for idx, q in enumerate(avoid_list[:300], 1):
+        avoid_block = f"\n\n🚫 PREVIOUS QUESTIONS ALREADY PUBLISHED ON CHANNEL (TOTAL: {len(avoid_list[:150])}):\n"
+        for idx, q in enumerate(avoid_list[:150], 1):
             avoid_block += f"{idx}. {q}\n"
-        avoid_block += (
-            "\nCRITICAL MANDATE: Your #1 job is ZERO DUPLICATION. Check your generated questions against the list above. "
-            "If ANY question touches an already used topic or shares a similar answer, IT IS A FATAL REJECTION. "
-            "Generate 3 COMPLETELY BRAND NEW questions on UNTOUCHED areas of Islamic knowledge (e.g., lesser-known Prophets "
-            "like Hud, Salih, Shu'aib, Ayyub, Zakariyya, Yahya; lesser-known Sahaba; specific Islamic calendar dates/events; "
-            "historical battles like Uhud, Khandaq, Hunayn, Mu'tah; afterlife details; or distinct daily etiquettes).\n"
-        )
 
-    if language == "bn":
-        lang_instruction = """Generate ALL content strictly in authentic, natural BANGLA (বাংলা).
-Options must be labelled with Bengali letters: "ক) ...", "খ) ...", "গ) ...".
-Example JSON format:
-{
+    system_prompt = f"""You are an elite Islamic scholar and viral short-form video producer.
+Generate a 3-Question interactive Islamic quiz reel in authentic, natural BANGLA (বাংলা).
+
+VIRAL CONTENT PSYCHOLOGY (3-TIER FORMULA):
+1. Q1 (Confidence Hook): 90%+ hit rate easy fundamental deen/salah question.
+2. Q2 (Debate Magnet): Widely misunderstood misconception or daily practice that sparks comment debates.
+3. Q3 (Mindblowing Secret): Inspiring Quranic miracle, Sunnah reward, or historical fact.
+
+STRICT RELIGIOUS MANDATE:
+- Every question MUST include an EXACT verified citation in 'explanation' and 'source' (e.g. সহীহ বুখারী: [নম্বর], সহীহ মুসলিম: [নম্বর], জামে আত-তিরমিযী: [নম্বর], সূরা [নাম]: [আয়াত]).
+- STRICTLY ZERO generic citations like '[হাদিস শরীফ]' without book name and number!
+- Output ONLY valid JSON:
+{{
   "title": "৯৯% মানুষ ৩ নম্বর প্রশ্নে আটকে যায়! 🧠 (৩-এ আপনার স্কোর কত?)",
-  "hook": {
-    "headline": "৯৯% মানুষ ২ ও ৩ নম্বর প্রশ্নে আটকে যায়! 🧠",
-    "sub_text": "সততার সাথে ৩-এ আপনার স্কোর কমেন্টে জানান! 👇",
-    "sfx": "whoosh"
-  },
   "questions": [
-    {
+    {{
       "number": 1,
       "tier": "confidence_builder",
-      "category": "সহজ দৈনন্দিন আমল ও মূল ভিত্তি",
-      "question": "[একটি সহজ মৌলিক ইসলামিক প্রশ্ন - সর্বোচ্চ ৮-১০ শব্দ]",
-      "options": ["ক) [বিকল্প ১]", "খ) [বিকল্প ২]", "গ) [সঠিক উত্তর]"],
-      "correct_option": "গ) [সঠিক উত্তর]",
-      "explanation": "[সংক্ষিপ্ত প্রামাণিক রেফারেন্স/দলিল - সর্বোচ্চ ১০ শব্দ]",
-      "sfx_timer": "clock_tick",
-      "sfx_reveal": "correct_bell"
-    },
-    {
+      "category": "[বিভাগ]",
+      "question": "[৮-১০ শব্দের প্রশ্ন]",
+      "options": ["ক) ...", "খ) ...", "গ) ..."],
+      "correct_option": "ক) ...",
+      "explanation": "[সহীহ হাদিস/কুরআনের রেফারেন্সসহ ব্যাখ্যা]",
+      "source": "সহীহ বুখারী: [নম্বর]"
+    }},
+    {{
       "number": 2,
       "tier": "debate_misconception",
-      "category": "বহুল প্রচলিত ভুল ধারণা ও দৈনন্দিন মাসয়ালা",
-      "question": "[একটি বহুল ভুল হওয়া মাসয়ালা বা বিতর্কিত প্রশ্ন - সর্বোচ্চ ৮-১০ শব্দ]",
-      "options": ["ক) [সাধারণ মানুষের ভুল ধারণা]", "খ) [সঠিক উত্তর]", "গ) [অন্য একটি বিকল্প]"],
-      "correct_option": "খ) [সঠিক উত্তর]",
-      "explanation": "[সহীহ হাদিস/কোরআনের রেফারেন্স - সর্বোচ্চ ১০ শব্দ]",
-      "debate_prompt": "উত্তর দেখার আগেই কমেন্টে লিখুন!",
-      "sfx_timer": "clock_tick",
-      "sfx_reveal": "correct_bell"
-    },
-    {
+      "category": "[বিভাগ]",
+      "question": "[প্রশ্ন]",
+      "options": ["ক) ...", "খ) ...", "গ) ..."],
+      "correct_option": "খ) ...",
+      "explanation": "[রেফারেন্সসহ ব্যাখ্যা]",
+      "source": "সহীহ মুসলিম: [নম্বর]"
+    }},
+    {{
       "number": 3,
       "tier": "mindblowing_secret",
-      "category": "কোরআনের বিস্ময়কর রহস্য ও নবীদের ইতিহাস",
-      "question": "[একটি চমকপ্রদ ও গভীর ঐতিহাসিক বা কোরআনিক তথ্য - সর্বোচ্চ ৮-১০ শব্দ]",
-      "options": ["ক) [বিকল্প ১]", "খ) [বিকল্প ২]", "গ) [সঠিক উত্তর]"],
-      "correct_option": "গ) [সঠিক উত্তর]",
-      "explanation": "[সূরা বা হাদিসের প্রামাণ্য রেফারেন্স - সর্বোচ্চ ১০ শব্দ]",
-      "sfx_timer": "clock_tick",
-      "sfx_reveal": "correct_bell"
-    }
-  ],
-  "outro": {
-    "score_prompt": "সততার সাথে ৩-এ আপনার স্কোর কত হলো কমেন্টে লিখুন! 👇",
-    "follow_cta": "প্রতিদিনের বিশুদ্ধ ইসলামিক কুইজের জন্য Follow করে সাথে থাকুন! 🌿",
-    "pinned_comment": "৩/৩ কার কার হয়েছে? কমেন্টে 'মাশাআল্লাহ' লিখুন! 👇 আর ২ নম্বর প্রশ্নের উত্তর আপনি কি আগে জানতেন?",
-    "sfx": "outro_riser"
-  }
-}"""
-    else:
-        lang_instruction = """Generate all text strictly in ENGLISH.
-Options must be labelled: "A) ...", "B) ...", "C) ...".
-"""
-
-    system_prompt = f"""You are an elite viral short-form video producer specializing in high-engagement, high-comment 3-Question interactive Islamic quiz reels for YouTube Shorts, Instagram Reels, and Facebook Reels.
-
-{lang_instruction}
-
-VIRAL CONTENT PSYCHOLOGY (MANDATORY):
-To maximize comments, replays, and algorithmic reach, EVERY video must strictly follow the GOLDEN 3-TIER INTERACTION FORMULA:
-
-1. Q1: THE CONFIDENCE HOOK (Easy Entry — 90%+ hit rate):
-   - A widely known, basic Deen/Salah/Quran/Prophets fact that gives the viewer an instant confident "Yes, I know this!" to stop the scroll.
-   - Focus on fundamental topics like core pillars, well-known Quranic facts, foundational Islamic history, or famous historical sites.
-
-2. Q2: THE DEBATE & COMMON MISCONCEPTION MAGNET (Massive Comment Driver):
-   - A widely misunderstood daily practice, Halal vs. Makruh vs. Haram issue, or common wudu/salah/social etiquette myth where everyday Muslims often argue or hold mistaken beliefs.
-   - Crucial: This triggers viewers to rush to the comments section to debate or state their opinion before the answer is revealed!
-
-3. Q3: THE MINDBLOWING PROPHET/QURAN SECRET (Score & Share Driver):
-   - An awe-inspiring Quranic miracle, surprising historical event, afterlife detail, or lesser-known Prophet detail that makes viewers say "SubhanAllah", share the video, and comment their final score (e.g. 3/3 or 2/3).
-
-CRITICAL FORMATTING RULES:
-1. Question Text: Direct start inquiry only! Keep under 8-10 words. Punchy, clear, everyday Bangla. STRICTLY NEVER include 'প্রশ্ন ১', 'প্রশ্ন ২', 'Question 1', 'Q1:' or any numbering in the question text.
-2. Options: Exactly 3 clean options (1-3 words each).
-3. Honorifics: Always use "হযরত ... (আ.)", "হযরত ... (রা.)", "রাসূলুল্লাহ (ﷺ)".
-4. Pinned Comment: Always generate a friction-free pinned comment prompt that encourages 1-word answers (e.g. 'মাশাআল্লাহ' or '৩/৩').
-
-Respond with ONLY valid JSON:"""
-
-    rejected_in_session: list[str] = []
-    base_user_prompt = f"""Generate a fresh, viral 3-Question Islamic Quiz Reel script in {language.upper()} following the exact 3-tier formula (Q1 Confidence -> Q2 Debate/Misconception -> Q3 Mindblowing Secret). Ensure Q2 is a controversial/common misconception that drives comments.
-
-{avoid_block}
-
-CRITICAL: Return ONLY valid JSON adhering strictly to the schema provided."""
+      "category": "[বিভাগ]",
+      "question": "[প্রশ্ন]",
+      "options": ["ক) ...", "খ) ...", "গ) ..."],
+      "correct_option": "গ) ...",
+      "explanation": "[রেফারেন্সসহ ব্যাখ্যা]",
+      "source": "জামে আত-তিরমিযী: [নম্বর]"
+    }}
+  ]
+}}"""
 
     for attempt in range(1, max_retries + 1):
-        logger.info(f"Generating quiz script attempt {attempt}/{max_retries}...")
-        
-        current_user_prompt = base_user_prompt
-        if rejected_in_session:
-            current_user_prompt += f"\n\nCRITICAL NEGATIVE CONSTRAINTS (Attempt {attempt}):\nThe following questions were REJECTED because they duplicated existing videos. DO NOT REPEAT THEM OR ANY SIMILAR TOPIC:\n"
-            for r in rejected_in_session[-10:]:
-                current_user_prompt += f"- ❌ REJECTED: {r}\n"
-            current_user_prompt += "Pick completely fresh, brand new topics!"
-
-        data = extract_json(system_prompt, current_user_prompt, max_tokens=2500)
+        logger.info(f"Generating LLM script attempt {attempt}/{max_retries}...")
+        prompt = f"Generate 3 fresh questions following the 3-tier formula with exact Sahih Hadith citations.\n{avoid_block}"
+        data = extract_json(system_prompt, prompt, max_tokens=2500)
         if not data or "questions" not in data or len(data["questions"]) != 3:
-            logger.warning(f"Attempt {attempt}: Invalid script JSON structure received. Retrying...")
             continue
 
-        questions = data.get("questions", [])
-        
-        # Check intra-script duplicates (Q1 vs Q2 vs Q3)
-        intra_dup, intra_reason = check_intra_script_duplicates(questions)
-        if intra_dup:
-            logger.warning(f"Attempt {attempt}: Intra-script duplicate detected ({intra_reason}). Retrying...")
-            rejected_in_session.append(f"Internal overlap: {intra_reason}")
-            continue
-
-        # Check against Supabase 300 past questions + session rejected
-        full_avoid_pool = avoid_list + rejected_in_session
-        has_duplicate = False
-        duplicate_info = ""
-
-        for q in questions:
-            q_text = q.get("question", "").strip()
-            is_dup, matched_q, reason = check_question_duplicate(q_text, full_avoid_pool)
-            if is_dup:
-                has_duplicate = True
-                duplicate_info = f"'{q_text}' matched historical '{matched_q}' (Reason: {reason})"
-                rejected_in_session.append(q_text)
-                logger.warning(f"⚠️ [Attempt {attempt}/{max_retries}] Duplicate question rejected: {duplicate_info}. Retrying fresh script...")
+        # Verify duplicate and authenticity
+        is_dup = False
+        for q in data["questions"]:
+            dup, _, _ = check_question_duplicate(q.get("question", ""), avoid_list)
+            if dup:
+                is_dup = True
                 break
 
-        if not has_duplicate:
-            logger.info(f"✅ Successfully generated 3 fresh, unique quiz questions on attempt {attempt}:")
-            for q in questions:
-                logger.info(f"   - Q{q.get('number')}: {q.get('question')} ({q.get('correct_option')})")
-            return data
+        if is_dup:
+            logger.warning(f"Attempt {attempt}: Duplicate question detected against Supabase history. Retrying...")
+            continue
 
-    logger.error(f"❌ Failed to generate a 100% non-duplicate quiz script after {max_retries} attempts.")
+        is_valid, report = verify_quiz_script(data)
+        if is_valid:
+            logger.info(f"✅ Generated script cleared religious authenticity on attempt {attempt}.")
+            return data
+        else:
+            logger.warning(f"Attempt {attempt}: Religious verification failed ({report}). Retrying...")
+
+    logger.error("Failed to generate a certified non-duplicate quiz script.")
     return None
