@@ -19,11 +19,7 @@ import edge_tts
 from app.logger import logger
 from app.quiz.card_builder import create_viral_overlay, build_timed_ass
 
-BROLL_VIDEOS = [
-    "app/assets/broll/ocean_720.mp4",
-    "app/assets/broll/clouds_720.mp4",
-    "app/assets/broll/desert_720.mp4"
-]
+DEFAULT_BROLL_VIDEO = "app/assets/broll/ocean_720.mp4"
 
 SFX_TICK = "data/assets/sfx/clock_tick.wav"
 SFX_BELL = "data/assets/sfx/correct_bell.wav"
@@ -197,8 +193,7 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
     scene_files = []
 
     for idx, q in enumerate(questions, 1):
-        broll_choice = BROLL_VIDEOS[(idx - 1) % len(BROLL_VIDEOS)]
-        scene_mp4 = render_single_question_scene(q, broll_choice, temp_dir, idx)
+        scene_mp4 = render_single_question_scene(q, DEFAULT_BROLL_VIDEO, temp_dir, idx)
         scene_files.append(scene_mp4)
 
     # Concatenate all 3 scenes into final MP4
