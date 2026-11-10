@@ -2,8 +2,8 @@ name: Daily Quran Recitation Automation
 
 on:
   schedule:
-    # Runs at 00:07 UTC every day (06:07 AM Bangladesh Standard Time - BST, Morning Prime Slot)
-    - cron: '7 0 * * *'
+    # Runs at 22:00 UTC every day (04:00 AM Bangladesh Standard Time - BST, shifted earlier to counteract GitHub queue delays and publish reliably around 06:30-07:30 AM BST)
+    - cron: '0 22 * * *'
   workflow_dispatch: # Allows manual one-click trigger from GitHub Actions UI
 
 jobs:
@@ -133,7 +133,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin main || true
-          git add data/video_rotation_state.json data/quran_selection_state.json data/gemini_key_lock_state.json data/history_log.json data/stock_video_catalog.json data/catalog_rejected_clips.json || true
+          git add -A data/ || true
           git commit -m "chore(automation): persist rotation state and history log [skip ci]" || true
           git push origin main || true
 
