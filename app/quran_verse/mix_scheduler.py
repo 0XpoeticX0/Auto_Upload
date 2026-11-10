@@ -35,6 +35,15 @@ def execute_daily_mix_run(upload: bool = True, surah: int = None) -> dict:
     chosen_surah = result["surah"]
 
     if upload:
+        # Late-night upload safety guard: never upload during midnight/early-morning dead hours (11:00 PM - 05:00 AM BST)
+        hour_bst = now_bst.hour
+        if hour_bst >= 23 or hour_bst < 5:
+            logger.warning(
+                f"🌙 [Nighttime Upload Guard]: Current time is {now_bst.strftime('%I:%M %p BST')}. "
+                f"Runner was delayed past the broadcast window. Skipping upload to protect channel reach."
+            )
+            return result
+
         if not result.get("shariah_passed", False):
             logger.critical("🛑 ABORTING UPLOAD: Shariah Visual Compliance Gate was not verified!")
             raise RuntimeError("CRITICAL: Cannot upload video because it did not pass the Shariah Visual Compliance Gate!")
