@@ -28,7 +28,6 @@ service_account*.json
 # Media & Temporary Render Outputs
 *.mp4
 !app/assets/broll/*.mp4
-!app/assets/video_scenes/*.mp4
 *.wav
 *.mp3
 *.m4a
