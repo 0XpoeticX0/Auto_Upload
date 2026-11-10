@@ -5806,5 +5806,9 @@
   "https://assets.mixkit.co/videos/28077/28077-720.mp4": {
     "id": "28077",
     "reason": "1s FasterRCNN rejected: person at 31s (conf: 0.84)"
+  },
+  "https://assets.mixkit.co/videos/45145/45145-720.mp4": {
+    "id": "45145",
+    "reason": "A human hand and arm are visible on the right side of the image operating the machinery."
   }
 }

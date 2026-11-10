@@ -1,7 +1,7 @@
 {
   "current_cycle": 1,
   "current_video_in_cycle": 85,
-  "total_videos_completed": 84,
+  "total_videos_completed": 85,
   "total_clips_in_pool": 300,
   "plan": [
     {
@@ -19,9 +19,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/16623/16623-720.mp4",
+        "https://assets.mixkit.co/videos/26301/26301-720.mp4",
         "https://assets.mixkit.co/videos/12280/12280-720.mp4",
-        "https://assets.mixkit.co/videos/45166/45166-720.mp4"
+        "https://assets.mixkit.co/videos/45172/45172-720.mp4"
       ]
     },
     {
@@ -40,8 +40,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3099/3099-720.mp4",
-        "https://assets.mixkit.co/videos/35497/35497-720.mp4",
-        "https://assets.mixkit.co/videos/14158/14158-720.mp4"
+        "https://assets.mixkit.co/videos/35493/35493-720.mp4",
+        "https://assets.mixkit.co/videos/14159/14159-720.mp4"
       ]
     },
     {
@@ -79,9 +79,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11080/11080-720.mp4",
+        "https://assets.mixkit.co/videos/11082/11082-720.mp4",
         "https://assets.mixkit.co/videos/26112/26112-720.mp4",
-        "https://assets.mixkit.co/videos/28019/28019-720.mp4"
+        "https://assets.mixkit.co/videos/28020/28020-720.mp4"
       ]
     },
     {
@@ -99,9 +99,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4316/4316-720.mp4",
+        "https://assets.mixkit.co/videos/4336/4336-720.mp4",
         "https://assets.mixkit.co/videos/4396/4396-720.mp4",
-        "https://assets.mixkit.co/videos/4347/4347-720.mp4"
+        "https://assets.mixkit.co/videos/4352/4352-720.mp4"
       ]
     },
     {
@@ -119,9 +119,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4214/4214-720.mp4",
-        "https://assets.mixkit.co/videos/50576/50576-720.mp4",
-        "https://assets.mixkit.co/videos/4317/4317-720.mp4"
+        "https://assets.mixkit.co/videos/4215/4215-720.mp4",
+        "https://assets.mixkit.co/videos/28001/28001-720.mp4",
+        "https://assets.mixkit.co/videos/4320/4320-720.mp4"
       ]
     },
     {
@@ -159,8 +159,8 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/7207/7207-720.mp4",
-        "https://assets.mixkit.co/videos/45283/45283-720.mp4",
+        "https://assets.mixkit.co/videos/34857/34857-720.mp4",
+        "https://assets.mixkit.co/videos/45281/45281-720.mp4",
         "https://assets.mixkit.co/videos/31589/31589-720.mp4"
       ]
     },
@@ -199,9 +199,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/52423/52423-720.mp4",
+        "https://assets.mixkit.co/videos/32524/32524-720.mp4",
         "https://assets.mixkit.co/videos/45059/45059-720.mp4",
-        "https://assets.mixkit.co/videos/11073/11073-720.mp4"
+        "https://assets.mixkit.co/videos/11075/11075-720.mp4"
       ]
     },
     {
@@ -281,7 +281,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/5004/5004-720.mp4",
         "https://assets.mixkit.co/videos/44610/44610-720.mp4",
-        "https://assets.mixkit.co/videos/4354/4354-720.mp4"
+        "https://assets.mixkit.co/videos/4345/4345-720.mp4"
       ]
     },
     {
@@ -359,8 +359,8 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/26408/26408-720.mp4",
-        "https://assets.mixkit.co/videos/28048/28048-720.mp4",
+        "https://assets.mixkit.co/videos/15461/15461-720.mp4",
+        "https://assets.mixkit.co/videos/28050/28050-720.mp4",
         "https://assets.mixkit.co/videos/14165/14165-720.mp4"
       ]
     },
@@ -381,7 +381,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4281/4281-720.mp4",
         "https://assets.mixkit.co/videos/4368/4368-720.mp4",
-        "https://assets.mixkit.co/videos/28003/28003-720.mp4"
+        "https://assets.mixkit.co/videos/28010/28010-720.mp4"
       ]
     },
     {
@@ -419,7 +419,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4047/4047-720.mp4",
+        "https://assets.mixkit.co/videos/4052/4052-720.mp4",
         "https://assets.mixkit.co/videos/34847/34847-720.mp4",
         "https://assets.mixkit.co/videos/3350/3350-720.mp4"
       ]
@@ -440,7 +440,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/17832/17832-720.mp4",
-        "https://assets.mixkit.co/videos/4145/4145-720.mp4",
+        "https://assets.mixkit.co/videos/4163/4163-720.mp4",
         "https://assets.mixkit.co/videos/8052/8052-720.mp4"
       ]
     },
@@ -480,7 +480,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/52426/52426-720.mp4",
-        "https://assets.mixkit.co/videos/11065/11065-720.mp4",
+        "https://assets.mixkit.co/videos/11068/11068-720.mp4",
         "https://assets.mixkit.co/videos/2091/2091-720.mp4"
       ]
     },
@@ -499,9 +499,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/1216/1216-720.mp4",
+        "https://assets.mixkit.co/videos/1219/1219-720.mp4",
         "https://assets.mixkit.co/videos/10408/10408-720.mp4",
-        "https://assets.mixkit.co/videos/5371/5371-720.mp4"
+        "https://assets.mixkit.co/videos/36615/36615-720.mp4"
       ]
     },
     {
@@ -519,8 +519,8 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11083/11083-720.mp4",
-        "https://assets.mixkit.co/videos/17881/17881-720.mp4",
+        "https://assets.mixkit.co/videos/11080/11080-720.mp4",
+        "https://assets.mixkit.co/videos/20464/20464-720.mp4",
         "https://assets.mixkit.co/videos/48025/48025-720.mp4"
       ]
     },
@@ -541,7 +541,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50941/50941-720.mp4",
         "https://assets.mixkit.co/videos/4113/4113-720.mp4",
-        "https://assets.mixkit.co/videos/4195/4195-720.mp4"
+        "https://assets.mixkit.co/videos/4244/4244-720.mp4"
       ]
     },
     {
@@ -579,9 +579,9 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14190/14190-720.mp4",
+        "https://assets.mixkit.co/videos/14192/14192-720.mp4",
         "https://assets.mixkit.co/videos/14215/14215-720.mp4",
-        "https://assets.mixkit.co/videos/4161/4161-720.mp4"
+        "https://assets.mixkit.co/videos/4145/4145-720.mp4"
       ]
     },
     {
@@ -619,9 +619,9 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28005/28005-720.mp4",
+        "https://assets.mixkit.co/videos/28002/28002-720.mp4",
         "https://assets.mixkit.co/videos/2212/2212-720.mp4",
-        "https://assets.mixkit.co/videos/25073/25073-720.mp4"
+        "https://assets.mixkit.co/videos/34969/34969-720.mp4"
       ]
     },
     {
@@ -660,7 +660,7 @@
       "permutation_str": "3 2 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50934/50934-720.mp4",
-        "https://assets.mixkit.co/videos/4208/4208-720.mp4",
+        "https://assets.mixkit.co/videos/4206/4206-720.mp4",
         "https://assets.mixkit.co/videos/3298/3298-720.mp4"
       ]
     },
@@ -679,9 +679,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4280/4280-720.mp4",
-        "https://assets.mixkit.co/videos/1147/1147-720.mp4",
-        "https://assets.mixkit.co/videos/14175/14175-720.mp4"
+        "https://assets.mixkit.co/videos/4308/4308-720.mp4",
+        "https://assets.mixkit.co/videos/1196/1196-720.mp4",
+        "https://assets.mixkit.co/videos/14177/14177-720.mp4"
       ]
     },
     {
@@ -701,7 +701,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45086/45086-720.mp4",
         "https://assets.mixkit.co/videos/31559/31559-720.mp4",
-        "https://assets.mixkit.co/videos/28012/28012-720.mp4"
+        "https://assets.mixkit.co/videos/28016/28016-720.mp4"
       ]
     },
     {
@@ -719,9 +719,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/46383/46383-720.mp4",
+        "https://assets.mixkit.co/videos/46385/46385-720.mp4",
         "https://assets.mixkit.co/videos/14319/14319-720.mp4",
-        "https://assets.mixkit.co/videos/4352/4352-720.mp4"
+        "https://assets.mixkit.co/videos/4354/4354-720.mp4"
       ]
     },
     {
@@ -739,7 +739,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4041/4041-720.mp4",
+        "https://assets.mixkit.co/videos/4047/4047-720.mp4",
         "https://assets.mixkit.co/videos/42496/42496-720.mp4",
         "https://assets.mixkit.co/videos/30316/30316-720.mp4"
       ]
@@ -820,7 +820,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/34363/34363-720.mp4",
-        "https://assets.mixkit.co/videos/4356/4356-720.mp4",
+        "https://assets.mixkit.co/videos/4365/4365-720.mp4",
         "https://assets.mixkit.co/videos/45100/45100-720.mp4"
       ]
     },
@@ -839,7 +839,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28004/28004-720.mp4",
+        "https://assets.mixkit.co/videos/28003/28003-720.mp4",
         "https://assets.mixkit.co/videos/47239/47239-720.mp4",
         "https://assets.mixkit.co/videos/45093/45093-720.mp4"
       ]
@@ -861,7 +861,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/28342/28342-720.mp4",
         "https://assets.mixkit.co/videos/4148/4148-720.mp4",
-        "https://assets.mixkit.co/videos/14218/14218-720.mp4"
+        "https://assets.mixkit.co/videos/19600/19600-720.mp4"
       ]
     },
     {
@@ -880,7 +880,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3396/3396-720.mp4",
-        "https://assets.mixkit.co/videos/8550/8550-720.mp4",
+        "https://assets.mixkit.co/videos/14222/14222-720.mp4",
         "https://assets.mixkit.co/videos/40109/40109-720.mp4"
       ]
     },
@@ -960,7 +960,7 @@
       "permutation_str": "3 2 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/44389/44389-720.mp4",
-        "https://assets.mixkit.co/videos/46319/46319-720.mp4",
+        "https://assets.mixkit.co/videos/46328/46328-720.mp4",
         "https://assets.mixkit.co/videos/8120/8120-720.mp4"
       ]
     },
@@ -999,7 +999,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/19614/19614-720.mp4",
+        "https://assets.mixkit.co/videos/19615/19615-720.mp4",
         "https://assets.mixkit.co/videos/25163/25163-720.mp4",
         "https://assets.mixkit.co/videos/45298/45298-720.mp4"
       ]
@@ -1021,7 +1021,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/47558/47558-720.mp4",
         "https://assets.mixkit.co/videos/9598/9598-720.mp4",
-        "https://assets.mixkit.co/videos/4360/4360-720.mp4"
+        "https://assets.mixkit.co/videos/4356/4356-720.mp4"
       ]
     },
     {
@@ -1040,7 +1040,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/22155/22155-720.mp4",
-        "https://assets.mixkit.co/videos/46423/46423-720.mp4",
+        "https://assets.mixkit.co/videos/46429/46429-720.mp4",
         "https://assets.mixkit.co/videos/46061/46061-720.mp4"
       ]
     },
@@ -1081,7 +1081,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3306/3306-720.mp4",
         "https://assets.mixkit.co/videos/2120/2120-720.mp4",
-        "https://assets.mixkit.co/videos/4339/4339-720.mp4"
+        "https://assets.mixkit.co/videos/4342/4342-720.mp4"
       ]
     },
     {
@@ -1161,7 +1161,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/8015/8015-720.mp4",
         "https://assets.mixkit.co/videos/46388/46388-720.mp4",
-        "https://assets.mixkit.co/videos/4090/4090-720.mp4"
+        "https://assets.mixkit.co/videos/4074/4074-720.mp4"
       ]
     },
     {
@@ -1180,7 +1180,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45672/45672-720.mp4",
-        "https://assets.mixkit.co/videos/25068/25068-720.mp4",
+        "https://assets.mixkit.co/videos/11084/11084-720.mp4",
         "https://assets.mixkit.co/videos/1195/1195-720.mp4"
       ]
     },
@@ -1200,8 +1200,8 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/18785/18785-720.mp4",
-        "https://assets.mixkit.co/videos/11086/11086-720.mp4",
-        "https://assets.mixkit.co/videos/4320/4320-720.mp4"
+        "https://assets.mixkit.co/videos/11090/11090-720.mp4",
+        "https://assets.mixkit.co/videos/4318/4318-720.mp4"
       ]
     },
     {
@@ -1219,9 +1219,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/19610/19610-720.mp4",
+        "https://assets.mixkit.co/videos/19612/19612-720.mp4",
         "https://assets.mixkit.co/videos/30468/30468-720.mp4",
-        "https://assets.mixkit.co/videos/4233/4233-720.mp4"
+        "https://assets.mixkit.co/videos/4232/4232-720.mp4"
       ]
     },
     {
@@ -1240,7 +1240,7 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/118/118-720.mp4",
-        "https://assets.mixkit.co/videos/26301/26301-720.mp4",
+        "https://assets.mixkit.co/videos/35521/35521-720.mp4",
         "https://assets.mixkit.co/videos/9843/9843-720.mp4"
       ]
     },
@@ -1279,7 +1279,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/7006/7006-720.mp4",
+        "https://assets.mixkit.co/videos/52423/52423-720.mp4",
         "https://assets.mixkit.co/videos/8014/8014-720.mp4",
         "https://assets.mixkit.co/videos/4363/4363-720.mp4"
       ]
@@ -1320,7 +1320,7 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1566/1566-720.mp4",
-        "https://assets.mixkit.co/videos/14161/14161-720.mp4",
+        "https://assets.mixkit.co/videos/14163/14163-720.mp4",
         "https://assets.mixkit.co/videos/4357/4357-720.mp4"
       ]
     },
@@ -1340,8 +1340,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/44904/44904-720.mp4",
-        "https://assets.mixkit.co/videos/1219/1219-720.mp4",
-        "https://assets.mixkit.co/videos/16371/16371-720.mp4"
+        "https://assets.mixkit.co/videos/1206/1206-720.mp4",
+        "https://assets.mixkit.co/videos/26977/26977-720.mp4"
       ]
     },
     {
@@ -1361,7 +1361,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/26795/26795-720.mp4",
         "https://assets.mixkit.co/videos/45585/45585-720.mp4",
-        "https://assets.mixkit.co/videos/46406/46406-720.mp4"
+        "https://assets.mixkit.co/videos/46410/46410-720.mp4"
       ]
     },
     {
@@ -1379,9 +1379,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/46373/46373-720.mp4",
+        "https://assets.mixkit.co/videos/46374/46374-720.mp4",
         "https://assets.mixkit.co/videos/45033/45033-720.mp4",
-        "https://assets.mixkit.co/videos/19455/19455-720.mp4"
+        "https://assets.mixkit.co/videos/30907/30907-720.mp4"
       ]
     },
     {
@@ -1419,9 +1419,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4123/4123-720.mp4",
+        "https://assets.mixkit.co/videos/4131/4131-720.mp4",
         "https://assets.mixkit.co/videos/9670/9670-720.mp4",
-        "https://assets.mixkit.co/videos/4120/4120-720.mp4"
+        "https://assets.mixkit.co/videos/4123/4123-720.mp4"
       ]
     },
     {
@@ -1439,9 +1439,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14187/14187-720.mp4",
+        "https://assets.mixkit.co/videos/14188/14188-720.mp4",
         "https://assets.mixkit.co/videos/19243/19243-720.mp4",
-        "https://assets.mixkit.co/videos/18186/18186-720.mp4"
+        "https://assets.mixkit.co/videos/15666/15666-720.mp4"
       ]
     },
     {
@@ -1479,9 +1479,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4450/4450-720.mp4",
-        "https://assets.mixkit.co/videos/14159/14159-720.mp4",
-        "https://assets.mixkit.co/videos/45184/45184-720.mp4"
+        "https://assets.mixkit.co/videos/44370/44370-720.mp4",
+        "https://assets.mixkit.co/videos/14160/14160-720.mp4",
+        "https://assets.mixkit.co/videos/45194/45194-720.mp4"
       ]
     },
     {
@@ -1501,7 +1501,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/41402/41402-720.mp4",
         "https://assets.mixkit.co/videos/26798/26798-720.mp4",
-        "https://assets.mixkit.co/videos/15666/15666-720.mp4"
+        "https://assets.mixkit.co/videos/44269/44269-720.mp4"
       ]
     },
     {
@@ -1519,8 +1519,8 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11125/11125-720.mp4",
-        "https://assets.mixkit.co/videos/46382/46382-720.mp4",
+        "https://assets.mixkit.co/videos/11126/11126-720.mp4",
+        "https://assets.mixkit.co/videos/46383/46383-720.mp4",
         "https://assets.mixkit.co/videos/3151/3151-720.mp4"
       ]
     },
@@ -1540,7 +1540,7 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50566/50566-720.mp4",
-        "https://assets.mixkit.co/videos/14035/14035-720.mp4",
+        "https://assets.mixkit.co/videos/34951/34951-720.mp4",
         "https://assets.mixkit.co/videos/28338/28338-720.mp4"
       ]
     },
@@ -1561,7 +1561,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/2221/2221-720.mp4",
         "https://assets.mixkit.co/videos/9810/9810-720.mp4",
-        "https://assets.mixkit.co/videos/45228/45228-720.mp4"
+        "https://assets.mixkit.co/videos/45229/45229-720.mp4"
       ]
     },
     {
@@ -1579,9 +1579,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14198/14198-720.mp4",
+        "https://assets.mixkit.co/videos/14199/14199-720.mp4",
         "https://assets.mixkit.co/videos/28341/28341-720.mp4",
-        "https://assets.mixkit.co/videos/4292/4292-720.mp4"
+        "https://assets.mixkit.co/videos/4317/4317-720.mp4"
       ]
     },
     {
@@ -1600,7 +1600,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/15625/15625-720.mp4",
-        "https://assets.mixkit.co/videos/45216/45216-720.mp4",
+        "https://assets.mixkit.co/videos/45217/45217-720.mp4",
         "https://assets.mixkit.co/videos/1080/1080-720.mp4"
       ]
     },
@@ -1640,8 +1640,8 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/31565/31565-720.mp4",
-        "https://assets.mixkit.co/videos/18812/18812-720.mp4",
-        "https://assets.mixkit.co/videos/4031/4031-720.mp4"
+        "https://assets.mixkit.co/videos/16623/16623-720.mp4",
+        "https://assets.mixkit.co/videos/4061/4061-720.mp4"
       ]
     },
     {
@@ -1659,9 +1659,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/44269/44269-720.mp4",
+        "https://assets.mixkit.co/videos/7006/7006-720.mp4",
         "https://assets.mixkit.co/videos/3031/3031-720.mp4",
-        "https://assets.mixkit.co/videos/35095/35095-720.mp4"
+        "https://assets.mixkit.co/videos/35091/35091-720.mp4"
       ]
     },
     {
@@ -1679,9 +1679,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/30907/30907-720.mp4",
+        "https://assets.mixkit.co/videos/35055/35055-720.mp4",
         "https://assets.mixkit.co/videos/9969/9969-720.mp4",
-        "https://assets.mixkit.co/videos/50572/50572-720.mp4"
+        "https://assets.mixkit.co/videos/28005/28005-720.mp4"
       ]
     },
     {
@@ -1720,8 +1720,8 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/27028/27028-720.mp4",
-        "https://assets.mixkit.co/videos/1203/1203-720.mp4",
-        "https://assets.mixkit.co/videos/19619/19619-720.mp4"
+        "https://assets.mixkit.co/videos/1216/1216-720.mp4",
+        "https://assets.mixkit.co/videos/19622/19622-720.mp4"
       ]
     },
     {
@@ -1741,7 +1741,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/14911/14911-720.mp4",
         "https://assets.mixkit.co/videos/30563/30563-720.mp4",
-        "https://assets.mixkit.co/videos/28046/28046-720.mp4"
+        "https://assets.mixkit.co/videos/28049/28049-720.mp4"
       ]
     },
     {
@@ -1759,8 +1759,8 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4232/4232-720.mp4",
-        "https://assets.mixkit.co/videos/34982/34982-720.mp4",
+        "https://assets.mixkit.co/videos/4245/4245-720.mp4",
+        "https://assets.mixkit.co/videos/31706/31706-720.mp4",
         "https://assets.mixkit.co/videos/1938/1938-720.mp4"
       ]
     },
@@ -1779,8 +1779,8 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/34855/34855-720.mp4",
-        "https://assets.mixkit.co/videos/10212/10212-720.mp4",
+        "https://assets.mixkit.co/videos/31002/31002-720.mp4",
+        "https://assets.mixkit.co/videos/35511/35511-720.mp4",
         "https://assets.mixkit.co/videos/570/570-720.mp4"
       ]
     },
@@ -1799,9 +1799,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/27874/27874-720.mp4",
-        "https://assets.mixkit.co/videos/11129/11129-720.mp4",
-        "https://assets.mixkit.co/videos/28011/28011-720.mp4"
+        "https://assets.mixkit.co/videos/30928/30928-720.mp4",
+        "https://assets.mixkit.co/videos/11133/11133-720.mp4",
+        "https://assets.mixkit.co/videos/28008/28008-720.mp4"
       ]
     },
     {
@@ -1819,9 +1819,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11081/11081-720.mp4",
+        "https://assets.mixkit.co/videos/11079/11079-720.mp4",
         "https://assets.mixkit.co/videos/15386/15386-720.mp4",
-        "https://assets.mixkit.co/videos/45213/45213-720.mp4"
+        "https://assets.mixkit.co/videos/45214/45214-720.mp4"
       ]
     },
     {
@@ -1839,8 +1839,8 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/35521/35521-720.mp4",
-        "https://assets.mixkit.co/videos/28049/28049-720.mp4",
+        "https://assets.mixkit.co/videos/25073/25073-720.mp4",
+        "https://assets.mixkit.co/videos/28047/28047-720.mp4",
         "https://assets.mixkit.co/videos/3963/3963-720.mp4"
       ]
     },
@@ -1860,7 +1860,7 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1182/1182-720.mp4",
-        "https://assets.mixkit.co/videos/20464/20464-720.mp4",
+        "https://assets.mixkit.co/videos/34789/34789-720.mp4",
         "https://assets.mixkit.co/videos/26939/26939-720.mp4"
       ]
     },
@@ -1880,8 +1880,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/48307/48307-720.mp4",
-        "https://assets.mixkit.co/videos/4362/4362-720.mp4",
-        "https://assets.mixkit.co/videos/14222/14222-720.mp4"
+        "https://assets.mixkit.co/videos/4371/4371-720.mp4",
+        "https://assets.mixkit.co/videos/8662/8662-720.mp4"
       ]
     },
     {
@@ -1899,8 +1899,8 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28008/28008-720.mp4",
-        "https://assets.mixkit.co/videos/44373/44373-720.mp4",
+        "https://assets.mixkit.co/videos/28007/28007-720.mp4",
+        "https://assets.mixkit.co/videos/4450/4450-720.mp4",
         "https://assets.mixkit.co/videos/8065/8065-720.mp4"
       ]
     },
@@ -1919,8 +1919,8 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/31730/31730-720.mp4",
-        "https://assets.mixkit.co/videos/4100/4100-720.mp4",
+        "https://assets.mixkit.co/videos/51595/51595-720.mp4",
+        "https://assets.mixkit.co/videos/4111/4111-720.mp4",
         "https://assets.mixkit.co/videos/30079/30079-720.mp4"
       ]
     },
@@ -1941,7 +1941,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/44617/44617-720.mp4",
         "https://assets.mixkit.co/videos/27196/27196-720.mp4",
-        "https://assets.mixkit.co/videos/11082/11082-720.mp4"
+        "https://assets.mixkit.co/videos/11086/11086-720.mp4"
       ]
     },
     {
@@ -1960,7 +1960,7 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/47592/47592-720.mp4",
-        "https://assets.mixkit.co/videos/4055/4055-720.mp4",
+        "https://assets.mixkit.co/videos/4056/4056-720.mp4",
         "https://assets.mixkit.co/videos/30031/30031-720.mp4"
       ]
     },
@@ -1979,9 +1979,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4247/4247-720.mp4",
-        "https://assets.mixkit.co/videos/34166/34166-720.mp4",
-        "https://assets.mixkit.co/videos/11079/11079-720.mp4"
+        "https://assets.mixkit.co/videos/4253/4253-720.mp4",
+        "https://assets.mixkit.co/videos/31563/31563-720.mp4",
+        "https://assets.mixkit.co/videos/11083/11083-720.mp4"
       ]
     },
     {
@@ -2000,8 +2000,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/8100/8100-720.mp4",
-        "https://assets.mixkit.co/videos/35091/35091-720.mp4",
-        "https://assets.mixkit.co/videos/4378/4378-720.mp4"
+        "https://assets.mixkit.co/videos/34991/34991-720.mp4",
+        "https://assets.mixkit.co/videos/4381/4381-720.mp4"
       ]
     },
     {
@@ -2040,8 +2040,8 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45315/45315-720.mp4",
-        "https://assets.mixkit.co/videos/19618/19618-720.mp4",
-        "https://assets.mixkit.co/videos/4399/4399-720.mp4"
+        "https://assets.mixkit.co/videos/19619/19619-720.mp4",
+        "https://assets.mixkit.co/videos/1140/1140-720.mp4"
       ]
     },
     {
@@ -2060,7 +2060,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/11060/11060-720.mp4",
-        "https://assets.mixkit.co/videos/4337/4337-720.mp4",
+        "https://assets.mixkit.co/videos/4347/4347-720.mp4",
         "https://assets.mixkit.co/videos/43076/43076-720.mp4"
       ]
     },
@@ -2079,9 +2079,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/46392/46392-720.mp4",
-        "https://assets.mixkit.co/videos/14192/14192-720.mp4",
-        "https://assets.mixkit.co/videos/4237/4237-720.mp4"
+        "https://assets.mixkit.co/videos/46406/46406-720.mp4",
+        "https://assets.mixkit.co/videos/14194/14194-720.mp4",
+        "https://assets.mixkit.co/videos/4239/4239-720.mp4"
       ]
     },
     {
@@ -2099,7 +2099,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/1201/1201-720.mp4",
+        "https://assets.mixkit.co/videos/1198/1198-720.mp4",
         "https://assets.mixkit.co/videos/8150/8150-720.mp4",
         "https://assets.mixkit.co/videos/14411/14411-720.mp4"
       ]
@@ -2120,8 +2120,8 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/2187/2187-720.mp4",
-        "https://assets.mixkit.co/videos/34792/34792-720.mp4",
-        "https://assets.mixkit.co/videos/14200/14200-720.mp4"
+        "https://assets.mixkit.co/videos/34795/34795-720.mp4",
+        "https://assets.mixkit.co/videos/14204/14204-720.mp4"
       ]
     },
     {
@@ -2141,7 +2141,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/18791/18791-720.mp4",
         "https://assets.mixkit.co/videos/4034/4034-720.mp4",
-        "https://assets.mixkit.co/videos/11153/11153-720.mp4"
+        "https://assets.mixkit.co/videos/11181/11181-720.mp4"
       ]
     },
     {
@@ -2159,7 +2159,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/31002/31002-720.mp4",
+        "https://assets.mixkit.co/videos/27874/27874-720.mp4",
         "https://assets.mixkit.co/videos/1171/1171-720.mp4",
         "https://assets.mixkit.co/videos/2386/2386-720.mp4"
       ]
@@ -2179,7 +2179,7 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4128/4128-720.mp4",
+        "https://assets.mixkit.co/videos/4137/4137-720.mp4",
         "https://assets.mixkit.co/videos/4013/4013-720.mp4",
         "https://assets.mixkit.co/videos/2206/2206-720.mp4"
       ]
@@ -2219,9 +2219,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4282/4282-720.mp4",
-        "https://assets.mixkit.co/videos/4051/4051-720.mp4",
-        "https://assets.mixkit.co/videos/45212/45212-720.mp4"
+        "https://assets.mixkit.co/videos/4280/4280-720.mp4",
+        "https://assets.mixkit.co/videos/4031/4031-720.mp4",
+        "https://assets.mixkit.co/videos/45213/45213-720.mp4"
       ]
     },
     {
@@ -2239,7 +2239,7 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11011/11011-720.mp4",
+        "https://assets.mixkit.co/videos/11017/11017-720.mp4",
         "https://assets.mixkit.co/videos/44279/44279-720.mp4",
         "https://assets.mixkit.co/videos/110/110-720.mp4"
       ]
@@ -2259,7 +2259,7 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/46389/46389-720.mp4",
+        "https://assets.mixkit.co/videos/46392/46392-720.mp4",
         "https://assets.mixkit.co/videos/47948/47948-720.mp4",
         "https://assets.mixkit.co/videos/28915/28915-720.mp4"
       ]
@@ -2320,7 +2320,7 @@
       "permutation_str": "3 2 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/13000/13000-720.mp4",
-        "https://assets.mixkit.co/videos/28023/28023-720.mp4",
+        "https://assets.mixkit.co/videos/28022/28022-720.mp4",
         "https://assets.mixkit.co/videos/47299/47299-720.mp4"
       ]
     },
@@ -2339,7 +2339,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11046/11046-720.mp4",
+        "https://assets.mixkit.co/videos/11044/11044-720.mp4",
         "https://assets.mixkit.co/videos/46189/46189-720.mp4",
         "https://assets.mixkit.co/videos/44382/44382-720.mp4"
       ]
@@ -2361,7 +2361,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/41375/41375-720.mp4",
         "https://assets.mixkit.co/videos/2125/2125-720.mp4",
-        "https://assets.mixkit.co/videos/4254/4254-720.mp4"
+        "https://assets.mixkit.co/videos/4279/4279-720.mp4"
       ]
     },
     {
@@ -2381,7 +2381,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45085/45085-720.mp4",
         "https://assets.mixkit.co/videos/28085/28085-720.mp4",
-        "https://assets.mixkit.co/videos/4111/4111-720.mp4"
+        "https://assets.mixkit.co/videos/4115/4115-720.mp4"
       ]
     },
     {
@@ -2400,7 +2400,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1610/1610-720.mp4",
-        "https://assets.mixkit.co/videos/11124/11124-720.mp4",
+        "https://assets.mixkit.co/videos/11125/11125-720.mp4",
         "https://assets.mixkit.co/videos/14167/14167-720.mp4"
       ]
     },
@@ -2420,8 +2420,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1089/1089-720.mp4",
-        "https://assets.mixkit.co/videos/4253/4253-720.mp4",
-        "https://assets.mixkit.co/videos/11075/11075-720.mp4"
+        "https://assets.mixkit.co/videos/4264/4264-720.mp4",
+        "https://assets.mixkit.co/videos/11081/11081-720.mp4"
       ]
     },
     {
@@ -2441,7 +2441,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/35016/35016-720.mp4",
         "https://assets.mixkit.co/videos/19215/19215-720.mp4",
-        "https://assets.mixkit.co/videos/38375/38375-720.mp4"
+        "https://assets.mixkit.co/videos/4041/4041-720.mp4"
       ]
     },
     {
@@ -2460,8 +2460,8 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/44366/44366-720.mp4",
-        "https://assets.mixkit.co/videos/1198/1198-720.mp4",
-        "https://assets.mixkit.co/videos/34795/34795-720.mp4"
+        "https://assets.mixkit.co/videos/1203/1203-720.mp4",
+        "https://assets.mixkit.co/videos/9884/9884-720.mp4"
       ]
     },
     {
@@ -2480,7 +2480,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50940/50940-720.mp4",
-        "https://assets.mixkit.co/videos/19624/19624-720.mp4",
+        "https://assets.mixkit.co/videos/19626/19626-720.mp4",
         "https://assets.mixkit.co/videos/4093/4093-720.mp4"
       ]
     },
@@ -2501,7 +2501,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/41573/41573-720.mp4",
         "https://assets.mixkit.co/videos/28343/28343-720.mp4",
-        "https://assets.mixkit.co/videos/35055/35055-720.mp4"
+        "https://assets.mixkit.co/videos/19695/19695-720.mp4"
       ]
     },
     {
@@ -2521,7 +2521,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/8082/8082-720.mp4",
         "https://assets.mixkit.co/videos/41401/41401-720.mp4",
-        "https://assets.mixkit.co/videos/28006/28006-720.mp4"
+        "https://assets.mixkit.co/videos/28011/28011-720.mp4"
       ]
     },
     {
@@ -2540,7 +2540,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/33934/33934-720.mp4",
-        "https://assets.mixkit.co/videos/11181/11181-720.mp4",
+        "https://assets.mixkit.co/videos/50576/50576-720.mp4",
         "https://assets.mixkit.co/videos/51106/51106-720.mp4"
       ]
     },
@@ -2559,9 +2559,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11045/11045-720.mp4",
+        "https://assets.mixkit.co/videos/11065/11065-720.mp4",
         "https://assets.mixkit.co/videos/4283/4283-720.mp4",
-        "https://assets.mixkit.co/videos/4308/4308-720.mp4"
+        "https://assets.mixkit.co/videos/4304/4304-720.mp4"
       ]
     },
     {
@@ -2580,8 +2580,8 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45065/45065-720.mp4",
-        "https://assets.mixkit.co/videos/19615/19615-720.mp4",
-        "https://assets.mixkit.co/videos/27302/27302-720.mp4"
+        "https://assets.mixkit.co/videos/19618/19618-720.mp4",
+        "https://assets.mixkit.co/videos/10086/10086-720.mp4"
       ]
     },
     {
@@ -2599,9 +2599,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/34879/34879-720.mp4",
+        "https://assets.mixkit.co/videos/7454/7454-720.mp4",
         "https://assets.mixkit.co/videos/45089/45089-720.mp4",
-        "https://assets.mixkit.co/videos/28053/28053-720.mp4"
+        "https://assets.mixkit.co/videos/28062/28062-720.mp4"
       ]
     },
     {
@@ -2620,7 +2620,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45098/45098-720.mp4",
-        "https://assets.mixkit.co/videos/14177/14177-720.mp4",
+        "https://assets.mixkit.co/videos/14183/14183-720.mp4",
         "https://assets.mixkit.co/videos/3334/3334-720.mp4"
       ]
     },
@@ -2639,9 +2639,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4239/4239-720.mp4",
-        "https://assets.mixkit.co/videos/11130/11130-720.mp4",
-        "https://assets.mixkit.co/videos/34857/34857-720.mp4"
+        "https://assets.mixkit.co/videos/4233/4233-720.mp4",
+        "https://assets.mixkit.co/videos/11132/11132-720.mp4",
+        "https://assets.mixkit.co/videos/15937/15937-720.mp4"
       ]
     },
     {
@@ -2659,7 +2659,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14166/14166-720.mp4",
+        "https://assets.mixkit.co/videos/14172/14172-720.mp4",
         "https://assets.mixkit.co/videos/4014/4014-720.mp4",
         "https://assets.mixkit.co/videos/14555/14555-720.mp4"
       ]
@@ -2679,7 +2679,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/18175/18175-720.mp4",
+        "https://assets.mixkit.co/videos/7207/7207-720.mp4",
         "https://assets.mixkit.co/videos/5372/5372-720.mp4",
         "https://assets.mixkit.co/videos/3412/3412-720.mp4"
       ]
@@ -2700,8 +2700,8 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/44395/44395-720.mp4",
-        "https://assets.mixkit.co/videos/28061/28061-720.mp4",
-        "https://assets.mixkit.co/videos/28054/28054-720.mp4"
+        "https://assets.mixkit.co/videos/28053/28053-720.mp4",
+        "https://assets.mixkit.co/videos/28058/28058-720.mp4"
       ]
     },
     {
@@ -2739,8 +2739,8 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11121/11121-720.mp4",
-        "https://assets.mixkit.co/videos/35003/35003-720.mp4",
+        "https://assets.mixkit.co/videos/11127/11127-720.mp4",
+        "https://assets.mixkit.co/videos/34982/34982-720.mp4",
         "https://assets.mixkit.co/videos/26793/26793-720.mp4"
       ]
     },
@@ -2759,7 +2759,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4171/4171-720.mp4",
+        "https://assets.mixkit.co/videos/4165/4165-720.mp4",
         "https://assets.mixkit.co/videos/45070/45070-720.mp4",
         "https://assets.mixkit.co/videos/51585/51585-720.mp4"
       ]
@@ -2779,9 +2779,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/20581/20581-720.mp4",
+        "https://assets.mixkit.co/videos/18348/18348-720.mp4",
         "https://assets.mixkit.co/videos/44496/44496-720.mp4",
-        "https://assets.mixkit.co/videos/34789/34789-720.mp4"
+        "https://assets.mixkit.co/videos/19240/19240-720.mp4"
       ]
     },
     {
@@ -2801,7 +2801,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/48527/48527-720.mp4",
         "https://assets.mixkit.co/videos/18345/18345-720.mp4",
-        "https://assets.mixkit.co/videos/28014/28014-720.mp4"
+        "https://assets.mixkit.co/videos/28023/28023-720.mp4"
       ]
     },
     {
@@ -2821,7 +2821,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/10414/10414-720.mp4",
         "https://assets.mixkit.co/videos/1934/1934-720.mp4",
-        "https://assets.mixkit.co/videos/4336/4336-720.mp4"
+        "https://assets.mixkit.co/videos/4314/4314-720.mp4"
       ]
     },
     {
@@ -2860,8 +2860,8 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/31607/31607-720.mp4",
-        "https://assets.mixkit.co/videos/14206/14206-720.mp4",
-        "https://assets.mixkit.co/videos/15692/15692-720.mp4"
+        "https://assets.mixkit.co/videos/14218/14218-720.mp4",
+        "https://assets.mixkit.co/videos/9609/9609-720.mp4"
       ]
     },
     {
@@ -2879,7 +2879,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4309/4309-720.mp4",
+        "https://assets.mixkit.co/videos/4292/4292-720.mp4",
         "https://assets.mixkit.co/videos/35513/35513-720.mp4",
         "https://assets.mixkit.co/videos/25542/25542-720.mp4"
       ]
@@ -2899,7 +2899,7 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/45230/45230-720.mp4",
+        "https://assets.mixkit.co/videos/46315/46315-720.mp4",
         "https://assets.mixkit.co/videos/32075/32075-720.mp4",
         "https://assets.mixkit.co/videos/17746/17746-720.mp4"
       ]
@@ -2940,8 +2940,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/9691/9691-720.mp4",
-        "https://assets.mixkit.co/videos/12032/12032-720.mp4",
-        "https://assets.mixkit.co/videos/9609/9609-720.mp4"
+        "https://assets.mixkit.co/videos/31545/31545-720.mp4",
+        "https://assets.mixkit.co/videos/8550/8550-720.mp4"
       ]
     },
     {
@@ -2960,7 +2960,7 @@
       "permutation_str": "3 2 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4998/4998-720.mp4",
-        "https://assets.mixkit.co/videos/46387/46387-720.mp4",
+        "https://assets.mixkit.co/videos/46389/46389-720.mp4",
         "https://assets.mixkit.co/videos/52009/52009-720.mp4"
       ]
     },
@@ -2980,7 +2980,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/8068/8068-720.mp4",
-        "https://assets.mixkit.co/videos/4359/4359-720.mp4",
+        "https://assets.mixkit.co/videos/4360/4360-720.mp4",
         "https://assets.mixkit.co/videos/3383/3383-720.mp4"
       ]
     },
@@ -2999,7 +2999,7 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4192/4192-720.mp4",
+        "https://assets.mixkit.co/videos/4200/4200-720.mp4",
         "https://assets.mixkit.co/videos/44498/44498-720.mp4",
         "https://assets.mixkit.co/videos/10405/10405-720.mp4"
       ]
@@ -3020,7 +3020,7 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3000/3000-720.mp4",
-        "https://assets.mixkit.co/videos/14152/14152-720.mp4",
+        "https://assets.mixkit.co/videos/14153/14153-720.mp4",
         "https://assets.mixkit.co/videos/18311/18311-720.mp4"
       ]
     },
@@ -3041,7 +3041,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45671/45671-720.mp4",
         "https://assets.mixkit.co/videos/45591/45591-720.mp4",
-        "https://assets.mixkit.co/videos/11017/11017-720.mp4"
+        "https://assets.mixkit.co/videos/11023/11023-720.mp4"
       ]
     },
     {
@@ -3059,7 +3059,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28063/28063-720.mp4",
+        "https://assets.mixkit.co/videos/28081/28081-720.mp4",
         "https://assets.mixkit.co/videos/30018/30018-720.mp4",
         "https://assets.mixkit.co/videos/45122/45122-720.mp4"
       ]
@@ -3081,7 +3081,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50861/50861-720.mp4",
         "https://assets.mixkit.co/videos/44621/44621-720.mp4",
-        "https://assets.mixkit.co/videos/4394/4394-720.mp4"
+        "https://assets.mixkit.co/videos/4395/4395-720.mp4"
       ]
     },
     {
@@ -3099,7 +3099,7 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4056/4056-720.mp4",
+        "https://assets.mixkit.co/videos/4090/4090-720.mp4",
         "https://assets.mixkit.co/videos/30021/30021-720.mp4",
         "https://assets.mixkit.co/videos/1708/1708-720.mp4"
       ]
@@ -3120,8 +3120,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/41366/41366-720.mp4",
-        "https://assets.mixkit.co/videos/4371/4371-720.mp4",
-        "https://assets.mixkit.co/videos/45214/45214-720.mp4"
+        "https://assets.mixkit.co/videos/4379/4379-720.mp4",
+        "https://assets.mixkit.co/videos/45215/45215-720.mp4"
       ]
     },
     {
@@ -3179,9 +3179,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/34951/34951-720.mp4",
+        "https://assets.mixkit.co/videos/15692/15692-720.mp4",
         "https://assets.mixkit.co/videos/31629/31629-720.mp4",
-        "https://assets.mixkit.co/videos/28080/28080-720.mp4"
+        "https://assets.mixkit.co/videos/28063/28063-720.mp4"
       ]
     },
     {
@@ -3199,8 +3199,8 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11127/11127-720.mp4",
-        "https://assets.mixkit.co/videos/7495/7495-720.mp4",
+        "https://assets.mixkit.co/videos/11129/11129-720.mp4",
+        "https://assets.mixkit.co/videos/10212/10212-720.mp4",
         "https://assets.mixkit.co/videos/5369/5369-720.mp4"
       ]
     },
@@ -3220,7 +3220,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4374/4374-720.mp4",
-        "https://assets.mixkit.co/videos/46386/46386-720.mp4",
+        "https://assets.mixkit.co/videos/46387/46387-720.mp4",
         "https://assets.mixkit.co/videos/1762/1762-720.mp4"
       ]
     },
@@ -3240,7 +3240,7 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/561/561-720.mp4",
-        "https://assets.mixkit.co/videos/14188/14188-720.mp4",
+        "https://assets.mixkit.co/videos/14189/14189-720.mp4",
         "https://assets.mixkit.co/videos/1609/1609-720.mp4"
       ]
     },
@@ -3259,7 +3259,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28065/28065-720.mp4",
+        "https://assets.mixkit.co/videos/28067/28067-720.mp4",
         "https://assets.mixkit.co/videos/35099/35099-720.mp4",
         "https://assets.mixkit.co/videos/31746/31746-720.mp4"
       ]
@@ -3280,7 +3280,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/26794/26794-720.mp4",
-        "https://assets.mixkit.co/videos/45173/45173-720.mp4",
+        "https://assets.mixkit.co/videos/45184/45184-720.mp4",
         "https://assets.mixkit.co/videos/42498/42498-720.mp4"
       ]
     },
@@ -3299,7 +3299,7 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28058/28058-720.mp4",
+        "https://assets.mixkit.co/videos/28057/28057-720.mp4",
         "https://assets.mixkit.co/videos/5022/5022-720.mp4",
         "https://assets.mixkit.co/videos/27914/27914-720.mp4"
       ]
@@ -3321,7 +3321,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/19222/19222-720.mp4",
         "https://assets.mixkit.co/videos/28087/28087-720.mp4",
-        "https://assets.mixkit.co/videos/11003/11003-720.mp4"
+        "https://assets.mixkit.co/videos/11010/11010-720.mp4"
       ]
     },
     {
@@ -3339,9 +3339,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11135/11135-720.mp4",
+        "https://assets.mixkit.co/videos/11139/11139-720.mp4",
         "https://assets.mixkit.co/videos/14148/14148-720.mp4",
-        "https://assets.mixkit.co/videos/14186/14186-720.mp4"
+        "https://assets.mixkit.co/videos/14187/14187-720.mp4"
       ]
     },
     {
@@ -3360,8 +3360,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/9595/9595-720.mp4",
-        "https://assets.mixkit.co/videos/32524/32524-720.mp4",
-        "https://assets.mixkit.co/videos/46375/46375-720.mp4"
+        "https://assets.mixkit.co/videos/12032/12032-720.mp4",
+        "https://assets.mixkit.co/videos/46381/46381-720.mp4"
       ]
     },
     {
@@ -3381,7 +3381,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1186/1186-720.mp4",
         "https://assets.mixkit.co/videos/1083/1083-720.mp4",
-        "https://assets.mixkit.co/videos/34813/34813-720.mp4"
+        "https://assets.mixkit.co/videos/52422/52422-720.mp4"
       ]
     },
     {
@@ -3399,8 +3399,8 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28047/28047-720.mp4",
-        "https://assets.mixkit.co/videos/46418/46418-720.mp4",
+        "https://assets.mixkit.co/videos/28048/28048-720.mp4",
+        "https://assets.mixkit.co/videos/46419/46419-720.mp4",
         "https://assets.mixkit.co/videos/14217/14217-720.mp4"
       ]
     },
@@ -3419,9 +3419,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4376/4376-720.mp4",
+        "https://assets.mixkit.co/videos/4362/4362-720.mp4",
         "https://assets.mixkit.co/videos/28336/28336-720.mp4",
-        "https://assets.mixkit.co/videos/11037/11037-720.mp4"
+        "https://assets.mixkit.co/videos/11042/11042-720.mp4"
       ]
     },
     {
@@ -3440,7 +3440,7 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3387/3387-720.mp4",
-        "https://assets.mixkit.co/videos/1273/1273-720.mp4",
+        "https://assets.mixkit.co/videos/11001/11001-720.mp4",
         "https://assets.mixkit.co/videos/5016/5016-720.mp4"
       ]
     },
@@ -3461,7 +3461,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1193/1193-720.mp4",
         "https://assets.mixkit.co/videos/41378/41378-720.mp4",
-        "https://assets.mixkit.co/videos/46318/46318-720.mp4"
+        "https://assets.mixkit.co/videos/46319/46319-720.mp4"
       ]
     },
     {
@@ -3479,9 +3479,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28067/28067-720.mp4",
+        "https://assets.mixkit.co/videos/28068/28068-720.mp4",
         "https://assets.mixkit.co/videos/4152/4152-720.mp4",
-        "https://assets.mixkit.co/videos/36615/36615-720.mp4"
+        "https://assets.mixkit.co/videos/44373/44373-720.mp4"
       ]
     },
     {
@@ -3499,9 +3499,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14160/14160-720.mp4",
-        "https://assets.mixkit.co/videos/34991/34991-720.mp4",
-        "https://assets.mixkit.co/videos/4314/4314-720.mp4"
+        "https://assets.mixkit.co/videos/14161/14161-720.mp4",
+        "https://assets.mixkit.co/videos/35003/35003-720.mp4",
+        "https://assets.mixkit.co/videos/4339/4339-720.mp4"
       ]
     },
     {
@@ -3519,7 +3519,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/17732/17732-720.mp4",
+        "https://assets.mixkit.co/videos/35519/35519-720.mp4",
         "https://assets.mixkit.co/videos/26797/26797-720.mp4",
         "https://assets.mixkit.co/videos/30057/30057-720.mp4"
       ]
@@ -3540,7 +3540,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1194/1194-720.mp4",
-        "https://assets.mixkit.co/videos/11068/11068-720.mp4",
+        "https://assets.mixkit.co/videos/11072/11072-720.mp4",
         "https://assets.mixkit.co/videos/18167/18167-720.mp4"
       ]
     },
@@ -3560,7 +3560,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/2392/2392-720.mp4",
-        "https://assets.mixkit.co/videos/45217/45217-720.mp4",
+        "https://assets.mixkit.co/videos/45218/45218-720.mp4",
         "https://assets.mixkit.co/videos/45127/45127-720.mp4"
       ]
     },
@@ -3579,7 +3579,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4165/4165-720.mp4",
+        "https://assets.mixkit.co/videos/4192/4192-720.mp4",
         "https://assets.mixkit.co/videos/26300/26300-720.mp4",
         "https://assets.mixkit.co/videos/30889/30889-720.mp4"
       ]
@@ -3601,7 +3601,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/18787/18787-720.mp4",
         "https://assets.mixkit.co/videos/35013/35013-720.mp4",
-        "https://assets.mixkit.co/videos/4342/4342-720.mp4"
+        "https://assets.mixkit.co/videos/4324/4324-720.mp4"
       ]
     },
     {
@@ -3619,9 +3619,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4200/4200-720.mp4",
-        "https://assets.mixkit.co/videos/29362/29362-720.mp4",
-        "https://assets.mixkit.co/videos/4351/4351-720.mp4"
+        "https://assets.mixkit.co/videos/4208/4208-720.mp4",
+        "https://assets.mixkit.co/videos/20581/20581-720.mp4",
+        "https://assets.mixkit.co/videos/4355/4355-720.mp4"
       ]
     },
     {
@@ -3660,8 +3660,8 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/19649/19649-720.mp4",
-        "https://assets.mixkit.co/videos/4391/4391-720.mp4",
-        "https://assets.mixkit.co/videos/4380/4380-720.mp4"
+        "https://assets.mixkit.co/videos/4399/4399-720.mp4",
+        "https://assets.mixkit.co/videos/4386/4386-720.mp4"
       ]
     },
     {
@@ -3679,7 +3679,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11142/11142-720.mp4",
+        "https://assets.mixkit.co/videos/11145/11145-720.mp4",
         "https://assets.mixkit.co/videos/28844/28844-720.mp4",
         "https://assets.mixkit.co/videos/20425/20425-720.mp4"
       ]
@@ -3700,7 +3700,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/568/568-720.mp4",
-        "https://assets.mixkit.co/videos/31545/31545-720.mp4",
+        "https://assets.mixkit.co/videos/19455/19455-720.mp4",
         "https://assets.mixkit.co/videos/45124/45124-720.mp4"
       ]
     },
@@ -3721,7 +3721,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/14466/14466-720.mp4",
         "https://assets.mixkit.co/videos/10407/10407-720.mp4",
-        "https://assets.mixkit.co/videos/11113/11113-720.mp4"
+        "https://assets.mixkit.co/videos/11117/11117-720.mp4"
       ]
     },
     {
@@ -3741,7 +3741,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/43064/43064-720.mp4",
         "https://assets.mixkit.co/videos/40047/40047-720.mp4",
-        "https://assets.mixkit.co/videos/46385/46385-720.mp4"
+        "https://assets.mixkit.co/videos/46386/46386-720.mp4"
       ]
     },
     {
@@ -3779,8 +3779,8 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28073/28073-720.mp4",
-        "https://assets.mixkit.co/videos/45218/45218-720.mp4",
+        "https://assets.mixkit.co/videos/28069/28069-720.mp4",
+        "https://assets.mixkit.co/videos/45228/45228-720.mp4",
         "https://assets.mixkit.co/videos/6850/6850-720.mp4"
       ]
     },
@@ -3819,7 +3819,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11134/11134-720.mp4",
+        "https://assets.mixkit.co/videos/11135/11135-720.mp4",
         "https://assets.mixkit.co/videos/45670/45670-720.mp4",
         "https://assets.mixkit.co/videos/4166/4166-720.mp4"
       ]
@@ -3860,8 +3860,8 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/35085/35085-720.mp4",
-        "https://assets.mixkit.co/videos/7454/7454-720.mp4",
-        "https://assets.mixkit.co/videos/28010/28010-720.mp4"
+        "https://assets.mixkit.co/videos/26408/26408-720.mp4",
+        "https://assets.mixkit.co/videos/28006/28006-720.mp4"
       ]
     },
     {
@@ -3879,7 +3879,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/19608/19608-720.mp4",
+        "https://assets.mixkit.co/videos/19609/19609-720.mp4",
         "https://assets.mixkit.co/videos/50874/50874-720.mp4",
         "https://assets.mixkit.co/videos/47655/47655-720.mp4"
       ]
@@ -3900,8 +3900,8 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/25245/25245-720.mp4",
-        "https://assets.mixkit.co/videos/28070/28070-720.mp4",
-        "https://assets.mixkit.co/videos/45229/45229-720.mp4"
+        "https://assets.mixkit.co/videos/28080/28080-720.mp4",
+        "https://assets.mixkit.co/videos/45230/45230-720.mp4"
       ]
     },
     {
@@ -3919,7 +3919,7 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28013/28013-720.mp4",
+        "https://assets.mixkit.co/videos/28019/28019-720.mp4",
         "https://assets.mixkit.co/videos/8104/8104-720.mp4",
         "https://assets.mixkit.co/videos/4038/4038-720.mp4"
       ]
@@ -3939,9 +3939,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/6932/6932-720.mp4",
-        "https://assets.mixkit.co/videos/46381/46381-720.mp4",
-        "https://assets.mixkit.co/videos/1206/1206-720.mp4"
+        "https://assets.mixkit.co/videos/34975/34975-720.mp4",
+        "https://assets.mixkit.co/videos/46382/46382-720.mp4",
+        "https://assets.mixkit.co/videos/1273/1273-720.mp4"
       ]
     },
     {
@@ -4001,7 +4001,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50864/50864-720.mp4",
         "https://assets.mixkit.co/videos/3132/3132-720.mp4",
-        "https://assets.mixkit.co/videos/34162/34162-720.mp4"
+        "https://assets.mixkit.co/videos/34879/34879-720.mp4"
       ]
     },
     {
@@ -4019,7 +4019,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/35864/35864-720.mp4",
+        "https://assets.mixkit.co/videos/50570/50570-720.mp4",
         "https://assets.mixkit.co/videos/4060/4060-720.mp4",
         "https://assets.mixkit.co/videos/2716/2716-720.mp4"
       ]
@@ -4039,9 +4039,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/9884/9884-720.mp4",
+        "https://assets.mixkit.co/videos/18812/18812-720.mp4",
         "https://assets.mixkit.co/videos/27543/27543-720.mp4",
-        "https://assets.mixkit.co/videos/4395/4395-720.mp4"
+        "https://assets.mixkit.co/videos/4391/4391-720.mp4"
       ]
     },
     {
@@ -4059,7 +4059,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4209/4209-720.mp4",
+        "https://assets.mixkit.co/videos/4214/4214-720.mp4",
         "https://assets.mixkit.co/videos/31596/31596-720.mp4",
         "https://assets.mixkit.co/videos/14468/14468-720.mp4"
       ]
@@ -4079,7 +4079,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28057/28057-720.mp4",
+        "https://assets.mixkit.co/videos/28061/28061-720.mp4",
         "https://assets.mixkit.co/videos/30043/30043-720.mp4",
         "https://assets.mixkit.co/videos/16564/16564-720.mp4"
       ]
@@ -4100,8 +4100,8 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1218/1218-720.mp4",
-        "https://assets.mixkit.co/videos/52422/52422-720.mp4",
-        "https://assets.mixkit.co/videos/45209/45209-720.mp4"
+        "https://assets.mixkit.co/videos/31733/31733-720.mp4",
+        "https://assets.mixkit.co/videos/45212/45212-720.mp4"
       ]
     },
     {
@@ -4120,7 +4120,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/11185/11185-720.mp4",
-        "https://assets.mixkit.co/videos/28002/28002-720.mp4",
+        "https://assets.mixkit.co/videos/28004/28004-720.mp4",
         "https://assets.mixkit.co/videos/4412/4412-720.mp4"
       ]
     },
@@ -4139,7 +4139,7 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4074/4074-720.mp4",
+        "https://assets.mixkit.co/videos/4089/4089-720.mp4",
         "https://assets.mixkit.co/videos/14559/14559-720.mp4",
         "https://assets.mixkit.co/videos/9681/9681-720.mp4"
       ]
@@ -4159,8 +4159,8 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/19626/19626-720.mp4",
-        "https://assets.mixkit.co/videos/11072/11072-720.mp4",
+        "https://assets.mixkit.co/videos/25068/25068-720.mp4",
+        "https://assets.mixkit.co/videos/11073/11073-720.mp4",
         "https://assets.mixkit.co/videos/45069/45069-720.mp4"
       ]
     },
@@ -4180,7 +4180,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/43600/43600-720.mp4",
-        "https://assets.mixkit.co/videos/1137/1137-720.mp4",
+        "https://assets.mixkit.co/videos/1141/1141-720.mp4",
         "https://assets.mixkit.co/videos/4205/4205-720.mp4"
       ]
     },
@@ -4239,9 +4239,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14194/14194-720.mp4",
+        "https://assets.mixkit.co/videos/14197/14197-720.mp4",
         "https://assets.mixkit.co/videos/9603/9603-720.mp4",
-        "https://assets.mixkit.co/videos/31563/31563-720.mp4"
+        "https://assets.mixkit.co/videos/45283/45283-720.mp4"
       ]
     },
     {
@@ -4259,9 +4259,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/1141/1141-720.mp4",
-        "https://assets.mixkit.co/videos/1196/1196-720.mp4",
-        "https://assets.mixkit.co/videos/15461/15461-720.mp4"
+        "https://assets.mixkit.co/videos/1142/1142-720.mp4",
+        "https://assets.mixkit.co/videos/1201/1201-720.mp4",
+        "https://assets.mixkit.co/videos/38375/38375-720.mp4"
       ]
     },
     {
@@ -4280,7 +4280,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/14203/14203-720.mp4",
-        "https://assets.mixkit.co/videos/4206/4206-720.mp4",
+        "https://assets.mixkit.co/videos/4203/4203-720.mp4",
         "https://assets.mixkit.co/videos/6734/6734-720.mp4"
       ]
     },
@@ -4301,7 +4301,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/26140/26140-720.mp4",
         "https://assets.mixkit.co/videos/3310/3310-720.mp4",
-        "https://assets.mixkit.co/videos/18348/18348-720.mp4"
+        "https://assets.mixkit.co/videos/17732/17732-720.mp4"
       ]
     },
     {
@@ -4340,7 +4340,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3128/3128-720.mp4",
-        "https://assets.mixkit.co/videos/11145/11145-720.mp4",
+        "https://assets.mixkit.co/videos/11153/11153-720.mp4",
         "https://assets.mixkit.co/videos/3358/3358-720.mp4"
       ]
     },
@@ -4379,9 +4379,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/34517/34517-720.mp4",
+        "https://assets.mixkit.co/videos/50574/50574-720.mp4",
         "https://assets.mixkit.co/videos/34314/34314-720.mp4",
-        "https://assets.mixkit.co/videos/45215/45215-720.mp4"
+        "https://assets.mixkit.co/videos/45216/45216-720.mp4"
       ]
     },
     {
@@ -4400,7 +4400,7 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1169/1169-720.mp4",
-        "https://assets.mixkit.co/videos/19240/19240-720.mp4",
+        "https://assets.mixkit.co/videos/34792/34792-720.mp4",
         "https://assets.mixkit.co/videos/9438/9438-720.mp4"
       ]
     },
@@ -4440,7 +4440,7 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/14150/14150-720.mp4",
-        "https://assets.mixkit.co/videos/4381/4381-720.mp4",
+        "https://assets.mixkit.co/videos/4380/4380-720.mp4",
         "https://assets.mixkit.co/videos/11922/11922-720.mp4"
       ]
     },
@@ -4480,8 +4480,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/11022/11022-720.mp4",
-        "https://assets.mixkit.co/videos/11002/11002-720.mp4",
-        "https://assets.mixkit.co/videos/12030/12030-720.mp4"
+        "https://assets.mixkit.co/videos/11003/11003-720.mp4",
+        "https://assets.mixkit.co/videos/7495/7495-720.mp4"
       ]
     },
     {
@@ -4499,8 +4499,8 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/46417/46417-720.mp4",
-        "https://assets.mixkit.co/videos/4361/4361-720.mp4",
+        "https://assets.mixkit.co/videos/46418/46418-720.mp4",
+        "https://assets.mixkit.co/videos/4376/4376-720.mp4",
         "https://assets.mixkit.co/videos/52419/52419-720.mp4"
       ]
     },
@@ -4541,7 +4541,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45082/45082-720.mp4",
         "https://assets.mixkit.co/videos/44385/44385-720.mp4",
-        "https://assets.mixkit.co/videos/4379/4379-720.mp4"
+        "https://assets.mixkit.co/videos/4378/4378-720.mp4"
       ]
     },
     {
@@ -4560,7 +4560,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/51689/51689-720.mp4",
-        "https://assets.mixkit.co/videos/46419/46419-720.mp4",
+        "https://assets.mixkit.co/videos/46420/46420-720.mp4",
         "https://assets.mixkit.co/videos/19636/19636-720.mp4"
       ]
     },
@@ -4599,8 +4599,8 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11028/11028-720.mp4",
-        "https://assets.mixkit.co/videos/14156/14156-720.mp4",
+        "https://assets.mixkit.co/videos/11039/11039-720.mp4",
+        "https://assets.mixkit.co/videos/14157/14157-720.mp4",
         "https://assets.mixkit.co/videos/48016/48016-720.mp4"
       ]
     },
@@ -4619,8 +4619,8 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4115/4115-720.mp4",
-        "https://assets.mixkit.co/videos/50570/50570-720.mp4",
+        "https://assets.mixkit.co/videos/4120/4120-720.mp4",
+        "https://assets.mixkit.co/videos/45610/45610-720.mp4",
         "https://assets.mixkit.co/videos/1774/1774-720.mp4"
       ]
     },
@@ -4639,8 +4639,8 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11126/11126-720.mp4",
-        "https://assets.mixkit.co/videos/46315/46315-720.mp4",
+        "https://assets.mixkit.co/videos/11121/11121-720.mp4",
+        "https://assets.mixkit.co/videos/46316/46316-720.mp4",
         "https://assets.mixkit.co/videos/8053/8053-720.mp4"
       ]
     },
@@ -4659,9 +4659,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4245/4245-720.mp4",
+        "https://assets.mixkit.co/videos/4247/4247-720.mp4",
         "https://assets.mixkit.co/videos/43607/43607-720.mp4",
-        "https://assets.mixkit.co/videos/19623/19623-720.mp4"
+        "https://assets.mixkit.co/videos/19624/19624-720.mp4"
       ]
     },
     {
@@ -4679,7 +4679,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14157/14157-720.mp4",
+        "https://assets.mixkit.co/videos/14158/14158-720.mp4",
         "https://assets.mixkit.co/videos/51590/51590-720.mp4",
         "https://assets.mixkit.co/videos/22729/22729-720.mp4"
       ]
@@ -4699,9 +4699,9 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/31723/31723-720.mp4",
+        "https://assets.mixkit.co/videos/34855/34855-720.mp4",
         "https://assets.mixkit.co/videos/45058/45058-720.mp4",
-        "https://assets.mixkit.co/videos/14197/14197-720.mp4"
+        "https://assets.mixkit.co/videos/14198/14198-720.mp4"
       ]
     },
     {
@@ -4719,7 +4719,7 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11133/11133-720.mp4",
+        "https://assets.mixkit.co/videos/11130/11130-720.mp4",
         "https://assets.mixkit.co/videos/41397/41397-720.mp4",
         "https://assets.mixkit.co/videos/19219/19219-720.mp4"
       ]
@@ -4781,7 +4781,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1611/1611-720.mp4",
         "https://assets.mixkit.co/videos/10106/10106-720.mp4",
-        "https://assets.mixkit.co/videos/11139/11139-720.mp4"
+        "https://assets.mixkit.co/videos/11142/11142-720.mp4"
       ]
     },
     {
@@ -4800,7 +4800,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45031/45031-720.mp4",
-        "https://assets.mixkit.co/videos/4137/4137-720.mp4",
+        "https://assets.mixkit.co/videos/4140/4140-720.mp4",
         "https://assets.mixkit.co/videos/50165/50165-720.mp4"
       ]
     },
@@ -4841,7 +4841,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/8061/8061-720.mp4",
         "https://assets.mixkit.co/videos/51935/51935-720.mp4",
-        "https://assets.mixkit.co/videos/34975/34975-720.mp4"
+        "https://assets.mixkit.co/videos/35497/35497-720.mp4"
       ]
     },
     {
@@ -4860,8 +4860,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4049/4049-720.mp4",
-        "https://assets.mixkit.co/videos/34969/34969-720.mp4",
-        "https://assets.mixkit.co/videos/28020/28020-720.mp4"
+        "https://assets.mixkit.co/videos/27302/27302-720.mp4",
+        "https://assets.mixkit.co/videos/28018/28018-720.mp4"
       ]
     },
     {
@@ -4880,8 +4880,8 @@
       "permutation_str": "3 2 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/2473/2473-720.mp4",
-        "https://assets.mixkit.co/videos/11039/11039-720.mp4",
-        "https://assets.mixkit.co/videos/46374/46374-720.mp4"
+        "https://assets.mixkit.co/videos/11037/11037-720.mp4",
+        "https://assets.mixkit.co/videos/46375/46375-720.mp4"
       ]
     },
     {
@@ -4899,9 +4899,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4089/4089-720.mp4",
+        "https://assets.mixkit.co/videos/4100/4100-720.mp4",
         "https://assets.mixkit.co/videos/50863/50863-720.mp4",
-        "https://assets.mixkit.co/videos/4393/4393-720.mp4"
+        "https://assets.mixkit.co/videos/4382/4382-720.mp4"
       ]
     },
     {
@@ -4960,7 +4960,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50868/50868-720.mp4",
-        "https://assets.mixkit.co/videos/45145/45145-720.mp4",
+        "https://assets.mixkit.co/videos/45166/45166-720.mp4",
         "https://assets.mixkit.co/videos/8759/8759-720.mp4"
       ]
     },
@@ -4979,7 +4979,7 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4324/4324-720.mp4",
+        "https://assets.mixkit.co/videos/4337/4337-720.mp4",
         "https://assets.mixkit.co/videos/15919/15919-720.mp4",
         "https://assets.mixkit.co/videos/11193/11193-720.mp4"
       ]
@@ -5019,7 +5019,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14189/14189-720.mp4",
+        "https://assets.mixkit.co/videos/14190/14190-720.mp4",
         "https://assets.mixkit.co/videos/47532/47532-720.mp4",
         "https://assets.mixkit.co/videos/8083/8083-720.mp4"
       ]
@@ -5039,9 +5039,9 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/1142/1142-720.mp4",
+        "https://assets.mixkit.co/videos/1147/1147-720.mp4",
         "https://assets.mixkit.co/videos/3404/3404-720.mp4",
-        "https://assets.mixkit.co/videos/19622/19622-720.mp4"
+        "https://assets.mixkit.co/videos/19623/19623-720.mp4"
       ]
     },
     {
@@ -5080,7 +5080,7 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45067/45067-720.mp4",
-        "https://assets.mixkit.co/videos/8663/8663-720.mp4",
+        "https://assets.mixkit.co/videos/6932/6932-720.mp4",
         "https://assets.mixkit.co/videos/30867/30867-720.mp4"
       ]
     },
@@ -5100,8 +5100,8 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/1180/1180-720.mp4",
-        "https://assets.mixkit.co/videos/14153/14153-720.mp4",
-        "https://assets.mixkit.co/videos/4264/4264-720.mp4"
+        "https://assets.mixkit.co/videos/14154/14154-720.mp4",
+        "https://assets.mixkit.co/videos/4254/4254-720.mp4"
       ]
     },
     {
@@ -5120,8 +5120,8 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/34856/34856-720.mp4",
-        "https://assets.mixkit.co/videos/4355/4355-720.mp4",
-        "https://assets.mixkit.co/videos/19600/19600-720.mp4"
+        "https://assets.mixkit.co/videos/4359/4359-720.mp4",
+        "https://assets.mixkit.co/videos/19601/19601-720.mp4"
       ]
     },
     {
@@ -5141,7 +5141,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/47811/47811-720.mp4",
         "https://assets.mixkit.co/videos/32910/32910-720.mp4",
-        "https://assets.mixkit.co/videos/45172/45172-720.mp4"
+        "https://assets.mixkit.co/videos/45173/45173-720.mp4"
       ]
     },
     {
@@ -5159,9 +5159,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/35519/35519-720.mp4",
+        "https://assets.mixkit.co/videos/12030/12030-720.mp4",
         "https://assets.mixkit.co/videos/4070/4070-720.mp4",
-        "https://assets.mixkit.co/videos/35511/35511-720.mp4"
+        "https://assets.mixkit.co/videos/35095/35095-720.mp4"
       ]
     },
     {
@@ -5179,7 +5179,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4318/4318-720.mp4",
+        "https://assets.mixkit.co/videos/4316/4316-720.mp4",
         "https://assets.mixkit.co/videos/49334/49334-720.mp4",
         "https://assets.mixkit.co/videos/1176/1176-720.mp4"
       ]
@@ -5199,9 +5199,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4304/4304-720.mp4",
+        "https://assets.mixkit.co/videos/4309/4309-720.mp4",
         "https://assets.mixkit.co/videos/14196/14196-720.mp4",
-        "https://assets.mixkit.co/videos/27532/27532-720.mp4"
+        "https://assets.mixkit.co/videos/18186/18186-720.mp4"
       ]
     },
     {
@@ -5219,7 +5219,7 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4386/4386-720.mp4",
+        "https://assets.mixkit.co/videos/4393/4393-720.mp4",
         "https://assets.mixkit.co/videos/14422/14422-720.mp4",
         "https://assets.mixkit.co/videos/34742/34742-720.mp4"
       ]
@@ -5259,8 +5259,8 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14199/14199-720.mp4",
-        "https://assets.mixkit.co/videos/45281/45281-720.mp4",
+        "https://assets.mixkit.co/videos/14200/14200-720.mp4",
+        "https://assets.mixkit.co/videos/35864/35864-720.mp4",
         "https://assets.mixkit.co/videos/8081/8081-720.mp4"
       ]
     },
@@ -5339,8 +5339,8 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4244/4244-720.mp4",
-        "https://assets.mixkit.co/videos/51595/51595-720.mp4",
+        "https://assets.mixkit.co/videos/4237/4237-720.mp4",
+        "https://assets.mixkit.co/videos/5371/5371-720.mp4",
         "https://assets.mixkit.co/videos/45338/45338-720.mp4"
       ]
     },
@@ -5379,7 +5379,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28016/28016-720.mp4",
+        "https://assets.mixkit.co/videos/28013/28013-720.mp4",
         "https://assets.mixkit.co/videos/43605/43605-720.mp4",
         "https://assets.mixkit.co/videos/5031/5031-720.mp4"
       ]
@@ -5399,7 +5399,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/46429/46429-720.mp4",
+        "https://assets.mixkit.co/videos/14152/14152-720.mp4",
         "https://assets.mixkit.co/videos/34846/34846-720.mp4",
         "https://assets.mixkit.co/videos/30087/30087-720.mp4"
       ]
@@ -5420,8 +5420,8 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/2202/2202-720.mp4",
-        "https://assets.mixkit.co/videos/28001/28001-720.mp4",
-        "https://assets.mixkit.co/videos/50574/50574-720.mp4"
+        "https://assets.mixkit.co/videos/28000/28000-720.mp4",
+        "https://assets.mixkit.co/videos/34166/34166-720.mp4"
       ]
     },
     {
@@ -5459,9 +5459,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11132/11132-720.mp4",
-        "https://assets.mixkit.co/videos/45610/45610-720.mp4",
-        "https://assets.mixkit.co/videos/28079/28079-720.mp4"
+        "https://assets.mixkit.co/videos/11134/11134-720.mp4",
+        "https://assets.mixkit.co/videos/45608/45608-720.mp4",
+        "https://assets.mixkit.co/videos/28075/28075-720.mp4"
       ]
     },
     {
@@ -5480,7 +5480,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4313/4313-720.mp4",
-        "https://assets.mixkit.co/videos/46329/46329-720.mp4",
+        "https://assets.mixkit.co/videos/46335/46335-720.mp4",
         "https://assets.mixkit.co/videos/51797/51797-720.mp4"
       ]
     },
@@ -5499,7 +5499,7 @@
       ],
       "permutation_str": "2 3 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4052/4052-720.mp4",
+        "https://assets.mixkit.co/videos/4051/4051-720.mp4",
         "https://assets.mixkit.co/videos/26081/26081-720.mp4",
         "https://assets.mixkit.co/videos/1168/1168-720.mp4"
       ]
@@ -5520,7 +5520,7 @@
       "permutation_str": "3 2 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/41545/41545-720.mp4",
-        "https://assets.mixkit.co/videos/4382/4382-720.mp4",
+        "https://assets.mixkit.co/videos/4398/4398-720.mp4",
         "https://assets.mixkit.co/videos/20234/20234-720.mp4"
       ]
     },
@@ -5560,7 +5560,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45584/45584-720.mp4",
-        "https://assets.mixkit.co/videos/19695/19695-720.mp4",
+        "https://assets.mixkit.co/videos/14035/14035-720.mp4",
         "https://assets.mixkit.co/videos/30027/30027-720.mp4"
       ]
     },
@@ -5580,7 +5580,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4059/4059-720.mp4",
-        "https://assets.mixkit.co/videos/28068/28068-720.mp4",
+        "https://assets.mixkit.co/videos/28073/28073-720.mp4",
         "https://assets.mixkit.co/videos/51791/51791-720.mp4"
       ]
     },
@@ -5601,7 +5601,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/51600/51600-720.mp4",
         "https://assets.mixkit.co/videos/30084/30084-720.mp4",
-        "https://assets.mixkit.co/videos/28071/28071-720.mp4"
+        "https://assets.mixkit.co/videos/28065/28065-720.mp4"
       ]
     },
     {
@@ -5639,7 +5639,7 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/1140/1140-720.mp4",
+        "https://assets.mixkit.co/videos/1137/1137-720.mp4",
         "https://assets.mixkit.co/videos/10410/10410-720.mp4",
         "https://assets.mixkit.co/videos/3983/3983-720.mp4"
       ]
@@ -5661,7 +5661,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/45057/45057-720.mp4",
         "https://assets.mixkit.co/videos/41383/41383-720.mp4",
-        "https://assets.mixkit.co/videos/10086/10086-720.mp4"
+        "https://assets.mixkit.co/videos/29362/29362-720.mp4"
       ]
     },
     {
@@ -5679,9 +5679,9 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/45608/45608-720.mp4",
+        "https://assets.mixkit.co/videos/34162/34162-720.mp4",
         "https://assets.mixkit.co/videos/4132/4132-720.mp4",
-        "https://assets.mixkit.co/videos/4398/4398-720.mp4"
+        "https://assets.mixkit.co/videos/4394/4394-720.mp4"
       ]
     },
     {
@@ -5700,8 +5700,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/51796/51796-720.mp4",
-        "https://assets.mixkit.co/videos/11009/11009-720.mp4",
-        "https://assets.mixkit.co/videos/4215/4215-720.mp4"
+        "https://assets.mixkit.co/videos/11011/11011-720.mp4",
+        "https://assets.mixkit.co/videos/4195/4195-720.mp4"
       ]
     },
     {
@@ -5719,7 +5719,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/46316/46316-720.mp4",
+        "https://assets.mixkit.co/videos/46317/46317-720.mp4",
         "https://assets.mixkit.co/videos/3373/3373-720.mp4",
         "https://assets.mixkit.co/videos/30094/30094-720.mp4"
       ]
@@ -5740,8 +5740,8 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4149/4149-720.mp4",
-        "https://assets.mixkit.co/videos/11090/11090-720.mp4",
-        "https://assets.mixkit.co/videos/4279/4279-720.mp4"
+        "https://assets.mixkit.co/videos/11113/11113-720.mp4",
+        "https://assets.mixkit.co/videos/4282/4282-720.mp4"
       ]
     },
     {
@@ -5759,7 +5759,7 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/8662/8662-720.mp4",
+        "https://assets.mixkit.co/videos/8663/8663-720.mp4",
         "https://assets.mixkit.co/videos/32983/32983-720.mp4",
         "https://assets.mixkit.co/videos/3133/3133-720.mp4"
       ]
@@ -5779,8 +5779,8 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11023/11023-720.mp4",
-        "https://assets.mixkit.co/videos/46420/46420-720.mp4",
+        "https://assets.mixkit.co/videos/11025/11025-720.mp4",
+        "https://assets.mixkit.co/videos/46423/46423-720.mp4",
         "https://assets.mixkit.co/videos/4881/4881-720.mp4"
       ]
     },
@@ -5839,9 +5839,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14154/14154-720.mp4",
+        "https://assets.mixkit.co/videos/14156/14156-720.mp4",
         "https://assets.mixkit.co/videos/3414/3414-720.mp4",
-        "https://assets.mixkit.co/videos/28081/28081-720.mp4"
+        "https://assets.mixkit.co/videos/28079/28079-720.mp4"
       ]
     },
     {
@@ -5860,7 +5860,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/6782/6782-720.mp4",
-        "https://assets.mixkit.co/videos/14204/14204-720.mp4",
+        "https://assets.mixkit.co/videos/14206/14206-720.mp4",
         "https://assets.mixkit.co/videos/9998/9998-720.mp4"
       ]
     },
@@ -5879,7 +5879,7 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/11117/11117-720.mp4",
+        "https://assets.mixkit.co/videos/11124/11124-720.mp4",
         "https://assets.mixkit.co/videos/572/572-720.mp4",
         "https://assets.mixkit.co/videos/39768/39768-720.mp4"
       ]
@@ -5899,9 +5899,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/28062/28062-720.mp4",
+        "https://assets.mixkit.co/videos/28071/28071-720.mp4",
         "https://assets.mixkit.co/videos/48014/48014-720.mp4",
-        "https://assets.mixkit.co/videos/19603/19603-720.mp4"
+        "https://assets.mixkit.co/videos/19608/19608-720.mp4"
       ]
     },
     {
@@ -5921,7 +5921,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50870/50870-720.mp4",
         "https://assets.mixkit.co/videos/18770/18770-720.mp4",
-        "https://assets.mixkit.co/videos/11044/11044-720.mp4"
+        "https://assets.mixkit.co/videos/11045/11045-720.mp4"
       ]
     },
     {
@@ -5941,7 +5941,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/2782/2782-720.mp4",
         "https://assets.mixkit.co/videos/4686/4686-720.mp4",
-        "https://assets.mixkit.co/videos/28018/28018-720.mp4"
+        "https://assets.mixkit.co/videos/28014/28014-720.mp4"
       ]
     },
     {
@@ -5959,8 +5959,8 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/30928/30928-720.mp4",
-        "https://assets.mixkit.co/videos/46317/46317-720.mp4",
+        "https://assets.mixkit.co/videos/16371/16371-720.mp4",
+        "https://assets.mixkit.co/videos/46318/46318-720.mp4",
         "https://assets.mixkit.co/videos/8067/8067-720.mp4"
       ]
     },
@@ -5980,8 +5980,8 @@
       "permutation_str": "1 2 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/50867/50867-720.mp4",
-        "https://assets.mixkit.co/videos/19601/19601-720.mp4",
-        "https://assets.mixkit.co/videos/11084/11084-720.mp4"
+        "https://assets.mixkit.co/videos/19603/19603-720.mp4",
+        "https://assets.mixkit.co/videos/18175/18175-720.mp4"
       ]
     },
     {
@@ -6041,7 +6041,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4119/4119-720.mp4",
         "https://assets.mixkit.co/videos/15233/15233-720.mp4",
-        "https://assets.mixkit.co/videos/46335/46335-720.mp4"
+        "https://assets.mixkit.co/videos/46373/46373-720.mp4"
       ]
     },
     {
@@ -6060,7 +6060,7 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/10409/10409-720.mp4",
-        "https://assets.mixkit.co/videos/45194/45194-720.mp4",
+        "https://assets.mixkit.co/videos/45197/45197-720.mp4",
         "https://assets.mixkit.co/videos/4303/4303-720.mp4"
       ]
     },
@@ -6080,7 +6080,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/4433/4433-720.mp4",
-        "https://assets.mixkit.co/videos/11042/11042-720.mp4",
+        "https://assets.mixkit.co/videos/11046/11046-720.mp4",
         "https://assets.mixkit.co/videos/45079/45079-720.mp4"
       ]
     },
@@ -6099,9 +6099,9 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4163/4163-720.mp4",
+        "https://assets.mixkit.co/videos/4171/4171-720.mp4",
         "https://assets.mixkit.co/videos/8133/8133-720.mp4",
-        "https://assets.mixkit.co/videos/28007/28007-720.mp4"
+        "https://assets.mixkit.co/videos/28012/28012-720.mp4"
       ]
     },
     {
@@ -6119,9 +6119,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/4345/4345-720.mp4",
+        "https://assets.mixkit.co/videos/4351/4351-720.mp4",
         "https://assets.mixkit.co/videos/45099/45099-720.mp4",
-        "https://assets.mixkit.co/videos/11001/11001-720.mp4"
+        "https://assets.mixkit.co/videos/11002/11002-720.mp4"
       ]
     },
     {
@@ -6141,7 +6141,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/51105/51105-720.mp4",
         "https://assets.mixkit.co/videos/4009/4009-720.mp4",
-        "https://assets.mixkit.co/videos/31706/31706-720.mp4"
+        "https://assets.mixkit.co/videos/31723/31723-720.mp4"
       ]
     },
     {
@@ -6160,8 +6160,8 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/19463/19463-720.mp4",
-        "https://assets.mixkit.co/videos/28069/28069-720.mp4",
-        "https://assets.mixkit.co/videos/11025/11025-720.mp4"
+        "https://assets.mixkit.co/videos/28070/28070-720.mp4",
+        "https://assets.mixkit.co/videos/11028/11028-720.mp4"
       ]
     },
     {
@@ -6200,7 +6200,7 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/10417/10417-720.mp4",
-        "https://assets.mixkit.co/videos/4365/4365-720.mp4",
+        "https://assets.mixkit.co/videos/4361/4361-720.mp4",
         "https://assets.mixkit.co/videos/2793/2793-720.mp4"
       ]
     },
@@ -6220,7 +6220,7 @@
       "permutation_str": "2 3 1",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/44364/44364-720.mp4",
-        "https://assets.mixkit.co/videos/4061/4061-720.mp4",
+        "https://assets.mixkit.co/videos/4054/4054-720.mp4",
         "https://assets.mixkit.co/videos/51035/51035-720.mp4"
       ]
     },
@@ -6240,7 +6240,7 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/34873/34873-720.mp4",
-        "https://assets.mixkit.co/videos/28000/28000-720.mp4",
+        "https://assets.mixkit.co/videos/50572/50572-720.mp4",
         "https://assets.mixkit.co/videos/45620/45620-720.mp4"
       ]
     },
@@ -6279,9 +6279,9 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/34953/34953-720.mp4",
-        "https://assets.mixkit.co/videos/19612/19612-720.mp4",
-        "https://assets.mixkit.co/videos/28050/28050-720.mp4"
+        "https://assets.mixkit.co/videos/34813/34813-720.mp4",
+        "https://assets.mixkit.co/videos/19614/19614-720.mp4",
+        "https://assets.mixkit.co/videos/28054/28054-720.mp4"
       ]
     },
     {
@@ -6299,9 +6299,9 @@
       ],
       "permutation_str": "2 1 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14183/14183-720.mp4",
+        "https://assets.mixkit.co/videos/14186/14186-720.mp4",
         "https://assets.mixkit.co/videos/50134/50134-720.mp4",
-        "https://assets.mixkit.co/videos/46410/46410-720.mp4"
+        "https://assets.mixkit.co/videos/46417/46417-720.mp4"
       ]
     },
     {
@@ -6319,7 +6319,7 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/26977/26977-720.mp4",
+        "https://assets.mixkit.co/videos/27532/27532-720.mp4",
         "https://assets.mixkit.co/videos/19197/19197-720.mp4",
         "https://assets.mixkit.co/videos/34746/34746-720.mp4"
       ]
@@ -6339,7 +6339,7 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14163/14163-720.mp4",
+        "https://assets.mixkit.co/videos/14166/14166-720.mp4",
         "https://assets.mixkit.co/videos/5028/5028-720.mp4",
         "https://assets.mixkit.co/videos/45112/45112-720.mp4"
       ]
@@ -6359,9 +6359,9 @@
       ],
       "permutation_str": "3 2 1",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/35493/35493-720.mp4",
+        "https://assets.mixkit.co/videos/34953/34953-720.mp4",
         "https://assets.mixkit.co/videos/28827/28827-720.mp4",
-        "https://assets.mixkit.co/videos/4140/4140-720.mp4"
+        "https://assets.mixkit.co/videos/4161/4161-720.mp4"
       ]
     },
     {
@@ -6419,8 +6419,8 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/14172/14172-720.mp4",
-        "https://assets.mixkit.co/videos/4054/4054-720.mp4",
+        "https://assets.mixkit.co/videos/14175/14175-720.mp4",
+        "https://assets.mixkit.co/videos/4055/4055-720.mp4",
         "https://assets.mixkit.co/videos/45589/45589-720.mp4"
       ]
     },
@@ -6440,7 +6440,7 @@
       "permutation_str": "1 3 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/12060/12060-720.mp4",
-        "https://assets.mixkit.co/videos/4131/4131-720.mp4",
+        "https://assets.mixkit.co/videos/4128/4128-720.mp4",
         "https://assets.mixkit.co/videos/30588/30588-720.mp4"
       ]
     },
@@ -6461,7 +6461,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/10280/10280-720.mp4",
         "https://assets.mixkit.co/videos/2213/2213-720.mp4",
-        "https://assets.mixkit.co/videos/31733/31733-720.mp4"
+        "https://assets.mixkit.co/videos/31730/31730-720.mp4"
       ]
     },
     {
@@ -6481,7 +6481,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3409/3409-720.mp4",
         "https://assets.mixkit.co/videos/2092/2092-720.mp4",
-        "https://assets.mixkit.co/videos/45197/45197-720.mp4"
+        "https://assets.mixkit.co/videos/45209/45209-720.mp4"
       ]
     },
     {
@@ -6499,9 +6499,9 @@
       ],
       "permutation_str": "3 1 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/19609/19609-720.mp4",
+        "https://assets.mixkit.co/videos/19610/19610-720.mp4",
         "https://assets.mixkit.co/videos/11413/11413-720.mp4",
-        "https://assets.mixkit.co/videos/4203/4203-720.mp4"
+        "https://assets.mixkit.co/videos/4209/4209-720.mp4"
       ]
     },
     {
@@ -6520,7 +6520,7 @@
       "permutation_str": "2 1 3",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/540/540-720.mp4",
-        "https://assets.mixkit.co/videos/11010/11010-720.mp4",
+        "https://assets.mixkit.co/videos/11009/11009-720.mp4",
         "https://assets.mixkit.co/videos/14205/14205-720.mp4"
       ]
     },
@@ -6539,7 +6539,7 @@
       ],
       "permutation_str": "1 3 2",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/15937/15937-720.mp4",
+        "https://assets.mixkit.co/videos/17881/17881-720.mp4",
         "https://assets.mixkit.co/videos/1931/1931-720.mp4",
         "https://assets.mixkit.co/videos/1751/1751-720.mp4"
       ]
@@ -6580,8 +6580,8 @@
       "permutation_str": "3 1 2",
       "ordered_clips": [
         "https://assets.mixkit.co/videos/3365/3365-720.mp4",
-        "https://assets.mixkit.co/videos/46328/46328-720.mp4",
-        "https://assets.mixkit.co/videos/28075/28075-720.mp4"
+        "https://assets.mixkit.co/videos/46329/46329-720.mp4",
+        "https://assets.mixkit.co/videos/28084/28084-720.mp4"
       ]
     },
     {
@@ -6639,7 +6639,7 @@
       ],
       "permutation_str": "1 2 3",
       "ordered_clips": [
-        "https://assets.mixkit.co/videos/44370/44370-720.mp4",
+        "https://assets.mixkit.co/videos/34517/34517-720.mp4",
         "https://assets.mixkit.co/videos/5361/5361-720.mp4",
         "https://assets.mixkit.co/videos/2408/2408-720.mp4"
       ]
@@ -6661,7 +6661,7 @@
       "ordered_clips": [
         "https://assets.mixkit.co/videos/46131/46131-720.mp4",
         "https://assets.mixkit.co/videos/4204/4204-720.mp4",
-        "https://assets.mixkit.co/videos/28022/28022-720.mp4"
+        "https://assets.mixkit.co/videos/28046/28046-720.mp4"
       ]
     }
   ],
@@ -6789,6 +6789,9 @@
     "https://assets.mixkit.co/videos/39179/39179-720.mp4",
     "https://assets.mixkit.co/videos/39195/39195-720.mp4",
     "https://assets.mixkit.co/videos/1090/1090-720.mp4",
-    "https://assets.mixkit.co/videos/25375/25375-720.mp4"
+    "https://assets.mixkit.co/videos/25375/25375-720.mp4",
+    "https://assets.mixkit.co/videos/50934/50934-720.mp4",
+    "https://assets.mixkit.co/videos/9839/9839-720.mp4",
+    "https://assets.mixkit.co/videos/4386/4386-720.mp4"
   ]
 }

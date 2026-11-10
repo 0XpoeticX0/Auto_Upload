@@ -1,5 +1,5 @@
 {
-  "total_unique": 1000,
+  "total_unique": 999,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -4367,13 +4367,6 @@
       "id": "45143",
       "url": "https://assets.mixkit.co/videos/45143/45143-720.mp4"
     },
-    "https://assets.mixkit.co/videos/45145/45145-720.mp4": {
-      "category": "nature",
-      "title": "Verified Halal nature clip 45145",
-      "duration": 15.0,
-      "id": "45145",
-      "url": "https://assets.mixkit.co/videos/45145/45145-720.mp4"
-    },
     "https://assets.mixkit.co/videos/45166/45166-720.mp4": {
       "category": "nature",
       "title": "Verified Halal nature clip 45166",
@@ -7970,7 +7963,6 @@
       "https://assets.mixkit.co/videos/45127/45127-720.mp4",
       "https://assets.mixkit.co/videos/45141/45141-720.mp4",
       "https://assets.mixkit.co/videos/45143/45143-720.mp4",
-      "https://assets.mixkit.co/videos/45145/45145-720.mp4",
       "https://assets.mixkit.co/videos/45166/45166-720.mp4",
       "https://assets.mixkit.co/videos/45172/45172-720.mp4",
       "https://assets.mixkit.co/videos/45173/45173-720.mp4",
