@@ -39,6 +39,9 @@ def get_authenticated_service():
                 creds = None
 
         if not creds:
+            if os.environ.get('GITHUB_ACTIONS') == 'true' or os.environ.get('CI') == 'true':
+                logger.error("🛑 [Headless CI] token.json is missing, expired, or invalid. Cannot run interactive browser login on GitHub Actions!")
+                return None
             if not os.path.exists('client_secrets.json'):
                 logger.error("client_secrets.json missing. Cannot authenticate YouTube.")
                 return None
