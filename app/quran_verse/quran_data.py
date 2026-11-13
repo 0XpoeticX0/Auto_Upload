@@ -205,6 +205,15 @@ SURAH_NAMES_EN = {
 
 # Curated bank of guaranteed complete self-contained passages under 90s (Fallback & Rotation)
 CURATED_COMPLETE_PASSAGES = [
+    # User Reference Link 4 & 5: https://youtube.com/shorts/IqtWZyEVY3Y & https://youtube.com/shorts/zygp3kspEjU
+    {
+        "surah": 43,
+        "ayah_start": 68,
+        "ayah_end": 71,
+        "theme_hint": "হে আমার বান্দাগণ! আজ তোমাদের কোনো ভয় নেই—তোমরা জান্নাতে প্রবেশ করো (Surah Az-Zukhruf 68-71)",
+        "reflection_bn": "হে আমার বান্দাগণ! আজ তোমাদের কোনো ভয় নেই এবং তোমরা দুঃখিতও হবে না। তোমরা এবং তোমাদের সঙ্গীরা সানন্দে জান্নাতে প্রবেশ করো।",
+        "ideal_reciter": "alafasy"
+    },
     # User Reference Link 3 (Part A): https://youtube.com/shorts/2LDnH6xgoW4
     {
         "surah": 20,
