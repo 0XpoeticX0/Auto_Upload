@@ -1,5 +1,5 @@
 {
-  "total_unique": 998,
+  "total_unique": 997,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -6250,13 +6250,6 @@
       "duration": 20.8,
       "category": "mountains"
     },
-    "https://assets.mixkit.co/videos/4391/4391-720.mp4": {
-      "id": "4391",
-      "url": "https://assets.mixkit.co/videos/4391/4391-720.mp4",
-      "title": "Cinematic Halal Mountains Clip 4391",
-      "duration": 20.9,
-      "category": "mountains"
-    },
     "https://assets.mixkit.co/videos/4399/4399-720.mp4": {
       "id": "4399",
       "url": "https://assets.mixkit.co/videos/4399/4399-720.mp4",
@@ -7633,7 +7626,6 @@
       "https://assets.mixkit.co/videos/4398/4398-720.mp4",
       "https://assets.mixkit.co/videos/4394/4394-720.mp4",
       "https://assets.mixkit.co/videos/4395/4395-720.mp4",
-      "https://assets.mixkit.co/videos/4391/4391-720.mp4",
       "https://assets.mixkit.co/videos/4399/4399-720.mp4"
     ],
     "earth": [
