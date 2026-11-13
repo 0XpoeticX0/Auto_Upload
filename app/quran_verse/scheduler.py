@@ -24,7 +24,7 @@ from app.quran_verse.quran_data import RECITERS_CONFIG
 
 BST = timezone(timedelta(hours=6))
 
-DAILY_QURAN_TIME = "06:00 AM BST"
+DAILY_QURAN_TIME = "4 Times Daily (03:00 AM, 06:00 AM, 09:00 AM, 12:00 PM BST)"
 
 def get_daily_alternating_reciter() -> str:
     """

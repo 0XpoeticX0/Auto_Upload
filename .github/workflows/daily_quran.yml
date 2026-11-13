@@ -2,8 +2,15 @@ name: Daily Quran Recitation Automation
 
 on:
   schedule:
-    # Runs at 22:00 UTC every day (04:00 AM Bangladesh Standard Time - BST, shifted earlier to counteract GitHub queue delays and publish reliably around 06:30-07:30 AM BST)
-    - cron: '0 22 * * *'
+    # 4 Times Daily: 3:00 AM, 6:00 AM, 9:00 AM, 12:00 PM BST (Bangladesh Standard Time, UTC+6)
+    # - 03:00 AM BST = 21:00 UTC (previous day)
+    # - 06:00 AM BST = 00:00 UTC
+    # - 09:00 AM BST = 03:00 UTC
+    # - 12:00 PM BST = 06:00 UTC
+    - cron: '0 21 * * *'  # 03:00 AM BST
+    - cron: '0 0 * * *'   # 06:00 AM BST
+    - cron: '0 3 * * *'   # 09:00 AM BST
+    - cron: '0 6 * * *'   # 12:00 PM BST
   workflow_dispatch: # Allows manual one-click trigger from GitHub Actions UI
 
 jobs:
