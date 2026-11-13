@@ -1,5 +1,5 @@
 {
-  "total_unique": 997,
+  "total_unique": 996,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -6355,13 +6355,6 @@
       "duration": 12.0,
       "category": "space"
     },
-    "https://assets.mixkit.co/videos/11002/11002-720.mp4": {
-      "id": "11002",
-      "url": "https://assets.mixkit.co/videos/11002/11002-720.mp4",
-      "title": "Cinematic Halal Space Clip 11002",
-      "duration": 18.0,
-      "category": "space"
-    },
     "https://assets.mixkit.co/videos/11003/11003-720.mp4": {
       "id": "11003",
       "url": "https://assets.mixkit.co/videos/11003/11003-720.mp4",
@@ -7190,7 +7183,6 @@
       "https://assets.mixkit.co/videos/1609/1609-720.mp4",
       "https://assets.mixkit.co/videos/32982/32982-720.mp4",
       "https://assets.mixkit.co/videos/11001/11001-720.mp4",
-      "https://assets.mixkit.co/videos/11002/11002-720.mp4",
       "https://assets.mixkit.co/videos/11003/11003-720.mp4",
       "https://assets.mixkit.co/videos/11010/11010-720.mp4",
       "https://assets.mixkit.co/videos/11009/11009-720.mp4",
