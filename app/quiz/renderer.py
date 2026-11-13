@@ -18,11 +18,15 @@ import asyncio
 import edge_tts
 from app.logger import logger
 from app.quiz.card_builder import create_viral_overlay, build_timed_ass
+from app.quiz.sfx import ensure_sfx_assets
 
 DEFAULT_BROLL_VIDEO = "app/assets/broll/ocean_720.mp4"
 
-SFX_TICK = "data/assets/sfx/clock_tick.wav"
-SFX_BELL = "data/assets/sfx/correct_bell.wav"
+SFX_DIR = os.path.abspath("app/assets/sfx").replace('\\', '/')
+ensure_sfx_assets(SFX_DIR)
+
+SFX_TICK = os.path.join(SFX_DIR, "clock_tick.wav").replace('\\', '/')
+SFX_BELL = os.path.join(SFX_DIR, "correct_bell.wav").replace('\\', '/')
 
 async def _synthesize_voice(text: str, out_wav: str, voice: str = "bn-BD-PradeepNeural", rate: str = "+0%"):
     """Synthesizes human-paced voiceover with warm studio broadcast EQ and -18 LUFS normalization."""
@@ -134,7 +138,11 @@ def render_single_question_scene(
         "-map", "[aout]",
         composite_audio
     ]
-    subprocess.run(audio_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        subprocess.run(audio_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+    except subprocess.CalledProcessError as err:
+        logger.error(f"FFmpeg audio mixing failed (code {err.returncode}): {err.stderr}")
+        raise
 
     # 5. Video Compositing with Continuous Live-Motion Footage
     rel_ass = os.path.relpath(ass_path).replace('\\', '/')
@@ -172,7 +180,11 @@ def render_single_question_scene(
         "-shortest",
         out_mp4
     ]
-    subprocess.run(render_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        subprocess.run(render_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+    except subprocess.CalledProcessError as err:
+        logger.error(f"FFmpeg video compositing failed (code {err.returncode}): {err.stderr}")
+        raise
     logger.info(f"   ✓ Question {q_num} scene rendered ({total_dur:.2f}s): {out_mp4}")
     return out_mp4
 
@@ -212,7 +224,11 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         "-c", "copy",
         output_path
     ]
-    subprocess.run(concat_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        subprocess.run(concat_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+    except subprocess.CalledProcessError as err:
+        logger.error(f"FFmpeg concat failed (code {err.returncode}): {err.stderr}")
+        raise
 
     if os.path.exists(output_path) and os.path.getsize(output_path) > 0:
         total_dur = get_audio_duration(output_path)

@@ -29,6 +29,8 @@ service_account*.json
 *.mp4
 !app/assets/broll/*.mp4
 *.wav
+!app/assets/sfx/*.wav
+!app/assets/sfx/**
 *.mp3
 *.m4a
 *.aac

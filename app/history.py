@@ -14,18 +14,36 @@ from app.logger import logger
 
 HISTORY_FILE = os.path.abspath("data/history_log.json")
 
-DEFAULT_SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
-DEFAULT_SUPABASE_KEY = os.environ.get("SUPABASE_KEY", os.environ.get("SUPABASE_ANON_KEY", ""))
+def _normalize_supabase_url(raw_url: str) -> str:
+    """Safely normalizes Supabase URL, handling postgresql:// connection strings if passed in env."""
+    if not raw_url:
+        return ""
+    raw_url = raw_url.strip()
+    if raw_url.startswith(("postgresql://", "postgres://")):
+        m_user = re.search(r"postgres\.([a-zA-Z0-9_-]+):", raw_url)
+        m_host = re.search(r"db\.([a-zA-Z0-9_-]+)\.supabase\.co", raw_url)
+        if m_user:
+            raw_url = f"https://{m_user.group(1)}.supabase.co"
+        elif m_host:
+            raw_url = f"https://{m_host.group(1)}.supabase.co"
+        else:
+            raw_url = "https://tvezntceubxaqvcicyyc.supabase.co"
+    elif not raw_url.startswith(("http://", "https://")):
+        if re.match(r"^[a-zA-Z0-9_-]+$", raw_url):
+            raw_url = f"https://{raw_url}.supabase.co"
+        else:
+            return ""
+            
+    raw_url = raw_url.rstrip("/")
+    if "/rest/v1" not in raw_url:
+        raw_url = f"{raw_url}/rest/v1"
+    return raw_url
 
 def _get_supabase_config():
-    raw_url = os.environ.get("SUPABASE_URL", DEFAULT_SUPABASE_URL).strip()
-    if raw_url.startswith("postgresql://") or raw_url.startswith("postgres://") or "fvboniedjpcjldoniqtp" in raw_url or not raw_url.startswith("http"):
-        raw_url = DEFAULT_SUPABASE_URL
-    raw_url = raw_url.rstrip("/")
-    if raw_url and "/rest/v1" not in raw_url:
-        raw_url = f"{raw_url}/rest/v1"
-    key = os.environ.get("SUPABASE_KEY", os.environ.get("SUPABASE_ANON_KEY", DEFAULT_SUPABASE_KEY))
-    return raw_url, key
+    raw_url = os.environ.get("SUPABASE_URL", "").strip()
+    url = _normalize_supabase_url(raw_url)
+    key = os.environ.get("SUPABASE_KEY", os.environ.get("SUPABASE_ANON_KEY", "")).strip()
+    return url, key
 
 DEFAULT_SUPABASE_TABLE = "used_islamic_video"
 

@@ -74,7 +74,7 @@ def write_wav(file_path: str, samples: list[float], sample_rate: int = 44100):
             raw.extend(struct.pack("<h", int_val))
         wf.writeframes(raw)
 
-def ensure_sfx_assets(output_dir: str = "data/assets/sfx") -> dict[str, str]:
+def ensure_sfx_assets(output_dir: str = "app/assets/sfx") -> dict[str, str]:
     """Generates all needed royalty-free SFX if they don't already exist."""
     os.makedirs(output_dir, exist_ok=True)
     
