@@ -5822,5 +5822,9 @@
   "https://assets.mixkit.co/videos/11002/11002-720.mp4": {
     "id": "11002",
     "reason": "The image contains multiple humans walking around the ruins, visible as small figures scattered throughout the grounds and along the pathways."
+  },
+  "https://assets.mixkit.co/videos/11121/11121-720.mp4": {
+    "id": "11121",
+    "reason": "The image features St. Peter's Basilica, which is a church, and includes multiple crosses (such as atop the dome and the obelisk) as well as numerous statues lining the roofline."
   }
 }
