@@ -63,6 +63,8 @@ logs/
 
 # Python & Testing Artifacts
 test/
+tests/
+test*/
 scripts/
 test_visual_demos/
 __pycache__/
