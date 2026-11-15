@@ -81,5 +81,13 @@ htmlcov/
 Thumbs.db
 desktop.ini
 
+# Scripts & Local Batch Files (Strictly disallowed on GitHub)
+*.bat
+*.cmd
+*.ps1
+
+# Local Experiments & Demos
+demo_post/
+
 # Test Quiz Lab (Local experimental redesign)
 test_quiz_lab/
