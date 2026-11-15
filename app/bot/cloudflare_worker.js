@@ -3,8 +3,9 @@
  * 
  * Environment Variables required in Cloudflare Worker Settings:
  * - FB_VERIFY_TOKEN: daily_dos_islam_bot_verify_token
- * - FB_ACCESS_TOKEN: Your Page Access Token
- * - GEMINI_API_KEY: Your Gemini API Key
+ * - FB_ACCESS_TOKEN: Your Page Access Token or User Token
+ * - GEMINI_API_KEY: Your Gemini API Key (or GEMINI_API_KEYS with comma separation)
+ * - (Optional) CHAT_HISTORY: KV Namespace binding for chat logs
  */
 
 const SYSTEM_PROMPT = `You are 'Daily Dos of Islam Bot', a dedicated Islamic Dawah & Spiritual Support AI for the Facebook page 'Daily Dos of Islam'.
@@ -116,6 +117,17 @@ async function getPageAccessToken(baseToken, targetPageId = "103994582489858") {
   if (!clean) return "";
 
   try {
+    // 1. Check if token is already a direct Page Access Token
+    const meRes = await fetch(`https://graph.facebook.com/v20.0/me?fields=id&access_token=${clean}`);
+    if (meRes.ok) {
+      const meData = await meRes.json();
+      if (meData.id === targetPageId) {
+        cachedPageToken = clean;
+        return clean;
+      }
+    }
+
+    // 2. If it is a User token, fetch the page token from /me/accounts
     const res = await fetch(`https://graph.facebook.com/v20.0/me/accounts?access_token=${clean}`);
     if (res.ok) {
       const data = await res.json();
@@ -156,16 +168,34 @@ async function handleMessengerReply({ env, senderId, userText }) {
 
     await sendFbMessage(fbToken, senderId, aiReply);
     await sendTyping(fbToken, senderId, "typing_off");
+
+    // Persist conversation to Cloudflare KV (CHAT_HISTORY) if bound in Worker
+    if (env.CHAT_HISTORY) {
+      try {
+        const timestamp = new Date().toISOString();
+        const key = `${senderId}_${Date.now()}`;
+        await env.CHAT_HISTORY.put(key, JSON.stringify({
+          senderId,
+          userText,
+          aiReply,
+          timestamp
+        }), { expirationTtl: 60 * 60 * 24 * 30 }); // 30 days retention
+        console.log(`[BOT] Conversation saved to CHAT_HISTORY KV (key: ${key})`);
+      } catch (kvErr) {
+        console.warn("[BOT] Failed to write to CHAT_HISTORY KV:", kvErr.message);
+      }
+    }
   } catch (err) {
     console.error("[BOT] Error in handleMessengerReply:", err);
   }
 }
 
-// Prioritized for blazing fast response time (< 1.2s) while maintaining top theological quality
+// Prioritized active models with fallback
 const MODELS_BEST_TO_WORST = [
-  "gemini-3.5-flash-lite",   // 1. Ultra-low latency (< 800ms), verified active
-  "gemini-3.6-flash",        // 2. High-performance flagship Flash model, verified active
-  "gemini-3.1-flash-lite"    // 3. Lightweight fallback
+  "gemini-3.5-flash-lite",
+  "gemini-2.5-flash",
+  "gemini-flash-latest",
+  "gemini-3.1-flash-lite-preview"
 ];
 
 async function askGemini(keys, text) {
@@ -228,21 +258,21 @@ async function askGemini(keys, text) {
 
 async function sendFbMessage(accessToken, recipientId, text) {
   const cleanToken = accessToken.trim();
-  const url = "https://graph.facebook.com/v20.0/me/messages";
+  const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${cleanToken}`;
   try {
     const res = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${cleanToken}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         recipient: { id: recipientId },
-        message: { text: text }
+        message: { text: text },
+        messaging_type: "RESPONSE"
       })
     });
     const data = await res.json();
-    if (res.ok) {
+    if (res.ok && data.message_id) {
       console.log(`[FB_SEND] Message delivered to ${recipientId}, message_id: ${data.message_id}`);
     } else {
       console.error(`[FB_SEND] Graph API Error (HTTP ${res.status}):`, JSON.stringify(data));
@@ -254,13 +284,12 @@ async function sendFbMessage(accessToken, recipientId, text) {
 
 async function sendTyping(accessToken, recipientId, action) {
   const cleanToken = accessToken.trim();
-  const url = "https://graph.facebook.com/v20.0/me/messages";
+  const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${cleanToken}`;
   try {
     await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${cleanToken}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         recipient: { id: recipientId },

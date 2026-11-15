@@ -104,6 +104,17 @@ async function getPageAccessToken(baseToken, targetPageId = "103994582489858") {
   if (!clean) return "";
 
   try {
+    // 1. Check if token is already a direct Page Access Token
+    const meRes = await fetch(`https://graph.facebook.com/v20.0/me?fields=id&access_token=${clean}`);
+    if (meRes.ok) {
+      const meData = await meRes.json();
+      if (meData.id === targetPageId) {
+        cachedPageToken = clean;
+        return clean;
+      }
+    }
+
+    // 2. Fetch page accounts if User token
     const res = await fetch(`https://graph.facebook.com/v20.0/me/accounts?access_token=${clean}`);
     if (res.ok) {
       const data = await res.json();
@@ -126,23 +137,40 @@ async function getPageAccessToken(baseToken, targetPageId = "103994582489858") {
 
 async function handleMessengerReply({ env, senderId, userText }) {
   const rawToken = env.FB_ACCESS_TOKEN || "";
-  const pageToken = await getPageAccessToken(rawToken, env.FB_PAGE_ID || "103994582489858");
+  const fbToken = await getPageAccessToken(rawToken, env.FB_PAGE_ID || "103994582489858");
   const geminiKeys = getGeminiKeys(env);
 
-  if (!pageToken || geminiKeys.length === 0) {
-    console.error("[BOT] Missing FB_ACCESS_TOKEN or GEMINI_API_KEY in Environment Settings!");
+  if (!fbToken || geminiKeys.length === 0) {
+    console.error("[BOT] Missing FB_ACCESS_TOKEN or GEMINI_API_KEY in Worker Settings!");
     return;
   }
 
   try {
     console.log(`[BOT] Received message from ${senderId}: "${userText}"`);
-    await sendTyping(pageToken, senderId, "typing_on");
+    await sendTyping(fbToken, senderId, "typing_on");
 
     const aiReply = await askGemini(geminiKeys, userText);
     console.log(`[BOT] Generated AI Reply: "${aiReply.substring(0, 60)}..."`);
 
-    await sendFbMessage(pageToken, senderId, aiReply);
-    await sendTyping(pageToken, senderId, "typing_off");
+    await sendFbMessage(fbToken, senderId, aiReply);
+    await sendTyping(fbToken, senderId, "typing_off");
+
+    // Persist conversation to Cloudflare KV (CHAT_HISTORY) if bound in Worker
+    if (env.CHAT_HISTORY) {
+      try {
+        const timestamp = new Date().toISOString();
+        const key = `${senderId}_${Date.now()}`;
+        await env.CHAT_HISTORY.put(key, JSON.stringify({
+          senderId,
+          userText,
+          aiReply,
+          timestamp
+        }), { expirationTtl: 60 * 60 * 24 * 30 }); // 30 days retention
+        console.log(`[BOT] Conversation saved to CHAT_HISTORY KV (key: ${key})`);
+      } catch (kvErr) {
+        console.warn("[BOT] Failed to write to CHAT_HISTORY KV:", kvErr.message);
+      }
+    }
   } catch (err) {
     console.error("[BOT] Error in handleMessengerReply:", err);
   }
@@ -150,13 +178,14 @@ async function handleMessengerReply({ env, senderId, userText }) {
 
 const MODELS_BEST_TO_WORST = [
   "gemini-3.5-flash-lite",
-  "gemini-3.6-flash",
-  "gemini-3.1-flash-lite"
+  "gemini-2.5-flash",
+  "gemini-flash-latest",
+  "gemini-3.1-flash-lite-preview"
 ];
 
 async function askGemini(keys, text) {
   if (!keys || keys.length === 0) {
-    console.error("[GEMINI] No API keys configured!");
+    console.error("[GEMINI] No API keys configured in Worker!");
     return "আসসালামু আলাইকুম। Daily Dos of Islam-এ আপনাকে স্বাগতম। আমরা শীঘ্রই আপনার মেসেজের উত্তর দিব, ইনশাআল্লাহ। জাযাকাল্লাহু খাইরান!";
   }
 
@@ -214,13 +243,12 @@ async function askGemini(keys, text) {
 
 async function sendFbMessage(accessToken, recipientId, text) {
   const cleanToken = accessToken.trim();
-  const url = "https://graph.facebook.com/v20.0/me/messages";
+  const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${cleanToken}`;
   try {
     const res = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${cleanToken}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         recipient: { id: recipientId },
@@ -229,7 +257,7 @@ async function sendFbMessage(accessToken, recipientId, text) {
       })
     });
     const data = await res.json();
-    if (res.ok) {
+    if (res.ok && data.message_id) {
       console.log(`[FB_SEND] Message delivered to ${recipientId}, message_id: ${data.message_id}`);
     } else {
       console.error(`[FB_SEND] Graph API Error (HTTP ${res.status}):`, JSON.stringify(data));
@@ -241,13 +269,12 @@ async function sendFbMessage(accessToken, recipientId, text) {
 
 async function sendTyping(accessToken, recipientId, action) {
   const cleanToken = accessToken.trim();
-  const url = "https://graph.facebook.com/v20.0/me/messages";
+  const url = `https://graph.facebook.com/v20.0/me/messages?access_token=${cleanToken}`;
   try {
     await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${cleanToken}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         recipient: { id: recipientId },
