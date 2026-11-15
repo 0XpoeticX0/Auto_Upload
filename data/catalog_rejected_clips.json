@@ -5830,5 +5830,9 @@
   "https://assets.mixkit.co/videos/44382/44382-720.mp4": {
     "id": "44382",
     "reason": "The image contains two small figures walking on the beach in the middle right area, representing humans."
+  },
+  "https://assets.mixkit.co/videos/4165/4165-720.mp4": {
+    "id": "4165",
+    "reason": "A human is visible on the far right edge of the image, standing in the doorway."
   }
 }
