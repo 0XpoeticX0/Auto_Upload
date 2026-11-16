@@ -5834,5 +5834,9 @@
   "https://assets.mixkit.co/videos/4165/4165-720.mp4": {
     "id": "4165",
     "reason": "A human is visible on the far right edge of the image, standing in the doorway."
+  },
+  "https://assets.mixkit.co/videos/34846/34846-720.mp4": {
+    "id": "34846",
+    "reason": "There are two tiny human figures visible as silhouettes walking along the path near the center of the image, below the trees and next to the water."
   }
 }
