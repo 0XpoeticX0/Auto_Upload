@@ -1,5 +1,5 @@
 {
-  "total_unique": 992,
+  "total_unique": 990,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -6418,13 +6418,6 @@
       "duration": 12.6,
       "category": "space"
     },
-    "https://assets.mixkit.co/videos/11045/11045-720.mp4": {
-      "id": "11045",
-      "url": "https://assets.mixkit.co/videos/11045/11045-720.mp4",
-      "title": "Cinematic Halal Space Clip 11045",
-      "duration": 14.0,
-      "category": "space"
-    },
     "https://assets.mixkit.co/videos/11065/11065-720.mp4": {
       "id": "11065",
       "url": "https://assets.mixkit.co/videos/11065/11065-720.mp4",
@@ -6437,13 +6430,6 @@
       "url": "https://assets.mixkit.co/videos/11068/11068-720.mp4",
       "title": "Cinematic Halal Space Clip 11068",
       "duration": 15.8,
-      "category": "space"
-    },
-    "https://assets.mixkit.co/videos/11072/11072-720.mp4": {
-      "id": "11072",
-      "url": "https://assets.mixkit.co/videos/11072/11072-720.mp4",
-      "title": "Cinematic Halal Space Clip 11072",
-      "duration": 14.0,
       "category": "space"
     },
     "https://assets.mixkit.co/videos/11073/11073-720.mp4": {
@@ -7167,10 +7153,8 @@
       "https://assets.mixkit.co/videos/11042/11042-720.mp4",
       "https://assets.mixkit.co/videos/11046/11046-720.mp4",
       "https://assets.mixkit.co/videos/11044/11044-720.mp4",
-      "https://assets.mixkit.co/videos/11045/11045-720.mp4",
       "https://assets.mixkit.co/videos/11065/11065-720.mp4",
       "https://assets.mixkit.co/videos/11068/11068-720.mp4",
-      "https://assets.mixkit.co/videos/11072/11072-720.mp4",
       "https://assets.mixkit.co/videos/11073/11073-720.mp4",
       "https://assets.mixkit.co/videos/11075/11075-720.mp4",
       "https://assets.mixkit.co/videos/11081/11081-720.mp4",
