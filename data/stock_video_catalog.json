@@ -1,5 +1,5 @@
 {
-  "total_unique": 990,
+  "total_unique": 989,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -579,13 +579,6 @@
       "duration": 19.6,
       "id": "51797",
       "url": "https://assets.mixkit.co/videos/51797/51797-720.mp4"
-    },
-    "https://assets.mixkit.co/videos/4148/4148-720.mp4": {
-      "category": "valley",
-      "title": "Halal Scenic Clip 4148",
-      "duration": 16.2,
-      "id": "4148",
-      "url": "https://assets.mixkit.co/videos/4148/4148-720.mp4"
     },
     "https://assets.mixkit.co/videos/31629/31629-720.mp4": {
       "category": "valley",
@@ -7648,7 +7641,6 @@
     ],
     "valley": [
       "https://assets.mixkit.co/videos/51797/51797-720.mp4",
-      "https://assets.mixkit.co/videos/4148/4148-720.mp4",
       "https://assets.mixkit.co/videos/31629/31629-720.mp4",
       "https://assets.mixkit.co/videos/118/118-720.mp4",
       "https://assets.mixkit.co/videos/4998/4998-720.mp4",
