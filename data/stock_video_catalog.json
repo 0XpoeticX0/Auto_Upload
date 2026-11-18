@@ -1,5 +1,5 @@
 {
-  "total_unique": 989,
+  "total_unique": 988,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -4087,13 +4087,6 @@
       "id": "44385",
       "url": "https://assets.mixkit.co/videos/44385/44385-720.mp4"
     },
-    "https://assets.mixkit.co/videos/44378/44378-720.mp4": {
-      "category": "coastal",
-      "title": "Verified Halal coastal clip 44378",
-      "duration": 15.0,
-      "id": "44378",
-      "url": "https://assets.mixkit.co/videos/44378/44378-720.mp4"
-    },
     "https://assets.mixkit.co/videos/44387/44387-720.mp4": {
       "category": "coastal",
       "title": "Verified Halal coastal clip 44387",
@@ -7946,7 +7939,6 @@
       "https://assets.mixkit.co/videos/47239/47239-720.mp4",
       "https://assets.mixkit.co/videos/52419/52419-720.mp4",
       "https://assets.mixkit.co/videos/44385/44385-720.mp4",
-      "https://assets.mixkit.co/videos/44378/44378-720.mp4",
       "https://assets.mixkit.co/videos/44387/44387-720.mp4",
       "https://assets.mixkit.co/videos/44366/44366-720.mp4",
       "https://assets.mixkit.co/videos/44389/44389-720.mp4",
