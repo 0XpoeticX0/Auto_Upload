@@ -5854,5 +5854,9 @@
   "https://assets.mixkit.co/videos/44378/44378-720.mp4": {
     "id": "44378",
     "reason": "There are small human figures visible on the beach in the mid-ground, near the shoreline."
+  },
+  "https://assets.mixkit.co/videos/34166/34166-720.mp4": {
+    "id": "34166",
+    "reason": "The image contains a human figure standing in the stream near the bottom center of the frame."
   }
 }

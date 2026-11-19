@@ -1,5 +1,5 @@
 {
-  "total_unique": 988,
+  "total_unique": 987,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -5522,13 +5522,6 @@
       "duration": 15.9,
       "category": "water_stream"
     },
-    "https://assets.mixkit.co/videos/34166/34166-720.mp4": {
-      "id": "34166",
-      "url": "https://assets.mixkit.co/videos/34166/34166-720.mp4",
-      "title": "Verified Halal Water Stream Clip 34166",
-      "duration": 13.9,
-      "category": "water_stream"
-    },
     "https://assets.mixkit.co/videos/31563/31563-720.mp4": {
       "id": "31563",
       "url": "https://assets.mixkit.co/videos/31563/31563-720.mp4",
@@ -7358,7 +7351,6 @@
       "https://assets.mixkit.co/videos/1931/1931-720.mp4",
       "https://assets.mixkit.co/videos/34517/34517-720.mp4",
       "https://assets.mixkit.co/videos/50574/50574-720.mp4",
-      "https://assets.mixkit.co/videos/34166/34166-720.mp4",
       "https://assets.mixkit.co/videos/31563/31563-720.mp4",
       "https://assets.mixkit.co/videos/45283/45283-720.mp4",
       "https://assets.mixkit.co/videos/45281/45281-720.mp4",
