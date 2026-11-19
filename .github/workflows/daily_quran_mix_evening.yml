@@ -126,12 +126,3 @@ jobs:
         run: |
           python -m app.quran_verse.mix_scheduler --upload
 
-      - name: Persist Mix Rotation State & History
-        if: always()
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main || true
-          git add -A data/ || true
-          git commit -m "chore(automation): persist quran mix rotation state and timings [skip ci]" || true
-          git push origin main || true

@@ -1,15 +1,6 @@
-# Runtime Data & Registries
+# Runtime Data & Registries (All state persisted purely in Supabase)
 data/*
-!data/history_log.json
-!data/video_registry.json
 !data/stock_video_catalog.json
-!data/used_hadiths_registry.json
-!data/video_rotation_state.json
-!data/quran_mix_state.json
-!data/catalog_rejected_clips.json
-!data/quran_selection_state.json
-!data/gemini_key_lock_state.json
-!data/curated_quran_state.json
 
 # Secrets & Authentication Tokens
 .env

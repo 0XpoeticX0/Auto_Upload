@@ -20,6 +20,48 @@ MANIFEST_PATH = os.path.abspath("app/assets/curated_user_quran/curated_quran_man
 CURATED_DIR = os.path.abspath("app/assets/curated_user_quran")
 STATE_PATH = os.path.abspath("data/curated_quran_state.json")
 
+def _fetch_cloud_curated_state() -> dict:
+    """Fetches real-time curated rotation state directly from Supabase."""
+    try:
+        from app.history import _get_supabase_config
+        url, key = _get_supabase_config()
+        if url and key:
+            import urllib.request
+            headers = {"apikey": key, "Authorization": f"Bearer {key}"}
+            req = urllib.request.Request(f"{url}/used_islamic_video?id=eq.curated_quran_state_v1", headers=headers)
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                if resp.status == 200:
+                    rows = json.loads(resp.read().decode("utf-8"))
+                    if rows and "title" in rows[0]:
+                        return json.loads(rows[0]["title"])
+    except Exception as e:
+        logger.debug(f"Cloud curated state fetch notice: {e}")
+    return {}
+
+def _sync_cloud_curated_state(state: dict):
+    """Upserts curated rotation state to Supabase so zero git commits are ever needed."""
+    try:
+        from app.history import _get_supabase_config
+        url, key = _get_supabase_config()
+        if url and key:
+            import urllib.request
+            headers = {
+                "apikey": key,
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates"
+            }
+            payload = {
+                "id": "curated_quran_state_v1",
+                "title": json.dumps(state),
+                "source": "curated_quran_state"
+            }
+            req = urllib.request.Request(f"{url}/used_islamic_video", data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                pass
+    except Exception as e:
+        logger.debug(f"Cloud curated sync notice: {e}")
+
 def get_curated_state() -> dict:
     default_state = {
         "next_mode": "curated",
@@ -27,6 +69,12 @@ def get_curated_state() -> dict:
         "last_run": None,
         "history": []
     }
+    # 1. Try Supabase cloud ground-truth first
+    cloud_state = _fetch_cloud_curated_state()
+    if cloud_state:
+        return cloud_state
+        
+    # 2. Local fallback
     if os.path.exists(STATE_PATH):
         try:
             with open(STATE_PATH, "r", encoding="utf-8") as f:
@@ -36,12 +84,16 @@ def get_curated_state() -> dict:
     return default_state
 
 def save_curated_state(state: dict):
+    # 1. Persist directly to Supabase cloud
+    _sync_cloud_curated_state(state)
+    
+    # 2. Local cache
     try:
         os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
         with open(STATE_PATH, "w", encoding="utf-8") as f:
             json.dump(state, f, ensure_ascii=False, indent=2)
     except Exception as e:
-        logger.error(f"Failed to save curated state: {e}")
+        logger.error(f"Failed to save curated state locally: {e}")
 
 def get_audio_duration(file_path: str) -> float:
     cmd = ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", file_path]

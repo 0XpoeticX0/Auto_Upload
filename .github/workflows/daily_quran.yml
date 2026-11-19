@@ -134,13 +134,4 @@ jobs:
         run: |
           python -m app.quran_verse.scheduler --upload
 
-      - name: Persist Video Rotation State & History
-        if: always()
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main || true
-          git add -A data/ || true
-          git commit -m "chore(automation): persist rotation state and history log [skip ci]" || true
-          git push origin main || true
 
