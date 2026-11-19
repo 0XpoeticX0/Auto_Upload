@@ -5858,5 +5858,13 @@
   "https://assets.mixkit.co/videos/34166/34166-720.mp4": {
     "id": "34166",
     "reason": "The image contains a human figure standing in the stream near the bottom center of the frame."
+  },
+  "https://assets.mixkit.co/videos/19614/19614-720.mp4": {
+    "id": "19614",
+    "reason": "The image features a decorated Christmas tree with a star on top against a golden, snowy background. The Christmas tree is a prominent Christian religious symbol and holiday decoration, which falls under prohibited items in strict Shariah visual audits."
+  },
+  "https://assets.mixkit.co/videos/4371/4371-720.mp4": {
+    "id": "4371",
+    "reason": "There are small human figures visible in the shallow water near the sandy beach area."
   }
 }

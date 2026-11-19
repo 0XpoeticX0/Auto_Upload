@@ -1,5 +1,5 @@
 {
-  "total_unique": 987,
+  "total_unique": 985,
   "halal_certified": true,
   "shariah_compliance": "Strictly 0 humans, 0 faces, 0 silhouettes, 0 statues, 0 animals",
   "min_duration_seconds": 15.0,
@@ -4899,13 +4899,6 @@
       "id": "19612",
       "url": "https://assets.mixkit.co/videos/19612/19612-720.mp4"
     },
-    "https://assets.mixkit.co/videos/19614/19614-720.mp4": {
-      "category": "celestial",
-      "title": "Verified Halal celestial clip 19614",
-      "duration": 15.0,
-      "id": "19614",
-      "url": "https://assets.mixkit.co/videos/19614/19614-720.mp4"
-    },
     "https://assets.mixkit.co/videos/19615/19615-720.mp4": {
       "category": "celestial",
       "title": "Verified Halal celestial clip 19615",
@@ -6129,13 +6122,6 @@
       "url": "https://assets.mixkit.co/videos/4362/4362-720.mp4",
       "title": "Cinematic Halal Mountains Clip 4362",
       "duration": 29.7,
-      "category": "mountains"
-    },
-    "https://assets.mixkit.co/videos/4371/4371-720.mp4": {
-      "id": "4371",
-      "url": "https://assets.mixkit.co/videos/4371/4371-720.mp4",
-      "title": "Cinematic Halal Mountains Clip 4371",
-      "duration": 19.6,
       "category": "mountains"
     },
     "https://assets.mixkit.co/videos/4379/4379-720.mp4": {
@@ -7538,7 +7524,6 @@
       "https://assets.mixkit.co/videos/4361/4361-720.mp4",
       "https://assets.mixkit.co/videos/4376/4376-720.mp4",
       "https://assets.mixkit.co/videos/4362/4362-720.mp4",
-      "https://assets.mixkit.co/videos/4371/4371-720.mp4",
       "https://assets.mixkit.co/videos/4379/4379-720.mp4",
       "https://assets.mixkit.co/videos/4378/4378-720.mp4",
       "https://assets.mixkit.co/videos/4381/4381-720.mp4",
@@ -7975,7 +7960,6 @@
       "https://assets.mixkit.co/videos/19609/19609-720.mp4",
       "https://assets.mixkit.co/videos/19610/19610-720.mp4",
       "https://assets.mixkit.co/videos/19612/19612-720.mp4",
-      "https://assets.mixkit.co/videos/19614/19614-720.mp4",
       "https://assets.mixkit.co/videos/19615/19615-720.mp4",
       "https://assets.mixkit.co/videos/19618/19618-720.mp4",
       "https://assets.mixkit.co/videos/19619/19619-720.mp4",

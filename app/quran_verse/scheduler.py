@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 Automated Daily Scheduler & Slot Manager for Quran Recitation Videos (< 90s).
-Configured for: Exactly 1 Daily High-Impact Video at 06:00 AM BST (Dawn / Morning Prime).
-Automatically alternates daily between:
-- Sheikh Mishary Rashid Alafasy (শায়খ মিশারি রশিদ আল-আফাসি)
-- Sheikh Yasser Al-Dossari (শায়খ ইয়াসির আদ-দাওসারি)
+Configured for 4 Daily Slots:
+- 2 Slots Curated User Audio & High-Impact Bengali Script
+- 2 Slots Random / AI Quran Video
+Automatically alternates between Curated and Random modes.
+Both modes strictly enforce:
+- 100% Halal live-motion cinematic video triplet rotation (GEMINI.md)
+- Authentic recitations & broadcast audio mastering
+- Pure Bengali typography & curiosity hooks
+- Facebook Stars call-to-action & auto-pinned first comment
+- Viral hashtags & metadata
 """
 
 import sys
@@ -20,57 +26,62 @@ load_dotenv()
 
 from app.logger import logger
 from app.quran_verse.generator import run_quran_verse_pipeline
+from app.quran_verse.curated_pipeline import run_curated_quran_pipeline, get_curated_state, save_curated_state
 from app.quran_verse.quran_data import RECITERS_CONFIG
 
 BST = timezone(timedelta(hours=6))
 
 DAILY_QURAN_TIME = "4 Times Daily (03:00 AM, 06:00 AM, 09:00 AM, 12:00 PM BST)"
 
-def get_daily_alternating_reciter() -> str:
+def execute_daily_quran_run(upload: bool = True, reciter_id: str = None, mode: str = "auto") -> dict:
     """
-    Alternates daily between Alafasy and Dossari based on the calendar day.
-    Even days: alafasy
-    Odd days: dossari
-    """
-    day_num = datetime.now(BST).toordinal()
-    return "alafasy" if day_num % 2 == 0 else "dossari"
-
-def execute_daily_quran_run(upload: bool = True, reciter_id: str = None) -> dict:
-    """
-    Executes the Daily 1 Quran Recitation video pipeline:
-    1. Alternates reciter (Alafasy / Dossari)
-    2. Selects meaningful self-contained Quranic passage
-    3. 3-Stage Gemini Clearance Gate
-    4. Downloads authentic audio & studio vocal mastering
-    5. Renders 1080x1920 60FPS video with centered subtitles
-    6. Automatically publishes to YouTube Shorts, Facebook & Instagram
+    Executes the scheduled Quran video pipeline:
+    - In 'curated' mode: Runs the curated audio & verified Bengali script pipeline.
+    - In 'random' mode: Runs the intelligent random passage & AI discovery pipeline.
+    - In 'auto' mode: Seamlessly alternates 2 Curated and 2 Random runs per day.
     """
     now_bst = datetime.now(BST)
-    date_str = now_bst.strftime("%Y-%m-%d")
+    date_str = now_bst.strftime("%Y-%m-%d %H:%M:%S BST")
     
-    logger.info(f"=== LAUNCHING DAILY 1 QURAN RECITATION VIDEO PIPELINE ===")
-    logger.info(f"Date: {date_str} | Target Time: {DAILY_QURAN_TIME}")
-    if reciter_id and reciter_id in RECITERS_CONFIG:
-        logger.info(f"Manual Reciter Forced: {RECITERS_CONFIG[reciter_id]['name_en']}")
+    logger.info(f"=== LAUNCHING SCHEDULED QURAN RECITATION PIPELINE ===")
+    logger.info(f"Time: {date_str} | Schedule: {DAILY_QURAN_TIME}")
+    
+    state = get_curated_state()
+    active_mode = mode
+    if active_mode == "auto":
+        active_mode = state.get("next_mode", "curated")
+        
+    logger.info(f"🎯 Execution Target Mode: '{active_mode.upper()}' (2 Curated / 2 Random Daily Mix)")
+
+    if active_mode == "curated":
+        logger.info("Executing Curated Quran Pipeline (User Audio + Verified Bengali Script)...")
+        result = run_curated_quran_pipeline(upload=upload)
+        # Advance mode to random for next schedule slot
+        state["next_mode"] = "random"
+        save_curated_state(state)
     else:
-        logger.info("Mode: Intelligent Emotion-to-Voice Matching (Alafasy vs. Dossari)")
+        logger.info("Executing Random Quran Pipeline (AI Discovery & Pure Nature Triplet)...")
+        result = run_quran_verse_pipeline(
+            reciter_id=reciter_id,
+            upload=upload
+        )
+        # Advance mode to curated for next schedule slot
+        state["next_mode"] = "curated"
+        save_curated_state(state)
 
-    result = run_quran_verse_pipeline(
-        reciter_id=reciter_id,
-        upload=upload
-    )
-
-    logger.info("🎉 Daily 1 Quran video execution completed successfully!")
+    logger.info(f"🎉 Scheduled Quran video execution completed! Next Mode queued: '{state['next_mode'].upper()}'")
     return result
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Daily 1 Quran Video Automated Scheduler")
+    parser = argparse.ArgumentParser(description="Daily Quran Video Automated Scheduler")
     parser.add_argument("--reciter", choices=["alafasy", "dossari"], default=None, help="Force specific reciter")
+    parser.add_argument("--mode", choices=["auto", "curated", "random"], default="auto", help="Scheduling mode: auto (alternates 2+2), curated, or random")
     parser.add_argument("--upload", action="store_true", default=True, help="Auto upload to social media")
     parser.add_argument("--no-upload", dest="upload", action="store_false", help="Render video only without uploading")
 
     args = parser.parse_args()
     execute_daily_quran_run(
         upload=args.upload,
-        reciter_id=args.reciter
+        reciter_id=args.reciter,
+        mode=args.mode
     )

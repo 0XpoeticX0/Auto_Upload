@@ -9,6 +9,7 @@ data/*
 !data/catalog_rejected_clips.json
 !data/quran_selection_state.json
 !data/gemini_key_lock_state.json
+!data/curated_quran_state.json
 
 # Secrets & Authentication Tokens
 .env
@@ -32,6 +33,7 @@ service_account*.json
 !app/assets/sfx/*.wav
 !app/assets/sfx/**
 *.mp3
+!app/assets/curated_user_quran/**
 *.m4a
 *.aac
 *.ass
