@@ -1005,8 +1005,10 @@ Select a fresh, inspiring, and ear-pleasing melodious passage with 100% complete
                 verse_data["reciter"] = reciter
                 verse_data["reciter_rationale"] = data.get("reciter_rationale", "")
                 return verse_data
+            else:
+                logger.warning("⚡ [AI Discovery Fallback] AI discovery returned empty. Falling back immediately to Curated Pre-Selected List.")
         except Exception as e:
-            logger.warning(f"AI passage selection notice: {e}. Falling back to curated bank.")
+            logger.warning(f"⚡ [AI Discovery Fallback] AI discovery error: {e}. Falling back immediately to Curated Pre-Selected List.")
 
     # Fallback to curated rotation - STRICTLY EXCLUDE PASSAGES OVERLAPPING ALREADY USED OR REJECTED AYAHS
     import random
@@ -1014,7 +1016,7 @@ Select a fresh, inspiring, and ear-pleasing melodious passage with 100% complete
     for p in CURATED_COMPLETE_PASSAGES:
         p_surah = p["surah"]
         p_ayahs = set(range(p["ayah_start"], p["ayah_end"] + 1))
-        banned_ayahs = used_ayahs_map.get(p_surah, set())
+        banned_ayahs = set(used_ayahs_map.get(p_surah, []))
         if not (p_ayahs & banned_ayahs):
             pass_str = f"Surah {p_surah}:{p['ayah_start']}-{p['ayah_end']}"
             if rejected_passages and any(pass_str in r or f"Surah {p_surah}:" in r for r in rejected_passages):

@@ -15,12 +15,8 @@ from app.config import (
 from app.logger import logger
 
 MODELS = [
-    "gemini-3.5-flash-lite",
-    "gemini-3.6-flash",        # Blazing fast, low latency
-    "gemini-3.5-flash",        # Highly reliable & stable
-    "gemini-3.7-flash",        # Advanced reasoning
-    "gemini-flash-lite-latest",# Canonical alias for lite
-    "gemini-flash-latest",     # Canonical alias for flash
+    "gemini-2.5-flash",        # Primary stable production model
+    "gemini-flash-latest",     # Canonical alias fallback
 ]
 
 GLOBAL_RULE = "\n\nCRITICAL SYSTEM RULE: You must cross-check all Islamic claims with authentic Quranic verses and Sahih Hadith. Do not output any misinformation, unverified stories, or false claims. All claims must be backed by authentic sources."
@@ -129,10 +125,18 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
 
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
 
+    max_attempts = 2
+    attempts = 0
+
     for model_name in MODELS:
         for idx, key in key_candidates:
             if _is_blacklisted(model_name, key):
                 continue
+
+            attempts += 1
+            if attempts > max_attempts:
+                logger.warning(f"⚠️ Reached max Gemini attempts ({max_attempts}). Failing fast to allow instant fallback.")
+                return ""
 
             try:
                 logger.info(f"Attempting model '{model_name}' on Key #{idx+1}/{len(key_pool)} (Active Lock: #{get_locked_key_index()+1})")
@@ -153,20 +157,19 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
                 is_503 = "503" in err_str or "UNAVAILABLE" in err_str
                 is_quota = "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower()
                 if is_503:
-                    logger.warning(f"Model '{model_name}' temporary 503 spike on Key #{idx+1}. Pausing 2s...")
-                    time.sleep(2)
+                    logger.warning(f"Model '{model_name}' temporary 503 spike on Key #{idx+1}. Pausing 1s...")
+                    time.sleep(1)
                     _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
                 elif is_quota:
-                    logger.warning(f"⚠️ Key #{idx+1} quota/rate limit exhausted (429). Blacklisting and advancing active lock...")
+                    logger.warning(f"⚠️ Key #{idx+1} quota/rate limit exhausted (429). Advancing active lock...")
                     _SESSION_FAILED_PAIRS[(model_name, key)] = time.time() + 180
-                    # Advance lock immediately to the next available key
                     next_idx = (idx + 1) % len(key_pool)
                     save_locked_key_index(next_idx)
                 else:
-                    logger.warning(f"Model '{model_name}' failed on Key #{idx+1} ({err_str[:120]}). Blacklisting for {_BLACKLIST_EXPIRY_SEC}s...")
+                    logger.warning(f"Model '{model_name}' failed on Key #{idx+1} ({err_str[:120]}).")
                     _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
 
-    logger.error("All Gemini models and API keys failed.")
+    logger.error("Gemini model attempts exhausted.")
     return ""
 
 def _parse_dirty_json(text: str) -> dict:
@@ -228,10 +231,18 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
 
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
 
+    max_attempts = 2
+    attempts = 0
+
     for model_name in MODELS:
         for idx, key in key_candidates:
             if _is_blacklisted(model_name, key):
                 continue
+
+            attempts += 1
+            if attempts > max_attempts:
+                logger.warning(f"⚠️ Reached max Gemini attempts ({max_attempts}) in extract_json. Failing fast to allow instant fallback.")
+                return {}
 
             try:
                 logger.info(f"Attempting model '{model_name}' on Key #{idx+1}/{len(key_pool)} (Active Lock: #{get_locked_key_index()+1})")
@@ -260,17 +271,17 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
                 is_503 = "503" in err_str or "UNAVAILABLE" in err_str
                 is_quota = "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower()
                 if is_503:
-                    logger.warning(f"Model '{model_name}' temporary 503 spike on Key #{idx+1}. Pausing 2s...")
-                    time.sleep(2)
+                    logger.warning(f"Model '{model_name}' temporary 503 spike on Key #{idx+1}. Pausing 1s...")
+                    time.sleep(1)
                     _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
                 elif is_quota:
-                    logger.warning(f"⚠️ Key #{idx+1} quota/rate limit exhausted (429). Blacklisting and advancing active lock...")
+                    logger.warning(f"⚠️ Key #{idx+1} quota/rate limit exhausted (429). Advancing active lock...")
                     _SESSION_FAILED_PAIRS[(model_name, key)] = time.time() + 180
                     next_idx = (idx + 1) % len(key_pool)
                     save_locked_key_index(next_idx)
                 else:
-                    logger.warning(f"Model '{model_name}' failed on Key #{idx+1} ({err_str[:120]}). Blacklisting for {_BLACKLIST_EXPIRY_SEC}s...")
+                    logger.warning(f"Model '{model_name}' failed on Key #{idx+1} ({err_str[:120]}).")
                     _SESSION_FAILED_PAIRS[(model_name, key)] = time.time()
 
-    logger.error("All Gemini models and API keys failed.")
+    logger.error("All Gemini models and API keys failed in extract_json.")
     return {}
