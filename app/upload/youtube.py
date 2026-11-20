@@ -211,33 +211,11 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
             except Exception as e:
                 logger.error(f"Failed to upload captions: {e}")
                 
-        # 3. Auto-Post Pinned First Comment for Instant Algorithm Boost
-        comment_text = metadata.get("pinned_comment")
-        if not comment_text:
-            if "কুইজ" in metadata.get("youtube_title", "") or "quiz" in metadata.get("youtube_title", "").lower():
-                comment_text = "আজকের কুইজে আপনার স্কোর ৫-এ কত হলো? ৫/৫, ৪/৫ নাকি ৩/৫? কমেন্টে জানান! 👇"
-            else:
-                comment_text = "সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন—রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿"
-                
-        if comment_text and video_id:
-            try:
-                logger.info(f"Posting auto-first comment on YouTube video {video_id}...")
-                youtube.commentThreads().insert(
-                    part="snippet",
-                    body={
-                        "snippet": {
-                            "videoId": video_id,
-                            "topLevelComment": {
-                                "snippet": {
-                                    "textOriginal": comment_text
-                                }
-                            }
-                        }
-                    }
-                ).execute()
-                logger.info(f"✅ Auto-first comment posted on YouTube!")
-            except Exception as e:
-                logger.warning(f"Notice: Could not post first comment on YouTube: {e}")
+        # 3. Auto-Post Pinned First Comment (DISABLED per user request to remove first comment)
+        # comment_text = metadata.get("pinned_comment")
+        # if comment_text and video_id:
+        #     try:
+        #         ...
                 
         return video_id
         

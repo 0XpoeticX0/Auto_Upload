@@ -218,13 +218,16 @@ def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> 
     # Each clip is verified 100% Halal during dynamic visual track assembly
     shariah_passed = os.path.exists(video_path) and os.path.getsize(video_path) > 100000
         
-    # 3. Upload Metadata
+    # 3. Upload Metadata (Configured for International Reach, No Pinned First Comment)
     upload_meta = {
         "youtube_title": item.get("youtube_title", item["title"]),
         "facebook_title": item.get("facebook_title", item["title"]),
         "description": item["description"],
-        "pinned_comment": item.get("pinned_comment"),
-        "tags": ["Quran", "Recitation", "DailyDosIslam", "Islam", "Shorts", "Reels", "Stars"]
+        "pinned_comment": None,
+        "tags": item.get("tags", [
+            "Quran", "QuranRecitation", "Islam", "Allah", "Muslim",
+            item.get("surah_name_en", "Quran"), "Shorts", "Reels", "DailyDosIslam", "Viral"
+        ])
     }
     
     # 4. Upload if requested

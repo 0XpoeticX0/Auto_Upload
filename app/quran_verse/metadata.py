@@ -1,99 +1,117 @@
 # -*- coding: utf-8 -*-
 """
 Metadata & Caption Generator for Quran Recitation Videos.
-Creates professional titles, detailed contextual descriptions, full Arabic & Bengali text,
-and high-converting dawah hashtags.
+Optimized for International Viral Reach (< 100 char global titles, bilingual descriptions, universal tags).
+No auto-first comments per user specification.
 """
+
+from app.quran_verse.quran_data import SURAH_NAMES_EN
 
 def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
     """
-    Generates YouTube Shorts, Instagram Reels, Facebook Reels, and TikTok metadata.
+    Generates YouTube Shorts, Instagram Reels, Facebook Reels, and TikTok metadata
+    with international global reach.
     """
-    surah_name = verse_data["surah_name_bn"]
-    range_str = verse_data["verse_range_str"]
-    reciter_info = audio_data["reciter"]
-    reciter_bn = reciter_info["name_bn"]
-    badge_name = reciter_info.get("title_badge", reciter_bn)
-    theme_headline = verse_data.get("theme_headline", "কোরআনের পরম শান্তি ও হেদায়াত")
-    reflection = verse_data.get("reflection_bn", "")
-    verses = verse_data.get("verses", [])
+    surah_num = verse_data.get("surah", 1)
+    surah_name_bn = verse_data.get("surah_name_bn", "")
+    surah_name_en = verse_data.get("surah_name_en") or SURAH_NAMES_EN.get(surah_num, f"Surah {surah_num}")
+    range_str = verse_data.get("verse_range_str", "")
+    
+    reciter_info = audio_data.get("reciter", verse_data.get("reciter", {}))
+    reciter_en = reciter_info.get("name_en", "Sheikh Mishary Rashid Alafasy")
+    reciter_bn = reciter_info.get("name_bn", "শায়খ মিশারি রশিদ আল-আফাসি")
+    reciter_short = reciter_info.get("title_badge", "Alafasy")
+    
+    # Emotional English theme headline for international audience
+    theme_headline_en = verse_data.get("theme_headline_en") or verse_data.get("theme_hint")
+    if not theme_headline_en or any(ord(c) > 127 for c in theme_headline_en):
+        # Default global curiosity hooks
+        default_hooks = [
+            "Heart Touching Quran Recitation",
+            "When Your Heart Needs Peace",
+            "Listen To This Beautiful Recitation",
+            "A Powerful Message From Allah",
+            "The Words That Heal Your Soul"
+        ]
+        import random
+        theme_headline_en = random.choice(default_hooks)
+    
+    clean_hook = theme_headline_en.replace("(", "").replace(")", "").strip()
+    if len(clean_hook) > 42:
+        clean_hook = clean_hook[:42].strip()
 
-    # High-converting title (< 100 characters)
-    # e.g., "কঠিন সময়ে মন শান্ত করার আয়াত—সূরা আশ-শারহ | মিশারি আল-আফাসি #Shorts"
-    clean_headline = theme_headline.replace("(", "").replace(")", "")
-    if len(clean_headline) > 35:
-        clean_headline = clean_headline[:35]
-
-    yt_title = f"{clean_headline}—{surah_name} (আয়াত {range_str}) | {badge_name} #Shorts"
+    # International high-converting title (< 95 chars)
+    # e.g., "When Your Heart Needs Peace ➔ Surah Al-Mulk (1-4) | Alafasy #Shorts #Quran"
+    yt_title = f"{clean_hook} ➔ Surah {surah_name_en} ({range_str}) | {reciter_short} #Shorts #Quran"
     if len(yt_title) > 95:
-        yt_title = f"{surah_name} (আয়াত {range_str}) | {badge_name} #Shorts"
+        yt_title = f"Surah {surah_name_en} ({range_str}) | Beautiful Quran Recitation #Shorts #Quran"
 
-    # Detailed Description
+    fb_title = f"{clean_hook} ➔ Surah {surah_name_en} ({range_str}) | {reciter_en}"
+
+    verses = verse_data.get("verses", [])
+    reflection = verse_data.get("reflection_bn", "")
+
+    # Global International Bilingual Description
     description = (
-        f"✨ পবিত্র কুরআন তিলাওয়াত ও বাংলা অনুবাদ ✨\n"
-        f"📖 {surah_name} • আয়াত {range_str}\n"
-        f"🎙️ তিলাওয়াত: {reciter_bn}\n"
-        f"📖 উৎস: EveryAyah.com / Quran.com API (Free Religious & Educational Public Distribution)\n\n"
+        f"✨ {clean_hook} ✨\n"
+        f"📖 Surah: {surah_name_en} ({surah_name_bn}) | Verses: {range_str}\n"
+        f"🎙️ Recited by: {reciter_en}\n\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"📜 আয়াত ও বাংলা অর্থ:\n\n"
+        f"📜 Sacred Verses & English Translation:\n\n"
     )
 
-    bn_digits = {'0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'}
-    def to_bn(n):
-        return "".join(bn_digits.get(c, c) for c in str(n))
-
     for v in verses:
-        a_num = to_bn(v.get("ayah_number", ""))
+        a_num = v.get("ayah_number", "")
         ar = v.get("arabic", "").strip()
-        bn = v.get("bengali", "").strip()
+        en = v.get("english", "").strip()
         description += f"({a_num}) {ar}\n"
-        description += f"🗣️ অর্থ: “{bn}”\n\n"
+        if en:
+            description += f"“{en}”\n\n"
+        else:
+            description += "\n"
+
+    # Bengali section
+    description += (
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"📖 বাংলা অর্থ:\n\n"
+    )
+    for v in verses:
+        a_num = v.get("ayah_number", "")
+        bn = v.get("bengali", "").strip()
+        if bn:
+            description += f"({a_num}) “{bn}”\n"
 
     if reflection:
         description += (
-            f"━━━━━━━━━━━━━━━━━━━━\n"
-            f"🌿 কুরআনের বার্তা ও সান্ত্বনা:\n"
-            f"{reflection}\n\n"
+            f"\n━━━━━━━━━━━━━━━━━━━━\n"
+            f"🌿 কুরআনের বার্তা:\n"
+            f"{reflection}\n"
         )
 
     description += (
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"📌 পরবর্তীতে তিলাওয়াত শোনার জন্য ভিডিওটি 🔖 Save করে রাখুন।\n"
-        f"🤍 কুরআন ও সহীহ সুন্নাহর দাওয়াত ছড়িয়ে দিতে বন্ধুদের সাথে Share করুন।\n"
-        f"রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿\n\n"
-        f"👉 প্রতিদিনের বিশুদ্ধ কুরআন তিলাওয়াত ও সহীহ হাদিসের জন্য Follow করুন: @dailydos_islam\n\n"
-        f"#Quran #QuranTilawat #কুরআন_তিলাওয়াত #{surah_name.replace(' ', '_')} "
-        f"#IslamicReminders #MuslimUmmah #DeenOverDunya #Alhamdulillah #Shorts #Reels #ViralReels"
+        f"\n━━━━━━━━━━━━━━━━━━━━\n"
+        f"🤍 Spread the words of the Holy Quran — Share with your loved ones.\n"
+        f"The Prophet Muhammad (ﷺ) said: 'Whoever guides someone to goodness will have a reward like one who did it.' [Sahih Muslim: 1893] 🌿\n\n"
+        f"⭐ Support our dawah with Facebook Stars if this touched your heart.\n\n"
+        f"#Quran #QuranRecitation #Surah{surah_name_en.replace(' ', '').replace('-', '')} #Islam #Allah #IslamicReminder "
+        f"#Muslim #Deen #ProphetMuhammad #Shorts #Reels #DailyDosIslam #Viral #fyp"
     )
 
-    # Hard safety guard: Instagram limit is 2,200 chars. Ensure description stays under 2,050 chars.
-    if len(description) > 2050 and reflection:
-        excess = len(description) - 2000
-        avail_refl = max(60, len(reflection) - excess)
-        trimmed_refl = reflection[:avail_refl]
-        if "।" in trimmed_refl:
-            trimmed_refl = trimmed_refl.rsplit("।", 1)[0] + "।"
-        else:
-            trimmed_refl = trimmed_refl + "..."
-        description = description.replace(f"🌿 কুরআনের বার্তা ও সান্ত্বনা:\n{reflection}\n\n", f"🌿 কুরআনের বার্তা ও সান্ত্বনা:\n{trimmed_refl}\n\n")
-
-    pinned_comment = (
-        f"আলহামদুলিল্লাহ! পবিত্র কুরআনের এই আয়াতটি আপনার হৃদয়ে কেমন অনুভূতি সৃষ্টি করেছে? "
-        f"মন্তব্যে শেয়ার করুন এবং সহীহ দ্বীনি দাওয়াত ছড়িয়ে দিতে ভিডিওটি Share করুন। 🤲🌿"
-    )
-
+    # Global Tags
     tags = [
-        "Quran", "QuranRecitation", "কুরআন_তিলাওয়াত",
-        surah_name.replace(" ", ""), "Islam", "DailyDos",
-        badge_name.replace(" ", ""), "Shorts", "Reels"
+        "Quran", "QuranRecitation", f"Surah{surah_name_en.replace(' ', '').replace('-', '')}",
+        "Islam", "Allah", "Muslim", "IslamicReminder", "ProphetMuhammad",
+        reciter_short, "Shorts", "Reels", "DailyDosIslam", "Viral", "fyp"
     ]
 
     return {
         "title": yt_title,
+        "youtube_title": yt_title,
+        "facebook_title": fb_title,
         "description": description.strip(),
-        "pinned_comment": pinned_comment,
+        "pinned_comment": None,  # No first comment
         "tags": tags,
-        "reciter_name": reciter_bn,
-        "surah_name": surah_name,
+        "reciter_name": reciter_en,
+        "surah_name": surah_name_en,
         "range_str": range_str
     }

@@ -98,9 +98,9 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
         logger.info("Uploading as Facebook VIDEO (shown on Page timeline)")
         success, video_id = _upload_as_video(page_id, access_token, video_path, title, description, scheduled_publish_time=scheduled_publish_time)
 
-    # Post auto-first comment
-    if success and video_id and pinned_comment and not scheduled_publish_time:
-        _post_facebook_comment(page_id, access_token, video_id, pinned_comment)
+    # Post auto-first comment (DISABLED per user request to remove first comment)
+    # if success and video_id and pinned_comment and not scheduled_publish_time:
+    #     _post_facebook_comment(page_id, access_token, video_id, pinned_comment)
 
     # Upload custom thumbnail if provided
     cover_cdn_url = None
