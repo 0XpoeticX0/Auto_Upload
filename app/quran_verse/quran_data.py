@@ -647,7 +647,7 @@ def clean_html_tags(text: str) -> str:
     return clean_bengali_translation(text)
 
 def clean_english_translation(text: str) -> str:
-    """Strips HTML tags, footnote indices, and modernizes archaic Victorian vocabulary (e.g. breast -> chest)."""
+    """Strips HTML tags, footnote indices, unwraps editorial brackets, and modernizes archaic vocabulary."""
     if not text:
         return ""
     text = re.sub(r'<[^>]+>', '', text)
@@ -657,6 +657,8 @@ def clean_english_translation(text: str) -> str:
     # Modernize awkward archaic anatomical translations
     text = re.sub(r'\bbreast\b', 'chest', text, flags=re.IGNORECASE)
     text = re.sub(r'\bbreasts\b', 'chests', text, flags=re.IGNORECASE)
+    # Unwrap explanatory brackets for clean, natural subtitle reading: [life] -> life
+    text = re.sub(r'\[([a-zA-Z\s\'-]+)\]', r'\1', text)
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
@@ -725,8 +727,8 @@ def fetch_verse_data(surah: int, ayah_start: int, ayah_end: int = None) -> dict:
                 logger.warning(f"Translation {trans_id} fetch notice for {surah}:{ayah}: {e}")
                 continue
 
-        # Fetch English translation (Resource 85: M.A.S. Abdel Haleem Oxford / Resource 20: Saheeh International)
-        for en_trans_id in [85, 20]:
+        # Fetch English translation: Resource 20 (Saheeh International - #1 Global Standard), fallback to 85 (Abdel Haleem)
+        for en_trans_id in [20, 85]:
             url_en = f"https://api.quran.com/api/v4/verses/by_key/{surah}:{ayah}?translations={en_trans_id}"
             try:
                 req_en = urllib.request.Request(url_en, headers={"User-Agent": "Mozilla/5.0"})

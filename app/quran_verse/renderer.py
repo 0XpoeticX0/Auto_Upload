@@ -166,7 +166,9 @@ def format_english_subtitles_for_ass(en_raw: str, max_words_per_line: int = 7) -
     """
     if not en_raw:
         return ""
-    text = en_raw.strip().strip('"').strip("'")
+    text = en_raw.strip().strip('"').strip("'").strip('“').strip('”')
+    # Unwrap any editorial brackets for seamless video subtitle reading: [life] -> life
+    text = re.sub(r'\[([a-zA-Z\s\'-]+)\]', r'\1', text)
     words = text.split()
     if len(words) <= max_words_per_line:
         wrapped = text
