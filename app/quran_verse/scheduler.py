@@ -56,20 +56,20 @@ def execute_daily_quran_run(upload: bool = True, reciter_id: str = None, mode: s
     if active_mode == "curated":
         logger.info("Executing Curated Quran Pipeline (User Audio + Verified Bengali Script)...")
         result = run_curated_quran_pipeline(upload=upload)
-        # Advance mode to random for next schedule slot
-        state["next_mode"] = "random"
-        save_curated_state(state)
+        # run_curated_quran_pipeline automatically advances index, queues 'random' mode, and syncs to Supabase.
     else:
         logger.info("Executing Random Quran Pipeline (AI Discovery & Pure Nature Triplet)...")
         result = run_quran_verse_pipeline(
             reciter_id=reciter_id,
             upload=upload
         )
-        # Advance mode to curated for next schedule slot
-        state["next_mode"] = "curated"
-        save_curated_state(state)
+        # Advance mode to curated for next schedule slot using fresh cloud state
+        fresh_state = get_curated_state()
+        fresh_state["next_mode"] = "curated"
+        save_curated_state(fresh_state)
 
-    logger.info(f"🎉 Scheduled Quran video execution completed! Next Mode queued: '{state['next_mode'].upper()}'")
+    final_state = get_curated_state()
+    logger.info(f"🎉 Scheduled Quran video execution completed! Next Mode queued: '{final_state.get('next_mode', 'curated').upper()}' | Next Curated Index: {final_state.get('next_curated_index', 0)}")
     return result
 
 if __name__ == "__main__":
