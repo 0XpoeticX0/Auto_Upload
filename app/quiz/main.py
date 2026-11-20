@@ -8,8 +8,8 @@ from app.quiz.generator import generate_quiz_script
 from app.quiz.renderer import render_quiz_video
 from app.quiz.history import fetch_used_quiz_questions, record_used_quiz_questions, format_quiz_metadata
 
-def run_quiz_pipeline(language: str = "bn", output_path: str = "data/output/quiz_sample_video.mp4", upload: bool = False) -> str | None:
-    logger.info(f"=== Starting 5-Question Interactive Islamic Quiz Pipeline (language={language}, upload={upload}) ===")
+def run_quiz_pipeline(language: str = "en", output_path: str = "data/output/quiz_sample_video.mp4", upload: bool = False) -> str | None:
+    logger.info(f"=== Starting 3-Question Interactive Islamic Quiz Pipeline (language={language}, upload={upload}) ===")
     
     # 1. Fetch recent questions from Supabase for zero repetition (last 300 questions)
     recent_questions = fetch_used_quiz_questions(limit=300)
@@ -42,7 +42,7 @@ def run_quiz_pipeline(language: str = "bn", output_path: str = "data/output/quiz
     
     # 4. Upload if requested
     if upload:
-        metadata = format_quiz_metadata(quiz_script)
+        metadata = format_quiz_metadata(quiz_script, language=language)
         logger.info(f"Uploading Quiz Video: '{metadata.get('youtube_title')}'...")
         
         # Extract clean Question 1 thumbnail at t=2.0s
@@ -88,8 +88,8 @@ def run_quiz_pipeline(language: str = "bn", output_path: str = "data/output/quiz
     return video_path
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate 5-Question Islamic Quiz Reel")
-    parser.add_argument("--lang", default="bn", choices=["en", "bn"], help="Language of quiz (en/bn)")
+    parser = argparse.ArgumentParser(description="Generate 3-Question Islamic Quiz Reel")
+    parser.add_argument("--lang", default="en", choices=["en", "bn"], help="Language of quiz (en/bn)")
     parser.add_argument("--out", default="data/output/quiz_sample_video.mp4", help="Output MP4 path")
     parser.add_argument("--upload", action="store_true", help="Upload video to YouTube and Facebook/Instagram")
     args = parser.parse_args()

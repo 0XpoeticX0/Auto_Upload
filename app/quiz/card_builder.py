@@ -164,9 +164,9 @@ def format_ts(sec: float) -> str:
     cs = int((sec - int(sec)) * 100)
     return f"{h}:{m:02d}:{s:02d}.{cs:02d}"
 
-def build_timed_ass(q_data: dict, t_countdown: float, t_reveal: float, total_dur: float, out_ass_path: str):
+def build_timed_ass(q_data: dict, t_countdown: float, t_reveal: float, total_dur: float, out_ass_path: str, language: str = "en"):
     """
-    Builds timed ASS subtitle file using Kalpurush font and 60-30-10 styling.
+    Builds timed ASS subtitle file using Segoe UI (English) or Kalpurush (Bengali) font and 60-30-10 styling.
     """
     ts_start = format_ts(0.0)
     ts_c3 = format_ts(t_countdown)
@@ -178,21 +178,37 @@ def build_timed_ass(q_data: dict, t_countdown: float, t_reveal: float, total_dur
     raw_question = q_data.get("question", "")
     question = re.sub(r'^(?:প্রশ্ন\s*[০-৯\d]+[:।\-]?\s*|Question\s*\d+[:.\-]?\s*|Q\d+[:.\-]?\s*)', '', raw_question, flags=re.IGNORECASE).strip()
     options = q_data.get("options", [])
-    correct_opt = q_data.get("correct_option", "ক").strip()
-    correct_letter = correct_opt[0] if correct_opt else "ক"
+    correct_opt = q_data.get("correct_option", "A" if language == "en" else "ক").strip()
+    correct_letter = correct_opt[0].upper() if correct_opt else ("A" if language == "en" else "ক")
     explanation = q_data.get("explanation", "").strip()
     q_num = q_data.get("number", 1)
     total_q = q_data.get("total_questions", 3)
-    category = q_data.get("category", "আল-কুরআন")
+    category = q_data.get("category", "Islamic Knowledge" if language == "en" else "আল-কুরআন")
 
-    hook_text = "🏆 ৩টি সহজ ইসলামিক প্রশ্ন—৩-এ ৩ পাওয়ার চ্যালেঞ্জ নিচ্ছেন? ➔"
-
-    # Golden Highlights on sacred question terms (10% Accent)
-    styled_q = question
-    for term in ["বিসমিল্লাহ", "সূরা", "ফরজ", "হারাম", "হালাল", "নবীজি", "রাসূলুল্লাহ", "সালাত", "যোহর", "আসর", "দেনমোহর", "গীবত"]:
-        if term in styled_q:
-            styled_q = styled_q.replace(term, f"{{\\c{ASS_COLOR_GOLD}}}{term}{{\\c{ASS_COLOR_WHITE}}}")
-            break
+    if language == "en":
+        hook_text = "🏆 3 Quick Islamic Questions — Can You Score 3/3? ➔"
+        tracker_text = f"📖 {category} • Question {q_num}/{total_q}"
+        english_terms = [
+            "Allah", "Prophet", "Muhammad", "Quran", "Surah", "Ayah", "Salah", "Hadith",
+            "Bismillah", "Jannah", "Ramadan", "Zakat", "Sunnah", "Mahr", "Dhikr", "Fard",
+            "Halal", "Haram", "Tawakkul", "Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"
+        ]
+        styled_q = question
+        for term in english_terms:
+            pattern = re.compile(rf'\b{re.escape(term)}\b', re.IGNORECASE)
+            match = pattern.search(styled_q)
+            if match:
+                orig = match.group(0)
+                styled_q = styled_q[:match.start()] + f"{{\\c{ASS_COLOR_GOLD}}}{orig}{{\\c{ASS_COLOR_WHITE}}}" + styled_q[match.end():]
+                break
+    else:
+        hook_text = "🏆 ৩টি সহজ ইসলামিক প্রশ্ন—৩-এ ৩ পাওয়ার চ্যালেঞ্জ নিচ্ছেন? ➔"
+        tracker_text = f"📖 {category} • প্রশ্ন {q_num}/{total_q}"
+        styled_q = question
+        for term in ["বিসমিল্লাহ", "সূরা", "ফরজ", "হারাম", "হালাল", "নবীজি", "রাসূলুল্লাহ", "সালাত", "যোহর", "আসর", "দেনমোহর", "গীবত"]:
+            if term in styled_q:
+                styled_q = styled_q.replace(term, f"{{\\c{ASS_COLOR_GOLD}}}{term}{{\\c{ASS_COLOR_WHITE}}}")
+                break
 
     words = styled_q.split()
     mid = len(words) // 2
@@ -203,11 +219,14 @@ def build_timed_ass(q_data: dict, t_countdown: float, t_reveal: float, total_dur
     else:
         lines = [" ".join(words)]
 
+    font_name = "Segoe UI" if language == "en" else "Kalpurush"
+    default_letters = ["A", "B", "C"] if language == "en" else ["ক", "খ", "গ"]
+
     dialogues = []
     # 1. Top Hook
     dialogues.append(f"Dialogue: 0,{ts_start},{ts_end},HookStyle,,0,0,0,,{{\\pos(540,182)}}{hook_text}")
     # 2. Tracker
-    dialogues.append(f"Dialogue: 0,{ts_start},{ts_end},TrackerStyle,,0,0,0,,{{\\pos(540,282)}}📖 {category} • প্রশ্ন {q_num}/{total_q}")
+    dialogues.append(f"Dialogue: 0,{ts_start},{ts_end},TrackerStyle,,0,0,0,,{{\\pos(540,282)}}{tracker_text}")
 
     # 3. Question Text (30% Secondary White)
     start_q_y = 480 - (len(lines) - 1) * 38
@@ -219,29 +238,48 @@ def build_timed_ass(q_data: dict, t_countdown: float, t_reveal: float, total_dur
     opt_y = 787
     for idx, opt in enumerate(options):
         opt_str = opt.strip()
-        opt_letter = opt_str[0] if opt_str else ["ক", "খ", "গ"][idx]
+        opt_letter = opt_str[0].upper() if opt_str else default_letters[idx]
         is_this_correct = (opt_letter == correct_letter) or (correct_opt in opt_str)
-        opt_text = opt_str[2:].strip() if len(opt_str) > 2 and opt_str[1] in [')', ':', '-'] else opt_str
+        opt_text = opt_str[2:].strip() if len(opt_str) > 2 and opt_str[1] in [')', ':', '-', '.'] else opt_str
 
+        # Option letter badges inside circular badge
+        dialogues.append(f"Dialogue: 0,{ts_start},{ts_rev},OptionBadgeStyle,,0,0,0,,{{\\pos(142,{opt_y})}}{opt_letter}")
+        if is_this_correct:
+            dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},OptionBadgeCheckStyle,,0,0,0,,{{\\pos(142,{opt_y})}}✓")
+        else:
+            dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},OptionBadgeDimStyle,,0,0,0,,{{\\pos(142,{opt_y})}}{opt_letter}")
+
+        # Option text (centered in option card body)
         # Before reveal: 30% secondary white
-        dialogues.append(f"Dialogue: 0,{ts_start},{ts_rev},OptionStyle,,0,0,0,,{{\\pos(540,{opt_y})}}{opt_text}")
+        dialogues.append(f"Dialogue: 0,{ts_start},{ts_rev},OptionStyle,,0,0,0,,{{\\pos(580,{opt_y})}}{opt_text}")
 
         # After reveal:
         if is_this_correct:
             # 10% Accent Luminous Emerald
-            dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},OptionCorrectStyle,,0,0,0,,{{\\pos(540,{opt_y})}}{opt_text}")
+            dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},OptionCorrectStyle,,0,0,0,,{{\\pos(580,{opt_y})}}{opt_text}")
         else:
             # Dimmed out
-            dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},OptionDimStyle,,0,0,0,,{{\\pos(540,{opt_y})}}{opt_text}")
+            dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},OptionDimStyle,,0,0,0,,{{\\pos(580,{opt_y})}}{opt_text}")
         opt_y += 173
 
     # 5. Countdown text (10% Gold)
-    dialogues.append(f"Dialogue: 0,{ts_c3},{ts_c2},TimerNumStyle,,0,0,0,,{{\\pos(540,1315)}}⏱️ আর ৩ সেকেন্ড...")
-    dialogues.append(f"Dialogue: 0,{ts_c2},{ts_c1},TimerNumStyle,,0,0,0,,{{\\pos(540,1315)}}⏱️ আর ২ সেকেন্ড...")
-    dialogues.append(f"Dialogue: 0,{ts_c1},{ts_rev},TimerNumStyle,,0,0,0,,{{\\pos(540,1315)}}⏱️ আর ১ সেকেন্ড...")
+    if language == "en":
+        cd_3 = "⏱️ 3 seconds left..."
+        cd_2 = "⏱️ 2 seconds left..."
+        cd_1 = "⏱️ 1 second left..."
+        reveal_txt = f"✅ Correct Answer: Option [{correct_letter}]"
+    else:
+        cd_3 = "⏱️ আর ৩ সেকেন্ড..."
+        cd_2 = "⏱️ আর ২ সেকেন্ড..."
+        cd_1 = "⏱️ আর ১ সেকেন্ড..."
+        reveal_txt = f"✅ সঠিক উত্তর: [{correct_letter}]"
+
+    dialogues.append(f"Dialogue: 0,{ts_c3},{ts_c2},TimerNumStyle,,0,0,0,,{{\\pos(540,1315)}}{cd_3}")
+    dialogues.append(f"Dialogue: 0,{ts_c2},{ts_c1},TimerNumStyle,,0,0,0,,{{\\pos(540,1315)}}{cd_2}")
+    dialogues.append(f"Dialogue: 0,{ts_c1},{ts_rev},TimerNumStyle,,0,0,0,,{{\\pos(540,1315)}}{cd_1}")
 
     # 6. Reveal Badge & Sahih Proof
-    dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},RevealBadgeStyle,,0,0,0,,{{\\pos(540,1268)}}✅ সঠিক উত্তর: [{correct_letter}]")
+    dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},RevealBadgeStyle,,0,0,0,,{{\\pos(540,1268)}}{reveal_txt}")
     if explanation:
         dialogues.append(f"Dialogue: 0,{ts_rev},{ts_end},ProofStyle,,0,0,0,,{{\\pos(540,1322)}}{explanation}")
 
@@ -253,15 +291,18 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: HookStyle,Kalpurush,38,{ASS_COLOR_WHITE},&H000000FF&,&H00000000&,&H00000000&,0,0,0,0,100,100,0,0,1,0,0,5,30,30,10,1
-Style: TrackerStyle,Kalpurush,34,{ASS_COLOR_GOLD},&H000000FF&,&H00000000&,&H00000000&,0,0,0,0,100,100,0,0,1,0,0,5,30,30,10,1
-Style: QuestionStyle,Kalpurush,54,{ASS_COLOR_WHITE},&H000000FF&,&H00050D09&,&H70000000&,0,0,0,0,100,100,0,0,1,3.5,1.5,5,80,80,10,1
-Style: OptionStyle,Kalpurush,48,{ASS_COLOR_WHITE},&H000000FF&,&H0008120D&,&H50000000&,0,0,0,0,100,100,0,0,1,2.8,1.2,5,100,100,10,1
-Style: OptionCorrectStyle,Kalpurush,50,{ASS_COLOR_DARK},&H000000FF&,&H00FFFFFF&,&H00000000&,1,0,0,0,100,100,0,0,1,1.5,0,5,100,100,10,1
-Style: OptionDimStyle,Kalpurush,44,{ASS_COLOR_MUTED},&H000000FF&,&H00000000&,&H00000000&,0,0,0,0,100,100,0,0,1,0,0,5,100,100,10,1
-Style: TimerNumStyle,Kalpurush,42,{ASS_COLOR_GOLD},&H000000FF&,&H000A1812&,&H60000000&,0,0,0,0,100,100,0,0,1,3.0,1.2,5,30,30,10,1
-Style: RevealBadgeStyle,Kalpurush,46,{ASS_COLOR_GOLD},&H000000FF&,&H00091710&,&H70000000&,1,0,0,0,100,100,0,0,1,3.2,1.5,5,30,30,10,1
-Style: ProofStyle,Kalpurush,32,{ASS_COLOR_WHITE},&H000000FF&,&H0007130E&,&H50000000&,0,0,0,0,100,100,0,0,1,2.2,1.0,5,80,80,10,1
+Style: HookStyle,{font_name},36,{ASS_COLOR_WHITE},&H000000FF&,&H00000000&,&H00000000&,1,0,0,0,100,100,0,0,1,0,0,5,30,30,10,1
+Style: TrackerStyle,{font_name},32,{ASS_COLOR_GOLD},&H000000FF&,&H00000000&,&H00000000&,1,0,0,0,100,100,0,0,1,0,0,5,30,30,10,1
+Style: QuestionStyle,{font_name},50,{ASS_COLOR_WHITE},&H000000FF&,&H00050D09&,&H70000000&,1,0,0,0,100,100,0,0,1,3.5,1.5,5,80,80,10,1
+Style: OptionStyle,{font_name},44,{ASS_COLOR_WHITE},&H000000FF&,&H0008120D&,&H50000000&,1,0,0,0,100,100,0,0,1,2.8,1.2,5,50,50,10,1
+Style: OptionBadgeStyle,{font_name},40,{ASS_COLOR_GOLD},&H000000FF&,&H00050D09&,&H70000000&,1,0,0,0,100,100,0,0,1,2.0,0,5,10,10,10,1
+Style: OptionBadgeCheckStyle,{font_name},44,{ASS_COLOR_DARK},&H000000FF&,&H00FFFFFF&,&H00000000&,1,0,0,0,100,100,0,0,1,1.5,0,5,10,10,10,1
+Style: OptionBadgeDimStyle,{font_name},38,{ASS_COLOR_MUTED},&H000000FF&,&H00000000&,&H00000000&,0,0,0,0,100,100,0,0,1,0,0,5,10,10,10,1
+Style: OptionCorrectStyle,{font_name},46,{ASS_COLOR_DARK},&H000000FF&,&H00FFFFFF&,&H00000000&,1,0,0,0,100,100,0,0,1,1.5,0,5,50,50,10,1
+Style: OptionDimStyle,{font_name},40,{ASS_COLOR_MUTED},&H000000FF&,&H00000000&,&H00000000&,0,0,0,0,100,100,0,0,1,0,0,5,50,50,10,1
+Style: TimerNumStyle,{font_name},38,{ASS_COLOR_GOLD},&H000000FF&,&H000A1812&,&H60000000&,1,0,0,0,100,100,0,0,1,3.0,1.2,5,30,30,10,1
+Style: RevealBadgeStyle,{font_name},42,{ASS_COLOR_GOLD},&H000000FF&,&H00091710&,&H70000000&,1,0,0,0,100,100,0,0,1,3.2,1.5,5,30,30,10,1
+Style: ProofStyle,{font_name},30,{ASS_COLOR_WHITE},&H000000FF&,&H0007130E&,&H50000000&,0,0,0,0,100,100,0,0,1,2.2,1.0,5,80,80,10,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text

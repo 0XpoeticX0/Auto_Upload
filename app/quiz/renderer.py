@@ -28,12 +28,16 @@ ensure_sfx_assets(SFX_DIR)
 SFX_TICK = os.path.join(SFX_DIR, "clock_tick.wav").replace('\\', '/')
 SFX_BELL = os.path.join(SFX_DIR, "correct_bell.wav").replace('\\', '/')
 
-async def _synthesize_voice(text: str, out_wav: str, voice: str = "bn-BD-PradeepNeural", rate: str = "+0%"):
+async def _synthesize_voice(text: str, out_wav: str, voice: str = None, rate: str = "+0%", language: str = "en"):
     """Synthesizes human-paced voiceover with warm studio broadcast EQ and -18 LUFS normalization."""
     clean_text = re.sub(r'[\U00010000-\U0010ffff]', '', text).strip()
     raw_mp3 = out_wav + ".raw.mp3"
     
-    voices = [voice, "bn-IN-BashkarNeural", "bn-BD-NabanitaNeural"]
+    if language == "en":
+        voices = [voice or "en-US-ChristopherNeural", "en-US-GuyNeural", "en-US-AndrewNeural"]
+    else:
+        voices = [voice or "bn-BD-PradeepNeural", "bn-IN-BashkarNeural", "bn-BD-NabanitaNeural"]
+
     success = False
     for v in voices:
         try:
@@ -58,8 +62,8 @@ async def _synthesize_voice(text: str, out_wav: str, voice: str = "bn-BD-Pradeep
     if os.path.exists(raw_mp3):
         os.remove(raw_mp3)
 
-def synthesize_voice_sync(text: str, out_wav: str):
-    asyncio.run(_synthesize_voice(text, out_wav))
+def synthesize_voice_sync(text: str, out_wav: str, language: str = "en"):
+    asyncio.run(_synthesize_voice(text, out_wav, language=language))
 
 def get_audio_duration(audio_file: str) -> float:
     cmd = [
@@ -75,7 +79,8 @@ def render_single_question_scene(
     q_data: dict,
     broll_path: str,
     temp_dir: str,
-    scene_idx: int
+    scene_idx: int,
+    language: str = "en"
 ) -> str:
     """
     Renders one full question scene (Voice + 3 Ticks + Reveal Chime + 60-30-10 Visuals).
@@ -86,10 +91,10 @@ def render_single_question_scene(
 
     # 1. Voice
     voice_wav = os.path.join(temp_dir, f"voice_q{q_num}.wav")
-    spoken_text = re.sub(r'^(?:প্রশ্ন\s*[০-৯\d]+[:।\-]?\s*|Q\d+[:.\-]?\s*)', '', q_text, flags=re.IGNORECASE).strip()
+    spoken_text = re.sub(r'^(?:প্রশ্ন\s*[০-৯\d]+[:।\-]?\s*|Question\s*\d+[:.\-]?\s*|Q\d+[:.\-]?\s*)', '', q_text, flags=re.IGNORECASE).strip()
     if not spoken_text.endswith("?"):
         spoken_text += "?"
-    synthesize_voice_sync(spoken_text, voice_wav)
+    synthesize_voice_sync(spoken_text, voice_wav, language=language)
     voice_dur = get_audio_duration(voice_wav)
 
     # 2. Timing
@@ -109,7 +114,7 @@ def render_single_question_scene(
         png_overlays[st] = png_path
 
     ass_path = os.path.join(temp_dir, f"q{q_num}_subtitles.ass")
-    build_timed_ass(q_data, t_countdown, t_reveal, total_dur, ass_path)
+    build_timed_ass(q_data, t_countdown, t_reveal, total_dur, ass_path, language=language)
 
     # 4. 60-30-10 Audio Mix (60% Voice, 30% Nature Bed, 10% SFX Cues)
     composite_audio = os.path.join(temp_dir, f"audio_q{q_num}.wav")
@@ -188,7 +193,7 @@ def render_single_question_scene(
     logger.info(f"   ✓ Question {q_num} scene rendered ({total_dur:.2f}s): {out_mp4}")
     return out_mp4
 
-def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_sample_video.mp4", language: str = "bn") -> str | None:
+def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_sample_video.mp4", language: str = "en") -> str | None:
     """
     Renders the complete 3-question interactive Quiz video (9:16) with 60-30-10 live-motion design (~28-32s).
     """
@@ -201,11 +206,11 @@ def render_quiz_video(quiz_data: dict, output_path: str = "data/output/quiz_samp
         logger.error("No questions found in quiz data.")
         return None
 
-    logger.info(f"Rendering 3-Question Quiz Video following 60-30-10 Rule ({len(questions)} questions)...")
+    logger.info(f"Rendering 3-Question Quiz Video following 60-30-10 Rule (language={language}, {len(questions)} questions)...")
     scene_files = []
 
     for idx, q in enumerate(questions, 1):
-        scene_mp4 = render_single_question_scene(q, DEFAULT_BROLL_VIDEO, temp_dir, idx)
+        scene_mp4 = render_single_question_scene(q, DEFAULT_BROLL_VIDEO, temp_dir, idx, language=language)
         scene_files.append(scene_mp4)
 
     # Concatenate all 3 scenes into final MP4

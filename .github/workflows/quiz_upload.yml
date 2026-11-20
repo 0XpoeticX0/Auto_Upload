@@ -115,7 +115,7 @@ jobs:
         [ -n "$HF_TOKEN" ] && ! grep -q "HF_TOKEN=" .env 2>/dev/null && echo "HF_TOKEN=$HF_TOKEN" >> .env
         echo "Successfully configured all environment secrets."
 
-    - name: Run Bengali Islamic Quiz Pipeline (Generate & Upload)
+    - name: Run English Islamic Quiz Pipeline (Generate & Upload)
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GEMINI_POST_API_KEY: ${{ secrets.GEMINI_POST_API_KEY || secrets.GEMINI_API_KEY }}
@@ -130,4 +130,4 @@ jobs:
         FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         IG_USER_ID: ${{ secrets.IG_USER_ID }}
       run: |
-        python -m app.quiz.main --lang bn --upload
+        python -m app.quiz.main --lang en --upload

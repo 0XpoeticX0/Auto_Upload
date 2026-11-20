@@ -14,6 +14,7 @@ import re
 from app.logger import logger
 
 VALID_SOURCES = [
+    # Bengali sources
     r'সহীহ বুখারী',
     r'সহীহ মুসলিম',
     r'জামে আত-তিরমিযী',
@@ -25,7 +26,20 @@ VALID_SOURCES = [
     r'মুসনাদে আহমাদ',
     r'সূরা\s+[^\:]+\:\s*[\d০-৯]+',
     r'তাফসীরে ইবনে কাসীর',
-    r'সীরাতে ইবনে হিশাম'
+    r'সীরাতে ইবনে হিশাম',
+    # English sources
+    r'Sahih\s+Bukhari',
+    r'Sahih\s+Muslim',
+    r'Jami(?:\s+at)?-Tirmidhi',
+    r'Sunan\s+an-Nasa(?:\'|i)',
+    r'Sunan\s+Abi\s+Dawud',
+    r'Sunan\s+Ibn\s+Majah',
+    r'Muwatta\s+Malik',
+    r'Musnad\s+Ahmad',
+    r'Surah\s+[a-zA-Z\s\'-]+\:\s*\d+',
+    r'Quran\s+\d+\:\d+',
+    r'Tafsir\s+Ibn\s+Kathir',
+    r'Sirah\s+Ibn\s+Hisham'
 ]
 
 GENERIC_BANNED_PATTERNS = [
@@ -35,6 +49,9 @@ GENERIC_BANNED_PATTERNS = [
     r'\[\s*হাদীস\s*\]',
     r'\[\s*আল-হাদিস\s*\]',
     r'\[\s*কোরআন\s*শরীফ\s*\]',
+    r'\[\s*Hadith\s*\]',
+    r'\[\s*Quran\s*\]',
+    r'\[\s*Islamic\s+Tradition\s*\]'
 ]
 
 def verify_question_authenticity(q_data: dict) -> tuple[bool, str]:
