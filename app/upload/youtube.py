@@ -97,14 +97,17 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
         video_category = metadata.get("category", "educational")
         category_id = CATEGORY_IDS.get(video_category, "27")
 
+        def_lang = metadata.get('default_language', 'en')
+        def_audio = metadata.get('default_audio_language', 'en')
+
         body = {
             'snippet': {
                 'title': metadata.get('youtube_title', 'Generated Short')[:100],
                 'description': metadata.get('description', ''),
                 'tags': metadata.get('tags', []),
                 'categoryId': category_id,
-                'defaultLanguage': 'bn',
-                'defaultAudioLanguage': 'bn'
+                'defaultLanguage': def_lang,
+                'defaultAudioLanguage': def_audio
             },
             'status': {
                 'privacyStatus': 'private' if metadata.get('publish_at') else metadata.get('privacy_status', 'public'),
@@ -119,17 +122,16 @@ def upload_to_youtube(video_path: str, metadata: dict, thumbnail_path: str = Non
             body['status']['publishAt'] = metadata['publish_at']
             logger.info(f"YouTube Video scheduled for: {metadata['publish_at']}")
         
-        # Multi-Language Localizations (Global English Search Reach)
+        # Multi-Language Localizations (Global English Search Reach if default is not English)
         en_title = metadata.get("english_title")
         en_desc = metadata.get("english_description")
-        if en_title and en_desc:
+        if en_title and en_desc and def_lang != 'en':
             body['localizations'] = {
                 'en': {
                     'title': en_title[:100],
                     'description': en_desc[:5000]
                 }
             }
-            body['snippet']['defaultLanguage'] = 'bn'
         
         media = MediaFileUpload(video_path, chunksize=-1, resumable=True, mimetype='video/mp4')
         

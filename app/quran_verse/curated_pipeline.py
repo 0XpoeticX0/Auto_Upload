@@ -226,8 +226,10 @@ def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> 
         "pinned_comment": None,
         "tags": item.get("tags", [
             "Quran", "QuranRecitation", "Islam", "Allah", "Muslim",
-            item.get("surah_name_en", "Quran"), "Shorts", "Reels", "DailyDosIslam", "Viral"
-        ])
+            item.get("surah_name_en", "Quran"), "Shorts", "Reels", "DailyDos", "Viral"
+        ]),
+        "default_language": "en",
+        "default_audio_language": "ar"
     }
     
     # 4. Upload if requested

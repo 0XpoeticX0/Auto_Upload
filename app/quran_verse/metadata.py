@@ -51,10 +51,11 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
     verses = verse_data.get("verses", [])
     reflection = verse_data.get("reflection_bn", "")
 
-    # Global International Bilingual Description
+    # 100% International Global Description
+    surah_tag = surah_name_en.replace(' ', '').replace('-', '').replace("'", "")
     description = (
         f"✨ {clean_hook} ✨\n"
-        f"📖 Surah: {surah_name_en} ({surah_name_bn}) | Verses: {range_str}\n"
+        f"📖 Surah: {surah_name_en} | Verses: {range_str}\n"
         f"🎙️ Recited by: {reciter_en}\n\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
         f"📜 Sacred Verses & English Translation:\n\n"
@@ -70,38 +71,21 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
         else:
             description += "\n"
 
-    # Bengali section
     description += (
         f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"📖 বাংলা অর্থ:\n\n"
-    )
-    for v in verses:
-        a_num = v.get("ayah_number", "")
-        bn = v.get("bengali", "").strip()
-        if bn:
-            description += f"({a_num}) “{bn}”\n"
-
-    if reflection:
-        description += (
-            f"\n━━━━━━━━━━━━━━━━━━━━\n"
-            f"🌿 কুরআনের বার্তা:\n"
-            f"{reflection}\n"
-        )
-
-    description += (
-        f"\n━━━━━━━━━━━━━━━━━━━━\n"
-        f"🤍 Spread the words of the Holy Quran — Share with your loved ones.\n"
+        f"🤍 Spread the words of the Holy Quran — Share with your family and loved ones.\n"
         f"The Prophet Muhammad (ﷺ) said: 'Whoever guides someone to goodness will have a reward like one who did it.' [Sahih Muslim: 1893] 🌿\n\n"
-        f"⭐ Support our dawah with Facebook Stars if this touched your heart.\n\n"
-        f"#Quran #QuranRecitation #Surah{surah_name_en.replace(' ', '').replace('-', '')} #Islam #Allah #IslamicReminder "
-        f"#Muslim #Deen #ProphetMuhammad #Shorts #Reels #DailyDosIslam #Viral #fyp"
+        f"⭐ Support our dawah with Stars if this recitation brought peace to your heart.\n\n"
+        f"#Quran #QuranRecitation #Surah{surah_tag} #Islam #Allah #IslamicReminder "
+        f"#Muslim #Deen #ProphetMuhammad #Shorts #Reels #DailyDos #Viral #fyp #Trending #HeartTouching #PeacefulRecitation"
     )
 
-    # Global Tags
+    # Global High-Ranking SEO Tags
     tags = [
-        "Quran", "QuranRecitation", f"Surah{surah_name_en.replace(' ', '').replace('-', '')}",
+        "Quran", "QuranRecitation", f"Surah{surah_tag}",
         "Islam", "Allah", "Muslim", "IslamicReminder", "ProphetMuhammad",
-        reciter_short, "Shorts", "Reels", "DailyDosIslam", "Viral", "fyp"
+        reciter_short, "Shorts", "Reels", "DailyDos", "Viral", "fyp",
+        "Trending", "HeartTouching", "PeacefulRecitation", "IslamicStatus", "Deen"
     ]
 
     return {
@@ -109,9 +93,11 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
         "youtube_title": yt_title,
         "facebook_title": fb_title,
         "description": description.strip(),
-        "pinned_comment": None,  # No first comment
+        "pinned_comment": None,  # No first comment per user instruction
         "tags": tags,
         "reciter_name": reciter_en,
         "surah_name": surah_name_en,
-        "range_str": range_str
+        "range_str": range_str,
+        "default_language": "en",
+        "default_audio_language": "ar"
     }

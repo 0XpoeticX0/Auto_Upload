@@ -60,8 +60,8 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
     description = metadata.get("description", "")
     title = metadata.get("facebook_title", metadata.get("youtube_title", ""))
     # Append Stars CTA to description if not already present
-    star_cta = "⭐ ভিডিওটি ভালো লাগলে স্টার (Stars) পাঠিয়ে আমাদের দাওয়াতি কনটেন্ট তৈরিতে সহায়তা করতে পারেন।"
-    if "স্টার" not in description and "Stars" not in description:
+    star_cta = "⭐ Support our dawah with Stars if this touched your heart."
+    if "Stars" not in description and "স্টার" not in description:
         if description.strip():
             description = f"{description.strip()}\n\n{star_cta}\n#Stars #FacebookStars"
         else:
@@ -69,13 +69,8 @@ def upload_to_facebook(video_path: str, metadata: dict, video_type: str = "auto"
     
     full_caption = description.strip()
     
-    # Determine pinned comment
-    pinned_comment = metadata.get("pinned_comment")
-    if not pinned_comment:
-        if "কুইজ" in title or "quiz" in title.lower():
-            pinned_comment = "আজকের কুইজে আপনার স্কোর ৩-এ কত হলো? ৩/৩, ২/৩ নাকি ১/৩? কমেন্টে জানান! আর ভালো লাগলে স্টার (Stars ⭐) পাঠিয়ে আমাদের দাওয়াতি কাজে পাশে থাকুন। 🌿"
-        else:
-            pinned_comment = "ভিডিওটি ভালো লাগলে স্টার (Stars ⭐) পাঠিয়ে আমাদের দ্বীনি কাজে সহায়তা করতে পারেন। বন্ধুদের সাথে Share করুন—রাসূলুল্লাহ (ﷺ) বলেছেন: ‘যে ব্যক্তি কোনো ভালো কাজের পথ দেখায়, সে তার সমপরিমাণ সওয়াব পায়।’ [সহীহ মুসলিম: ১৮৯৩] 🌿"
+    # Auto-first comments disabled per user request
+    pinned_comment = None
 
     # Auto-detect: if filename contains "loop_reel", "_short", "reel", "slot", "episode", or "quiz", use Reels API and Instagram cross-posting
     is_reel = (

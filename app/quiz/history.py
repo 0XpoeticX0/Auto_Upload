@@ -127,14 +127,17 @@ def format_quiz_metadata(quiz_script: dict, language: str = "en") -> dict:
         else:
             yt_title = raw_title
             
-        desc = f"{raw_title}\n\n"
+        desc = f"🏆 3 Quick Islamic Questions — Can You Score 3/3? ➔\n\n"
+        desc += f"{raw_title}\n\n"
         desc += "How strong is your Islamic knowledge? ☪️\n"
         desc += "Challenge yourself with 3 quick authentic questions from the Holy Quran and Sahih Hadith!\n\n"
-        desc += "💡 How many did you get right? Be honest and comment your score (3/3, 2/3) below! 👇\n\n"
-        desc += "━━━━━━━━━━━━━━━━━━━━\n📌 Stay connected with DailyDos:\n"
+        desc += "💡 How many did you get right? Be honest and comment your score (3/3, 2/3, 1/3) below! 👇\n"
+        desc += "Did you know the answer to Question 2?\n\n"
+        desc += "━━━━━━━━━━━━━━━━━━━━\n📌 Subscribe to DailyDos for daily authentic Islamic quizzes and reminders:\n"
         desc += "🔹 YouTube: https://www.youtube.com/@dailydos-no1\n"
         desc += "🔹 Facebook: https://www.facebook.com/DailyDosNo1\n\n"
-        desc += "#IslamicQuiz #MuslimQuiz #IslamTrivia #QuranQuiz #Hadith #DailyDos #Shorts #ReelsViral #ExplorePage #Faith #IslamicKnowledge"
+        desc += "⭐ Challenge your friends & family — The Prophet (ﷺ) said: 'Convey from me, even if it is one verse.' [Sahih Bukhari: 3461] 🌿\n\n"
+        desc += "#IslamicQuiz #MuslimQuiz #IslamTrivia #QuranQuiz #Hadith #DailyDos #Shorts #Reels #ExplorePage #Faith #IslamicKnowledge #Viral #fyp #Trending #Deen #IslamicShorts"
 
         return {
             "youtube_title": yt_title[:100],
@@ -146,9 +149,12 @@ def format_quiz_metadata(quiz_script: dict, language: str = "en") -> dict:
             "tags": [
                 "Shorts", "IslamicQuiz", "MuslimQuiz", "IslamTrivia", "QuranQuiz",
                 "HadithQuiz", "DailyDos", "ReelsViral", "ShortsFeed", "SahihHadith",
-                "LearnIslam", "ExplorePage", "TestYourKnowledge"
+                "LearnIslam", "ExplorePage", "TestYourKnowledge", "Viral", "fyp",
+                "Trending", "Islam", "Muslim", "IslamicShorts", "Deen"
             ],
-            "category": "educational"
+            "category": "educational",
+            "default_language": "en",
+            "default_audio_language": "en"
         }
     else:
         raw_title = quiz_script.get("title", "৯৯% মানুষ ৩ নম্বর প্রশ্নে আটকে যায়! 🧠 (৩-এ আপনার স্কোর কত?)")

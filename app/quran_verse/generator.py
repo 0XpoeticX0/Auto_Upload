@@ -322,9 +322,12 @@ def run_quran_verse_pipeline(
         logger.info("Uploading Quran video to platforms...")
         upload_meta = {
             "youtube_title": metadata["title"],
+            "facebook_title": metadata.get("facebook_title", metadata["title"]),
             "description": metadata["description"],
-            "pinned_comment": metadata["pinned_comment"],
-            "tags": metadata["tags"]
+            "pinned_comment": metadata.get("pinned_comment"),
+            "tags": metadata["tags"],
+            "default_language": metadata.get("default_language", "en"),
+            "default_audio_language": metadata.get("default_audio_language", "ar")
         }
 
         # YouTube Shorts
