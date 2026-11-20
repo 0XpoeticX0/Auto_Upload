@@ -827,6 +827,7 @@ def select_meaningful_passage_ai(
     reciter_id: str = None,
     recent_history: list = None,
     used_ayahs_map: dict = None,
+    banned_surahs: list = None,
     rejected_passages: list = None,
     last_fail_reason: str = "",
     use_curated_fallback: bool = False
@@ -835,11 +836,14 @@ def select_meaningful_passage_ai(
     Uses Gemini to intelligently select a complete, self-contained passage from the Quran
     that has 100% complete meaning, zero missing context, and can finish recitation within 85 seconds.
     Intelligently assigns the most appealing reciter (Alafasy vs. Dossari) based on the passage's emotion.
-    Enforces strict zero-duplication: already-used Ayahs within the last 60 videos are strictly forbidden.
-    (Note: Different Ayahs of the same Surah ARE allowed, but duplicate Ayahs are forbidden).
+    Enforces strict zero-duplication:
+    - Banned Surahs within recent history are strictly forbidden (Surah-level cooldown).
+    - Already-used Ayahs within the last 60 videos are strictly forbidden.
     """
     used_ayahs_map = used_ayahs_map or {}
+    banned_surahs = banned_surahs or []
     avoid_list = "\n- ".join(recent_history[:60]) if recent_history else "None"
+    banned_surahs_str = ", ".join(f"Surah {s} ({SURAH_NAMES_BN.get(s, '')})" for s in set(banned_surahs)) if banned_surahs else "None"
 
     # Build clear already-used Ayahs text per Surah
     used_items = []
@@ -916,11 +920,13 @@ CRITICAL AUDIT & SELECTION MANDATES:
 Your goal is to select a complete, self-contained Quranic passage (under 90 seconds recitation length) that provides a deeply moving, complete message to the viewer, and assign the IDEAL vocal reciter for maximum emotional appeal.
 
 CRITICAL PASSAGE RULES (MANDATORY):
-1. ZERO DUPLICATION OF ALREADY RECITED AYAHS:
-   - The following specific Ayahs were ALREADY RECITED in the last 60 videos:
+1. STRICT SURAH COOLDOWN & ZERO REPETITION:
+   - The following Surahs were RECITED IN RECENT VIDEOS and are STRICTLY BANNED:
+{banned_surahs_str}
+   - STRICTLY PROHIBITED: Do NOT select ANY Ayah from the banned Surahs above!
+   - You MUST explore and select from one of the other 100+ unexplored Surahs of the Holy Quran (e.g. Surah Maryam, Ta-Ha, Al-Kahf, Al-Anbiya, Al-Furqan, Yasin, Qaf, Al-Waqi'ah, Al-Hashr, Al-Insan, Al-Fajr, Al-Mursalat, etc.)!
+   - In addition, the following specific Ayahs were ALREADY RECITED in the last 60 videos and are strictly banned:
 {used_ayahs_section}
-   - STRICTLY DO NOT select any passage containing or overlapping with any of the already-recited Ayahs listed above!
-   - You MAY select from any Surah of the Holy Quran (including other unrecited verses of these same Surahs, or any other Surah), but there must be ZERO OVERLAP with the already-used Ayahs.
 2. COMPLETE MEANING & ZERO CUT-OFFS: The passage MUST form a complete, self-contained unit of thought. Never cut off in the middle of a sentence, list, or argument!
 3. DURATION & AYAH COUNT LIMIT (STRICT MAXIMUM 2 TO 6 AYAHS):
    - Total recitation length MUST be between 30 and 80 seconds (STRICTLY UNDER 85 SECONDS).
@@ -1015,6 +1021,8 @@ Select a fresh, inspiring, and ear-pleasing melodious passage with 100% complete
     available_curated = []
     for p in CURATED_COMPLETE_PASSAGES:
         p_surah = p["surah"]
+        if p_surah in banned_surahs:
+            continue
         p_ayahs = set(range(p["ayah_start"], p["ayah_end"] + 1))
         banned_ayahs = set(used_ayahs_map.get(p_surah, []))
         if not (p_ayahs & banned_ayahs):
@@ -1024,8 +1032,10 @@ Select a fresh, inspiring, and ear-pleasing melodious passage with 100% complete
             available_curated.append(p)
 
     if not available_curated:
-        logger.warning("All curated passages overlapped with recent history! Using complete curated bank as emergency fallback.")
-        available_curated = CURATED_COMPLETE_PASSAGES
+        logger.warning("All curated passages overlapped with recent history! Filtering by non-banned Surahs.")
+        available_curated = [p for p in CURATED_COMPLETE_PASSAGES if p["surah"] not in banned_surahs]
+        if not available_curated:
+            available_curated = CURATED_COMPLETE_PASSAGES
 
     choice = random.choice(available_curated)
     chosen_reciter_id = reciter_id or choice.get("ideal_reciter", "alafasy")

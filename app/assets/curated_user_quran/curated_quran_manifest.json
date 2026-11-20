@@ -1,41 +1,6 @@
 [
   {
-    "id": "01_ad_duha_93_5_6",
-    "audio_file": "01_surah_ad_duha_93_5_6.mp3",
-    "surah": 93,
-    "surah_name_ar": "الضحى",
-    "surah_name_en": "Ad-Duha",
-    "surah_name_bn": "আদ-দুহা",
-    "ayah_start": 5,
-    "ayah_end": 6,
-    "reciter_id": "alafasy",
-    "reciter_title": "হৃদয়স্পর্শী তিলাওয়াত",
-    "title": "চরম হতাশার মুহূর্তে আপনার রব আপনাকে যে পরম সান্ত্বনা দিচ্ছেন ➔",
-    "facebook_title": "চরম হতাশার মুহূর্তে আপনার রব আপনাকে যে পরম সান্ত্বনা দিচ্ছেন ➔",
-    "youtube_title": "চরম হতাশার মুহূর্তে আপনার রব আপনাকে যে পরম অভয় দিচ্ছেন ➔ #Shorts #Quran",
-    "description": "চরম হতাশার মুহূর্তে আপনার রব আপনাকে যে পরম সান্ত্বনা দিচ্ছেন ➔\n\nপবিত্র কুরআনুল কারীমের এক অপার সান্ত্বনাভরা বাণী:\n‘আর অচিরেই আপনার রব আপনাকে এমন কিছু দেবেন, যাতে আপনি সন্তুষ্ট হয়ে যাবেন। তিনি কি আপনাকে পিতৃহীন পাননি, অতঃপর আশ্রয় দেননি?’ [সূরা আদ-দুহা: ৫-৬]\n\nযে রব অতীতজীবনে আপনাকে একা ফেলে যাননি, তিনি বর্তমান বা ভবিষ্যতেও কখনো আপনাকে ছেড়ে যাবেন না। রবের ওপর ভরসা রাখুন।\n\n⭐ ভিডিওটি ভালো লাগলে স্টার (Stars) পাঠিয়ে আমাদের দ্বীনি কাজে সহায়তা করতে পারেন।\n\n#Quran #SurahAdDuha #QuranRecitation #IslamicReminder #Dua #Hope #Tawakkul #Peace #Reels #Shorts #DailyDosIslam #Stars #FacebookStars #ViralReels",
-    "pinned_comment": "জীবনের কঠিন সময়ে এই আয়াতটি আপনার হৃদয়ে কতটা প্রশান্তি এনে দিল? কমেন্টে জানান! আর ভালো লাগলে স্টার (Stars ⭐) পাঠিয়ে আমাদের দাওয়াতি কাজে পাশে থাকুন। 🌿",
-    "ayah_timings": [
-      {
-        "ayah": 5,
-        "start": 0.0,
-        "end": 12.8,
-        "arabic": "وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ",
-        "bengali": "আর অচিরেই আপনার রব আপনাকে এমন কিছু দেবেন,\\Nযাতে আপনি সম্পূর্ণ সন্তুষ্ট হয়ে যাবেন।",
-        "english": "And your Lord is going to give you, and you will be satisfied."
-      },
-      {
-        "ayah": 6,
-        "start": 12.8,
-        "end": 25.4,
-        "arabic": "أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ",
-        "bengali": "তিনি কি আপনাকে পিতৃহীন অবস্থায় পাননি,\\Nঅতঃপর পরম মমতায় আশ্রয় দেননি?",
-        "english": "Did He not find you an orphan and give you shelter?"
-      }
-    ]
-  },
-  {
-    "id": "02_al_anam_6_21",
+    "id": "01_al_anam_6_21",
     "audio_file": "02_surah_al_anam_6_21.mp3",
     "surah": 6,
     "surah_name_ar": "الأنعام",
@@ -70,7 +35,7 @@
     ]
   },
   {
-    "id": "03_ad_duha_full",
+    "id": "02_ad_duha_full",
     "audio_file": "03_surah_ad_duha_full.mp3",
     "surah": 93,
     "surah_name_ar": "الضحى",
@@ -129,7 +94,7 @@
     ]
   },
   {
-    "id": "04_al_mulk_67_1_4",
+    "id": "03_al_mulk_67_1_4",
     "audio_file": "04_surah_al_mulk_67_1_4.mp3",
     "surah": 67,
     "surah_name_ar": "الملك",
@@ -172,7 +137,7 @@
     ]
   },
   {
-    "id": "05_al_anbiya_21_32",
+    "id": "04_al_anbiya_21_32",
     "audio_file": "05_surah_al_anbiya_21_32.mp3",
     "surah": 21,
     "surah_name_ar": "الأنبياء",
@@ -207,7 +172,7 @@
     ]
   },
   {
-    "id": "06_surah_short_recitation",
+    "id": "05_surah_short_recitation",
     "audio_file": "06_surah_short_recitation.mp3",
     "surah": 2,
     "surah_name_ar": "البقرة",
@@ -234,7 +199,7 @@
     ]
   },
   {
-    "id": "07_al_ahzab_33_33",
+    "id": "06_al_ahzab_33_33",
     "audio_file": "07_surah_al_ahzab_33_33.mp3",
     "surah": 33,
     "surah_name_ar": "الأحزاب",
@@ -269,7 +234,7 @@
     ]
   },
   {
-    "id": "08_fatir_35_12",
+    "id": "07_fatir_35_12",
     "audio_file": "08_surah_fatir_35_12.mp3",
     "surah": 35,
     "surah_name_ar": "فاطر",

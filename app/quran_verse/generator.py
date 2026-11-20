@@ -89,8 +89,10 @@ def generate_quran_verse_video(
     quran_history = fetch_recent_quran_pipeline_history(limit=60)
     used_ayahs_map = get_used_ayahs_map(quran_history, limit=60)
     past_titles = [r.get("title", "") for r in quran_history[:60] if r.get("title")]
+    recent_surahs_cooldown = [r.get("surah") for r in quran_history if r.get("surah")][:25]
 
     logger.info(f"🚫 [Zero-Duplication Gate] Tracking already used Ayahs across {len(used_ayahs_map)} Surahs in last 60 videos:")
+    logger.info(f"🚫 [Surah Cooldown Gate] {len(recent_surahs_cooldown)} Surahs on strict cooldown: {recent_surahs_cooldown}")
     for s_num, ayahs in sorted(used_ayahs_map.items()):
         bn_s = SURAH_NAMES_BN.get(s_num, "")
         logger.info(f"   - Surah {s_num} ({bn_s}): used Ayahs {sorted(list(ayahs))}")
@@ -129,12 +131,13 @@ def generate_quran_verse_video(
                 reciter_id=forced_reciter_id,
                 recent_history=past_titles,
                 used_ayahs_map=dynamic_used_ayahs,
+                banned_surahs=recent_surahs_cooldown,
                 rejected_passages=rejected_passages,
                 last_fail_reason=last_fail_reason,
                 use_curated_fallback=use_curated
             )
 
-        # STRICT ZERO-DUPLICATION ENFORCEMENT GATE: AYAH-LEVEL REJECTION
+        # STRICT ZERO-DUPLICATION ENFORCEMENT GATE: AYAH-LEVEL & SURAH-LEVEL REJECTION
         cand_surah = v_cand.get("surah")
         cand_start = v_cand.get("ayah_start")
         cand_end = v_cand.get("ayah_end") or cand_start
@@ -142,6 +145,15 @@ def generate_quran_verse_video(
         cand_range_str = str(v_cand.get("verse_range_str", ""))
 
         if not (surah and ayah_start):
+            # Check 0: Strict Surah-level cooldown (reject if Surah was recited in last 25 videos)
+            if cand_surah in recent_surahs_cooldown and attempt <= 6:
+                logger.warning(
+                    f"🚫 [Surah Cooldown Gate] REJECTED (Attempt {attempt}/{max_selection_retries}): "
+                    f"Surah {cand_surah} ({cand_surah_name_bn}) was recited recently! Must select a fresh Surah."
+                )
+                rejected_passages.append(f"Surah {cand_surah}")
+                continue
+
             # Check 1: Ayah-level overlap check (rejection occurs ONLY if specific Ayahs have been used)
             cand_ayahs = set(range(cand_start, cand_end + 1))
             banned_ayahs = dynamic_used_ayahs.get(cand_surah, set())
