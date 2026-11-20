@@ -647,18 +647,16 @@ def clean_html_tags(text: str) -> str:
     return clean_bengali_translation(text)
 
 def clean_english_translation(text: str) -> str:
-    """Strips HTML tags, footnote indices, unwraps editorial brackets, and modernizes archaic vocabulary."""
+    """
+    Strips HTML markup and footnote reference anchors from API response,
+    preserving the authentic translation text 100% as published without changing any words or brackets.
+    """
     if not text:
         return ""
+    # Strip footnote reference tags and their footnote index (e.g. <sup foot_note=197778>1</sup>)
+    text = re.sub(r'<sup[^>]*>.*?</sup>', '', text)
+    # Strip any remaining HTML tags
     text = re.sub(r'<[^>]+>', '', text)
-    text = re.sub(r'\[[0-9]+\]', '', text)
-    # Strip footnote numbers attached to trailing punctuation or words (e.g. 'off.1' -> 'off.')
-    text = re.sub(r'(?<=[a-zA-Z\.?!,;])\d+', '', text)
-    # Modernize awkward archaic anatomical translations
-    text = re.sub(r'\bbreast\b', 'chest', text, flags=re.IGNORECASE)
-    text = re.sub(r'\bbreasts\b', 'chests', text, flags=re.IGNORECASE)
-    # Unwrap explanatory brackets for clean, natural subtitle reading: [life] -> life
-    text = re.sub(r'\[([a-zA-Z\s\'-]+)\]', r'\1', text)
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
