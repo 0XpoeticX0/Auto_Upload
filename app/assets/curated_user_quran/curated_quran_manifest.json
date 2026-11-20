@@ -1,42 +1,58 @@
 [
   {
-    "id": "01_al_anam_6_21",
-    "audio_file": "02_surah_al_anam_6_21.mp3",
-    "surah": 6,
-    "surah_name_ar": "الأنعام",
-    "surah_name_en": "Al-An'am",
-    "surah_name_bn": "আল-আনআম",
-    "ayah_start": 21,
-    "ayah_end": 21,
+    "id": "01_al_qiyamah_75_31_36",
+    "audio_file": "01_surah_al_qiyamah_75_31_36.mp3",
+    "surah": 75,
+    "surah_name_ar": "القيامة",
+    "surah_name_en": "Al-Qiyamah",
+    "surah_name_bn": "আল-ক্বিয়ামাহ",
+    "ayah_start": 31,
+    "ayah_end": 36,
     "reciter_id": "dossari",
     "reciter_title": "শায়খ ইয়াসির আদ-দাওসারি",
-    "title": "আল্লাহর চেয়ে বড় সত্য আর কেউ কি বলতে পারে? অন্তরে কাঁপন জাগানো আয়াত ➔",
-    "facebook_title": "আল্লাহর চেয়ে বড় সত্য আর কেউ কি বলতে পারে? অন্তরে কাঁপন জাগানো আয়াত ➔",
-    "youtube_title": "আল্লাহর সত্য নিদর্শন অস্বীকারকারীদের পরিণতি ➔ #Shorts #Quran",
-    "description": "আল্লাহর চেয়ে বড় সত্য আর কেউ কি বলতে পারে? অন্তরে কাঁপন জাগানো আয়াত ➔\n\n‘আর যে আল্লাহর ওপর মিথ্যারোপ করে অথবা তাঁর নিদর্শনসমূহ প্রত্যাখ্যান করে, তার চেয়ে বড় সীমালঙ্ঘনকারী আর কে হতে পারে? নিশ্চয়ই জালিমরা কখনো সফল হবে না।’ [সূরা আল-আনআম: ২১]\n\nমহান রবের মহিমান্বিত তিলাওয়াত আমাদের অন্তরকে সত্যের পথে অবিচল রাখুক।\n\n⭐ ভিডিওটি ভালো লাগলে স্টার (Stars) পাঠিয়ে আমাদের দ্বীনি কাজে সহায়তা করতে পারেন।\n\n#Quran #SurahAlAnam #QuranRecitation #Islam #IslamicReminder #Truth #DayOfJudgment #Reels #Shorts #DailyDosIslam #Stars #FacebookStars #ViralReels",
-    "pinned_comment": "এই শক্তিশালী আয়াতটি শুনে আপনার অনুভূতি কমেন্টে জানান! ভিডিওটি ভালো লাগলে স্টার (Stars ⭐) পাঠিয়ে আমাদের দাওয়াতি কনটেন্ট তৈরিতে সহায়তা করুন। 🌿",
+    "title": "মানুষ কি মনে করে যে তাকে কোনো হিসাব ছাড়া এমনিই ছেড়ে দেওয়া হবে? ➔",
+    "facebook_title": "মানুষ কি মনে করে যে তাকে কোনো হিসাব ছাড়া এমনিই ছেড়ে দেওয়া হবে? ➔",
+    "youtube_title": "মানুষকে কি এমনিই ছেড়ে দেওয়া হবে? অন্তরে কাঁপন জাগানো আয়াত ➔ #Shorts #Quran",
+    "description": "মানুষ কি মনে করে যে তাকে কোনো হিসাব ছাড়া এমনিই ছেড়ে দেওয়া হবে? ➔\n\n‘সে সত্যে বিশ্বাস করেনি এবং সালাতও আদায় করেনি; বরং সে মিথ্যারোপ করেছিল ও মুখ ফিরিয়ে নিয়েছিল। অতঃপর সে দম্ভভরে নিজ পরিবারের দিকে চলে গেল। দুর্ভোগ তোমার জন্য, অতঃপর দুর্ভোগ! মানুষ কি মনে করে যে তাকে এমনিই ছেড়ে দেওয়া হবে?’ [সূরা আল-ক্বিয়ামাহ: ৩১-৩৬]\n\nমহান রবের এই কাঁপন ধরানো বার্তা আমাদের অন্তরকে পরকালের জন্য প্রস্তুত করুক।\n\n⭐ ভিডিওটি ভালো লাগলে স্টার (Stars) পাঠিয়ে আমাদের দ্বীনি কাজে সহায়তা করতে পারেন।\n\n#Quran #SurahAlQiyamah #DayOfJudgment #Warning #Hereafter #Islam #IslamicReminder #Truth #Reels #Shorts #DailyDosIslam #Stars #FacebookStars #ViralReels",
+    "pinned_comment": "এই গম্ভীর তিলাওয়াত শুনে আপনার হৃদয় কেঁপে উঠল কি? কমেন্টে জানান! আর ভালো লাগলে স্টার (Stars ⭐) পাঠিয়ে আমাদের দাওয়াতি কনটেন্ট তৈরিতে সহায়তা করুন। 🌿",
     "ayah_timings": [
       {
-        "ayah": 21,
+        "ayah": 31,
         "start": 0.0,
-        "end": 22.0,
-        "arabic": "وَمَنْ أَظْلَمُ مِمَّنِ افْتَرَىٰ عَلَى اللَّهِ كَذِبًا أَوْ كَذَّبَ بِآيَاتِهِ",
-        "bengali": "আর যে আল্লাহর প্রতি মিথ্যারোপ করে,\\Nকিংবা তাঁর নিদর্শন অস্বীকার করে, তার চেয়ে বড় জালিম আর কে?",
-        "english": "And who is more unjust than one who invents a lie about Allah or denies His verses?"
+        "end": 6.0,
+        "arabic": "فَلَا صَدَّقَ وَلَا صَلَّىٰ ۝ وَلَٰكِن كَذَّبَ وَتَوَلَّىٰ",
+        "bengali": "সে সত্যে বিশ্বাস করেনি এবং সালাতও আদায় করেনি;\\Nবরং সে মিথ্যারোপ করেছিল ও মুখ ফিরিয়ে নিয়েছিল।",
+        "english": "And the disbeliever had not believed, nor had he prayed. But he denied and turned away."
       },
       {
-        "ayah": 21,
-        "start": 22.0,
-        "end": 44.3,
-        "arabic": "إِنَّهُ لَا يُفْلِحُ الظَّالِمُونَ",
-        "bengali": "নিশ্চয়ই সত্য প্রত্যাখ্যানকারী জালিমরা,\\Nকখনোই চূড়ান্ত সাফল্য লাভ করবে না।",
-        "english": "Indeed, the wrongdoers will not succeed."
+        "ayah": 33,
+        "start": 6.0,
+        "end": 11.3,
+        "arabic": "ثُمَّ ذَهَبَ إِلَىٰ أَهْلِهِۦ يَتَمَطَّىٰٓ",
+        "bengali": "অতঃপর সে চরম অহংকার ও দম্ভভরে,\\Nনিজের পরিবারের দিকে চলে গেল।",
+        "english": "Then he went to his family, swaggering in pride."
+      },
+      {
+        "ayah": 34,
+        "start": 11.3,
+        "end": 16.5,
+        "arabic": "أَوْلَىٰ لَكَ فَأَوْلَىٰ ۝ ثُمَّ أَوْلَىٰ لَكَ فَأَوْلَىٰٓ",
+        "bengali": "দুর্ভোগ তোমার জন্য, অতঃপর চূড়ান্ত দুর্ভোগ!\\Nআবারও দুর্ভোগ তোমার জন্য, অতঃপর দুর্ভোগ!",
+        "english": "Woe to you, and woe! Then woe to you, and woe!"
+      },
+      {
+        "ayah": 36,
+        "start": 16.5,
+        "end": 25.4,
+        "arabic": "أَيَحْسَبُ ٱلْإِنسَٰنُ أَن يُتْرَكَ سُدًى",
+        "bengali": "মানুষ কি ভেবে নিয়েছে যে তাকে কোনো হিসাব ছাড়া,\\Nএমনিতেই ছেড়ে দেওয়া হবে?",
+        "english": "Does man think that he will be left neglected?"
       }
     ]
   },
   {
     "id": "02_ad_duha_full",
-    "audio_file": "03_surah_ad_duha_full.mp3",
+    "audio_file": "02_surah_ad_duha_full.mp3",
     "surah": 93,
     "surah_name_ar": "الضحى",
     "surah_name_en": "Ad-Duha",
@@ -95,7 +111,7 @@
   },
   {
     "id": "03_al_mulk_67_1_4",
-    "audio_file": "04_surah_al_mulk_67_1_4.mp3",
+    "audio_file": "03_surah_al_mulk_67_1_4.mp3",
     "surah": 67,
     "surah_name_ar": "الملك",
     "surah_name_en": "Al-Mulk",
@@ -137,70 +153,8 @@
     ]
   },
   {
-    "id": "04_al_anbiya_21_32",
-    "audio_file": "05_surah_al_anbiya_21_32.mp3",
-    "surah": 21,
-    "surah_name_ar": "الأنبياء",
-    "surah_name_en": "Al-Anbiya",
-    "surah_name_bn": "আল-আম্বিয়া",
-    "ayah_start": 30,
-    "ayah_end": 32,
-    "reciter_id": "dossari",
-    "reciter_title": "শায়খ ইয়াসির আদ-দাওসারি",
-    "title": "মহাবিশ্বের বিশাল সৃষ্টির দিকে তাকিয়ে মানুষ কীভাবে রবকে ভুলে থাকে? ➔",
-    "facebook_title": "মহাবিশ্বের বিশাল সৃষ্টির দিকে তাকিয়ে মানুষ কীভাবে রবকে ভুলে থাকে? ➔",
-    "youtube_title": "আকাশকে সুরক্ষিত ছাদ বানানোর ঐশী নিদর্শন ➔ #Shorts #Quran",
-    "description": "মহাবিশ্বের বিশাল সৃষ্টির দিকে তাকিয়ে মানুষ কীভাবে রবকে ভুলে থাকে? ➔\n\n‘এবং আমরা আকাশকে বানিয়েছি এক সুরক্ষিত ছাদ; অথচ তারা এর নিদর্শনাবলী থেকে উদাসীন হয়ে মুখ ফিরিয়ে নেয়।’ [সূরা আল-আম্বিয়া: ৩২]\n\nমহাকাশের কোটি নক্ষত্র আর সুরক্ষিত বায়ুমণ্ডল রবের এক মহাশক্তির নীরব সাক্ষ্য।\n\n⭐ ভিডিওটি ভালো লাগলে স্টার (Stars) পাঠিয়ে আমাদের দ্বীনি কাজে সহায়তা করতে পারেন।\n\n#Quran #SurahAlAnbiya #Creation #Cosmos #Miracle #Faith #Islam #Reels #Shorts #DailyDosIslam #Stars #FacebookStars #ViralReels",
-    "pinned_comment": "আল্লাহর এই মহান সৃষ্টি নিয়ে আপনার ভাবনা কমেন্টে শেয়ার করুন! ভালো লাগলে স্টার (Stars ⭐) পাঠিয়ে আমাদের দ্বীনি দাওয়াতে সহায়তা করুন। 🌿",
-    "ayah_timings": [
-      {
-        "ayah": 32,
-        "start": 0.0,
-        "end": 35.0,
-        "arabic": "وَجَعَلْنَا السَّمَاءَ سَقْفًا مَّحْفُوظًا",
-        "bengali": "আর আমরা এই বিশাল আকাশমণ্ডলকে বানিয়েছি,\\Nপৃথিবীর জন্য এক সুরক্ষিত শক্তিশালী ছাদ।",
-        "english": "And We made the sky a protected ceiling."
-      },
-      {
-        "ayah": 32,
-        "start": 35.0,
-        "end": 76.3,
-        "arabic": "وَهُمْ عَنْ آيَاتِهَا مُعْرِضُونَ",
-        "bengali": "অথচ মানুষ এর স্পষ্ট ঐশী নিদর্শনাবলী থেকে,\\Nউদাসীন হয়ে মুখ ফিরিয়ে থাকে।",
-        "english": "Yet from its signs they are turning away."
-      }
-    ]
-  },
-  {
-    "id": "05_surah_short_recitation",
-    "audio_file": "06_surah_short_recitation.mp3",
-    "surah": 2,
-    "surah_name_ar": "البقرة",
-    "surah_name_en": "Al-Baqarah",
-    "surah_name_bn": "আল-বাক্বারাহ",
-    "ayah_start": 286,
-    "ayah_end": 286,
-    "reciter_id": "alafasy",
-    "reciter_title": "শায়খ মিশারি রশিদ আল-আফাসি",
-    "title": "আল্লাহ কোনো আত্মাকে তার সাধ্যের বাইরে কোনো বোঝা চাপান না ➔",
-    "facebook_title": "আল্লাহ কোনো আত্মাকে তার সাধ্যের বাইরে কোনো বোঝা চাপান না ➔",
-    "youtube_title": "সাধ্যের অতীত কোনো বোঝা আল্লাহ চাপান না ➔ #Shorts #Quran",
-    "description": "আল্লাহ কোনো আত্মাকে তার সাধ্যের বাইরে কোনো বোঝা চাপান না ➔\n\n‘আল্লাহ কাউকে তার সাধ্যের অতিরিক্ত কোনো দায়িত্ব দেন না।’ [সূরা আল-বাক্বারাহ: ২৮৬]\n\nআপনি যে পরীক্ষার ভেতর দিয়ে যাচ্ছেন, তা সহ্য করার মতো শক্তি আল্লাহ আপনাকে দিয়েছেন বলেই এ পরীক্ষা এসেছে। সবর করুন।\n\n⭐ ভিডিওটি ভালো লাগলে স্টার (Stars) পাঠিয়ে আমাদের দ্বীনি কাজে সহায়তা করতে পারেন।\n\n#Quran #SurahBaqarah #Patience #Sabr #Comfort #Dua #Reels #Shorts #DailyDosIslam #Stars #FacebookStars #ViralReels",
-    "pinned_comment": "এই অমূল্য সান্ত্বনা পেয়ে কার কার মনে ভরসা জাগল? কমেন্টে জানান! ভালো লাগলে স্টার (Stars ⭐) পাঠিয়ে পাশে থাকুন। 🌿",
-    "ayah_timings": [
-      {
-        "ayah": 286,
-        "start": 0.0,
-        "end": 11.5,
-        "arabic": "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا",
-        "bengali": "আল্লাহ কোনো মানুষের ওপর এমন বোঝা চাপান না,\\Nযা তার সাধ্যের অতীত বা বহনাতীত।",
-        "english": "Allah does not burden a soul beyond that it can bear."
-      }
-    ]
-  },
-  {
-    "id": "06_al_ahzab_33_33",
-    "audio_file": "07_surah_al_ahzab_33_33.mp3",
+    "id": "04_al_ahzab_33_33",
+    "audio_file": "04_surah_al_ahzab_33_33.mp3",
     "surah": 33,
     "surah_name_ar": "الأحزاب",
     "surah_name_en": "Al-Ahzab",
@@ -234,8 +188,8 @@
     ]
   },
   {
-    "id": "07_fatir_35_12",
-    "audio_file": "08_surah_fatir_35_12.mp3",
+    "id": "05_fatir_35_12",
+    "audio_file": "05_surah_fatir_35_12.mp3",
     "surah": 35,
     "surah_name_ar": "فاطر",
     "surah_name_en": "Fatir",
