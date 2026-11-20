@@ -239,10 +239,12 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah
             ar_chunks.append(" ".join(ar_words[i * w_per_chunk : (i + 1) * w_per_chunk]))
         ar_chunks.append(" ".join(ar_words[(n - 1) * w_per_chunk:]))
 
-    bn_chunks = split_into_n_chunks(bn_text, n, 'bn')
+    bn_chunks = split_into_n_chunks(bn_text, n, 'bn') if bn_text else [""] * n
     en_chunks = split_into_n_chunks(en_text, n, 'en') if en_text else [""] * n
 
     total_ar_words = sum(len(c.split()) for c in ar_chunks)
+    total_en_words = sum(len(c.split()) for c in en_chunks)
+    total_bn_words = sum(len(c.split()) for c in bn_chunks)
     curr_start = start_sec
     clauses = []
 
@@ -253,22 +255,41 @@ def split_long_ayah_clauses(ar_text: str, bn_text: str, en_text: str, total_ayah
         else:
             if total_ar_words > 0:
                 prop = p_words / float(total_ar_words)
+            elif total_en_words > 0:
+                prop = len(en_chunks[i].split()) / float(total_en_words)
+            elif total_bn_words > 0:
+                prop = len(bn_chunks[i].split()) / float(total_bn_words)
             else:
-                total_bn_words = sum(len(c.split()) for c in bn_chunks)
-                prop = len(bn_chunks[i].split()) / max(1, float(total_bn_words))
+                prop = 1.0 / float(n)
             c_dur = max(3.0, total_ayah_dur * prop)
             curr_end = min(start_sec + total_ayah_dur - 2.5, round(curr_start + c_dur, 2))
 
         clauses.append({
             "start": curr_start,
             "end": curr_end,
-            "arabic": ar_chunks[i],
+            "arabic": ar_chunks[i] if i < len(ar_chunks) else "",
             "bengali": bn_chunks[i] if i < len(bn_chunks) else "",
             "english": en_chunks[i] if i < len(en_chunks) else ""
         })
         curr_start = curr_end
 
     return clauses
+
+def highlight_sacred_words_en(text: str) -> str:
+    """Highlights sacred theological words in English with Royal Gold (&H0015CCFA&)."""
+    if not text:
+        return ""
+    # Words to highlight (sacred names, divine attributes, hereafter)
+    sacred = [
+        r'\bAllah\b', r'\bLord\b', r'\bThe Almighty\b', r'\bGod\b',
+        r'\bMerciful\b', r'\bAll-Knowing\b', r'\bAll-Wise\b',
+        r'\bParadise\b', r'\bJannah\b', r'\bHereafter\b', r'\bFaith\b'
+    ]
+    pattern = re.compile('(' + '|'.join(sacred) + ')', re.IGNORECASE)
+    text = pattern.sub(r'{\\c&H0015CCFA&}\1{\\c&H00FFFFFF&}', text)
+    # Highlight parenthetical explanatory context e.g. [life] or (i.e., ...)
+    text = re.sub(r'(\[[^\]]+\])', r'{\\c&H0015CCFA&}\1{\\c&H00FFFFFF&}', text)
+    return text
 
 def highlight_sacred_words(text: str) -> str:
     """Highlights sacred theological words and parenthetical context in Royal Gold (&H0015CCFA&)."""
@@ -285,24 +306,21 @@ def highlight_sacred_words(text: str) -> str:
 
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
-    Builds ASS subtitles with centered Bengali translation (middle), English at bottom, and Top Badges:
-    - Permanent Top Header badge at Y=240 (Kalpurush 48 Gold)
+    Builds 100% International Global ASS subtitles with centered English translation
+    in the focal middle and sleek English Top Badges:
+    - Permanent Top Header badge at Y=240 (Segoe UI 46 Gold)
     - Permanent Top SubHeader badge at Y=305 (Segoe UI 32 Silver)
-    - Synchronized Bengali translation in Center at Y=960 (Kalpurush 70 White with Royal Gold highlights)
-    - Synchronized English translation at Bottom at Y=1530 (Segoe UI 48 White)
+    - Synchronized English translation in Center at Y=960 (Segoe UI 58 White with Royal Gold highlights)
     """
-    surah_name_bn = verse_data["surah_name_bn"]
-    surah_name_en = verse_data.get("surah_name_en") or SURAH_NAMES_EN.get(verse_data["surah"], f"Surah {verse_data['surah']}")
-    surah = verse_data["surah"]
-    verse_range_str = verse_data["verse_range_str"]
-    range_str_bn = to_bangla_digits(verse_range_str)
+    surah_name_en = verse_data.get("surah_name_en") or SURAH_NAMES_EN.get(verse_data.get("surah", 1), f"Surah {verse_data.get('surah', 1)}")
+    verse_range_str = verse_data.get("verse_range_str", "")
     total_dur = audio_data["total_duration"]
     ayah_timings = audio_data["ayah_timings"]
     reciter_info = verse_data.get("reciter", {})
-    reciter_title = reciter_info.get("name_en", "Mishary Rashid Alafasy")
+    reciter_title = reciter_info.get("name_en", verse_data.get("reciter_title", "Sheikh Mishary Rashid Alafasy"))
 
-    top_badge_bn = f"[ {surah_name_bn}  •  আয়াত {range_str_bn} ]"
-    top_badge_en = f"Surah {surah_name_en}  •  {reciter_title}"
+    top_badge_main = f"[ Surah {surah_name_en}  •  Verses {verse_range_str} ]"
+    top_badge_sub = f"Recitation: {reciter_title}"
 
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
@@ -312,46 +330,47 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: TopBadge,Kalpurush,48,&H0015CCFA&,&H00000000,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,3.4,2.0,5,50,50,20,1
-Style: SubBadge,Segoe UI,32,&H00E2E8F0&,&H00000000,&H00000000,&H90000000,0,1,0,0,100,100,1,0,1,2.0,1.2,5,50,50,20,1
-Style: BengaliCenter,Kalpurush,70,&H00FFFFFF&,&H00000000,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,4.0,2.5,5,50,50,20,1
-Style: EnglishBottom,Segoe UI,48,&H00FFFFFF&,&H00000000,&H00000000,&H90000000,0,1,0,0,100,100,0,0,1,2.8,1.6,5,60,60,20,1
+Style: TopBadge,Segoe UI,46,&H0015CCFA&,&H00000000,&H00000000,&H90000000,1,0,0,0,100,100,1,0,1,3.4,2.0,5,50,50,20,1
+Style: SubBadge,Segoe UI,32,&H00E2E8F0&,&H00000000,&H00000000,&H90000000,0,0,0,0,100,100,1,0,1,2.0,1.2,5,50,50,20,1
+Style: EnglishCenter,Segoe UI,58,&H00FFFFFF&,&H00000000,&H00000000,&H90000000,1,0,0,0,100,100,0,0,1,3.6,2.2,5,70,70,20,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 ; Permanent Top Badges
-Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},TopBadge,,0,0,0,,{{\\pos(540,240)}}{top_badge_bn}
-Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubBadge,,0,0,0,,{{\\pos(540,305)}}{top_badge_en}
+Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},TopBadge,,0,0,0,,{{\\pos(540,240)}}{top_badge_main}
+Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubBadge,,0,0,0,,{{\\pos(540,305)}}{top_badge_sub}
 """
 
     for timing in ayah_timings:
         start_sec = timing["start"]
         end_sec = timing["end"]
         dur = max(0.5, end_sec - start_sec)
-        bn_raw = timing.get("bengali", "").strip()
         en_raw = timing.get("english", "").strip()
+        # Fallback to bengali only if english is completely empty
+        if not en_raw:
+            en_raw = timing.get("bengali", "").strip()
 
-        # Keep ayahs under 8.5s or under 14 words as 1 full, peaceful 2-line card
-        if dur <= 8.5 or len(bn_raw.split()) <= 13:
+        # Keep ayahs under 8.5s or under 13 words as 1 full, peaceful 2-line card
+        if dur <= 8.5 or len(en_raw.split()) <= 13:
             start_str = format_ass_time(start_sec)
             end_str = format_ass_time(end_sec)
-            bn_clean = highlight_sacred_words(format_bengali_subtitles_for_ass(bn_raw, words_per_line=5))
-            en_clean = format_english_subtitles_for_ass(en_raw, max_words_per_line=7)
+            en_clean = highlight_sacred_words_en(format_english_subtitles_for_ass(en_raw, max_words_per_line=7))
 
-            ass_content += f"Dialogue: 2,{start_str},{end_str},BengaliCenter,,0,0,0,,{{\\pos(540,960)}}{bn_clean}\n"
-            if en_clean:
-                ass_content += f"Dialogue: 3,{start_str},{end_str},EnglishBottom,,0,0,0,,{{\\pos(540,1530)}}{en_clean}\n"
+            ass_content += f"Dialogue: 2,{start_str},{end_str},EnglishCenter,,0,0,0,,{{\\pos(540,960)}}{en_clean}\n"
         else:
-            clauses = split_long_ayah_clauses("", bn_raw, en_raw, dur, start_sec)
+            clauses = split_long_ayah_clauses(
+                timing.get("arabic", ""),
+                timing.get("bengali", ""),
+                en_raw,
+                dur,
+                start_sec
+            )
             for c in clauses:
                 c_start_str = format_ass_time(c["start"])
                 c_end_str = format_ass_time(c["end"])
-                bn_clean = highlight_sacred_words(format_bengali_subtitles_for_ass(c["bengali"], words_per_line=5))
-                en_clean = format_english_subtitles_for_ass(c["english"], max_words_per_line=7)
+                en_clean = highlight_sacred_words_en(format_english_subtitles_for_ass(c["english"], max_words_per_line=7))
 
-                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},BengaliCenter,,0,0,0,,{{\\pos(540,960)}}{bn_clean}\n"
-                if en_clean:
-                    ass_content += f"Dialogue: 3,{c_start_str},{c_end_str},EnglishBottom,,0,0,0,,{{\\pos(540,1530)}}{en_clean}\n"
+                ass_content += f"Dialogue: 2,{c_start_str},{c_end_str},EnglishCenter,,0,0,0,,{{\\pos(540,960)}}{en_clean}\n"
 
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write(ass_content)

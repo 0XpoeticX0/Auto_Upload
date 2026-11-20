@@ -343,7 +343,7 @@ def pass_3_production_typography_and_pacing(video_path: str, ass_subtitle_path: 
                 style = parts[3].strip()
                 text = parts[9].strip()
 
-                if "Bengali" in style:
+                if "Center" in style or "Bengali" in style or "English" in style:
                     def parse_time(t_str):
                         h, m, s = t_str.split(":")
                         return int(h) * 3600 + int(m) * 60 + float(s)
@@ -448,6 +448,7 @@ def pass_4_rendered_video_subtitle_verse_match(
         start_sec = t.get("start", 0.0)
         end_sec = t.get("end", 0.0)
         expected_bn = t.get("bengali", "").strip()
+        expected_en = t.get("english", "").strip()
         expected_ar = t.get("arabic", "").strip()
 
         mid_sec = round((start_sec + end_sec) / 2.0, 2)
@@ -468,25 +469,25 @@ def pass_4_rendered_video_subtitle_verse_match(
 
         prompt = f"""You are an accredited Quran Quality Auditor and Verification Gatekeeper.
 Inspect this frame extracted directly from the FINAL RENDERED VIDEO at timestamp {mid_sec}s.
-The video is a vertical 9:16 Quran Short displaying recitation with centered Bengali subtitles.
+The video is a vertical 9:16 Quran Short displaying recitation with centered subtitles (English translation or Bengali translation).
 
 Passage: Surah {surah_name_bn} ({range_str})
 Current Ayah being recited: Ayah {ayah_num}
 Original Arabic: {expected_ar}
-Complete Ayah Bengali Translation:
-"{expected_bn}"
+English Translation: "{expected_en}"
+Bengali Translation: "{expected_bn}"
 
 IMPORTANT CONTEXT FOR SHORT-FORM VIDEO SUBTITLES:
 1. Subtitles are dynamically chunked into short 1-2 line phrase cards (5 to 8 words per card) synced to the reciter's pace. Therefore, a single frame will display an authentic clause/segment of the verse, NOT the full paragraph all at once.
 2. The top header badge displays the full passage range for the video (e.g. "{range_str}"). This is completely intentional and correct.
 
 VERIFICATION MANDATE:
-1. Does the Bengali subtitle visible in the center of the frame faithfully match words/clauses from the target Ayah without distortion or error?
-2. Are the Bengali letters properly shaped with ZERO broken glyphs, corrupt characters, or spelling errors?
+1. Does the subtitle visible in the center of the frame faithfully match words/clauses from the target Ayah (in English translation or Bengali translation) without distortion or error?
+2. Are the letters properly shaped with ZERO broken glyphs, corrupt characters, or spelling errors?
 3. Are there ZERO living beings (humans, faces, silhouettes, animals) anywhere in the frame?
 
 CRITERIA:
-- Set "subtitle_matches_ayah": true as long as the visible on-screen Bengali text accurately represents a valid clause or portion of the target Ayah without incorrect words.
+- Set "subtitle_matches_ayah": true as long as the visible on-screen text accurately represents a valid clause or portion of the target Ayah (English or Bengali) without incorrect words.
 - Set "has_living_being": false if no humans or animals are present.
 - Set "pass": true if both criteria are met.
 
