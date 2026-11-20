@@ -103,65 +103,55 @@ def get_audio_duration(file_path: str) -> float:
     except Exception:
         return 30.0
 
-def select_next_curated_item(manifest: list, force_index: int = None) -> tuple[int, dict]:
+def select_random_curated_item(manifest: list, force_index: int = None) -> tuple[int, dict]:
     """
-    Intelligently selects the next unplayed curated track.
-    1. Checks Supabase cloud history to see which Surahs/titles were already uploaded.
-    2. Checks the rotation cycle history.
-    3. Guarantees zero duplicate uploads of the same curated audio/script.
+    Randomly selects a curated Quran track from the manifest.
+    - Purely random selection (not serial, never locked to 0 -> 1 -> 2).
+    - Avoids selecting the exact same track consecutively.
+    - Completely self-contained without requiring Supabase.
     """
-    state = get_curated_state()
+    import random
     if force_index is not None:
         idx = force_index % len(manifest)
         return idx, manifest[idx]
 
-    # Fetch recent Quran uploads directly from Supabase
-    recent_surahs = set()
-    recent_titles = set()
+    if not manifest:
+        raise ValueError("Curated Quran manifest is empty!")
+
+    if len(manifest) == 1:
+        return 0, manifest[0]
+
+    # Check local cache or last run file to avoid picking the same track back-to-back
+    last_id = None
+    if os.path.exists(STATE_PATH):
+        try:
+            with open(STATE_PATH, "r", encoding="utf-8") as f:
+                last_id = json.load(f).get("last_id")
+        except Exception:
+            pass
+
+    # Exclude the last used item to guarantee "not same"
+    pool = [m for m in manifest if m.get("id") != last_id]
+    if not pool:
+        pool = manifest
+
+    chosen = random.choice(pool)
+    chosen_idx = manifest.index(chosen)
+
+    # Save last used id locally for the next run
     try:
-        from app.history import fetch_recent_quran_pipeline_history
-        recent_quran = fetch_recent_quran_pipeline_history(limit=50)
-        for r in recent_quran:
-            if r.get("surah"):
-                recent_surahs.add(r.get("surah"))
-            if r.get("title"):
-                recent_titles.add(r.get("title"))
-    except Exception as e:
-        logger.warning(f"Could not fetch Supabase history for curated deduplication: {e}")
+        os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+        with open(STATE_PATH, "w", encoding="utf-8") as f:
+            json.dump({"last_id": chosen.get("id"), "last_surah": chosen.get("surah")}, f, indent=2)
+    except Exception:
+        pass
 
-    state_history = set(state.get("history", []))
-    start_idx = state.get("next_curated_index", 0) % len(manifest)
-
-    # Candidate search: find first item not uploaded recently in Supabase or state
-    for offset in range(len(manifest)):
-        cand_idx = (start_idx + offset) % len(manifest)
-        cand_item = manifest[cand_idx]
-        cand_id = cand_item["id"]
-        cand_surah = cand_item["surah"]
-        cand_title = f"[কিউরেটেড তিলাওয়াত] {cand_item['title']}"
-
-        # If completely unplayed in recent Supabase records AND state history
-        if cand_id not in state_history and cand_title not in recent_titles and cand_surah not in recent_surahs:
-            logger.info(f"Selected fresh curated item #{cand_idx + 1} (Surah {cand_surah}) - zero recent duplication.")
-            return cand_idx, cand_item
-
-    # Secondary check: find first item not in state history (even if surah was in older random runs)
-    for offset in range(len(manifest)):
-        cand_idx = (start_idx + offset) % len(manifest)
-        cand_item = manifest[cand_idx]
-        if cand_item["id"] not in state_history:
-            logger.info(f"Selected unplayed curated item #{cand_idx + 1} from rotation list.")
-            return cand_idx, cand_item
-
-    # If all 7 curated items were completed in this cycle, start a fresh cycle
-    logger.info("All curated items completed a full cycle! Resetting curated cycle history.")
-    state["history"] = []
-    save_curated_state(state)
-    return start_idx, manifest[start_idx]
+    logger.info(f"🎲 Randomly selected curated track #{chosen_idx + 1}/{len(manifest)}: Surah {chosen['surah_name_bn']} ({chosen['id']})")
+    return chosen_idx, chosen
 
 def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> dict:
     """
-    Renders and publishes the next curated Quran video in sequence.
+    Renders and publishes a randomly selected curated Quran video.
     """
     logger.info("=== LAUNCHING CURATED QURAN RECITATION PIPELINE ===")
     
@@ -174,7 +164,7 @@ def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> 
     if not manifest:
         raise ValueError("Curated Quran manifest is empty!")
         
-    idx, item = select_next_curated_item(manifest, force_index=force_index)
+    idx, item = select_random_curated_item(manifest, force_index=force_index)
     logger.info(f"▶ Selected Curated Item #{idx + 1}/{len(manifest)}: Surah {item['surah_name_bn']} ({item['surah']}:{item['ayah_start']}-{item['ayah_end']})")
     
     audio_path = os.path.join(CURATED_DIR, item["audio_file"])
@@ -276,22 +266,20 @@ def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> 
         except Exception as e:
             logger.warning(f"TikTok upload notice: {e}")
 
-    # Advance state index & record history
-    current_state = get_curated_state()
-    current_state["next_curated_index"] = (idx + 1) % len(manifest)
-    current_state["next_mode"] = "random"
-    current_state["last_run"] = {
-        "id": item["id"],
-        "timestamp": int(time.time()),
-        "video_path": video_path
-    }
-    if "history" not in current_state or not isinstance(current_state["history"], list):
-        current_state["history"] = []
-    if item["id"] not in current_state["history"]:
-        current_state["history"].append(item["id"])
-    save_curated_state(current_state)
+    # Record last run locally for next run's random exclusion
+    try:
+        os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+        with open(STATE_PATH, "w", encoding="utf-8") as f:
+            json.dump({
+                "last_id": item["id"],
+                "last_surah": item["surah"],
+                "timestamp": int(time.time()),
+                "video_path": video_path
+            }, f, indent=2)
+    except Exception:
+        pass
     
-    logger.info(f"✅ Curated Quran video execution finished! Next Curated Index: {current_state['next_curated_index']}")
+    logger.info(f"✅ Curated Quran video execution finished! Randomly selected track: {item['id']}")
     return {
         "video_path": video_path,
         "item": item,

@@ -26,7 +26,7 @@ load_dotenv()
 
 from app.logger import logger
 from app.quran_verse.generator import run_quran_verse_pipeline
-from app.quran_verse.curated_pipeline import run_curated_quran_pipeline, get_curated_state, save_curated_state
+from app.quran_verse.curated_pipeline import run_curated_quran_pipeline
 from app.quran_verse.quran_data import RECITERS_CONFIG
 
 BST = timezone(timedelta(hours=6))
@@ -46,30 +46,35 @@ def execute_daily_quran_run(upload: bool = True, reciter_id: str = None, mode: s
     logger.info(f"=== LAUNCHING SCHEDULED QURAN RECITATION PIPELINE ===")
     logger.info(f"Time: {date_str} | Schedule: {DAILY_QURAN_TIME}")
     
-    state = get_curated_state()
     active_mode = mode
     if active_mode == "auto":
-        active_mode = state.get("next_mode", "curated")
+        # 4 Daily Slots: Exactly 2 Curated & 2 Random
+        # Slot 1: 03:00 AM BST -> Curated (Selective audio & script)
+        # Slot 2: 06:00 AM BST -> Random (AI / Complete Quran)
+        # Slot 3: 09:00 AM BST -> Curated (Selective audio & script)
+        # Slot 4: 12:00 PM BST -> Random (AI / Complete Quran)
+        hour = now_bst.hour
+        if hour in (2, 3, 4, 8, 9, 10):
+            active_mode = "curated"
+        elif hour in (5, 6, 7, 11, 12, 13):
+            active_mode = "random"
+        else:
+            # Fallback for manual run outside standard hours: random 50/50 choice
+            active_mode = random.choice(["curated", "random"])
         
     logger.info(f"🎯 Execution Target Mode: '{active_mode.upper()}' (2 Curated / 2 Random Daily Mix)")
 
     if active_mode == "curated":
         logger.info("Executing Curated Quran Pipeline (User Audio + Verified Bengali Script)...")
         result = run_curated_quran_pipeline(upload=upload)
-        # run_curated_quran_pipeline automatically advances index, queues 'random' mode, and syncs to Supabase.
     else:
         logger.info("Executing Random Quran Pipeline (AI Discovery & Pure Nature Triplet)...")
         result = run_quran_verse_pipeline(
             reciter_id=reciter_id,
             upload=upload
         )
-        # Advance mode to curated for next schedule slot using fresh cloud state
-        fresh_state = get_curated_state()
-        fresh_state["next_mode"] = "curated"
-        save_curated_state(fresh_state)
 
-    final_state = get_curated_state()
-    logger.info(f"🎉 Scheduled Quran video execution completed! Next Mode queued: '{final_state.get('next_mode', 'curated').upper()}' | Next Curated Index: {final_state.get('next_curated_index', 0)}")
+    logger.info(f"🎉 Scheduled Quran video execution completed! Mode ran: '{active_mode.upper()}'")
     return result
 
 if __name__ == "__main__":
