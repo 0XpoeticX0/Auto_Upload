@@ -290,3 +290,13 @@ def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> 
         "item": item,
         "shariah_passed": shariah_passed
     }
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Curated Quran Audio Pipeline (< 90s)")
+    parser.add_argument("--index", type=int, default=None, help="Force specific track index (0-based) from curated manifest")
+    parser.add_argument("--upload", dest="upload", action="store_true", default=True, help="Auto upload to social media (default: True)")
+    parser.add_argument("--no-upload", dest="upload", action="store_false", help="Render video only without uploading")
+
+    args = parser.parse_args()
+    run_curated_quran_pipeline(upload=args.upload, force_index=args.index)

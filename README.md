@@ -1,6 +1,7 @@
 # 📖 DailyDos Islam — Automated Islamic Video Publishing Engine
 
-[![Daily Quran Automation](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/daily_quran.yml/badge.svg)](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/daily_quran.yml)
+[![Quran Random Verse Pipeline](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/quran_random_verse.yml/badge.svg)](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/quran_random_verse.yml)
+[![Quran Curated Audio Pipeline](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/quran_curated_audio.yml/badge.svg)](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/quran_curated_audio.yml)
 [![Daily Quran Mix](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/daily_quran_mix_evening.yml/badge.svg)](https://github.com/0XpoeticX0/Auto_Upload/actions/workflows/daily_quran_mix_evening.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
@@ -53,17 +54,18 @@ All pipelines run fully in the cloud via GitHub Actions:
 
 | Pipeline | Target BST (UTC) | Workflow File | Description |
 | :--- | :--- | :--- | :--- |
-| **Morning Quran Recitation** | **06:30 AM – 07:30 AM BST**<br>`cron: '0 22 * * *'` (22:00 UTC) | [`.github/workflows/daily_quran.yml`](.github/workflows/daily_quran.yml) | Pure Arabic recitation with synchronized Bengali subtitles (< 85s). |
-| **Afternoon Quran Mix** | **03:07 PM BST**<br>`cron: '7 9 * * *'` (09:07 UTC) | [`.github/workflows/daily_quran_mix_evening.yml`](.github/workflows/daily_quran_mix_evening.yml) | Alternating Arabic recitation + spoken Bengali translation (Sheikh Mishary Alafasy & Zayed Iqbal). Includes nighttime delay guard. |
-| **Islamic Quiz Reels** | **Friday 05:00 AM & Monday 09:00 AM BST** | [`.github/workflows/quiz_upload.yml`](.github/workflows/quiz_upload.yml) | Engaging Islamic multiple-choice quiz reels with sound effects and countdown timers. |
+| **Quran Random Verse Pipeline** | **06:07 AM & 12:07 PM BST**<br>`cron: '7 0 * * *'`, `'7 6 * * *'` | [`.github/workflows/quran_random_verse.yml`](.github/workflows/quran_random_verse.yml) | Intelligent AI random verse selection, pure Arabic recitation, clean live-motion video (< 90s). |
+| **Quran Curated Audio Pipeline** | **03:07 AM & 09:07 AM BST**<br>`cron: '7 21 * * *'`, `'7 3 * * *'` | [`.github/workflows/quran_curated_audio.yml`](.github/workflows/quran_curated_audio.yml) | High-impact user curated audio library, clean live-motion video (< 90s). |
+| **Afternoon Quran Mix** | **03:07 PM BST**<br>`cron: '7 9 * * *'` (09:07 UTC) | [`.github/workflows/daily_quran_mix_evening.yml`](.github/workflows/daily_quran_mix_evening.yml) | Alternating Arabic recitation + spoken Bengali translation (Sheikh Mishary Alafasy & Zayed Iqbal). |
+| **Islamic Quiz Reels** | **Friday 05:07 AM & Monday 09:07 AM BST** | [`.github/workflows/quiz_upload.yml`](.github/workflows/quiz_upload.yml) | Engaging English Islamic multiple-choice quiz reels with sound effects and countdown timers. |
 
 ---
 
 ## 🔁 Selection Engine & Deduplication
 
-1. **50/50 Dual Mode Rotation**:
-   - **Mode A (Curated Masterpieces)**: Cycles through a curated bank of 50 multi-verse Quranic passages pre-audited between **23.2s and 74.8s** across 7 emotional pillars (Solace & Anxiety, Divine Majesty, Tawakkul & Rizq, Repentance & Hope, The Day of Reckoning, Character of Believers, Celestial Signs).
-   - **Mode B (Random AI Discovery)**: Gemini dynamically discovers self-contained spiritual verses from the Quran.
+1. **Dual Independent Workflows**:
+   - **Quran Random Verse Pipeline**: Gemini dynamically discovers self-contained spiritual verses from the Quran or selects by manual input (`--surah`, `--ayah`, `--reciter`).
+   - **Quran Curated Audio Pipeline**: Cycles through the curated audio collection in `app/assets/curated_user_quran/` without back-to-back repetitions.
 2. **60-Video Lookback Window**:
    - Queries Supabase and local history (`data/history_log.json`).
    - Strictly blocks any Surah and Ayah range published in the last 60 videos to guarantee diverse content.
@@ -77,8 +79,9 @@ All pipelines run fully in the cloud via GitHub Actions:
 
 ```text
 ├── .github/workflows/             # GitHub Actions automation workflows
-│   ├── daily_quran.yml            # Daily Morning Quran Recitation (06:00 AM BST)
-│   ├── daily_quran_mix_evening.yml# Daily Afternoon Quran Mix (03:00 PM BST)
+│   ├── quran_random_verse.yml     # Quran Random Verse Pipeline (06:07 AM & 12:07 PM BST)
+│   ├── quran_curated_audio.yml    # Quran Curated Audio Pipeline (03:07 AM & 09:07 AM BST)
+│   ├── daily_quran_mix_evening.yml# Daily Afternoon Quran Mix (archived)
 │   └── quiz_upload.yml            # 2x Weekly Islamic Quiz Reel pipeline
 ├── app/
 │   ├── assets/

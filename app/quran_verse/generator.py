@@ -382,7 +382,8 @@ if __name__ == "__main__":
     parser.add_argument("--surah", type=int, default=None, help="Surah number (e.g. 94)")
     parser.add_argument("--ayah", type=str, default=None, help="Ayah or range (e.g. '5' or '1-8')")
     parser.add_argument("--reciter", type=str, choices=["alafasy", "dossari"], default=None, help="Reciter id")
-    parser.add_argument("--upload", action="store_true", help="Upload after rendering")
+    parser.add_argument("--upload", dest="upload", action="store_true", default=True, help="Upload after rendering (default: True)")
+    parser.add_argument("--no-upload", dest="upload", action="store_false", help="Render video only without uploading")
 
     args = parser.parse_args()
 

@@ -1,20 +1,40 @@
-name: Daily Quran Recitation Automation
+name: 📖 Quran Random Verse Pipeline (06:07 AM & 12:07 PM BST)
 
 on:
   schedule:
-    # 4 Times Daily: 3:00 AM, 6:00 AM, 9:00 AM, 12:00 PM BST (Bangladesh Standard Time, UTC+6)
-    # - 03:00 AM BST = 21:00 UTC (previous day)
-    # - 06:00 AM BST = 00:00 UTC
-    # - 09:00 AM BST = 03:00 UTC
-    # - 12:00 PM BST = 06:00 UTC
-    - cron: '0 21 * * *'  # 03:00 AM BST
-    - cron: '0 0 * * *'   # 06:00 AM BST
-    - cron: '0 3 * * *'   # 09:00 AM BST
-    - cron: '0 6 * * *'   # 12:00 PM BST
-  workflow_dispatch: # Allows manual one-click trigger from GitHub Actions UI
+    # 2 Times Daily: 06:07 AM BST (00:07 UTC) & 12:07 PM BST (06:07 UTC)
+    # 7-minute offset prevents GitHub Actions queue delays
+    - cron: '7 0 * * *'   # 06:07 AM BST
+    - cron: '7 6 * * *'   # 12:07 PM BST
+  workflow_dispatch:
+    inputs:
+      reciter:
+        description: 'Reciter choice (auto, alafasy, dossari)'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - 'auto'
+          - 'alafasy'
+          - 'dossari'
+      surah:
+        description: 'Surah number (e.g. 67 for Al-Mulk; leave blank for AI random selection)'
+        required: false
+        default: ''
+        type: string
+      ayah:
+        description: 'Ayah or range (e.g. 1-10; leave blank for AI selection)'
+        required: false
+        default: ''
+        type: string
+      upload:
+        description: 'Upload to YouTube / Facebook / TikTok'
+        required: false
+        default: true
+        type: boolean
 
 jobs:
-  daily-quran:
+  random-verse-pipeline:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
@@ -55,7 +75,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt
-
+          pip install --force-reinstall google-genai
+          pip install --force-reinstall Pillow
 
       - name: Inject Credentials & Secrets
         env:
@@ -115,7 +136,7 @@ jobs:
           [ -n "$HF_TOKEN" ] && ! grep -q "HF_TOKEN=" .env 2>/dev/null && echo "HF_TOKEN=$HF_TOKEN" >> .env
           echo "Successfully configured all environment secrets."
 
-      - name: Run Daily Quran Recitation Generator & Upload
+      - name: Run Quran Random Verse Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
@@ -132,6 +153,30 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          python -m app.quran_verse.scheduler --upload
+          RECITER="${{ github.event.inputs.reciter }}"
+          SURAH="${{ github.event.inputs.surah }}"
+          AYAH="${{ github.event.inputs.ayah }}"
+          UPLOAD="${{ github.event.inputs.upload }}"
 
+          CMD="python -m app.quran_verse.generator"
 
+          if [ -n "$RECITER" ] && [ "$RECITER" != "auto" ]; then
+            CMD="$CMD --reciter $RECITER"
+          fi
+
+          if [ -n "$SURAH" ]; then
+            CMD="$CMD --surah $SURAH"
+          fi
+
+          if [ -n "$AYAH" ]; then
+            CMD="$CMD --ayah $AYAH"
+          fi
+
+          if [ "$UPLOAD" = "false" ]; then
+            CMD="$CMD --no-upload"
+          else
+            CMD="$CMD --upload"
+          fi
+
+          echo "🚀 Executing: $CMD"
+          eval $CMD
