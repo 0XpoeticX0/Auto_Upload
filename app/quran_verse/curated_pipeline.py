@@ -200,9 +200,9 @@ def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> 
         "ayah_timings": item["ayah_timings"]
     }
     
-    # 1. Render Video using the certified 100% Halal live-motion footage triplet rotation
+    # 1. Render Video using the certified 100% Halal live-motion footage triplet rotation (Clean Video Mode - Zero text)
     from app.quran_verse.renderer import render_quran_verse_video
-    video_path = render_quran_verse_video(verse_data, audio_data)
+    video_path = render_quran_verse_video(verse_data, audio_data, clean_video=True)
     
     # Generate thumbnail
     thumbnail_path = video_path.replace(".mp4", "_thumb.jpg")

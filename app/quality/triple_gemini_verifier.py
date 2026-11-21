@@ -310,60 +310,55 @@ Respond strictly in valid JSON:
 # ==============================================================================
 # PASS 3: SUBTITLE, AUDIO & PRODUCTION PERFECTION (ZERO VIDEO MISTAKES)
 # ==============================================================================
-def pass_3_production_typography_and_pacing(video_path: str, ass_subtitle_path: str, verse_data: dict) -> dict:
+def pass_3_production_typography_and_pacing(video_path: str, ass_subtitle_path: str = None, verse_data: dict = None, clean_video: bool = True) -> dict:
     """
     Pass 3: Production, Subtitle Pacing & Typography Integrity Check.
-    Ensures:
-    - 200% NO broken Bengali (zero broken conjuncts, zero tofu boxes 🗹).
-    - Subtitle card pacing: every card has duration >= 2.5s (no fast-flashing text).
-    - Subtitle formatting: strictly 1-2 lines maximum, center-aligned.
-    - Video output: valid playable stream with synchronized audio.
+    When clean_video is True, verifies audio/video stream integrity without requiring on-screen text.
     """
     errors = []
 
-    # 1. Typography & Linguistic Check on Bengali Text
-    verses = verse_data.get("verses", [])
-    all_bn_text = " ".join(v.get("bengali", "") for v in verses)
-    lint_errors = programmatic_bangla_linter(all_bn_text)
-    if lint_errors:
-        errors.append(f"Bangla typography linter found errors: {'; '.join(lint_errors)}")
+    # 1. Typography & Linguistic Check on Text if subtitles are enabled
+    if not clean_video and verse_data:
+        verses = verse_data.get("verses", [])
+        all_bn_text = " ".join(v.get("bengali", "") for v in verses)
+        lint_errors = programmatic_bangla_linter(all_bn_text)
+        if lint_errors:
+            errors.append(f"Bangla typography linter found errors: {'; '.join(lint_errors)}")
 
-    # 2. Check ASS Subtitle Cards (Pacing & Duration)
-    if ass_subtitle_path and os.path.exists(ass_subtitle_path):
-        with open(ass_subtitle_path, "r", encoding="utf-8") as f:
-            ass_content = f.read()
+    # 2. Check ASS Subtitle Cards (Pacing & Duration) if not clean_video
+    if not clean_video:
+        if ass_subtitle_path and os.path.exists(ass_subtitle_path):
+            with open(ass_subtitle_path, "r", encoding="utf-8") as f:
+                ass_content = f.read()
 
-        dialogue_lines = [l for l in ass_content.splitlines() if l.startswith("Dialogue:")]
-        for idx, line in enumerate(dialogue_lines):
-            # Parse timing: Dialogue: Layer,Start,End,Style,...
-            parts = line.split(",", 9)
-            if len(parts) >= 10:
-                start_str = parts[1].strip()
-                end_str = parts[2].strip()
-                style = parts[3].strip()
-                text = parts[9].strip()
+            dialogue_lines = [l for l in ass_content.splitlines() if l.startswith("Dialogue:")]
+            for idx, line in enumerate(dialogue_lines):
+                parts = line.split(",", 9)
+                if len(parts) >= 10:
+                    start_str = parts[1].strip()
+                    end_str = parts[2].strip()
+                    style = parts[3].strip()
+                    text = parts[9].strip()
 
-                if "Center" in style or "Bengali" in style or "English" in style:
-                    def parse_time(t_str):
-                        h, m, s = t_str.split(":")
-                        return int(h) * 3600 + int(m) * 60 + float(s)
+                    if "Center" in style or "Bengali" in style or "English" in style:
+                        def parse_time(t_str):
+                            h, m, s = t_str.split(":")
+                            return int(h) * 3600 + int(m) * 60 + float(s)
 
-                    try:
-                        s_sec = parse_time(start_str)
-                        e_sec = parse_time(end_str)
-                        dur = e_sec - s_sec
+                        try:
+                            s_sec = parse_time(start_str)
+                            e_sec = parse_time(end_str)
+                            dur = e_sec - s_sec
 
-                        # Rule: Subtitle card must have duration >= 2.45s
-                        if dur < 2.45:
-                            errors.append(f"Subtitle card #{idx+1} flashes too fast ({dur:.2f}s < 2.50s): '{text}'")
+                            if dur < 2.45:
+                                errors.append(f"Subtitle card #{idx+1} flashes too fast ({dur:.2f}s < 2.50s): '{text}'")
 
-                        # Rule: Max 2 lines (single \\N allowed)
-                        if text.count("\\N") > 1:
-                            errors.append(f"Subtitle card #{idx+1} exceeds 2 lines: '{text}'")
-                    except Exception:
-                        pass
-    elif ass_subtitle_path:
-        errors.append(f"ASS subtitle file not found at {ass_subtitle_path}")
+                            if text.count("\\N") > 1:
+                                errors.append(f"Subtitle card #{idx+1} exceeds 2 lines: '{text}'")
+                        except Exception:
+                            pass
+        elif ass_subtitle_path:
+            errors.append(f"ASS subtitle file not found at {ass_subtitle_path}")
 
     # 3. Audio & Video Stream Integrity via ffprobe
     if os.path.exists(video_path):
@@ -582,14 +577,15 @@ def verify_full_video_3x(
     ass_subtitle_path: str = None,
     verse_data: dict = None,
     audio_data: dict = None,
-    temp_dir: str = None
+    temp_dir: str = None,
+    clean_video: bool = True
 ) -> tuple[bool, dict]:
     """
     Executes the comprehensive Gemini Re-Verification Pipeline on the final rendered video:
     - Pass 1: Religious & Contextual Truth (Zero Misinformation)
     - Pass 2: Shariah Visual Compliance & Defect Detection (Zero Non-Halal)
-    - Pass 3: Subtitle, Audio & Production Perfection (Zero Video Mistakes)
-    - Pass 4: Rendered Video Subtitle-to-Ayah Verification (100% Match on Actual Output)
+    - Pass 3: Production Perfection & Audio/Video Stream Integrity (Zero Video Mistakes)
+    - Pass 4: Rendered Video Subtitle-to-Ayah Verification (skipped in clean video mode)
 
     Returns (is_approved: bool, report: dict).
     Only returns True if ALL PASSES clear with 100% compliance.
@@ -615,15 +611,18 @@ def verify_full_video_3x(
     logger.info(f"✅ [Pass 2 PASSED]: {p2.get('reason')}")
 
     # Pass 3: Subtitle, Audio & Production Perfection
-    logger.info("[Pass 3/4] Auditing subtitle pacing, typography, and audio synchronization...")
-    p3 = pass_3_production_typography_and_pacing(video_path, ass_subtitle_path, verse_data)
+    logger.info("[Pass 3/4] Auditing production quality and audio/video synchronization...")
+    p3 = pass_3_production_typography_and_pacing(video_path, ass_subtitle_path, verse_data, clean_video=clean_video)
     if not p3.get("pass", False):
         logger.error(f"❌ [Pass 3 FAILED]: {p3.get('reason')}")
         return False, {"failed_pass": 3, "details": p3}
     logger.info(f"✅ [Pass 3 PASSED]: {p3.get('reason')}")
 
     # Pass 4: Rendered Video Subtitle-to-Ayah Verification
-    if audio_data:
+    if clean_video:
+        logger.info("[Pass 4/4] Clean video mode: on-screen text omitted by design per user standard. Verified.")
+        p4 = {"pass": True, "score": 100, "reason": "Clean video mode verified: on-screen text omitted by design."}
+    elif audio_data:
         logger.info("[Pass 4/4] Auditing actual rendered video frames for 100% subtitle match...")
         p4 = pass_4_rendered_video_subtitle_verse_match(video_path, verse_data, audio_data, temp_dir)
         if not p4.get("pass", False):

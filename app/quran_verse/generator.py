@@ -244,8 +244,8 @@ def generate_quran_verse_video(
     # 4. Generate Metadata
     metadata = generate_quran_metadata(verse_data, audio_data)
 
-    # 5. Render Video (1080x1920 60FPS) with Centered Bengali Translation Subtitles
-    video_path = render_quran_verse_video(verse_data, audio_data, video_slot=video_slot)
+    # 5. Render Video (1080x1920 60FPS) Clean Video (Zero on-screen text/overlays)
+    video_path = render_quran_verse_video(verse_data, audio_data, video_slot=video_slot, clean_video=True)
 
     # 6. Extract a clean thumbnail frame at t=3.0s from the rendered video
     thumbnail_path = None
@@ -270,13 +270,13 @@ def generate_quran_verse_video(
 
     # Mandatory Final Video Gemini Verification Gate (Passes 1 to 4)
     from app.quality.triple_gemini_verifier import verify_full_video_3x
-    ass_path = os.path.abspath("data/temp/quran_render_run/quran_subtitles.ass")
-    logger.info(f"🛡️ Running Full Video Gemini Verification Gate on {video_path}...")
+    logger.info(f"🛡️ Running Full Video Gemini Verification Gate on {video_path} (Clean Video Mode)...")
     verified, audit_report = verify_full_video_3x(
         video_path=video_path,
-        ass_subtitle_path=ass_path,
+        ass_subtitle_path=None,
         verse_data=verse_data,
-        audio_data=audio_data
+        audio_data=audio_data,
+        clean_video=True
     )
     if not verified:
         failed_pass = audit_report.get("failed_pass", "Unknown")

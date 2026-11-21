@@ -559,10 +559,11 @@ def build_dynamic_quran_visual_track(total_dur: float, temp_dir: str, video_slot
     logger.info(f"✅ Dynamic Quran Master Visual Track built successfully: {master_visual_path}")
     return master_visual_path
 
-def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str = "data/output", video_slot: int = None) -> str:
+def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str = "data/output", video_slot: int = None, clean_video: bool = True) -> str:
     """
-    Renders end-to-end 1080x1920 vertical video with dynamic 4-8s cuts,
-    centered Arabic/Bengali subtitles, and authentic B-rolls.
+    Renders end-to-end 1080x1920 vertical video with dynamic 15-20s cuts.
+    When clean_video is True (default), renders 100% clean cinematic live-motion footage
+    with zero on-screen text, subtitles, badges, or overlays.
     Returns path to rendered MP4 video.
     """
     os.makedirs(output_dir, exist_ok=True)
@@ -580,66 +581,77 @@ def render_quran_verse_video(verse_data: dict, audio_data: dict, output_dir: str
     ayah_timings = audio_data.get("ayah_timings", [])
     master_visual_path = build_dynamic_quran_visual_track(total_dur, temp_dir, video_slot=video_slot, ayah_timings=ayah_timings)
 
-    # 2. Build Subtitles
-    ass_path = os.path.join(temp_dir, "quran_subtitles.ass")
-    build_quran_ass_subtitles(verse_data, audio_data, ass_path)
-
-    # 3. Output Video File
+    # 2. Output Video File
     out_filename = f"Quran_Surah_{surah}_{start}_{end}_{reciter_id}.mp4"
     final_output_path = os.path.join(output_dir, out_filename)
 
-    # Normalize paths for FFmpeg filter on Windows
-    safe_ass_path = ass_path.replace("\\", "/").replace(":", "\\:")
-
-    # 4. Burn ASS Subtitles & Merge Audio over Full-Screen 1080x1920 Live Motion Visual Track
-    grad_path = os.path.abspath("app/assets/grad_center_bottom.png")
-    safe_grad_path = grad_path.replace("\\", "/").replace(":", "\\:")
-
-    if os.path.exists(grad_path):
-        filter_complex = (
-            f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=60[bg];"
-            f"[1:v]scale=1080:1920[grad];"
-            f"[bg][grad]overlay=0:0[graded];"
-            f"[graded]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
-        )
+    if clean_video:
+        logger.info(f"🎬 Rendering 100% Clean Quran Video (Zero on-screen text/overlays): {final_output_path} ({total_dur:.1f}s)...")
         cmd = [
             "ffmpeg", "-y",
             "-i", master_visual_path,
-            "-i", grad_path,
             "-i", audio_file,
-            "-filter_complex", filter_complex,
-            "-map", "[outv]",
-            "-map", "2:a",
             "-c:v", "libx264",
             "-preset", "fast",
             "-crf", "18",
             "-c:a", "aac",
-            "-b:a", "192k",
+            "-b:a", "256k",
             "-t", str(total_dur),
             "-pix_fmt", "yuv420p",
             final_output_path
         ]
     else:
-        filter_complex = (
-            f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=60[bg];"
-            f"[bg]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
-        )
-        cmd = [
-            "ffmpeg", "-y",
-            "-i", master_visual_path,
-            "-i", audio_file,
-            "-filter_complex", filter_complex,
-            "-map", "[outv]",
-            "-map", "1:a",
-            "-c:v", "libx264",
-            "-preset", "fast",
-            "-crf", "18",
-            "-c:a", "aac",
-            "-b:a", "192k",
-            "-t", str(total_dur),
-            "-pix_fmt", "yuv420p",
-            final_output_path
-        ]
+        # Build subtitles only if clean_video is False
+        ass_path = os.path.join(temp_dir, "quran_subtitles.ass")
+        build_quran_ass_subtitles(verse_data, audio_data, ass_path)
+        safe_ass_path = ass_path.replace("\\", "/").replace(":", "\\:")
+        grad_path = os.path.abspath("app/assets/grad_center_bottom.png")
+
+        if os.path.exists(grad_path):
+            filter_complex = (
+                f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=60[bg];"
+                f"[1:v]scale=1080:1920[grad];"
+                f"[bg][grad]overlay=0:0[graded];"
+                f"[graded]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
+            )
+            cmd = [
+                "ffmpeg", "-y",
+                "-i", master_visual_path,
+                "-i", grad_path,
+                "-i", audio_file,
+                "-filter_complex", filter_complex,
+                "-map", "[outv]",
+                "-map", "2:a",
+                "-c:v", "libx264",
+                "-preset", "fast",
+                "-crf", "18",
+                "-c:a", "aac",
+                "-b:a", "192k",
+                "-t", str(total_dur),
+                "-pix_fmt", "yuv420p",
+                final_output_path
+            ]
+        else:
+            filter_complex = (
+                f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=60[bg];"
+                f"[bg]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv]"
+            )
+            cmd = [
+                "ffmpeg", "-y",
+                "-i", master_visual_path,
+                "-i", audio_file,
+                "-filter_complex", filter_complex,
+                "-map", "[outv]",
+                "-map", "1:a",
+                "-c:v", "libx264",
+                "-preset", "fast",
+                "-crf", "18",
+                "-c:a", "aac",
+                "-b:a", "192k",
+                "-t", str(total_dur),
+                "-pix_fmt", "yuv420p",
+                final_output_path
+            ]
 
     logger.info(f"Rendering Full-Screen Quran video: {final_output_path} ({total_dur:.1f}s)...")
     res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
