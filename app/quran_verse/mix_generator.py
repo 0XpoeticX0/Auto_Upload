@@ -273,20 +273,13 @@ def generate_quran_mix_video(surah: int = None, output_dir: str = "data/output")
     grad_path = os.path.abspath("app/assets/grad_center_bottom.png")
     safe_ass_path = ass_path.replace("\\", "/").replace(":", "\\:")
 
-    logger.info(f"Encoding final video with broadcast audio and ASS subtitles: {final_output_path}...")
+    logger.info(f"Encoding 100% clean live-motion video with broadcast audio: {final_output_path}...")
     cmd_render = [
         "ffmpeg", "-y",
         "-i", master_visual,
-        "-i", grad_path,
         "-i", raw_audio_path,
-        "-filter_complex", (
-            f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=60[bg];"
-            f"[1:v]scale=1080:1920[grad];"
-            f"[bg][grad]overlay=0:0[graded];"
-            f"[graded]ass='{safe_ass_path}':fontsdir=app/assets/fonts[outv];"
-            f"[2:a]loudnorm=I=-18.0:TP=-2.0:LRA=11.0[outa]"
-        ),
-        "-map", "[outv]",
+        "-filter_complex", "[1:a]loudnorm=I=-18.0:TP=-2.0:LRA=11.0[outa]",
+        "-map", "0:v",
         "-map", "[outa]",
         "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
         "-c:a", "aac", "-b:a", "192k",
@@ -320,20 +313,25 @@ def generate_quran_mix_video(surah: int = None, output_dir: str = "data/output")
     except Exception as e:
         logger.warning(f"Thumbnail extraction notice: {e}")
 
-    # 6. Metadata with High-CTR Curiosity Hook & Authentic Islamic Foundation Translation
-    hook = SURAH_SPIRITUAL_HOOKS.get(chosen_surah, "হৃদয়স্পর্শী তিলাওয়াত ও বাংলা অনুবাদ")
+    # 7. Metadata (Zero reciter names, zero surah names, zero pinned comment)
     metadata = {
-        "title": f"{hook}—{title_bn} | {title_en} | Sheikh Mishary Alafasy #Shorts",
+        "title": "When Your Heart Needs Peace #Shorts #Quran",
+        "youtube_title": "When Your Heart Needs Peace #Shorts #Quran",
+        "facebook_title": "When Your Heart Needs Peace",
         "description": (
-            f"{hook}—{title_bn} ({title_en})।\n\n"
-            f"আরবি তিলাওয়াত ও প্রাঞ্জল বাংলা বাচিক অনুবাদ।\n\n"
-            f"আরবি ক্বারী: শায়খ মিশারি রশিদ আল-আফাসি (Sheikh Mishary Rashid Alafasy)\n"
-            f"বাংলা বাচনিক কণ্ঠ: জায়েদ ইকবাল (Zayed Iqbal)\n"
-            f"অনুবাদ: ইসলামিক ফাউন্ডেশন বাংলাদেশ (Islamic Foundation Bangladesh)\n\n"
-            f"#Quran #QuranBangla #{title_en.replace(' ', '')} #IslamicShorts #MisharyAlafasy #Bangladesh"
+            "✨ When Your Heart Needs Peace ✨\n\n"
+            "━━━━━━━━━━━━━━━━━━━━\n"
+            "🤍 Spread the words of the Holy Quran — Share with your family and loved ones.\n"
+            "The Prophet Muhammad (ﷺ) said: 'Whoever guides someone to goodness will have a reward like one who did it.' [Sahih Muslim: 1893] 🌿\n\n"
+            "⭐ Support our dawah with Stars if this recitation brought peace to your heart.\n\n"
+            "#Quran #QuranRecitation #Islam #Allah #IslamicReminder "
+            "#Muslim #Deen #ProphetMuhammad #Shorts #Reels #DailyDos #Viral #fyp #Trending #HeartTouching #PeacefulRecitation"
         ),
-        "tags": ["Quran", "Quran Bangla", title_en, title_bn, "Mishary Alafasy", "Islamic Foundation Bangladesh", "Shorts", "Reels"],
-        "pinned_comment": f"সুবহানাল্লাহ! {title_bn}-এর মধুর তিলাওয়াত ও মর্মস্পর্শী বাংলা অর্থ হৃদয় ছুঁয়ে যায়। চ্যানেলটি সাবস্ক্রাইব করে দ্বীনের দাওয়াত ছড়িয়ে দিন।"
+        "tags": [
+            "Quran", "QuranRecitation", "Islam", "Allah", "Muslim", "IslamicReminder", "ProphetMuhammad",
+            "Shorts", "Reels", "DailyDos", "Viral", "fyp", "Trending", "HeartTouching", "PeacefulRecitation", "IslamicStatus", "Deen"
+        ],
+        "pinned_comment": None
     }
 
     return {

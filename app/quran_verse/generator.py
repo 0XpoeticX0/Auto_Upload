@@ -320,12 +320,49 @@ def run_quran_verse_pipeline(
             raise RuntimeError("CRITICAL: Cannot upload video because it did not pass the Shariah Visual Compliance Gate!")
 
         logger.info("Uploading Quran video to platforms...")
+
+        def _sanitize_metadata_text(text: str) -> str:
+            if not text:
+                return ""
+            import re
+            lines = []
+            for line in text.split("\n"):
+                if re.search(r"(📖\s*Surah|🎙️\s*Recit|Recited by|Sheikh\s+[A-Za-z]+)", line, re.IGNORECASE):
+                    continue
+                lines.append(line)
+            cleaned = "\n".join(lines)
+            reciters = [
+                r"Sheikh\s+Yasser\s+(?:Al-)?Dossari", r"Sheikh\s+Mishary\s+Rashid\s+Alafasy",
+                r"Yasser\s+(?:Al-)?Dossari", r"Mishary\s+Rashid\s+Alafasy",
+                r"Alafasy", r"Dossari", r"Dossary", r"Al-Dossari"
+            ]
+            for r in reciters:
+                cleaned = re.sub(r, "", cleaned, flags=re.IGNORECASE)
+            cleaned = re.sub(r"\[Surah\s+[^\]]+\]", "", cleaned, flags=re.IGNORECASE)
+            cleaned = re.sub(r"➔\s*Surah\s+[A-Za-z\-]+(?:\s*\([^)]*\))?", "", cleaned, flags=re.IGNORECASE)
+            cleaned = re.sub(r"\|\s*Surah\s+[A-Za-z\-]+(?:\s*\([^)]*\))?", "", cleaned, flags=re.IGNORECASE)
+            cleaned = re.sub(r"Surah\s+[A-Za-z\-]+(?:\s*\([^)]*\))?", "", cleaned, flags=re.IGNORECASE)
+            cleaned = re.sub(r"\s*\|\s*#", " #", cleaned)
+            cleaned = re.sub(r"\s*\|\s*$", "", cleaned)
+            cleaned = re.sub(r"[ \t]+", " ", cleaned)
+            return cleaned.strip()
+
+        def _sanitize_tags(tag_list: list) -> list:
+            import re
+            banned = re.compile(r"(surah|reciter|dossari|alafasy|mishary|yasser)", re.IGNORECASE)
+            return [t for t in tag_list if not banned.search(t)]
+
+        clean_title = _sanitize_metadata_text(metadata["title"])
+        clean_fb_title = _sanitize_metadata_text(metadata.get("facebook_title", metadata["title"]))
+        clean_desc = _sanitize_metadata_text(metadata["description"])
+        clean_tags = _sanitize_tags(metadata.get("tags", []))
+
         upload_meta = {
-            "youtube_title": metadata["title"],
-            "facebook_title": metadata.get("facebook_title", metadata["title"]),
-            "description": metadata["description"],
-            "pinned_comment": metadata.get("pinned_comment"),
-            "tags": metadata["tags"],
+            "youtube_title": clean_title,
+            "facebook_title": clean_fb_title,
+            "description": clean_desc,
+            "pinned_comment": None,
+            "tags": clean_tags,
             "default_language": metadata.get("default_language", "en"),
             "default_audio_language": metadata.get("default_audio_language", "ar")
         }
@@ -343,7 +380,7 @@ def run_quran_verse_pipeline(
         surah_num = result['verse_data']['surah']
         a_start = result['verse_data']['ayah_start']
         a_end = result['verse_data']['ayah_end']
-        history_title = f"[কুরআন তিলাওয়াত] {metadata['title']}"
+        history_title = f"[কুরআন তিলাওয়াত] {clean_title}"
         reciter_id = result['verse_data'].get('reciter_id', '')
 
         try:
@@ -369,7 +406,7 @@ def run_quran_verse_pipeline(
         # TikTok
         try:
             from app.upload.tiktok import upload_to_tiktok
-            tt_res = upload_to_tiktok(video_path, caption=metadata["title"], tags=metadata["tags"])
+            tt_res = upload_to_tiktok(video_path, caption=clean_title, tags=clean_tags)
             logger.info(f"TikTok Upload: {tt_res.get('status')}")
         except Exception as e:
             logger.warning(f"TikTok upload notice: {e}")

@@ -12,12 +12,13 @@
   - **No video is ever forced to start with a specific clip, image, or fixed opening scene.** Visuals start dynamically and naturally from the selected rotation.
   - Never hold a single scene or loop 1 clip on itself.
 
-## 2. Typography & Subtitle Standards
-- **Font & Rendering**: Exclusively use `Kalpurush` font with `fontsdir='app/assets/fonts'`, regular weight (`Bold: 0`), size 54–60, outline 3.2, shadow 1.8. Zero missing glyphs or tofu boxes (`🗹`).
-- **Strict 1–2 Line Subtitles**: Subtitles MUST ALWAYS be **1 or 2 lines maximum** in the center (`\pos(540,960)`). Never 3+ line paragraphs.
-- **Clause Chunking & Balance**: Each subtitle card contains 5 to 9 words (~2.5s - 4.5s duration). Split evenly in the middle (`\N`) so both lines have balanced length (~3-5 words each).
-- **Safe Margins**: Safe margin > 150px (Left/Right margins 70), center-locked alignment (`5`), zero text clipping.
-- **Highlights**: Crisp white (`&H00FFFFFF&`) with Royal Gold highlights (`{\c&H0041AFEB&}`) on sacred/key words (`আল্লাহ`, `রব`, `তাওয়াক্কুল`, etc.).
+## 2. Clean Video & Metadata Standards (Strict Mandate)
+- **100% Clean Video (Zero On-Screen Text)**: For all Quran recitation videos, strictly zero on-screen text, zero subtitles (no Arabic, no English, no Bengali), zero gradient darkening overlays, and zero badges. Only pure, pristine 1080x1920 60 FPS live-motion nature footage.
+- **Zero Reciter & Verse Names in Metadata**: STRICTLY ZERO reciter names (no "Alafasy", no "Dossari", etc.), ZERO Surah names (no "Surah ..."), and ZERO verse numbers in titles, descriptions, and tags across all videos.
+  - *Title format*: `{Emotional Curiosity Hook} #Shorts #Quran`
+  - *Description format*: Emotional curiosity hook, sacred Arabic verses and unfiltered English translation, authentic Hadith on sharing goodness, and universal tags.
+  - *Tags*: Strictly universal high-ranking Islamic/Quran tags (zero reciter tags, zero Surah tags).
+- **Zero Pinned Comments**: Strictly `pinned_comment = None` across all platforms (no automated first comments).
 
 ## 3. Audio & Recitation Standards
 - **Approved Quran Reciters**: Strictly **Sheikh Yasser Ad-Dossari** (`dossari`) and **Sheikh Mishary Rashid Alafasy** (`alafasy`).

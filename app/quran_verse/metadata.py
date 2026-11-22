@@ -5,24 +5,12 @@ Optimized for International Viral Reach (< 100 char global titles, bilingual des
 No auto-first comments per user specification.
 """
 
-from app.quran_verse.quran_data import SURAH_NAMES_EN
-
 def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
     """
     Generates YouTube Shorts, Instagram Reels, Facebook Reels, and TikTok metadata
     with international global reach.
     """
-    surah_num = verse_data.get("surah", 1)
-    surah_name_bn = verse_data.get("surah_name_bn", "")
-    surah_name_en = verse_data.get("surah_name_en") or SURAH_NAMES_EN.get(surah_num, f"Surah {surah_num}")
-    range_str = verse_data.get("verse_range_str", "")
-    
-    reciter_info = audio_data.get("reciter", verse_data.get("reciter", {}))
-    reciter_en = reciter_info.get("name_en", "Sheikh Mishary Rashid Alafasy")
-    reciter_bn = reciter_info.get("name_bn", "শায়খ মিশারি রশিদ আল-আফাসি")
-    reciter_short = reciter_info.get("title_badge", "Alafasy")
-    
-    # Emotional English theme headline for international audience
+    # Emotional English theme headline for international audience (STRICTLY NO reciter name, NO Surah name, NO Ayah numbers)
     theme_headline_en = verse_data.get("theme_headline_en") or verse_data.get("theme_hint")
     if not theme_headline_en or any(ord(c) > 127 for c in theme_headline_en):
         # Default global curiosity hooks

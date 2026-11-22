@@ -306,21 +306,10 @@ def highlight_sacred_words(text: str) -> str:
 
 def build_quran_ass_subtitles(verse_data: dict, audio_data: dict, ass_path: str):
     """
-    Builds 100% International Global ASS subtitles with centered English translation
-    in the focal middle and sleek English Top Badges:
-    - Permanent Top Header badge at Y=240 (Segoe UI 46 Gold)
-    - Permanent Top SubHeader badge at Y=305 (Segoe UI 32 Silver)
-    - Synchronized English translation in Center at Y=960 (Segoe UI 58 White with Royal Gold highlights)
+    Builds clean ASS subtitles (STRICTLY ZERO reciter badges, ZERO Surah badges).
     """
-    surah_name_en = verse_data.get("surah_name_en") or SURAH_NAMES_EN.get(verse_data.get("surah", 1), f"Surah {verse_data.get('surah', 1)}")
-    verse_range_str = verse_data.get("verse_range_str", "")
     total_dur = audio_data["total_duration"]
     ayah_timings = audio_data["ayah_timings"]
-    reciter_info = verse_data.get("reciter", {})
-    reciter_title = reciter_info.get("name_en", verse_data.get("reciter_title", "Sheikh Mishary Rashid Alafasy"))
-
-    top_badge_main = f"[ Surah {surah_name_en}  •  Verses {verse_range_str} ]"
-    top_badge_sub = f"Recitation: {reciter_title}"
 
     ass_content = f"""[Script Info]
 ScriptType: v4.00+
@@ -330,15 +319,10 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: TopBadge,Segoe UI,46,&H0015CCFA&,&H00000000,&H00000000,&H90000000,1,0,0,0,100,100,1,0,1,3.4,2.0,5,50,50,20,1
-Style: SubBadge,Segoe UI,32,&H00E2E8F0&,&H00000000,&H00000000,&H90000000,0,0,0,0,100,100,1,0,1,2.0,1.2,5,50,50,20,1
 Style: EnglishCenter,Segoe UI,58,&H00FFFFFF&,&H00000000,&H00000000,&H90000000,1,0,0,0,100,100,0,0,1,3.6,2.2,5,70,70,20,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-; Permanent Top Badges
-Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},TopBadge,,0,0,0,,{{\\pos(540,240)}}{top_badge_main}
-Dialogue: 0,0:00:00.00,{format_ass_time(total_dur)},SubBadge,,0,0,0,,{{\\pos(540,305)}}{top_badge_sub}
 """
 
     for timing in ayah_timings:

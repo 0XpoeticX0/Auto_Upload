@@ -54,7 +54,7 @@ def execute_daily_mix_run(upload: bool = True, surah: int = None) -> dict:
         upload_meta = {
             "youtube_title": metadata["title"],
             "description": metadata["description"],
-            "pinned_comment": metadata["pinned_comment"],
+            "pinned_comment": None,
             "tags": metadata["tags"]
         }
 
