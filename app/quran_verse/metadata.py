@@ -37,35 +37,30 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
         theme_headline_en = random.choice(default_hooks)
     
     clean_hook = theme_headline_en.replace("(", "").replace(")", "").strip()
-    if len(clean_hook) > 42:
-        clean_hook = clean_hook[:42].strip()
+    if len(clean_hook) > 60:
+        clean_hook = clean_hook[:60].strip()
 
-    # International high-converting title (< 95 chars)
-    # e.g., "When Your Heart Needs Peace ➔ Surah Al-Mulk (1-4) | Alafasy #Shorts #Quran"
-    yt_title = f"{clean_hook} ➔ Surah {surah_name_en} ({range_str}) | {reciter_short} #Shorts #Quran"
+    # International high-converting title (< 95 chars) - STRICTLY NO reciter name, NO Surah name, NO Ayah numbers
+    yt_title = f"{clean_hook} #Shorts #Quran"
     if len(yt_title) > 95:
-        yt_title = f"Surah {surah_name_en} ({range_str}) | Beautiful Quran Recitation #Shorts #Quran"
+        yt_title = f"{clean_hook[:70].strip()} #Shorts #Quran"
 
-    fb_title = f"{clean_hook} ➔ Surah {surah_name_en} ({range_str}) | {reciter_en}"
+    fb_title = clean_hook
 
     verses = verse_data.get("verses", [])
-    reflection = verse_data.get("reflection_bn", "")
 
-    # 100% International Global Description
-    surah_tag = surah_name_en.replace(' ', '').replace('-', '').replace("'", "")
+    # 100% Clean International Global Description - STRICTLY NO reciter name, NO Surah name, NO Ayah numbers
     description = (
-        f"✨ {clean_hook} ✨\n"
-        f"📖 Surah: {surah_name_en} | Verses: {range_str}\n"
-        f"🎙️ Recited by: {reciter_en}\n\n"
+        f"✨ {clean_hook} ✨\n\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
         f"📜 Sacred Verses & English Translation:\n\n"
     )
 
     for v in verses:
-        a_num = v.get("ayah_number", "")
         ar = v.get("arabic", "").strip()
         en = v.get("english", "").strip()
-        description += f"({a_num}) {ar}\n"
+        if ar:
+            description += f"{ar}\n"
         if en:
             description += f"“{en}”\n\n"
         else:
@@ -76,15 +71,15 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
         f"🤍 Spread the words of the Holy Quran — Share with your family and loved ones.\n"
         f"The Prophet Muhammad (ﷺ) said: 'Whoever guides someone to goodness will have a reward like one who did it.' [Sahih Muslim: 1893] 🌿\n\n"
         f"⭐ Support our dawah with Stars if this recitation brought peace to your heart.\n\n"
-        f"#Quran #QuranRecitation #Surah{surah_tag} #Islam #Allah #IslamicReminder "
+        f"#Quran #QuranRecitation #Islam #Allah #IslamicReminder "
         f"#Muslim #Deen #ProphetMuhammad #Shorts #Reels #DailyDos #Viral #fyp #Trending #HeartTouching #PeacefulRecitation"
     )
 
-    # Global High-Ranking SEO Tags
+    # Global High-Ranking SEO Tags - STRICTLY ZERO reciter names, ZERO Surah tags
     tags = [
-        "Quran", "QuranRecitation", f"Surah{surah_tag}",
+        "Quran", "QuranRecitation",
         "Islam", "Allah", "Muslim", "IslamicReminder", "ProphetMuhammad",
-        reciter_short, "Shorts", "Reels", "DailyDos", "Viral", "fyp",
+        "Shorts", "Reels", "DailyDos", "Viral", "fyp",
         "Trending", "HeartTouching", "PeacefulRecitation", "IslamicStatus", "Deen"
     ]
 
@@ -95,9 +90,6 @@ def generate_quran_metadata(verse_data: dict, audio_data: dict) -> dict:
         "description": description.strip(),
         "pinned_comment": None,  # No first comment per user instruction
         "tags": tags,
-        "reciter_name": reciter_en,
-        "surah_name": surah_name_en,
-        "range_str": range_str,
         "default_language": "en",
         "default_audio_language": "ar"
     }

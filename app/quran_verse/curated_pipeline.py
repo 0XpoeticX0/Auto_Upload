@@ -218,16 +218,50 @@ def run_curated_quran_pipeline(upload: bool = True, force_index: int = None) -> 
     # Each clip is verified 100% Halal during dynamic visual track assembly
     shariah_passed = os.path.exists(video_path) and os.path.getsize(video_path) > 100000
         
-    # 3. Upload Metadata (Configured for International Reach, No Pinned First Comment)
+    # 3. Upload Metadata (Strictly ZERO reciter names, ZERO Surah names in title/description/tags)
+    def _sanitize_metadata_text(text: str) -> str:
+        if not text:
+            return ""
+        import re
+        lines = []
+        for line in text.split("\n"):
+            if re.search(r"(📖\s*Surah|🎙️\s*Recit|Recited by|Sheikh\s+[A-Za-z]+)", line, re.IGNORECASE):
+                continue
+            lines.append(line)
+        cleaned = "\n".join(lines)
+        reciters = [
+            r"Sheikh\s+Yasser\s+(?:Al-)?Dossari", r"Sheikh\s+Mishary\s+Rashid\s+Alafasy",
+            r"Yasser\s+(?:Al-)?Dossari", r"Mishary\s+Rashid\s+Alafasy",
+            r"Alafasy", r"Dossari", r"Dossary", r"Al-Dossari"
+        ]
+        for r in reciters:
+            cleaned = re.sub(r, "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\[Surah\s+[^\]]+\]", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"➔\s*Surah\s+[A-Za-z\-]+(?:\s*\([^)]*\))?", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\|\s*Surah\s+[A-Za-z\-]+(?:\s*\([^)]*\))?", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"Surah\s+[A-Za-z\-]+(?:\s*\([^)]*\))?", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\s*\|\s*#", " #", cleaned)
+        cleaned = re.sub(r"\s*\|\s*$", "", cleaned)
+        cleaned = re.sub(r"[ \t]+", " ", cleaned)
+        return cleaned.strip()
+
+    def _sanitize_tags(tag_list: list) -> list:
+        import re
+        banned = re.compile(r"(surah|reciter|dossari|alafasy|mishary|yasser)", re.IGNORECASE)
+        return [t for t in tag_list if not banned.search(t)]
+
+    raw_tags = item.get("tags", [
+        "Quran", "QuranRecitation", "Islam", "Allah", "Muslim",
+        "Shorts", "Reels", "DailyDos", "Viral"
+    ])
+    clean_tags = _sanitize_tags(raw_tags)
+
     upload_meta = {
-        "youtube_title": item.get("youtube_title", item["title"]),
-        "facebook_title": item.get("facebook_title", item["title"]),
-        "description": item["description"],
+        "youtube_title": _sanitize_metadata_text(item.get("youtube_title", item["title"])),
+        "facebook_title": _sanitize_metadata_text(item.get("facebook_title", item["title"])),
+        "description": _sanitize_metadata_text(item["description"]),
         "pinned_comment": None,
-        "tags": item.get("tags", [
-            "Quran", "QuranRecitation", "Islam", "Allah", "Muslim",
-            item.get("surah_name_en", "Quran"), "Shorts", "Reels", "DailyDos", "Viral"
-        ]),
+        "tags": clean_tags,
         "default_language": "en",
         "default_audio_language": "ar"
     }
