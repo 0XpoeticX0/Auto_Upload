@@ -15,8 +15,11 @@ from app.config import (
 from app.logger import logger
 
 MODELS = [
-    "gemini-2.5-flash",        # Primary stable production model
-    "gemini-flash-latest",     # Canonical alias fallback
+    "gemini-3.5-flash-lite",      # Primary lightning-fast available model
+    "gemini-3.1-flash-lite",      # Secondary lightweight production model
+    "gemini-flash-lite-latest",   # Canonical alias fallback
+    "gemini-3-flash-preview",     # High-reasoning preview model
+    "gemini-flash-latest",        # General flash fallback
 ]
 
 GLOBAL_RULE = "\n\nCRITICAL SYSTEM RULE: You must cross-check all Islamic claims with authentic Quranic verses and Sahih Hadith. Do not output any misinformation, unverified stories, or false claims. All claims must be backed by authentic sources."
@@ -125,7 +128,7 @@ def generate_text(system_prompt: str, user_prompt: str, for_posts: bool = False)
 
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
 
-    max_attempts = 2
+    max_attempts = 6
     attempts = 0
 
     for model_name in MODELS:
@@ -231,7 +234,7 @@ def extract_json(system_prompt: str, user_prompt: str, max_tokens: int = 4000, f
 
     prompt = f"SYSTEM INSTRUCTIONS:\n{system_prompt}{GLOBAL_RULE}\n\nUSER PROMPT:\n{user_prompt}"
 
-    max_attempts = 2
+    max_attempts = 6
     attempts = 0
 
     for model_name in MODELS:
